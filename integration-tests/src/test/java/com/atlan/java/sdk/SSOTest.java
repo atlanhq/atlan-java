@@ -22,11 +22,12 @@ public class SSOTest extends AtlanLiveTest {
     // private static final String FIXED_USER = "aryaman.bhushan";
     private static final String GROUP_NAME = PREFIX;
 
+    private static final String SSO_TYPE = AtlanSSO.JUMPCLOUD.getValue();
     private static final String SSO_GROUP_NAME = PREFIX;
     private static final String SSO_GROUP_NAME_UPDATED = SSO_GROUP_NAME + "-updated";
 
     private static AtlanGroup group1 = null;
-    private static SSOMapping azureGroupMapping = null;
+    private static SSOMapping groupMapping = null;
 
     @Test(groups = {"sso.create.group"})
     void createGroup() throws AtlanException {
@@ -37,8 +38,7 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.create.mapping"},
             dependsOnGroups = {"sso.create.group"})
     void createSsoMapping() throws AtlanException {
-        SSOMapping response =
-                Atlan.getDefaultClient().sso.createGroupMapping(AtlanSSO.AZURE_AD.getValue(), group1, SSO_GROUP_NAME);
+        SSOMapping response = Atlan.getDefaultClient().sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME);
         assertNotNull(response);
     }
 
@@ -46,26 +46,26 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.read.mapping"},
             dependsOnGroups = {"sso.create.mapping"})
     void readSsoMapping() throws AtlanException {
-        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(AtlanSSO.AZURE_AD.getValue());
+        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(SSO_TYPE);
         assertNotNull(mappings);
         for (SSOMapping mapping : mappings) {
             if (mapping.getName().contains(group1.getId())
                     && mapping.getIdentityProviderMapper().equals(SSOEndpoint.IDP_GROUP_MAPPER)) {
-                azureGroupMapping = mapping;
+                groupMapping = mapping;
                 break;
             }
         }
-        assertNotNull(azureGroupMapping);
-        validateSsoMapping(group1, azureGroupMapping, false);
+        assertNotNull(groupMapping);
+        validateSsoMapping(group1, groupMapping, false);
     }
 
     @Test(
             groups = {"sso.create.mapping.again"},
             dependsOnGroups = {"sso.read.mapping"})
     void createSsoMappingAgain() {
-        assertThrows(InvalidRequestException.class, () -> Atlan.getDefaultClient()
-                .sso
-                .createGroupMapping(AtlanSSO.AZURE_AD.getValue(), group1, SSO_GROUP_NAME));
+        assertThrows(
+                InvalidRequestException.class,
+                () -> Atlan.getDefaultClient().sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME));
     }
 
     @Test(
@@ -74,8 +74,7 @@ public class SSOTest extends AtlanLiveTest {
     void updateSsoMapping() throws AtlanException {
         SSOMapping updated = Atlan.getDefaultClient()
                 .sso
-                .updateGroupMapping(
-                        AtlanSSO.AZURE_AD.getValue(), group1, azureGroupMapping.getId(), SSO_GROUP_NAME_UPDATED);
+                .updateGroupMapping(SSO_TYPE, group1, groupMapping.getId(), SSO_GROUP_NAME_UPDATED);
         validateSsoMapping(group1, updated, true);
     }
 
@@ -83,9 +82,9 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.delete.mapping"},
             dependsOnGroups = {"sso.update.mapping"})
     void deleteSsoMapping() throws AtlanException, InterruptedException {
-        Atlan.getDefaultClient().sso.deleteGroupMapping(AtlanSSO.AZURE_AD.getValue(), azureGroupMapping.getId());
+        Atlan.getDefaultClient().sso.deleteGroupMapping(SSO_TYPE, groupMapping.getId());
         Thread.sleep(5000);
-        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(AtlanSSO.AZURE_AD.getValue());
+        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(SSO_TYPE);
         assertNotNull(mappings);
         SSOMapping local = null;
         for (SSOMapping mapping : mappings) {
@@ -101,7 +100,7 @@ public class SSOTest extends AtlanLiveTest {
     private void validateSsoMapping(AtlanGroup group, SSOMapping mapping, boolean isUpdated) {
         assertNotNull(mapping);
         assertNotNull(mapping.getId());
-        assertEquals(mapping.getIdentityProviderAlias(), AtlanSSO.AZURE_AD.getValue());
+        assertEquals(mapping.getIdentityProviderAlias(), SSO_TYPE);
         assertEquals(mapping.getIdentityProviderMapper(), SSOEndpoint.IDP_GROUP_MAPPER);
         assertNotNull(mapping.getConfig());
         assertEquals(mapping.getConfig().getAttributes(), "[]");
