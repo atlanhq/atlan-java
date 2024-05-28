@@ -144,7 +144,7 @@ class PartialAssetsTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun connection1Created() {
         validateConnection()
     }
@@ -164,7 +164,7 @@ class PartialAssetsTest : PackageTest() {
         assertFalse(c1.isPartial)
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun database1Created() {
         val displayName = "Test DB"
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
@@ -187,7 +187,7 @@ class PartialAssetsTest : PackageTest() {
         assertTrue(db.isPartial)
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun schema1Created() {
         val displayName = "Test schema"
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
@@ -215,7 +215,7 @@ class PartialAssetsTest : PackageTest() {
         assertTrue(sch.isPartial)
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun table1Created() {
         val displayName = "Test table"
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
@@ -248,7 +248,7 @@ class PartialAssetsTest : PackageTest() {
         assertTrue(tbl.isPartial)
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun columnsForTable1Created() {
         val displayCol1 = "Test column 1"
         val displayCol2 = "Test column 2"
@@ -292,7 +292,7 @@ class PartialAssetsTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun view1Created() {
         validateView()
     }
@@ -324,7 +324,7 @@ class PartialAssetsTest : PackageTest() {
         assertTrue(view.isPartial)
     }
 
-    @Test(groups = ["create"])
+    @Test
     fun columnsForView1Created() {
         validateColumnsForView()
     }
@@ -370,12 +370,12 @@ class PartialAssetsTest : PackageTest() {
         }
     }
 
-    @Test(dependsOnGroups = ["create"])
+    @Test
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["create"])
+    @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

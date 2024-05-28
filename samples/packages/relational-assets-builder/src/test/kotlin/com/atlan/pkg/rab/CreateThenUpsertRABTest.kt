@@ -176,7 +176,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun connection1Created() {
         validateConnection()
     }
@@ -195,7 +195,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals(setOf("admins"), c1.adminGroups)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun database1Created() {
         validateDatabase("Test DB")
     }
@@ -220,7 +220,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals("TEST_SCHEMA", db.schemas.first().name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun schema1Created() {
         validateSchema("Test schema")
     }
@@ -250,7 +250,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertEquals("TEST_VIEW", sch.views.first().name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun table1Created() {
         validateTable("Test table")
     }
@@ -301,7 +301,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertTrue(colNames.contains("COL2"))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun columnsForTable1Created() {
         validateColumnsForTable1("Test column 1", "Test column 2")
     }
@@ -346,7 +346,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun view1Created() {
         validateView()
     }
@@ -382,7 +382,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertTrue(colNames.contains("COL4"))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["rab.ctu.create"])
     fun columnsForView1Created() {
         validateColumnsForView()
     }
@@ -427,7 +427,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    @Test(groups = ["rab.ctu.runUpdate"], dependsOnGroups = ["rab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
         setup(
@@ -450,47 +450,47 @@ class CreateThenUpsertRABTest : PackageTest() {
         retrySearchUntil(request, 2)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun connectionUnchanged() {
         validateConnection()
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun databaseChanged() {
         validateDatabase("Revised DB")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun schemaChanged() {
         validateSchema("Revised schema")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun tableChanged() {
         validateTable("Revised table")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun columnsForTable1Changed() {
         validateColumnsForTable1("Revised column 1", "Revised column 2")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun viewUnchanged() {
         validateView()
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
     fun columnsForView1Unchanged() {
         validateColumnsForView()
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["rab.ctu.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["rab.ctu.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

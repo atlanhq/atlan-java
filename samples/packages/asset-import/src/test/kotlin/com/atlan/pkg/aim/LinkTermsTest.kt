@@ -125,14 +125,14 @@ class LinkTermsTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["aim.lt.create"])
     fun connectionCreated() {
         val c1 = Connection.findByName(connectionName, connectorType)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1[0].name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["aim.lt.create"])
     fun tableCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Table.select()
@@ -153,7 +153,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals(1708035825000L, tables[0].lastRowChangedAt)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["aim.lt.create"])
     fun viewCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = View.select()
@@ -174,7 +174,7 @@ class LinkTermsTest : PackageTest() {
         assertFalse(views[0].atlanTags.first().propagate)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["aim.lt.create"])
     fun columnCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Column.select()
@@ -189,7 +189,7 @@ class LinkTermsTest : PackageTest() {
         assertTrue(columns[0].atlanTags.isEmpty())
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["aim.lt.create"])
     fun termAssigned() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Atlan.getDefaultClient().assets.select()
@@ -210,7 +210,7 @@ class LinkTermsTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    @Test(groups = ["aim.lt.runUpdate"], dependsOnGroups = ["aim.lt.create"])
     fun upsertRevisions() {
         modifyFile()
         setup(
@@ -227,7 +227,7 @@ class LinkTermsTest : PackageTest() {
         Thread.sleep(10000)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedTable() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Table.select()
@@ -248,7 +248,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals(1708035825000L, tables[0].lastRowChangedAt)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedView() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = View.select()
@@ -267,7 +267,7 @@ class LinkTermsTest : PackageTest() {
         assertEquals("Now with description", views[0].description)
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["aim.lt.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
