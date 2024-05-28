@@ -76,6 +76,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     fun beforeClass() {
         createConnections()
         createAssets()
+        Thread.sleep(15000)
         setup(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),

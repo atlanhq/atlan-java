@@ -40,14 +40,14 @@ class ImpactReportTest : PackageTest() {
         Reporter.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["mdir.create"])
     fun glossaryCreated() {
         val glossary = Glossary.findByName(glossaryName)
         assertNotNull(glossary)
         assertEquals(glossaryName, glossary.name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["mdir.create"])
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
         val request = GlossaryCategory.select()
@@ -67,7 +67,7 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["mdir.create"])
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
         val request = GlossaryTerm.select()
@@ -194,7 +194,7 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    @Test(groups = ["mdir.runUpdate"], dependsOnGroups = ["mdir.create"])
     fun rerunReport() {
         setup(
             MetadataImpactReportCfg(
@@ -206,12 +206,12 @@ class ImpactReportTest : PackageTest() {
         Reporter.main(arrayOf(testDirectory))
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate"])
+    @Test(dependsOnGroups = ["mdir.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate"])
+    @Test(dependsOnGroups = ["mdir.*"])
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}mdir.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -225,7 +225,7 @@ class ImpactReportTest : PackageTest() {
         }
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate"])
+    @Test(dependsOnGroups = ["mdir.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

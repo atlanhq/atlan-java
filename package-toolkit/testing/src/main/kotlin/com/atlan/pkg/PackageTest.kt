@@ -227,6 +227,7 @@ abstract class PackageTest {
         fun removeConnection(name: String, type: AtlanConnectorType) {
             val results = Connection.findByName(name, type)
             if (!results.isNullOrEmpty()) {
+                val deletionType = AtlanDeleteType.PURGE
                 results.forEach {
                     val assets = client.assets.select(true)
                         .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
@@ -236,7 +237,6 @@ abstract class PackageTest {
                         .map(Asset::getGuid)
                         .toList()
                     if (assets.isNotEmpty()) {
-                        val deletionType = AtlanDeleteType.PURGE
                         val guidList = assets.toList()
                         val totalToDelete = guidList.size
                         logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
@@ -250,7 +250,7 @@ abstract class PackageTest {
                                 .toList()
                                 .parallelStream()
                                 .forEach { batch ->
-                                    val i = currentCount.getAndAdd(20)
+                                    val i = currentCount.getAndAdd(batch.size.toLong())
                                     logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                                     if (batch.isNotEmpty()) {
                                         client.assets.delete(batch, deletionType).block()
@@ -260,7 +260,7 @@ abstract class PackageTest {
                     }
                     // Purge the connection itself, now that all assets are purged
                     logger.info { " --- Purging connection: ${it.qualifiedName}... ---" }
-                    client.assets.delete(it.guid, AtlanDeleteType.PURGE).block()
+                    client.assets.delete(it.guid, deletionType).block()
                 }
             }
         }

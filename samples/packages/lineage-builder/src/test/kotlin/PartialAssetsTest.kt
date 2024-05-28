@@ -90,14 +90,14 @@ class PartialAssetsTest : PackageTest() {
         Loader.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun connectionCreated() {
         val c1 = Connection.findByName(connectionName, connectorType)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1[0].name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun partialSourceCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Table.select()
@@ -112,7 +112,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("source_table", tables[0].name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun partialTargetCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = View.select()
@@ -127,7 +127,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("target_view", views[0].name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun lineageProcessCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = LineageProcess.select()
@@ -153,7 +153,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("Only a test...", process.announcementMessage)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun downstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = Table.select()
@@ -179,7 +179,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("target_view", downstream[1].name)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["lb.pa.create"])
     fun upstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request = View.select()
@@ -205,7 +205,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("source_table", upstream[1].name)
     }
 
-    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    @Test(groups = ["lb.pa.runUpdate"], dependsOnGroups = ["lb.pa.create"])
     fun upsertRevisions() {
         // Convert partial view into full view
         val c = Connection.findByName(connectionName, connectorType)[0]!!
@@ -238,7 +238,7 @@ class PartialAssetsTest : PackageTest() {
         Thread.sleep(5000)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["lb.pa.update"], dependsOnGroups = ["lb.pa.runUpdate"])
     fun testRevisions() {
         // Validate no portion of the full view has been clobbered by the update
         val c = Connection.findByName(connectionName, connectorType)[0]!!
@@ -256,7 +256,7 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("And with a description now, too...", views[0].description)
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["lb.pa.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }

@@ -43,7 +43,7 @@ object EnrichmentMigrator {
         val includeOOTB = Utils.getOrDefault(config.limitType, "EXCLUDE") == "INCLUDE"
         val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
         val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
-        val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true)
+        val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields())
         if (includeArchived) {
             start.add(Asset.STATUS.atlanFieldName)
         }

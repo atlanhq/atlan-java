@@ -175,7 +175,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun connection1Created() {
         validateConnection()
     }
@@ -194,7 +194,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(setOf("admins"), c1.adminGroups)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun cube1Created() {
         validateCube("Test cube")
     }
@@ -219,7 +219,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(1, cube.cubeDimensionCount)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun dim1Created() {
         validateDimension("Test dimension")
     }
@@ -250,7 +250,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(expectedCount, dim.cubeHierarchyCount)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun hierarchy1Created() {
         validateHierarchy("Test hierarchy1")
     }
@@ -307,7 +307,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(3, hier.cubeFieldCount)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun fieldsForHierarchy1Created() {
         validateFieldsForHierarchy1("Test field 1", "Test field 2", "Test field 3")
     }
@@ -369,7 +369,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun hierarchy2Created() {
         validateHierarchy2()
     }
@@ -407,7 +407,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals(2, hier.cubeFieldCount)
     }
 
-    @Test(groups = ["create"])
+    @Test(groups = ["cab.ctu.create"])
     fun fieldsForHierarchy2Created() {
         validateFieldsForHierarchy2()
     }
@@ -459,7 +459,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["runUpdate"], dependsOnGroups = ["create"])
+    @Test(groups = ["cab.ctu.runUpdate"], dependsOnGroups = ["cab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
         setup(
@@ -469,6 +469,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                 assetsFailOnErrors = true,
                 deltaSemantic = "full",
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
+                deltaRemovalType = "purge",
                 skipS3 = true,
             ),
         )
@@ -477,32 +478,32 @@ class CreateThenUpsertCABTest : PackageTest() {
         Thread.sleep(10000)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun connectionUnchanged() {
         validateConnection()
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun cubeChanged() {
         validateCube("Revised cube")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun dimensionChanged() {
         validateDimension("Revised dimension", 1)
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun hierarchy1Changed() {
         validateHierarchy("Revised hierarchy1")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun fieldsForHierarchy1Changed() {
         validateFieldsForHierarchy1("Revised field 1", "Revised field 2", "Revised field 3")
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun hierarchy2Gone() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val request = CubeHierarchy.select()
@@ -516,7 +517,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertTrue(response.assets.isNullOrEmpty())
     }
 
-    @Test(groups = ["update"], dependsOnGroups = ["runUpdate"])
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun fieldsForHierarchy2Gone() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val request = CubeField.select()
@@ -529,12 +530,12 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertTrue(response.assets.isNullOrEmpty())
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["cab.ctu.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["create", "runUpdate", "update"])
+    @Test(dependsOnGroups = ["cab.ctu.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

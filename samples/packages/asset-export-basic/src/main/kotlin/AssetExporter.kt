@@ -10,6 +10,7 @@ import com.atlan.model.assets.INamespace
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Procedure
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.fields.CustomMetadataField
 import com.atlan.model.fields.SearchableField
 import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.serde.RowSerde
@@ -83,7 +84,7 @@ class AssetExporter(
             if (ctx.includeDescription) {
                 builder.whereSome(Asset.DESCRIPTION.hasAnyValue())
             }
-            for (cmField in CustomMetadataFields.all) {
+            for (cmField in ctx.cmFields) {
                 builder.whereSome(cmField.hasAnyValue())
             }
         }
@@ -97,12 +98,12 @@ class AssetExporter(
         return if (ctx.limitToAttributes.isNotEmpty()) {
             ctx.limitToAttributes.map { SearchableField(it, it) }.toMutableList()
         } else {
-            getAttributesToExtract(ctx.includeDescription)
+            getAttributesToExtract(ctx.includeDescription, ctx.cmFields)
         }
     }
 
     companion object {
-        fun getAttributesToExtract(includeDesc: Boolean): MutableList<AtlanField> {
+        fun getAttributesToExtract(includeDesc: Boolean, cmFields: List<CustomMetadataField>): MutableList<AtlanField> {
             val attributeList: MutableList<AtlanField> = if (includeDesc) {
                 mutableListOf(
                     Asset.NAME,
@@ -141,7 +142,7 @@ class AssetExporter(
                     Asset.STARRED_DETAILS,
                 )
             }
-            for (cmField in CustomMetadataFields.all) {
+            for (cmField in cmFields) {
                 attributeList.add(cmField)
             }
             return attributeList

@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.Atlan
+import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
 import java.io.File
 
@@ -25,6 +27,8 @@ object Exporter {
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val emails = Utils.getAsList(config.emailAddresses)
 
+        val cmFields = getAllCustomMetadataFields()
+
         val ctx = Context(
             assetsExportScope,
             limitToAssets,
@@ -32,6 +36,7 @@ object Exporter {
             assetsQualifiedNamePrefix,
             includeDescription,
             includeArchived,
+            cmFields,
         )
 
         val exportedFiles = mutableListOf<File>()
@@ -64,6 +69,18 @@ object Exporter {
         }
     }
 
+    fun getAllCustomMetadataFields(): List<CustomMetadataField> {
+        val customMetadataDefs = Atlan.getDefaultClient().customMetadataCache
+            .getAllCustomAttributes(false, true)
+        val cmFields = mutableListOf<CustomMetadataField>()
+        for ((setName, attributes) in customMetadataDefs) {
+            for (attribute in attributes) {
+                cmFields.add(CustomMetadataField(Atlan.getDefaultClient(), setName, attribute.displayName))
+            }
+        }
+        return cmFields
+    }
+
     data class Context(
         val assetsExportScope: String,
         val limitToAssets: List<String>,
@@ -71,5 +88,6 @@ object Exporter {
         val assetsQualifiedNamePrefix: String,
         val includeDescription: Boolean,
         val includeArchived: Boolean,
+        val cmFields: List<CustomMetadataField>,
     )
 }
