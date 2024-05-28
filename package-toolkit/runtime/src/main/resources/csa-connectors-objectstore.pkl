@@ -72,7 +72,7 @@ options {
         helpText = "Enter the ID of the GCP project."
         width = 4
       }
-      ["password"] = new Config.TextInput {
+      ["password"] = new Config.PasswordInput {
         title = "Service account JSON"
         required = false
         helpText = "Enter the JSON for your service account credentials."
@@ -116,7 +116,7 @@ options {
         helpText = "Enter the unique application (client) ID assigned to your app by Azure AD when the app was registered."
         width = 4
       }
-      ["password"] = new Config.TextInput {
+      ["password"] = new Config.PasswordInput {
         title = "Azure client secret"
         required = false
         helpText = "Enter your client secret."
@@ -125,7 +125,7 @@ options {
       ["extra"] = new Config.NestedInput {
         title = "ADLS details"
         inputs {
-          ["azure_tenant_id"] = new Config.TextInput {
+          ["azure_tenant_id"] = new Config.PasswordInput {
             title = "Azure tenant ID"
             required = false
             helpText = "Enter the unique identifier of the Azure Active Directory instance."
