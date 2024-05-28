@@ -926,7 +926,7 @@ local class ConnectorConfigMap extends ConfigMap {
     ["labels"] = new Mapping<String, String> {
       ["workflows.argoproj.io/configmap-type"] = "Parameter"
       ["orchestration.atlan.com/version"] = "1"
-      ["orchestration.atlan.com/source"] = config.source
+      ["orchestration.atlan.com/source"] = config.source.replaceAll(" ", "")
     }
   }
   fixed data: Mapping<String, String> = new Mapping {
