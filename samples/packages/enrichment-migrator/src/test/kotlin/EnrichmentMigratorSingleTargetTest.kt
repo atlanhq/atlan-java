@@ -37,12 +37,11 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     )
 
     private fun createConnections() {
-        val client = Atlan.getDefaultClient()
-        Connection.creator(c1, AtlanConnectorType.HIVE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+        Connection.creator(c1, AtlanConnectorType.MSSQL)
             .build()
             .save()
             .block()
-        Connection.creator(c2, AtlanConnectorType.ESSBASE, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+        Connection.creator(c2, AtlanConnectorType.POSTGRES)
             .build()
             .save()
             .block()
@@ -57,8 +56,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
 
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, AtlanConnectorType.HIVE)[0]!!
-        val connection2 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val connection1 = Connection.findByName(c1, AtlanConnectorType.MSSQL)[0]!!
+        val connection2 = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -89,8 +88,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         createAssets()
         setup(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.MSSQL)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.POSTGRES)?.get(0)?.qualifiedName!!),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
@@ -102,7 +101,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val targetConnection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         val client = Atlan.getDefaultClient()
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request = Table.select()
@@ -125,7 +124,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val targetConnection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         val filename = targetConnection.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
@@ -138,8 +137,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     @AfterClass(alwaysRun = true)
     fun afterClass(context: ITestContext) {
         val client = Atlan.getDefaultClient()
-        removeConnection(c1, AtlanConnectorType.HIVE)
-        removeConnection(c2, AtlanConnectorType.ESSBASE)
+        removeConnection(c1, AtlanConnectorType.MSSQL)
+        removeConnection(c2, AtlanConnectorType.POSTGRES)
         client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
         teardown(context.failedTests.size() > 0)
     }

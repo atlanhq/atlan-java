@@ -108,7 +108,7 @@ public class FluentSearch extends CompoundQuery {
 
     /**
      * Run the fluent search to retrieve assets that match the supplied criteria.
-     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * Note: if the number of results exceeds the predefined threshold (100,000 assets)
      * this will be automatically converted into a bulkStream().
      *
      * @param parallel if true, returns a parallel stream
@@ -129,7 +129,7 @@ public class FluentSearch extends CompoundQuery {
     /**
      * Run the fluent search to retrieve assets that match the supplied criteria, using a
      * parallel stream (multiple pages are retrieved in parallel for improved throughput).
-     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * Note: if the number of results exceeds the predefined threshold (100,000 assets)
      * this will be automatically converted into a bulkStream().
      *
      * @return a stream of assets that match the specified criteria, lazily-fetched

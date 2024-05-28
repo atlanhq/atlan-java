@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
-    private static final long MASS_EXTRACT_THRESHOLD = IndexSearchDSL.DEFAULT_PAGE_SIZE * 1000L;
+    private static final long MASS_EXTRACT_THRESHOLD = 100000L;
 
     private static final int CHARACTERISTICS = Spliterator.NONNULL
             | Spliterator.IMMUTABLE
@@ -243,7 +243,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     /**
      * Stream the results (lazily) for processing without needing to manually manage paging.
-     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * Note: if the number of results exceeds the predefined threshold (100,000 assets)
      * this will be automatically converted into a bulkStream().
      *
      * @return a lazily-loaded stream of results from the search
@@ -261,7 +261,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     /**
      * Stream a large number of results (lazily) for processing without needing to manually manage paging.
-     * Note: this will reorder the results in order to iterate through a large number (more than ~300,000) results,
+     * Note: this will reorder the results in order to iterate through a large number (more than 100,000) results,
      * so any sort ordering you have specified may be ignored.
      *
      * @return a lazily-loaded stream of results from the search
@@ -272,7 +272,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     /**
      * Stream the results in parallel across all pages (may do more than limited to in a request).
-     * Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+     * Note: if the number of results exceeds the predefined threshold (100,000 assets)
      * this will be automatically converted into a bulkStream().
      *
      * @return a lazily-loaded stream of results from the search
