@@ -564,7 +564,7 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <h4>stream</h4>
 <pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;stream()</pre>
 <div class="block">Stream the results (lazily) for processing without needing to manually manage paging.
- Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+ Note: if the number of results exceeds the predefined threshold (100,000 assets)
  this will be automatically converted into a bulkStream().</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -580,7 +580,7 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <h4>bulkStream</h4>
 <pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;bulkStream()</pre>
 <div class="block">Stream a large number of results (lazily) for processing without needing to manually manage paging.
- Note: this will reorder the results in order to iterate through a large number (more than ~300,000) results,
+ Note: this will reorder the results in order to iterate through a large number (more than 100,000) results,
  so any sort ordering you have specified may be ignored.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -596,7 +596,7 @@ implements java.lang.Iterable&lt;<a href="../assets/Asset.html" title="class in 
 <h4>parallelStream</h4>
 <pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;parallelStream()</pre>
 <div class="block">Stream the results in parallel across all pages (may do more than limited to in a request).
- Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+ Note: if the number of results exceeds the predefined threshold (100,000 assets)
  this will be automatically converted into a bulkStream().</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>

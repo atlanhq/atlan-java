@@ -425,7 +425,7 @@ extends <a href="CompoundQuery.html" title="class in com.atlan.model.search">Com
 <pre class="methodSignature">public&nbsp;java.util.stream.Stream&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;stream&#8203;(boolean&nbsp;parallel)
                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Run the fluent search to retrieve assets that match the supplied criteria.
- Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+ Note: if the number of results exceeds the predefined threshold (100,000 assets)
  this will be automatically converted into a bulkStream().</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -447,7 +447,7 @@ extends <a href="CompoundQuery.html" title="class in com.atlan.model.search">Com
                                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Run the fluent search to retrieve assets that match the supplied criteria, using a
  parallel stream (multiple pages are retrieved in parallel for improved throughput).
- Note: if the number of results exceeds the predefined threshold (~300,000 assets)
+ Note: if the number of results exceeds the predefined threshold (100,000 assets)
  this will be automatically converted into a bulkStream().</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
