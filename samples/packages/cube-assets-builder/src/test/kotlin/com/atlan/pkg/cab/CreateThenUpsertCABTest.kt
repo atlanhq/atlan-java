@@ -469,6 +469,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                 assetsFailOnErrors = true,
                 deltaSemantic = "full",
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
+                deltaRemovalType = "purge",
                 skipS3 = true,
             ),
         )
