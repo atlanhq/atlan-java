@@ -28,7 +28,11 @@ class Transformer(
             } else {
                 inputRow[it] ?: ""
             }
-            raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
+            if (ctx.targetDatabaseName.isNotBlank()) {
+                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(ctx.sourceDatabaseName, ctx.targetDatabaseName)
+            } else {
+                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
+            }
         }.toList()
         // Wrap them all up in a list (one-to-one row output from input)
         return listOf(values)

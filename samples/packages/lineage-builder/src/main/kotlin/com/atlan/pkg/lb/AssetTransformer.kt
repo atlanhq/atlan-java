@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
+import org.slf4j.Logger
 
 class AssetTransformer(
     private val ctx: Loader.Context,
@@ -94,6 +95,8 @@ class AssetTransformer(
     }
 
     private fun mapAsset(inputRow: Map<String, String>, prefix: String): List<String> {
+        System.out.println("HERE I AM----------------->")
+        System.out.println(inputRow)
         val connectionQN = getConnectionQN(ctx, inputRow, prefix)
         val assetQN = getAssetQN(ctx, inputRow, prefix)
         return if (assetQN.isNotBlank()) {
