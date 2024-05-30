@@ -260,9 +260,8 @@ public enum ErrorCode implements ExceptionMessageSet {
     UNEXPECTED_NUMBER_OF_DATABASE_FOUND(
             400,
             "ATLAN-JAVA-400-047",
-            "Expected only one database name matching the given pattern {0} but found {1}.",
+            "Expected {0} database name(s) matching the given pattern {1} but found {2}.",
             "Use a more restrictive regular expression."),
-
     AUTHENTICATION_PASSTHROUGH(
             401,
             "ATLAN-JAVA-401-000",

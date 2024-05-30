@@ -1,4 +1,5 @@
 import com.atlan.Atlan
+import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -17,17 +18,23 @@ import org.testng.annotations.BeforeClass
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 
 private const val TARGET_DB_NAME_1 = "db_test02"
 
 private const val TARGET_DB_NAME_2 = "db_test03"
 
+private const val SOURCE_DATABASE_NAME = "db_test01"
+
+private const val DB_NAME_PATTERN = "db_test.."
+
 class EnrichmentMigratorPatternTest : PackageTest() {
     private val c1 = makeUnique("emsc1")
     private val c2 = makeUnique("emsc2")
     private val cm1 = makeUnique("emscm")
     private val now = Instant.now().toEpochMilli()
+    private var sourceConnectionQualifiedName = ""
     private var targetConnectionQualifiedName = ""
     private val targetTableQualifiedNamesByName = mutableMapOf<String, String>()
 
@@ -57,10 +64,11 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
         val connection1 = Connection.findByName(c1, AtlanConnectorType.MSSQL)[0]!!
+        this.sourceConnectionQualifiedName = connection1.qualifiedName
         val connection2 = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         this.targetConnectionQualifiedName = connection2.qualifiedName
         val batch = AssetBatch(client, 20)
-        val db1 = Database.creator("db_test01", connection1.qualifiedName).build()
+        val db1 = Database.creator(SOURCE_DATABASE_NAME, connection1.qualifiedName).build()
         batch.add(db1)
         val db2 = Database.creator(TARGET_DB_NAME_1, connection2.qualifiedName).build()
         batch.add(db2)
@@ -100,7 +108,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.MSSQL)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.POSTGRES)?.get(0)?.qualifiedName!!),
-                sourceQnPrefix = "db_test..",
+                sourceQnPrefix = DB_NAME_PATTERN,
                 isPrefixDatabasePattern = true,
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
@@ -114,15 +122,15 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     @Test
     fun getDatabaseNames_when_only_one_match_then_returns_one_name() {
         val connection = Connection.findByName(c1, AtlanConnectorType.MSSQL)[0]!!
-        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, "db_test..")
+        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, DB_NAME_PATTERN)
         assertEquals(1, databaseNames.size)
-        assertEquals(listOf("db_test01"), databaseNames)
+        assertEquals(listOf(SOURCE_DATABASE_NAME), databaseNames)
     }
 
     @Test
     fun getDatabaseNames_when_multiple_matches_then_returns_multiple_name() {
         val connection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
-        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, "db_test..")
+        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, DB_NAME_PATTERN)
         assertEquals(2, databaseNames.size)
         assertEquals(listOf(TARGET_DB_NAME_1, TARGET_DB_NAME_2), databaseNames)
     }
@@ -132,6 +140,84 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         val connection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, "")
         assertEquals(0, databaseNames.size)
+    }
+
+    @Test
+    fun getSourceDatabaseNames_when_is_prefix_and_one_match_returns_name() {
+        assertEquals(
+            SOURCE_DATABASE_NAME,
+            EnrichmentMigrator.getSourceDatabaseNames(
+                true,
+                this.sourceConnectionQualifiedName,
+                SOURCE_DATABASE_NAME,
+            ),
+        )
+    }
+
+    @Test
+    fun getSourceDatabaseNames_when_is_prefix_and_more_than_one_found_throws_exception() {
+        val exception = assertFailsWith<InvalidRequestException>(
+            block = {
+                EnrichmentMigrator.getSourceDatabaseNames(
+                    true,
+                    this.sourceConnectionQualifiedName,
+                    ".*",
+                )
+            },
+        )
+        assertEquals("ATLAN-JAVA-400-047 Expected only one database name(s) matching the given pattern .* but found 4.", exception.message)
+    }
+
+    @Test
+    fun getSourceDatabaseNames_when_is_prefix_and_none_found_throws_exception() {
+        val exception = assertFailsWith<InvalidRequestException>(
+            block = {
+                EnrichmentMigrator.getSourceDatabaseNames(
+                    true,
+                    this.sourceConnectionQualifiedName,
+                    ".",
+                )
+            },
+        )
+        assertEquals("ATLAN-JAVA-400-047 Expected only one database name(s) matching the given pattern . but found 0.", exception.message)
+    }
+
+    @Test
+    fun getSourceDatabaseNames_when_is_not_prefix_then_returns_empty_string() {
+        assertEquals(
+            "",
+            EnrichmentMigrator.getSourceDatabaseNames(
+                false,
+                this.sourceConnectionQualifiedName,
+                SOURCE_DATABASE_NAME,
+            ),
+        )
+    }
+
+    @Test
+    fun getTargetDatabaseNames_when_has_match_returns_names() {
+        assertEquals(
+            listOf(TARGET_DB_NAME_1, TARGET_DB_NAME_2),
+            EnrichmentMigrator.getTargetDatabaseName(
+                true,
+                this.targetConnectionQualifiedName,
+                DB_NAME_PATTERN,
+            ),
+        )
+    }
+
+    @Test
+    fun getTargetDatabaseNames_when_is_prefix_and_none_found_throws_exception() {
+        val exception = assertFailsWith<InvalidRequestException>(
+            block = {
+                EnrichmentMigrator.getTargetDatabaseName(
+                    true,
+                    this.targetConnectionQualifiedName,
+                    ".",
+                )
+            },
+        )
+        assertEquals("ATLAN-JAVA-400-047 Expected at least one database name(s) matching the given pattern . but found 0.", exception.message)
     }
 
     @Test
