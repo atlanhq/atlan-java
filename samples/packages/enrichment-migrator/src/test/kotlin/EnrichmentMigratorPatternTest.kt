@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Connection

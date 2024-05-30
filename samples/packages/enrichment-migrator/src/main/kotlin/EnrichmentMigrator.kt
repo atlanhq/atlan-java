@@ -99,9 +99,9 @@ object EnrichmentMigrator {
             }
             start.toList()
         }
-        targetConnectionQNs.forEachIndexed { index, targetConnectionQN ->
-            val target_databases = getTargetDatabaseName(isPrefixDatabasePattern, targetConnectionQN, sourcePrefix)
-            target_databases.forEach { targetDatabaseName ->
+        targetConnectionQNs.forEachIndexed { _, targetConnectionQN ->
+            val targetDatabaseNames = getTargetDatabaseName(isPrefixDatabasePattern, targetConnectionQN, sourcePrefix)
+            targetDatabaseNames.forEach { targetDatabaseName ->
                 val ctx = MigratorContext(
                     sourceConnectionQN = sourceConnectionQN,
                     targetConnectionQN = targetConnectionQN,

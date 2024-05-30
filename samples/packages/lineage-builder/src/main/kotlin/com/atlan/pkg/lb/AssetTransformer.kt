@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
-import org.slf4j.Logger
 
 class AssetTransformer(
     private val ctx: Loader.Context,
