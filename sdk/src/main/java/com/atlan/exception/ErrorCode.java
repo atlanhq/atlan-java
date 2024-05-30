@@ -258,10 +258,10 @@ public enum ErrorCode implements ExceptionMessageSet {
             "SSO group mapping already exists between {0} (Atlan group) and {1} (SSO group).",
             "Use updateGroupMapping() to update the existing group mapping."),
     UNEXPECTED_NUMBER_OF_DATABASE_FOUND(
-        400,
-        "ATLAN-JAVA-400-047",
-        "Expected only one database name matching the given pattern {0} but found {1}.",
-        "Use a more restrictive regular expression."),
+            400,
+            "ATLAN-JAVA-400-047",
+            "Expected only one database name matching the given pattern {0} but found {1}.",
+            "Use a more restrictive regular expression."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
