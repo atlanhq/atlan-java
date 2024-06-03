@@ -33,7 +33,10 @@ public class ExceptionMessageDefinition {
      */
     public String getErrorMessage(String... params) {
         if (params != null) {
-            MessageFormat mf = new MessageFormat(errorMessage);
+            StringBuilder s1 = new StringBuilder(errorMessage);
+            s1.append(" Suggestion: ");
+            s1.append(userAction);
+            MessageFormat mf = new MessageFormat(s1.toString() );
             return mf.format(params);
         } else {
             return errorMessage;
