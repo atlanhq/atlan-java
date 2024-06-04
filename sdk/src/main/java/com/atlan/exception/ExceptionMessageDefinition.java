@@ -32,11 +32,14 @@ public class ExceptionMessageDefinition {
      * @return the formatted error message
      */
     public String getErrorMessage(String... params) {
+        StringBuilder sb = new StringBuilder();
         if (params != null) {
             MessageFormat mf = new MessageFormat(errorMessage);
-            return mf.format(params);
+            sb.append(mf.format(params));
         } else {
-            return errorMessage;
+            sb.append(errorMessage);
         }
+        sb.append(" Suggestion: ").append(userAction);
+        return sb.toString();
     }
 }

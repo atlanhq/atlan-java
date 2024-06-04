@@ -78,6 +78,7 @@ public class AttributeDefOptions extends AtlanObject {
             DataContract.TYPE_NAME,
             DataStudioAsset.TYPE_NAME,
             Database.TYPE_NAME,
+            DatabricksUnityCatalogTag.TYPE_NAME,
             DbtColumnProcess.TYPE_NAME,
             DbtMetric.TYPE_NAME,
             DbtModel.TYPE_NAME,
