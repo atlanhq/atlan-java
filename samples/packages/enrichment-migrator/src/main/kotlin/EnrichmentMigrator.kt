@@ -149,7 +149,7 @@ object EnrichmentMigrator {
             val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
             if (databaseNames.size < 1) {
                 throw InvalidRequestException(
-                    ErrorCode.UNEXPECTED_NUMBER_OF_DATABASE_FOUND,
+                    ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
                     "at least one",
                     targetDatabasePattern,
                     "0",
@@ -169,7 +169,7 @@ object EnrichmentMigrator {
         val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix.split("/")[0])
         if (sourceDatabaseNames.size != 1) {
             throw InvalidRequestException(
-                ErrorCode.UNEXPECTED_NUMBER_OF_DATABASE_FOUND,
+                ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
                 "only one",
                 sourcePrefix,
                 sourceDatabaseNames.size.toString(),

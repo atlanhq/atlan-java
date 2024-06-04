@@ -257,7 +257,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-046",
             "SSO group mapping already exists between {0} (Atlan group) and {1} (SSO group).",
             "Use updateGroupMapping() to update the existing group mapping."),
-    UNEXPECTED_NUMBER_OF_DATABASE_FOUND(
+    UNEXPECTED_NUMBER_OF_DATABASES_FOUND(
             400,
             "ATLAN-JAVA-400-047",
             "Expected {0} database name(s) matching the given pattern {1} but found {2}.",
