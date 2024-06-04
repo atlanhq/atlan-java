@@ -82,6 +82,15 @@ public class IndexSearchRequest extends AtlanObject {
     Boolean excludeAtlanTags = false;
 
     /**
+     * Whether to include Atlan tag names for assets (true) or not (false). By default, this is true and
+     * Atlan tag names are therefore included. Note that this can be set to true even when excludeAtlanTags
+     * is set to false.
+     */
+    @Builder.Default
+    @JsonProperty("includeClassificationNames")
+    Boolean includeAtlanTagNames = true;
+
+    /**
      * Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
      * and therefore only active (not deleted) relationships will be included.
      */
