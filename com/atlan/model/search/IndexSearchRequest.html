@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -307,58 +307,65 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIncludeAtlanTagNames()">getIncludeAtlanTagNames</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether to include Atlan tag names for assets (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRelationAttributes()">getRelationAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attributes to include on each related entity of each result document.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequestMetadata()">getRequestMetadata</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Controls how the search is logged (if at all).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShowSearchScore()">getShowSearchScore</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, include the score of each result.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSuppressLogs()">getSuppressLogs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search()">search</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.AtlanClient)">search</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Run the search.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -568,6 +575,18 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getExcludeAtlanTags()</pre>
 <div class="block">Whether to include Atlan tags for assets (false) or not (true). By default, this is false and
  Atlan tags are therefore included.</div>
+</li>
+</ul>
+<a id="getIncludeAtlanTagNames()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIncludeAtlanTagNames</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIncludeAtlanTagNames()</pre>
+<div class="block">Whether to include Atlan tag names for assets (true) or not (false). By default, this is true and
+ Atlan tag names are therefore included. Note that this can be set to true even when excludeAtlanTags
+ is set to false.</div>
 </li>
 </ul>
 <a id="getAllowDeletedRelations()">
