@@ -496,7 +496,7 @@ public interface IConnection {
     /** Credential strategy to use for this connection for preview queries. */
     String getPreviewCredentialStrategy();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** Query config for this connection. */
