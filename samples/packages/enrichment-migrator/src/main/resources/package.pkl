@@ -47,12 +47,11 @@ uiConfig {
           helpText = "Further limit the assets in the source connection by this qualifiedName (not including the connection portion of the qualifiedName)."
           width = 4
         }
-        ["is_prefix_database_pattern"] = new BooleanInput {
-          title = "Prefix is database pattern"
+        ["target_database_pattern"] = new TextInput {
+          title = "Target Database Patern"
           required = false
-          helpText = "Limit to (prefix) represents a pattern for database names"
+          helpText = "A regular expression to be used as a pattern for matching target databases"
           width = 4
-          defaultSelection = false
         }
         ["target_connection"] = new ConnectionSelector {
           title = "Target"

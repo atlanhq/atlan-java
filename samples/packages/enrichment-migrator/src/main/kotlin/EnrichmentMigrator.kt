@@ -29,21 +29,12 @@ object EnrichmentMigrator {
         val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
         val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
-        val isPrefixDatabasePattern = Utils.getOrDefault(config.isPrefixDatabasePattern, false)
-        val sourceDatabaseName = getSourceDatabaseNames(isPrefixDatabasePattern, sourceConnectionQN, sourcePrefix)
+        val targetDatabasePattern = Utils.getOrDefault(config.targetDatabasePattern, "")
+        val sourceDatabaseName = getSourceDatabaseNames(targetDatabasePattern, sourceConnectionQN, sourcePrefix)
         val sourceQN = if (sourcePrefix.isBlank()) {
             sourceConnectionQN
-        } else if (isPrefixDatabasePattern) {
-            "$sourceConnectionQN/$sourceDatabaseName"
         } else {
             "$sourceConnectionQN/$sourcePrefix"
-        }
-
-        if (isPrefixDatabasePattern) {
-            val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix)
-            if (sourceDatabaseNames.size > 1) {
-                throw InvalidRequestException(ErrorCode.UNEXPECTED_NUMBER_OF_DATABASE_FOUND, sourcePrefix)
-            }
         }
 
         // 1. Extract the enriched metadata
@@ -100,7 +91,7 @@ object EnrichmentMigrator {
             start.toList()
         }
         targetConnectionQNs.forEachIndexed { _, targetConnectionQN ->
-            val targetDatabaseNames = getTargetDatabaseName(isPrefixDatabasePattern, targetConnectionQN, sourcePrefix)
+            val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
             targetDatabaseNames.forEach { targetDatabaseName ->
                 val ctx = MigratorContext(
                     sourceConnectionQN = sourceConnectionQN,
@@ -151,18 +142,17 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getTargetDatabaseName(
-        isPrefixDatabasePattern: Boolean,
         targetConnectionQN: String,
-        sourcePrefix: String,
+        targetDatabasePattern: String,
     ): List<String> {
-        if (isPrefixDatabasePattern) {
-            val databaseNames = getDatabaseNames(targetConnectionQN, sourcePrefix)
+        if (targetDatabasePattern.isNotBlank()) {
+            val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
             if (databaseNames.size < 1) {
                 throw InvalidRequestException(
                     ErrorCode.UNEXPECTED_NUMBER_OF_DATABASE_FOUND,
                     "at least one",
-                    sourcePrefix,
-                    databaseNames.size.toString(),
+                    targetDatabasePattern,
+                    "0",
                 )
             }
             return databaseNames
@@ -172,11 +162,11 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getSourceDatabaseNames(
-        isPrefixDatabasePattern: Boolean,
+        targetDatabasePattern: String,
         sourceConnectionQN: String,
         sourcePrefix: String,
-    ) = if (isPrefixDatabasePattern) {
-        val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix)
+    ) = if (targetDatabasePattern.isNotBlank()) {
+        val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix.split("/")[0])
         if (sourceDatabaseNames.size != 1) {
             throw InvalidRequestException(
                 ErrorCode.UNEXPECTED_NUMBER_OF_DATABASE_FOUND,

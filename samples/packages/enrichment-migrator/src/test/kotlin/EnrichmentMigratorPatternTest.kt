@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.exception.InvalidRequestException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -30,6 +31,8 @@ private const val TARGET_DB_NAME_2 = "db_test03"
 private const val SOURCE_DATABASE_NAME = "db_test01"
 
 private const val DB_NAME_PATTERN = "db_test.."
+
+private const val USER_DESCRIPTION = "Some user description"
 
 class EnrichmentMigratorPatternTest : PackageTest() {
     private val c1 = makeUnique("emsc1")
@@ -83,6 +86,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         val sch3 = Schema.creator("sch1", db3).build()
         batch.add(sch3)
         val tbl1 = Table.creator("tbl1", sch1)
+            .userDescription(USER_DESCRIPTION)
             .customMetadata(
                 cm1,
                 CustomMetadataAttributes.builder()
@@ -97,7 +101,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         batch.add(tbl3)
         val response = batch.flush()
         response.getCreatedAssets(Table::class.java).forEach { table ->
-            this.targetTableQualifiedNamesByName.put(table.name, table.qualifiedName)
+            this.targetTableQualifiedNamesByName[table.name] = table.qualifiedName
         }
     }
 
@@ -110,8 +114,8 @@ class EnrichmentMigratorPatternTest : PackageTest() {
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.MSSQL)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.POSTGRES)?.get(0)?.qualifiedName!!),
-                sourceQnPrefix = DB_NAME_PATTERN,
-                isPrefixDatabasePattern = true,
+                sourceQnPrefix = SOURCE_DATABASE_NAME,
+                targetDatabasePattern = DB_NAME_PATTERN,
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
@@ -149,7 +153,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         assertEquals(
             SOURCE_DATABASE_NAME,
             EnrichmentMigrator.getSourceDatabaseNames(
-                true,
+                DB_NAME_PATTERN,
                 this.sourceConnectionQualifiedName,
                 SOURCE_DATABASE_NAME,
             ),
@@ -161,7 +165,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         val exception = assertFailsWith<InvalidRequestException>(
             block = {
                 EnrichmentMigrator.getSourceDatabaseNames(
-                    true,
+                    DB_NAME_PATTERN,
                     this.sourceConnectionQualifiedName,
                     ".*",
                 )
@@ -175,7 +179,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         val exception = assertFailsWith<InvalidRequestException>(
             block = {
                 EnrichmentMigrator.getSourceDatabaseNames(
-                    true,
+                    DB_NAME_PATTERN,
                     this.sourceConnectionQualifiedName,
                     ".",
                 )
@@ -189,7 +193,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         assertEquals(
             "",
             EnrichmentMigrator.getSourceDatabaseNames(
-                false,
+                "",
                 this.sourceConnectionQualifiedName,
                 SOURCE_DATABASE_NAME,
             ),
@@ -201,7 +205,6 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         assertEquals(
             listOf(TARGET_DB_NAME_1, TARGET_DB_NAME_2),
             EnrichmentMigrator.getTargetDatabaseName(
-                true,
                 this.targetConnectionQualifiedName,
                 DB_NAME_PATTERN,
             ),
@@ -213,7 +216,6 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         val exception = assertFailsWith<InvalidRequestException>(
             block = {
                 EnrichmentMigrator.getTargetDatabaseName(
-                    true,
                     this.targetConnectionQualifiedName,
                     ".",
                 )
@@ -225,7 +227,6 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         validateFilesExist(
             listOf(
                 "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$TARGET_DB_NAME_1.csv".replace("/", "_"),
@@ -236,7 +237,6 @@ class EnrichmentMigratorPatternTest : PackageTest() {
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
         val client = Atlan.getDefaultClient()
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         this.targetTableQualifiedNamesByName.forEach { entry ->
@@ -244,10 +244,12 @@ class EnrichmentMigratorPatternTest : PackageTest() {
                 .where(Table.QUALIFIED_NAME.eq(entry.value))
                 .where(cmField.hasAnyValue())
                 .includeOnResults(cmField)
+                .includeOnResults(Asset.USER_DESCRIPTION)
                 .toRequest()
             val response = retrySearchUntil(request, 1)
             response.stream()
                 .forEach {
+                    assertEquals(USER_DESCRIPTION, it.userDescription)
                     val cm = it.customMetadataSets
                     assertNotNull(cm)
                     val attrs = cm[cm1]?.attributes
