@@ -34,7 +34,8 @@ public class ExceptionMessageDefinition {
     public String getErrorMessage(String... params) {
         StringBuilder sb = new StringBuilder();
         if (params != null) {
-            sb.append(new MessageFormat(errorMessage).format(params));
+            MessageFormat mf = new MessageFormat(errorMessage);
+            sb.append(mf.format(params));
         } else {
             sb.append(errorMessage);
         }
