@@ -176,6 +176,9 @@ public interface ICatalog {
             case Database.TYPE_NAME:
                 ref = Database.refByQualifiedName(qualifiedName);
                 break;
+            case DatabricksUnityCatalogTag.TYPE_NAME:
+                ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
+                break;
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
                 break;
@@ -933,7 +936,7 @@ public interface ICatalog {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
