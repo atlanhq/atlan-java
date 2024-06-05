@@ -855,6 +855,10 @@ local class WorkflowContainer {
       name = "X_ATLAN_AGENT_WORKFLOW_ID"
       value = "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"
     }
+    new NameValuePair {
+      name = "AZURE_STORAGE_CONTAINER_NAME"
+      value = "argo-artifacts"
+    }
     new ConfigMapEntry {
       name = "AWS_S3_BUCKET_NAME"
       configMapName = "atlan-defaults"
@@ -864,6 +868,26 @@ local class WorkflowContainer {
       name = "AWS_S3_REGION"
       configMapName = "atlan-defaults"
       configMapKey = "region"
+    }
+    new ConfigMapEntry {
+      name = "GCP_STORAGE_BUCKET"
+      configMapName = "atlan-defaults"
+      configMapKey = "bucket"
+    }
+    new NamedSecret {
+      name = "GCP_PROJECT_ID"
+      secretName = "bucket-details-secret"
+      secretKey = "GCP_PROJECT_ID"
+    }
+    new NamedSecret {
+      name = "AZURE_STORAGE_ACCESS_KEY"
+      secretName = "azurestorage"
+      secretKey = "AZURE_STORAGE_ACCESS_KEY"
+    }
+    new NamedSecret {
+      name = "AZURE_STORAGE_ACCOUNT"
+      secretName = "azurestorage"
+      secretKey = "AZURE_STORAGE_ACCOUNT"
     }
     new NamedSecret {
       name = "CLIENT_ID"
