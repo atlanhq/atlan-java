@@ -1,10 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import co.elastic.clients.elasticsearch._types.SortOrder
-import com.atlan.Atlan
 import com.atlan.exception.ErrorCode
 import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
@@ -90,7 +90,7 @@ object EnrichmentMigrator {
             }
             start.toList()
         }
-        targetConnectionQNs.forEachIndexed { _, targetConnectionQN ->
+        targetConnectionQNs.forEach { targetConnectionQN ->
             val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
             targetDatabaseNames.forEach { targetDatabaseName ->
                 val ctx = MigratorContext(
@@ -131,7 +131,7 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getDatabaseNames(connectionQN: String, sourcePrefix: String): List<String> {
-        val databaseNames = Atlan.getDefaultClient().assets.select()
+        val databaseNames = Database.select()
             .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
             .where(Asset.NAME.regex(sourcePrefix))
             .sort(Asset.NAME.order(SortOrder.Asc))

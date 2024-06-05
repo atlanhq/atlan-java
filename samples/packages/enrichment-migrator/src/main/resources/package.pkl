@@ -50,7 +50,7 @@ uiConfig {
         ["target_database_pattern"] = new TextInput {
           title = "Target database pattern"
           required = false
-          helpText = "A regular expression to be used as a pattern for matching target databases"
+          helpText = "Regular expression to be used as a pattern for matching target database(s)."
           width = 4
         }
         ["target_connection"] = new ConnectionSelector {
