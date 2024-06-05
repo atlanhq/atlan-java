@@ -151,7 +151,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         )
         assertEquals(
             "ATLAN-JAVA-400-047 Expected only one database name(s) matching the given pattern .* " +
-                    "but found 2. Suggestion: Use a more restrictive regular expression.",
+                "but found 2. Suggestion: Use a more restrictive regular expression.",
             exception.message,
         )
     }

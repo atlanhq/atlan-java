@@ -29,7 +29,8 @@ class Transformer(
                 inputRow[it] ?: ""
             }
             if (ctx.targetDatabaseName.isNotBlank()) {
-                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(ctx.sourceDatabaseName, ctx.targetDatabaseName)
+                val regex = "(^|[/])${ctx.sourceDatabaseName}($|[/])".toRegex()
+                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(regex, "$1${ctx.targetDatabaseName}$2")
             } else {
                 raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
             }
