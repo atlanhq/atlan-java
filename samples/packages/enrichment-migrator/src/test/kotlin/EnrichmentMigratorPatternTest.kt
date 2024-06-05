@@ -139,6 +139,24 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     }
 
     @Test
+    fun getSourceDatabaseNamesWhenIsPrefixAndMoreThanOneFoundThrowsException() {
+        val exception = assertFailsWith<InvalidRequestException>(
+            block = {
+                EnrichmentMigrator.getSourceDatabaseNames(
+                    DB_NAME_PATTERN,
+                    this.targetConnectionQualifiedName,
+                    ".*",
+                )
+            },
+        )
+        assertEquals(
+            "ATLAN-JAVA-400-047 Expected only one database name(s) matching the given pattern .* " +
+                    "but found 2. Suggestion: Use a more restrictive regular expression.",
+            exception.message,
+        )
+    }
+
+    @Test
     fun getSourceDatabaseNameWhenIsPrefixAndNoneFoundThrowsException() {
         val exception = assertFailsWith<InvalidRequestException>(
             block = {
