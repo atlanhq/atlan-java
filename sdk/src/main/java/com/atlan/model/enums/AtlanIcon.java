@@ -48,9 +48,11 @@ public enum AtlanIcon implements AtlanEnum {
     APPLE_PODCASTS_LOGO("PhApplePodcastsLogo"),
     APPROXIMATE_EQUALS("PhApproximateEquals"),
     ARCHIVE("PhArchive"),
-    /** @deprecated {@see ARCHIVE} */
+    /** @deprecated ARCHIVE */
+    @Deprecated
     ARCHIVE_BOX("PhArchiveBox"),
-    /** @deprecated {@see ARCHIVE} */
+    /** @deprecated ARCHIVE */
+    @Deprecated
     ARCHIVE_TRAY("PhArchiveTray"),
     ARMCHAIR("PhArmchair"),
     ARROW_ARC_LEFT("PhArrowArcLeft"),
@@ -656,13 +658,17 @@ public enum AtlanIcon implements AtlanEnum {
     FOLDER_DASHED("PhFolderDashed"),
     FOLDER_LOCK("PhFolderLock"),
     FOLDER_MINUS("PhFolderMinus"),
-    /** @deprecated {@see FOLDER} */
+    /** @deprecated FOLDER */
+    @Deprecated
     FOLDER_NOTCH("PhFolderNotch"),
-    /** @deprecated {@see FOLDER_MINUS} */
+    /** @deprecated FOLDER_MINUS */
+    @Deprecated
     FOLDER_NOTCH_MINUS("PhFolderNotchMinus"),
-    /** @deprecated {@see FOLDER_OPEN} */
+    /** @deprecated FOLDER_OPEN */
+    @Deprecated
     FOLDER_NOTCH_OPEN("PhFolderNotchOpen"),
-    /** @deprecated {@see FOLDER_PLUS} */
+    /** @deprecated FOLDER_PLUS */
+    @Deprecated
     FOLDER_NOTCH_PLUS("PhFolderNotchPlus"),
     FOLDER_OPEN("PhFolderOpen"),
     FOLDER_PLUS("PhFolderPlus"),
