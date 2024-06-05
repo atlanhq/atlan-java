@@ -3,6 +3,8 @@
 package com.atlan.pkg.objectstore
 
 import com.azure.identity.ClientSecretCredentialBuilder
+import com.azure.storage.common.StorageSharedKeyCredential
+import com.azure.storage.file.datalake.DataLakeServiceClient
 import com.azure.storage.file.datalake.DataLakeServiceClientBuilder
 import com.azure.storage.file.datalake.models.ListPathsOptions
 import mu.KLogger
@@ -14,8 +16,8 @@ import java.io.File
  * @param accountName name of the Azure account
  * @param containerName name of the container in ADLS to use for syncing
  * @param logger through which to record any problems
- * @param tenantId unique identifier (GUID) of the tenant
- * @param clientId unique identifier (GUID) of the client
+ * @param tenantId unique identifier (GUID) of the tenant (or blank to use Atlan's backing store in ADLS)
+ * @param clientId unique identifier (GUID) of the client (or blank to use Atlan's backing store in ADLS)
  * @param clientSecret value of the secret for the client (note this is not the GUID of the client secret)
  */
 class ADLSSync(
@@ -26,15 +28,28 @@ class ADLSSync(
     private val clientId: String,
     private val clientSecret: String,
 ) : ObjectStorageSyncer {
-    private val credential = ClientSecretCredentialBuilder()
-        .tenantId(tenantId)
-        .clientId(clientId)
-        .clientSecret(clientSecret)
-        .build()
-    private val adlsClient = DataLakeServiceClientBuilder()
-        .endpoint("https://$accountName.dfs.core.windows.net")
-        .credential(credential)
-        .buildClient()
+
+    private val adlsClient: DataLakeServiceClient
+    init {
+        if (tenantId.isNotBlank() && clientId.isNotBlank()) {
+            val credential = ClientSecretCredentialBuilder()
+                .tenantId(tenantId)
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .build()
+            adlsClient = DataLakeServiceClientBuilder()
+                .endpoint("https://$accountName.dfs.core.windows.net")
+                .credential(credential)
+                .buildClient()
+        } else {
+            // Fallback to using Atlan's backing store if tenantId or clientId is empty
+            val credential = StorageSharedKeyCredential(accountName, clientSecret)
+            adlsClient = DataLakeServiceClientBuilder()
+                .endpoint("https://$accountName.dfs.core.windows.net")
+                .credential(credential)
+                .buildClient()
+        }
+    }
 
     /** {@inheritDoc} */
     override fun copyFrom(prefix: String, localDirectory: String): List<String> {
