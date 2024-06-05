@@ -90,6 +90,7 @@ object EnrichmentMigrator {
             }
             start.toList()
         }
+        val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
         targetConnectionQNs.forEach { targetConnectionQN ->
             val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
             targetDatabaseNames.forEach { targetDatabaseName ->
@@ -120,7 +121,7 @@ object EnrichmentMigrator {
                 val importConfig = AssetImportCfg(
                     assetsFile = transformedFile,
                     assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true),
+                    assetsFailOnErrors = assetsFailOnErrors,
                     assetsBatchSize = batchSize,
                     assetsFieldSeparator = fieldSeparator.toString(),
                 )
