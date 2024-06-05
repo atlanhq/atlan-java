@@ -16,15 +16,15 @@ import java.io.FileOutputStream
  * @param projectId identifier of the GCP project
  * @param bucketName name of the bucket in GCS to use for syncing
  * @param logger through which to record any problems
- * @param credentials path to JSON application credentials
+ * @param credentials JSON application credentials (as a string), or empty to use Atlan's backing store
  */
 class GCSSync(
     private val projectId: String,
     private val bucketName: String,
     private val logger: KLogger,
-    private val credentials: String?,
+    private val credentials: String,
 ) : ObjectStorageSyncer {
-    private val storage = if (credentials != null) {
+    private val storage = if (credentials.isNotBlank()) {
         StorageOptions.newBuilder().setProjectId(projectId)
             .setCredentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
             .build().service

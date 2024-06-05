@@ -461,10 +461,14 @@ class ConfigMapEntry extends NamedPair {
   hidden configMapName: String
   hidden configMapKey: String
   hidden default: String? = null
+  hidden optional: Boolean? = null
   hidden fixed value = new Mapping {
     ["configMapKeyRef"] = new Mapping {
       ["name"] = configMapName
       ["key"] = configMapKey
+      when (optional != null) {
+        ["optional"] = optional
+      }
     }
   }
 }
@@ -475,10 +479,14 @@ class NamedSecret extends NamedPair {
     ["secretKeyRef"] = new Mapping {
       ["name"] = secretName
       ["key"] = secretKey
+      when (optional != null) {
+        ["optional"] = optional
+      }
     }
   }
   hidden secretName: String
   hidden secretKey: String
+  hidden optional: Boolean? = null
 }
 
 local class NestedConfig extends NamedPair {
@@ -863,31 +871,37 @@ local class WorkflowContainer {
       name = "AWS_S3_BUCKET_NAME"
       configMapName = "atlan-defaults"
       configMapKey = "bucket"
+      optional = true
     }
     new ConfigMapEntry {
       name = "AWS_S3_REGION"
       configMapName = "atlan-defaults"
       configMapKey = "region"
+      optional = true
     }
     new ConfigMapEntry {
       name = "GCP_STORAGE_BUCKET"
       configMapName = "atlan-defaults"
       configMapKey = "bucket"
+      optional = true
     }
     new NamedSecret {
       name = "GCP_PROJECT_ID"
       secretName = "bucket-details-secret"
       secretKey = "GCP_PROJECT_ID"
+      optional = true
     }
     new NamedSecret {
       name = "AZURE_STORAGE_ACCESS_KEY"
       secretName = "azurestorage"
       secretKey = "AZURE_STORAGE_ACCESS_KEY"
+      optional = true
     }
     new NamedSecret {
       name = "AZURE_STORAGE_ACCOUNT"
       secretName = "azurestorage"
       secretKey = "AZURE_STORAGE_ACCOUNT"
+      optional = true
     }
     new NamedSecret {
       name = "CLIENT_ID"
