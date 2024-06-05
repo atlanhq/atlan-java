@@ -105,7 +105,8 @@ object EnrichmentMigrator {
                 } else {
                     targetConnectionQN.replace("/", "_")
                 }
-                val transformedFile = "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
+                val transformedFile =
+                    "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
                 val transformer = Transformer(
                     ctx,
                     extractFile,
@@ -129,7 +130,7 @@ object EnrichmentMigrator {
     }
 
     @JvmStatic
-    fun getDatabaseNames(connectionQN: String, sourcePrefix: String): MutableList<String> {
+    fun getDatabaseNames(connectionQN: String, sourcePrefix: String): List<String> {
         val databaseNames = Atlan.getDefaultClient().assets.select()
             .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
             .where(Asset.NAME.regex(sourcePrefix))
@@ -145,19 +146,19 @@ object EnrichmentMigrator {
         targetConnectionQN: String,
         targetDatabasePattern: String,
     ): List<String> {
-        if (targetDatabasePattern.isNotBlank()) {
-            val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
-            if (databaseNames.size < 1) {
-                throw InvalidRequestException(
-                    ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
-                    "at least one",
-                    targetDatabasePattern,
-                    "0",
-                )
-            }
-            return databaseNames
+        if (targetDatabasePattern.isBlank()) {
+            return listOf("")
         }
-        return listOf("")
+        val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
+        if (databaseNames.size < 1) {
+            throw InvalidRequestException(
+                ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
+                "at least one",
+                targetDatabasePattern,
+                "0",
+            )
+        }
+        return databaseNames
     }
 
     @JvmStatic
@@ -165,7 +166,10 @@ object EnrichmentMigrator {
         targetDatabasePattern: String,
         sourceConnectionQN: String,
         sourcePrefix: String,
-    ) = if (targetDatabasePattern.isNotBlank()) {
+    ): String {
+        if (targetDatabasePattern.isBlank()) {
+            return ""
+        }
         val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix.split("/")[0])
         if (sourceDatabaseNames.size != 1) {
             throw InvalidRequestException(
@@ -174,11 +178,8 @@ object EnrichmentMigrator {
                 sourcePrefix,
                 sourceDatabaseNames.size.toString(),
             )
-        } else {
-            sourceDatabaseNames[0]
         }
-    } else {
-        ""
+        return sourceDatabaseNames[0]
     }
 
     data class MigratorContext(

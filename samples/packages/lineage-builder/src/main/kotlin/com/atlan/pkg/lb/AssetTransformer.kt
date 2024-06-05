@@ -94,8 +94,6 @@ class AssetTransformer(
     }
 
     private fun mapAsset(inputRow: Map<String, String>, prefix: String): List<String> {
-        System.out.println("HERE I AM----------------->")
-        System.out.println(inputRow)
         val connectionQN = getConnectionQN(ctx, inputRow, prefix)
         val assetQN = getAssetQN(ctx, inputRow, prefix)
         return if (assetQN.isNotBlank()) {

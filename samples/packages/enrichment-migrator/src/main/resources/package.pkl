@@ -48,7 +48,7 @@ uiConfig {
           width = 4
         }
         ["target_database_pattern"] = new TextInput {
-          title = "Target Database Patern"
+          title = "Target database pattern"
           required = false
           helpText = "A regular expression to be used as a pattern for matching target databases"
           width = 4
