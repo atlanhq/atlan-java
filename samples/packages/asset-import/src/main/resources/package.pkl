@@ -32,19 +32,29 @@ preview = true
 
 uiConfig {
   tasks {
+    ["Source"] {
+      description = "Inputs"
+      inputs {
+        ["import_type"] = new Radio {
+          title = "Import metadata from"
+          helpText = "Select how you want to provide the file(s) containing metadata to be imported, produced by one of the Asset Export packages."
+          possibleValues {
+            ["DIRECT"] = "Direct file upload(s)"
+            ["CLOUD"] = "Object storage"
+          }
+          default = "DIRECT"
+        }
+        ["cloud_source"] = new CredentialInput {
+          title = "Import metadata from"
+          required = true
+          credType = "csa-connectors-objectstore"
+          helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
+        }
+      }
+    }
     ["Assets"] {
       description = "Assets to import"
       inputs {
-        ["assets_import_type"] = new Radio {
-          title = "Import assets from"
-          required = true
-          helpText = "Select how you want to provide the file containing asset details to be imported."
-          possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
-          }
-          default = "UPLOAD"
-        }
         ["assets_file"] = new FileUploader {
           title = "Assets file"
           fileTypes {
@@ -54,26 +64,17 @@ uiConfig {
           helpText = "Select the file containing assets to import, produced by one of the Asset Export packages."
           placeholderText = "Select assets CSV file"
         }
-        ["assets_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
+        ["assets_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing asset metadata."
+          placeholderText = "path/to/file"
           width = 4
         }
-        ["assets_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
+        ["assets_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "assets.csv"
           width = 4
-        }
-        ["assets_s3_object_key"] = new TextInput {
-          title = "S3 object key"
-          required = false
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
         }
         ["assets_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -155,16 +156,6 @@ uiConfig {
     ["Glossaries"] {
       description = "Glossaries to import"
       inputs {
-        ["glossaries_import_type"] = new Radio {
-          title = "Import glossaries, categories and terms from"
-          required = true
-          helpText = "Select how you want to provide the file containing glossaries, categories and terms to be imported."
-          possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
-          }
-          default = "UPLOAD"
-        }
         ["glossaries_file"] = new FileUploader {
           title = "Glossaries file"
           fileTypes { "text/csv" }
@@ -172,26 +163,17 @@ uiConfig {
           helpText = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages."
           placeholderText = "Select glossaries CSV file"
         }
-        ["glossaries_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
+        ["glossaries_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing glossaries, categories and terms."
+          placeholderText = "path/to/file"
           width = 4
         }
-        ["glossaries_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
+        ["glossaries_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "glossaries.csv"
           width = 4
-        }
-        ["glossaries_s3_object_key"] = new TextInput {
-          title = "S3 object key"
-          required = false
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
         }
         ["glossaries_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -255,16 +237,6 @@ uiConfig {
     ["Data products"] {
       description = "Data products to import"
       inputs {
-        ["data_products_import_type"] = new Radio {
-          title = "Import data products"
-          required = true
-          helpText = "Select how you want to provide the file containing domains and data products to be imported."
-          possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
-          }
-          default = "UPLOAD"
-        }
         ["data_products_file"] = new FileUploader {
           title = "Data products file"
           fileTypes { "text/csv" }
@@ -272,26 +244,17 @@ uiConfig {
           helpText = "Select the file containing domains and data products to import, produced by one of the Asset Export packages."
           placeholderText = "Select data products CSV file"
         }
-        ["data_products_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
+        ["data_products_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing domains and data products."
+          placeholderText = "path/to/file"
           width = 4
         }
-        ["data_products_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
+        ["data_products_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "data_products.csv"
           width = 4
-        }
-        ["data_products_s3_object_key"] = new TextInput {
-          title = "S3 object key"
-          required = false
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
         }
         ["data_products_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -355,16 +318,12 @@ uiConfig {
   }
   rules {
     new UIRule {
-      whenInputs { ["assets_import_type"] = "UPLOAD" }
-      required { "assets_file" }
+      whenInputs { ["import_type"] = "DIRECT" }
+      required { "assets_file" "glossaries_file" "data_products_file" }
     }
     new UIRule {
-      whenInputs { ["assets_import_type"] = "S3" }
-      required {
-        "assets_s3_region"
-        "assets_s3_bucket"
-        "assets_s3_object_key"
-      }
+      whenInputs { ["import_type"] = "CLOUD" }
+      required { "cloud_source" "assets_prefix" "assets_key" "glossaries_prefix" "glossaries_key" "data_products_prefix" "data_products_key" }
     }
     new UIRule {
       whenInputs { ["assets_config"] = "advanced" }
@@ -378,36 +337,12 @@ uiConfig {
       }
     }
     new UIRule {
-      whenInputs { ["glossaries_import_type"] = "UPLOAD" }
-      required { "glossaries_file" }
-    }
-    new UIRule {
-      whenInputs { ["glossaries_import_type"] = "S3" }
-      required {
-        "glossaries_s3_region"
-        "glossaries_s3_bucket"
-        "glossaries_s3_object_key"
-      }
-    }
-    new UIRule {
       whenInputs { ["glossaries_config"] = "advanced" }
       required {
         "glossaries_attr_to_overwrite"
         "glossaries_fail_on_errors"
         "glossaries_field_separator"
         "glossaries_batch_size"
-      }
-    }
-    new UIRule {
-        whenInputs { ["data_products_import_type"] = "UPLOAD" }
-        required { "data_products_file" }
-        }
-    new UIRule {
-      whenInputs { ["data_products_import_type"] = "S3" }
-      required {
-        "data_products_s3_region"
-        "data_products_s3_bucket"
-        "data_products_s3_object_key"
       }
     }
     new UIRule {

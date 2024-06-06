@@ -16,6 +16,4 @@ data class GCSCredential(val from: Credential) {
 
     /** Bucket provided, or the default bucket for Atlan's backing store if none was provided. */
     val bucket = Utils.getOrDefault((from.extra?.get("gcs_bucket") ?: "") as String, getEnvVar("GCP_STORAGE_BUCKET"))
-    val objectPrefix = (from.extra?.get("gcs_prefix") ?: "") as String
-    val objectKey = (from.extra?.get("gcs_key") ?: "") as String
 }

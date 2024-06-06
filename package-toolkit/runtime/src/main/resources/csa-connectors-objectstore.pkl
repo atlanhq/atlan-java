@@ -44,20 +44,6 @@ options {
             placeholderText = "bucket-name"
             width = 4
           }
-          ["s3_prefix"] = new Config.TextInput {
-            title = "Prefix (path)"
-            required = false
-            helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
-            placeholderText = "path/to/files"
-            width = 4
-          }
-          ["s3_key"] = new Config.TextInput {
-            title = "Object key (filename)"
-            required = false
-            helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
-            placeholderText = "file.csv"
-            width = 4
-          }
         }
       }
     }
@@ -86,20 +72,6 @@ options {
             required = false
             helpText = "Enter the bucket from which to retrieve the object store object(s)."
             placeholderText = "bucket-name"
-            width = 4
-          }
-          ["gcs_prefix"] = new Config.TextInput {
-            title = "Prefix (path)"
-            required = false
-            helpText = "Enter the prefix (path) within the bucket from which to retrieve the object(s)."
-            placeholderText = "path/to/files"
-            width = 4
-          }
-          ["gcs_key"] = new Config.TextInput {
-            title = "Object key (filename)"
-            required = false
-            helpText = "Enter the object key (filename), including its extension, within the bucket and prefix."
-            placeholderText = "file.csv"
             width = 4
           }
         }
@@ -142,20 +114,6 @@ options {
             required = false
             helpText = "Enter the container from which to retrieve the object store object(s)."
             placeholderText = "container-name"
-            width = 4
-          }
-          ["adls_prefix"] = new Config.TextInput {
-            title = "Directory"
-            required = false
-            helpText = "Enter the directory (path) within the container from which to retrieve the object(s)."
-            placeholderText = "path/to/files"
-            width = 4
-          }
-          ["adls_key"] = new Config.TextInput {
-            title = "Object key (filename)"
-            required = false
-            helpText = "Enter the object key (filename), including its extension, within the container and prefix."
-            placeholderText = "file.csv"
             width = 4
           }
         }

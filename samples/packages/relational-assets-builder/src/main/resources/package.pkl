@@ -50,6 +50,18 @@ uiConfig {
           helpText = "Select the file containing the relational assets to import."
           placeholderText = "Select assets CSV file"
         }
+        ["assets_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the bucket/container from which to retrieve the object(s)."
+          placeholderText = "path/to/files"
+          width = 4
+        }
+        ["assets_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the bucket/container and prefix."
+          placeholderText = "file.csv"
+          width = 4
+        }
         ["cloud_source"] = new CredentialInput {
           title = "Assets file"
           required = true
@@ -126,7 +138,7 @@ uiConfig {
     }
     new UIRule {
       whenInputs { ["import_type"] = "CLOUD" }
-      required { "cloud_source" }
+      required { "assets_prefix" "assets_key" "cloud_source" }
     }
   }
 }

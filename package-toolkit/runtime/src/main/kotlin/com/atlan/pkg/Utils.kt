@@ -485,37 +485,41 @@ object Utils {
      * storage as part of this method.
      *
      * @param uploadResult filename from a direct upload
-     * @param cloudDetails filename containing details about the cloud storage to use
      * @param outputDirectory local directory where any object storage-downloaded file should be placed
      * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file
+     * @param prefix (path / directory) where the file is located in object store
+     * @param key (filename) of the file in in object store
      * @return the name of the file that is on local container storage from which we can read information
      */
     fun getInputFile(
         uploadResult: String,
-        cloudDetails: String,
         outputDirectory: String,
         preferUpload: Boolean = true,
+        prefix: String? = null,
+        key: String? = null,
     ): String {
         return if (preferUpload) {
             uploadResult
         } else {
             val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
             val cred = MAPPER.readValue<Credential>(contents)
+            val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
+            val preppedKey = key.let { it?.trimStart('/') } ?: ""
             when (cred.authType) {
                 "s3" -> {
                     val s3 = S3Credential(cred)
                     val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                    getInputFile(sync, "${s3.objectPrefix}/${s3.objectKey}", outputDirectory)
+                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
                 }
                 "gcs" -> {
                     val gcs = GCSCredential(cred)
                     val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                    getInputFile(sync, "${gcs.objectPrefix}/${gcs.objectKey}", outputDirectory)
+                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
                 }
                 "adls" -> {
                     val adls = ADLSCredential(cred)
                     val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
-                    getInputFile(sync, "${adls.objectPrefix}/${adls.objectKey}", outputDirectory)
+                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
                 }
                 else -> {
                     logger.warn { "Unknown source ${cred.authType} -- skipping." }

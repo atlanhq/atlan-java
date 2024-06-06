@@ -21,6 +21,4 @@ data class ADLSCredential(val from: Credential) {
 
     /** Container name provided, or the default container used for Atlan's backing store if none was provided. */
     val containerName = Utils.getOrDefault((from.extra?.get("adls_container") ?: "") as String, getEnvVar("AZURE_STORAGE_CONTAINER_NAME"))
-    val objectPrefix = (from.extra?.get("adls_prefix") ?: "") as String
-    val objectKey = (from.extra?.get("adls_key") ?: "") as String
 }

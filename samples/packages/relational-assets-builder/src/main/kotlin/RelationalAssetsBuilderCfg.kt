@@ -16,6 +16,8 @@ import javax.annotation.processing.Generated
 data class RelationalAssetsBuilderCfg(
     @JsonProperty("import_type") val importType: String? = null,
     @JsonProperty("assets_file") val assetsFile: String? = null,
+    @JsonProperty("assets_prefix") val assetsPrefix: String? = null,
+    @JsonProperty("assets_key") val assetsKey: String? = null,
     @JsonProperty("cloud_source") val cloudSource: String? = null,
     @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
