@@ -48,6 +48,13 @@ abstract class CSVXformer(
     }
 
     companion object {
+        /**
+         * Extract the header from a provided file.
+         *
+         * @param file path to the CSV file for which to extract the header
+         * @param fieldSeparator field separator used within the CSV file (defaults to ',' if not specified)
+         * @return a list of the header names, in order
+         */
         fun getHeader(file: String, fieldSeparator: Char = ','): List<String> {
             val input = Paths.get(file)
             val builder = CsvReader.builder()
@@ -57,9 +64,22 @@ abstract class CSVXformer(
                 .ignoreDifferentFieldCount(false)
             builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
-                return one.map { obj: CsvRecord -> obj.fields }
-                    .orElse(emptyList())
+                return one.map { obj: CsvRecord ->
+                    obj.fields.map { field ->
+                        trimWhitespace(field)
+                    }
+                }.orElse(emptyList())
             }
+        }
+
+        /**
+         * Trim all whitespace from the provided value, including byte order marks (BOM) or other zero-width space (ZWSP) characters
+         *
+         * @param s the original string to trim
+         * @return a "clean" string without any of these characters or whitespace around it
+         */
+        fun trimWhitespace(s: String): String {
+            return s.trim().trim('\uFEFF', '\u200B')
         }
     }
 
@@ -128,7 +148,7 @@ abstract class CSVXformer(
         val map = mutableMapOf<String, String>()
         header.forEachIndexed { index, s ->
             // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
-            val trimmed = s.trim().trim('\uFEFF', '\u200B')
+            val trimmed = trimWhitespace(s)
             map[trimmed] = values.getOrElse(index) { "" }
         }
         return map.toMap()

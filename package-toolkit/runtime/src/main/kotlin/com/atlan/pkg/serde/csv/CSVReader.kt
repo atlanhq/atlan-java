@@ -47,30 +47,22 @@ class CSVReader @JvmOverloads constructor(
 
     private val reader: CsvReader<CsvRecord>
     private val counter: CsvReader<CsvRecord>
-    private val header: List<String>
-    private val typeIdx: Int
-    private val qualifiedNameIdx: Int
+    private val header: List<String> = CSVXformer.getHeader(path, fieldSeparator)
+    private val typeIdx: Int = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
+    private val qualifiedNameIdx: Int = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
 
     init {
+        if (typeIdx < 0) {
+            throw IOException(
+                "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
+            )
+        }
         val inputFile = Paths.get(path)
         val builder = CsvReader.builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
             .skipEmptyLines(true)
             .ignoreDifferentFieldCount(false)
-        builder.ofCsvRecord(inputFile).use { tmp ->
-            val one = tmp.stream().findFirst()
-            header =
-                one.map { obj: CsvRecord -> obj.fields }
-                    .orElse(emptyList())
-        }
-        typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
-        qualifiedNameIdx = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
-        if (typeIdx < 0) {
-            throw IOException(
-                "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
-            )
-        }
         reader = builder.ofCsvRecord(inputFile)
         counter = builder.ofCsvRecord(inputFile)
     }

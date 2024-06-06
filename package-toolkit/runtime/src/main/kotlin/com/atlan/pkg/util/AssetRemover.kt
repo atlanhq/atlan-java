@@ -6,6 +6,7 @@ import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.search.FluentSearch
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
@@ -96,22 +97,19 @@ class AssetRemover(
      */
     @Throws(IOException::class)
     private fun getAssetIdentities(filename: String): Set<AssetBatch.AssetIdentity> {
-        val inputFile = Paths.get(filename)
-        val builder = CsvReader.builder()
-            .fieldSeparator(',')
-            .quoteCharacter('"')
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
-        val header = builder.ofCsvRecord(inputFile).use { tmp ->
-            tmp.stream().findFirst().map { obj: CsvRecord -> obj.fields }
-                .orElse(emptyList())
-        }
+        val header = CSVXformer.getHeader(filename, ',')
         val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         if (typeIdx < 0) {
             throw IOException(
                 "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
             )
         }
+        val inputFile = Paths.get(filename)
+        val builder = CsvReader.builder()
+            .fieldSeparator(',')
+            .quoteCharacter('"')
+            .skipEmptyLines(true)
+            .ignoreDifferentFieldCount(false)
         val reader = builder.ofCsvRecord(inputFile)
         val set = mutableSetOf<AssetBatch.AssetIdentity>()
         reader.stream().skip(1).forEach { r: CsvRecord ->
