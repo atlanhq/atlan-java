@@ -16,11 +16,14 @@ import javax.annotation.processing.Generated
 data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_import_type") val assetsImportType: String? = null,
     @JsonProperty("assets_file") val assetsFile: String? = null,
-    @JsonProperty("assets_s3_region") val assetsS3Region: String? = null,
-    @JsonProperty("assets_s3_bucket") val assetsS3Bucket: String? = null,
-    @JsonProperty("assets_s3_object_key") val assetsS3ObjectKey: String? = null,
+    @JsonProperty("assets_prefix") val assetsPrefix: String? = null,
+    @JsonProperty("assets_key") val assetsKey: String? = null,
+    @JsonProperty("cloud_source") val cloudSource: String? = null,
     @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
-    @JsonProperty("assets_config_type") val assetsConfigType: String? = null,
+    @JsonProperty("delta_semantic") val deltaSemantic: String? = null,
+    @JsonProperty("delta_removal_type") val deltaRemovalType: String? = null,
+    @JsonProperty("previous_file_direct") val previousFileDirect: String? = null,
+    @JsonProperty("skip_s3") val skipS3: Boolean? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>? = null,
@@ -28,8 +31,4 @@ data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_field_separator") val assetsFieldSeparator: String? = null,
     @JsonProperty("assets_batch_size") val assetsBatchSize: Number? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean? = null,
-    @JsonProperty("delta_semantic") val deltaSemantic: String? = null,
-    @JsonProperty("delta_removal_type") val deltaRemovalType: String? = null,
-    @JsonProperty("previous_file_direct") val previousFileDirect: String? = null,
-    @JsonProperty("skip_s3") val skipS3: Boolean? = null,
 ) : CustomConfig()
