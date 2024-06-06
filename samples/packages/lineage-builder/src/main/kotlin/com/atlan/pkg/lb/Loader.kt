@@ -33,18 +33,15 @@ object Loader {
     fun import(config: LineageBuilderCfg, outputDirectory: String = "tmp") {
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
-        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
         val lineageUpload = Utils.getOrDefault(config.lineageImportType, "UPLOAD") == "UPLOAD"
         val lineageFilename = Utils.getOrDefault(config.lineageFile, "")
-        val lineageS3Region = Utils.getOrDefault(config.lineageS3Region, defaultRegion)
-        val lineageS3Bucket = Utils.getOrDefault(config.lineageS3Bucket, defaultBucket)
-        val lineageS3ObjectKey = Utils.getOrDefault(config.lineageS3ObjectKey, "")
+        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
+        val lineageKey = Utils.getOrDefault(config.lineageKey, "")
         val lineageFailOnErrors = Utils.getOrDefault(config.lineageFailOnErrors, true)
         val lineageAssetSemantic = Utils.getCreationHandling(config.lineageUpsertSemantic, AssetCreationHandling.PARTIAL)
         val lineageCaseSensitive = Utils.getOrDefault(config.lineageCaseSensitive, true)
 
-        val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageS3ObjectKey.isNotBlank())
+        val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && cloudDetails.isNotBlank() && lineageKey.isNotBlank())
         if (!lineageFileProvided) {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)
@@ -53,10 +50,9 @@ object Loader {
         val lineageInput = Utils.getInputFile(
             lineageFilename,
             outputDirectory,
-            s3Region = lineageS3Region,
-            s3Bucket = lineageS3Bucket,
-            s3ObjectKey = lineageS3ObjectKey,
-            preferUpload = lineageUpload,
+            lineageUpload,
+            Utils.getOrDefault(config.lineagePrefix, ""),
+            lineageKey,
         )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(lineageFailOnErrors)

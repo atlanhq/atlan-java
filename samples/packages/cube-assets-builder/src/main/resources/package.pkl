@@ -32,7 +32,7 @@ preview = true
 
 uiConfig {
   tasks {
-    ["Assets"] {
+    ["Source"] {
       description = "Assets to import"
       inputs {
         ["assets_import_type"] = new Radio {
@@ -40,10 +40,10 @@ uiConfig {
           required = true
           helpText = "Select how you want to provide the file containing cube assets to be imported."
           possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
+            ["DIRECT"] = "Direct upload"
+            ["CLOUD"] = "Object storage"
           }
-          default = "UPLOAD"
+          default = "DIRECT"
         }
         ["assets_file"] = new FileUploader {
           title = "Assets file"
@@ -52,27 +52,29 @@ uiConfig {
           helpText = "Select the file containing the cube assets to import."
           placeholderText = "Select assets CSV file"
         }
-        ["assets_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
+        ["assets_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing cube assets."
+          placeholderText = "path/to/file"
           width = 4
         }
-        ["assets_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
+        ["assets_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "cubes.csv"
           width = 4
         }
-        ["assets_s3_object_key"] = new TextInput {
-          title = "S3 object key"
-          required = false
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
+        ["cloud_source"] = new CredentialInput {
+          title = "Import metadata from"
+          required = true
+          credType = "csa-connectors-objectstore"
+          helpText = "Enter details for the object store from which to retrieve the file(s) containing cube assets to be imported."
         }
+      }
+    }
+    ["Semantics"] {
+      description = "Processing logic"
+      inputs {
         ["assets_upsert_semantic"] = new Radio {
           title = "Input handling"
           required = false
@@ -83,16 +85,44 @@ uiConfig {
           default = "upsert"
           helpText = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
         }
-        ["assets_config_type"] = new Radio {
-          title = "Options"
-          required = true
+        ["delta_semantic"] = new Radio {
+          title = "Delta handling"
+          required = false
           possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
+            ["full"] = "Full replacement"
+            ["delta"] = "Incremental"
           }
-          default = "default"
-          helpText = "Options to optimize how assets are imported."
+          default = "full"
+          helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
         }
+        ["delta_removal_type"] = new Radio {
+          title = "Removal type"
+          required = false
+          possibleValues {
+            ["archive"] = "Archive (recoverable)"
+            ["purge"] = "Purge (cannot be recovered)"
+          }
+          default = "archive"
+          helpText = "How to delete any assets not found in the latest file."
+        }
+        ["previous_file_direct"] = new TextInput {
+          title = "Previous file"
+          required = false
+          hide = true
+          helpText = "Path to a direct file (locally) to use for delta processing."
+        }
+        ["skip_s3"] = new BooleanInput {
+          title = "Skip S3"
+          required = false
+          hide = true
+          defaultSelection = false
+          helpText = "Whether to skip S3 operations (uploading and downloading files) as part of delta processing."
+        }
+      }
+    }
+    ["Options"] {
+      description = "Configuration options"
+      inputs {
         ["assets_attr_to_overwrite"] = new DropDown {
           title = "Remove attributes, if empty"
           required = false
@@ -139,65 +169,18 @@ uiConfig {
         }
       }
     }
-    ["Semantics"] {
-      description = "Processing logic"
-      inputs {
-        ["delta_semantic"] = new Radio {
-          title = "Delta handling"
-          required = false
-          possibleValues {
-            ["full"] = "Full replacement"
-            ["delta"] = "Incremental"
-          }
-          default = "full"
-          helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
-        }
-        ["delta_removal_type"] = new Radio {
-          title = "Removal type"
-          required = false
-          possibleValues {
-            ["archive"] = "Archive (recoverable)"
-            ["purge"] = "Purge (cannot be recovered)"
-          }
-          default = "archive"
-          helpText = "How to delete any assets not found in the latest file."
-        }
-        ["previous_file_direct"] = new TextInput {
-          title = "Previous file"
-          required = false
-          hide = true
-          helpText = "Path to a direct file (locally) to use for delta processing."
-        }
-        ["skip_s3"] = new BooleanInput {
-          title = "Skip S3"
-          required = false
-          hide = true
-          defaultSelection = false
-          helpText = "Whether to skip S3 operations (uploading and downloading files) as part of delta processing."
-        }
-      }
-    }
   }
   rules {
     new UIRule {
-      whenInputs { ["assets_import_type"] = "UPLOAD" }
+      whenInputs { ["assets_import_type"] = "DIRECT" }
       required { "assets_file" }
     }
     new UIRule {
-      whenInputs { ["assets_import_type"] = "S3" }
+      whenInputs { ["assets_import_type"] = "CLOUD" }
       required {
-        "assets_s3_region"
-        "assets_s3_bucket"
-        "assets_s3_object_key"
-      }
-    }
-    new UIRule {
-      whenInputs { ["assets_config_type"] = "advanced" }
-      required {
-        "assets_attr_to_overwrite"
-        "assets_fail_on_errors"
-        "assets_field_separator"
-        "assets_batch_size"
+        "assets_prefix"
+        "assets_key"
+        "cloud_source"
       }
     }
     new UIRule {

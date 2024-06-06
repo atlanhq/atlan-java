@@ -7,7 +7,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
-import com.atlan.model.assets.CubeField.getHierarchyQualifiedName
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
@@ -61,17 +60,16 @@ object Importer {
         val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
         val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
         val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
+        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
+        val assetsKey = Utils.getOrDefault(config.assetsKey, "")
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
-        val assetsS3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion)
-        val assetsS3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket)
-        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
+        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && cloudDetails.isNotBlank() && assetsKey.isNotBlank())
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
@@ -82,10 +80,9 @@ object Importer {
         val assetsInput = Utils.getInputFile(
             assetsFilename,
             outputDirectory,
-            s3Region = assetsS3Region,
-            s3Bucket = assetsS3Bucket,
-            s3ObjectKey = assetsS3ObjectKey,
-            preferUpload = assetsUpload,
+            assetsUpload,
+            Utils.getOrDefault(config.assetsPrefix, ""),
+            assetsKey,
         )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 

@@ -32,7 +32,7 @@ preview = true
 
 uiConfig {
   tasks {
-    ["Lineage"] {
+    ["Source"] {
       description = "Lineage to import"
       inputs {
         ["lineage_import_type"] = new Radio {
@@ -40,10 +40,10 @@ uiConfig {
           required = true
           helpText = "Select how you want to provide the file containing lineage details to be imported."
           possibleValues {
-            ["UPLOAD"] = "Direct upload"
-            ["S3"] = "S3 object"
+            ["DIRECT"] = "Direct upload"
+            ["CLOUD"] = "Object storage"
           }
-          default = "UPLOAD"
+          default = "DIRECT"
         }
         ["lineage_file"] = new FileUploader {
           title = "Lineage file"
@@ -52,27 +52,29 @@ uiConfig {
           helpText = "Select the file containing lineage to import."
           placeholderText = "Select lineage CSV file"
         }
-        ["lineage_s3_region"] = new TextInput {
-          title = "S3 region"
-          required = false
-          helpText = "Enter the S3 region from which to retrieve the S3 object. If empty, will use the region of Atlan's own back-end storage."
-          placeholderText = "ap-south-1"
+        ["lineage_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing lineage details."
+          placeholderText = "path/to/file"
           width = 4
         }
-        ["lineage_s3_bucket"] = new TextInput {
-          title = "S3 bucket"
-          required = false
-          helpText = "Enter the S3 bucket from which to retrieve the S3 object. If empty, will use the bucket of Atlan's own back-end storage."
-          placeholderText = "bucket-name"
+        ["lineage_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "lineage.csv"
           width = 4
         }
-        ["lineage_s3_object_key"] = new TextInput {
-          title = "S3 object key"
+        ["cloud_source"] = new CredentialInput {
+          title = "Import lineage from"
           required = true
-          helpText = "Enter the S3 object key, including the name of the object and its prefix (path) in the S3 bucket."
-          placeholderText = "some/where/file.csv"
-          width = 8
+          credType = "csa-connectors-objectstore"
+          helpText = "Enter details for the object store from which to retrieve the file(s) containing lineage details to be imported."
         }
+      }
+    }
+    ["Options"] {
+      description = "Configuration options"
+      inputs {
         ["lineage_upsert_semantic"] = new Radio {
           title = "Unknown asset handling"
           required = false
@@ -83,16 +85,6 @@ uiConfig {
           }
           default = "partial"
           helpText = "How to handle assets that do not yet exist in Atlan."
-        }
-        ["lineage_config_type"] = new Radio {
-          title = "Options"
-          required = true
-          possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
-          }
-          default = "default"
-          helpText = "Options to optimize how lineage is imported."
         }
         ["lineage_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
@@ -123,24 +115,15 @@ uiConfig {
   }
   rules {
     new UIRule {
-      whenInputs { ["lineage_import_type"] = "UPLOAD" }
+      whenInputs { ["lineage_import_type"] = "DIRECT" }
       required { "lineage_file" }
     }
     new UIRule {
-      whenInputs { ["lineage_import_type"] = "S3" }
+      whenInputs { ["lineage_import_type"] = "CLOUD" }
       required {
-        "lineage_s3_region"
-        "lineage_s3_bucket"
-        "lineage_s3_object_key"
-      }
-    }
-    new UIRule {
-      whenInputs { ["lineage_config_type"] = "advanced" }
-      required {
-        "lineage_fail_on_errors"
-        "lineage_case_sensitive"
-        "field_separator"
-        "batch_size"
+        "lineage_prefix"
+        "lineage_key"
+        "cloud_source"
       }
     }
   }
