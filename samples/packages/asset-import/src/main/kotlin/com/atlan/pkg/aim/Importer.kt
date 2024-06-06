@@ -33,23 +33,14 @@ object Importer {
         val assetsFieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val glossariesFieldSeparator = Utils.getOrDefault(config.glossariesFieldSeparator, ",")[0]
         val dataProductsFieldSeparator = Utils.getOrDefault(config.dataProductsFieldSeparator, ",")[0]
-        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
-        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
-        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
-        val glossariesUpload = Utils.getOrDefault(config.glossariesImportType, "UPLOAD") == "UPLOAD"
-        val dataProductsUpload = Utils.getOrDefault(config.dataProductsImportType, "UPLOAD") == "UPLOAD"
+        val directUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
         val dataProductsFilename = Utils.getOrDefault(config.dataProductsFile, "")
-        val assetsS3Region = Utils.getOrDefault(config.assetsS3Region, defaultRegion)
-        val assetsS3Bucket = Utils.getOrDefault(config.assetsS3Bucket, defaultBucket)
-        val assetsS3ObjectKey = Utils.getOrDefault(config.assetsS3ObjectKey, "")
-        val glossariesS3Region = Utils.getOrDefault(config.glossariesS3Region, defaultRegion)
-        val glossariesS3Bucket = Utils.getOrDefault(config.glossariesS3Bucket, defaultBucket)
-        val glossariesS3ObjectKey = Utils.getOrDefault(config.glossariesS3ObjectKey, "")
-        val dataProductsS3Region = Utils.getOrDefault(config.dataProductsS3Region, defaultRegion)
-        val dataProductsS3Bucket = Utils.getOrDefault(config.dataProductsS3Bucket, defaultBucket)
-        val dataProductsS3ObjectKey = Utils.getOrDefault(config.dataProductsS3ObjectKey, "")
+        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
+        val assetsKey = Utils.getOrDefault(config.assetsKey, "")
+        val glossariesKey = Utils.getOrDefault(config.glossariesKey, "")
+        val dataProductsKey = Utils.getOrDefault(config.dataProductsKey, "")
         val assetAttrsToOverwrite =
             attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
@@ -66,9 +57,9 @@ object Importer {
         val dataProductsFailOnErrors = Utils.getOrDefault(config.dataProductsFailOnErrors, true)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsS3ObjectKey.isNotBlank())
-        val glossariesFileProvided = (glossariesUpload && glossariesFilename.isNotBlank()) || (!glossariesUpload && glossariesS3ObjectKey.isNotBlank())
-        val dataProductsFileProvided = (dataProductsUpload && dataProductsFilename.isNotBlank()) || (!dataProductsUpload && dataProductsS3ObjectKey.isNotBlank())
+        val assetsFileProvided = (directUpload && assetsFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && assetsKey.isNotBlank())
+        val glossariesFileProvided = (directUpload && glossariesFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && glossariesKey.isNotBlank())
+        val dataProductsFileProvided = (directUpload && dataProductsFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && dataProductsKey.isNotBlank())
         if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)
@@ -80,10 +71,9 @@ object Importer {
         val glossariesInput = Utils.getInputFile(
             glossariesFilename,
             outputDirectory,
-            s3Region = glossariesS3Region,
-            s3Bucket = glossariesS3Bucket,
-            s3ObjectKey = glossariesS3ObjectKey,
-            preferUpload = glossariesUpload,
+            directUpload,
+            Utils.getOrDefault(config.glossariesPrefix, ""),
+            glossariesKey,
         )
         val resultsGTC = if (glossariesInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
@@ -107,10 +97,9 @@ object Importer {
         val assetsInput = Utils.getInputFile(
             assetsFilename,
             outputDirectory,
-            s3Region = assetsS3Region,
-            s3Bucket = assetsS3Bucket,
-            s3ObjectKey = assetsS3ObjectKey,
-            preferUpload = assetsUpload,
+            directUpload,
+            Utils.getOrDefault(config.assetsPrefix, ""),
+            assetsKey,
         )
         val resultsAssets = if (assetsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
@@ -136,10 +125,9 @@ object Importer {
         val dataProductsInput = Utils.getInputFile(
             dataProductsFilename,
             outputDirectory,
-            s3Region = dataProductsS3Region,
-            s3Bucket = dataProductsS3Bucket,
-            s3ObjectKey = dataProductsS3ObjectKey,
-            preferUpload = dataProductsUpload,
+            directUpload,
+            Utils.getOrDefault(config.dataProductsPrefix, ""),
+            dataProductsKey,
         )
         val resultsDDP = if (dataProductsInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)

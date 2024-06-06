@@ -67,9 +67,10 @@ object Importer {
         // to allow subsequent out-of-order parallel processing
         val assetsInput = Utils.getInputFile(
             assetsFilename,
-            assetsCloudDetails,
             outputDirectory,
             assetsUpload,
+            Utils.getOrDefault(config.assetsPrefix, ""),
+            Utils.getOrDefault(config.assetsKey, ""),
         )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 
