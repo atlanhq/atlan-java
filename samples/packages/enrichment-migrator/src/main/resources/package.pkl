@@ -47,6 +47,12 @@ uiConfig {
           helpText = "Further limit the assets in the source connection by this qualifiedName (not including the connection portion of the qualifiedName)."
           width = 4
         }
+        ["target_database_pattern"] = new TextInput {
+          title = "Target database pattern"
+          required = false
+          helpText = "Regular expression to be used as a pattern for matching target database(s)."
+          width = 4
+        }
         ["target_connection"] = new ConnectionSelector {
           title = "Target"
           required = true

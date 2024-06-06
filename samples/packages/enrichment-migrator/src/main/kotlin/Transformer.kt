@@ -28,7 +28,12 @@ class Transformer(
             } else {
                 inputRow[it] ?: ""
             }
-            raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
+            if (ctx.targetDatabaseName.isNotBlank()) {
+                val regex = "(^|[/])${ctx.sourceDatabaseName}($|[/])".toRegex()
+                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(regex, "$1${ctx.targetDatabaseName}$2")
+            } else {
+                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
+            }
         }.toList()
         // Wrap them all up in a list (one-to-one row output from input)
         return listOf(values)
