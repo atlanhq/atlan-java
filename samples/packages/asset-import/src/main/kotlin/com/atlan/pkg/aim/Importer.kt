@@ -68,14 +68,14 @@ object Importer {
         LinkCache.preload()
 
         // Glossaries...
-        val glossariesInput = Utils.getInputFile(
-            glossariesFilename,
-            outputDirectory,
-            directUpload,
-            Utils.getOrDefault(config.glossariesPrefix, ""),
-            glossariesKey,
-        )
-        val resultsGTC = if (glossariesInput.isNotBlank()) {
+        val resultsGTC = if (glossariesFileProvided) {
+            val glossariesInput = Utils.getInputFile(
+                glossariesFilename,
+                outputDirectory,
+                directUpload,
+                Utils.getOrDefault(config.glossariesPrefix, ""),
+                glossariesKey,
+            )
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
             val glossaryImporter =
@@ -94,14 +94,14 @@ object Importer {
             null
         }
 
-        val assetsInput = Utils.getInputFile(
-            assetsFilename,
-            outputDirectory,
-            directUpload,
-            Utils.getOrDefault(config.assetsPrefix, ""),
-            assetsKey,
-        )
-        val resultsAssets = if (assetsInput.isNotBlank()) {
+        val resultsAssets = if (assetsFileProvided) {
+            val assetsInput = Utils.getInputFile(
+                assetsFilename,
+                outputDirectory,
+                directUpload,
+                Utils.getOrDefault(config.assetsPrefix, ""),
+                assetsKey,
+            )
             FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { "=== Importing assets... ===" }
             val assetImporter = AssetImporter(
@@ -122,14 +122,14 @@ object Importer {
         }
 
         // Data products...
-        val dataProductsInput = Utils.getInputFile(
-            dataProductsFilename,
-            outputDirectory,
-            directUpload,
-            Utils.getOrDefault(config.dataProductsPrefix, ""),
-            dataProductsKey,
-        )
-        val resultsDDP = if (dataProductsInput.isNotBlank()) {
+        val resultsDDP = if (dataProductsFileProvided) {
+            val dataProductsInput = Utils.getInputFile(
+                dataProductsFilename,
+                outputDirectory,
+                directUpload,
+                Utils.getOrDefault(config.dataProductsPrefix, ""),
+                dataProductsKey,
+            )
             FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
             logger.info { "=== Importing domains... ===" }
             val domainImporter =
