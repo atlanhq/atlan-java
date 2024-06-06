@@ -237,13 +237,22 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (classificationNames != null && classificationNames.isArray()) {
             clsNames = new HashSet<>();
             // Translate these IDs in to human-readable names
-            try {
-                for (JsonNode element : classificationNames) {
-                    String name = client.getAtlanTagCache().getNameForId(element.asText());
-                    clsNames.add(name);
+            for (JsonNode element : classificationNames) {
+                String tagId = element.asText();
+                String name;
+                try {
+                    name = client.getAtlanTagCache().getNameForId(tagId);
+                } catch (NotFoundException e) {
+                    name = Serde.DELETED_AUDIT_OBJECT;
+                    log.debug(
+                            "Unable to find tag with ID {}, deserializing as {}.",
+                            tagId,
+                            Serde.DELETED_AUDIT_OBJECT,
+                            e);
+                } catch (AtlanException e) {
+                    throw new IOException(e);
                 }
-            } catch (AtlanException e) {
-                throw new IOException(e);
+                clsNames.add(name);
             }
         }
 
