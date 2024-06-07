@@ -28,5 +28,9 @@ data class AdoptionExportCfg(
     @JsonProperty("changes_max") val changesMax: Number? = null,
     @JsonProperty("include_searches") val includeSearches: String? = null,
     @JsonProperty("maximum_searches") val maximumSearches: Number? = null,
+    @JsonProperty("delivery_type") val deliveryType: String? = null,
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
+    @JsonProperty("target_prefix") val targetPrefix: String? = null,
+    @JsonProperty("target_key") val targetKey: String? = null,
+    @JsonProperty("cloud_target") val cloudTarget: String? = null,
 ) : CustomConfig()

@@ -93,7 +93,7 @@ uiConfig {
         ["delivery_type"] = new Radio {
           title = "Export via"
           required = true
-          helpText = "Select how you want to receive the exported file."
+          helpText = "Select how you want to receive the exported file(s)."
           possibleValues {
             ["DIRECT"] = "Direct download"
             ["EMAIL"] = "Email"
@@ -109,7 +109,7 @@ uiConfig {
         }
         ["target_prefix"] = new TextInput {
           title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store into which to upload the exported files."
+          helpText = "Enter the directory (path) within the object store into which to upload the exported file(s)."
           placeholderText = "path/to/files"
           width = 4
         }
@@ -117,7 +117,7 @@ uiConfig {
           title = "Upload export to"
           required = true
           credType = "csa-connectors-objectstore"
-          helpText = "Enter details for the object store to which to upload the exported file."
+          helpText = "Enter details for the object store to which to upload the exported file(s)."
         }
       }
     }

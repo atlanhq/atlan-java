@@ -27,6 +27,7 @@ object AdoptionExporter {
         val includeViews = Utils.getOrDefault(config.includeViews, "BY_VIEWS")
         val includeChanges = Utils.getOrDefault(config.includeChanges, "NO") == "YES"
         val includeSearches = Utils.getOrDefault(config.includeSearches, "NO") == "YES"
+        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
         val exportFile = "$outputDirectory${File.separator}adoption-export.xlsx"
         ExcelWriter(exportFile).use { xlsx ->
@@ -49,18 +50,25 @@ object AdoptionExporter {
             }
         }
 
-        val emails = Utils.getOrDefault(config.emailAddresses, "")
-            .split(',')
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-            .toList()
-        if (emails.isNotEmpty()) {
-            Utils.sendEmail(
-                "[Atlan] Adoption Export results",
-                emails,
-                "Hi there! As requested, please find attached the results of the Adoption Export package.\n\nAll the best!\nAtlan",
-                listOf(File(exportFile)),
-            )
+        when (deliveryType) {
+            "EMAIL" -> {
+                val emails = Utils.getAsList(config.emailAddresses)
+                if (emails.isNotEmpty()) {
+                    Utils.sendEmail(
+                        "[Atlan] Adoption Export results",
+                        emails,
+                        "Hi there! As requested, please find attached the results of the Adoption Export package.\n\nAll the best!\nAtlan",
+                        listOf(File(exportFile)),
+                    )
+                }
+            }
+            "CLOUD" -> {
+                Utils.uploadOutputFile(
+                    exportFile,
+                    Utils.getOrDefault(config.targetPrefix, ""),
+                    Utils.getOrDefault(config.targetKey, ""),
+                )
+            }
         }
     }
 
@@ -68,7 +76,7 @@ object AdoptionExporter {
         val client = Atlan.getDefaultClient()
         val fullList = keyMap.keys.toList()
         val totalCount = fullList.size
-        val idxBatchSize = 50
+        val idxBatchSize = 300
         val detailMap = mutableMapOf<String, Asset>()
         for (i in 0..totalCount step idxBatchSize) {
             val subList = fullList.subList(i, min(i + idxBatchSize, totalCount))

@@ -61,11 +61,7 @@ object Exporter {
 
         when (deliveryType) {
             "EMAIL" -> {
-                val emails = Utils.getOrDefault(config.emailAddresses, "")
-                    .split(',')
-                    .map { it.trim() }
-                    .filter { it.isNotBlank() }
-                    .toList()
+                val emails = Utils.getAsList(config.emailAddresses)
                 if (emails.isNotEmpty()) {
                     Utils.sendEmail(
                         "[Atlan] Asset Export (basic) results",
