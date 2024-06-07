@@ -503,8 +503,8 @@ object Utils {
         } else {
             val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
             val cred = MAPPER.readValue<Credential>(contents)
-            val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
-            val preppedKey = key.let { it?.trimStart('/') } ?: ""
+            val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
+            val preppedKey = getOrDefault(key?.trimStart('/'), "")
             if (preppedKey.isBlank()) {
                 return getInputFiles(uploadResult, outputDirectory, preferUpload, prefix)[0]
             }
@@ -555,7 +555,7 @@ object Utils {
         } else {
             val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
             val cred = MAPPER.readValue<Credential>(contents)
-            val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
+            val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
             when (cred.authType) {
                 "s3" -> {
                     val s3 = S3Credential(cred)
@@ -619,10 +619,8 @@ object Utils {
     ) {
         val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
         val cred = MAPPER.readValue<Credential>(contents)
-        val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
-        val preppedKey = key.let { it?.trimStart('/') } ?: {
-            File(outputFile).name // default to filename from the output file
-        }
+        val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
+        val preppedKey = getOrDefault(key?.trimStart('/'), File(outputFile).name) // default to filename from the output file
         val sync: ObjectStorageSyncer? = when (cred.authType) {
             "s3" -> {
                 val s3 = S3Credential(cred)

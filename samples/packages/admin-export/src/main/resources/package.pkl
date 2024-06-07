@@ -87,7 +87,7 @@ uiConfig {
         ["target_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
-          placeholderText = "admin-export.csv"
+          placeholderText = "admin-export.xlsx"
           width = 4
         }
         ["cloud_target"] = new CredentialInput {
