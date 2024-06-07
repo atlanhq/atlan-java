@@ -18,14 +18,14 @@ object Exporter {
     }
 
     fun export(config: AssetExportBasicCfg, outputDirectory: String) {
-        val batchSize = 20
+        val batchSize = 300
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val limitToAssets = Utils.getAsList(config.assetTypesToInclude)
         val limitToAttributes = Utils.getAsList(config.attributesToInclude)
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
-        val emails = Utils.getAsList(config.emailAddresses)
+        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
         val cmFields = getAllCustomMetadataFields()
 
@@ -59,13 +59,31 @@ object Exporter {
             File(assetsFile).createNewFile()
         }
 
-        if (emails.isNotEmpty()) {
-            Utils.sendEmail(
-                "[Atlan] Asset Export (basic) results",
-                emails,
-                "Hi there! As requested, please find attached the results of the Asset Export (basic) package.\n\nAll the best!\nAtlan",
-                exportedFiles,
-            )
+        when (deliveryType) {
+            "EMAIL" -> {
+                val emails = Utils.getOrDefault(config.emailAddresses, "")
+                    .split(',')
+                    .map { it.trim() }
+                    .filter { it.isNotBlank() }
+                    .toList()
+                if (emails.isNotEmpty()) {
+                    Utils.sendEmail(
+                        "[Atlan] Asset Export (basic) results",
+                        emails,
+                        "Hi there! As requested, please find attached the results of the Asset Export (basic) package.\n\nAll the best!\nAtlan",
+                        exportedFiles,
+                    )
+                }
+            }
+            "CLOUD" -> {
+                for (exportFile in exportedFiles) {
+                    Utils.uploadOutputFile(
+                        exportFile.path,
+                        Utils.getOrDefault(config.targetPrefix, ""),
+                        "",
+                    )
+                }
+            }
         }
     }
 
