@@ -29,11 +29,7 @@ object AdminExporter {
 
         val objectsToInclude = Utils.getOrDefault(config.objectsToInclude, listOf("users", "groups"))
         val includeNativePolicies = Utils.getOrDefault(config.includeNativePolicies, false)
-        val emails = Utils.getOrDefault(config.emailAddresses, "")
-            .split(',')
-            .map { it.trim() }
-            .filter { it.isNotBlank() }
-            .toList()
+        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
         // Before we start processing, will pre-cache all glossaries,
         // so we can resolve them to meaningful names
@@ -53,13 +49,29 @@ object AdminExporter {
             }
         }
 
-        if (emails.isNotEmpty()) {
-            Utils.sendEmail(
-                "[Atlan] Admin Export results",
-                emails,
-                "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
-                listOf(File(exportFile)),
-            )
+        when (deliveryType) {
+            "EMAIL" -> {
+                val emails = Utils.getOrDefault(config.emailAddresses, "")
+                    .split(',')
+                    .map { it.trim() }
+                    .filter { it.isNotBlank() }
+                    .toList()
+                if (emails.isNotEmpty()) {
+                    Utils.sendEmail(
+                        "[Atlan] Admin Export results",
+                        emails,
+                        "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
+                        listOf(File(exportFile)),
+                    )
+                }
+            }
+            "CLOUD" -> {
+                Utils.uploadOutputFile(
+                    exportFile,
+                    Utils.getOrDefault(config.targetPrefix, ""),
+                    Utils.getOrDefault(config.targetKey, ""),
+                )
+            }
         }
     }
 

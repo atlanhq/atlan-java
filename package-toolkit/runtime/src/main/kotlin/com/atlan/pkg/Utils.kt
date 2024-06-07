@@ -488,7 +488,7 @@ object Utils {
      * @param outputDirectory local directory where any object storage-downloaded file should be placed
      * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file
      * @param prefix (path / directory) where the file is located in object store
-     * @param key (filename) of the file in in object store
+     * @param key (filename) of the file in object store
      * @return the name of the file that is on local container storage from which we can read information
      */
     fun getInputFile(
@@ -505,6 +505,9 @@ object Utils {
             val cred = MAPPER.readValue<Credential>(contents)
             val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
             val preppedKey = key.let { it?.trimStart('/') } ?: ""
+            if (preppedKey.isBlank()) {
+                return getInputFiles(uploadResult, outputDirectory, preferUpload, prefix)[0]
+            }
             when (cred.authType) {
                 "s3" -> {
                     val s3 = S3Credential(cred)
@@ -530,57 +533,49 @@ object Utils {
     }
 
     /**
-     * Return the (container-)local input file name whenever a user is given the
+     * Return the (container-)local input file names whenever a user is given the
      * choice of how to provide an input file (either by uploading directly or through an object store).
-     * If using the object store details, the object will be downloaded from the object store and placed into local
+     * If using the object store details, the objects will be downloaded from the object store and placed into local
      * storage as part of this method.
      *
      * @param uploadResult filename from a direct upload
      * @param outputDirectory local directory where any object storage-downloaded file should be placed
-     * @param s3Region name of the S3 region for an S3 download
-     * @param s3Bucket name of the S3 bucket for an S3 download
-     * @param s3ObjectKey full path to the S3 object within the bucket
-     * @param gcsProjectId project ID for GCP
-     * @param gcsBucket name of the GCS bucket for a GCS download
-     * @param gcsObjectKey full path to the GCS object within the bucket
-     * @param gcsCredentials location of JSON file containing GCS credentials
-     * @param adlsAccountName name of the Azure account
-     * @param adlsContainerName fname of the ADLS container for an ADLS download
-     * @param adlsObjectKey full path to the ADLS object within the container
-     * @param adlsSasToken shared access secret (SAS) token for ADLS
-     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file
-     * @return the name of the file that is on local container storage from which we can read information
+     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the files
+     * @param prefix (path / directory) where the files are located in object store
+     * @return the names of the files that are on local container storage from which we can read information
      */
-    fun getInputFile(
+    fun getInputFiles(
         uploadResult: String,
         outputDirectory: String,
-        s3Region: String = "",
-        s3Bucket: String = "",
-        s3ObjectKey: String = "",
-        gcsProjectId: String = "",
-        gcsBucket: String = "",
-        gcsObjectKey: String = "",
-        gcsCredentials: String = "",
-        adlsAccountName: String = "",
-        adlsContainerName: String = "",
-        adlsObjectKey: String = "",
-        adlsSasToken: String = "",
         preferUpload: Boolean = true,
-    ): String {
+        prefix: String? = null,
+    ): List<String> {
         return if (preferUpload) {
-            uploadResult
+            listOf(uploadResult)
         } else {
-            if (s3ObjectKey.isNotBlank()) {
-                val sync = S3Sync(s3Bucket, s3Region, logger)
-                getInputFile(sync, s3ObjectKey, outputDirectory)
-            } else if (gcsObjectKey.isNotBlank()) {
-                val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
-                getInputFile(sync, gcsObjectKey, outputDirectory)
-            } else if (adlsObjectKey.isNotBlank()) {
-                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, "", "", "")
-                getInputFile(sync, adlsObjectKey, outputDirectory)
-            } else {
-                ""
+            val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
+            val cred = MAPPER.readValue<Credential>(contents)
+            val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
+            when (cred.authType) {
+                "s3" -> {
+                    val s3 = S3Credential(cred)
+                    val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                }
+                "gcs" -> {
+                    val gcs = GCSCredential(cred)
+                    val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                }
+                "adls" -> {
+                    val adls = ADLSCredential(cred)
+                    val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
+                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                }
+                else -> {
+                    logger.warn { "Unknown source ${cred.authType} -- skipping." }
+                    listOf()
+                }
             }
         }
     }
@@ -600,77 +595,63 @@ object Utils {
     }
 
     /**
-     * Return the (container-)local input file names whenever a user is given the
-     * choice of how to provide an input file (either by uploading directly or through object storage).
-     * If using the object store details, the objects will be downloaded from object storage and placed into local
-     * storage as part of this method.
+     * Given an object storage syncer, download the specified file to the local outputDirectory.
      *
-     * @param uploadResult filename from a direct upload
-     * @param outputDirectory local directory where any object store-downloaded files should be placed
-     * @param s3Region name of the S3 region for an S3 download
-     * @param s3Bucket name of the S3 bucket for an S3 download
-     * @param s3ObjectKey full path to the S3 object within the bucket (if it ends with a /, all objects in that prefix will be downloaded)
-     * @param gcsProjectId project ID for GCP
-     * @param gcsBucket name of the GCS bucket for a GCS download
-     * @param gcsObjectKey full path to the GCS object within the bucket
-     * @param gcsCredentials location of JSON file containing GCS credentials
-     * @param adlsAccountName name of the Azure account
-     * @param adlsContainerName fname of the ADLS container for an ADLS download
-     * @param adlsObjectKey full path to the ADLS object within the container
-     * @param adlsSasToken shared access secret (SAS) token for ADLS
-     * @param preferUpload if true, take the directly-uploaded file; otherwise use the object store details to download the file(s)
-     * @return the name(s) of the file(s) that are on local container storage from which we can read information
+     * @param syncer object storage syncer
+     * @param remote object key in object storage
+     * @param outputDirectory local directory into which to download the file
      */
-    fun getInputFiles(
-        uploadResult: String,
-        outputDirectory: String,
-        s3Region: String = "",
-        s3Bucket: String = "",
-        s3ObjectKey: String = "",
-        gcsProjectId: String = "",
-        gcsBucket: String = "",
-        gcsObjectKey: String = "",
-        gcsCredentials: String = "",
-        adlsAccountName: String = "",
-        adlsContainerName: String = "",
-        adlsObjectKey: String = "",
-        adlsSasToken: String = "",
-        preferUpload: Boolean = true,
-    ): List<String> {
-        return if (preferUpload) {
-            listOf(uploadResult)
-        } else {
-            if (s3ObjectKey.isNotBlank() && s3ObjectKey.endsWith("/")) {
-                val sync = S3Sync(s3Bucket, s3Region, logger)
-                sync.copyFrom(s3ObjectKey, outputDirectory)
-            } else if (gcsObjectKey.isNotBlank() && gcsObjectKey.endsWith("/")) {
-                val sync = GCSSync(gcsProjectId, gcsBucket, logger, gcsCredentials)
-                sync.copyFrom(gcsObjectKey, outputDirectory)
-            } else if (adlsObjectKey.isNotBlank() && adlsObjectKey.endsWith("/")) {
-                val sync = ADLSSync(adlsAccountName, adlsContainerName, logger, "", "", "")
-                sync.copyFrom(adlsObjectKey, outputDirectory)
-            } else if (s3ObjectKey.isNotBlank() || gcsObjectKey.isNotBlank() || adlsObjectKey.isNotBlank()) {
-                listOf(
-                    getInputFile(
-                        uploadResult,
-                        outputDirectory,
-                        s3Region,
-                        s3Bucket,
-                        s3ObjectKey,
-                        gcsProjectId,
-                        gcsBucket,
-                        gcsObjectKey,
-                        gcsCredentials,
-                        adlsAccountName,
-                        adlsContainerName,
-                        adlsObjectKey,
-                        adlsSasToken,
-                        false,
-                    ),
-                )
-            } else {
-                emptyList()
+    private fun getInputFiles(syncer: ObjectStorageSyncer, remote: String, outputDirectory: String): List<String> {
+        return syncer.copyFrom(remote, outputDirectory)
+    }
+
+    /**
+     * Upload the provided output file to the object store defined by the credentials available.
+     *
+     * @param outputFile path and filename of the file to upload
+     * @param prefix (path / directory) where the file should be uploaded in object store
+     * @param key (filename) of the file in object store
+     */
+    fun uploadOutputFile(
+        outputFile: String,
+        prefix: String? = null,
+        key: String? = null,
+    ) {
+        val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
+        val cred = MAPPER.readValue<Credential>(contents)
+        val preppedPrefix = prefix.let { it?.trimEnd('/') } ?: ""
+        val preppedKey = key.let { it?.trimStart('/') } ?: {
+            File(outputFile).name // default to filename from the output file
+        }
+        val sync: ObjectStorageSyncer? = when (cred.authType) {
+            "s3" -> {
+                val s3 = S3Credential(cred)
+                S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
             }
+
+            "gcs" -> {
+                val gcs = GCSCredential(cred)
+                GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+            }
+
+            "adls" -> {
+                val adls = ADLSCredential(cred)
+                ADLSSync(
+                    adls.storageAccount,
+                    adls.containerName,
+                    logger,
+                    adls.tenantId,
+                    adls.clientId,
+                    adls.clientSecret,
+                )
+            }
+            else -> {
+                logger.warn { "Unknown target ${cred.authType} -- skipping." }
+                null
+            }
+        }
+        sync?.uploadTo(outputFile, "$preppedPrefix/$preppedKey") ?: {
+            throw IllegalStateException("No valid target to upload output file found.")
         }
     }
 }
