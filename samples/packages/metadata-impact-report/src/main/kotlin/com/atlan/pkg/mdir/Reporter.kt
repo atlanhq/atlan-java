@@ -87,11 +87,11 @@ object Reporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<MetadataImpactReportCfg>()
-        val batchSize = 50
+        val batchSize = 300
         val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
         val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
         val includeDetails = Utils.getOrDefault(config.includeDetails, false)
-        val emails = Utils.getAsList(config.emailAddresses)
+        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
         val ctx = if (includeGlossary) {
             val glossary = createGlossaryIdempotent(glossaryName)
@@ -111,13 +111,25 @@ object Reporter {
         }
         val reportFile = runReports(ctx, outputDirectory, batchSize)
 
-        if (emails.isNotEmpty()) {
-            Utils.sendEmail(
-                "[Atlan] Metadata Impact Report",
-                emails,
-                "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
-                listOf(File(reportFile)),
-            )
+        when (deliveryType) {
+            "EMAIL" -> {
+                val emails = Utils.getAsList(config.emailAddresses)
+                if (emails.isNotEmpty()) {
+                    Utils.sendEmail(
+                        "[Atlan] Metadata Impact Report",
+                        emails,
+                        "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
+                        listOf(File(reportFile)),
+                    )
+                }
+            }
+            "CLOUD" -> {
+                Utils.uploadOutputFile(
+                    reportFile,
+                    Utils.getOrDefault(config.targetPrefix, ""),
+                    Utils.getOrDefault(config.targetKey, ""),
+                )
+            }
         }
     }
 
