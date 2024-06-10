@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Singular;
 
 /**
@@ -127,7 +128,7 @@ public class Suggestions {
          */
         public SuggestionResponse get() throws AtlanException {
             List<String> allTypes = new ArrayList<>();
-            allTypes.add(asset.getName());
+            allTypes.add(asset.getTypeName());
             if (withOtherTypes != null && !withOtherTypes.isEmpty()) {
                 allTypes.addAll(withOtherTypes);
             }
@@ -184,7 +185,7 @@ public class Suggestions {
             for (TYPE include : includes) {
                 switch (include) {
                     case SystemDescription:
-                        responseBuilder.descriptions(
+                        responseBuilder.systemDescriptions(
                                 getDescriptions(aggregations.get(AGG_DESCRIPTION), Asset.DESCRIPTION));
                         break;
                     case UserDescription:
@@ -192,10 +193,10 @@ public class Suggestions {
                                 getDescriptions(aggregations.get(AGG_USER_DESCRIPTION), Asset.USER_DESCRIPTION));
                         break;
                     case IndividualOwners:
-                        responseBuilder.ownerGroups(getOthers(aggregations.get(AGG_OWNER_GROUPS)));
+                        responseBuilder.ownerUsers(getOthers(aggregations.get(AGG_OWNER_USERS)));
                         break;
                     case GroupOwners:
-                        responseBuilder.ownerUsers(getOthers(aggregations.get(AGG_OWNER_USERS)));
+                        responseBuilder.ownerGroups(getOthers(aggregations.get(AGG_OWNER_GROUPS)));
                         break;
                     case Tags:
                         responseBuilder.atlanTags(getTags(client, aggregations.get(AGG_ATLAN_TAGS)));
@@ -236,14 +237,17 @@ public class Suggestions {
          * @throws AtlanException on any issue interacting with the APIs
          */
         public AssetMutationResponse apply(boolean allowMultiple) throws AtlanException {
-            return _apply(allowMultiple).save();
+            Apply result = _apply(allowMultiple);
+            return result.getAsset().save(result.getIncludesTags());
         }
 
         /**
          * Find the requested suggestions and apply the top suggestions as
          * changes to the asset within the provided batch.
          * Note: this will NOT validate whether there is any existing value for what
-         * you are setting, so will clobber any existing value with the suggestion.
+         * you are setting, so will clobber any existing value with the suggestion. Also,
+         * to ensure tags are applied you MUST set your provided batch up to replace tags
+         * BEFORE using it here.
          * If you want to be certain you are only updating empty values, you should ensure
          * you are only building a finder for suggestions for values that do not already
          * exist on the asset in question.
@@ -267,15 +271,15 @@ public class Suggestions {
          * @throws AtlanException on any issue interacting with the APIs
          */
         public AssetMutationResponse apply(ParallelBatch batch, boolean allowMultiple) throws AtlanException {
-            return batch.add(_apply(allowMultiple));
+            return batch.add(_apply(allowMultiple).getAsset());
         }
 
-        private Asset _apply(boolean allowMultiple) throws AtlanException {
+        private Apply _apply(boolean allowMultiple) throws AtlanException {
             SuggestionResponse response = get();
             Asset.AssetBuilder<?, ?> builder = asset.trimToRequired();
-            if (response.getDescriptions() != null
-                    && !response.getDescriptions().isEmpty()) {
-                builder.description(response.getDescriptions().get(0).getValue());
+            if (response.getSystemDescriptions() != null
+                    && !response.getSystemDescriptions().isEmpty()) {
+                builder.description(response.getSystemDescriptions().get(0).getValue());
             }
             if (response.getUserDescriptions() != null
                     && !response.getUserDescriptions().isEmpty()) {
@@ -299,7 +303,9 @@ public class Suggestions {
                     builder.ownerUser(response.getOwnerUsers().get(0).getValue());
                 }
             }
+            boolean includesTags = false;
             if (response.getAtlanTags() != null && !response.getAtlanTags().isEmpty()) {
+                includesTags = true;
                 if (allowMultiple) {
                     builder.atlanTags(response.getAtlanTags().stream()
                             .map(t -> AtlanTag.builder()
@@ -324,7 +330,7 @@ public class Suggestions {
                     builder.assignedTerm(response.getAssignedTerms().get(0).getValue());
                 }
             }
-            return builder.build();
+            return new Apply(builder.build(), includesTags);
         }
 
         private static List<SuggestionResponse.SuggestedItem> getDescriptions(AggregationResult res, AtlanField field) {
@@ -384,6 +390,17 @@ public class Suggestions {
                 }
             }
             return results;
+        }
+    }
+
+    @Getter
+    private static class Apply {
+        boolean includesTags;
+        Asset asset;
+
+        private Apply(Asset asset, boolean includesTags) {
+            this.asset = asset;
+            this.includesTags = includesTags;
         }
     }
 }

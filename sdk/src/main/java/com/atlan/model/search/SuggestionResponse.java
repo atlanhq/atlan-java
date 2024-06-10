@@ -21,7 +21,7 @@ public class SuggestionResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
     /** Suggested system-level descriptions. */
-    List<SuggestedItem> descriptions;
+    List<SuggestedItem> systemDescriptions;
 
     /** Suggested user-provided descriptions. */
     List<SuggestedItem> userDescriptions;
