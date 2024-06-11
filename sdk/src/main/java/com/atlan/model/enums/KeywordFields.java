@@ -396,6 +396,10 @@ public enum KeywordFields implements AtlanSearchableField {
     CUBE_QUALIFIED_NAME("cubeQualifiedName"),
     /** Criticality of this data product. */
     DAAP_CRITICALITY("daapCriticality"),
+    /** Input ports guids for this data product. */
+    DAAP_INPUT_PORT_GUIDS("daapInputPortGuids"),
+    /** Output ports guids for this data product. */
+    DAAP_OUTPUT_PORT_GUIDS("daapOutputPortGuids"),
     /** Information sensitivity of this data product. */
     DAAP_SENSITIVITY("daapSensitivity"),
     /** Status of this data product. */
@@ -1348,6 +1352,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TARGET_SERVER_NAME("targetServerName"),
     /** List of actions associated with this task. */
     TASK_ACTIONS("taskActions"),
+    /** username of the user who created this task */
+    TASK_CREATED_BY("taskCreatedBy"),
     /** action executed by the recipient */
     TASK_EXECUTION_ACTION("taskExecutionAction"),
     /** comment for the action executed by user */
@@ -1364,6 +1370,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TASK_REQUESTOR_COMMENT("taskRequestorComment"),
     /** type of task */
     TASK_TYPE("taskType"),
+    /** username of the user who updated this task */
+    TASK_UPDATED_BY("taskUpdatedBy"),
     /** Name of the Atlan workspace in which this asset exists. */
     TENANT_ID("tenantId"),
     /** TBC */

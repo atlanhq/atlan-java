@@ -40,6 +40,12 @@ public interface IDataProduct {
     /** Criticality of this data product. */
     KeywordField DAAP_CRITICALITY = new KeywordField("daapCriticality", "daapCriticality");
 
+    /** Input ports guids for this data product. */
+    KeywordField DAAP_INPUT_PORT_GUIDS = new KeywordField("daapInputPortGuids", "daapInputPortGuids");
+
+    /** Output ports guids for this data product. */
+    KeywordField DAAP_OUTPUT_PORT_GUIDS = new KeywordField("daapOutputPortGuids", "daapOutputPortGuids");
+
     /** Information sensitivity of this data product. */
     KeywordField DAAP_SENSITIVITY = new KeywordField("daapSensitivity", "daapSensitivity");
 
@@ -329,6 +335,12 @@ public interface IDataProduct {
 
     /** Criticality of this data product. */
     DataProductCriticality getDaapCriticality();
+
+    /** Input ports guids for this data product. */
+    SortedSet<String> getDaapInputPortGuids();
+
+    /** Output ports guids for this data product. */
+    SortedSet<String> getDaapOutputPortGuids();
 
     /** Information sensitivity of this data product. */
     DataProductSensitivity getDaapSensitivity();
