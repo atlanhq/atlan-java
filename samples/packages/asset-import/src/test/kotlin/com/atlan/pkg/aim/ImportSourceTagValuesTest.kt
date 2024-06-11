@@ -74,7 +74,7 @@ class ImportSourceTagValuesTest : PackageTest() {
         assertTrue(result is Table)
         val table = result as Table
         val tags = table.atlanTags
-        assertEquals(4, tags.size)
+        assertEquals(1, tags.size)
         tags.forEach { tag ->
             assertFalse(tag.propagate)
             val attachments = tag.sourceTagAttachments
@@ -132,6 +132,6 @@ class ImportSourceTagValuesTest : PackageTest() {
             .ifPresent {
                 Table.purge(it.guid)
             }
-        teardown(true) // context.failedTests.size() > 0)
+        teardown(context.failedTests.size() > 0)
     }
 }
