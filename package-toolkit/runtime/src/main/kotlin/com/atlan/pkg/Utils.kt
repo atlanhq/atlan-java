@@ -512,17 +512,17 @@ object Utils {
                 "s3" -> {
                     val s3 = S3Credential(cred)
                     val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
+                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
                 }
                 "gcs" -> {
                     val gcs = GCSCredential(cred)
                     val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
+                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
                 }
                 "adls" -> {
                     val adls = ADLSCredential(cred)
                     val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
-                    getInputFile(sync, "$preppedPrefix/$preppedKey", outputDirectory)
+                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
                 }
                 else -> {
                     logger.warn { "Unknown source ${cred.authType} -- skipping." }
@@ -555,22 +555,21 @@ object Utils {
         } else {
             val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
             val cred = MAPPER.readValue<Credential>(contents)
-            val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
             when (cred.authType) {
                 "s3" -> {
                     val s3 = S3Credential(cred)
                     val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                    getInputFiles(sync, outputDirectory, prefix)
                 }
                 "gcs" -> {
                     val gcs = GCSCredential(cred)
                     val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                    getInputFiles(sync, outputDirectory, prefix)
                 }
                 "adls" -> {
                     val adls = ADLSCredential(cred)
                     val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
-                    getInputFiles(sync, "$preppedPrefix/", outputDirectory)
+                    getInputFiles(sync, outputDirectory, prefix)
                 }
                 else -> {
                     logger.warn { "Unknown source ${cred.authType} -- skipping." }
@@ -584,25 +583,30 @@ object Utils {
      * Given an object storage syncer, download the specified file to the local outputDirectory.
      *
      * @param syncer object storage syncer
-     * @param remote object key in object storage
      * @param outputDirectory local directory into which to download the file
+     * @param prefix object prefix in object storage
      */
-    private fun getInputFile(syncer: ObjectStorageSyncer, remote: String, outputDirectory: String): String {
-        val filename = File(remote).name
-        val path = "$outputDirectory${File.separator}$filename"
-        syncer.downloadFrom(remote, path)
-        return path
+    fun getInputFiles(
+        syncer: ObjectStorageSyncer,
+        outputDirectory: String,
+        prefix: String? = null,
+    ): List<String> {
+        val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
+        return syncer.copyFrom("$preppedPrefix/", outputDirectory)
     }
 
     /**
      * Given an object storage syncer, download the specified file to the local outputDirectory.
      *
      * @param syncer object storage syncer
-     * @param remote object key in object storage
      * @param outputDirectory local directory into which to download the file
+     * @param remote object key in object storage
      */
-    private fun getInputFiles(syncer: ObjectStorageSyncer, remote: String, outputDirectory: String): List<String> {
-        return syncer.copyFrom(remote, outputDirectory)
+    fun getInputFile(syncer: ObjectStorageSyncer, outputDirectory: String, remote: String): String {
+        val filename = File(remote).name
+        val path = "$outputDirectory${File.separator}$filename"
+        syncer.downloadFrom(remote, path)
+        return path
     }
 
     /**
@@ -619,8 +623,6 @@ object Utils {
     ) {
         val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
         val cred = MAPPER.readValue<Credential>(contents)
-        val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
-        val preppedKey = getOrDefault(key?.trimStart('/'), File(outputFile).name) // default to filename from the output file
         val sync: ObjectStorageSyncer? = when (cred.authType) {
             "s3" -> {
                 val s3 = S3Credential(cred)
@@ -648,8 +650,41 @@ object Utils {
                 null
             }
         }
-        sync?.uploadTo(outputFile, "$preppedPrefix/$preppedKey") ?: {
+        sync?.let { uploadOutputFile(it, outputFile, prefix, key) } ?: {
             throw IllegalStateException("No valid target to upload output file found.")
+        }
+    }
+
+    /**
+     * Upload the provided output file to the object store via the provided syncer.
+     *
+     * @param syncer through which to upload the file
+     * @param outputFile path and filename of the file to upload
+     * @param prefix (path / directory) where the file should be uploaded in object store
+     * @param key (filename) of the file in object store
+     */
+    fun uploadOutputFile(
+        syncer: ObjectStorageSyncer,
+        outputFile: String,
+        prefix: String? = null,
+        key: String? = null,
+    ) {
+        val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
+        val preppedKey = getOrDefault(key?.trimStart('/'), File(outputFile).name) // default to filename from the output file
+        syncer.uploadTo(outputFile, "$preppedPrefix/$preppedKey")
+    }
+
+    /**
+     * Return the backing store of the Atlan tenant.
+     *
+     * @return object storage syncer for Atlan's backing store
+     */
+    fun getBackingStore(): ObjectStorageSyncer {
+        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "aws")) {
+            "aws" -> S3Sync("", "", logger)
+            "gcp" -> GCSSync("", "", logger, "")
+            "azure" -> ADLSSync("", "", logger, "", "", "")
+            else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
     }
 }

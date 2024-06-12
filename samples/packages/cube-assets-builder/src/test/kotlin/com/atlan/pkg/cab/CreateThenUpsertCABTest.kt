@@ -169,7 +169,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 trackBatches = false,
-                skipS3 = true,
+                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -470,7 +470,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                 deltaSemantic = "full",
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
                 deltaRemovalType = "purge",
-                skipS3 = true,
+                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))

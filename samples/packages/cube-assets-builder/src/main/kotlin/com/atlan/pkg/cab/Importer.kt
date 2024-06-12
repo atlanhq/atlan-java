@@ -14,7 +14,7 @@ import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
-import com.atlan.pkg.objectstore.S3Sync
+import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.util.AssetRemover
@@ -57,9 +57,7 @@ object Importer {
     fun import(config: CubeAssetsBuilderCfg, outputDirectory: String = "tmp"): String? {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
-        val defaultRegion = Utils.getEnvVar("AWS_S3_REGION")
-        val defaultBucket = Utils.getEnvVar("AWS_S3_BUCKET_NAME")
-        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "UPLOAD") == "UPLOAD"
+        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "DIRECT") == "DIRECT"
         val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetsKey = Utils.getOrDefault(config.assetsKey, "")
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
@@ -174,16 +172,16 @@ object Importer {
             } else {
                 val purgeAssets = Utils.getOrDefault(config.deltaRemovalType, "archive") == "purge"
                 val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
-                val skipS3 = Utils.getOrDefault(config.skipS3, false)
+                val skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false)
                 val cubeName = preprocessedDetails.cubeName
                 val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQN"
-                val s3 = if (!skipS3) S3Sync(defaultBucket, defaultRegion, logger) else null
+                val objectStore = if (!skipObjectStore) Utils.getBackingStore() else null
                 val lastCubesFile = if (previousFileDirect.isNotBlank()) {
                     transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
-                } else if (skipS3) {
+                } else if (skipObjectStore) {
                     ""
                 } else {
-                    s3!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
+                    objectStore!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
                 }
                 if (lastCubesFile.isNotBlank()) {
                     // If there was a previous file, calculate the delta to see what we need
@@ -203,9 +201,9 @@ object Importer {
                 } else {
                     logger.info { "No previous file found for cube, treated it as an initial load." }
                 }
-                // Copy processed files to specified location in S3 for future comparison purposes
-                if (!skipS3) {
-                    uploadToS3(s3!!, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
+                // Copy processed files to specified location in object storage for future comparison purposes
+                if (!skipObjectStore) {
+                    uploadToBackingStore(objectStore!!, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
                 }
             }
         }
@@ -213,22 +211,19 @@ object Importer {
     }
 
     /**
-     * Upload a file used to load the cube to S3.
+     * Upload a file used to load the cube to Atlan backing store.
      *
-     * @param s3 connectivity to S3 bucket into which to upload the file
+     * @param objectStore syncer providing access to the Atlan's backing object store
      * @param localFile the full path of the local file to upload
      * @param cubeQualifiedName the qualified name of the cube to which the file belongs
-     * @param s3Extension the extension to add to the file in S3
+     * @param extension the extension to add to the file in object storage
      */
-    fun uploadToS3(s3: S3Sync, localFile: String, cubeQualifiedName: String, s3Extension: String) {
+    fun uploadToBackingStore(objectStore: ObjectStorageSyncer, localFile: String, cubeQualifiedName: String, extension: String) {
         val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQualifiedName"
         val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
             .withZone(ZoneId.of("UTC"))
             .format(Instant.now())
-        s3.uploadTo(
-            localFile,
-            "$previousFileLocation/$sortedTime$s3Extension",
-        )
+        Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
     }
 
     private fun preprocessCSV(originalFile: String, fieldSeparator: Char): PreprocessedCsv {

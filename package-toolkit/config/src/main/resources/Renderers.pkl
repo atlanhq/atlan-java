@@ -868,6 +868,12 @@ local class WorkflowContainer {
       value = "argo-artifacts"
     }
     new ConfigMapEntry {
+      name = "CLOUD_PROVIDER"
+      configMapName = "atlan-defaults"
+      configMapKey = "cloud"
+      default = "aws"
+    }
+    new ConfigMapEntry {
       name = "AWS_S3_BUCKET_NAME"
       configMapName = "atlan-defaults"
       configMapKey = "bucket"

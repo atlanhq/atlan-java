@@ -33,7 +33,7 @@ object Loader {
     fun import(config: LineageBuilderCfg, outputDirectory: String = "tmp") {
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-        val lineageUpload = Utils.getOrDefault(config.lineageImportType, "UPLOAD") == "UPLOAD"
+        val lineageUpload = Utils.getOrDefault(config.lineageImportType, "DIRECT") == "DIRECT"
         val lineageFilename = Utils.getOrDefault(config.lineageFile, "")
         val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val lineageKey = Utils.getOrDefault(config.lineageKey, "")
