@@ -60,6 +60,7 @@ class CreateThenUpsertRABTest : PackageTest() {
                     .replace("{{CONNECTION1}}", conn1)
                     .replace("{{TAG1}}", tag1)
                     .replace("{{TAG2}}", tag2)
+                    .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -74,6 +75,7 @@ class CreateThenUpsertRABTest : PackageTest() {
                 if (!line.contains("TEST_VIEW")) {
                     val revised = line
                         .replace("Test ", "Revised ")
+                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                     output.appendText("$revised\n")
                 }
             }

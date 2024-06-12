@@ -1,5 +1,6 @@
 typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,dataType,displayName,description,certificateStatus,certificateStatusMessage,readme,adminRoles,adminGroups,adminUsers
-Connection,{{CONNECTION1}},cockroachdb,,,,,,,,,,,$admin,admins,chris
+Connection,{{CONNECTION1}},cockroachdb,,,,,,,,,,,$admin,admins,"chris
+{{API_TOKEN_USER}}"
 Database,{{CONNECTION1}},cockroachdb,TEST_DB,,,,,Test DB,,,,,,,
 Schema,{{CONNECTION1}},cockroachdb,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,
 Table,{{CONNECTION1}},cockroachdb,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,,,
