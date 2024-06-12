@@ -111,12 +111,12 @@ uiConfig {
           hide = true
           helpText = "Path to a direct file (locally) to use for delta processing."
         }
-        ["skip_s3"] = new BooleanInput {
-          title = "Skip S3"
+        ["skip_object_store"] = new BooleanInput {
+          title = "Skip object storage"
           required = false
           hide = true
           defaultSelection = false
-          helpText = "Whether to skip S3 operations (uploading and downloading files) as part of delta processing."
+          helpText = "Whether to skip object storage operations (uploading and downloading files) as part of delta processing."
         }
       }
     }
