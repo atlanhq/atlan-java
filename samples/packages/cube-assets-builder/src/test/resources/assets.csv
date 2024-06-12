@@ -1,5 +1,6 @@
 typeName,connectionName,connectorType,cubeName,cubeDimensionName,cubeHierarchyName,fieldName,parentFieldQualifiedName,displayName,description,certificateStatus,certificateStatusMessage,readme,atlanTags,adminRoles,adminGroups,adminUsers
-Connection,{{CONNECTION1}},essbase,,,,,,,,,,,,$admin,admins,chris
+Connection,{{CONNECTION1}},essbase,,,,,,,,,,,,$admin,admins,"chris
+{{API_TOKEN_USER}}"
 Cube,{{CONNECTION1}},essbase,TEST_CUBE,,,,,Test cube,,,,,,,,
 CubeDimension,{{CONNECTION1}},essbase,TEST_CUBE,TEST_DIM,,,,Test dimension,,,,,,,,
 CubeHierarchy,{{CONNECTION1}},essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY1,,,Test hierarchy1,,VERIFIED,Ready to use,<h1>Table readme</h1>,"{{TAG1}}>>FULL

@@ -50,6 +50,7 @@ class PartialAssetsTest : PackageTest() {
             lines.forEach { line ->
                 val revised = line
                     .replace("{{CONNECTION1}}", conn1)
+                    .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
