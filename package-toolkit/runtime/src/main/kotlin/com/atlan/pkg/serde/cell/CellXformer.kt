@@ -13,14 +13,15 @@ import java.util.TreeSet
 
 object CellXformer {
     const val LIST_DELIMITER = "\n"
+    private const val NEWLINE_SENTINEL = "§\r"
 
     fun encode(
         value: Any?,
-        guid: String,
-        dates: Boolean,
+        guid: String? = null,
+        dates: Boolean = false,
     ): String {
         return when (value) {
-            is String -> value
+            is String -> encodeString(value)
             is Collection<*> -> {
                 val list = mutableListOf<String>()
                 for (element in value) {
@@ -39,7 +40,7 @@ object CellXformer {
             is Asset -> AssetRefXformer.encode(value)
             is AtlanEnum -> EnumXformer.encode(value)
             is AtlanStruct -> StructXformer.encode(value)
-            is AtlanTag -> AtlanTagXformer.encode(guid, value)
+            is AtlanTag -> AtlanTagXformer.encode(guid!!, value)
             is Long -> {
                 if (dates) {
                     TimestampXformer.encode(value)
@@ -68,7 +69,7 @@ object CellXformer {
                 in GroupXformer.FIELDS -> GroupXformer.decode(value, fieldName)
                 in RoleXformer.FIELDS -> RoleXformer.decode(value, fieldName)
                 in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
-                else -> value
+                else -> decodeString(value)
             }
         } else if (Boolean::class.java.isAssignableFrom(type) || java.lang.Boolean::class.java.isAssignableFrom(type)) {
             value.toBoolean()
@@ -131,6 +132,22 @@ object CellXformer {
             listOf()
         } else {
             values.split(LIST_DELIMITER).map { it.trim() }
+        }
+    }
+
+    private fun encodeString(value: String): String {
+        return if (value.contains(LIST_DELIMITER)) {
+            value.replace(LIST_DELIMITER, NEWLINE_SENTINEL)
+        } else {
+            value
+        }
+    }
+
+    private fun decodeString(value: String): String {
+        return if (value.contains(NEWLINE_SENTINEL)) {
+            value.replace(NEWLINE_SENTINEL, LIST_DELIMITER)
+        } else {
+            value
         }
     }
 }
