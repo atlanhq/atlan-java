@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.lftag
+import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
-import com.atlan.pkg.lftag.Results
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import mu.KotlinLogging
@@ -37,19 +38,23 @@ object LakeTagSynchronizer {
         val tagFileNames = mutableListOf<String>()
         val connectionMap = mutableMapOf<String, String>()
         val metadataMap = mutableMapOf<String, String>()
-        files.forEach({ fileName ->
+        files.forEach { fileName ->
             when (fileName) {
                 "$outputDirectory/connection_map.json" -> {
                     val jsonString: String = File(fileName).readText(Charsets.UTF_8)
                     connectionMap += mapper.readValue<Map<String, String>>(jsonString)
                 }
+
                 "$outputDirectory/metadata_map.json" -> {
                     val jsonString: String = File(fileName).readText(Charsets.UTF_8)
                     metadataMap += mapper.readValue<Map<String, String>>(jsonString)
                 }
-                else -> { tagFileNames.add(fileName) }
+
+                else -> {
+                    tagFileNames.add(fileName)
+                }
             }
-        })
+        }
         if (connectionMap.isEmpty()) {
             logger.error { "The file connection_map.json must be provided." }
         }

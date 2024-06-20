@@ -17,7 +17,7 @@ containerCommand {
   "/dumb-init"
   "--"
   "java"
-  "LakeTagSynchronizer"
+  "com.atlan.pkg.lftag.LakeTagSynchronizer"
 }
 outputs {
   files {

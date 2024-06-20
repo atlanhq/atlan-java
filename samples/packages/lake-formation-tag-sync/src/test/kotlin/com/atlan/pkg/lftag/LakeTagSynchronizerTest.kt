@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.pkg.lftag
+import LakeFormationTagSyncCfg
 import com.atlan.pkg.PackageTest
 import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
