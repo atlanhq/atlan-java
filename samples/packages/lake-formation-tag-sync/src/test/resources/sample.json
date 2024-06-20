@@ -1,0 +1,57 @@
+{
+  "TableList": [
+    {
+      "Table": {
+        "CatalogId": "614518280298",
+        "DatabaseName": "dev_atlan_dev",
+        "Name": "stg_customer_categories"
+      },
+      "LFTagOnDatabase": [
+        {
+          "CatalogId": "614518280298",
+          "TagKey": "security_classification",
+          "TagValues": [
+            "public"
+          ]
+        },
+        {
+          "CatalogId": "614518280298",
+          "TagKey": "privacy_sensitivity",
+          "TagValues": [
+            "non-pi"
+          ]
+        }
+      ],
+      "LFTagsOnTable": [
+        {
+          "CatalogId": "614518280298",
+          "TagKey": "security_classification",
+          "TagValues": [
+            "public"
+          ]
+        },
+        {
+          "CatalogId": "614518280298",
+          "TagKey": "data_load_method",
+          "TagValues": [
+            "fullhistory"
+          ]
+        }
+      ],
+      "LFTagsOnColumns": [
+        {
+          "Name": "club_code",
+          "LFTags": [
+            {
+              "CatalogId": "614518280298",
+              "TagKey": "security_classification",
+              "TagValues": [
+                "public"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
