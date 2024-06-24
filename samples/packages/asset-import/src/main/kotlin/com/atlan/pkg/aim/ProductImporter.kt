@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
 import com.atlan.model.assets.Asset
@@ -13,11 +15,27 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
+/**
+ * Import data products (only) into Atlan from a provided CSV file.
+ *
+ * Only the data products and attributes in the provided CSV file will attempt to be loaded.
+ * By default, any blank values in a cell in the CSV file will be ignored. If you would like any
+ * particular column's blank values to actually overwrite (i.e. remove) existing values for that
+ * asset in Atlan, then add that column's field to getAttributesToOverwrite.
+ *
+ * @param filename name of the file to import
+ * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
+ * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
+ * @param batchSize maximum number of records to save per API request
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ */
 class ProductImporter(
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : CSVImporter(
     filename = filename,
@@ -26,6 +44,7 @@ class ProductImporter(
     batchSize = batchSize,
     typeNameFilter = DataProduct.TYPE_NAME,
     logger = KotlinLogging.logger {},
+    failOnErrors = failOnErrors,
     fieldSeparator = fieldSeparator,
 ) {
 

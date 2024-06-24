@@ -21,6 +21,7 @@ import mu.KotlinLogging
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class GlossaryImporter(
@@ -28,6 +29,7 @@ class GlossaryImporter(
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : GTCImporter(
     filename = filename,
@@ -37,6 +39,7 @@ class GlossaryImporter(
     cache = GlossaryCache,
     typeNameFilter = Glossary.TYPE_NAME,
     logger = KotlinLogging.logger {},
+    failOnErrors = failOnErrors,
     fieldSeparator = fieldSeparator,
 ) {
     /** {@inheritDoc} */
