@@ -18,6 +18,7 @@ import com.atlan.model.assets.Schema;
 import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.FluentSearch;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -260,8 +261,47 @@ public class DataMeshTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"mesh.purge.connection"},
+            groups = {"mesh.purge.product"},
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*"},
+            alwaysRun = true)
+    void purgeProduct() throws AtlanException, InterruptedException {
+        AssetMutationResponse response = DataProduct.purge(product.getGuid());
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
+        assertTrue(one instanceof DataProduct);
+        DataProduct deletedProduct =
+                response.getDeletedAssets(DataProduct.class).get(0);
+        assertEquals(deletedProduct.getGuid(), product.getGuid());
+        assertEquals(deletedProduct.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"mesh.purge.domains"},
+            dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.product"},
+            alwaysRun = true)
+    void purgeDomains() throws AtlanException, InterruptedException {
+        AssetMutationResponse response = DataDomain.purge(subDomain.getGuid());
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
+        assertTrue(one instanceof DataDomain);
+        DataDomain deletedDomain = response.getDeletedAssets(DataDomain.class).get(0);
+        assertEquals(deletedDomain.getGuid(), subDomain.getGuid());
+        assertEquals(deletedDomain.getStatus(), AtlanStatus.DELETED);
+        response = DataDomain.purge(domain.getGuid());
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        one = response.getDeletedAssets().get(0);
+        assertTrue(one instanceof DataDomain);
+        deletedDomain = response.getDeletedAssets(DataDomain.class).get(0);
+        assertEquals(deletedDomain.getGuid(), domain.getGuid());
+        assertEquals(deletedDomain.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"mesh.purge.connection"},
+            dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.domains"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
