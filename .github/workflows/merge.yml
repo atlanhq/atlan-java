@@ -152,12 +152,12 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
       - name: Publish package
         run: |
-          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Dorg.gradle.project.sonatypeUsername=$NEXUS_USERNAME -Dorg.gradle.project.sonatypePassword=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -Dorg.gradle.project.sonatypeUsername=$SONATYPE_USER -Dorg.gradle.project.sonatypePassword=$SONATYPE_TOKEN -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+          SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
   publish-base-image:

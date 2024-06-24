@@ -304,6 +304,12 @@ public interface IGlossaryTerm {
     SortedSet<String> getAssetMcMonitorTypes();
 
     /** TBC */
+    Long getAssetPoliciesCount();
+
+    /** TBC */
+    SortedSet<String> getAssetPolicyGUIDs();
+
+    /** TBC */
     Long getAssetSodaCheckCount();
 
     /** TBC */

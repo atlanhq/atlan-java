@@ -239,6 +239,12 @@ public interface IDynamoDB {
     /** Types of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorTypes();
 
+    /** Count of policies inside the asset */
+    Long getAssetPoliciesCount();
+
+    /** Array of policy ids governing this asset */
+    SortedSet<String> getAssetPolicyGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
