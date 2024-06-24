@@ -50,6 +50,7 @@ class CSVReader @JvmOverloads constructor(
     private val header: List<String> = CSVXformer.getHeader(path, fieldSeparator)
     private val typeIdx: Int = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
     private val qualifiedNameIdx: Int = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
+    private val includesTags: Boolean = header.indexOf("atlanTags") != -1
 
     init {
         if (typeIdx < 0) {
@@ -84,7 +85,7 @@ class CSVReader @JvmOverloads constructor(
         val primaryBatch = ParallelBatch(
             client,
             batchSize,
-            true,
+            includesTags,
             customMetadataHandling,
             true,
             updateOnly,
