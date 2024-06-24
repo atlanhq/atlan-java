@@ -25,6 +25,7 @@ import mu.KLogger
  * @param cache of existing glossaries, terms or categories (will be preloaded by import)
  * @param typeNameFilter name of the specific type that should be handled by this importer
  * @param logger through which to log any problems
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class GTCImporter(
@@ -35,6 +36,7 @@ abstract class GTCImporter(
     protected val cache: AssetCache,
     typeNameFilter: String,
     logger: KLogger,
+    failOnErrors: Boolean,
     fieldSeparator: Char,
 ) : CSVImporter(
     filename,
@@ -43,6 +45,7 @@ abstract class GTCImporter(
     attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
+    failOnErrors = failOnErrors,
     trackBatches = true, // Always track batches for GTC importers, to ensure cache is managed
     fieldSeparator = fieldSeparator,
 ) {

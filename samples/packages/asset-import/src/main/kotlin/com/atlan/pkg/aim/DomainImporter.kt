@@ -27,6 +27,7 @@ import kotlin.math.max
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
  * @param batchSize maximum number of records to save per API request
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class DomainImporter(
@@ -34,6 +35,7 @@ class DomainImporter(
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
+    private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : CSVImporter(
     filename,
@@ -42,7 +44,8 @@ class DomainImporter(
     attrsToOverwrite,
     updateOnly = updateOnly,
     batchSize = batchSize,
-    trackBatches = true, // Always track batches for GTC importers, to ensure cache is managed
+    failOnErrors = failOnErrors,
+    trackBatches = true, // Always track batches for domain importer, to ensure cache is managed
     fieldSeparator = fieldSeparator,
 ) {
     private var levelToProcess = 0
