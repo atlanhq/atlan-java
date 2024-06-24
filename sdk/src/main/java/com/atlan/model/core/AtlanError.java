@@ -14,6 +14,11 @@ import lombok.ToString;
 public class AtlanError extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    public AtlanError(long code, String message) {
+        this.code = code;
+        this.errorMessage = message;
+    }
+
     /** A numeric error code. */
     Long code;
 
