@@ -457,6 +457,23 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     }
 
     /**
+     * Indicates whether the sort options contain any user-requested sorting (true) or not (false).
+     *
+     * @param sort list of sorting options
+     * @return true if the sorting options have any user-requested sorting
+     */
+    public static boolean hasUserRequestedSort(List<SortOptions> sort) {
+        if (presortedByTimestamp(sort)) {
+            return false;
+        }
+        if (sort != null && !sort.isEmpty() && sort.get(0).isField()) {
+            String fieldName = sort.get(0).field().field();
+            return !fieldName.equals(Asset.GUID.getInternalFieldName()) || sort.size() != 1;
+        }
+        return true;
+    }
+
+    /**
      * Rewrites the sorting options to ensure that sorting by creation time, ascending, is the top
      * priority. Adds this condition if it does not already exist, or moves it up to the top sorting
      * priority if it does already exist in the list.
@@ -534,6 +551,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 if (presortedByTimestamp(dsl.getSort())) {
                     // If the results are already sorted in ascending order by timestamp, proceed
                     this.response = response;
+                } else if (hasUserRequestedSort(dsl.getSort())) {
+                    // Alternatively, if they are sorted by any user-requested sort, we need to throw an error
+                    throw new IllegalArgumentException(
+                            "Bulk searches can only be sorted by timestamp in ascending order - you must remove your own requested sorting to run a bulk search.");
                 } else {
                     // Otherwise, re-fetch the first page sorted first by timestamp
                     this.response = response.getFirstPageTimestampOrdered();
