@@ -31,4 +31,8 @@ public class InvalidRequestException extends AtlanException {
     public InvalidRequestException(ErrorCode error, Throwable e) {
         super(error, e);
     }
+
+    public InvalidRequestException(ErrorCode error, Throwable e, String... params) {
+        super(error, e, params);
+    }
 }

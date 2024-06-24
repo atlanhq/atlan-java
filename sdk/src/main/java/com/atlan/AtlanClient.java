@@ -154,6 +154,9 @@ public class AtlanClient {
     /** Endpoint with operations to manage SSO configuration. */
     public final SSOEndpoint sso;
 
+    /** Endpoint with operations to interact with OpenLineage. */
+    public final OpenLineageEndpoint openLineage;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -204,6 +207,7 @@ public class AtlanClient {
         credentials = new CredentialsEndpoint(this);
         tasks = new TaskEndpoint(this);
         sso = new SSOEndpoint(this);
+        openLineage = new OpenLineageEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
