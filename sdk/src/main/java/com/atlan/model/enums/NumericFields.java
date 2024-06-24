@@ -46,6 +46,8 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_DBT_JOB_NEXT_RUN("assetDbtJobNextRun"),
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     ASSET_MC_LAST_SYNC_RUN_AT("assetMcLastSyncRunAt"),
+    /** Count of policies inside the asset */
+    ASSET_POLICIES_COUNT("assetPoliciesCount"),
     /** Number of checks done via Soda. */
     ASSET_SODA_CHECK_COUNT("assetSodaCheckCount"),
     /** TBC */
@@ -54,6 +56,14 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_SODA_LAST_SYNC_RUN_AT("assetSodaLastSyncRunAt"),
     /** TBC */
     AUTH_SERVICE_POLICY_LAST_SYNC("authServicePolicyLastSync"),
+    /** count of noncompliant assets in the incident */
+    BUSINESS_POLICY_INCIDENT_NONCOMPLIANT_COUNT("businessPolicyIncidentNoncompliantCount"),
+    /** Validity start date of the policy */
+    BUSINESS_POLICY_VALID_FROM("businessPolicyValidFrom"),
+    /** Validity end date of the policy */
+    BUSINESS_POLICY_VALID_TILL("businessPolicyValidTill"),
+    /** Version of the policy */
+    BUSINESS_POLICY_VERSION("businessPolicyVersion"),
     /** Time at which this calculation view was activated at */
     CALCULATION_VIEW_ACTIVATED_AT("calculationViewActivatedAt"),
     /** The version ID of this calculation view. */
@@ -110,6 +120,8 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
     /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
+    /** number of compliant assets in the policy */
+    COMPLIANT_ASSETS_COUNT("compliantAssetsCount"),
     /** Number of dimensions in the cube. */
     CUBE_DIMENSION_COUNT("cubeDimensionCount"),
     /** Number of total fields in the cube hierarchy. */
@@ -192,6 +204,8 @@ public enum NumericFields implements AtlanSearchableField {
     GCS_OBJECT_SIZE("gcsObjectSize"),
     /** Number of the project in which the asset exists. */
     GOOGLE_PROJECT_NUMBER("googleProjectNumber"),
+    /** number of governed assets in the policy */
+    GOVERNED_ASSETS_COUNT("governedAssetsCount"),
     /** Number of members in this consumer group. */
     KAFKA_CONSUMER_GROUP_MEMBER_COUNT("kafkaConsumerGroupMemberCount"),
     /** Number of partitions for this topic. */
@@ -268,6 +282,10 @@ public enum NumericFields implements AtlanSearchableField {
     MONGO_DB_DATABASE_COLLECTION_COUNT("mongoDBDatabaseCollectionCount"),
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     NESTED_COLUMN_COUNT("nestedColumnCount"),
+    /** number of non compliant assets in the policy */
+    NON_COMPLIANT_ASSETS_COUNT("nonCompliantAssetsCount"),
+    /** number of non governed assets in the policy */
+    NON_GOVERNED_ASSETS_COUNT("nonGovernedAssetsCount"),
     /** Number of digits allowed to the right of the decimal point. */
     NUMERIC_SCALE("numericScale"),
     /** Number of rows after which results should be uploaded to storage. */

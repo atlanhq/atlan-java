@@ -104,6 +104,8 @@ public enum TextFields implements AtlanSearchableField {
     AZURE_RESOURCE_ID("azureResourceId.text"),
     /** Simple name of the AzureServiceBus Namespace in which this asset exists. */
     AZURE_SERVICE_BUS_NAMESPACE_NAME("azureServiceBusNamespaceName"),
+    /** Unique name of the business policy through which this asset is accessible. */
+    BUSINESS_POLICY_QUALIFIED_NAME("businessPolicyQualifiedName.text"),
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     CALCULATION_VIEW_NAME("calculationViewName"),
     /** Status of this asset's certification. */

@@ -343,6 +343,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetMcMonitorTypes;
 
+    /** Count of policies inside the asset */
+    @Attribute
+    Long assetPoliciesCount;
+
+    /** Array of policy ids governing this asset */
+    @Attribute
+    @Singular
+    SortedSet<String> assetPolicyGUIDs;
+
     /** Number of checks done via Soda. */
     @Attribute
     Long assetSodaCheckCount;

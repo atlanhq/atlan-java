@@ -51,6 +51,10 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
     @Singular
     List<Action> taskActions;
 
+    /** username of the user who created this task */
+    @Attribute
+    String taskCreatedBy;
+
     /** action executed by the recipient */
     @Attribute
     String taskExecutionAction;
@@ -91,6 +95,10 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
     /** type of task */
     @Attribute
     String taskType;
+
+    /** username of the user who updated this task */
+    @Attribute
+    String taskUpdatedBy;
 
     /**
      * Builds the minimal object necessary to create a relationship to a Task, from a potentially

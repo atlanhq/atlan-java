@@ -266,6 +266,12 @@ public interface IAsset {
     /** Types of all associated Monte Carlo monitors. */
     KeywordField ASSET_MC_MONITOR_TYPES = new KeywordField("assetMcMonitorTypes", "assetMcMonitorTypes");
 
+    /** Count of policies inside the asset */
+    NumericField ASSET_POLICIES_COUNT = new NumericField("assetPoliciesCount", "assetPoliciesCount");
+
+    /** Array of policy ids governing this asset */
+    KeywordField ASSET_POLICY_GUI_DS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
+
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
 
@@ -697,6 +703,12 @@ public interface IAsset {
 
     /** Types of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorTypes();
+
+    /** Count of policies inside the asset */
+    Long getAssetPoliciesCount();
+
+    /** Array of policy ids governing this asset */
+    SortedSet<String> getAssetPolicyGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
