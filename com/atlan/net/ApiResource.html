@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":10,"i13":10,"i14":9,"i15":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":10,"i15":10,"i16":9,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -375,21 +375,43 @@ implements <a href="../model/core/AtlanResponseInterface.html" title="interface 
 </td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,com.atlan.model.core.AtlanObject,com.atlan.net.RequestOptions)">requestPlainText</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                java.lang.String&nbsp;url,
+                <a href="../model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>&nbsp;payload,
+                <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Pass-through to the request-handling method after confirming that the provided payload is non-null.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">requestPlainText</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                java.lang.String&nbsp;url,
+                java.lang.String&nbsp;body,
+                <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Pass-through the request to the request-handling method.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLastResponse(com.atlan.net.AtlanResponse)">setLastResponse</a></span>&#8203;(<a href="AtlanResponse.html" title="class in com.atlan.net">AtlanResponse</a>&nbsp;response)</code></th>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#urlEncode(java.lang.String)">urlEncode</a></span>&#8203;(java.lang.String&nbsp;str)</code></th>
 <td class="colLast">
 <div class="block">URL-encodes a string.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#urlEncodeId(java.lang.String)">urlEncodeId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
@@ -654,6 +676,34 @@ implements <a href="../model/core/AtlanResponseInterface.html" title="interface 
 </dl>
 </li>
 </ul>
+<a id="requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,com.atlan.model.core.AtlanObject,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestPlainText</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;requestPlainText&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                                                java.lang.String&nbsp;url,
+                                                <a href="../model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>&nbsp;payload,
+                                                <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Pass-through to the request-handling method after confirming that the provided payload is non-null.
+ This uses special handling of the response, where the response is plain text rather than JSON.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>method</code> - for the request</dd>
+<dd><code>url</code> - of the request</dd>
+<dd><code>payload</code> - to send in the request</dd>
+<dd><code>options</code> - for sending the request (or null to use global defaults)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problem</dd>
+</dl>
+</li>
+</ul>
 <a id="request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
@@ -679,6 +729,36 @@ implements <a href="../model/core/AtlanResponseInterface.html" title="interface 
 <dd><code>url</code> - of the request</dd>
 <dd><code>body</code> - to send in the request, if any (to not send any use an empty string)</dd>
 <dd><code>clazz</code> - defining the expected response type</dd>
+<dd><code>options</code> - for sending the request (or null to use global defaults)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problem</dd>
+</dl>
+</li>
+</ul>
+<a id="requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestPlainText</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;requestPlainText&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                                                java.lang.String&nbsp;url,
+                                                java.lang.String&nbsp;body,
+                                                <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Pass-through the request to the request-handling method.
+ This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+ to Atlan and precisely what was returned (prior to deserialization).
+ This handles the response as plain text rather than JSON.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>method</code> - for the request</dd>
+<dd><code>url</code> - of the request</dd>
+<dd><code>body</code> - to send in the request, if any (to not send any use an empty string)</dd>
 <dd><code>options</code> - for sending the request (or null to use global defaults)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the response</dd>

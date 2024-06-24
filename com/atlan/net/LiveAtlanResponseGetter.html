@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -243,6 +243,18 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">requestPlainText</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                java.lang.String&nbsp;url,
+                java.lang.String&nbsp;body,
+                <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                java.lang.String&nbsp;requestId)</code></th>
+<td class="colLast">
+<div class="block">Send a request to an Atlan API, when a response is expected.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T extends <a href="../model/core/AtlanEventStreamResponseInterface.html" title="interface in com.atlan.model.core">AtlanEventStreamResponseInterface</a>&gt;<br>T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestStream(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions,java.lang.String)">requestStream</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
              <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
@@ -376,6 +388,38 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 <dd><code>url</code> - of the endpoint (with all path and query parameters) for the request</dd>
 <dd><code>body</code> - payload for the request, if any</dd>
 <dd><code>clazz</code> - the expected response object type from the request</dd>
+<dd><code>options</code> - any alternative options to use for the request, or null to use default options</dd>
+<dd><code>requestId</code> - unique identifier (GUID) of a single request to Atlan</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the response of the request</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problem, indicating the type of problem encountered</dd>
+</dl>
+</li>
+</ul>
+<a id="requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestPlainText</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;requestPlainText&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                         <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                                         java.lang.String&nbsp;url,
+                                         java.lang.String&nbsp;body,
+                                         <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                                         java.lang.String&nbsp;requestId)
+                                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Send a request to an Atlan API, when a response is expected.
+ This handles the response as plain text, rather than JSON.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="AtlanResponseGetter.html#requestPlainText(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">requestPlainText</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>method</code> - to use for the request</dd>
+<dd><code>url</code> - of the endpoint (with all path and query parameters) for the request</dd>
+<dd><code>body</code> - payload for the request, if any</dd>
 <dd><code>options</code> - any alternative options to use for the request, or null to use default options</dd>
 <dd><code>requestId</code> - unique identifier (GUID) of a single request to Atlan</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
