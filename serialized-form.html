@@ -4659,6 +4659,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Types of all associated Monte Carlo monitors.</div>
 </li>
 <li class="blockList">
+<h4>assetPoliciesCount</h4>
+<pre>java.lang.Long assetPoliciesCount</pre>
+<div class="block">Count of policies inside the asset</div>
+</li>
+<li class="blockList">
+<h4>assetPolicyGUIDs</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; assetPolicyGUIDs</pre>
+<div class="block">Array of policy ids governing this asset</div>
+</li>
+<li class="blockList">
 <h4>assetSodaCheckCount</h4>
 <pre>java.lang.Long assetSodaCheckCount</pre>
 <div class="block">Number of checks done via Soda.</div>
@@ -5977,6 +5987,220 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>typeName</h4>
 <pre>java.lang.String typeName</pre>
 <div class="block">Fixed typeName for BIProcesss.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.BusinessPolicy">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/BusinessPolicy.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BusinessPolicy</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>businessPolicyBaseParentGuid</h4>
+<pre>java.lang.String businessPolicyBaseParentGuid</pre>
+<div class="block">Base parent Guid for policy used in version</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyFilterDSL</h4>
+<pre>java.lang.String businessPolicyFilterDSL</pre>
+<div class="block">Business Policy Filter ES DSL to denote the associate asset/s involved.</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyLongDescription</h4>
+<pre>java.lang.String businessPolicyLongDescription</pre>
+<div class="block">Body of the business policy, a long readme like document</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyReviewPeriod</h4>
+<pre>java.lang.String businessPolicyReviewPeriod</pre>
+<div class="block">Duration for the business policy to complete review.</div>
+</li>
+<li class="blockList">
+<h4>businessPolicySelectedApprovalWF</h4>
+<pre>java.lang.String businessPolicySelectedApprovalWF</pre>
+<div class="block">Selected approval workflow id for business policy</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyType</h4>
+<pre>java.lang.String businessPolicyType</pre>
+<div class="block">Type of business policy</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyValidFrom</h4>
+<pre>java.lang.Long businessPolicyValidFrom</pre>
+<div class="block">Validity start date of the policy</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyValidTill</h4>
+<pre>java.lang.Long businessPolicyValidTill</pre>
+<div class="block">Validity end date of the policy</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyVersion</h4>
+<pre>java.lang.Integer businessPolicyVersion</pre>
+<div class="block">Version of the policy</div>
+</li>
+<li class="blockList">
+<h4>exceptionsForBusinessPolicy</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IBusinessPolicyException.html" title="interface in com.atlan.model.assets">IBusinessPolicyException</a>&gt; exceptionsForBusinessPolicy</pre>
+<div class="block">Exception assigned to business polices</div>
+</li>
+<li class="blockList">
+<h4>relatedBusinessPolicies</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IBusinessPolicy.html" title="interface in com.atlan.model.assets">IBusinessPolicy</a>&gt; relatedBusinessPolicies</pre>
+<div class="block">BusinessPolicy that have the same (or relatable) compliance</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for BusinessPolicys.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.BusinessPolicyException">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/BusinessPolicyException.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BusinessPolicyException</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>businessPolicyExceptionFilterDSL</h4>
+<pre>java.lang.String businessPolicyExceptionFilterDSL</pre>
+<div class="block">Business Policy Exception Filter ES DSL to denote the associate asset/s involved.</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyExceptionGroups</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; businessPolicyExceptionGroups</pre>
+<div class="block">List of groups who are part of this exception</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyExceptionUsers</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; businessPolicyExceptionUsers</pre>
+<div class="block">List of users who are part of this exception</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyForException</h4>
+<pre><a href="com/atlan/model/assets/IBusinessPolicy.html" title="interface in com.atlan.model.assets">IBusinessPolicy</a> businessPolicyForException</pre>
+<div class="block">Business policies related to exception</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyQualifiedName</h4>
+<pre>java.lang.String businessPolicyQualifiedName</pre>
+<div class="block">Unique name of the business policy through which this asset is accessible.</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for BusinessPolicyExceptions.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.BusinessPolicyIncident">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/BusinessPolicyIncident.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BusinessPolicyIncident</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>businessPolicyIncidentFilterDSL</h4>
+<pre>java.lang.String businessPolicyIncidentFilterDSL</pre>
+<div class="block">Filter ES DSL to denote the associate asset/s involved.</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyIncidentNoncompliantCount</h4>
+<pre>java.lang.Long businessPolicyIncidentNoncompliantCount</pre>
+<div class="block">count of noncompliant assets in the incident</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyIncidentRelatedPolicyGUIDs</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; businessPolicyIncidentRelatedPolicyGUIDs</pre>
+<div class="block">policy ids related to this incident</div>
+</li>
+<li class="blockList">
+<h4>incidentSeverity</h4>
+<pre><a href="com/atlan/model/enums/IncidentSeverity.html" title="enum in com.atlan.model.enums">IncidentSeverity</a> incidentSeverity</pre>
+<div class="block">Status of this asset's severity.</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for BusinessPolicyIncidents.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.BusinessPolicyLog">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/BusinessPolicyLog.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BusinessPolicyLog</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>businessPolicyId</h4>
+<pre>java.lang.String businessPolicyId</pre>
+<div class="block">business policy guid for which log are created</div>
+</li>
+<li class="blockList">
+<h4>businessPolicyLogPolicyType</h4>
+<pre>java.lang.String businessPolicyLogPolicyType</pre>
+<div class="block">business policy type for which log are created</div>
+</li>
+<li class="blockList">
+<h4>compliantAssetsCount</h4>
+<pre>java.lang.Long compliantAssetsCount</pre>
+<div class="block">number of compliant assets in the policy</div>
+</li>
+<li class="blockList">
+<h4>governedAssetsCount</h4>
+<pre>java.lang.Long governedAssetsCount</pre>
+<div class="block">number of governed assets in the policy</div>
+</li>
+<li class="blockList">
+<h4>nonCompliantAssetsCount</h4>
+<pre>java.lang.Long nonCompliantAssetsCount</pre>
+<div class="block">number of non compliant assets in the policy</div>
+</li>
+<li class="blockList">
+<h4>nonGovernedAssetsCount</h4>
+<pre>java.lang.Long nonGovernedAssetsCount</pre>
+<div class="block">number of non governed assets in the policy</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for BusinessPolicyLogs.</div>
 </li>
 </ul>
 </li>
@@ -9546,6 +9770,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>daapCriticality</h4>
 <pre><a href="com/atlan/model/enums/DataProductCriticality.html" title="enum in com.atlan.model.enums">DataProductCriticality</a> daapCriticality</pre>
 <div class="block">Criticality of this data product.</div>
+</li>
+<li class="blockList">
+<h4>daapInputPortGuids</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; daapInputPortGuids</pre>
+<div class="block">Input ports guids for this data product.</div>
+</li>
+<li class="blockList">
+<h4>daapOutputPortGuids</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; daapOutputPortGuids</pre>
+<div class="block">Output ports guids for this data product.</div>
 </li>
 <li class="blockList">
 <h4>daapSensitivity</h4>
@@ -26513,6 +26747,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">List of actions associated with this task.</div>
 </li>
 <li class="blockList">
+<h4>taskCreatedBy</h4>
+<pre>java.lang.String taskCreatedBy</pre>
+<div class="block">username of the user who created this task</div>
+</li>
+<li class="blockList">
 <h4>taskExecutionAction</h4>
 <pre>java.lang.String taskExecutionAction</pre>
 <div class="block">action executed by the recipient</div>
@@ -26561,6 +26800,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>taskType</h4>
 <pre>java.lang.String taskType</pre>
 <div class="block">type of task</div>
+</li>
+<li class="blockList">
+<h4>taskUpdatedBy</h4>
+<pre>java.lang.String taskUpdatedBy</pre>
+<div class="block">username of the user who updated this task</div>
 </li>
 <li class="blockListLast">
 <h4>typeName</h4>
