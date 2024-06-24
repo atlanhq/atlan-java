@@ -4,6 +4,7 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.Atlan
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
@@ -21,6 +22,13 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.serde.csv.CSVXformer
+import com.atlan.pkg.serde.csv.ThreadSafeWriter
+import de.siegmar.fastcsv.reader.CsvReader
+import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.writer.CsvWriter
+import de.siegmar.fastcsv.writer.LineDelimiter
+import de.siegmar.fastcsv.writer.QuoteStrategies
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
@@ -42,9 +50,11 @@ class ImportGlossariesTest : PackageTest() {
     private val tag2 = makeUnique("igt2")
 
     private val testFile = "input.csv"
+    private val revisedFile = "revised.csv"
 
     private val files = listOf(
         testFile,
+        revisedFile,
         "debug.log",
     )
 
@@ -62,6 +72,38 @@ class ImportGlossariesTest : PackageTest() {
                 output.appendText("$revised\n")
             }
         }
+    }
+
+    private fun modifyFile() {
+        val input = Paths.get(testDirectory, testFile)
+        val output = Paths.get(testDirectory, revisedFile)
+        val builder = CsvReader.builder()
+            .fieldSeparator(',')
+            .quoteCharacter('"')
+            .skipEmptyLines(true)
+            .ignoreDifferentFieldCount(false)
+        val reader = builder.ofCsvRecord(input)
+        val header: List<String> = CSVXformer.getHeader(input.toString(), ',')
+        val tagsIdx = header.indexOf("atlanTags")
+        val descriptionIdx = header.indexOf(Asset.DESCRIPTION.atlanFieldName)
+        CsvWriter.builder()
+            .fieldSeparator(',')
+            .quoteCharacter('"')
+            .quoteStrategy(QuoteStrategies.NON_EMPTY)
+            .lineDelimiter(LineDelimiter.PLATFORM)
+            .build(ThreadSafeWriter(output.toString()))
+            .use { out ->
+                var count = 0
+                reader.stream().forEach { r: CsvRecord ->
+                    val fields = r.fields.toMutableList()
+                    fields.removeAt(tagsIdx)
+                    if (count > 0) {
+                        fields[descriptionIdx] = "Now with a description."
+                    }
+                    out.writeRecord(fields)
+                    count++
+                }
+            }
     }
 
     private fun createTags() {
@@ -136,7 +178,7 @@ class ImportGlossariesTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun glossary1Created() {
         val g1 = Glossary.findByName(glossary1, glossaryAttrs)
         assertNotNull(g1)
@@ -147,7 +189,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(CertificateStatus.VERIFIED, g1.certificateStatus)
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun glossary2Created() {
         val g2 = Glossary.findByName(glossary2, glossaryAttrs)
         assertNotNull(g2)
@@ -159,7 +201,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals("With a message!", g2.certificateStatusMessage)
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryCategory.select()
@@ -198,7 +240,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryCategory.select()
@@ -232,7 +274,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryTerm.select()
@@ -249,111 +291,15 @@ class ImportGlossariesTest : PackageTest() {
             term as GlossaryTerm
             assertEquals(glossary1, term.anchor?.name)
             when (term.name) {
-                "Term1" -> {
-                    assertEquals(2, term.categories.size)
-                    assertEquals(setOf("Cat1.a", "Cat1.a.i"), term.categories.map(IGlossaryCategory::getName).toSet())
-                    assertEquals("Test term 1 for asset import package (multiple categories).", term.userDescription)
-                    assertEquals(setOf("chris"), term.ownerUsers)
-                    assertTrue(term.ownerGroups.isNullOrEmpty())
-                    assertEquals(CertificateStatus.DRAFT, term.certificateStatus)
-                    assertTrue(term.certificateStatusMessage.isNullOrEmpty())
-                    assertEquals(AtlanAnnouncementType.WARNING, term.announcementType)
-                    assertEquals("Careful", term.announcementTitle)
-                    assertEquals("This is only a test.", term.announcementMessage)
-                    assertEquals(1, term.atlanTags.size)
-                    assertEquals(setOf(tag1), term.atlanTags.map(AtlanTag::getTypeName).toSet())
-                    assertEquals(2, term.links.size)
-                    assertEquals(setOf("Customer", "Example"), term.links.map(ILink::getName).toSet())
-                    assertEquals(setOf("https://en.wikipedia.org/wiki/Customer", "https://www.example.com"), term.links.map(ILink::getLink).toSet())
-                    assertNotNull(term.readme)
-                    assertEquals("<h1>This is term1!</h1>", term.readme.description)
-                    assertEquals(1, term.seeAlso.size)
-                    assertEquals(setOf("Term3"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
-                    assertEquals(1, term.preferredTerms.size)
-                    assertEquals(setOf("TermA"), term.preferredTerms.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.synonyms.isNullOrEmpty())
-                    assertTrue(term.antonyms.isNullOrEmpty())
-                    assertTrue(term.translatedTerms.isNullOrEmpty())
-                    assertTrue(term.validValuesFor.isNullOrEmpty())
-                    assertTrue(term.classifies.isNullOrEmpty())
-                }
-                "TermA" -> {
-                    assertEquals(1, term.categories.size)
-                    assertEquals(setOf("Cat2"), term.categories.map(IGlossaryCategory::getName).toSet())
-                    assertEquals("Test term A for asset import package (single category).", term.userDescription)
-                    assertEquals(setOf("chris", "aryaman.bhushan"), term.ownerUsers)
-                    assertTrue(term.ownerGroups.isNullOrEmpty())
-                    assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
-                    assertTrue(term.certificateStatusMessage.isNullOrEmpty())
-                    assertEquals(AtlanAnnouncementType.INFORMATION, term.announcementType)
-                    assertEquals("Look!", term.announcementTitle)
-                    assertEquals("Just a test.", term.announcementMessage)
-                    assertEquals(1, term.atlanTags.size)
-                    assertEquals(setOf(tag2), term.atlanTags.map(AtlanTag::getTypeName).toSet())
-                    assertTrue(term.links.isNullOrEmpty())
-                    assertNull(term.readme)
-                    assertTrue(term.seeAlso.isNullOrEmpty())
-                    assertTrue(term.preferredTerms.isNullOrEmpty())
-                    assertTrue(term.synonyms.isNullOrEmpty())
-                    assertEquals(1, term.antonyms.size)
-                    assertEquals(setOf("TermB"), term.antonyms.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.translatedTerms.isNullOrEmpty())
-                    assertTrue(term.validValuesFor.isNullOrEmpty())
-                    assertTrue(term.classifies.isNullOrEmpty())
-                }
-                "TermC" -> {
-                    assertTrue(term.categories.isNullOrEmpty())
-                    assertEquals("Test term C for asset import package (no categories).", term.userDescription)
-                    assertTrue(term.ownerUsers.isNullOrEmpty())
-                    assertTrue(term.ownerGroups.isNullOrEmpty())
-                    assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
-                    assertTrue(term.certificateStatusMessage.isNullOrEmpty())
-                    assertNull(term.announcementType)
-                    assertNull(term.announcementTitle)
-                    assertNull(term.announcementMessage)
-                    assertTrue(term.atlanTags.isNullOrEmpty())
-                    assertTrue(term.links.isNullOrEmpty())
-                    assertNull(term.readme)
-                    assertTrue(term.seeAlso.isNullOrEmpty())
-                    assertTrue(term.preferredTerms.isNullOrEmpty())
-                    assertEquals(1, term.synonyms.size)
-                    assertEquals(setOf("Term2"), term.synonyms.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.antonyms.isNullOrEmpty())
-                    assertTrue(term.translatedTerms.isNullOrEmpty())
-                    assertEquals(1, term.validValuesFor.size)
-                    assertEquals(setOf("Term1"), term.validValuesFor.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.classifies.isNullOrEmpty())
-                }
-                "Term3" -> {
-                    assertTrue(term.categories.isNullOrEmpty())
-                    assertEquals("Test term 3 for asset import package (no categories).", term.userDescription)
-                    assertTrue(term.ownerUsers.isNullOrEmpty())
-                    assertTrue(term.ownerGroups.isNullOrEmpty())
-                    assertNull(term.certificateStatus)
-                    assertTrue(term.certificateStatusMessage.isNullOrEmpty())
-                    assertNull(term.announcementType)
-                    assertNull(term.announcementTitle)
-                    assertNull(term.announcementMessage)
-                    assertEquals(2, term.atlanTags.size)
-                    assertEquals(setOf(tag1, tag2), term.atlanTags.map(AtlanTag::getTypeName).toSet())
-                    assertTrue(term.links.isNullOrEmpty())
-                    assertNotNull(term.readme)
-                    assertEquals("<h3>This is term3…</h3>", term.readme.description)
-                    assertEquals(2, term.seeAlso.size)
-                    assertEquals(setOf("Term1", "Term2"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.preferredTerms.isNullOrEmpty())
-                    assertTrue(term.synonyms.isNullOrEmpty())
-                    assertTrue(term.antonyms.isNullOrEmpty())
-                    assertEquals(2, term.translatedTerms.size)
-                    assertEquals(setOf("TermA", "TermB"), term.translatedTerms.map(IGlossaryTerm::getName).toSet())
-                    assertTrue(term.validValuesFor.isNullOrEmpty())
-                    assertTrue(term.classifies.isNullOrEmpty())
-                }
+                "Term1" -> validateTerm1(term)
+                "TermA" -> validateTermA(term)
+                "TermC" -> validateTermC(term)
+                "Term3" -> validateTerm3(term)
             }
         }
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryTerm.select()
@@ -448,12 +394,176 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test
+    @Test(groups = ["aim.gloss.runUpdate"], dependsOnGroups = ["aim.gloss.create"])
+    fun upsertRevisions() {
+        modifyFile()
+        setup(
+            AssetImportCfg(
+                glossariesFile = Paths.get(testDirectory, revisedFile).toString(),
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = true,
+            ),
+        )
+        Importer.main(arrayOf(testDirectory))
+        // Allow Elastic index to become consistent
+        Thread.sleep(10000)
+    }
+
+    @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
+    fun tagsUnchanged() {
+        val g1 = Glossary.findByName(glossary1)!!
+        val request = GlossaryTerm.select()
+            .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+            .includesOnResults(termAttrs)
+            .includeOnRelations(Glossary.NAME)
+            .includeOnRelations(Readme.DESCRIPTION)
+            .includeOnRelations(Link.LINK)
+            .toRequest()
+        val response = retrySearchUntil(request, 4)
+        val g1terms = response.assets
+        assertEquals(4, g1terms.size)
+        g1terms.forEach { term ->
+            term as GlossaryTerm
+            assertEquals(glossary1, term.anchor?.name)
+            when (term.name) {
+                "Term1" -> validateTerm1(term)
+                "TermA" -> validateTermA(term)
+                "TermC" -> validateTermC(term)
+                "Term3" -> validateTerm3(term)
+            }
+        }
+    }
+
+    @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
+    fun descriptionsAdded() {
+        val g1 = Glossary.findByName(glossary1)!!
+        val request = GlossaryTerm.select()
+            .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+            .includesOnResults(termAttrs)
+            .includeOnRelations(Glossary.NAME)
+            .includeOnRelations(Readme.DESCRIPTION)
+            .includeOnRelations(Link.LINK)
+            .toRequest()
+        val response = retrySearchUntil(request, 4)
+        val g1terms = response.assets
+        assertEquals(4, g1terms.size)
+        g1terms.forEach { term ->
+            term as GlossaryTerm
+            assertEquals(glossary1, term.anchor?.name)
+            assertEquals("Now with a description.", term.description)
+        }
+    }
+
+    private fun validateTerm1(term: GlossaryTerm) {
+        assertEquals(2, term.categories.size)
+        assertEquals(setOf("Cat1.a", "Cat1.a.i"), term.categories.map(IGlossaryCategory::getName).toSet())
+        assertEquals("Test term 1 for asset import package (multiple categories).", term.userDescription)
+        assertEquals(setOf("chris"), term.ownerUsers)
+        assertTrue(term.ownerGroups.isNullOrEmpty())
+        assertEquals(CertificateStatus.DRAFT, term.certificateStatus)
+        assertTrue(term.certificateStatusMessage.isNullOrEmpty())
+        assertEquals(AtlanAnnouncementType.WARNING, term.announcementType)
+        assertEquals("Careful", term.announcementTitle)
+        assertEquals("This is only a test.", term.announcementMessage)
+        assertEquals(1, term.atlanTags.size)
+        assertEquals(setOf(tag1), term.atlanTags.map(AtlanTag::getTypeName).toSet())
+        assertEquals(2, term.links.size)
+        assertEquals(setOf("Customer", "Example"), term.links.map(ILink::getName).toSet())
+        assertEquals(setOf("https://en.wikipedia.org/wiki/Customer", "https://www.example.com"), term.links.map(ILink::getLink).toSet())
+        assertNotNull(term.readme)
+        assertEquals("<h1>This is term1!</h1>", term.readme.description)
+        assertEquals(1, term.seeAlso.size)
+        assertEquals(setOf("Term3"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
+        assertEquals(1, term.preferredTerms.size)
+        assertEquals(setOf("TermA"), term.preferredTerms.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.synonyms.isNullOrEmpty())
+        assertTrue(term.antonyms.isNullOrEmpty())
+        assertTrue(term.translatedTerms.isNullOrEmpty())
+        assertTrue(term.validValuesFor.isNullOrEmpty())
+        assertTrue(term.classifies.isNullOrEmpty())
+    }
+
+    private fun validateTermA(term: GlossaryTerm) {
+        assertEquals(1, term.categories.size)
+        assertEquals(setOf("Cat2"), term.categories.map(IGlossaryCategory::getName).toSet())
+        assertEquals("Test term A for asset import package (single category).", term.userDescription)
+        assertEquals(setOf("chris", "aryaman.bhushan"), term.ownerUsers)
+        assertTrue(term.ownerGroups.isNullOrEmpty())
+        assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
+        assertTrue(term.certificateStatusMessage.isNullOrEmpty())
+        assertEquals(AtlanAnnouncementType.INFORMATION, term.announcementType)
+        assertEquals("Look!", term.announcementTitle)
+        assertEquals("Just a test.", term.announcementMessage)
+        assertEquals(1, term.atlanTags.size)
+        assertEquals(setOf(tag2), term.atlanTags.map(AtlanTag::getTypeName).toSet())
+        assertTrue(term.links.isNullOrEmpty())
+        assertNull(term.readme)
+        assertTrue(term.seeAlso.isNullOrEmpty())
+        assertTrue(term.preferredTerms.isNullOrEmpty())
+        assertTrue(term.synonyms.isNullOrEmpty())
+        assertEquals(1, term.antonyms.size)
+        assertEquals(setOf("TermB"), term.antonyms.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.translatedTerms.isNullOrEmpty())
+        assertTrue(term.validValuesFor.isNullOrEmpty())
+        assertTrue(term.classifies.isNullOrEmpty())
+    }
+
+    private fun validateTermC(term: GlossaryTerm) {
+        assertTrue(term.categories.isNullOrEmpty())
+        assertEquals("Test term C for asset import package (no categories).", term.userDescription)
+        assertTrue(term.ownerUsers.isNullOrEmpty())
+        assertTrue(term.ownerGroups.isNullOrEmpty())
+        assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
+        assertTrue(term.certificateStatusMessage.isNullOrEmpty())
+        assertNull(term.announcementType)
+        assertNull(term.announcementTitle)
+        assertNull(term.announcementMessage)
+        assertTrue(term.atlanTags.isNullOrEmpty())
+        assertTrue(term.links.isNullOrEmpty())
+        assertNull(term.readme)
+        assertTrue(term.seeAlso.isNullOrEmpty())
+        assertTrue(term.preferredTerms.isNullOrEmpty())
+        assertEquals(1, term.synonyms.size)
+        assertEquals(setOf("Term2"), term.synonyms.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.antonyms.isNullOrEmpty())
+        assertTrue(term.translatedTerms.isNullOrEmpty())
+        assertEquals(1, term.validValuesFor.size)
+        assertEquals(setOf("Term1"), term.validValuesFor.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.classifies.isNullOrEmpty())
+    }
+
+    private fun validateTerm3(term: GlossaryTerm) {
+        assertTrue(term.categories.isNullOrEmpty())
+        assertEquals("Test term 3 for asset import package (no categories).", term.userDescription)
+        assertTrue(term.ownerUsers.isNullOrEmpty())
+        assertTrue(term.ownerGroups.isNullOrEmpty())
+        assertNull(term.certificateStatus)
+        assertTrue(term.certificateStatusMessage.isNullOrEmpty())
+        assertNull(term.announcementType)
+        assertNull(term.announcementTitle)
+        assertNull(term.announcementMessage)
+        assertEquals(2, term.atlanTags.size)
+        assertEquals(setOf(tag1, tag2), term.atlanTags.map(AtlanTag::getTypeName).toSet())
+        assertTrue(term.links.isNullOrEmpty())
+        assertNotNull(term.readme)
+        assertEquals("<h3>This is term3…</h3>", term.readme.description)
+        assertEquals(2, term.seeAlso.size)
+        assertEquals(setOf("Term1", "Term2"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.preferredTerms.isNullOrEmpty())
+        assertTrue(term.synonyms.isNullOrEmpty())
+        assertTrue(term.antonyms.isNullOrEmpty())
+        assertEquals(2, term.translatedTerms.size)
+        assertEquals(setOf("TermA", "TermB"), term.translatedTerms.map(IGlossaryTerm::getName).toSet())
+        assertTrue(term.validValuesFor.isNullOrEmpty())
+        assertTrue(term.classifies.isNullOrEmpty())
+    }
+
+    @Test(dependsOnGroups = ["aim.gloss.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(dependsOnGroups = ["aim.gloss.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
