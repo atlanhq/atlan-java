@@ -7,6 +7,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.nio.file.Paths
 import kotlin.IllegalStateException
@@ -16,6 +17,7 @@ import kotlin.test.assertFailsWith
  * Test creation of relational assets where one of the columns has an invalid parent.
  */
 class InvalidParentTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.AZURE_COSMOS_DB

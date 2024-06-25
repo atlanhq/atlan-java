@@ -29,6 +29,7 @@ import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
+import mu.KotlinLogging
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -40,6 +41,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary and its inter-related contents.
  */
 class ImportGlossariesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val glossary1 = makeUnique("igg1")
     private val glossary2 = makeUnique("igg2")
@@ -160,17 +162,6 @@ class ImportGlossariesTest : PackageTest() {
     override fun setup() {
         prepFile()
         createTags()
-    }
-
-    override fun teardown() {
-        removeGlossary(glossary1)
-        removeGlossary(glossary2)
-        removeTag(tag1)
-        removeTag(tag2)
-    }
-
-    @Test(groups = ["aim.gloss"], dependsOnGroups = ["aim.lt.*"])
-    fun runImport() {
         setup(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
@@ -181,7 +172,14 @@ class ImportGlossariesTest : PackageTest() {
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    override fun teardown() {
+        removeGlossary(glossary1)
+        removeGlossary(glossary2)
+        removeTag(tag1)
+        removeTag(tag2)
+    }
+
+    @Test(groups = ["aim.gloss.create"])
     fun glossary1Created() {
         val g1 = Glossary.findByName(glossary1, glossaryAttrs)
         assertNotNull(g1)
@@ -192,7 +190,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(CertificateStatus.VERIFIED, g1.certificateStatus)
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    @Test(groups = ["aim.gloss.create"])
     fun glossary2Created() {
         val g2 = Glossary.findByName(glossary2, glossaryAttrs)
         assertNotNull(g2)
@@ -204,7 +202,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals("With a message!", g2.certificateStatusMessage)
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryCategory.select()
@@ -243,7 +241,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryCategory.select()
@@ -277,7 +275,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryTerm.select()
@@ -302,7 +300,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
+    @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryTerm.select()

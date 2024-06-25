@@ -1,12 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import kotlin.test.Test
 
 /**
  * Test export of only glossaries, no assets.
  */
 class OnlyGlossariesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val files = listOf(
         "glossary-export.csv",

@@ -23,7 +23,13 @@ dependencies {
 
 tasks {
     test {
-        useTestNG()
+        useTestNG {
+            maxParallelForks = 4
+            options {
+                parallel = "classes"
+                threadCount = 1
+            }
+        }
     }
 }
 

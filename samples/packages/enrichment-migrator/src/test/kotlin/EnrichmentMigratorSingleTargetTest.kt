@@ -13,6 +13,7 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
+import mu.KotlinLogging
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,6 +23,7 @@ import kotlin.test.assertNotNull
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorSingleTargetTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("emsc1")
     private val c2 = makeUnique("emsc2")

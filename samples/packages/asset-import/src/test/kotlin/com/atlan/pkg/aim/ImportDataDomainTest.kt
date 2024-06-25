@@ -12,12 +12,14 @@ import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class ImportDataDomainTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val dataDomain1 = makeUnique("idd1")
     private val dataDomain2 = makeUnique("idd2")

@@ -10,6 +10,7 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
+import mu.KotlinLogging
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -18,6 +19,7 @@ import kotlin.test.assertTrue
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorArchivedTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("ema1")
     private val connectorType = AtlanConnectorType.COCKROACHDB

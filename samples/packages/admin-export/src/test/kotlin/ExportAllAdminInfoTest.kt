@@ -3,6 +3,7 @@
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.xls.ExcelReader
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
@@ -12,6 +13,8 @@ import java.io.File
  * Test export of all administrative information.
  */
 class ExportAllAdminInfoTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val files = listOf(
         "debug.log",
         "admin-export.xlsx",

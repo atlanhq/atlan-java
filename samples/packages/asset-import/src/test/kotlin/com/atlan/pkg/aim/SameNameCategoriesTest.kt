@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -15,6 +16,8 @@ import kotlin.test.assertTrue
  * but in different parent paths.
  */
 class SameNameCategoriesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val glossaryName = makeUnique("sncg1")
 
     private val testFile = "same_name_categories.csv"

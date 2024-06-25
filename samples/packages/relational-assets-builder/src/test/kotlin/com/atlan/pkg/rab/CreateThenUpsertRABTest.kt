@@ -22,6 +22,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -33,6 +34,7 @@ import kotlin.test.assertNotNull
  * Test creation of relational assets followed by an upsert of the same relational assets.
  */
 class CreateThenUpsertRABTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("ctu1")
     private val conn1Type = AtlanConnectorType.MPARTICLE

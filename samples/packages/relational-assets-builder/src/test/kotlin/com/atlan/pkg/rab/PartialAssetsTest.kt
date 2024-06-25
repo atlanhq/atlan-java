@@ -17,6 +17,7 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -28,6 +29,7 @@ import kotlin.test.assertNotNull
  * Test creation of partial relational assets.
  */
 class PartialAssetsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("pc1")
     private val conn1Type = AtlanConnectorType.COCKROACHDB
