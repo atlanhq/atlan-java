@@ -12,6 +12,8 @@ import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
 
+private const val TAG_FILE_NAME_PREFIX = "lftag_association"
+
 /**
  * Actually run the migrator, taking all settings from environment variables.
  * Note: all parameters should be passed through environment variables.
@@ -63,9 +65,12 @@ object LakeTagSynchronizer {
                     val jsonString: String = File(fileName).readText(Charsets.UTF_8)
                     metadataMap += mapper.readValue<Map<String, String>>(jsonString)
                 }
-
                 else -> {
-                    tagFileNames.add(fileName)
+                    if (File(fileName).nameWithoutExtension.startsWith(TAG_FILE_NAME_PREFIX)) {
+                        tagFileNames.add(fileName)
+                    } else {
+                        logger.warn { "Skippiing $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
+                    }
                 }
             }
         }

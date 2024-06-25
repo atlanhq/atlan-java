@@ -90,7 +90,7 @@ class LakeTagSynchronizerTest : PackageTest() {
         File("$testDirectory/$CONNECTION_MAP_JSON").delete()
         Utils.uploadOutputFile("$testDirectory/$METADATA_MAP_JSON", PREFIX, METADATA_MAP_JSON)
         File("$testDirectory/$METADATA_MAP_JSON").delete()
-        Utils.uploadOutputFile("./src/test/resources/sample.json", PREFIX, "sample.json")
+        Utils.uploadOutputFile("./src/test/resources/lftag_association_1.json", PREFIX, "lftag_association_1.json")
     }
 
     private fun createEnums() {
@@ -196,7 +196,15 @@ class LakeTagSynchronizerTest : PackageTest() {
 
     @Test
     fun validateFilesCreated() {
-        validateFilesExist(listOf("debug.log", CONNECTION_MAP_JSON, METADATA_MAP_JSON, "sample.json", "sample.csv"))
+        validateFilesExist(
+            listOf(
+                "debug.log",
+                CONNECTION_MAP_JSON,
+                METADATA_MAP_JSON,
+                "lftag_association_1.json",
+                "lftag_association_1.csv",
+            ),
+        )
     }
 
     override fun teardown() {

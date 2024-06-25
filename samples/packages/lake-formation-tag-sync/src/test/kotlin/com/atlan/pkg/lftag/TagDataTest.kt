@@ -12,7 +12,7 @@ private val mapper = jacksonObjectMapper()
 class TagDataTest {
     @Test
     fun whenDeserializableTagDataThenSuccess() {
-        val jsonString: String = File("./src/test/resources/sample.json").readText(Charsets.UTF_8)
+        val jsonString: String = File("./src/test/resources/lftag_association_1.json").readText(Charsets.UTF_8)
         val tagData = mapper.readValue(jsonString, TagData::class.java)
         assertEquals(1, tagData.tableList.size)
     }

@@ -35,7 +35,7 @@ class CVSProducerTest : PackageTest() {
             "other_duplicate_assets" to "Duplication::Other Duplicate Assets",
         )
         val producer = CSVProducer(connectionMap, metadataMap, testDirectory)
-        producer.transform("./src/test/resources/sample.json", "data.csv")
+        producer.transform("./src/test/resources/lftag_association_1.json", "data.csv")
         validateFilesExist(listOf("debug.log", "data.csv"))
     }
 }
