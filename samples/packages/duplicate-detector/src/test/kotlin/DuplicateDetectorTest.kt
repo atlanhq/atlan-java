@@ -8,9 +8,6 @@ import com.atlan.model.assets.View
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -26,8 +23,7 @@ class DuplicateDetectorTest : PackageTest() {
     )
     private val glossaryName = testId
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             DuplicateDetectorCfg(
                 glossaryName = glossaryName,
@@ -37,6 +33,10 @@ class DuplicateDetectorTest : PackageTest() {
             ),
         )
         DuplicateDetector.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeGlossary(glossaryName)
     }
 
     @Test
@@ -74,11 +74,5 @@ class DuplicateDetectorTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeGlossary(glossaryName)
-        teardown(context.failedTests.size() > 0)
     }
 }

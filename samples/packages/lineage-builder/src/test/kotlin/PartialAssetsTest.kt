@@ -14,9 +14,6 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.lb.Loader
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -76,8 +73,7 @@ class PartialAssetsTest : PackageTest() {
         return response.getResult(c1)
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createConnection()
         prepFile()
         setup(
@@ -88,6 +84,10 @@ class PartialAssetsTest : PackageTest() {
             ),
         )
         Loader.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeConnection(connectionName, connectorType)
     }
 
     @Test(groups = ["lb.pa.create"])
@@ -259,11 +259,5 @@ class PartialAssetsTest : PackageTest() {
     @Test(dependsOnGroups = ["lb.pa.*"])
     fun filesCreated() {
         validateFilesExist(files)
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(connectionName, connectorType)
-        teardown(context.failedTests.size() > 0)
     }
 }

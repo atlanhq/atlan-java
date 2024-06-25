@@ -5,9 +5,6 @@ import com.atlan.pkg.adoption.AdoptionExporter
 import com.atlan.pkg.serde.xls.ExcelReader
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
 import java.math.BigDecimal
@@ -21,8 +18,7 @@ class ExportRawViewsTest : PackageTest() {
         "adoption-export.xlsx",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             AdoptionExportCfg(
                 includeViews = "BY_VIEWS",
@@ -70,10 +66,5 @@ class ExportRawViewsTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }

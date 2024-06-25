@@ -10,9 +10,6 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -65,8 +62,7 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
         Atlan.getDefaultClient().assets.delete(guids, AtlanDeleteType.SOFT).block()
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createConnections()
         createAssets()
         archiveTable()
@@ -81,6 +77,10 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
+    }
+
+    override fun teardown() {
+        removeConnection(c1, connectorType)
     }
 
     @Test
@@ -114,11 +114,5 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(c1, connectorType)
-        teardown(context.failedTests.size() > 0)
     }
 }

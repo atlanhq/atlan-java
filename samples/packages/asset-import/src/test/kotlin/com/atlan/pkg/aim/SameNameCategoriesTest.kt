@@ -5,9 +5,6 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,8 +37,7 @@ class SameNameCategoriesTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         setup(
             AssetImportCfg(
@@ -52,6 +48,10 @@ class SameNameCategoriesTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeGlossary(glossaryName)
     }
 
     @Test
@@ -79,11 +79,5 @@ class SameNameCategoriesTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeGlossary(glossaryName)
-        teardown(context.failedTests.size() > 0)
     }
 }

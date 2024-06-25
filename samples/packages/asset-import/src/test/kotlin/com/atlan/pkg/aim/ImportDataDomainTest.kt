@@ -12,9 +12,6 @@ import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -83,8 +80,7 @@ class ImportDataDomainTest : PackageTest() {
         DataProduct.README,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         setup(
             AssetImportCfg(
@@ -101,6 +97,13 @@ class ImportDataDomainTest : PackageTest() {
         d1 = findDataDomain(dataDomain1)
         d2 = findDataDomain(dataDomain2)
         d3 = findDataDomain(dataDomain3)
+    }
+
+    override fun teardown() {
+        removeDomain(dataDomain1)
+        removeDomain(dataDomain2)
+        removeDomain(dataDomain3)
+        removeProduct(dataProduct1)
     }
 
     @Test
@@ -179,14 +182,5 @@ class ImportDataDomainTest : PackageTest() {
             .toRequest()
         val response = retrySearchUntil(request, 1)
         return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeDomain(dataDomain1)
-        removeDomain(dataDomain2)
-        removeDomain(dataDomain3)
-        removeProduct(dataProduct1)
-        teardown(context.failedTests.size() > 0)
     }
 }
