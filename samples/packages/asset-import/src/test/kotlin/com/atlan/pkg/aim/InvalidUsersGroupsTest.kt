@@ -5,10 +5,8 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -18,6 +16,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary that has invalid users and groups defined.
  */
 class InvalidUsersGroupsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val glossary1 = makeUnique("iugg1")
     private val glossary2 = makeUnique("iugg2")
@@ -43,8 +42,7 @@ class InvalidUsersGroupsTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         setup(
             AssetImportCfg(
@@ -59,6 +57,11 @@ class InvalidUsersGroupsTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        Glossary.purge(Glossary.findByName(glossary1).guid)
+        Glossary.purge(Glossary.findByName(glossary2).guid)
     }
 
     @Test
@@ -88,12 +91,5 @@ class InvalidUsersGroupsTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        Glossary.purge(Glossary.findByName(glossary1).guid)
-        Glossary.purge(Glossary.findByName(glossary2).guid)
-        teardown(context.failedTests.size() > 0)
     }
 }

@@ -29,11 +29,9 @@ import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
+import mu.KotlinLogging
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -43,6 +41,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary and its inter-related contents.
  */
 class ImportGlossariesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val glossary1 = makeUnique("igg1")
     private val glossary2 = makeUnique("igg2")
@@ -50,7 +49,7 @@ class ImportGlossariesTest : PackageTest() {
     private val tag2 = makeUnique("igt2")
 
     private val testFile = "input.csv"
-    private val revisedFile = "revised.csv"
+    private val revisedFile = "with_desc.csv"
 
     private val files = listOf(
         testFile,
@@ -160,23 +159,24 @@ class ImportGlossariesTest : PackageTest() {
         GlossaryTerm.CLASSIFIES,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         createTags()
         setup(
             AssetImportCfg(
-                assetsFile = null,
-                assetsUpsertSemantic = null,
-                assetsAttrToOverwrite = null,
-                assetsFailOnErrors = true,
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
-                glossariesAttrToOverwrite = listOf(),
                 glossariesFailOnErrors = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeGlossary(glossary1)
+        removeGlossary(glossary2)
+        removeTag(tag1)
+        removeTag(tag2)
     }
 
     @Test(groups = ["aim.gloss.create"])
@@ -401,8 +401,8 @@ class ImportGlossariesTest : PackageTest() {
         setup(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, revisedFile).toString(),
-                assetsUpsertSemantic = "upsert",
-                assetsFailOnErrors = true,
+                glossariesUpsertSemantic = "upsert",
+                glossariesFailOnErrors = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -568,14 +568,5 @@ class ImportGlossariesTest : PackageTest() {
     @Test(dependsOnGroups = ["aim.gloss.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeGlossary(glossary1)
-        removeGlossary(glossary2)
-        removeTag(tag1)
-        removeTag(tag2)
-        teardown(context.failedTests.size() > 0)
     }
 }

@@ -8,11 +8,9 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.mdir.Reporter
 import com.atlan.pkg.serde.xls.ExcelReader
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,6 +20,7 @@ import kotlin.test.assertNotNull
  * Test detection of duplicate assets.
  */
 class ImpactReportTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val glossaryName = makeUnique("mdir")
     private val files = listOf(
@@ -29,8 +28,7 @@ class ImpactReportTest : PackageTest() {
         "mdir.xlsx",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             MetadataImpactReportCfg(
                 glossaryName = glossaryName,
@@ -38,6 +36,10 @@ class ImpactReportTest : PackageTest() {
             ),
         )
         Reporter.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeGlossary(glossaryName)
     }
 
     @Test(groups = ["mdir.create"])
@@ -228,11 +230,5 @@ class ImpactReportTest : PackageTest() {
     @Test(dependsOnGroups = ["mdir.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeGlossary(glossaryName)
-        teardown(context.failedTests.size() > 0)
     }
 }

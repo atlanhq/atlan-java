@@ -3,11 +3,9 @@
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.xls.ExcelReader
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
 
@@ -15,13 +13,14 @@ import java.io.File
  * Test export of only users.
  */
 class ExportUsersTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val files = listOf(
         "debug.log",
         "admin-export.xlsx",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             AdminExportCfg(
                 objectsToInclude = listOf("users"),
@@ -68,10 +67,5 @@ class ExportUsersTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }

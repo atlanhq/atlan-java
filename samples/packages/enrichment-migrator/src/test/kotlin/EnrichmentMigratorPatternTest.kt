@@ -10,9 +10,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,6 +27,8 @@ private const val DB_NAME_PATTERN = "db_test.."
 private const val USER_DESCRIPTION = "Some user description"
 
 class EnrichmentMigratorPatternTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val c1 = makeUnique("emsc1")
     private val c2 = makeUnique("emsc2")
     private val now = Instant.now().toEpochMilli()
@@ -85,8 +85,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createConnections()
         createAssets()
         setup(
@@ -101,6 +100,11 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
+    }
+
+    override fun teardown() {
+        removeConnection(c1, AtlanConnectorType.MSSQL)
+        removeConnection(c2, AtlanConnectorType.POSTGRES)
     }
 
     @Test
@@ -244,13 +248,5 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        val client = Atlan.getDefaultClient()
-        removeConnection(c1, AtlanConnectorType.MSSQL)
-        removeConnection(c2, AtlanConnectorType.POSTGRES)
-        teardown(context.failedTests.size() > 0)
     }
 }

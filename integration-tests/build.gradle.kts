@@ -37,6 +37,13 @@ testing {
 
 tasks {
     test {
+        useTestNG {
+            maxParallelForks = 4
+            options {
+                parallel = "classes"
+                threadCount = 1
+            }
+        }
         onlyIf {
             project.hasProperty("integrationTests")
         }

@@ -6,11 +6,9 @@ import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -19,14 +17,14 @@ import kotlin.test.assertNotNull
  * Test import of the canonical PetStore example from Swagger.
  */
 class ImportPetStoreTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val testId = makeUnique("oapi")
     private val files = listOf(
         "debug.log",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             OpenAPISpecLoaderCfg(
                 specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
@@ -35,6 +33,10 @@ class ImportPetStoreTest : PackageTest() {
             ),
         )
         OpenAPISpecLoader.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeConnection(testId, AtlanConnectorType.API)
     }
 
     @Test
@@ -105,11 +107,5 @@ class ImportPetStoreTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(testId, AtlanConnectorType.API)
-        teardown(context.failedTests.size() > 0)
     }
 }

@@ -68,7 +68,13 @@ tasks {
         destinationDirectory.set(file(jarPath))
     }
     test {
-        useTestNG()
+        useTestNG {
+            maxParallelForks = 4
+            options {
+                parallel = "classes"
+                threadCount = 1
+            }
+        }
         onlyIf {
             project.hasProperty("packageTests")
         }

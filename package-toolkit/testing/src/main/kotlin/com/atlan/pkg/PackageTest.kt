@@ -20,11 +20,13 @@ import com.atlan.net.HttpClient
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import mu.KotlinLogging
+import mu.KLogger
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertNotNull
 import org.testng.Assert.assertTrue
+import org.testng.ITestContext
+import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables
 import uk.org.webcompere.systemstubs.properties.SystemProperties
@@ -39,6 +41,8 @@ import kotlin.math.round
  * Base class that all package integration tests should extend.
  */
 abstract class PackageTest {
+    protected abstract val logger: KLogger
+
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
     private val vars = EnvironmentVariables()
     private val properties = SystemProperties()
@@ -55,16 +59,25 @@ abstract class PackageTest {
         File(testDirectory).mkdirs()
     }
 
+    /** Implement any logic necessary for setting up the test to be run. */
+    abstract fun setup()
+
+    /** Implement any logic necessary to clean up any objects created by your tests. */
+    open fun teardown() {
+        // By default, do nothing
+    }
+
     /**
      * Then, ensure that the logging is configured.
      * This MUST run before anything else, to ensure that logs are captured in the
      * unique directory created above and not overlapping across test in the same module
      */
     @BeforeClass
-    fun logSetup() {
+    fun testsSetup() {
         properties.set("logDirectory", testDirectory)
         properties.setup()
         sysExit.setup()
+        setup()
     }
 
     /**
@@ -156,7 +169,7 @@ abstract class PackageTest {
             response = request.search()
             count++
         }
-        assertFalse(response.approximateCount < expectedSize)
+        assertFalse(response.approximateCount < expectedSize, "Search retries overran - found ${response.approximateCount} results when expecting $expectedSize.")
         return response
     }
 
@@ -169,8 +182,6 @@ abstract class PackageTest {
     }
 
     companion object {
-        private val logger = KotlinLogging.logger {}
-
         init {
             // Note that this must be set here to allow us to do any
             // initial env retrieval before setting the config for a particular test
@@ -180,9 +191,68 @@ abstract class PackageTest {
 
         protected val client: AtlanClient = Atlan.getDefaultClient()
         private val ALPHABET = charArrayOf(
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-            'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-            'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '0',
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            'g',
+            'h',
+            'i',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'o',
+            'p',
+            'q',
+            'r',
+            's',
+            't',
+            'u',
+            'v',
+            'w',
+            'x',
+            'y',
+            'z',
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
         )
         private const val PREFIX = "jpkg_"
         private const val TAG_REMOVAL_RETRIES = 30
@@ -190,147 +260,163 @@ abstract class PackageTest {
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
         private val mapper = Serde.createMapper(client).registerKotlinModule()
+    }
 
-        /**
-         * Remove these files.
-         *
-         * @param files list of filenames to be removed
-         * @param relativeTo (optional) path under which the files exist
-         */
-        fun removeFiles(files: List<String>, relativeTo: String = "") {
-            files.forEach {
-                val file = getFile(it, relativeTo)
-                if (file.exists() && file.isFile) {
-                    assertTrue(file.delete(), "Could not delete file.")
-                }
+    /**
+     * Remove these files.
+     *
+     * @param files list of filenames to be removed
+     * @param relativeTo (optional) path under which the files exist
+     */
+    fun removeFiles(files: List<String>, relativeTo: String = "") {
+        files.forEach {
+            val file = getFile(it, relativeTo)
+            if (file.exists() && file.isFile) {
+                assertTrue(file.delete(), "Could not delete file.")
             }
         }
+    }
 
-        /**
-         * Remove the specified directory.
-         *
-         * @param directory path to the directory to be removed
-         */
-        fun removeDirectory(directory: String) {
-            val file = File(directory)
-            if (file.exists() && file.isDirectory) {
-                assertTrue(file.deleteRecursively(), "Could not delete directory.")
-            }
+    /**
+     * Remove the specified directory.
+     *
+     * @param directory path to the directory to be removed
+     */
+    fun removeDirectory(directory: String) {
+        val file = File(directory)
+        if (file.exists() && file.isDirectory) {
+            assertTrue(file.deleteRecursively(), "Could not delete directory.")
         }
+    }
 
-        /**
-         * Remove the provided connection, if it exists.
-         *
-         * @param name of the connection
-         * @param type of the connector
-         */
-        fun removeConnection(name: String, type: AtlanConnectorType) {
-            val results = Connection.findByName(name, type)
-            if (!results.isNullOrEmpty()) {
-                val deletionType = AtlanDeleteType.PURGE
-                results.forEach {
-                    val assets = client.assets.select(true)
-                        .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
-                        .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
-                        .pageSize(50)
-                        .stream()
-                        .map(Asset::getGuid)
-                        .toList()
-                    if (assets.isNotEmpty()) {
-                        val guidList = assets.toList()
-                        val totalToDelete = guidList.size
-                        logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
-                        if (totalToDelete < 20) {
-                            client.assets.delete(guidList, deletionType).block()
-                        } else {
-                            val currentCount = AtomicLong(0)
-                            guidList
-                                .asSequence()
-                                .chunked(20)
-                                .toList()
-                                .parallelStream()
-                                .forEach { batch ->
-                                    val i = currentCount.getAndAdd(batch.size.toLong())
-                                    logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
-                                    if (batch.isNotEmpty()) {
-                                        client.assets.delete(batch, deletionType).block()
-                                    }
+    /**
+     * Remove the provided connection, if it exists.
+     *
+     * @param name of the connection
+     * @param type of the connector
+     */
+    fun removeConnection(name: String, type: AtlanConnectorType) {
+        val results = Connection.findByName(name, type)
+        if (!results.isNullOrEmpty()) {
+            val deletionType = AtlanDeleteType.PURGE
+            results.forEach {
+                val assets = client.assets.select(true)
+                    .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
+                    .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
+                    .pageSize(50)
+                    .stream()
+                    .map(Asset::getGuid)
+                    .toList()
+                if (assets.isNotEmpty()) {
+                    val guidList = assets.toList()
+                    val totalToDelete = guidList.size
+                    logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
+                    if (totalToDelete < 20) {
+                        client.assets.delete(guidList, deletionType).block()
+                    } else {
+                        val currentCount = AtomicLong(0)
+                        guidList
+                            .asSequence()
+                            .chunked(20)
+                            .toList()
+                            .parallelStream()
+                            .forEach { batch ->
+                                val i = currentCount.getAndAdd(batch.size.toLong())
+                                logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
+                                if (batch.isNotEmpty()) {
+                                    client.assets.delete(batch, deletionType).block()
                                 }
-                        }
+                            }
                     }
-                    // Purge the connection itself, now that all assets are purged
-                    logger.info { " --- Purging connection: ${it.qualifiedName}... ---" }
+                }
+                // Purge the connection itself, now that all assets are purged
+                logger.info { " --- Purging connection: ${it.qualifiedName}... ---" }
+                try {
                     client.assets.delete(it.guid, deletionType).block()
+                } catch (e: Exception) {
+                    logger.error(e) { "Unable to purge connection: ${it.qualifiedName}" }
                 }
             }
         }
+    }
 
-        /**
-         * Remove the specified tag.
-         *
-         * @param displayName human-readable display name of the tag to remove
-         * @throws ConflictException if the tag cannot be removed because there are still references to it
-         */
-        @Throws(ConflictException::class)
-        fun removeTag(displayName: String, retryCount: Int = 0) {
-            try {
-                AtlanTagDef.purge(displayName)
-            } catch (e: ConflictException) {
-                if (retryCount < TAG_REMOVAL_RETRIES) {
-                    Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
-                    removeTag(displayName, retryCount + 1)
-                } else {
-                    throw e
-                }
+    /**
+     * Remove the specified tag.
+     *
+     * @param displayName human-readable display name of the tag to remove
+     * @throws ConflictException if the tag cannot be removed because there are still references to it
+     */
+    @Throws(ConflictException::class)
+    fun removeTag(displayName: String, retryCount: Int = 0) {
+        try {
+            AtlanTagDef.purge(displayName)
+        } catch (e: ConflictException) {
+            if (retryCount < TAG_REMOVAL_RETRIES) {
+                Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
+                removeTag(displayName, retryCount + 1)
+            } else {
+                logger.error(e) { "Unable to remove tag: $displayName" }
             }
         }
+    }
 
-        /**
-         * Remove the provided glossary, if it exists.
-         *
-         * @param name of the glossary
-         */
-        fun removeGlossary(name: String) {
-            val glossary = Glossary.findByName(name)
-            val terms = GlossaryTerm.select()
-                .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
-                .stream()
-                .map { it.guid }
-                .toList()
+    /**
+     * Remove the provided glossary, if it exists.
+     *
+     * @param name of the glossary
+     */
+    fun removeGlossary(name: String) {
+        val glossary = Glossary.findByName(name)
+        val terms = GlossaryTerm.select()
+            .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
+            .stream()
+            .map { it.guid }
+            .toList()
+        try {
             if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
             Glossary.purge(glossary.guid)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to purge glossary or its terms: $name" }
         }
+    }
 
-        private fun getFile(filename: String, relativeTo: String): File {
-            return if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
-        }
+    private fun getFile(filename: String, relativeTo: String): File {
+        return if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
+    }
 
-        /**
-         * Remove the provided domain, if it exists
-         *
-         * @param name of the domain
-         */
-        fun removeDomain(name: String) {
-            val domainGuids = DataDomain.select()
-                .where(DataDomain.NAME.eq(name))
-                .stream()
-                .map { it.guid }
-                .toList()
+    /**
+     * Remove the provided domain, if it exists
+     *
+     * @param name of the domain
+     */
+    fun removeDomain(name: String) {
+        val domainGuids = DataDomain.select()
+            .where(DataDomain.NAME.eq(name))
+            .stream()
+            .map { it.guid }
+            .toList()
+        try {
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to remove domain: $name" }
         }
+    }
 
-        /**
-         * Remove the provided products, if it exists
-         *
-         * @param name of the domain
-         */
-        fun removeProduct(name: String) {
-            val domainGuids = DataProduct.select()
-                .where(DataProduct.NAME.eq(name))
-                .stream()
-                .map { it.guid }
-                .toList()
+    /**
+     * Remove the provided products, if it exists
+     *
+     * @param name of the domain
+     */
+    fun removeProduct(name: String) {
+        val domainGuids = DataProduct.select()
+            .where(DataProduct.NAME.eq(name))
+            .stream()
+            .map { it.guid }
+            .toList()
+        try {
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to remove product: $name" }
         }
     }
 
@@ -356,9 +442,16 @@ abstract class PackageTest {
      *
      * @param keepLogs (optional) whether to retain the logs generated by the test (true) or automatically remove them (default, false)
      */
-    fun teardown(keepLogs: Boolean = false) {
-        if (!keepLogs) {
-            removeDirectory(testDirectory)
+    @AfterClass(alwaysRun = true)
+    fun testsTeardown(context: ITestContext) {
+        try {
+            teardown()
+            val keepLogs = context.failedTests.size() > 0
+            if (!keepLogs) {
+                removeDirectory(testDirectory)
+            }
+        } catch (e: Exception) {
+            logger.error(e) { "Failed to teardown." }
         }
         properties.teardown()
         vars.teardown()

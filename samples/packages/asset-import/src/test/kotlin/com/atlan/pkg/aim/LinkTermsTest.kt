@@ -18,9 +18,7 @@ import com.atlan.model.search.FluentSearch
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,6 +30,8 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing assigned terms.
  */
 class LinkTermsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
     private val connectorType = AtlanConnectorType.GENERIC
@@ -40,7 +40,7 @@ class LinkTermsTest : PackageTest() {
     private val tag2 = makeUnique("ltt2")
 
     private val testFile = "input.csv"
-    private val revisedFile = "revised.csv"
+    private val revisedFile = "case_insensitive.csv"
 
     private val files = listOf(
         testFile,
@@ -108,8 +108,7 @@ class LinkTermsTest : PackageTest() {
         return response.getResult(c1)
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createGlossary()
         val connection = createConnection()
         prepFile(connection.qualifiedName)
@@ -123,6 +122,13 @@ class LinkTermsTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeConnection(connectionName, connectorType)
+        removeGlossary(glossaryName)
+        removeTag(tag1)
+        removeTag(tag2)
     }
 
     @Test(groups = ["aim.lt.create"])
@@ -270,14 +276,5 @@ class LinkTermsTest : PackageTest() {
     @Test(dependsOnGroups = ["aim.lt.*"])
     fun filesCreated() {
         validateFilesExist(files)
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(connectionName, connectorType)
-        removeGlossary(glossaryName)
-        removeTag(tag1)
-        removeTag(tag2)
-        teardown(context.failedTests.size() > 0)
     }
 }

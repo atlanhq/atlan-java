@@ -8,9 +8,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -18,6 +16,7 @@ import kotlin.test.assertEquals
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorMultipleTargetTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("emmc1")
     private val c2 = makeUnique("emmc2")
@@ -72,8 +71,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         batch.flush()
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createConnections()
         createAssets()
         Thread.sleep(15000)
@@ -91,6 +89,12 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
+    }
+
+    override fun teardown() {
+        removeConnection(c1, AtlanConnectorType.HIVE)
+        removeConnection(c2, AtlanConnectorType.ESSBASE)
+        removeConnection(c3, AtlanConnectorType.ESSBASE)
     }
 
     @Test
@@ -118,13 +122,5 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(c1, AtlanConnectorType.HIVE)
-        removeConnection(c2, AtlanConnectorType.ESSBASE)
-        removeConnection(c3, AtlanConnectorType.ESSBASE)
-        teardown(context.failedTests.size() > 0)
     }
 }

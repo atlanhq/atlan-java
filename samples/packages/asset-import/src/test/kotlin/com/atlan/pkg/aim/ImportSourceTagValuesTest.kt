@@ -7,10 +7,8 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,6 +19,7 @@ import kotlin.test.assertNotNull
  * Test import of source tag values.
  */
 class ImportSourceTagValuesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val table = makeUnique("istv")
 
@@ -45,8 +44,7 @@ class ImportSourceTagValuesTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         prepFile(snowflakeConnection.qualifiedName)
         setup(
@@ -57,6 +55,18 @@ class ImportSourceTagValuesTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        Table.select()
+            .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
+            .where(Table.NAME.eq(table))
+            .stream()
+            .findFirst()
+            .ifPresent {
+                Table.purge(it.guid)
+            }
     }
 
     @Test
@@ -119,19 +129,5 @@ class ImportSourceTagValuesTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
-        Table.select()
-            .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
-            .where(Table.NAME.eq(table))
-            .stream()
-            .findFirst()
-            .ifPresent {
-                Table.purge(it.guid)
-            }
-        teardown(context.failedTests.size() > 0)
     }
 }

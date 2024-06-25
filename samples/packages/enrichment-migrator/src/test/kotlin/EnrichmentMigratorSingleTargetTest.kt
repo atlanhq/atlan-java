@@ -13,9 +13,7 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,6 +23,7 @@ import kotlin.test.assertNotNull
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorSingleTargetTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("emsc1")
     private val c2 = makeUnique("emsc2")
@@ -81,8 +80,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         batch.flush()
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createConnections()
         createCustomMetadata()
         createAssets()
@@ -97,6 +95,13 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         )
         EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
+    }
+
+    override fun teardown() {
+        val client = Atlan.getDefaultClient()
+        removeConnection(c1, AtlanConnectorType.MSSQL)
+        removeConnection(c2, AtlanConnectorType.POSTGRES)
+        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
     }
 
     @Test
@@ -132,14 +137,5 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        val client = Atlan.getDefaultClient()
-        removeConnection(c1, AtlanConnectorType.MSSQL)
-        removeConnection(c2, AtlanConnectorType.POSTGRES)
-        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
-        teardown(context.failedTests.size() > 0)
     }
 }

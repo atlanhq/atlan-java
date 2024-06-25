@@ -1,15 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import kotlin.test.Test
 
 /**
  * Test export of only glossaries, no assets.
  */
 class OnlyGlossariesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val files = listOf(
         "glossary-export.csv",
@@ -17,8 +16,7 @@ class OnlyGlossariesTest : PackageTest() {
         "asset-export.csv",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             AssetExportBasicCfg(
                 exportScope = "GLOSSARIES_ONLY",
@@ -38,10 +36,5 @@ class OnlyGlossariesTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }

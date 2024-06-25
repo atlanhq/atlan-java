@@ -22,11 +22,9 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -36,6 +34,7 @@ import kotlin.test.assertNotNull
  * Test creation of relational assets followed by an upsert of the same relational assets.
  */
 class CreateThenUpsertRABTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("ctu1")
     private val conn1Type = AtlanConnectorType.MPARTICLE
@@ -163,8 +162,7 @@ class CreateThenUpsertRABTest : PackageTest() {
         Column.ORDER,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         createTags()
         setup(
@@ -176,6 +174,12 @@ class CreateThenUpsertRABTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeConnection(conn1, conn1Type)
+        removeTag(tag1)
+        removeTag(tag2)
     }
 
     @Test(groups = ["rab.ctu.create"])
@@ -495,13 +499,5 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(dependsOnGroups = ["rab.ctu.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(conn1, conn1Type)
-        removeTag(tag1)
-        removeTag(tag2)
-        teardown(context.failedTests.size() > 0)
     }
 }

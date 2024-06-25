@@ -3,15 +3,14 @@
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import kotlin.test.Test
 
 /**
  * Test export of all assets and glossaries.
  */
 class ExportAllAssetsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val files = listOf(
         "asset-export.csv",
@@ -19,8 +18,7 @@ class ExportAllAssetsTest : PackageTest() {
         "glossary-export.csv",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             AssetExportBasicCfg(
                 exportScope = "ALL",
@@ -39,10 +37,5 @@ class ExportAllAssetsTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }
