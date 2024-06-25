@@ -69,7 +69,7 @@ object LakeTagSynchronizer {
                     if (File(fileName).nameWithoutExtension.startsWith(TAG_FILE_NAME_PREFIX)) {
                         tagFileNames.add(fileName)
                     } else {
-                        logger.warn { "Skippiing $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
+                        logger.warn { "Skipping $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
                     }
                 }
             }
