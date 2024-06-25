@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -15,6 +16,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary that has invalid users and groups defined.
  */
 class InvalidUsersGroupsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val glossary1 = makeUnique("iugg1")
     private val glossary2 = makeUnique("iugg2")

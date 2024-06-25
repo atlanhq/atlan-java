@@ -3,6 +3,7 @@
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.adoption.AdoptionExporter
 import com.atlan.pkg.serde.xls.ExcelReader
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
@@ -13,6 +14,8 @@ import java.math.BigDecimal
  * Test export of asset views adoption information, sorted by number of unique users.
  */
 class ExportUniqueUserViewsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val files = listOf(
         "debug.log",
         "adoption-export.xlsx",

@@ -3,12 +3,14 @@
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import kotlin.test.Test
 
 /**
  * Test export of all assets and glossaries.
  */
 class ExportAllAssetsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val files = listOf(
         "asset-export.csv",

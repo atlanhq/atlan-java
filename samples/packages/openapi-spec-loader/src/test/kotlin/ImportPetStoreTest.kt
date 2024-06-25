@@ -6,6 +6,7 @@ import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import kotlin.test.Test
@@ -16,6 +17,7 @@ import kotlin.test.assertNotNull
  * Test import of the canonical PetStore example from Swagger.
  */
 class ImportPetStoreTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val testId = makeUnique("oapi")
     private val files = listOf(

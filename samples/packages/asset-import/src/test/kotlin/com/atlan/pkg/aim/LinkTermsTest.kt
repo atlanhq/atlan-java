@@ -18,6 +18,7 @@ import com.atlan.model.search.FluentSearch
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -29,6 +30,8 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing assigned terms.
  */
 class LinkTermsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
     private val connectorType = AtlanConnectorType.GENERIC

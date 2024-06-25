@@ -14,6 +14,7 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.lb.Loader
+import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -24,6 +25,7 @@ import kotlin.test.assertTrue
  * Test creation of lineage using partial assets.
  */
 class PartialAssetsTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val connectionName = makeUnique("pat")
     private val connectorType = AtlanConnectorType.MULESOFT

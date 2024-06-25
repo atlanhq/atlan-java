@@ -7,6 +7,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -18,6 +19,7 @@ import kotlin.test.assertNotNull
  * Test import of source tag values.
  */
 class ImportSourceTagValuesTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val table = makeUnique("istv")
 

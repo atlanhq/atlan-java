@@ -8,6 +8,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
+import mu.KotlinLogging
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -15,6 +16,7 @@ import kotlin.test.assertEquals
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorMultipleTargetTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("emmc1")
     private val c2 = makeUnique("emmc2")
