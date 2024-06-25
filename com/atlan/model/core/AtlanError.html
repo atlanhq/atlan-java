@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,8 +200,7 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(long,java.lang.String)">AtlanError</a></span>&#8203;(long&nbsp;code,
-          java.lang.String&nbsp;message)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">AtlanError</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -322,6 +321,20 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCode(java.lang.Long)">setCode</a></span>&#8203;(java.lang.Long&nbsp;code)</code></th>
+<td class="colLast">
+<div class="block">A numeric error code.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setErrorMessage(java.lang.String)">setErrorMessage</a></span>&#8203;(java.lang.String&nbsp;errorMessage)</code></th>
+<td class="colLast">
+<div class="block">A human-readable message providing more details about the error.</div>
+</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -356,14 +369,13 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(long,java.lang.String)">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AtlanError</h4>
-<pre>public&nbsp;AtlanError&#8203;(long&nbsp;code,
-                  java.lang.String&nbsp;message)</pre>
+<pre>public&nbsp;AtlanError()</pre>
 </li>
 </ul>
 </li>
@@ -546,7 +558,7 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <a id="toString()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
@@ -555,6 +567,26 @@ extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanOb
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
 </dl>
+</li>
+</ul>
+<a id="setCode(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCode</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCode&#8203;(java.lang.Long&nbsp;code)</pre>
+<div class="block">A numeric error code.</div>
+</li>
+</ul>
+<a id="setErrorMessage(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setErrorMessage</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setErrorMessage&#8203;(java.lang.String&nbsp;errorMessage)</pre>
+<div class="block">A human-readable message providing more details about the error.</div>
 </li>
 </ul>
 </li>
