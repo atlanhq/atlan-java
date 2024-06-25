@@ -1,8 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
+import AssetImportCfg
 import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import mu.KotlinLogging
@@ -67,6 +69,19 @@ object LakeTagSynchronizer {
         if (results.anyFailures && failOnErrors) {
             logger.error { "Some errors detected, failing the workflow." }
             exitProcess(1)
+        }
+        val csvProducer = CSVProducer(connectionMap, metadataMap, outputDirectory)
+        tagFileNames.forEachIndexed { index, tagFileName ->
+            val csvFileName = tagFileName.replace("$outputDirectory/", "").replace(".json", ".csv")
+            csvProducer.transform(tagFileName, csvFileName)
+            val importConfig = AssetImportCfg(
+                assetsFile = "$outputDirectory/$csvFileName",
+                assetsUpsertSemantic = "update",
+                assetsFailOnErrors = failOnErrors,
+                assetsBatchSize = batchSize,
+                assetsFieldSeparator = ",",
+            )
+            Importer.import(importConfig, outputDirectory)
         }
     }
 

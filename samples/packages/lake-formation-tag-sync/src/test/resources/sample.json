@@ -3,8 +3,8 @@
     {
       "Table": {
         "CatalogId": "614518280298",
-        "DatabaseName": "dev_atlan_dev",
-        "Name": "stg_customer_categories"
+        "DatabaseName": "dev_sch",
+        "Name": "tbl1"
       },
       "LFTagOnDatabase": [
         {
@@ -40,7 +40,7 @@
       ],
       "LFTagsOnColumns": [
         {
-          "Name": "club_code",
+          "Name": "col1",
           "LFTags": [
             {
               "CatalogId": "614518280298",

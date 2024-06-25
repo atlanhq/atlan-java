@@ -30,5 +30,6 @@ class CVSProducerTest : PackageTest() {
         )
         val producer = CSVProducer(connectionMap, metadataMap, testDirectory)
         producer.transform("./src/test/resources/sample.json", "data.csv")
+        validateFilesExist(listOf("debug.log", "data.csv"))
     }
 }
