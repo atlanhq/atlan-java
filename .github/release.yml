@@ -17,6 +17,9 @@ changelog:
     - title: 🐞 Bug fixes
       labels:
         - bug
+    - title: 📦 Packages
+      labels:
+        - packages
     - title: 🥗 QOL improvements
       labels:
         - "*"
