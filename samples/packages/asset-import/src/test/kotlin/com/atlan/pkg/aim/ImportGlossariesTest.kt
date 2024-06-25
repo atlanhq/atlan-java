@@ -139,6 +139,7 @@ class ImportGlossariesTest : PackageTest() {
         GlossaryTerm.NAME,
         GlossaryTerm.ANCHOR,
         GlossaryTerm.CATEGORIES,
+        GlossaryTerm.DESCRIPTION,
         GlossaryTerm.USER_DESCRIPTION,
         GlossaryTerm.OWNER_USERS,
         GlossaryTerm.OWNER_GROUPS,
@@ -439,6 +440,7 @@ class ImportGlossariesTest : PackageTest() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryTerm.select()
             .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+            .where(GlossaryTerm.DESCRIPTION.hasAnyValue())
             .includesOnResults(termAttrs)
             .includeOnRelations(Glossary.NAME)
             .includeOnRelations(Readme.DESCRIPTION)
