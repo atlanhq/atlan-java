@@ -311,7 +311,9 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             throw new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, "" + code, body == null ? "" : body);
         }
 
-        AtlanError error = new AtlanError(code, body);
+        AtlanError error = new AtlanError();
+        error.setCode((long) code);
+        error.setErrorMessage(body);
         raiseError(code, error);
     }
 
