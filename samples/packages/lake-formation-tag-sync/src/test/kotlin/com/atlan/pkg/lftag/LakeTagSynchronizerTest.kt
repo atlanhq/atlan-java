@@ -18,9 +18,7 @@ import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.common.io.Files
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
+import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
 import kotlin.test.assertEquals
@@ -42,6 +40,7 @@ private const val METADATA_MAP_JSON = "metadata_map.json"
 private const val S3_BUCKET = "lakestoragetag"
 
 class LakeTagSynchronizerTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
     private val c1 = makeUnique("lftagdb")
     private var connectionQualifiedName = ""
     private var tableGuid = ""
@@ -157,8 +156,7 @@ class LakeTagSynchronizerTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         createCredentials()
         createConnections()
         createAssets()
@@ -201,12 +199,10 @@ class LakeTagSynchronizerTest : PackageTest() {
         validateFilesExist(listOf("debug.log", CONNECTION_MAP_JSON, METADATA_MAP_JSON, "sample.json", "sample.csv"))
     }
 
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
+    override fun teardown() {
         val client = Atlan.getDefaultClient()
         removeConnection(c1, AtlanConnectorType.REDSHIFT)
         client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
         EnumDef.purge(enum1)
-        teardown((context.passedTests.size() > 0) && (context.failedTests.size() < 1))
     }
 }

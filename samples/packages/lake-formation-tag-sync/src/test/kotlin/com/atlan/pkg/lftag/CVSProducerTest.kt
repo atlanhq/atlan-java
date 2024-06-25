@@ -1,9 +1,15 @@
 package com.atlan.pkg.lftag
 
 import com.atlan.pkg.PackageTest
+import mu.KotlinLogging
 import org.testng.annotations.Test
 
 class CVSProducerTest : PackageTest() {
+    override val logger = KotlinLogging.logger {}
+
+    override fun setup() {
+    }
+
     @Test
     fun transform() {
         val connectionMap = mapOf("dev" to "default/redshift/1687361820/wide_world_importers")

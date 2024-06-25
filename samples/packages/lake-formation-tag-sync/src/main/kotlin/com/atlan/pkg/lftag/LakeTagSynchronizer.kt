@@ -5,6 +5,7 @@ import AssetImportCfg
 import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
+import com.atlan.pkg.serde.csv.ImportResults
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import mu.KotlinLogging
@@ -22,17 +23,25 @@ object LakeTagSynchronizer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
+        val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
+        val results = sync(config, outputDirectory, failOnErrors)
+        if (!results && failOnErrors) {
+            logger.error { "Some errors detected, failing the workflow." }
+            exitProcess(1)
+        }
+    }
+
+    private fun sync(config: LakeFormationTagSyncCfg, outputDirectory: String, failOnErrors: Boolean): Boolean {
         val importType = Utils.getOrDefault(config.importType, "")
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        var results = Results(false)
+        var results: ImportResults? = null
 
         val mapper = jacksonObjectMapper()
 
         if (importType != "CLOUD") {
             logger.error { "Direct file upload(s) are not supported at this time." }
-            results = Results(true)
+            return false
         }
         val files = Utils.getInputFiles(
             "",
@@ -62,19 +71,15 @@ object LakeTagSynchronizer {
         }
         if (connectionMap.isEmpty()) {
             logger.error { "The file connection_map.json must be provided." }
-            results = Results(true)
+            return false
         }
         if (metadataMap.isEmpty()) {
             logger.error { "The file metadata_map.json must be provided." }
-            results = Results(true)
+            return false
         }
         if (tagFileNames.isEmpty()) {
             logger.error { "You must provide at least one json file containing Lake Tag data." }
-            results = Results(true)
-        }
-        if (results.anyFailures && failOnErrors) {
-            logger.error { "Some errors detected, failing the workflow." }
-            exitProcess(1)
+            return false
         }
         val csvProducer = CSVProducer(connectionMap, metadataMap, outputDirectory)
         tagFileNames.forEach { tagFileName ->
@@ -87,7 +92,11 @@ object LakeTagSynchronizer {
                 assetsBatchSize = batchSize,
                 assetsFieldSeparator = ",",
             )
-            Importer.import(importConfig, outputDirectory)
+            val result = Importer.import(importConfig, outputDirectory)?.combinedWith(results)
+            if (result != null) {
+                results = result.combinedWith(result)
+            }
         }
+        return !(results?.anyFailures ?: false)
     }
 }
