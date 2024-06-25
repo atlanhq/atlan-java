@@ -5,9 +5,6 @@ import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.xls.ExcelReader
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.io.File
 
@@ -20,8 +17,7 @@ class ExportAllAdminInfoTest : PackageTest() {
         "admin-export.xlsx",
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         setup(
             AdminExportCfg(
                 objectsToInclude = listOf(
@@ -124,10 +120,5 @@ class ExportAllAdminInfoTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }

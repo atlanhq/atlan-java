@@ -7,9 +7,6 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import org.testng.annotations.Test
 import java.nio.file.Paths
 import kotlin.IllegalStateException
@@ -51,8 +48,7 @@ class InvalidParentTest : PackageTest() {
         Connection.ADMIN_USERS,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         setup(
             RelationalAssetsBuilderCfg(
@@ -65,14 +61,12 @@ class InvalidParentTest : PackageTest() {
         }
     }
 
+    override fun teardown() {
+        removeConnection(conn1, conn1Type)
+    }
+
     @Test
     fun placeholder() {
         // do nothing -- only test is that the import fails as part of BeforeClass
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(conn1, conn1Type)
-        teardown(context.failedTests.size() > 0)
     }
 }

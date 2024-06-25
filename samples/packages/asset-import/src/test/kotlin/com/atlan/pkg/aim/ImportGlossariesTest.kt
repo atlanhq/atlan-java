@@ -31,9 +31,6 @@ import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -50,7 +47,7 @@ class ImportGlossariesTest : PackageTest() {
     private val tag2 = makeUnique("igt2")
 
     private val testFile = "input.csv"
-    private val revisedFile = "revised.csv"
+    private val revisedFile = "with_desc.csv"
 
     private val files = listOf(
         testFile,
@@ -160,26 +157,31 @@ class ImportGlossariesTest : PackageTest() {
         GlossaryTerm.CLASSIFIES,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         createTags()
+    }
+
+    override fun teardown() {
+        removeGlossary(glossary1)
+        removeGlossary(glossary2)
+        removeTag(tag1)
+        removeTag(tag2)
+    }
+
+    @Test(groups = ["aim.gloss"], dependsOnGroups = ["aim.lt.*"])
+    fun runImport() {
         setup(
             AssetImportCfg(
-                assetsFile = null,
-                assetsUpsertSemantic = null,
-                assetsAttrToOverwrite = null,
-                assetsFailOnErrors = true,
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
-                glossariesAttrToOverwrite = listOf(),
                 glossariesFailOnErrors = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun glossary1Created() {
         val g1 = Glossary.findByName(glossary1, glossaryAttrs)
         assertNotNull(g1)
@@ -190,7 +192,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(CertificateStatus.VERIFIED, g1.certificateStatus)
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun glossary2Created() {
         val g2 = Glossary.findByName(glossary2, glossaryAttrs)
         assertNotNull(g2)
@@ -202,7 +204,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals("With a message!", g2.certificateStatusMessage)
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryCategory.select()
@@ -241,7 +243,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryCategory.select()
@@ -275,7 +277,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request = GlossaryTerm.select()
@@ -300,7 +302,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.gloss.create"], dependsOnGroups = ["aim.gloss"])
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request = GlossaryTerm.select()
@@ -401,8 +403,8 @@ class ImportGlossariesTest : PackageTest() {
         setup(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, revisedFile).toString(),
-                assetsUpsertSemantic = "upsert",
-                assetsFailOnErrors = true,
+                glossariesUpsertSemantic = "upsert",
+                glossariesFailOnErrors = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -568,14 +570,5 @@ class ImportGlossariesTest : PackageTest() {
     @Test(dependsOnGroups = ["aim.gloss.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeGlossary(glossary1)
-        removeGlossary(glossary2)
-        removeTag(tag1)
-        removeTag(tag2)
-        teardown(context.failedTests.size() > 0)
     }
 }

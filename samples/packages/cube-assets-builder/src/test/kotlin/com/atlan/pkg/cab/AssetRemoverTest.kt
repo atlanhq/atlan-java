@@ -10,9 +10,6 @@ import com.atlan.pkg.util.AssetRemover
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.io.File
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -56,8 +53,7 @@ class AssetRemoverTest : PackageTest() {
         }
     }
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         val connectionsMap = mapOf(
             AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
@@ -107,10 +103,5 @@ class AssetRemoverTest : PackageTest() {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        teardown(context.failedTests.size() > 0)
     }
 }

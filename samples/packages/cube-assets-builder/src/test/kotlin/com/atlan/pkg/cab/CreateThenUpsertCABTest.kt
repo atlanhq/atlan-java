@@ -22,9 +22,6 @@ import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
-import org.testng.ITestContext
-import org.testng.annotations.AfterClass
-import org.testng.annotations.BeforeClass
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -161,8 +158,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         CubeField.CUBE_SUB_FIELD_COUNT,
     )
 
-    @BeforeClass
-    fun beforeClass() {
+    override fun setup() {
         prepFile()
         createTags()
         setup(
@@ -175,6 +171,12 @@ class CreateThenUpsertCABTest : PackageTest() {
             ),
         )
         Importer.main(arrayOf(testDirectory))
+    }
+
+    override fun teardown() {
+        removeConnection(conn1, conn1Type)
+        removeTag(tag1)
+        removeTag(tag2)
     }
 
     @Test(groups = ["cab.ctu.create"])
@@ -540,13 +542,5 @@ class CreateThenUpsertCABTest : PackageTest() {
     @Test(dependsOnGroups = ["cab.ctu.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    @AfterClass(alwaysRun = true)
-    fun afterClass(context: ITestContext) {
-        removeConnection(conn1, conn1Type)
-        removeTag(tag1)
-        removeTag(tag2)
-        teardown(context.failedTests.size() > 0)
     }
 }
