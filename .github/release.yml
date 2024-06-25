@@ -11,7 +11,7 @@ changelog:
     - title: ⛑️ Breaking changes
       labels:
         - breaking
-    - title: 🪛 Experimental
+    - title: 🧪 Experimental
       labels:
         - experimental
     - title: 🐞 Bug fixes
