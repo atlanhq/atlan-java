@@ -13,7 +13,7 @@ import java.util.TreeSet
 
 object CellXformer {
     const val LIST_DELIMITER = "\n"
-    private const val NEWLINE_SENTINEL = "§\r"
+    private const val NEWLINE_SENTINEL = "§LF±"
 
     fun encode(
         value: Any?,
