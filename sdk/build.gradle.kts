@@ -46,6 +46,7 @@ dependencies {
     api(libs.slf4j)
     api(libs.elasticsearch.java)
     api(libs.freemarker)
+    api(libs.openlineage)
     implementation(libs.classgraph)
     testImplementation(libs.bundles.java.test)
     testImplementation(libs.bundles.log4j)

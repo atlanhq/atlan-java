@@ -60,6 +60,16 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     DataProductCriticality daapCriticality;
 
+    /** Input ports guids for this data product. */
+    @Attribute
+    @Singular
+    SortedSet<String> daapInputPortGuids;
+
+    /** Output ports guids for this data product. */
+    @Attribute
+    @Singular
+    SortedSet<String> daapOutputPortGuids;
+
     /** Information sensitivity of this data product. */
     @Attribute
     DataProductSensitivity daapSensitivity;

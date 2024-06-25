@@ -23,14 +23,17 @@ object LakeTagSynchronizer {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
         val importType = Utils.getOrDefault(config.importType, "")
-        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        val results = Results(false)
+        var results = Results(false)
 
         val mapper = jacksonObjectMapper()
 
+        if (importType != "CLOUD") {
+            logger.error { "Direct file upload(s) are not supported at this time." }
+            results = Results(true)
+        }
         val files = Utils.getInputFiles(
             "",
             outputDirectory,
@@ -59,19 +62,22 @@ object LakeTagSynchronizer {
         }
         if (connectionMap.isEmpty()) {
             logger.error { "The file connection_map.json must be provided." }
+            results = Results(true)
         }
         if (metadataMap.isEmpty()) {
             logger.error { "The file metadata_map.json must be provided." }
+            results = Results(true)
         }
         if (tagFileNames.isEmpty()) {
             logger.error { "You must provide at least one json file containing Lake Tag data." }
+            results = Results(true)
         }
         if (results.anyFailures && failOnErrors) {
             logger.error { "Some errors detected, failing the workflow." }
             exitProcess(1)
         }
         val csvProducer = CSVProducer(connectionMap, metadataMap, outputDirectory)
-        tagFileNames.forEachIndexed { index, tagFileName ->
+        tagFileNames.forEach { tagFileName ->
             val csvFileName = tagFileName.replace("$outputDirectory/", "").replace(".json", ".csv")
             csvProducer.transform(tagFileName, csvFileName)
             val importConfig = AssetImportCfg(
@@ -84,12 +90,4 @@ object LakeTagSynchronizer {
             Importer.import(importConfig, outputDirectory)
         }
     }
-
-    data class MigratorContext(
-        val sourceConnectionQN: String,
-        val targetConnectionQN: String,
-        val includeArchived: Boolean,
-        val sourceDatabaseName: String,
-        val targetDatabaseName: String,
-    )
 }

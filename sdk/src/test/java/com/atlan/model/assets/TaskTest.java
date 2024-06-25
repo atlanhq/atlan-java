@@ -137,6 +137,9 @@ public class TaskTest {
             .assetMcMonitorStatus("String1")
             .assetMcMonitorType("String0")
             .assetMcMonitorType("String1")
+            .assetPoliciesCount(123456789L)
+            .assetPolicyGUID("String0")
+            .assetPolicyGUID("String1")
             .assetSodaCheckCount(123456789L)
             .assetSodaCheckStatuses("String0")
             .assetSodaDQStatus("String0")
@@ -391,6 +394,7 @@ public class TaskTest {
                     .taskActionFulfillmentPayload("String1")
                     .taskActionDisplayText("String1")
                     .build())
+            .taskCreatedBy("String0")
             .taskExecutionAction("String0")
             .taskExecutionComment("String0")
             .taskExpiresAt(123456789L)
@@ -401,6 +405,7 @@ public class TaskTest {
             .taskRequestor("String0")
             .taskRequestorComment("String0")
             .taskType("String0")
+            .taskUpdatedBy("String0")
             .build();
 
     private static final int hash = full.hashCode();

@@ -313,6 +313,29 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     }
 
     /**
+     * Pass-through to the request-handling method after confirming that the provided payload is non-null.
+     * This uses special handling of the response, where the response is plain text rather than JSON.
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param payload to send in the request
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @throws AtlanException on any API interaction problem
+     */
+    public static String requestPlainText(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            AtlanObject payload,
+            RequestOptions options)
+            throws AtlanException {
+        checkNullTypedParams(url, payload);
+        return requestPlainText(client, method, url, payload.toJson(client), options);
+    }
+
+    /**
      * Pass-through the request to the request-handling method.
      * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
      * to Atlan and precisely what was returned (prior to deserialization).
@@ -353,6 +376,42 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
                 } else {
                     log.debug(" ... response: {}", response.getRawJsonObject());
                 }
+            } else {
+                log.debug(" ... empty response.");
+            }
+        }
+        return response;
+    }
+
+    /**
+     * Pass-through the request to the request-handling method.
+     * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+     * to Atlan and precisely what was returned (prior to deserialization).
+     * This handles the response as plain text rather than JSON.
+     *
+     * @param client connectivity to Atlan
+     * @param method for the request
+     * @param url of the request
+     * @param body to send in the request, if any (to not send any use an empty string)
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @throws AtlanException on any API interaction problem
+     */
+    public static String requestPlainText(
+            AtlanClient client, ApiResource.RequestMethod method, String url, String body, RequestOptions options)
+            throws AtlanException {
+        // Create a unique ID for every request, and add it to the logging context and header
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("X-Atlan-Request-Id", requestId);
+        log.debug("({}) {} with: {}", method, url, body);
+        String response =
+                ApiResource.atlanResponseGetter.requestPlainText(client, method, url, body, options, requestId);
+        // Ensure we reset the Atlan request ID, so we always have the context from the original
+        // request that was made (even if it in turn triggered off other requests)
+        MDC.put("X-Atlan-Request-Id", requestId);
+        if (log.isDebugEnabled()) {
+            if (response != null) {
+                log.debug(" ... response: {}", response);
             } else {
                 log.debug(" ... empty response.");
             }

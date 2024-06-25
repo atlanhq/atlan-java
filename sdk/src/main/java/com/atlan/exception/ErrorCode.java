@@ -262,6 +262,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-047",
             "Expected {0} database name(s) matching the given pattern {1} but found {2}.",
             "Use a more restrictive regular expression."),
+    OPENLINEAGE_NOT_CONFIGURED(
+            400,
+            "ATLAN-JAVA-400-048",
+            "Requested OpenLineage connector type {0} is not configured.",
+            "You must first run the appropriate marketplace package to configure OpenLineage for this connector before you can send events for it."),
+
     AUTHENTICATION_PASSTHROUGH(
             401,
             "ATLAN-JAVA-401-000",

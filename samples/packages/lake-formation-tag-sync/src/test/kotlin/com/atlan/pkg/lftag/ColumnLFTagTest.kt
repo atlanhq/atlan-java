@@ -10,7 +10,7 @@ class ColumnLFTagTest {
 
     @Test
     fun whenDeserializableColumnLFTagThenSuccess() {
-        var json = """
+        val json = """
         {
           "Name": "club_code",
           "LFTags": [

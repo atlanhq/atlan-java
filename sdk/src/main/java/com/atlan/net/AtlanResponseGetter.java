@@ -60,6 +60,28 @@ public interface AtlanResponseGetter {
             throws AtlanException;
 
     /**
+     * Send a request to an Atlan API, when a response is expected.
+     * This handles the response as plain text, rather than JSON.
+     *
+     * @param client connectivity to Atlan
+     * @param method to use for the request
+     * @param url of the endpoint (with all path and query parameters) for the request
+     * @param body payload for the request, if any
+     * @param options any alternative options to use for the request, or null to use default options
+     * @param requestId unique identifier (GUID) of a single request to Atlan
+     * @return the response of the request
+     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     */
+    String requestPlainText(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException;
+
+    /**
      * Send a request to an Atlan API, when an event-stream response is expected.
      *
      * @param client connectivity to Atlan

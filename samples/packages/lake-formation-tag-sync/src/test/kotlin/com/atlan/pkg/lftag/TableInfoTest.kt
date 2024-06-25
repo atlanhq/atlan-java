@@ -12,7 +12,7 @@ class TableInfoTest {
 
     @Test
     fun whenDeserializableTableInfoThenSuccess() {
-        var json = """
+        val json = """
         {
           "Table": {
             "CatalogId": "614518280298",

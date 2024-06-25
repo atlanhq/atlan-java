@@ -78,16 +78,34 @@ object Importer {
             )
             FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
             logger.info { "=== Importing glossaries... ===" }
-            val glossaryImporter =
-                GlossaryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
+            val glossaryImporter = GlossaryImporter(
+                glossariesInput,
+                glossaryAttrsToOverwrite,
+                glossariesUpdateOnly,
+                glossariesBatchSize,
+                glossariesFailOnErrors,
+                glossariesFieldSeparator,
+            )
             val resultsGlossary = glossaryImporter.import()
             logger.info { "=== Importing categories... ===" }
-            val categoryImporter =
-                CategoryImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
+            val categoryImporter = CategoryImporter(
+                glossariesInput,
+                glossaryAttrsToOverwrite,
+                glossariesUpdateOnly,
+                glossariesBatchSize,
+                glossariesFailOnErrors,
+                glossariesFieldSeparator,
+            )
             val resultsCategory = categoryImporter.import()
             logger.info { "=== Importing terms... ===" }
-            val termImporter =
-                TermImporter(glossariesInput, glossaryAttrsToOverwrite, glossariesUpdateOnly, glossariesBatchSize, glossariesFieldSeparator)
+            val termImporter = TermImporter(
+                glossariesInput,
+                glossaryAttrsToOverwrite,
+                glossariesUpdateOnly,
+                glossariesBatchSize,
+                glossariesFailOnErrors,
+                glossariesFieldSeparator,
+            )
             val resultsTerm = termImporter.import()
             resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
         } else {
@@ -132,12 +150,24 @@ object Importer {
             )
             FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
             logger.info { "=== Importing domains... ===" }
-            val domainImporter =
-                DomainImporter(dataProductsInput, dataProductAttrsToOverwrite, dataProductsUpdateOnly, dataProductsBatchSize, dataProductsFieldSeparator)
+            val domainImporter = DomainImporter(
+                dataProductsInput,
+                dataProductAttrsToOverwrite,
+                dataProductsUpdateOnly,
+                dataProductsBatchSize,
+                dataProductsFailOnErrors,
+                dataProductsFieldSeparator,
+            )
             val resultsDomain = domainImporter.import()
             logger.info { "=== Importing products... ===" }
-            val productImporter =
-                ProductImporter(dataProductsInput, dataProductAttrsToOverwrite, dataProductsUpdateOnly, dataProductsBatchSize, dataProductsFieldSeparator)
+            val productImporter = ProductImporter(
+                dataProductsInput,
+                dataProductAttrsToOverwrite,
+                dataProductsUpdateOnly,
+                dataProductsBatchSize,
+                dataProductsFailOnErrors,
+                dataProductsFieldSeparator,
+            )
             val resultsProduct = productImporter.import()
             resultsDomain?.combinedWith(resultsProduct)
         } else {

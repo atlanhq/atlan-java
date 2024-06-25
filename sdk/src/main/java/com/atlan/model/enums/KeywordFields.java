@@ -238,6 +238,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_MC_MONITOR_STATUSES("assetMcMonitorStatuses"),
     /** Types of all associated Monte Carlo monitors. */
     ASSET_MC_MONITOR_TYPES("assetMcMonitorTypes"),
+    /** Array of policy ids governing this asset */
+    ASSET_POLICY_GUI_DS("assetPolicyGUIDs"),
     /** All associated Soda check statuses. */
     ASSET_SODA_CHECK_STATUSES("assetSodaCheckStatuses"),
     /** Status of data quality from Soda. */
@@ -298,6 +300,32 @@ public enum KeywordFields implements AtlanSearchableField {
     BADGE_CONDITIONS("badgeConditions"),
     /** Custom metadata attribute for which to show the badge. */
     BADGE_METADATA_ATTRIBUTE("badgeMetadataAttribute"),
+    /** Base parent Guid for policy used in version */
+    BUSINESS_POLICY_BASE_PARENT_GUID("businessPolicyBaseParentGuid"),
+    /** Business Policy Exception Filter ES DSL to denote the associate asset/s involved. */
+    BUSINESS_POLICY_EXCEPTION_FILTER_DSL("businessPolicyExceptionFilterDSL"),
+    /** List of groups who are part of this exception */
+    BUSINESS_POLICY_EXCEPTION_GROUPS("businessPolicyExceptionGroups"),
+    /** List of users who are part of this exception */
+    BUSINESS_POLICY_EXCEPTION_USERS("businessPolicyExceptionUsers"),
+    /** Business Policy Filter ES DSL to denote the associate asset/s involved. */
+    BUSINESS_POLICY_FILTER_DSL("businessPolicyFilterDSL"),
+    /** business policy guid for which log are created */
+    BUSINESS_POLICY_ID("businessPolicyId"),
+    /** Filter ES DSL to denote the associate asset/s involved. */
+    BUSINESS_POLICY_INCIDENT_FILTER_DSL("businessPolicyIncidentFilterDSL"),
+    /** policy ids related to this incident */
+    BUSINESS_POLICY_INCIDENT_RELATED_POLICY_GUI_DS("businessPolicyIncidentRelatedPolicyGUIDs"),
+    /** business policy type for which log are created */
+    BUSINESS_POLICY_LOG_POLICY_TYPE("businessPolicyLogPolicyType"),
+    /** Unique name of the business policy through which this asset is accessible. */
+    BUSINESS_POLICY_QUALIFIED_NAME("businessPolicyQualifiedName"),
+    /** Duration for the business policy to complete review. */
+    BUSINESS_POLICY_REVIEW_PERIOD("businessPolicyReviewPeriod"),
+    /** Selected approval workflow id for business policy */
+    BUSINESS_POLICY_SELECTED_APPROVAL_WF("businessPolicySelectedApprovalWF"),
+    /** Type of business policy */
+    BUSINESS_POLICY_TYPE("businessPolicyType"),
     /** The owner who activated the calculation view */
     CALCULATION_VIEW_ACTIVATED_BY("calculationViewActivatedBy"),
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
@@ -396,6 +424,10 @@ public enum KeywordFields implements AtlanSearchableField {
     CUBE_QUALIFIED_NAME("cubeQualifiedName"),
     /** Criticality of this data product. */
     DAAP_CRITICALITY("daapCriticality"),
+    /** Input ports guids for this data product. */
+    DAAP_INPUT_PORT_GUIDS("daapInputPortGuids"),
+    /** Output ports guids for this data product. */
+    DAAP_OUTPUT_PORT_GUIDS("daapOutputPortGuids"),
     /** Information sensitivity of this data product. */
     DAAP_SENSITIVITY("daapSensitivity"),
     /** Status of this data product. */
@@ -664,6 +696,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ICON("icon"),
     /** Type of icon for the link, for example: image or emoji. */
     ICON_TYPE("iconType"),
+    /** Status of this asset's severity. */
+    INCIDENT_SEVERITY("incidentSeverity"),
     /** Assets that are inputs to this process. */
     INPUTS("inputs"),
     /** List of fields that are inputs to this flow. */
@@ -1348,6 +1382,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TARGET_SERVER_NAME("targetServerName"),
     /** List of actions associated with this task. */
     TASK_ACTIONS("taskActions"),
+    /** username of the user who created this task */
+    TASK_CREATED_BY("taskCreatedBy"),
     /** action executed by the recipient */
     TASK_EXECUTION_ACTION("taskExecutionAction"),
     /** comment for the action executed by user */
@@ -1364,6 +1400,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TASK_REQUESTOR_COMMENT("taskRequestorComment"),
     /** type of task */
     TASK_TYPE("taskType"),
+    /** username of the user who updated this task */
+    TASK_UPDATED_BY("taskUpdatedBy"),
     /** Name of the Atlan workspace in which this asset exists. */
     TENANT_ID("tenantId"),
     /** TBC */

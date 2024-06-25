@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -15,12 +16,14 @@ public class AtlanError extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** A numeric error code. */
+    @Setter
     Long code;
 
     /** A short string indicating the error code reported. */
     String errorCode;
 
     /** A human-readable message providing more details about the error. */
+    @Setter
     String errorMessage;
 
     /** A human-readable description providing more details about the error. */

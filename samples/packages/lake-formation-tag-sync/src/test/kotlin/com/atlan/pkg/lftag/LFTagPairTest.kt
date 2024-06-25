@@ -11,11 +11,11 @@ private const val JSON = """{"TagKey":"$TAG_KEY","TagValues":["public"],"Catalog
 private val mapper = jacksonObjectMapper()
 class LFTagPairTest {
 
-    private val tag_values = listOf("public")
+    private val tagValues = listOf("public")
 
     @Test
     fun whenSerializableLFTagThenSuccess() {
-        val lfTagPair = LFTagPair(TAG_KEY, tag_values, "614518280298")
+        val lfTagPair = LFTagPair(TAG_KEY, tagValues, "614518280298")
         val serialized = mapper.writeValueAsString(lfTagPair)
         assertEquals(serialized, JSON)
     }
@@ -25,6 +25,6 @@ class LFTagPairTest {
         val lfTagPair = mapper.readValue(JSON, LFTagPair::class.java)
         assertEquals(TAG_KEY, lfTagPair.tagKey)
         assertEquals(CATALOG_ID, lfTagPair.catalogId)
-        assertEquals(tag_values, lfTagPair.tagValues)
+        assertEquals(tagValues, lfTagPair.tagValues)
     }
 }

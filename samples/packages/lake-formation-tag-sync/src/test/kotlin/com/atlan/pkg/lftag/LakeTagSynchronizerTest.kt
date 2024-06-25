@@ -16,6 +16,8 @@ import com.atlan.model.typedefs.EnumDef
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.google.common.io.Files
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
@@ -37,6 +39,8 @@ private const val PREFIX = "stuff"
 
 private const val METADATA_MAP_JSON = "metadata_map.json"
 
+private const val S3_BUCKET = "lakestoragetag"
+
 class LakeTagSynchronizerTest : PackageTest() {
     private val c1 = makeUnique("lftagdb")
     private var connectionQualifiedName = ""
@@ -44,6 +48,7 @@ class LakeTagSynchronizerTest : PackageTest() {
     private var columnGuid = ""
     private val cm1 = makeUnique("lftcm")
     private val enum1 = makeUnique("lfenum")
+    private val mapper = jacksonObjectMapper()
 
     private fun createConnections() {
         Connection.creator(c1, AtlanConnectorType.REDSHIFT)
@@ -69,14 +74,15 @@ class LakeTagSynchronizerTest : PackageTest() {
         response.getCreatedAssets(Table::class.java).forEach { table ->
             this.tableGuid = table.guid
         }
-        response.getCreatedAssets(Column::class.java).forEach { column ->
-            this.columnGuid = column.guid
+        response.getCreatedAssets(Column::class.java).forEach { col ->
+            this.columnGuid = col.guid
         }
     }
 
     private fun createConnectionMap() {
+        val connectionMap = mapOf("dev" to "$connectionQualifiedName/$DATABASE_NAME")
         File("$testDirectory/$CONNECTION_MAP_JSON").bufferedWriter().use { out ->
-            out.write("{\"dev\":\"$connectionQualifiedName/$DATABASE_NAME\"}")
+            out.write(mapper.writeValueAsString(connectionMap))
         }
     }
 
@@ -107,17 +113,53 @@ class LakeTagSynchronizerTest : PackageTest() {
     }
 
     private fun createMetadataMap() {
-        File("$testDirectory/$METADATA_MAP_JSON").printWriter().use { out ->
-            out.println("{")
-            out.println("  \"security_classification\": \"$cm1::$attr1\",")
-            out.println("  \"privacy_sensitivity\": \"$cm1::$attr2\",")
-            out.println("  \"data_load_method\": \"$cm1::$attr3\"")
-            out.println("}")
+        val metaDataMap = mapOf(
+            "security_classification" to "$cm1::$attr1",
+            "privacy_sensitivity" to "$cm1::$attr2",
+            "data_load_method" to "$cm1::$attr3",
+        )
+        File("$testDirectory/$METADATA_MAP_JSON").bufferedWriter().use { out ->
+            out.write(mapper.writeValueAsString(metaDataMap))
+        }
+    }
+
+    private fun createCredentials() {
+        val credentials = mapOf(
+            "authType" to "s3",
+            "host" to "",
+            "port" to 0,
+            "username" to System.getenv("AWS_ACCESS_KEY_ID"),
+            "password" to System.getenv("AWS_SECRET_ACCESS_KEY"),
+            "extra" to mapOf(
+                "region" to System.getenv("AWS_DEFAULT_REGION"),
+                "s3_bucket" to S3_BUCKET,
+            ),
+            "connector" to "",
+            "connectorConfigName" to "",
+            "connectorType" to "",
+            "description" to "",
+            "connection" to "",
+            "id" to "",
+            "name" to "",
+            "isActive" to true,
+            "level" to "",
+            "metadata" to "",
+            "tenantId" to "",
+            "createdBy" to "",
+            "createdAt" to 0,
+            "updatedAt" to 0,
+            "version" to "",
+        )
+        val credentialsFile = File("/tmp/credentials/success/result-0.json")
+        Files.createParentDirs(credentialsFile)
+        credentialsFile.bufferedWriter().use { out ->
+            out.write(mapper.writeValueAsString(credentials))
         }
     }
 
     @BeforeClass
     fun beforeClass() {
+        createCredentials()
         createConnections()
         createAssets()
         createConnectionMap()
@@ -148,8 +190,15 @@ class LakeTagSynchronizerTest : PackageTest() {
     }
 
     @Test
+    fun validateColumnTagged() {
+        val column = Column.get(columnGuid)
+        val attribute1 = column.getCustomMetadata(cm1, attr1)
+        assertEquals("public", attribute1)
+    }
+
+    @Test
     fun validateFilesCreated() {
-        validateFilesExist(listOf("debug.log", "$CONNECTION_MAP_JSON", "$METADATA_MAP_JSON", "sample.json", "sample.csv"))
+        validateFilesExist(listOf("debug.log", CONNECTION_MAP_JSON, METADATA_MAP_JSON, "sample.json", "sample.csv"))
     }
 
     @AfterClass(alwaysRun = true)

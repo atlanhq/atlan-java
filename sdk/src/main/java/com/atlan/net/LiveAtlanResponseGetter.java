@@ -84,6 +84,20 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
     /** {@inheritDoc} */
     @Override
+    public String requestPlainText(
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            RequestOptions options,
+            String requestId)
+            throws AtlanException {
+        AtlanRequest request = new AtlanRequest(client, method, url, body, options, requestId);
+        return requestPlainText(request);
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public <T extends AtlanEventStreamResponseInterface> T requestStream(
             AtlanClient client,
             ApiResource.RequestMethod method,
@@ -163,6 +177,26 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         }
 
         return resource;
+    }
+
+    /**
+     * Makes a request to Atlan's API.
+     *
+     * @param request bundled details of the request to make
+     * @return the response of the request
+     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     */
+    private String requestPlainText(AtlanRequest request) throws AtlanException {
+        AtlanResponse response = httpClient.requestWithRetries(request);
+
+        int responseCode = response.code();
+        String responseBody = response.body();
+
+        if (responseCode < 200 || responseCode >= 300) {
+            handleApiError(responseCode, responseBody);
+        }
+
+        return responseBody;
     }
 
     /**
@@ -259,7 +293,28 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(response.body(), response.code(), null);
         }
 
-        raiseError(response, error);
+        raiseError(response.code(), error);
+    }
+
+    /**
+     * Detect specific exceptions based primarily on the response code received from Atlan.
+     *
+     * @param code numeric response code
+     * @param body of the response received from an API call
+     * @throws AtlanException a more specific exception, based on the details of that response
+     */
+    private static void handleApiError(int code, String body) throws AtlanException {
+
+        // Check for a 500 response first -- if found, we won't have a JSON body to parse,
+        // so preemptively exit with a generic ApiException pass-through.
+        if (code == 500) {
+            throw new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, "" + code, body == null ? "" : body);
+        }
+
+        AtlanError error = new AtlanError();
+        error.setCode((long) code);
+        error.setErrorMessage(body);
+        raiseError(code, error);
     }
 
     /**
@@ -291,20 +346,19 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(response.body().toString(), response.code(), null);
         }
 
-        raiseError(response, error);
+        raiseError(response.code(), error);
     }
 
     /**
      * Raise an Atlan-specific exception based on the response code.
      *
-     * @param response received from an API call
+     * @param code numeric response code received from an API call
      * @param error error details parsed from the response
-     * @param <T> type of the response (unused here)
      * @throws AtlanException a more specific exception, based on the details of the response
      */
-    private static <T> void raiseError(AbstractAtlanResponse<T> response, AtlanError error) throws AtlanException {
+    private static void raiseError(int code, AtlanError error) throws AtlanException {
         AtlanException exception;
-        switch (response.code()) {
+        switch (code) {
             case 400:
                 exception = new InvalidRequestException(
                         ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.findCode(), error.findMessage());

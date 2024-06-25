@@ -37,6 +37,9 @@ public interface ITask {
     /** List of actions associated with this task. */
     KeywordField TASK_ACTIONS = new KeywordField("taskActions", "taskActions");
 
+    /** username of the user who created this task */
+    KeywordField TASK_CREATED_BY = new KeywordField("taskCreatedBy", "taskCreatedBy");
+
     /** action executed by the recipient */
     KeywordField TASK_EXECUTION_ACTION = new KeywordField("taskExecutionAction", "taskExecutionAction");
 
@@ -66,6 +69,9 @@ public interface ITask {
 
     /** type of task */
     KeywordField TASK_TYPE = new KeywordField("taskType", "taskType");
+
+    /** username of the user who updated this task */
+    KeywordField TASK_UPDATED_BY = new KeywordField("taskUpdatedBy", "taskUpdatedBy");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -255,6 +261,12 @@ public interface ITask {
 
     /** Types of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorTypes();
+
+    /** Count of policies inside the asset */
+    Long getAssetPoliciesCount();
+
+    /** Array of policy ids governing this asset */
+    SortedSet<String> getAssetPolicyGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
@@ -478,6 +490,9 @@ public interface ITask {
     /** List of actions associated with this task. */
     List<Action> getTaskActions();
 
+    /** username of the user who created this task */
+    String getTaskCreatedBy();
+
     /** action executed by the recipient */
     String getTaskExecutionAction();
 
@@ -507,6 +522,9 @@ public interface ITask {
 
     /** type of task */
     String getTaskType();
+
+    /** username of the user who updated this task */
+    String getTaskUpdatedBy();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
