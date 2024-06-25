@@ -1,0 +1,25 @@
+changelog:
+  exclude:
+    labels:
+      - ignore
+    authors:
+      - octocat
+  categories:
+    - title: 🎉 New features
+      labels:
+        - enhancement
+    - title: ⛑️ Breaking changes
+      labels:
+        - breaking
+    - title: 🪛 Experimental
+      labels:
+        - experimental
+    - title: 🐞 Bug fixes
+      labels:
+        - bug
+    - title: 📦 Packages
+      labels:
+        - packages
+    - title: 🥗 QOL improvements
+      labels:
+        - "*"
