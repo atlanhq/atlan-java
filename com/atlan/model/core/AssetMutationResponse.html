@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -207,6 +207,21 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client">client</a></span></code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
+</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.net.ApiResource">
 <!--   -->
@@ -277,102 +292,116 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient()">getClient</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAssets()">getCreatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were created.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAssets(java.lang.Class)">getCreatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sublist of assets that were created, of the provided type.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeletedAssets()">getDeletedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were deleted.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeletedAssets(java.lang.Class)">getDeletedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sublist of assets that were deleted, of the provided type.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGuidAssignments()">getGuidAssignments</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Map of assigned unique identifiers for the created assets.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="MutatedAssets.html" title="class in com.atlan.model.core">MutatedAssets</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMutatedAssets()">getMutatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that were changed.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AssetMutationResponse.MutationType.html" title="enum in com.atlan.model.core">AssetMutationResponse.MutationType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMutation(com.atlan.model.assets.Asset)">getMutation</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;input)</code></th>
 <td class="colLast">
 <div class="block">Determine the type of mutation that was applied to the asset provided in the request.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartiallyUpdatedAssets()">getPartiallyUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were partially updated.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartiallyUpdatedAssets(java.lang.Class)">getPartiallyUpdatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sublist of assets that were partially updated, of the provided type.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartialUpdatedAssets()">getPartialUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of assets that were partially updated.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>T</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResult(T)">getResult</a></span>&#8203;(T&nbsp;input)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the specific mutation result for the asset provided in the request.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdatedAssets()">getUpdatedAssets</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of assets that were updated.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>&lt;T extends <a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdatedAssets(java.lang.Class)">getUpdatedAssets</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;type)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sublist of assets that were updated, of the provided type.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClient(com.atlan.AtlanClient)">setClient</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -407,6 +436,26 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="client">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>client</h4>
+<pre>protected transient&nbsp;<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a> client</pre>
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -613,6 +662,16 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </dl>
 </li>
 </ul>
+<a id="getClient()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getClient</h4>
+<pre class="methodSignature">public&nbsp;<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getClient()</pre>
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
+</li>
+</ul>
 <a id="getMutatedAssets()">
 <!--   -->
 </a>
@@ -687,7 +746,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <a id="toString()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>toString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
@@ -696,6 +755,16 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../../net/ApiResource.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiResource</a></code></dd>
 </dl>
+</li>
+</ul>
+<a id="setClient(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setClient</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setClient&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
+<div class="block">Connectivity to the Atlan tenant where the save operation was run.</div>
 </li>
 </ul>
 </li>
@@ -756,7 +825,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
