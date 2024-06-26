@@ -35,7 +35,7 @@ public class CubeTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("Cube");
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.ESSBASE;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.AZURE_ANALYSIS_SERVICES;
     public static final String CONNECTION_NAME = PREFIX;
 
     private static final String CUBE_NAME = PREFIX + "-cube";
