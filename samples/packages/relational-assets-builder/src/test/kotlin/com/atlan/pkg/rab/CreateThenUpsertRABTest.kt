@@ -37,7 +37,7 @@ class CreateThenUpsertRABTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("ctu1")
-    private val conn1Type = AtlanConnectorType.MPARTICLE
+    private val conn1Type = AtlanConnectorType.IMPALA
     private val tag1 = makeUnique("ctut1")
     private val tag2 = makeUnique("ctut2")
 

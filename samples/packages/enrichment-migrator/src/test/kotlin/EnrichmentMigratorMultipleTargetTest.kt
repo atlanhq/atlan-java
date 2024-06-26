@@ -21,6 +21,9 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     private val c1 = makeUnique("emmc1")
     private val c2 = makeUnique("emmc2")
     private val c3 = makeUnique("emmc3")
+    private val c1Type = AtlanConnectorType.REDIS
+    private val c2Type = AtlanConnectorType.STARBURST_GALAXY
+    private val c3Type = AtlanConnectorType.STARBURST_GALAXY
 
     private val files = listOf(
         "asset-export.csv",
@@ -29,17 +32,17 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
 
     private fun createConnections() {
         val batch = AssetBatch(Atlan.getDefaultClient(), 5)
-        batch.add(Connection.creator(c1, AtlanConnectorType.HIVE).build())
-        batch.add(Connection.creator(c2, AtlanConnectorType.ESSBASE).build())
-        batch.add(Connection.creator(c3, AtlanConnectorType.ESSBASE).build())
+        batch.add(Connection.creator(c1, c1Type).build())
+        batch.add(Connection.creator(c2, c2Type).build())
+        batch.add(Connection.creator(c3, c3Type).build())
         batch.flush()
     }
 
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, AtlanConnectorType.HIVE)[0]!!
-        val connection2 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
-        val connection3 = Connection.findByName(c3, AtlanConnectorType.ESSBASE)[0]!!
+        val connection1 = Connection.findByName(c1, c1Type)[0]!!
+        val connection2 = Connection.findByName(c2, c2Type)[0]!!
+        val connection3 = Connection.findByName(c3, c3Type)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -70,10 +73,10 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         Thread.sleep(15000)
         setup(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.HIVE)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(
-                    Connection.findByName(c2, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!,
-                    Connection.findByName(c3, AtlanConnectorType.ESSBASE)?.get(0)?.qualifiedName!!,
+                    Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!,
+                    Connection.findByName(c3, c3Type)?.get(0)?.qualifiedName!!,
                 ),
                 failOnErrors = false,
                 limitType = "INCLUDE",
@@ -85,14 +88,14 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     }
 
     override fun teardown() {
-        removeConnection(c1, AtlanConnectorType.HIVE)
-        removeConnection(c2, AtlanConnectorType.ESSBASE)
-        removeConnection(c3, AtlanConnectorType.ESSBASE)
+        removeConnection(c1, c1Type)
+        removeConnection(c2, c2Type)
+        removeConnection(c3, c3Type)
     }
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
+        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
         Table.select()
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
             .includeOnResults(Table.DESCRIPTION)
@@ -105,8 +108,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val t1 = Connection.findByName(c2, AtlanConnectorType.ESSBASE)[0]!!
-        val t2 = Connection.findByName(c3, AtlanConnectorType.ESSBASE)[0]!!
+        val t1 = Connection.findByName(c2, c2Type)[0]!!
+        val t2 = Connection.findByName(c3, c3Type)[0]!!
         val f1 = t1.qualifiedName.replace("/", "_")
         val f2 = t2.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$f1.csv", "CSA_EM_transformed_$f2.csv"))

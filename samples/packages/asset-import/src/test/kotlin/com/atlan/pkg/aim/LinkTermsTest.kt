@@ -34,7 +34,7 @@ class LinkTermsTest : PackageTest() {
 
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
-    private val connectorType = AtlanConnectorType.GENERIC
+    private val connectorType = AtlanConnectorType.NETEZZA
 
     private val tag1 = makeUnique("ltt1")
     private val tag2 = makeUnique("ltt2")
