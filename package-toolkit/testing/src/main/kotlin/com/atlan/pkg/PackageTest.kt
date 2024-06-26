@@ -446,7 +446,7 @@ abstract class PackageTest {
     fun testsTeardown(context: ITestContext) {
         try {
             teardown()
-            val keepLogs = context.failedTests.size() > 0
+            val keepLogs = context.failedTests.size() > 0 || context.passedTests.size() == 0
             if (!keepLogs) {
                 removeDirectory(testDirectory)
             }

@@ -16,7 +16,6 @@ import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
 import com.atlan.model.search.CompoundQuery;
-import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -606,15 +605,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 16L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 16L);
 
         // Test iterator
         List<String> guids = new ArrayList<>();
@@ -788,15 +779,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 16L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 16L);
 
         for (Asset a : response) {
             assertTrue(a instanceof Connection
@@ -1032,15 +1015,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Column.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
@@ -1064,15 +1039,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Column.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
@@ -1239,15 +1206,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnRelations(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
@@ -1278,15 +1237,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnRelations(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
@@ -1360,15 +1311,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(column5.getGuid(), 50).build();
 
-        AuditSearchResponse response = request.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getCount() < 33L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
-            count++;
-        }
+        AuditSearchResponse response = retrySearchUntil(request, 33L);
 
         validateAudits(response.getEntityAudits());
 
@@ -1384,21 +1327,10 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.audit"},
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByQN() throws AtlanException, InterruptedException {
-
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         Column.TYPE_NAME, column5.getQualifiedName(), 50)
                 .build();
-
-        AuditSearchResponse response = request.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getCount() < 33L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
-            count++;
-        }
-
+        AuditSearchResponse response = retrySearchUntil(request, 33L);
         validateAudits(response.getEntityAudits());
     }
 

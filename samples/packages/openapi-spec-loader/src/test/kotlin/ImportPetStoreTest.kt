@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.Connection
@@ -29,7 +28,7 @@ class ImportPetStoreTest : PackageTest() {
             OpenAPISpecLoaderCfg(
                 specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
                 connectionUsage = "CREATE",
-                connection = Connection.creator(testId, AtlanConnectorType.API, listOf(Atlan.getDefaultClient().roleCache.getIdForName("\$admin")), null, null).build(),
+                connection = Connection.creator(testId, AtlanConnectorType.API).build(),
             ),
         )
         OpenAPISpecLoader.main(arrayOf(testDirectory))

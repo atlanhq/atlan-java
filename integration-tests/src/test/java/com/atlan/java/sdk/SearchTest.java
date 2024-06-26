@@ -17,7 +17,6 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.net.HttpClient;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -178,16 +177,7 @@ public class SearchTest extends AtlanLiveTest {
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.UPDATE_TIME.gt(term5.getCreateTime()))
                 .toRequest();
-
-        IndexSearchResponse response = index.search();
-
-        int count = 0;
-        while (response.getApproximateCount() < 3L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
-
+        IndexSearchResponse response = retrySearchUntil(index, 3L);
         assertEquals(response.getApproximateCount(), 3);
     }
 

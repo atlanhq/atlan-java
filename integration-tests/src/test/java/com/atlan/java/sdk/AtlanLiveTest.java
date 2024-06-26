@@ -15,6 +15,9 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.search.AuditSearchRequest;
 import com.atlan.model.search.AuditSearchResponse;
 import com.atlan.model.search.EntityAudit;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.util.Random;
 import org.slf4j.Logger;
@@ -113,5 +116,59 @@ public abstract class AtlanLiveTest {
             }
         }
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected static IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
+            throws AtlanException, InterruptedException {
+        int count = 1;
+        IndexSearchResponse response = request.search();
+        while (response.getApproximateCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+        assertNotNull(response);
+        assertFalse(
+                response.getApproximateCount() < expectedSize,
+                "Search retries overran - found " + response.getApproximateCount() + " results when expecting "
+                        + expectedSize + ".");
+        return response;
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected static AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
+            throws AtlanException, InterruptedException {
+        int count = 1;
+        AuditSearchResponse response = request.search();
+        while (response.getCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+        assertNotNull(response);
+        assertFalse(
+                response.getCount() < expectedSize,
+                "Audit search retries overran - found " + response.getCount() + " results when expecting "
+                        + expectedSize + ".");
+        return response;
     }
 }

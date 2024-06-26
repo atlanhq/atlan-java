@@ -11,7 +11,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -158,15 +157,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 2L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 2L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
