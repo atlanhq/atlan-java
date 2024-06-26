@@ -198,20 +198,14 @@ public class APIAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"api.delete.path.read"},
             dependsOnGroups = {"api.delete.path"})
-    void readDeletedPath() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
-        APIPath deleted = APIPath.get(path.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), path.getGuid());
-        assertEquals(deleted.getQualifiedName(), path.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    void readDeletedPath() throws AtlanException {
+        validateDeletedAsset(path, log);
     }
 
     @Test(
             groups = {"api.delete.path.restore"},
             dependsOnGroups = {"api.delete.path.read"})
-    void restorePath() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
+    void restorePath() throws AtlanException {
         assertTrue(APIPath.restore(path.getQualifiedName()));
         APIPath restored = APIPath.get(path.getQualifiedName());
         assertEquals(restored.getGuid(), path.getGuid());

@@ -403,22 +403,10 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3.delete.wait"},
-            dependsOnGroups = {"s3.delete.object"})
-    void forceDelete() throws InterruptedException {
-        // Force a wait for consistency on deleted assets
-        Thread.sleep(2000);
-    }
-
-    @Test(
             groups = {"s3.delete.object.read"},
-            dependsOnGroups = {"s3.delete.wait"})
+            dependsOnGroups = {"s3.delete.object"})
     void readDeletedObjectARN() throws AtlanException {
-        S3Object deleted = S3Object.get(objectARN.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), objectARN.getGuid());
-        assertEquals(deleted.getQualifiedName(), objectARN.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(objectARN, log);
     }
 
     @Test(

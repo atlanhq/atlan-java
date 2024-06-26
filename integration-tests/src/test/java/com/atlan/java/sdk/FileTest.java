@@ -176,11 +176,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.delete.file.read"},
             dependsOnGroups = {"file.delete.file"})
     void readDeletedFile() throws AtlanException {
-        File deleted = File.get(file.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), file.getGuid());
-        assertEquals(deleted.getQualifiedName(), file.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(file, log);
     }
 
     @Test(

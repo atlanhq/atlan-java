@@ -253,11 +253,7 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.delete.consumergroup.read"},
             dependsOnGroups = {"kafka.delete.consumergroup"})
     void readDeletedGroup() throws AtlanException {
-        KafkaConsumerGroup deleted = KafkaConsumerGroup.get(consumerGroup.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), consumerGroup.getGuid());
-        assertEquals(deleted.getQualifiedName(), consumerGroup.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(consumerGroup, log);
     }
 
     @Test(
