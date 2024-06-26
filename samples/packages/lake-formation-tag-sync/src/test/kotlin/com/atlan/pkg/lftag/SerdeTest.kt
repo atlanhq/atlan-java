@@ -12,11 +12,7 @@ import kotlin.test.assertNotNull
 private const val TAG_KEY = "privacy_sensitivity"
 private const val CATALOG_ID = "614518280298"
 private const val JSON = """{"TagKey":"$TAG_KEY","TagValues":["public"],"CatalogId":"$CATALOG_ID"}"""
-private val mapper = jacksonObjectMapper()
-class SerdeTest {
-
-    private val tagValues = listOf("public")
-    val tableInfoJson = """
+val TABLE_INFO_JSON = """
         {
           "Table": {
             "CatalogId": "614518280298",
@@ -56,7 +52,11 @@ class SerdeTest {
             }
           ]
         }
-    """.trimIndent()
+""".trimIndent()
+private val mapper = jacksonObjectMapper()
+class SerdeTest {
+
+    private val tagValues = listOf("public")
 
     @Test
     fun whenDeserializableTableThenSuccess() {
@@ -75,7 +75,7 @@ class SerdeTest {
 
     @Test
     fun whenDeserializableTableInfoThenSuccess() {
-        val tableInfo = mapper.readValue(tableInfoJson, TableInfo::class.java)
+        val tableInfo = mapper.readValue(TABLE_INFO_JSON, TableInfo::class.java)
         assertNotNull(tableInfo.table)
         assertEquals(1, tableInfo.lfTagOnDatabase.size)
         assertEquals(1, tableInfo.lfTagsOnTable.size)
@@ -85,7 +85,7 @@ class SerdeTest {
     @Test
     fun getTagValuesByTagKey() {
         val tagValuesByTagKey = mutableMapOf<String, MutableSet<String>>()
-        val tableInfo = mapper.readValue(tableInfoJson, TableInfo::class.java)
+        val tableInfo = mapper.readValue(TABLE_INFO_JSON, TableInfo::class.java)
         assertEquals(mapOf("security_classification" to setOf("public", "private")), tableInfo.getTagValuesByTagKey(tagValuesByTagKey))
     }
 
