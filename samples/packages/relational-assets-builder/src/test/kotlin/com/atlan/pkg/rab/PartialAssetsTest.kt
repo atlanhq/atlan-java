@@ -32,7 +32,7 @@ class PartialAssetsTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("pc1")
-    private val conn1Type = AtlanConnectorType.COCKROACHDB
+    private val conn1Type = AtlanConnectorType.MARIADB
 
     private val testFile = "input.csv"
 

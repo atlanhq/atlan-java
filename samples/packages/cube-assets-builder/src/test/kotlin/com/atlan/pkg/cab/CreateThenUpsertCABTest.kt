@@ -36,7 +36,7 @@ class CreateThenUpsertCABTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("ctuc1")
-    private val conn1Type = AtlanConnectorType.ESSBASE
+    private val conn1Type = AtlanConnectorType.AZURE_ANALYSIS_SERVICES
     private val tag1 = makeUnique("ctuct1")
     private val tag2 = makeUnique("ctuct2")
 

@@ -26,6 +26,8 @@ class EnrichmentMigratorPatternTest : PackageTest() {
 
     private val c1 = makeUnique("empc1")
     private val c2 = makeUnique("empc2")
+    private val c1Type = AtlanConnectorType.AWS_GREENGRASS
+    private val c2Type = AtlanConnectorType.MPARTICLE
     private var sourceConnectionQualifiedName = ""
     private var targetConnectionQualifiedName = ""
     private val targetTableQualifiedNamesByName = mutableMapOf<String, String>()
@@ -37,16 +39,16 @@ class EnrichmentMigratorPatternTest : PackageTest() {
 
     private fun createConnections() {
         val batch = AssetBatch(Atlan.getDefaultClient(), 5)
-        batch.add(Connection.creator(c1, AtlanConnectorType.MSSQL).build())
-        batch.add(Connection.creator(c2, AtlanConnectorType.POSTGRES).build())
+        batch.add(Connection.creator(c1, c1Type).build())
+        batch.add(Connection.creator(c2, c2Type).build())
         batch.flush()
     }
 
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, AtlanConnectorType.MSSQL)[0]!!
+        val connection1 = Connection.findByName(c1, c1Type)[0]!!
         this.sourceConnectionQualifiedName = connection1.qualifiedName
-        val connection2 = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
+        val connection2 = Connection.findByName(c2, c2Type)[0]!!
         this.targetConnectionQualifiedName = connection2.qualifiedName
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator(SOURCE_DATABASE_NAME, connection1.qualifiedName).build()
@@ -80,8 +82,8 @@ class EnrichmentMigratorPatternTest : PackageTest() {
         createAssets()
         setup(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, AtlanConnectorType.MSSQL)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, AtlanConnectorType.POSTGRES)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
                 sourceQnPrefix = SOURCE_DATABASE_NAME,
                 targetDatabasePattern = DB_NAME_PATTERN,
                 failOnErrors = false,
@@ -93,13 +95,13 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     }
 
     override fun teardown() {
-        removeConnection(c1, AtlanConnectorType.MSSQL)
-        removeConnection(c2, AtlanConnectorType.POSTGRES)
+        removeConnection(c1, c1Type)
+        removeConnection(c2, c2Type)
     }
 
     @Test
     fun getDatabaseNamesWhenOnlyOneMatchThenReturnsOneName() {
-        val connection = Connection.findByName(c1, AtlanConnectorType.MSSQL)[0]!!
+        val connection = Connection.findByName(c1, c1Type)[0]!!
         val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, DB_NAME_PATTERN)
         assertEquals(1, databaseNames.size)
         assertEquals(listOf(SOURCE_DATABASE_NAME), databaseNames)
@@ -107,7 +109,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
 
     @Test
     fun getDatabaseNamesWhenMultipleMatchesThenReturnsMultipleName() {
-        val connection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
+        val connection = Connection.findByName(c2, c2Type)[0]!!
         val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, DB_NAME_PATTERN)
         assertEquals(2, databaseNames.size)
         assertEquals(listOf(TARGET_DB_NAME_1, TARGET_DB_NAME_2), databaseNames)
@@ -115,7 +117,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
 
     @Test
     fun getDatabaseNamesWhenNoMatchesThenReturnsEmptyList() {
-        val connection = Connection.findByName(c2, AtlanConnectorType.POSTGRES)[0]!!
+        val connection = Connection.findByName(c2, c2Type)[0]!!
         val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, "")
         assertEquals(0, databaseNames.size)
     }
