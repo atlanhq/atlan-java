@@ -28,7 +28,7 @@ class PartialAssetsTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val connectionName = makeUnique("pat")
-    private val connectorType = AtlanConnectorType.CLOUDERA_DATA_WAREHOUSE
+    private val connectorType = AtlanConnectorType.MATILLION
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"

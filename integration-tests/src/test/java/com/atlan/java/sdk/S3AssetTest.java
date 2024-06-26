@@ -394,13 +394,9 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"s3.delete.object.read"},
-            dependsOnGroups = {"s3.delete.wait"})
+            dependsOnGroups = {"s3.delete.object"})
     void readDeletedObjectByName() throws AtlanException {
-        S3Object deleted = S3Object.get(objectByName.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), objectByName.getGuid());
-        assertEquals(deleted.getQualifiedName(), objectByName.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(objectByName, log);
     }
 
     @Test(
