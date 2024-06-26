@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -13,7 +12,6 @@ import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -141,16 +139,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
                 .includeOnResults(DataStudioAsset.NAME)
                 .includeOnResults(DataStudioAsset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
-
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 2L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 2L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -204,20 +193,14 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"gds.delete.source.read"},
             dependsOnGroups = {"gds.delete.source"})
-    void readDeletedSource() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
-        DataStudioAsset deleted = DataStudioAsset.get(source.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), source.getGuid());
-        assertEquals(deleted.getQualifiedName(), source.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    void readDeletedSource() throws AtlanException {
+        validateDeletedAsset(source, log);
     }
 
     @Test(
             groups = {"gds.delete.source.restore"},
             dependsOnGroups = {"gds.delete.source.read"})
-    void restoreSource() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
+    void restoreSource() throws AtlanException {
         assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
         DataStudioAsset restored = DataStudioAsset.get(source.getQualifiedName());
         assertEquals(restored.getGuid(), source.getGuid());

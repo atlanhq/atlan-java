@@ -34,7 +34,7 @@ class LinkTermsTest : PackageTest() {
 
     private val glossaryName = makeUnique("ltg1")
     private val connectionName = makeUnique("ltc1")
-    private val connectorType = AtlanConnectorType.GENERIC
+    private val connectorType = AtlanConnectorType.NETEZZA
 
     private val tag1 = makeUnique("ltt1")
     private val tag2 = makeUnique("ltt2")
@@ -103,7 +103,7 @@ class LinkTermsTest : PackageTest() {
 
     private fun createConnection(): Connection {
         val client = Atlan.getDefaultClient()
-        val c1 = Connection.creator(connectionName, connectorType, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
+        val c1 = Connection.creator(connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }

@@ -20,7 +20,7 @@ class InvalidParentTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("c1")
-    private val conn1Type = AtlanConnectorType.AZURE_COSMOS_DB
+    private val conn1Type = AtlanConnectorType.FIREBOLT
 
     private val testFile = "input.csv"
 

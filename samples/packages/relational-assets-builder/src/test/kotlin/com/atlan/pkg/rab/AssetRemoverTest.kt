@@ -22,7 +22,7 @@ class AssetRemoverTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("rab_ar")
-    private val conn1Type = AtlanConnectorType.MPARTICLE
+    private val conn1Type = AtlanConnectorType.ICEBERG
     private val conn1QN = "default/${conn1Type.value}/1234567890"
 
     private val previousFile = "assets.csv"

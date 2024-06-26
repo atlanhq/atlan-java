@@ -1,8 +1,8 @@
 typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,dataType,displayName,description,certificateStatus,certificateStatusMessage,readme,atlanTags,adminRoles,adminGroups,adminUsers
-Connection,{{CONNECTION1}},mparticle,,,,,,,,,,,,$admin,admins,chris
-Database,{{CONNECTION1}},mparticle,TEST_DB,,,,,Test DB,,,,,,,,
-Schema,{{CONNECTION1}},mparticle,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,,
-Table,{{CONNECTION1}},mparticle,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,"{{TAG1}}>>FULL
+Connection,{{CONNECTION1}},iceberg,,,,,,,,,,,,$admin,admins,chris
+Database,{{CONNECTION1}},iceberg,TEST_DB,,,,,Test DB,,,,,,,,
+Schema,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,,
+Table,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,"{{TAG1}}>>FULL
 {{TAG2}}",,,
-Column,{{CONNECTION1}},mparticle,TEST_DB,TEST_SCHEMA,TEST_TBL,COL1,NVARCHAR(255),Test column 1,,,,,,,,
-Column,{{CONNECTION1}},mparticle,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,,,,,,,,
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL1,NVARCHAR(255),Test column 1,,,,,,,,
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,,,,,,,,

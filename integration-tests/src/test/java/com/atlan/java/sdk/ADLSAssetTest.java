@@ -11,7 +11,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -182,15 +181,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 3L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 3L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -253,11 +244,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.delete.object.read"},
             dependsOnGroups = {"adls.delete.object"})
     void readDeletedObject() throws AtlanException {
-        ADLSObject deleted = ADLSObject.get(object.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), object.getGuid());
-        assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(object, log);
     }
 
     @Test(

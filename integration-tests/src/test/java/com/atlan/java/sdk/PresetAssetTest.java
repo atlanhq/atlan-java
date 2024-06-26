@@ -11,7 +11,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -225,15 +224,7 @@ public class PresetAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 4L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 4L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -304,11 +295,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart.read"},
             dependsOnGroups = {"preset.delete.chart"})
     void readDeletedChart() throws AtlanException {
-        PresetChart deleted = PresetChart.get(chart.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), chart.getGuid());
-        assertEquals(deleted.getQualifiedName(), chart.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(chart, log);
     }
 
     @Test(

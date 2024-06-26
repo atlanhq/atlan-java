@@ -22,7 +22,7 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val c1 = makeUnique("ema1")
-    private val connectorType = AtlanConnectorType.COCKROACHDB
+    private val connectorType = AtlanConnectorType.AWS_SITE_WISE
 
     private val files = listOf(
         "asset-export.csv",
@@ -30,8 +30,7 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
     )
 
     private fun createConnections() {
-        val client = Atlan.getDefaultClient()
-        Connection.creator(c1, connectorType, listOf(client.roleCache.getIdForName("\$admin")), null, null)
+        Connection.creator(c1, connectorType)
             .build()
             .save()
             .block()

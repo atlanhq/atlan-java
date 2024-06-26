@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.core;
 
-import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -11,12 +10,10 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,11 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 public class ConnectionCreationResponse extends AssetMutationResponse implements AtlanAsyncMutator {
     private static final long serialVersionUID = 2L;
-
-    /** Connectivity to the Atlan tenant where the connection creation was run. */
-    @Setter
-    @JsonIgnore
-    private transient AtlanClient client;
 
     /**
      * Block until the connection that was created is confirmed to be accessible,
@@ -63,6 +55,7 @@ public class ConnectionCreationResponse extends AssetMutationResponse implements
         List<Asset> leftovers = new ArrayList<>();
         for (Asset one : toCheck) {
             if (one instanceof Connection) {
+                log.debug(" ... blocking to confirm connection accessibility: {}", one.getGuid());
                 // Only even attempt to look at an asset if it is a connection, otherwise skip it
                 // entirely
                 try {

@@ -29,13 +29,45 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
         .lineDelimiter(LineDelimiter.PLATFORM)
         .build(ThreadSafeWriter(path))
 
+    private val header = mutableListOf<String>()
+
     /**
      * Write a header row into the CSV file.
      *
      * @param values to use for the header
      */
-    fun writeHeader(values: Iterable<String?>?) {
-        writer.writeRecord(values)
+    fun writeHeader(values: Iterable<String>) {
+        header.addAll(values)
+        writeRecord(values)
+    }
+
+    /**
+     * Write a row of data into the CSV file, where key of the map is the column name and the value
+     * is the value to write for that column of the row of data.
+     * Note: be sure you have first called {@code writeHeader} to output the header row.
+     *
+     * @param values map keyed by column name with values for the row of data
+     */
+    fun writeRecord(values: Map<String, String?>?) {
+        if (values != null) {
+            val list = mutableListOf<String>()
+            header.forEach { name ->
+                list.add(values.getOrDefault(name, "") ?: "")
+            }
+            writeRecord(list)
+        }
+    }
+
+    /**
+     * Write a row of data into the CSV file, where the values are already sequenced
+     * in the same order as the header columns.
+     *
+     * @param values to use for the row of data
+     */
+    fun writeRecord(values: Iterable<String?>?) {
+        if (values != null) {
+            synchronized(writer) { writer.writeRecord(values) }
+        }
     }
 
     /**
@@ -82,7 +114,7 @@ class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = '
             logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
         }
         val values = assetToRow.buildFromAsset(a)
-        synchronized(writer) { writer.writeRecord(values) }
+        writeRecord(values)
         Utils.logProgress(count, totalAssetCount, logger, pageSize)
     }
 

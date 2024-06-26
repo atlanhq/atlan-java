@@ -5,13 +5,11 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -144,15 +142,7 @@ public class APIAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 1L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -198,20 +188,14 @@ public class APIAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"api.delete.path.read"},
             dependsOnGroups = {"api.delete.path"})
-    void readDeletedPath() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
-        APIPath deleted = APIPath.get(path.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), path.getGuid());
-        assertEquals(deleted.getQualifiedName(), path.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    void readDeletedPath() throws AtlanException {
+        validateDeletedAsset(path, log);
     }
 
     @Test(
             groups = {"api.delete.path.restore"},
             dependsOnGroups = {"api.delete.path.read"})
-    void restorePath() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
+    void restorePath() throws AtlanException {
         assertTrue(APIPath.restore(path.getQualifiedName()));
         APIPath restored = APIPath.get(path.getQualifiedName());
         assertEquals(restored.getGuid(), path.getGuid());

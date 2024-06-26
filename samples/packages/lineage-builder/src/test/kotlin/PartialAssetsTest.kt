@@ -28,7 +28,7 @@ class PartialAssetsTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val connectionName = makeUnique("pat")
-    private val connectorType = AtlanConnectorType.MULESOFT
+    private val connectorType = AtlanConnectorType.MATILLION
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -70,7 +70,7 @@ class PartialAssetsTest : PackageTest() {
 
     private fun createConnection(): Connection {
         val client = Atlan.getDefaultClient()
-        val c1 = Connection.creator(connectionName, connectorType, listOf(client.roleCache.getIdForName("\$admin")), null, null).build()
+        val c1 = Connection.creator(connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }

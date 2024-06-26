@@ -401,7 +401,7 @@ public class AssetBatch {
      * @throws AtlanException on any problems flushing (submitting) the batch
      */
     public AssetMutationResponse flush() throws AtlanException {
-        AssetMutationResponse response = null;
+        ConnectionCreationResponse response = null;
         List<Asset> revised = null;
         if (!_batch.isEmpty()) {
             boolean fuzzyMatch = false;
@@ -485,8 +485,8 @@ public class AssetBatch {
                             response = client.assets.saveMergingCM(revised, replaceAtlanTags);
                             break;
                     }
-                    if (response instanceof ConnectionCreationResponse) {
-                        response = ((ConnectionCreationResponse) response).block();
+                    if (response != null) {
+                        response.block();
                     }
                 } catch (AtlanException e) {
                     if (captureFailures) {
