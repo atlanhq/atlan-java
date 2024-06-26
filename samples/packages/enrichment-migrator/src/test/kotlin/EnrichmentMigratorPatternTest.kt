@@ -29,8 +29,8 @@ private const val USER_DESCRIPTION = "Some user description"
 class EnrichmentMigratorPatternTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val c1 = makeUnique("emsc1")
-    private val c2 = makeUnique("emsc2")
+    private val c1 = makeUnique("empc1")
+    private val c2 = makeUnique("empc2")
     private val now = Instant.now().toEpochMilli()
     private var sourceConnectionQualifiedName = ""
     private var targetConnectionQualifiedName = ""

@@ -125,8 +125,10 @@ object FieldSerde {
     private fun getSingleValuedCustomMetadata(attrDef: AttributeDef, value: String?): Any? {
         return if (attrDef.typeName.lowercase() == "date") {
             TimestampXformer.decode(value, "unused")
+        } else if (value != null) {
+            CellXformer.decodeString(value)
         } else {
-            value
+            null
         }
     }
 

@@ -135,7 +135,7 @@ object CellXformer {
         }
     }
 
-    private fun encodeString(value: String): String {
+    fun encodeString(value: String): String {
         return if (value.contains(LIST_DELIMITER)) {
             value.replace(LIST_DELIMITER, NEWLINE_SENTINEL)
         } else {
@@ -143,7 +143,7 @@ object CellXformer {
         }
     }
 
-    private fun decodeString(value: String): String {
+    fun decodeString(value: String): String {
         return if (value.contains(NEWLINE_SENTINEL)) {
             value.replace(NEWLINE_SENTINEL, LIST_DELIMITER)
         } else {
