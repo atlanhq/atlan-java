@@ -304,11 +304,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart.read"},
             dependsOnGroups = {"preset.delete.chart"})
     void readDeletedChart() throws AtlanException {
-        PresetChart deleted = PresetChart.get(chart.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), chart.getGuid());
-        assertEquals(deleted.getQualifiedName(), chart.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(chart, log);
     }
 
     @Test(

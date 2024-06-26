@@ -204,20 +204,14 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"gds.delete.source.read"},
             dependsOnGroups = {"gds.delete.source"})
-    void readDeletedSource() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
-        DataStudioAsset deleted = DataStudioAsset.get(source.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), source.getGuid());
-        assertEquals(deleted.getQualifiedName(), source.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    void readDeletedSource() throws AtlanException {
+        validateDeletedAsset(source, log);
     }
 
     @Test(
             groups = {"gds.delete.source.restore"},
             dependsOnGroups = {"gds.delete.source.read"})
-    void restoreSource() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
+    void restoreSource() throws AtlanException {
         assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
         DataStudioAsset restored = DataStudioAsset.get(source.getQualifiedName());
         assertEquals(restored.getGuid(), source.getGuid());
