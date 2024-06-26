@@ -28,18 +28,11 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     )
 
     private fun createConnections() {
-        Connection.creator(c1, AtlanConnectorType.HIVE)
-            .build()
-            .save()
-            .block()
-        Connection.creator(c2, AtlanConnectorType.ESSBASE)
-            .build()
-            .save()
-            .block()
-        Connection.creator(c3, AtlanConnectorType.ESSBASE)
-            .build()
-            .save()
-            .block()
+        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        batch.add(Connection.creator(c1, AtlanConnectorType.HIVE).build())
+        batch.add(Connection.creator(c2, AtlanConnectorType.ESSBASE).build())
+        batch.add(Connection.creator(c3, AtlanConnectorType.ESSBASE).build())
+        batch.flush()
     }
 
     private fun createAssets() {

@@ -36,14 +36,10 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
     )
 
     private fun createConnections() {
-        Connection.creator(c1, AtlanConnectorType.MSSQL)
-            .build()
-            .save()
-            .block()
-        Connection.creator(c2, AtlanConnectorType.POSTGRES)
-            .build()
-            .save()
-            .block()
+        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        batch.add(Connection.creator(c1, AtlanConnectorType.MSSQL).build())
+        batch.add(Connection.creator(c2, AtlanConnectorType.POSTGRES).build())
+        batch.flush()
     }
 
     private fun createCustomMetadata() {

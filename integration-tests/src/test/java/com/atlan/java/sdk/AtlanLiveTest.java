@@ -5,12 +5,22 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.search.AuditSearchRequest;
+import com.atlan.model.search.AuditSearchResponse;
+import com.atlan.model.search.EntityAudit;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.util.Random;
+import org.slf4j.Logger;
 
 /**
  * Base class with utility methods and constants for live (integration) tests.
@@ -77,5 +87,88 @@ public abstract class AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getCreatedAssets().size(), 1);
         return response.getCreatedAssets().get(0);
+    }
+
+    /**
+     * Validate an asset was deleted as expected, and if not log out full details of its activity
+     * log to see what could be the culprit.
+     *
+     * @param toValidate the asset that should be deleted
+     * @param log into which to write full details if the asset was not deleted as expected
+     * @throws AtlanException on any API communication issues
+     */
+    protected static void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
+        AtlanClient client = Atlan.getDefaultClient();
+        Asset deleted = Asset.get(client, toValidate.getGuid(), true);
+        assertNotNull(deleted);
+        assertEquals(deleted.getGuid(), toValidate.getGuid());
+        assertEquals(deleted.getQualifiedName(), toValidate.getQualifiedName());
+        assertEquals(deleted.getTypeName(), toValidate.getTypeName());
+        if (deleted.getStatus() != AtlanStatus.DELETED) {
+            log.warn(
+                    "Failed deletion test activity log, for {} {}:",
+                    toValidate.getTypeName(),
+                    toValidate.getQualifiedName());
+            AuditSearchResponse response =
+                    AuditSearchRequest.byGuid(toValidate.getGuid(), 100).build().search();
+            for (EntityAudit result : response) {
+                log.debug("  ... {}", result.toJson(client));
+            }
+        }
+        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected static IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
+            throws AtlanException, InterruptedException {
+        int count = 1;
+        IndexSearchResponse response = request.search();
+        while (response.getApproximateCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+        assertNotNull(response);
+        assertFalse(
+                response.getApproximateCount() < expectedSize,
+                "Search retries overran - found " + response.getApproximateCount() + " results when expecting "
+                        + expectedSize + ".");
+        return response;
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected static AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
+            throws AtlanException, InterruptedException {
+        int count = 1;
+        AuditSearchResponse response = request.search();
+        while (response.getCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+        assertNotNull(response);
+        assertFalse(
+                response.getCount() < expectedSize,
+                "Audit search retries overran - found " + response.getCount() + " results when expecting "
+                        + expectedSize + ".");
+        return response;
     }
 }

@@ -17,7 +17,6 @@ import com.atlan.model.fields.CustomMetadataField;
 import com.atlan.model.search.*;
 import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
-import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -576,15 +575,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .includeOnRelations(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
-        assertNotNull(response);
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
         assertNotNull(entities);
@@ -613,15 +605,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .includeOnRelations(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
 
-        assertNotNull(response);
-        int count = 0;
-        while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Asset> entities = response.getAssets();
         assertNotNull(entities);
@@ -909,16 +894,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void readTermAuditByGuid() throws AtlanException, InterruptedException {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(term.getGuid(), 40).build();
-        AuditSearchResponse response = request.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getCount() < 13L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
-            count++;
-        }
-
+        AuditSearchResponse response = retrySearchUntil(request, 13L);
         validateAudits(response.getEntityAudits());
     }
 
@@ -929,16 +905,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
                 .build();
-        AuditSearchResponse response = request.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getCount() < 13L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
-            count++;
-        }
-
+        AuditSearchResponse response = retrySearchUntil(request, 13L);
         validateAudits(response.getEntityAudits());
     }
 

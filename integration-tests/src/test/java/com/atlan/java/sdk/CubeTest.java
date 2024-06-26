@@ -24,7 +24,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -370,15 +369,7 @@ public class CubeTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-        assertNotNull(response);
-
-        int count = 0;
-        while (response.getApproximateCount() < 6L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 6L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);

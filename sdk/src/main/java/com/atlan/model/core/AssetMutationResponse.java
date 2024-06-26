@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.core;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
 import com.atlan.util.StringUtils;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -20,6 +22,11 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class AssetMutationResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
+
+    /** Connectivity to the Atlan tenant where the save operation was run. */
+    @Setter
+    @JsonIgnore
+    protected transient AtlanClient client;
 
     /** Kind of mutation that was applied to any given asset. */
     public enum MutationType {

@@ -16,7 +16,6 @@ import com.atlan.model.lineage.*;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -476,14 +475,7 @@ public class LineageTest extends AtlanLiveTest {
                 .includeOnResults(Asset.HAS_LINEAGE)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
-
-        int count = 0;
-        while (response.getApproximateCount() < 3L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = index.search();
-            count++;
-        }
+        IndexSearchResponse response = retrySearchUntil(index, 3L);
 
         assertNotNull(response);
         assertEquals(response.getApproximateCount().longValue(), 3L);

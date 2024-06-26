@@ -11,27 +11,21 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
 import mu.KotlinLogging
-import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-private const val TARGET_DB_NAME_1 = "db_test02"
-
-private const val TARGET_DB_NAME_2 = "db_test03"
-
-private const val SOURCE_DATABASE_NAME = "db_test01"
-
-private const val DB_NAME_PATTERN = "db_test.."
-
-private const val USER_DESCRIPTION = "Some user description"
-
 class EnrichmentMigratorPatternTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
+    private val TARGET_DB_NAME_1 = "db_test02"
+    private val TARGET_DB_NAME_2 = "db_test03"
+    private val SOURCE_DATABASE_NAME = "db_test01"
+    private val DB_NAME_PATTERN = "db_test.."
+    private val USER_DESCRIPTION = "Some user description"
+
     private val c1 = makeUnique("empc1")
     private val c2 = makeUnique("empc2")
-    private val now = Instant.now().toEpochMilli()
     private var sourceConnectionQualifiedName = ""
     private var targetConnectionQualifiedName = ""
     private val targetTableQualifiedNamesByName = mutableMapOf<String, String>()
@@ -42,14 +36,10 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     )
 
     private fun createConnections() {
-        Connection.creator(c1, AtlanConnectorType.MSSQL)
-            .build()
-            .save()
-            .block()
-        Connection.creator(c2, AtlanConnectorType.POSTGRES)
-            .build()
-            .save()
-            .block()
+        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        batch.add(Connection.creator(c1, AtlanConnectorType.MSSQL).build())
+        batch.add(Connection.creator(c2, AtlanConnectorType.POSTGRES).build())
+        batch.flush()
     }
 
     private fun createAssets() {
