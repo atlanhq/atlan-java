@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
-   Copyright 2023 Atlan Pte. Ltd. */
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 import AssetImportCfg
 import LakeFormationTagSyncCfg
@@ -34,17 +34,12 @@ object LakeTagSynchronizer {
     }
 
     private fun sync(config: LakeFormationTagSyncCfg, outputDirectory: String, failOnErrors: Boolean): Boolean {
-        val importType = Utils.getOrDefault(config.importType, "")
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         var results: ImportResults? = null
 
         val mapper = jacksonObjectMapper()
 
-        if (importType != "CLOUD") {
-            logger.error { "Direct file upload(s) are not supported at this time." }
-            return false
-        }
         val files = Utils.getInputFiles(
             "",
             outputDirectory,
@@ -60,7 +55,6 @@ object LakeTagSynchronizer {
                     val jsonString: String = File(fileName).readText(Charsets.UTF_8)
                     connectionMap += mapper.readValue<Map<String, String>>(jsonString)
                 }
-
                 "$outputDirectory/metadata_map.json" -> {
                     val jsonString: String = File(fileName).readText(Charsets.UTF_8)
                     metadataMap += mapper.readValue<Map<String, String>>(jsonString)

@@ -16,13 +16,13 @@ private const val QUALIFIED_NAME = "qualifiedName"
 
 class CSVProducer(
     private val connectionMap: Map<String, String>,
-    private val metadataMap: Map<String, String>,
+    metadataMap: Map<String, String>,
     private val outputDirName: String,
 ) {
     private val logger = KotlinLogging.logger {}
     private val mapper = jacksonObjectMapper()
     private val missingConnectionKeys = mutableSetOf<String>()
-    private val missingTagKeys = mutableSetOf<String>()
+    private val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
     private val headerNames = setOf(NAME, TYPE_NAME, QUALIFIED_NAME) + (metadataMap.map { (_, value) -> value }).toSet()
 
     fun transform(inputFileName: String, outputFileName: String) {
@@ -39,7 +39,7 @@ class CSVProducer(
                 if (connectionKey in this.connectionMap) {
                     val qualifiedName = "${connectionMap.getValue(connectionKey)}/$schemaName/${table.name}"
                     var row = mutableMapOf(QUALIFIED_NAME to qualifiedName, TYPE_NAME to "Table", NAME to table.name)
-                    getTagValues(tableInfo.lfTagsOnTable, row)
+                    tagToMetadataMapper.getTagValues(tableInfo.lfTagsOnTable, row)
                     csv.writeHeader(rowAsList(row))
                     tableInfo.lfTagsOnColumn.forEach { column ->
                         val columnQualifiedName = "$qualifiedName/${column.name}"
@@ -48,7 +48,7 @@ class CSVProducer(
                             TYPE_NAME to "Column",
                             NAME to table.name,
                         )
-                        getTagValues(column.lfTags, row)
+                        tagToMetadataMapper.getTagValues(column.lfTags, row)
                         csv.writeHeader(rowAsList(row))
                     }
                 } else {
@@ -56,17 +56,6 @@ class CSVProducer(
                 }
             }
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-        }
-    }
-
-    private fun getTagValues(tags: List<LFTagPair>, row: MutableMap<String, String>) {
-        tags.forEach { tag ->
-            val tagKey = if (tag.tagKey.startsWith("subdomain")) "Subdomain" else tag.tagKey
-            if (tagKey in this.metadataMap) {
-                val cmName = this.metadataMap.getValue(tagKey)
-                row[cmName] = tag.tagValues[0]
-            }
-            this.missingTagKeys.add(tagKey)
         }
     }
 

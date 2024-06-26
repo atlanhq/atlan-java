@@ -48,9 +48,10 @@ class LakeTagSynchronizerTest : PackageTest() {
     private val cm1 = makeUnique("lftcm")
     private val enum1 = makeUnique("lfenum")
     private val mapper = jacksonObjectMapper()
+    private val connectorType = AtlanConnectorType.MINISQL
 
     private fun createConnections() {
-        Connection.creator(c1, AtlanConnectorType.REDSHIFT)
+        Connection.creator(c1, connectorType)
             .build()
             .save()
             .block()
@@ -58,7 +59,7 @@ class LakeTagSynchronizerTest : PackageTest() {
 
     private fun createAssets() {
         val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, AtlanConnectorType.REDSHIFT)[0]!!
+        val connection1 = Connection.findByName(c1, connectorType)[0]!!
         connectionQualifiedName = connection1.qualifiedName
         val batch = AssetBatch(client, 20)
         val db = Database.creator(DATABASE_NAME, connection1.qualifiedName).build()

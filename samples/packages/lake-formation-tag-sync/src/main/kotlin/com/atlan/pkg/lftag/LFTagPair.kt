@@ -6,7 +6,7 @@ package com.atlan.pkg.lftag
 import com.fasterxml.jackson.annotation.JsonProperty
 
 class LFTagPair(
-    @JsonProperty("TagKey") var tagKey: String,
-    @JsonProperty("TagValues") var tagValues: List<String>,
-    @JsonProperty("CatalogId") var catalogId: String,
+    @JsonProperty("TagKey") val tagKey: String,
+    @JsonProperty("TagValues") val tagValues: List<String>,
+    @JsonProperty("CatalogId") val catalogId: String,
 )

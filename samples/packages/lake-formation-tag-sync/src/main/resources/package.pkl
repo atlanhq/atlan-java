@@ -7,7 +7,7 @@ import "modulepath:/BuildInfo.pkl"
 packageId = "@csa/lake-formation-tag-sync"
 packageName = "Lake Formation Tag Sync"
 version = semver.Version(BuildInfo.VERSION)
-description = "Add custom metadata properties to asset based upon the Lake Formation Tags."
+description = "Add Lake Formation Tags as custom metadata properties on assets."
 iconUrl = "http://assets.atlan.com/assets/ph-flow-arrow-light.svg"
 docsUrl = "https://solutions.atlan.com/lake-formation-tag-sync/"
 implementationLanguage = "Kotlin"
@@ -39,10 +39,9 @@ uiConfig {
           title = "Import lake tags from"
           helpText = "Select how you want to provide the file(s) containing the tags to be synched."
           possibleValues {
-            ["DIRECT"] = "Direct file upload(s)"
             ["CLOUD"] = "Object storage"
           }
-          default = "DIRECT"
+          default = "CLOUD"
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
