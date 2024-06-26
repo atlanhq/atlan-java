@@ -1728,18 +1728,14 @@ public class SQLAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"asset.delete.column.read"},
             dependsOnGroups = {"asset.delete.column"})
-    void readDeletedColumn() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
-        Column deleted = Column.get(column5.getGuid());
-        validateUpdatedColumn(deleted);
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    void readDeletedColumn() throws AtlanException {
+        validateDeletedAsset(column5, log);
     }
 
     @Test(
             groups = {"asset.delete.column.restore"},
             dependsOnGroups = {"asset.delete.column.read"})
-    void restoreColumn() throws AtlanException, InterruptedException {
-        Thread.sleep(5000);
+    void restoreColumn() throws AtlanException {
         assertTrue(Column.restore(column5.getQualifiedName()));
         Column restored = Column.get(column5.getGuid());
         validateUpdatedColumn(restored);

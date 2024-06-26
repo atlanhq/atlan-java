@@ -209,22 +209,10 @@ public class AirflowAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"airflow.delete.wait"},
-            dependsOnGroups = {"airflow.delete.task"})
-    void forceDelete() throws InterruptedException {
-        // Force a wait for consistency on deleted assets
-        Thread.sleep(2000);
-    }
-
-    @Test(
             groups = {"airflow.delete.task.read"},
-            dependsOnGroups = {"airflow.delete.wait"})
+            dependsOnGroups = {"airflow.delete.task"})
     void readDeletedTask() throws AtlanException {
-        AirflowTask deleted = AirflowTask.get(task.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), task.getGuid());
-        assertEquals(deleted.getQualifiedName(), task.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(task, log);
     }
 
     @Test(

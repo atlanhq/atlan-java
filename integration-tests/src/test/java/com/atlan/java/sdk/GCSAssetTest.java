@@ -209,11 +209,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.delete.object.read"},
             dependsOnGroups = {"gcs.delete.object"})
     void readDeletedObject() throws AtlanException {
-        GCSObject deleted = GCSObject.get(object.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), object.getGuid());
-        assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(object, log);
     }
 
     @Test(

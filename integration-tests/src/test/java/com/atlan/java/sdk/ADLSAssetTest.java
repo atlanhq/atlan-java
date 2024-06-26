@@ -244,11 +244,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.delete.object.read"},
             dependsOnGroups = {"adls.delete.object"})
     void readDeletedObject() throws AtlanException {
-        ADLSObject deleted = ADLSObject.get(object.getGuid());
-        assertNotNull(deleted);
-        assertEquals(deleted.getGuid(), object.getGuid());
-        assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
-        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+        validateDeletedAsset(object, log);
     }
 
     @Test(
