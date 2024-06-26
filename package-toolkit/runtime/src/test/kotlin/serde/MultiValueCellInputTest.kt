@@ -2,8 +2,13 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package serde
 
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.core.AtlanTag
+import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
+import com.atlan.model.typedefs.AttributeDef
+import com.atlan.model.typedefs.AttributeDefOptions
+import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
 import java.util.SortedSet
 import kotlin.test.Test
@@ -58,6 +63,17 @@ class MultiValueCellInputTest {
     @Test
     fun testMultiValueWithNewlines() {
         val result = CellXformer.decode(Asset::class.java, MULTI_VALUE_WITH_NEWLINES, List::class.java, String::class.java, "Custom::Metadata")
+        assertTrue(result is List<*>)
+        assertTrue(result.isNotEmpty())
+        assertEquals("Here's something\nwith a newline.", result[0])
+        assertEquals("Here's something without a newline.", result[1])
+    }
+
+    @Test
+    fun testMultiValueNewlineCustomMetadata() {
+        val mockClient = Atlan.getClient("https://example.com")
+        val attrDef = AttributeDef.of(mockClient, "Test", AtlanCustomAttributePrimitiveType.STRING, null, true, AttributeDefOptions.builder().build())
+        val result = FieldSerde.getCustomMetadataValueFromString(attrDef, MULTI_VALUE_WITH_NEWLINES)
         assertTrue(result is List<*>)
         assertTrue(result.isNotEmpty())
         assertEquals("Here's something\nwith a newline.", result[0])

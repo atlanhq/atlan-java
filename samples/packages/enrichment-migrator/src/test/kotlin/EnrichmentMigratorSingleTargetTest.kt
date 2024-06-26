@@ -25,9 +25,9 @@ import kotlin.test.assertNotNull
 class EnrichmentMigratorSingleTargetTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val c1 = makeUnique("emsc1")
-    private val c2 = makeUnique("emsc2")
-    private val cm1 = makeUnique("emscm")
+    private val c1 = makeUnique("emstc1")
+    private val c2 = makeUnique("emstc2")
+    private val cm1 = makeUnique("emstcm")
     private val now = Instant.now().toEpochMilli()
 
     private val files = listOf(
