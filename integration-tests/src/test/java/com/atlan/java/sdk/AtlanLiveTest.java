@@ -20,10 +20,8 @@ import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.util.Random;
-
 import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
-import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 
 /**
