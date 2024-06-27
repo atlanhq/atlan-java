@@ -27,8 +27,12 @@ import java.io.File
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.isDirectory
+import kotlin.io.path.isRegularFile
+import kotlin.io.path.pathString
 import kotlin.io.path.readText
+import kotlin.io.path.walk
 import kotlin.math.round
 import kotlin.system.exitProcess
 
@@ -544,6 +548,7 @@ object Utils {
      * @param prefix (path / directory) where the files are located in object store
      * @return the names of the files that are on local container storage from which we can read information
      */
+    @OptIn(ExperimentalPathApi::class)
     fun getInputFiles(
         uploadResult: String,
         outputDirectory: String,
@@ -551,7 +556,18 @@ object Utils {
         prefix: String? = null,
     ): List<String> {
         return if (preferUpload) {
-            listOf(uploadResult)
+            val path = Paths.get(uploadResult)
+            val files = mutableListOf<String>()
+            return if (path.isDirectory()) {
+                path.walk().forEach {
+                    if (it.isRegularFile()) {
+                        files.add(it.pathString)
+                    }
+                }
+                files
+            } else {
+                listOf(uploadResult)
+            }
         } else {
             val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
             val cred = MAPPER.readValue<Credential>(contents)
