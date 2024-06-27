@@ -57,7 +57,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         assertNotNull(workspace.getGuid());
         assertNotNull(workspace.getQualifiedName());
         assertEquals(workspace.getName(), WORKSPACE_NAME);
-        assertEquals(workspace.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(workspace.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(workspace.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
@@ -83,7 +83,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         assertNotNull(collection.getGuid());
         assertNotNull(collection.getQualifiedName());
         assertEquals(collection.getName(), COLLECTION_NAME);
-        assertEquals(collection.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(collection.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(collection.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
         assertEquals(collection.getConnectionQualifiedName(), connection.getQualifiedName());
     }
@@ -109,7 +109,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         assertNotNull(chart.getGuid());
         assertNotNull(chart.getQualifiedName());
         assertEquals(chart.getName(), CHART_NAME);
-        assertEquals(chart.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(chart.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(chart.getPresetDashboardQualifiedName(), collection.getQualifiedName());
         assertEquals(chart.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
         assertEquals(chart.getConnectionQualifiedName(), connection.getQualifiedName());
@@ -136,7 +136,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         assertNotNull(dataset.getGuid());
         assertNotNull(dataset.getQualifiedName());
         assertEquals(dataset.getName(), DATASET_NAME);
-        assertEquals(dataset.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(dataset.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(dataset.getPresetDashboardQualifiedName(), collection.getQualifiedName());
         assertEquals(dataset.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
         assertEquals(dataset.getConnectionQualifiedName(), connection.getQualifiedName());
@@ -335,8 +335,7 @@ public class PresetAssetTest extends AtlanLiveTest {
                 "preset.search.*",
                 "preset.update.*",
                 "preset.purge.chart"
-            },
-            alwaysRun = true)
+            })
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

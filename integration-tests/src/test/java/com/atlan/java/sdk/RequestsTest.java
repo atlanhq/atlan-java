@@ -29,7 +29,7 @@ public class RequestsTest extends AtlanLiveTest {
     private static final String PREFIX = makeUnique("Requests");
     private static final String API_TOKEN_NAME = PREFIX;
     private static final String GLOSSARY_NAME = PREFIX;
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.AIRFLOW;
+    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.COGNITE;
     private static final String ATLAN_TAG_NAME = PREFIX;
     private static final String TERM_NAME = PREFIX + " term";
 

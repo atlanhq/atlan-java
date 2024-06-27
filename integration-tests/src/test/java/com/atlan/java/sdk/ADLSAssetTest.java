@@ -278,8 +278,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"adls.purge.connection"},
-            dependsOnGroups = {"adls.create.*", "adls.read.*", "adls.search.*", "adls.update.*", "adls.purge.object"},
-            alwaysRun = true)
+            dependsOnGroups = {"adls.create.*", "adls.read.*", "adls.search.*", "adls.update.*", "adls.purge.object"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

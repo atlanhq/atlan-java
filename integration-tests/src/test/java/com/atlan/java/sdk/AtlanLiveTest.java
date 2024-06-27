@@ -113,7 +113,7 @@ public abstract class AtlanLiveTest {
         assertEquals(deleted.getTypeName(), toValidate.getTypeName());
         if (deleted.getStatus() != AtlanStatus.DELETED) {
             log.warn(
-                    "Failed deletion test activity log, for {} {}:",
+                    "Failed deletion test, activity log for {} {}:",
                     toValidate.getTypeName(),
                     toValidate.getQualifiedName());
             AuditSearchResponse response =
