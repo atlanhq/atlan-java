@@ -20,7 +20,9 @@ import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.util.Random;
+import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
+import org.testng.annotations.BeforeClass;
 
 /**
  * Base class with utility methods and constants for live (integration) tests.
@@ -55,6 +57,11 @@ public abstract class AtlanLiveTest {
         Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setMaxNetworkRetries(10);
+    }
+
+    @BeforeClass
+    public void setLogName() {
+        ThreadContext.put("className", this.getClass().getSimpleName());
     }
 
     protected static String makeUnique(String input) {

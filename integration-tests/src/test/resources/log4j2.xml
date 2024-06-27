@@ -8,9 +8,9 @@
             </PatternLayout>
         </Console>
         <Routing name="Routing">
-            <Routes pattern="$${sys:logDirectory}">
+            <Routes pattern="$${ctx:className}">
                 <Route>
-                    <File name="File" fileName="test.log" append="false">
+                    <File name="appender-${ctx:className}" fileName="${ctx:className}.log" append="false">
                         <PatternLayout>
                             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
                         </PatternLayout>
