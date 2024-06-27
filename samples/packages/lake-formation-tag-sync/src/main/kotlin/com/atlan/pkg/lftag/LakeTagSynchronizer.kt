@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
+
 import AssetImportCfg
 import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
@@ -12,14 +13,16 @@ import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
 
-private const val TAG_FILE_NAME_PREFIX = "lftag_association"
-
 /**
  * Actually run the migrator, taking all settings from environment variables.
  * Note: all parameters should be passed through environment variables.
  */
 object LakeTagSynchronizer {
     private val logger = KotlinLogging.logger {}
+
+    const val CONNECTION_MAP_JSON = "connection_map.json"
+    const val METADATA_MAP_JSON = "metadata_map.json"
+    const val TAG_FILE_NAME_PREFIX = "lftag_association"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -34,68 +37,57 @@ object LakeTagSynchronizer {
     }
 
     private fun sync(config: LakeFormationTagSyncCfg, outputDirectory: String, failOnErrors: Boolean): Boolean {
+        val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        var results: ImportResults? = null
+        var combinedResults: ImportResults? = null
 
         val mapper = jacksonObjectMapper()
 
         val files = Utils.getInputFiles(
-            "",
+            "$outputDirectory/$assetPrefix",
             outputDirectory,
-            false,
+            skipObjectStore,
             assetPrefix,
         )
         val tagFileNames = mutableListOf<String>()
         val connectionMap = mutableMapOf<String, String>()
         val metadataMap = mutableMapOf<String, String>()
         files.forEach { fileName ->
-            when (fileName) {
-                "$outputDirectory/connection_map.json" -> {
-                    val jsonString: String = File(fileName).readText(Charsets.UTF_8)
-                    connectionMap += mapper.readValue<Map<String, String>>(jsonString)
-                }
-                "$outputDirectory/metadata_map.json" -> {
-                    val jsonString: String = File(fileName).readText(Charsets.UTF_8)
-                    metadataMap += mapper.readValue<Map<String, String>>(jsonString)
-                }
-                else -> {
-                    if (File(fileName).nameWithoutExtension.startsWith(TAG_FILE_NAME_PREFIX)) {
-                        tagFileNames.add(fileName)
-                    } else {
-                        logger.warn { "Skipping $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
-                    }
-                }
+            val nameWithExt = File(fileName).name
+            when {
+                nameWithExt == CONNECTION_MAP_JSON -> connectionMap += mapper.readValue<Map<String, String>>(File(fileName))
+                nameWithExt == METADATA_MAP_JSON -> metadataMap += mapper.readValue<Map<String, String>>(File(fileName))
+                nameWithExt.startsWith(TAG_FILE_NAME_PREFIX) -> tagFileNames.add(fileName)
+                else -> logger.warn { "Skipping $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
             }
         }
         if (connectionMap.isEmpty()) {
-            logger.error { "The file connection_map.json must be provided." }
+            logger.error { "The file $CONNECTION_MAP_JSON must be provided." }
             return false
         }
         if (metadataMap.isEmpty()) {
-            logger.error { "The file metadata_map.json must be provided." }
+            logger.error { "The file $METADATA_MAP_JSON must be provided." }
             return false
         }
         if (tagFileNames.isEmpty()) {
-            logger.error { "You must provide at least one json file containing Lake Tag data." }
+            logger.error { "You must provide at least one json file containing Lake Tag data (name starting with $TAG_FILE_NAME_PREFIX)." }
             return false
         }
-        val csvProducer = CSVProducer(connectionMap, metadataMap, outputDirectory)
+        val csvProducer = CSVProducer(connectionMap, metadataMap)
         tagFileNames.forEach { tagFileName ->
-            val csvFileName = tagFileName.replace("$outputDirectory/", "").replace(".json", ".csv")
+            val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             csvProducer.transform(tagFileName, csvFileName)
             val importConfig = AssetImportCfg(
-                assetsFile = "$outputDirectory/$csvFileName",
+                assetsFile = csvFileName,
                 assetsUpsertSemantic = "update",
                 assetsFailOnErrors = failOnErrors,
                 assetsBatchSize = batchSize,
                 assetsFieldSeparator = ",",
             )
-            val result = Importer.import(importConfig, outputDirectory)?.combinedWith(results)
-            if (result != null) {
-                results = result.combinedWith(result)
-            }
+            val result = Importer.import(importConfig, outputDirectory)
+            combinedResults = combinedResults?.combinedWith(result) ?: result
         }
-        return !(results?.anyFailures ?: false)
+        return !(combinedResults?.anyFailures ?: false)
     }
 }

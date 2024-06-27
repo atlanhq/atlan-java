@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
 
-package com.atlan.pkg.lftag
+package com.atlan.pkg.lftag.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

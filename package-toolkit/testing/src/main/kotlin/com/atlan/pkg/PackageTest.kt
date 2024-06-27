@@ -175,9 +175,9 @@ abstract class PackageTest {
 
     private fun validateFile(filename: String, relativeTo: String): File {
         val file = getFile(filename, relativeTo)
-        assertNotNull(file, "File not found.")
-        assertTrue(file.exists(), "File does not exist.")
-        assertTrue(file.isFile, "Is not a file.")
+        assertNotNull(file, "File not found: ${file.path}.")
+        assertTrue(file.exists(), "File does not exist: ${file.path}.")
+        assertTrue(file.isFile, "Is not a file: ${file.path}.")
         return file
     }
 

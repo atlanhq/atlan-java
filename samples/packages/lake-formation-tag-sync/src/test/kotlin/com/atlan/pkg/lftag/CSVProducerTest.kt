@@ -3,8 +3,9 @@ package com.atlan.pkg.lftag
 import com.atlan.pkg.PackageTest
 import mu.KotlinLogging
 import org.testng.annotations.Test
+import java.io.File
 
-class CVSProducerTest : PackageTest() {
+class CSVProducerTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     override fun setup() {
@@ -34,8 +35,8 @@ class CVSProducerTest : PackageTest() {
             "duplication_count" to "Duplication::Duplication Count",
             "other_duplicate_assets" to "Duplication::Other Duplicate Assets",
         )
-        val producer = CSVProducer(connectionMap, metadataMap, testDirectory)
-        producer.transform("./src/test/resources/lftag_association_1.json", "data.csv")
+        val producer = CSVProducer(connectionMap, metadataMap)
+        producer.transform("./src/test/resources/lftag_association_1.json", "$testDirectory${File.separator}data.csv")
         validateFilesExist(listOf("debug.log", "data.csv"))
     }
 }

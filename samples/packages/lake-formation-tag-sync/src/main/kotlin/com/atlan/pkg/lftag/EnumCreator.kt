@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
 import com.atlan.Atlan

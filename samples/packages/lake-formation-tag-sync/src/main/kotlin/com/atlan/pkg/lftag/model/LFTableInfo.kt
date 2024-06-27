@@ -1,11 +1,11 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-package com.atlan.pkg.lftag
+package com.atlan.pkg.lftag.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-class TableInfo(
-    @JsonProperty("Table") var table: Table,
+class LFTableInfo(
+    @JsonProperty("Table") var table: LFTable,
     @JsonProperty("LFTagOnDatabase") var lfTagOnDatabase: List<LFTagPair>,
     @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair>,
     @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag>,

@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
+
 import LakeFormationTagSyncCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.Column
@@ -14,30 +15,17 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.model.typedefs.EnumDef
 import com.atlan.pkg.PackageTest
-import com.atlan.pkg.Utils
+import com.atlan.pkg.lftag.LakeTagSynchronizer.CONNECTION_MAP_JSON
+import com.atlan.pkg.lftag.LakeTagSynchronizer.METADATA_MAP_JSON
+import com.atlan.pkg.lftag.LakeTagSynchronizer.TAG_FILE_NAME_PREFIX
 import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.google.common.io.Files
 import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
+import java.nio.file.Paths
+import kotlin.io.path.copyTo
 import kotlin.test.assertEquals
-
-private const val DATABASE_NAME = "db_test"
-
-private const val attr1 = "Security Classification"
-
-private const val attr2 = "Privacy Sensitivity"
-
-private const val attr3 = "Data Load Method"
-
-private const val CONNECTION_MAP_JSON = "connection_map.json"
-
-private const val PREFIX = "stuff"
-
-private const val METADATA_MAP_JSON = "metadata_map.json"
-
-private const val S3_BUCKET = "lakestoragetag"
 
 class LakeTagSynchronizerTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
@@ -48,7 +36,13 @@ class LakeTagSynchronizerTest : PackageTest() {
     private val cm1 = makeUnique("lftcm")
     private val enum1 = makeUnique("lfenum")
     private val mapper = jacksonObjectMapper()
+
     private val connectorType = AtlanConnectorType.MINISQL
+    private val databaseName = "db_test"
+    private val attr1 = "Security Classification"
+    private val attr2 = "Privacy Sensitivity"
+    private val attr3 = "Data Load Method"
+    private val directoryPrefix = "stuff"
 
     private fun createConnections() {
         Connection.creator(c1, connectorType)
@@ -62,7 +56,7 @@ class LakeTagSynchronizerTest : PackageTest() {
         val connection1 = Connection.findByName(c1, connectorType)[0]!!
         connectionQualifiedName = connection1.qualifiedName
         val batch = AssetBatch(client, 20)
-        val db = Database.creator(DATABASE_NAME, connection1.qualifiedName).build()
+        val db = Database.creator(databaseName, connection1.qualifiedName).build()
         batch.add(db)
         val sch = Schema.creator("sch", db).build()
         batch.add(sch)
@@ -71,27 +65,19 @@ class LakeTagSynchronizerTest : PackageTest() {
         val column = Column.creator("col1", tbl, 1).build()
         batch.add(column)
         val response = batch.flush()
-        response.getCreatedAssets(Table::class.java).forEach { table ->
-            this.tableGuid = table.guid
-        }
-        response.getCreatedAssets(Column::class.java).forEach { col ->
-            this.columnGuid = col.guid
-        }
+        tableGuid = response.getResult(tbl).guid
+        columnGuid = response.getResult(column).guid
     }
 
     private fun createConnectionMap() {
-        val connectionMap = mapOf("dev" to "$connectionQualifiedName/$DATABASE_NAME")
-        File("$testDirectory/$CONNECTION_MAP_JSON").bufferedWriter().use { out ->
-            out.write(mapper.writeValueAsString(connectionMap))
-        }
+        val connectionMap = mapOf("dev" to "$connectionQualifiedName/$databaseName")
+        Paths.get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON).toFile()
+            .appendText(mapper.writeValueAsString(connectionMap))
     }
 
-    private fun uploadFiles() {
-        Utils.uploadOutputFile("$testDirectory/$CONNECTION_MAP_JSON", PREFIX, CONNECTION_MAP_JSON)
-        File("$testDirectory/$CONNECTION_MAP_JSON").delete()
-        Utils.uploadOutputFile("$testDirectory/$METADATA_MAP_JSON", PREFIX, METADATA_MAP_JSON)
-        File("$testDirectory/$METADATA_MAP_JSON").delete()
-        Utils.uploadOutputFile("./src/test/resources/lftag_association_1.json", PREFIX, "lftag_association_1.json")
+    private fun copyTagFile() {
+        Paths.get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
+            .copyTo(Paths.get(testDirectory, directoryPrefix, "${TAG_FILE_NAME_PREFIX}_1.json"))
     }
 
     private fun createEnums() {
@@ -118,65 +104,34 @@ class LakeTagSynchronizerTest : PackageTest() {
             "privacy_sensitivity" to "$cm1::$attr2",
             "data_load_method" to "$cm1::$attr3",
         )
-        File("$testDirectory/$METADATA_MAP_JSON").bufferedWriter().use { out ->
-            out.write(mapper.writeValueAsString(metaDataMap))
-        }
-    }
-
-    private fun createCredentials() {
-        val credentials = mapOf(
-            "authType" to "s3",
-            "host" to "",
-            "port" to 0,
-            "username" to System.getenv("AWS_ACCESS_KEY_ID"),
-            "password" to System.getenv("AWS_SECRET_ACCESS_KEY"),
-            "extra" to mapOf(
-                "region" to System.getenv("AWS_DEFAULT_REGION"),
-                "s3_bucket" to S3_BUCKET,
-            ),
-            "connector" to "",
-            "connectorConfigName" to "",
-            "connectorType" to "",
-            "description" to "",
-            "connection" to "",
-            "id" to "",
-            "name" to "",
-            "isActive" to true,
-            "level" to "",
-            "metadata" to "",
-            "tenantId" to "",
-            "createdBy" to "",
-            "createdAt" to 0,
-            "updatedAt" to 0,
-            "version" to "",
-        )
-        val credentialsFile = File("/tmp/credentials/success/result-0.json")
-        Files.createParentDirs(credentialsFile)
-        credentialsFile.bufferedWriter().use { out ->
-            out.write(mapper.writeValueAsString(credentials))
-        }
+        Paths.get(testDirectory, directoryPrefix, METADATA_MAP_JSON).toFile()
+            .appendText(mapper.writeValueAsString(metaDataMap))
     }
 
     override fun setup() {
-        createCredentials()
         createConnections()
         createAssets()
+        Paths.get(testDirectory, directoryPrefix).toFile().mkdirs()
         createConnectionMap()
         createCustomMetadata()
         createMetadataMap()
-        uploadFiles()
+        copyTagFile()
         setup(
             LakeFormationTagSyncCfg(
-                "CLOUD",
+                "DIRECT",
                 "s3",
-                PREFIX,
-                null,
-                null,
-                null,
+                directoryPrefix,
             ),
         )
         LakeTagSynchronizer.main(arrayOf(testDirectory))
         Thread.sleep(15000)
+    }
+
+    override fun teardown() {
+        val client = Atlan.getDefaultClient()
+        removeConnection(c1, connectorType)
+        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
+        EnumDef.purge(enum1)
     }
 
     @Test
@@ -200,18 +155,11 @@ class LakeTagSynchronizerTest : PackageTest() {
         validateFilesExist(
             listOf(
                 "debug.log",
-                CONNECTION_MAP_JSON,
-                METADATA_MAP_JSON,
-                "lftag_association_1.json",
+                "$directoryPrefix${File.separator}$CONNECTION_MAP_JSON",
+                "$directoryPrefix${File.separator}$METADATA_MAP_JSON",
+                "$directoryPrefix${File.separator}${TAG_FILE_NAME_PREFIX}_1.json",
                 "lftag_association_1.csv",
             ),
         )
-    }
-
-    override fun teardown() {
-        val client = Atlan.getDefaultClient()
-        removeConnection(c1, AtlanConnectorType.REDSHIFT)
-        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
-        EnumDef.purge(enum1)
     }
 }

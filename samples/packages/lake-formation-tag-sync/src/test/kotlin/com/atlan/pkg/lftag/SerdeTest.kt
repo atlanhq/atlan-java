@@ -2,6 +2,11 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
+import com.atlan.pkg.lftag.model.ColumnLFTag
+import com.atlan.pkg.lftag.model.LFTable
+import com.atlan.pkg.lftag.model.LFTableInfo
+import com.atlan.pkg.lftag.model.LFTagData
+import com.atlan.pkg.lftag.model.LFTagPair
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.testng.Assert
 import org.testng.annotations.Test
@@ -67,7 +72,7 @@ class SerdeTest {
             "Name": "stg_customer_categories"
         }
         """.trimIndent()
-        val table = mapper.readValue(json, Table::class.java)
+        val table = mapper.readValue(json, LFTable::class.java)
         assertEquals("614518280298", table.catalogId)
         assertEquals("dev_atlan_dev", table.databaseName)
         assertEquals("stg_customer_categories", table.name)
@@ -75,7 +80,7 @@ class SerdeTest {
 
     @Test
     fun whenDeserializableTableInfoThenSuccess() {
-        val tableInfo = mapper.readValue(TABLE_INFO_JSON, TableInfo::class.java)
+        val tableInfo = mapper.readValue(TABLE_INFO_JSON, LFTableInfo::class.java)
         assertNotNull(tableInfo.table)
         assertEquals(1, tableInfo.lfTagOnDatabase.size)
         assertEquals(1, tableInfo.lfTagsOnTable.size)
@@ -85,7 +90,7 @@ class SerdeTest {
     @Test
     fun getTagValuesByTagKey() {
         val tagValuesByTagKey = mutableMapOf<String, MutableSet<String>>()
-        val tableInfo = mapper.readValue(TABLE_INFO_JSON, TableInfo::class.java)
+        val tableInfo = mapper.readValue(TABLE_INFO_JSON, LFTableInfo::class.java)
         assertEquals(mapOf("security_classification" to setOf("public", "private")), tableInfo.getTagValuesByTagKey(tagValuesByTagKey))
     }
 
@@ -128,7 +133,7 @@ class SerdeTest {
     @Test
     fun whenDeserializableTagDataThenSuccess() {
         val jsonString: String = File("./src/test/resources/lftag_association_1.json").readText(Charsets.UTF_8)
-        val tagData = mapper.readValue(jsonString, TagData::class.java)
+        val tagData = mapper.readValue(jsonString, LFTagData::class.java)
         assertEquals(1, tagData.tableList.size)
     }
 }
