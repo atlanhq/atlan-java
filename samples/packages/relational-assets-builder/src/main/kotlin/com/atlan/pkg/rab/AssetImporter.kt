@@ -14,6 +14,7 @@ import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
@@ -81,25 +82,25 @@ abstract class AssetImporter(
             val current: String
             when (typeName) {
                 Connection.TYPE_NAME -> {
-                    val connection = row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)]
-                    val connector = row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]
+                    val connection = CSVXformer.trimWhitespace(row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)])
+                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)])
                     current = ConnectionIdentity(connection, connector).toString()
                     parent = null
                 }
                 Database.TYPE_NAME -> {
-                    current = row[header.indexOf(ISQL.DATABASE_NAME.atlanFieldName)]
+                    current = CSVXformer.trimWhitespace(row[header.indexOf(ISQL.DATABASE_NAME.atlanFieldName)])
                     parent = getQualifiedNameDetails(row, header, Connection.TYPE_NAME)
                 }
                 Schema.TYPE_NAME -> {
-                    current = row[header.indexOf(ISQL.SCHEMA_NAME.atlanFieldName)]
+                    current = CSVXformer.trimWhitespace(row[header.indexOf(ISQL.SCHEMA_NAME.atlanFieldName)])
                     parent = getQualifiedNameDetails(row, header, Database.TYPE_NAME)
                 }
                 Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
-                    current = row[header.indexOf(ENTITY_NAME)]
+                    current = CSVXformer.trimWhitespace(row[header.indexOf(ENTITY_NAME)])
                     parent = getQualifiedNameDetails(row, header, Schema.TYPE_NAME)
                 }
                 Column.TYPE_NAME -> {
-                    current = row[header.indexOf(ColumnImporter.COLUMN_NAME)]
+                    current = CSVXformer.trimWhitespace(row[header.indexOf(ColumnImporter.COLUMN_NAME)])
                     parent = getQualifiedNameDetails(row, header, Table.TYPE_NAME)
                 }
                 else -> throw IllegalStateException("Unknown SQL type: $typeName")
