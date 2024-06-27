@@ -17,7 +17,7 @@ jars/**
 generate/src/main/resources/markdown/**
 
 # Generated logs
-**/test.log
+/integration-tests/*.log
 **/debug.log
 
 ### Generated packages ###
