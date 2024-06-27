@@ -9,6 +9,7 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 
@@ -83,7 +84,7 @@ class TermImporter(
         val glossaryIdx = deserializer.heading.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
         val termName = deserializer.getValue(GlossaryTerm.NAME.atlanFieldName)?.let { it as String } ?: ""
         return if (glossaryIdx >= 0) {
-            val glossaryName = deserializer.row[glossaryIdx].ifBlank { "" }
+            val glossaryName = CSVXformer.trimWhitespace(deserializer.row[glossaryIdx].ifBlank { "" })
             if (glossaryName.isNotBlank() && termName.isNotBlank()) {
                 "$termName${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
             } else {

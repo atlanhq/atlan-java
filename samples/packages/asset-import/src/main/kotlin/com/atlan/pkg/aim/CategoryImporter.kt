@@ -8,6 +8,7 @@ import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer.CATEGORY_DELIMITER
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
@@ -111,12 +112,12 @@ class CategoryImporter(
         val parentCategory = deserializer.getValue(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)?.let { it as GlossaryCategory }
         val categoryName = deserializer.getValue(GlossaryCategory.NAME.atlanFieldName)?.let { it as String } ?: ""
         return if (glossaryIdx >= 0 && categoryName.isNotBlank()) {
-            val glossaryName = deserializer.row[glossaryIdx].ifBlank { "" }
+            val glossaryName = CSVXformer.trimWhitespace(deserializer.row[glossaryIdx].ifBlank { "" })
             val categoryPath = if (parentCategory == null) {
                 categoryName
             } else {
                 val parentIdx = deserializer.heading.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
-                val parentPath = deserializer.row[parentIdx].split(GLOSSARY_DELIMITER)[0]
+                val parentPath = CSVXformer.trimWhitespace(deserializer.row[parentIdx].split(GLOSSARY_DELIMITER)[0])
                 "$parentPath$CATEGORY_DELIMITER$categoryName"
             }
             "$categoryPath$GLOSSARY_DELIMITER$glossaryName"
