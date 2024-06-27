@@ -87,6 +87,10 @@ jobs:
           path: jars/enrichment-migrator-*.jar
       - uses: actions/upload-artifact@v4
         with:
+          name: lake-formation-tag-sync
+          path: jars/lake-formation-tag-sync-*.jar
+      - uses: actions/upload-artifact@v4
+        with:
           name: lineage-builder
           path: jars/lineage-builder-*.jar
       - uses: actions/upload-artifact@v4
@@ -209,6 +213,7 @@ jobs:
           - custom-metadata-extender
           - duplicate-detector
           - enrichment-migrator
+          - lake-formation-tag-sync
           - lineage-builder
           - metadata-impact-report
           - openapi-spec-loader
