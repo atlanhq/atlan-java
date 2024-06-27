@@ -9,6 +9,7 @@ import com.atlan.model.assets.Asset.AssetBuilder
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch
 import mu.KLogger
@@ -32,8 +33,8 @@ class RowDeserializer(
     val row: List<String>,
     private val typeIdx: Int = -1,
     private val qnIdx: Int = -1,
-    val typeName: String = row.getOrElse(typeIdx) { "" },
-    val qualifiedName: String = row.getOrElse(qnIdx) { "" },
+    val typeName: String = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }),
+    val qualifiedName: String = CSVXformer.trimWhitespace(row.getOrElse(qnIdx) { "" }),
     private val logger: KLogger,
     private val skipColumns: Set<String>,
 ) {
@@ -119,7 +120,7 @@ class RowDeserializer(
         if (fieldName.isNotBlank()) {
             val i = heading.indexOf(fieldName)
             if (i >= 0) {
-                val rValue = row[i]
+                val rValue = CSVXformer.trimWhitespace(row[i])
                 return if (fieldName.contains(CM_HEADING_DELIMITER)) {
                     // Custom metadata field...
                     val cache = Atlan.getDefaultClient().customMetadataCache
