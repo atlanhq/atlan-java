@@ -1,6 +1,8 @@
 package com.atlan.pkg.lftag
 
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.lftag.model.LFTagData
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
@@ -35,8 +37,11 @@ class CSVProducerTest : PackageTest() {
             "duplication_count" to "Duplication::Duplication Count",
             "other_duplicate_assets" to "Duplication::Other Duplicate Assets",
         )
+        val mapper = jacksonObjectMapper()
         val producer = CSVProducer(connectionMap, metadataMap)
-        producer.transform("./src/test/resources/lftag_association_1.json", "$testDirectory${File.separator}data.csv")
+        val jsonString: String = File("./src/test/resources/lftag_association_1.json").readText(Charsets.UTF_8)
+        val tagData = mapper.readValue(jsonString, LFTagData::class.java)
+        producer.transform(tagData, "$testDirectory${File.separator}data.csv")
         validateFilesExist(listOf("debug.log", "data.csv"))
     }
 }

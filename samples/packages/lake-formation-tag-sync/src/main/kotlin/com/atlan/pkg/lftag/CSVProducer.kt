@@ -9,7 +9,6 @@ import com.atlan.pkg.lftag.model.LFTagData
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
-import java.io.File
 
 class CSVProducer(
     private val connectionMap: Map<String, String>,
@@ -25,12 +24,10 @@ class CSVProducer(
         Asset.QUALIFIED_NAME.atlanFieldName,
     ) + metadataMap.values.toSet()
 
-    fun transform(inputFileName: String, fileName: String) {
+    fun transform(tagData: LFTagData, fileName: String) {
         CSVWriter(fileName).use { csv ->
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
-            val jsonString: String = File(inputFileName).readText(Charsets.UTF_8)
-            val tagData = mapper.readValue(jsonString, LFTagData::class.java)
             tagData.tableList.forEach { tableInfo ->
                 val table = tableInfo.table
                 val (connectionKey, schemaName) = table.databaseName.split('_', limit = 2)

@@ -6,7 +6,9 @@ import AssetImportCfg
 import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
+import com.atlan.pkg.lftag.model.LFTagData
 import com.atlan.pkg.serde.csv.ImportResults
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import mu.KotlinLogging
@@ -77,7 +79,8 @@ object LakeTagSynchronizer {
         val csvProducer = CSVProducer(connectionMap, metadataMap)
         tagFileNames.forEach { tagFileName ->
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
-            csvProducer.transform(tagFileName, csvFileName)
+            val lfTagData = createMissingEnums(tagFileName, mapper, metadataMap)
+            csvProducer.transform(lfTagData, csvFileName)
             val importConfig = AssetImportCfg(
                 assetsFile = csvFileName,
                 assetsUpsertSemantic = "update",
@@ -89,5 +92,20 @@ object LakeTagSynchronizer {
             combinedResults = combinedResults?.combinedWith(result) ?: result
         }
         return !(combinedResults?.anyFailures ?: false)
+    }
+
+    private fun createMissingEnums(
+        tagFileName: String,
+        mapper: ObjectMapper,
+        metadataMap: MutableMap<String, String>,
+    ): LFTagData {
+        val jsonString: String = File(tagFileName).readText(Charsets.UTF_8)
+        val tagData = mapper.readValue(jsonString, LFTagData::class.java)
+        val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
+        val enumCreator = EnumCreator(tagToMetadataMapper)
+        tagData.tagValuesByTagKey.forEach { entry ->
+            enumCreator.createOptions(entry.key, entry.value)
+        }
+        return tagData
     }
 }
