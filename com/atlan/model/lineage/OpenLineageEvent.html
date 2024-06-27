@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,8 +142,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">OpenLineageEvent</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
-<div class="block">Base class for handling OpenLineage events, passing through to the OpenLineage Java SDK
- but wrapping events such that they are handled appropriately in the Atlan Java SDK.</div>
+<div class="block">Atlan wrapper for abstracting OpenLineage events.
+ <br><br>
+ An event is a point-in-time representation of the state of a run.
+ <br><br>
+ You <em>must</em> have at least two states for any run for Atlan to process it for lineage:
+ <ul>
+     <li><code>START</code> to indicate that a run has begun</li>
+     <li>One of the following to indicate that the run has finished:
+     <ul>
+         <li><code>COMPLETE</code> to signify that execution of the run has concluded</li>
+         <li><code>ABORT</code> to signify the run has been stopped abnormally</li>
+         <li><code>FAIL</code> to signify the run has failed</li>
+     </ul></li>
+ </ul>
+ In addition, for lineage to show any inputs and outputs to a process in Atlan, <em>at least one</em>
+ of the events must have <code>inputs</code> and <code>outputs</code> defined. It is not necessary to include these
+ on all events; they will be merged from across all events for the same run (by matching on <code>runId</code>).
+ <br><br>
+ For more details, see <a href="https://openlineage.io/docs/spec/run-cycle">OpenLineage docs</a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.atlan.model.lineage.OpenLineageEvent">Serialized Form</a></dd>
@@ -254,33 +271,50 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="OpenLineageEvent.OpenLineageEventBuilder.html" title="class in com.atlan.model.lineage">OpenLineageEvent.OpenLineageEventBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(com.atlan.model.lineage.OpenLineageRun,io.openlineage.client.OpenLineage.RunEvent.EventType)">creator</a></span>&#8203;(<a href="OpenLineageRun.html" title="class in com.atlan.model.lineage">OpenLineageRun</a>&nbsp;run,
+       io.openlineage.client.OpenLineage.RunEvent.EventType&nbsp;type)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create an OpenLineage event.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#emit()">emit</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Send the OpenLineage event to Atlan to be processed.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#emit(com.atlan.AtlanClient)">emit</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Send the OpenLineage event to Atlan to be processed.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>io.openlineage.client.OpenLineage.BaseEvent</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEvent()">getEvent</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="OpenLineageEvent.OpenLineageEventBuilder.html" title="class in com.atlan.model.lineage">OpenLineageEvent.OpenLineageEventBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson(com.atlan.AtlanClient)">toJson</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Serialize the object to a JSON string.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
@@ -343,6 +377,55 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="creator(com.atlan.model.lineage.OpenLineageRun,io.openlineage.client.OpenLineage.RunEvent.EventType)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="OpenLineageEvent.OpenLineageEventBuilder.html" title="class in com.atlan.model.lineage">OpenLineageEvent.OpenLineageEventBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(<a href="OpenLineageRun.html" title="class in com.atlan.model.lineage">OpenLineageRun</a>&nbsp;run,
+                                                                          io.openlineage.client.OpenLineage.RunEvent.EventType&nbsp;type)</pre>
+<div class="block">Builds the minimal object necessary to create an OpenLineage event.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>run</code> - the OpenLineage run for which to create a new event</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the event, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="emit()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>emit</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;emit()
+          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Send the OpenLineage event to Atlan to be processed.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
+</dl>
+</li>
+</ul>
+<a id="emit(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>emit</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;emit&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)
+          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Send the OpenLineage event to Atlan to be processed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to an Atlan tenant</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
+</dl>
+</li>
+</ul>
 <a id="toJson(com.atlan.AtlanClient)">
 <!--   -->
 </a>
@@ -377,15 +460,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>toBuilder</h4>
 <pre class="methodSignature">public&nbsp;<a href="OpenLineageEvent.OpenLineageEventBuilder.html" title="class in com.atlan.model.lineage">OpenLineageEvent.OpenLineageEventBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
-</li>
-</ul>
-<a id="getEvent()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getEvent</h4>
-<pre class="methodSignature">public&nbsp;io.openlineage.client.OpenLineage.BaseEvent&nbsp;getEvent()</pre>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

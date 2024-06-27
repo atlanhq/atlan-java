@@ -28795,6 +28795,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.lineage.OpenLineageDataset">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/lineage/OpenLineageDataset.html" title="class in com.atlan.model.lineage">com.atlan.model.lineage.OpenLineageDataset</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>_dataset</h4>
+<pre>io.openlineage.client.OpenLineage.Dataset _dataset</pre>
+<div class="block">Internal definition of the OpenLineage dataset.</div>
+</li>
+<li class="blockList">
+<h4>assetName</h4>
+<pre>java.lang.String assetName</pre>
+<div class="block">Name of the asset, by OpenLineage standards.
+ For example: DB.SCHEMA.TABLE</div>
+</li>
+<li class="blockList">
+<h4>namespace</h4>
+<pre>java.lang.String namespace</pre>
+<div class="block">Name of the source where the dataset exists.
+ See: https://github.com/OpenLineage/OpenLineage/blob/main/spec/Naming.md</div>
+</li>
+<li class="blockListLast">
+<h4>openLineage</h4>
+<pre>io.openlineage.client.OpenLineage openLineage</pre>
+<div class="block">Producer definition for OpenLineage.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.lineage.OpenLineageEvent">
 <!--   -->
 </a>
@@ -28807,9 +28845,136 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h3>Serialized Fields</h3>
 <ul class="blockList">
+<li class="blockList">
+<h4>_builder</h4>
+<pre>io.openlineage.client.OpenLineage.RunEventBuilder _builder</pre>
+</li>
+<li class="blockList">
+<h4>_event</h4>
+<pre>io.openlineage.client.OpenLineage.BaseEvent _event</pre>
+<div class="block">Internal definition of the OpenLineage event.</div>
+</li>
+<li class="blockList">
+<h4>inputs</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/lineage/OpenLineageInputDataset.html" title="class in com.atlan.model.lineage">OpenLineageInputDataset</a>&gt; inputs</pre>
+<div class="block">Inputs (sources) for the lineage.</div>
+</li>
+<li class="blockList">
+<h4>outputs</h4>
+<pre>java.util.List&lt;<a href="com/atlan/model/lineage/OpenLineageOutputDataset.html" title="class in com.atlan.model.lineage">OpenLineageOutputDataset</a>&gt; outputs</pre>
+<div class="block">Outputs (targets) for the lineage.</div>
+</li>
 <li class="blockListLast">
-<h4>event</h4>
-<pre>io.openlineage.client.OpenLineage.BaseEvent event</pre>
+<h4>run</h4>
+<pre><a href="com/atlan/model/lineage/OpenLineageRun.html" title="class in com.atlan.model.lineage">OpenLineageRun</a> run</pre>
+<div class="block">Complete details about the OpenLineage run.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.lineage.OpenLineageInputDataset">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/lineage/OpenLineageInputDataset.html" title="class in com.atlan.model.lineage">com.atlan.model.lineage.OpenLineageInputDataset</a> extends <a href="com/atlan/model/lineage/OpenLineageDataset.html" title="class in com.atlan.model.lineage">OpenLineageDataset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>_builder</h4>
+<pre>io.openlineage.client.OpenLineage.InputDatasetBuilder _builder</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.lineage.OpenLineageJob">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/lineage/OpenLineageJob.html" title="class in com.atlan.model.lineage">com.atlan.model.lineage.OpenLineageJob</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>_builder</h4>
+<pre>io.openlineage.client.OpenLineage.JobBuilder _builder</pre>
+</li>
+<li class="blockList">
+<h4>_job</h4>
+<pre>io.openlineage.client.OpenLineage.Job _job</pre>
+<div class="block">Internal definition of the OpenLineage job.</div>
+</li>
+<li class="blockListLast">
+<h4>openLineage</h4>
+<pre>io.openlineage.client.OpenLineage openLineage</pre>
+<div class="block">Producer definition for OpenLineage.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.lineage.OpenLineageOutputDataset">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/lineage/OpenLineageOutputDataset.html" title="class in com.atlan.model.lineage">com.atlan.model.lineage.OpenLineageOutputDataset</a> extends <a href="com/atlan/model/lineage/OpenLineageDataset.html" title="class in com.atlan.model.lineage">OpenLineageDataset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>_builder</h4>
+<pre>io.openlineage.client.OpenLineage.OutputDatasetBuilder _builder</pre>
+</li>
+<li class="blockListLast">
+<h4>toFields</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;io.openlineage.client.OpenLineage.ColumnLineageDatasetFacetFieldsAdditionalInputFields&gt;&gt; toFields</pre>
+<div class="block">Column-level lineage.
+ Each entry should be keyed by the name of a column in this output dataset, and the value
+ should be a list of all input datasets' fields that are used as input into the output column.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.lineage.OpenLineageRun">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/lineage/OpenLineageRun.html" title="class in com.atlan.model.lineage">com.atlan.model.lineage.OpenLineageRun</a> extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>_builder</h4>
+<pre>io.openlineage.client.OpenLineage.RunBuilder _builder</pre>
+</li>
+<li class="blockList">
+<h4>_run</h4>
+<pre>io.openlineage.client.OpenLineage.Run _run</pre>
+<div class="block">Internal definition of the OpenLineage run.</div>
+</li>
+<li class="blockListLast">
+<h4>job</h4>
+<pre><a href="com/atlan/model/lineage/OpenLineageJob.html" title="class in com.atlan.model.lineage">OpenLineageJob</a> job</pre>
+<div class="block">Complete details about the OpenLineage job.</div>
 </li>
 </ul>
 </li>
