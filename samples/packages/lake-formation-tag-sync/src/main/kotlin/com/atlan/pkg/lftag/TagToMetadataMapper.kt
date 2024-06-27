@@ -4,6 +4,7 @@ package com.atlan.pkg.lftag
 
 class TagToMetadataMapper(private val metadataMap: Map<String, String>) {
     val missingTagKeys = mutableSetOf<String>()
+    private val regex = "::".toRegex()
 
     fun getTagValues(tags: List<LFTagPair>, row: MutableMap<String, String>) {
         tags.forEach { tag ->
@@ -14,5 +15,11 @@ class TagToMetadataMapper(private val metadataMap: Map<String, String>) {
             }
             this.missingTagKeys.add(tagKey)
         }
+    }
+
+    fun getSetAndAttributeNames(tagKey: String): Pair<String, String> {
+        val setAndAttributeName = metadataMap.getOrDefault(if (tagKey.startsWith("subdomain")) "Subdomain" else tagKey, "::")
+        val (first, second) = setAndAttributeName.split(regex)
+        return Pair(first, second)
     }
 }
