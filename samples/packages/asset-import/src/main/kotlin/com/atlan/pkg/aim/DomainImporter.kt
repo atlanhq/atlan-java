@@ -10,6 +10,7 @@ import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
@@ -161,7 +162,7 @@ class DomainImporter(
         val parentDomain = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
         return if (parentDomain != null) {
             val parentIdx = deserializer.heading.indexOf(DataDomain.PARENT_DOMAIN.atlanFieldName)
-            val parentPath = deserializer.row[parentIdx]
+            val parentPath = CSVXformer.trimWhitespace(deserializer.row[parentIdx])
             "${parentPath}$DATA_DOMAIN_DELIMITER$domainName"
         } else {
             "$domainName"
