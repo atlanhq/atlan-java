@@ -200,8 +200,7 @@ public class FileTest extends AtlanLiveTest {
 
     @Test(
             groups = {"file.purge.connection"},
-            dependsOnGroups = {"file.create.*", "file.read.*", "file.search.*", "file.update.*", "file.purge.*"},
-            alwaysRun = true)
+            dependsOnGroups = {"file.create.*", "file.read.*", "file.search.*", "file.update.*", "file.purge.*"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

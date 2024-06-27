@@ -243,8 +243,7 @@ public class GCSAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"gcs.purge.connection"},
-            dependsOnGroups = {"gcs.create.*", "gcs.read.*", "gcs.search.*", "gcs.update.*", "gcs.purge.object"},
-            alwaysRun = true)
+            dependsOnGroups = {"gcs.create.*", "gcs.read.*", "gcs.search.*", "gcs.update.*", "gcs.purge.object"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

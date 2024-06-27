@@ -284,8 +284,7 @@ public class KafkaTest extends AtlanLiveTest {
                 "kafka.search.*",
                 "kafka.update.*",
                 "kafka.purge.consumergroup"
-            },
-            alwaysRun = true)
+            })
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

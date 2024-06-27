@@ -278,8 +278,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
 
     @Test(
             groups = {"aeh.purge.connection"},
-            dependsOnGroups = {"aeh.create.*", "aeh.read.*", "aeh.search.*", "aeh.update.*", "aeh.purge.consumergroup"},
-            alwaysRun = true)
+            dependsOnGroups = {"aeh.create.*", "aeh.read.*", "aeh.search.*", "aeh.update.*", "aeh.purge.consumergroup"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
