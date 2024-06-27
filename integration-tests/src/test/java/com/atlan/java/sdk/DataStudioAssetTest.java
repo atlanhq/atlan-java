@@ -228,8 +228,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"gds.purge.connection"},
-            dependsOnGroups = {"gds.create.*", "gds.read.*", "gds.search.*", "gds.update.*", "gds.purge.source"},
-            alwaysRun = true)
+            dependsOnGroups = {"gds.create.*", "gds.read.*", "gds.search.*", "gds.update.*", "gds.purge.source"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

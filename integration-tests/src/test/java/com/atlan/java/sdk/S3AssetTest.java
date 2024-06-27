@@ -59,7 +59,7 @@ public class S3AssetTest extends AtlanLiveTest {
         assertNotNull(bucketARN.getQualifiedName());
         assertEquals(bucketARN.getName(), BUCKET_NAME);
         assertEquals(bucketARN.getAwsArn(), BUCKET_ARN);
-        assertEquals(bucketARN.getConnectorType(), AtlanConnectorType.S3);
+        assertEquals(bucketARN.getConnectorType(), CONNECTOR_TYPE);
     }
 
     @Test(
@@ -76,7 +76,7 @@ public class S3AssetTest extends AtlanLiveTest {
         assertNotNull(bucketByName.getQualifiedName());
         assertEquals(bucketByName.getName(), BUCKET_NAME);
         assertNull(bucketByName.getAwsArn());
-        assertEquals(bucketByName.getConnectorType(), AtlanConnectorType.S3);
+        assertEquals(bucketByName.getConnectorType(), CONNECTOR_TYPE);
     }
 
     @Test(
@@ -101,7 +101,7 @@ public class S3AssetTest extends AtlanLiveTest {
         assertNotNull(objectARN.getQualifiedName());
         assertEquals(objectARN.getName(), OBJECT_NAME);
         assertEquals(objectARN.getAwsArn(), OBJECT_ARN);
-        assertEquals(objectARN.getConnectorType(), AtlanConnectorType.S3);
+        assertEquals(objectARN.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(objectARN.getS3BucketName(), BUCKET_NAME);
         assertEquals(objectARN.getS3BucketQualifiedName(), bucketARN.getQualifiedName());
     }
@@ -130,7 +130,7 @@ public class S3AssetTest extends AtlanLiveTest {
         assertEquals(objectByName.getName(), OBJECT_NAME);
         assertEquals(objectByName.getS3ObjectKey(), OBJECT_PREFIX + "/" + OBJECT_NAME);
         assertNull(objectByName.getAwsArn());
-        assertEquals(objectByName.getConnectorType(), AtlanConnectorType.S3);
+        assertEquals(objectByName.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(objectByName.getS3BucketName(), BUCKET_NAME);
         assertEquals(objectByName.getS3BucketQualifiedName(), bucketByName.getQualifiedName());
     }
@@ -459,8 +459,7 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"s3.purge.connection"},
-            dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"},
-            alwaysRun = true)
+            dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"})
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

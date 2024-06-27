@@ -23,7 +23,7 @@ public class PersonaTest extends AtlanLiveTest {
 
     private static final String PERSONA_NAME = PREFIX;
     public static final String CONNECTION_NAME = PREFIX;
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.SYNDIGO;
     private static final String GLOSSARY_NAME = PREFIX;
     public static final String EXISTING_GROUP_NAME = "admins";
 
