@@ -110,6 +110,10 @@ jobs:
           path: jars/relational-assets-builder-*.jar
       - uses: actions/upload-artifact@v4
         with:
+          name: tests-cleanup
+          path: jars/tests-cleanup-*.jar
+      - uses: actions/upload-artifact@v4
+        with:
           name: asset-scorer
           path: jars/asset-scorer-*.jar
       - uses: actions/upload-artifact@v4
@@ -200,6 +204,7 @@ jobs:
           - openapi-spec-loader
           - owner-propagator
           - relational-assets-builder
+          - tests-cleanup
           - asset-scorer
           - verification-enforcer
     needs:
