@@ -216,7 +216,7 @@ object TestsCleanup {
     }
 
     private fun getPrivilegedClient(): AtlanClient {
-        val privileged = Atlan.getClient(client.baseUrl, PRIVILEGED_CLIENT)
+        val privileged = Atlan.getClient("INTERNAL", PRIVILEGED_CLIENT)
         privileged.apiToken = client.impersonate.escalate()
         return privileged
     }
