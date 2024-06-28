@@ -1,0 +1,48 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/tests-cleanup"
+packageName = "Tests Cleanup"
+version = semver.Version(BuildInfo.VERSION)
+description = "Remove all test assets from a tenant."
+iconUrl = "http://assets.atlan.com/assets/ph-broom-light.svg"
+docsUrl = "https://solutions.atlan.com/custom-metadata-extender/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "TestsCleanup"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Configuration"
+      inputs {
+        ["prefix"] = new TextInput {
+          title = "Test prefix"
+          required = true
+          helpText = "Enter the starting characters for all objects that should be removed."
+          width = 4
+          placeholderText = "jsdk_"
+        }
+      }
+    }
+  }
+}
