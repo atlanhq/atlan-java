@@ -3,10 +3,15 @@
 import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Badge
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.model.assets.Persona
+import com.atlan.model.assets.Purpose
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.pkg.Utils
@@ -38,7 +43,11 @@ object TestsCleanup {
         client = Atlan.getDefaultClient()
 
         purgeGlossaries(prefix)
+        purgeProducts(prefix)
+        purgeDomains(prefix)
         purgeAssets(prefix)
+        purgePurposes(prefix)
+        purgePersonas(prefix)
         purgeCustomMetadata(prefix)
         purgeTags(prefix)
     }
@@ -74,6 +83,26 @@ object TestsCleanup {
 
     data class AssetDetails(val name: String, val qualifiedName: String, val guid: String)
 
+    private fun purgeProducts(prefix: String) {
+        val list = DataProduct.select()
+            .where(DataProduct.NAME.startsWith(prefix))
+            .stream()
+            .map { it.guid }
+            .toList()
+        logger.info { "Purging ${list.size} data products." }
+        purgeByGuids(list)
+    }
+
+    private fun purgeDomains(prefix: String) {
+        val list = DataDomain.select()
+            .where(DataDomain.NAME.startsWith(prefix))
+            .stream()
+            .map { it.guid }
+            .toList()
+        logger.info { "Purging ${list.size} data domains." }
+        purgeByGuids(list)
+    }
+
     private fun purgeAssets(prefix: String) {
         val list = Connection.select()
             .where(Connection.NAME.startsWith(prefix))
@@ -95,7 +124,37 @@ object TestsCleanup {
         }
     }
 
+    private fun purgePurposes(prefix: String) {
+        val list = Purpose.select()
+            .where(Purpose.NAME.startsWith(prefix))
+            .stream()
+            .map { it.guid }
+            .toList()
+        logger.info { "Purging ${list.size} purposes." }
+        purgeByGuids(list)
+    }
+
+    private fun purgePersonas(prefix: String) {
+        val list = Persona.select()
+            .where(Persona.NAME.startsWith(prefix))
+            .stream()
+            .map { it.guid }
+            .toList()
+        logger.info { "Purging ${list.size} personas." }
+        purgeByGuids(list)
+    }
+
     private fun purgeCustomMetadata(prefix: String) {
+        val enums = client.typeDefs.list(AtlanTypeCategory.ENUM)
+            .enumDefs
+            .stream()
+            .filter { it.displayName.startsWith(prefix) }
+            .map { TypeDefDetails(it.displayName, it.name) }
+            .toList()
+        enums.forEach { e ->
+            logger.info { "Purging enum: ${e.internalName}" }
+            getPrivilegedClient().typeDefs.purge(e.internalName)
+        }
         val list = client.typeDefs.list(AtlanTypeCategory.CUSTOM_METADATA)
             .customMetadataDefs
             .stream()
@@ -103,6 +162,13 @@ object TestsCleanup {
             .map { TypeDefDetails(it.displayName, it.name) }
             .toList()
         list.forEach { cm ->
+            val badges = Badge.select()
+                .where(Badge.QUALIFIED_NAME.startsWith(Badge.generateQualifiedName(cm.name, "")))
+                .stream()
+                .map { it.guid }
+                .toList()
+            logger.info { "Purging ${badges.size} badges for custom metadata: ${cm.name}" }
+            purgeByGuids(badges)
             logger.info { "Purging custom metadata: ${cm.name}" }
             getPrivilegedClient().typeDefs.purge(cm.internalName)
         }
