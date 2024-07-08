@@ -49,8 +49,17 @@ object Exporter {
             // Still create an (empty) output file, to avoid errors in Argo
             File(glossaryFile).createNewFile()
         }
+        val meshFile = "$outputDirectory${File.separator}products-export.csv"
+        if ("PRODUCTS_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeProducts, false)) {
+            val meshExporter = MeshExporter(ctx, glossaryFile, batchSize)
+            meshExporter.export()
+            exportedFiles.add(File(meshFile))
+        } else {
+            // Still create an (empty) output file, to avoid errors in Argo
+            File(meshFile).createNewFile()
+        }
         val assetsFile = "$outputDirectory${File.separator}asset-export.csv"
-        if ("GLOSSARIES_ONLY" != assetsExportScope) {
+        if ("GLOSSARIES_ONLY" != assetsExportScope && "PRODUCTS_ONLY" != assetsExportScope) {
             val assetExporter = AssetExporter(ctx, assetsFile, batchSize)
             assetExporter.export()
             exportedFiles.add(File(assetsFile))

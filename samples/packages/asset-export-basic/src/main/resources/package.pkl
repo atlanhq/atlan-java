@@ -24,6 +24,7 @@ outputs {
     ["debug-logs"] = "/tmp/debug.log"
     ["assets-csv"] = "/tmp/asset-export.csv"
     ["glossaries-csv"] = "/tmp/glossary-export.csv"
+    ["products-csv"] = "/tmp/products-export.csv"
   }
 }
 keywords {
@@ -42,6 +43,7 @@ uiConfig {
           required = true
           possibleValues {
             ["GLOSSARIES_ONLY"] = "Glossaries only"
+            ["PRODUCTS_ONLY"] = "Products only"
             ["ENRICHED_ONLY"] = "Enriched only"
             ["ALL"] = "All"
           }
@@ -53,7 +55,7 @@ uiConfig {
           required = false
           helpText = "Starting value for a qualifiedName that will determine which assets to export."
           placeholderText = "default"
-          width = 6
+          width = 4
         }
         ["include_description"] = new BooleanInput {
           title = "Include description?"
@@ -65,6 +67,12 @@ uiConfig {
           title = "Include glossaries?"
           required = false
           helpText = "Whether glossaries (and their terms and categories) should be exported, too."
+          width = 4
+        }
+        ["include_products"] = new BooleanInput {
+          title = "Include data products?"
+          required = false
+          helpText = "Whether data products (and their domains) should be exported, too."
           width = 4
         }
         ["include_archived"] = new BooleanInput {
@@ -129,6 +137,7 @@ uiConfig {
         "qn_prefix"
         "include_description"
         "include_glossaries"
+        "include_products"
       }
     }
     new UIRule {
@@ -137,6 +146,7 @@ uiConfig {
         "qn_prefix"
         "include_description"
         "include_glossaries"
+        "include_products"
       }
     }
     new UIRule {
