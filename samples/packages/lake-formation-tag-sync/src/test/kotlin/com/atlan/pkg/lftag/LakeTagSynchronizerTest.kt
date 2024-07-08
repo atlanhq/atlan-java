@@ -146,6 +146,7 @@ class LakeTagSynchronizerTest : PackageTest() {
     @Test
     fun validateColumnTagged() {
         val column = Column.get(columnGuid)
+        assertEquals("col1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
         assertEquals("public", attribute1)
     }

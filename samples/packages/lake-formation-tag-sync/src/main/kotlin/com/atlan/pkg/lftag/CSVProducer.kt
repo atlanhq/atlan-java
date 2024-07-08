@@ -45,7 +45,7 @@ class CSVProducer(
                         row = mutableMapOf(
                             Asset.QUALIFIED_NAME.atlanFieldName to columnQualifiedName,
                             Asset.TYPE_NAME.atlanFieldName to Column.TYPE_NAME,
-                            Asset.NAME.atlanFieldName to table.name,
+                            Asset.NAME.atlanFieldName to column.name,
                         )
                         tagToMetadataMapper.getTagValues(column.lfTags, row)
                         csv.writeRecord(row)
