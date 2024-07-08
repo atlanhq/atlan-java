@@ -51,7 +51,7 @@ object Exporter {
         }
         val meshFile = "$outputDirectory${File.separator}products-export.csv"
         if ("PRODUCTS_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeProducts, false)) {
-            val meshExporter = MeshExporter(ctx, glossaryFile, batchSize)
+            val meshExporter = MeshExporter(ctx, meshFile, batchSize)
             meshExporter.export()
             exportedFiles.add(File(meshFile))
         } else {
