@@ -38,11 +38,47 @@ uiConfig {
     ["Configuration"] {
       description = "OpenAPI spec configuration"
       inputs {
+        ["import_type"] = new Radio {
+          title = "Import spec from"
+          helpText = "Select how you want to provide the OpenAPI spec file to be imported."
+          possibleValues {
+            ["URL"] = "URL"
+            // ["DIRECT"] = "Direct file upload"
+            ["CLOUD"] = "Object storage"
+          }
+          default = "URL"
+        }
         ["spec_url"] = new TextInput {
           title = "Specification URL"
           required = true
           helpText = "Full URL to the JSON form of the OpenAPI specification."
           placeholderText = "https://petstore3.swagger.io/api/v3/openapi.json"
+        }
+        ["spec_file"] = new FileUploader {
+          title = "Spec file"
+          fileTypes { "application/json" }
+          required = false
+          helpText = "Select the OpenAPI spec file containing metadata to import."
+          placeholderText = "Select OpenAPI JSON file"
+          hide = true
+        }
+        ["spec_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the OpenAPI spec file."
+          placeholderText = "path/to/file"
+          width = 4
+        }
+        ["spec_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "openapi.json"
+          width = 4
+        }
+        ["cloud_source"] = new CredentialInput {
+          title = "Import spec from"
+          required = true
+          credType = "csa-connectors-objectstore"
+          helpText = "Enter details for the object store from which to retrieve the OpenAPI spec containing metadata to be imported."
         }
       }
     }
@@ -74,6 +110,18 @@ uiConfig {
     }
   }
   rules {
+    new UIRule {
+      whenInputs { ["import_type"] = "URL" }
+      required { "spec_url" }
+    }
+    new UIRule {
+      whenInputs { ["import_type"] = "CLOUD" }
+      required { "cloud_source" "spec_prefix" "spec_key" }
+    }
+    new UIRule {
+      whenInputs { ["import_type"] = "DIRECT" }
+      required { "spec_file" }
+    }
     new UIRule {
       whenInputs { ["connection_usage"] = "REUSE" }
       required { "connection_qualified_name" }
