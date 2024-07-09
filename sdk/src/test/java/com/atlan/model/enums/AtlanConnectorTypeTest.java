@@ -6,7 +6,6 @@ import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 
 import com.atlan.model.assets.Connection;
-import com.atlan.util.StringUtils;
 import org.testng.annotations.Test;
 
 public class AtlanConnectorTypeTest {
