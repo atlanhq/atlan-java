@@ -27,7 +27,12 @@ object OpenAPISpecLoader {
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
 
+        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val importType = Utils.getOrDefault(config.importType, "URL")
         val specUrl = Utils.getOrDefault(config.specUrl, "")
+        val specFilename = Utils.getOrDefault(config.specFile, "")
+        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
+        val specKey = Utils.getOrDefault(config.specKey, "")
         val batchSize = 20
 
         val inputQN = config.connectionQualifiedName?.let {
@@ -36,15 +41,33 @@ object OpenAPISpecLoader {
         val connectionQN =
             Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
 
-        if (connectionQN == "" || specUrl == "") {
+        val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && cloudDetails.isNotBlank() && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
+        if (!specFileProvided) {
+            logger.error { "No input file was provided for the OpenAPI spec." }
+            exitProcess(1)
+        }
+
+        if (connectionQN.isBlank()) {
             logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
             exitProcess(4)
         }
 
-        logger.info { "Loading OpenAPI specification from $specUrl into: $connectionQN" }
+        val sourceUrl = when (importType) {
+            "CLOUD" -> {
+                Utils.getInputFile(
+                    specFilename,
+                    outputDirectory,
+                    false,
+                    Utils.getOrDefault(config.specPrefix, ""),
+                    specKey,
+                )
+            }
+            "DIRECT" -> specFilename
+            else -> specUrl
+        }
 
-        val parser = OpenAPISpecReader(specUrl)
-        loadOpenAPISpec(connectionQN, parser, batchSize)
+        logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
+        loadOpenAPISpec(connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
     }
 
     /**
