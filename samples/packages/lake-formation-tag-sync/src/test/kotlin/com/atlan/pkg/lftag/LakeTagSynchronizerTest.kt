@@ -27,13 +27,21 @@ import java.nio.file.Paths
 import kotlin.io.path.copyTo
 import kotlin.test.assertEquals
 
+private const val PUBLIC = "public"
+
+private const val NON_PI = "non-pi"
+
+private const val FULL_HISTORY = "fullhistory"
+
 class LakeTagSynchronizerTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
     private val c1 = makeUnique("lftagdb")
     private var connectionQualifiedName = ""
+    private var schemaGuid = ""
     private var tableGuid = ""
     private var columnGuid = ""
     private val cm1 = makeUnique("lftcm")
+
     private val enum1 = makeUnique("lfenum")
     private val mapper = jacksonObjectMapper()
 
@@ -65,6 +73,7 @@ class LakeTagSynchronizerTest : PackageTest() {
         val column = Column.creator("col1", tbl, 1).build()
         batch.add(column)
         val response = batch.flush()
+        schemaGuid = response.getResult(sch).guid
         tableGuid = response.getResult(tbl).guid
         columnGuid = response.getResult(column).guid
     }
@@ -83,7 +92,7 @@ class LakeTagSynchronizerTest : PackageTest() {
     private fun createEnums() {
         val enumDef = EnumDef.creator(
             enum1,
-            listOf("public", "non-pi", "fullhistory"),
+            listOf(PUBLIC, NON_PI, FULL_HISTORY),
         )
             .build()
         enumDef.create()
@@ -135,12 +144,21 @@ class LakeTagSynchronizerTest : PackageTest() {
     }
 
     @Test
+    fun validateSchemaTagged() {
+        val schema = Schema.get(schemaGuid)
+        val attribute1 = schema.getCustomMetadata(cm1, attr1)
+        assertEquals(PUBLIC, attribute1)
+        val attribute3 = schema.getCustomMetadata(cm1, attr2)
+        assertEquals(NON_PI, attribute3)
+    }
+
+    @Test
     fun validateTableTagged() {
         val table = Table.get(tableGuid)
         val attribute1 = table.getCustomMetadata(cm1, attr1)
-        assertEquals("public", attribute1)
+        assertEquals(PUBLIC, attribute1)
         val attribute3 = table.getCustomMetadata(cm1, attr3)
-        assertEquals("fullhistory", attribute3)
+        assertEquals(FULL_HISTORY, attribute3)
     }
 
     @Test
@@ -148,7 +166,7 @@ class LakeTagSynchronizerTest : PackageTest() {
         val column = Column.get(columnGuid)
         assertEquals("col1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
-        assertEquals("public", attribute1)
+        assertEquals(PUBLIC, attribute1)
     }
 
     @Test
