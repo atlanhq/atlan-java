@@ -115,6 +115,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     AZURE_SERVICE_BUS("azureservicebus", AtlanConnectionCategory.EVENT_BUS),
     COGNITE("cognite", AtlanConnectionCategory.SAAS),
     SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
+    UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     ;
 
     @JsonValue
@@ -130,11 +131,14 @@ public enum AtlanConnectorType implements AtlanEnum {
     }
 
     public static AtlanConnectorType fromValue(String value) {
+        if (value == null || value.isEmpty()) {
+            return null;
+        }
         for (AtlanConnectorType b : AtlanConnectorType.values()) {
             if (b.value.equals(value)) {
                 return b;
             }
         }
-        return null;
+        return UNKNOWN_CUSTOM;
     }
 }
