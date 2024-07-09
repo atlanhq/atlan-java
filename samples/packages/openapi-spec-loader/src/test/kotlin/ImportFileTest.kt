@@ -8,6 +8,7 @@ import com.atlan.pkg.PackageTest
 import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
+import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -15,18 +16,27 @@ import kotlin.test.assertNotNull
 /**
  * Test import of the canonical PetStore example from Swagger.
  */
-class ImportPetStoreTest : PackageTest() {
+class ImportFileTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val testId = makeUnique("oapi")
+    private val testId = makeUnique("oaf")
+    private val testFile = "openapi.json"
     private val files = listOf(
         "debug.log",
     )
 
+    private fun prepFile() {
+        // Prepare a copy of the file with unique names for domains and products
+        val input = Paths.get("src", "test", "resources", testFile).toFile()
+        input.copyTo(Paths.get(testDirectory, testFile).toFile(), true)
+    }
+
     override fun setup() {
+        prepFile()
         setup(
             OpenAPISpecLoaderCfg(
-                specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
+                importType = "DIRECT",
+                specFile = testFile,
                 connectionUsage = "CREATE",
                 connection = Connection.creator(testId, AtlanConnectorType.API).build(),
             ),
