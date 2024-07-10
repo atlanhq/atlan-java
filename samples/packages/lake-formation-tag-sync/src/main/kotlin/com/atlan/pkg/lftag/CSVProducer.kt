@@ -4,6 +4,7 @@ package com.atlan.pkg.lftag
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
+import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.pkg.lftag.model.LFTagData
 import com.atlan.pkg.serde.csv.CSVWriter
@@ -32,8 +33,16 @@ class CSVProducer(
                 val table = tableInfo.table
                 val (connectionKey, schemaName) = table.databaseName.split('_', limit = 2)
                 if (connectionKey in this.connectionMap) {
-                    val qualifiedName = "${connectionMap.getValue(connectionKey)}/$schemaName/${table.name}"
+                    val schemaQualifiedName = "${connectionMap.getValue(connectionKey)}/$schemaName"
                     var row = mutableMapOf(
+                        Asset.QUALIFIED_NAME.atlanFieldName to schemaQualifiedName,
+                        Asset.TYPE_NAME.atlanFieldName to Schema.TYPE_NAME,
+                        Asset.NAME.atlanFieldName to schemaName,
+                    )
+                    tagToMetadataMapper.getTagValues(tableInfo.lfTagOnDatabase, row)
+                    csv.writeRecord(row)
+                    val qualifiedName = "$schemaQualifiedName/${table.name}"
+                    row = mutableMapOf(
                         Asset.QUALIFIED_NAME.atlanFieldName to qualifiedName,
                         Asset.TYPE_NAME.atlanFieldName to Table.TYPE_NAME,
                         Asset.NAME.atlanFieldName to table.name,
