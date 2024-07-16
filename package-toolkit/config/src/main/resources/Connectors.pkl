@@ -409,6 +409,10 @@ hidden const AWS_SITE_WISE: Type = new {
   value = "aws-sitewise"
   category = "database"
 }
+hidden const PREFECT: Type = new {
+  value = "prefect"
+  category = "elt"
+}
 
 class Type {
   value: String

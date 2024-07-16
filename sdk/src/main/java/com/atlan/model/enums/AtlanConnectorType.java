@@ -115,6 +115,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     AZURE_SERVICE_BUS("azureservicebus", AtlanConnectionCategory.EVENT_BUS),
     COGNITE("cognite", AtlanConnectionCategory.SAAS),
     SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
+    PREFECT("prefect", AtlanConnectionCategory.ELT),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     ;
 
