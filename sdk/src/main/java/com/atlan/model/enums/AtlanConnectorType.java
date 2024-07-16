@@ -116,6 +116,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     COGNITE("cognite", AtlanConnectionCategory.SAAS),
     SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
+    PREFECT("prefect", AtlanConnectionCategory.ELT),
     ;
 
     @JsonValue
