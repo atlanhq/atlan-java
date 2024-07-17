@@ -101,7 +101,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     | NoSuchMethodException
                     | InvocationTargetException
                     | IllegalAccessException e) {
-                log.error(
+                log.warn(
                         "Unable to dynamically retrieve asset for typeName {}, falling back to an IndistinctAsset.",
                         typeName,
                         e);
