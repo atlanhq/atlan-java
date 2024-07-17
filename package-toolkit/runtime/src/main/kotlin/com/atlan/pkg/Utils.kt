@@ -697,9 +697,9 @@ object Utils {
      */
     fun getBackingStore(): ObjectStorageSyncer {
         return when (val cloud = getEnvVar("CLOUD_PROVIDER", "aws")) {
-            "aws" -> S3Sync("", "", logger)
-            "gcp" -> GCSSync("", "", logger, "")
-            "azure" -> ADLSSync("", "", logger, "", "", "")
+            "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
+            "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
+            "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
     }
