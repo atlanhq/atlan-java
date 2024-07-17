@@ -32,6 +32,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * Run the search.
      *
      * @return results from running the search
+     * @throws AtlanException on any API communication issue
      */
     public WorkflowSearchResponse search() throws AtlanException {
         return search(Atlan.getDefaultClient());
@@ -42,6 +43,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      *
      * @param client connectivity to the Atlan tenant on which to run the search
      * @return results from running the search
+     * @throws AtlanException on any API communication issue
      */
     public WorkflowSearchResponse search(AtlanClient client) throws AtlanException {
         return client.workflows.searchRuns(this);
@@ -52,6 +54,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      *
      * @param workflowName name of the workflow for which to find the latest run
      * @return the singular result giving the latest run of the workflow
+     * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResult findLatestRun(String workflowName) throws AtlanException {
         return findLatestRun(Atlan.getDefaultClient(), workflowName);
@@ -63,6 +66,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param client connectivity to the Atlan tenant on which to find the latest run of the workflow
      * @param workflowName name of the workflow for which to find the latest run
      * @return the singular result giving the latest run of the workflow
+     * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResult findLatestRun(AtlanClient client, String workflowName) throws AtlanException {
 
@@ -101,6 +105,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param client connectivity to the Atlan tenant on which to find the current run of the workflow
      * @param workflowName name of the workflow for which to find the current run
      * @return the singular result giving the latest currently-running run of the workflow, or null if it is not currently running
+     * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResult findCurrentRun(AtlanClient client, String workflowName) throws AtlanException {
 
@@ -143,6 +148,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      *
      * @param workflowRunName name of the specific workflow run to find
      * @return the singular result giving the specific run of the workflow
+     * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResult findRunByName(String workflowRunName) throws AtlanException {
         return findRunByName(Atlan.getDefaultClient(), workflowRunName);
@@ -154,6 +160,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param client connectivity to the Atlan tenant on which to find a specific run of the workflow
      * @param workflowRunName name of the specific workflow run to find
      * @return the singular result giving the specific run of the workflow
+     * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResult findRunByName(AtlanClient client, String workflowRunName) throws AtlanException {
         SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
@@ -190,6 +197,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @throws AtlanException on any API communication issue
      * @deprecated see {@link #findByType(AtlanPackageType, int)} for the replacement
      */
     @Deprecated
@@ -204,6 +212,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @throws AtlanException on any API communication issue
      * @deprecated see {@link #findByType(AtlanClient, AtlanPackageType, int)} for the replacement
      */
     @Deprecated
@@ -218,6 +227,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param type of the workflow
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @throws AtlanException on any API communication issue
      */
     public static List<WorkflowSearchResult> findByType(AtlanPackageType type, int maxResults) throws AtlanException {
         return findByType(Atlan.getDefaultClient(), type, maxResults);
@@ -230,10 +240,48 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param type of the workflow
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @throws AtlanException on any API communication issue
      */
     public static List<WorkflowSearchResult> findByType(AtlanClient client, AtlanPackageType type, int maxResults)
             throws AtlanException {
         return findByPrefix(client, type.getValue(), maxResults);
+    }
+
+    /**
+     * Find a workflow based on is ID (e.g. {@code atlan-snowflake-miner-1714638976}).
+     * Note: only workflows that have been run will be found.
+     *
+     * @param id unique identifier of the specific workflow to find
+     * @return singular result containing the workflow, or null if not found
+     * @throws AtlanException on any API communication issue
+     */
+    public static WorkflowSearchResult findById(String id) throws AtlanException {
+        return findById(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Find a workflow based on is ID (e.g. {@code atlan-snowflake-miner-1714638976}).
+     * Note: only workflows that have been run will be found.
+     *
+     * @param client connectivity to the Atlan tenant on which to find the workflow
+     * @param id unique identifier of the specific workflow to find
+     * @return singular result containing the workflow, or null if not found
+     * @throws AtlanException on any API communication issue
+     */
+    public static WorkflowSearchResult findById(AtlanClient client, String id) throws AtlanException {
+        Query term =
+                TermQuery.of(t -> t.field("metadata.name.keyword").value(id))._toQuery();
+        Query nested = NestedQuery.of(n -> n.path("metadata").query(term))._toQuery();
+        Query query = BoolQuery.of(b -> b.filter(nested))._toQuery();
+        WorkflowSearchRequest request =
+                WorkflowSearchRequest.builder().from(0).size(2).query(query).build();
+        WorkflowSearchResponse response = client.workflows.search(request);
+        if (response != null
+                && response.getHits() != null
+                && !response.getHits().getHits().isEmpty()) {
+            return response.getHits().getHits().get(0);
+        }
+        return null;
     }
 
     /**
@@ -243,6 +291,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @param prefix of the workflow
      * @param maxResults the maximum number of results to retrieve
      * @return the list of workflows of the provided type, with the most-recently created first
+     * @throws AtlanException on any API communication issue
      */
     private static List<WorkflowSearchResult> findByPrefix(AtlanClient client, String prefix, int maxResults)
             throws AtlanException {
