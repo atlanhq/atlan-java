@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
@@ -277,14 +278,10 @@ public class Suggestions {
         private Apply _apply(boolean allowMultiple) throws AtlanException {
             SuggestionResponse response = get();
             Asset.AssetBuilder<?, ?> builder = asset.trimToRequired();
-            if (response.getSystemDescriptions() != null
-                    && !response.getSystemDescriptions().isEmpty()) {
-                builder.description(response.getSystemDescriptions().get(0).getValue());
-            }
-            if (response.getUserDescriptions() != null
-                    && !response.getUserDescriptions().isEmpty()) {
-                builder.userDescription(response.getUserDescriptions().get(0).getValue());
-            }
+            String descriptionToApply = getDescriptionToApply(response);
+            // Note: only ever set the description over a user-provided description (never the system-sourced
+            // description)
+            builder.userDescription(descriptionToApply);
             if (response.getOwnerGroups() != null && !response.getOwnerGroups().isEmpty()) {
                 if (allowMultiple) {
                     builder.ownerGroups(response.getOwnerGroups().stream()
@@ -340,7 +337,9 @@ public class Suggestions {
                 for (AggregationBucketDetails bucket : result.getBuckets()) {
                     long count = bucket.getDocCount();
                     String value = bucket.getSourceValue(field).toString();
-                    results.add(new SuggestionResponse.SuggestedItem(count, value));
+                    if (!value.isBlank()) {
+                        results.add(new SuggestionResponse.SuggestedItem(count, value));
+                    }
                 }
             }
             return results;
@@ -353,7 +352,9 @@ public class Suggestions {
                 for (AggregationBucketDetails bucket : result.getBuckets()) {
                     long count = bucket.getDocCount();
                     String value = bucket.getKey().toString();
-                    results.add(new SuggestionResponse.SuggestedTerm(count, value));
+                    if (!value.isBlank()) {
+                        results.add(new SuggestionResponse.SuggestedTerm(count, value));
+                    }
                 }
             }
             return results;
@@ -367,13 +368,15 @@ public class Suggestions {
                 for (AggregationBucketDetails bucket : result.getBuckets()) {
                     long count = bucket.getDocCount();
                     String value = bucket.getKey().toString();
-                    String name;
-                    try {
-                        name = client.getAtlanTagCache().getNameForId(value);
-                    } catch (NotFoundException e) {
-                        name = Serde.DELETED_AUDIT_OBJECT;
+                    if (!value.isBlank()) {
+                        String name;
+                        try {
+                            name = client.getAtlanTagCache().getNameForId(value);
+                        } catch (NotFoundException e) {
+                            name = Serde.DELETED_AUDIT_OBJECT;
+                        }
+                        results.add(new SuggestionResponse.SuggestedItem(count, name));
                     }
-                    results.add(new SuggestionResponse.SuggestedItem(count, name));
                 }
             }
             return results;
@@ -386,11 +389,30 @@ public class Suggestions {
                 for (AggregationBucketDetails bucket : result.getBuckets()) {
                     long count = bucket.getDocCount();
                     String value = bucket.getKey().toString();
-                    results.add(new SuggestionResponse.SuggestedItem(count, value));
+                    if (!value.isBlank()) {
+                        results.add(new SuggestionResponse.SuggestedItem(count, value));
+                    }
                 }
             }
             return results;
         }
+    }
+
+    private static @Nullable String getDescriptionToApply(SuggestionResponse response) {
+        long maxDescriptionCount = 0;
+        String descriptionToApply = null;
+        if (response.getUserDescriptions() != null
+                && !response.getUserDescriptions().isEmpty()) {
+            maxDescriptionCount = response.getUserDescriptions().get(0).getCount();
+            descriptionToApply = response.getUserDescriptions().get(0).getValue();
+        }
+        if (response.getSystemDescriptions() != null
+                && !response.getSystemDescriptions().isEmpty()) {
+            if (response.getSystemDescriptions().get(0).getCount() > maxDescriptionCount) {
+                descriptionToApply = response.getSystemDescriptions().get(0).getValue();
+            }
+        }
+        return descriptionToApply;
     }
 
     @Getter
