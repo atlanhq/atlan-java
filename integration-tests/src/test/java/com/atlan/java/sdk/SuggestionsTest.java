@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
 /**
- * Tests all aspects of SQL assets (Connections, Databases, Schemas, Tables, Views, Materialized Views, Columns).
+ * Tests all aspects of finding and applying suggestions.
  */
 @Slf4j
 @SuppressWarnings("deprecation")
@@ -27,6 +27,8 @@ public class SuggestionsTest extends AtlanLiveTest {
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.TRINO;
     public static final String CONNECTION_NAME = PREFIX;
+
+    public static final String SYSTEM_DESCRIPTION = DESCRIPTION + " (system)";
 
     public static final String DATABASE_NAME = PREFIX + "_db";
     public static final String SCHEMA_NAME1 = PREFIX + "_schema";
@@ -259,7 +261,7 @@ public class SuggestionsTest extends AtlanLiveTest {
     void updateT1() throws AtlanException {
         Table toUpdate = Table.updater(table1.getQualifiedName(), TABLE_NAME)
                 .ownerGroup(ownerGroup.getName())
-                .description(DESCRIPTION)
+                .description(SYSTEM_DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1).toBuilder()
                         .propagate(false)
@@ -292,7 +294,7 @@ public class SuggestionsTest extends AtlanLiveTest {
     void updateT3() throws AtlanException {
         Table toUpdate = Table.updater(table3.getQualifiedName(), VIEW_NAME)
                 .ownerGroup(ownerGroup.getName())
-                .description(DESCRIPTION)
+                .description(SYSTEM_DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1).toBuilder()
                         .propagate(false)
@@ -325,7 +327,7 @@ public class SuggestionsTest extends AtlanLiveTest {
     void updateT1C1() throws AtlanException {
         Column toUpdate = Column.updater(t1c1.getQualifiedName(), COLUMN_NAME1)
                 .ownerGroup(ownerGroup.getName())
-                .description(DESCRIPTION)
+                .description(SYSTEM_DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1).toBuilder()
                         .propagate(false)
@@ -358,7 +360,7 @@ public class SuggestionsTest extends AtlanLiveTest {
     void updateV1C1() throws AtlanException {
         Column toUpdate = Column.updater(v1c1.getQualifiedName(), COLUMN_NAME1)
                 .ownerGroup(ownerGroup.getName())
-                .description(DESCRIPTION)
+                .description(SYSTEM_DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .atlanTag(AtlanTag.of(ATLAN_TAG_NAME2).toBuilder()
                         .propagate(false)
@@ -399,7 +401,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertNotNull(response.getSystemDescriptions());
         assertEquals(response.getSystemDescriptions().size(), 1);
         assertEquals(response.getSystemDescriptions().get(0).getCount(), 2);
-        assertEquals(response.getSystemDescriptions().get(0).getValue(), DESCRIPTION);
+        assertEquals(response.getSystemDescriptions().get(0).getValue(), SYSTEM_DESCRIPTION);
         assertNotNull(response.getUserDescriptions());
         assertEquals(response.getUserDescriptions().size(), 1);
         assertEquals(response.getUserDescriptions().get(0).getCount(), 2);
@@ -438,7 +440,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertNotNull(response.getSystemDescriptions());
         assertEquals(response.getSystemDescriptions().size(), 1);
         assertEquals(response.getSystemDescriptions().get(0).getCount(), 1);
-        assertEquals(response.getSystemDescriptions().get(0).getValue(), DESCRIPTION);
+        assertEquals(response.getSystemDescriptions().get(0).getValue(), SYSTEM_DESCRIPTION);
         assertNotNull(response.getUserDescriptions());
         assertEquals(response.getUserDescriptions().size(), 1);
         assertEquals(response.getUserDescriptions().get(0).getCount(), 1);
@@ -481,7 +483,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertNotNull(response.getSystemDescriptions());
         assertEquals(response.getSystemDescriptions().size(), 1);
         assertEquals(response.getSystemDescriptions().get(0).getCount(), 1);
-        assertEquals(response.getSystemDescriptions().get(0).getValue(), DESCRIPTION);
+        assertEquals(response.getSystemDescriptions().get(0).getValue(), SYSTEM_DESCRIPTION);
         assertTrue(response.getUserDescriptions() == null
                 || response.getUserDescriptions().isEmpty());
         assertTrue(response.getAtlanTags() == null || response.getAtlanTags().isEmpty());
@@ -495,14 +497,18 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.find.*"})
     void applyT2C1() throws AtlanException {
         AssetMutationResponse response = Suggestions.finder(t2c1)
-                .includes(Arrays.asList(Suggestions.TYPE.values()))
+                .include(Suggestions.TYPE.UserDescription)
+                .include(Suggestions.TYPE.IndividualOwners)
+                .include(Suggestions.TYPE.GroupOwners)
+                .include(Suggestions.TYPE.Tags)
+                .include(Suggestions.TYPE.Terms)
                 .apply();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2); // column + term
         Column one = response.getResult(t2c1);
         assertNotNull(one);
         assertEquals(one.getOwnerGroups(), Set.of(ownerGroup.getName()));
-        assertEquals(one.getDescription(), DESCRIPTION);
+        assertNull(one.getDescription()); // System description should be untouched (still empty)
         assertEquals(one.getUserDescription(), DESCRIPTION);
         assertNotNull(one.getAtlanTags());
         assertEquals(one.getAtlanTags().size(), 1);
@@ -527,8 +533,10 @@ public class SuggestionsTest extends AtlanLiveTest {
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         assertTrue(one.getOwnerGroups() == null || one.getOwnerGroups().isEmpty());
-        assertEquals(one.getDescription(), DESCRIPTION);
-        assertNull(one.getUserDescription());
+        assertNull(one.getDescription()); // System description should be untouched (still empty)
+        assertEquals(
+                one.getUserDescription(),
+                SYSTEM_DESCRIPTION); // System description should be applied to user description
         assertNotNull(one.getAtlanTags());
         assertEquals(one.getAtlanTags().size(), 2);
         assertEquals(
