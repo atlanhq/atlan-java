@@ -18,6 +18,7 @@ import kotlin.test.assertNotNull
 class ImportURLTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
+    private val connectorType = AtlanConnectorType.API
     private val testId = makeUnique("oau")
     private val files = listOf(
         "debug.log",
@@ -28,19 +29,19 @@ class ImportURLTest : PackageTest() {
             OpenAPISpecLoaderCfg(
                 specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
                 connectionUsage = "CREATE",
-                connection = Connection.creator(testId, AtlanConnectorType.API).build(),
+                connection = Connection.creator(testId, connectorType).build(),
             ),
         )
         OpenAPISpecLoader.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
-        removeConnection(testId, AtlanConnectorType.API)
+        removeConnection(testId, connectorType)
     }
 
     @Test
     fun connectionCreated() {
-        val results = Connection.findByName(testId, AtlanConnectorType.API)
+        val results = Connection.findByName(testId, connectorType)
         assertNotNull(results)
         assertEquals(1, results.size)
         assertEquals(testId, results[0].name)
@@ -48,7 +49,7 @@ class ImportURLTest : PackageTest() {
 
     @Test
     fun specCreated() {
-        val connectionQN = Connection.findByName(testId, AtlanConnectorType.API)?.get(0)?.qualifiedName!!
+        val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
         val request = APISpec.select()
             .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
             .includeOnResults(APISpec.NAME)
@@ -71,7 +72,7 @@ class ImportURLTest : PackageTest() {
 
     @Test
     fun pathsCreated() {
-        val connectionQN = Connection.findByName(testId, AtlanConnectorType.API)?.get(0)?.qualifiedName!!
+        val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
         val request = APIPath.select()
             .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
             .includeOnResults(APIPath.NAME)
