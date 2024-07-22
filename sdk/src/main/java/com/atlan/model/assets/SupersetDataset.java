@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -436,6 +437,59 @@ public class SupersetDataset extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a Superset dataset.
+     *
+     * @param name of the dataset
+     * @param dashboard in which the dataset should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the dataset, as a builder
+     * @throws InvalidRequestException if the dashboard provided is without a qualifiedName
+     */
+    public static SupersetDatasetBuilder<?, ?> creator(String name, SupersetDashboard dashboard)
+            throws InvalidRequestException {
+        validateRelationship(
+                SupersetDashboard.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", dashboard.getConnectionQualifiedName(),
+                        "qualifiedName", dashboard.getQualifiedName()));
+        return creator(name, dashboard.getConnectionQualifiedName(), dashboard.getQualifiedName())
+                .supersetDashboard(dashboard.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset dataset.
+     *
+     * @param name of the dataset
+     * @param dashboardQualifiedName unique name of the dashboard in which the dataset exists
+     * @return the minimal object necessary to create the dataset, as a builder
+     */
+    public static SupersetDatasetBuilder<?, ?> creator(String name, String dashboardQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dashboardQualifiedName);
+        return creator(name, connectionQualifiedName, dashboardQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset dataset.
+     *
+     * @param name of the dataset
+     * @param connectionQualifiedName unique name of the connection in which to create the SupersetDataset
+     * @param dashboardQualifiedName unique name of the SupersetDashboard in which to create the SupersetDataset
+     * @return the minimal object necessary to create the dataset, as a builder
+     */
+    public static SupersetDatasetBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String dashboardQualifiedName) {
+        // AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return SupersetDataset._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(dashboardQualifiedName + "/" + name)
+                .connectorType(AtlanConnectorType.SUPERSET)
+                .supersetDashboardQualifiedName(dashboardQualifiedName)
+                .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to update a SupersetDataset.
      *
      * @param qualifiedName of the SupersetDataset
@@ -464,6 +518,17 @@ public class SupersetDataset extends Asset
                         "qualifiedName", this.getQualifiedName(),
                         "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Generate a unique Superset workspace name.
+     *
+     * @param connectionQualifiedName unique name of the connection
+     * @param name for the workspace
+     * @return a unique name for the workspace
+     */
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

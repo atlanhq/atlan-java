@@ -35,6 +35,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     FIVETRAN("fivetran", AtlanConnectionCategory.ELT),
     VERTICA("vertica", AtlanConnectionCategory.WAREHOUSE),
     PRESET("preset", AtlanConnectionCategory.BI),
+    SUPERSET("superset", AtlanConnectionCategory.BI),
     API("api", AtlanConnectionCategory.API),
     DYNAMODB("dynamodb", AtlanConnectionCategory.WAREHOUSE),
     GCS("gcs", AtlanConnectionCategory.OBJECT_STORE),

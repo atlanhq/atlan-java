@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -451,6 +452,22 @@ public class SupersetDashboard extends Asset
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset dashboard.
+     *
+     * @param name of the dashboard
+     * @param connectionQualifiedName unique name of the connection through which the dashboard is accessible
+     * @return the minimal object necessary to create the dashboard, as a builder
+     */
+    public static SupersetDashboardBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return SupersetDashboard._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.SUPERSET);
     }
 
     /**
