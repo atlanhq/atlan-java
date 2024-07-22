@@ -213,7 +213,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 3);
 
-        one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof SupersetDashboard);
         assertFalse(one.isComplete());
         SupersetDashboard d = (SupersetDashboard) one;
