@@ -7,3 +7,11 @@ dependencies {
     implementation(project(":sdk"))
     implementation(libs.bundles.log4j)
 }
+
+tasks.register<JavaExec>("genModel") {
+    group = "application"
+    description = "Regenerate the model for assets"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("com.atlan.generators.ModelGeneratorV2")
+    workingDir = file("../")
+}
