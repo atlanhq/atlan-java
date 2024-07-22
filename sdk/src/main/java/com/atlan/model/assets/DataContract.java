@@ -58,7 +58,7 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     @Attribute
     IAsset dataContractAssetLatest;
 
-    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    /** (Deprecated) Replaced by dataContractSpec attribute. */
     @Attribute
     String dataContractJson;
 
@@ -69,6 +69,10 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     /** Data contract instance that holds the previous version of this contract. */
     @Attribute
     IDataContract dataContractPreviousVersion;
+
+    /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
+    @Attribute
+    String dataContractSpec;
 
     /** Version of the contract. */
     @Attribute

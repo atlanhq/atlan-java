@@ -36,6 +36,9 @@ public interface ILookerTile {
     /** Dashboard in which this tile exists. */
     RelationField DASHBOARD = new RelationField("dashboard");
 
+    /** Fields that are used in the tile. */
+    RelationField FIELDS = new RelationField("fields");
+
     /** Look in which this tile exists. */
     RelationField LOOK = new RelationField("look");
 
@@ -323,6 +326,9 @@ public interface ILookerTile {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Fields that are used in the tile. */
+    SortedSet<ILookerField> getFields();
 
     /** TBC */
     SortedSet<IFile> getFiles();

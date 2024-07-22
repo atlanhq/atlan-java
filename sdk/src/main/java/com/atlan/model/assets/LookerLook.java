@@ -50,6 +50,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Attribute
     ILookerDashboard dashboard;
 
+    /** Fields that are used in this look. */
+    @Attribute
+    @Singular
+    SortedSet<ILookerField> fields;
+
     /** Folder in which this Look exists. */
     @Attribute
     ILookerFolder folder;

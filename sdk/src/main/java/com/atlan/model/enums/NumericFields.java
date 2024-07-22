@@ -452,6 +452,12 @@ public enum NumericFields implements AtlanSearchableField {
     STARRED_COUNT("starredCount"),
     /** TBC */
     START_TIME("startTime"),
+    /** Count of charts present in the dashboard. */
+    SUPERSET_DASHBOARD_CHART_COUNT("supersetDashboardChartCount"),
+    /** Identifier of the dashboard in which this asset exists, in Superset. */
+    SUPERSET_DASHBOARD_ID("supersetDashboardId"),
+    /** Id of the dataset in superset. */
+    SUPERSET_DATASET_ID("supersetDatasetId"),
     /** Number of tables in this schema. */
     TABLE_COUNT("tableCount"),
     /** Time (epoch) at which the task expires . */

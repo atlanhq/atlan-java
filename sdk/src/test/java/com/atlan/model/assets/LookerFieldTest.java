@@ -394,9 +394,14 @@ public class LookerFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .dashboard(LookerDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .explore(LookerExplore.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .look(LookerLook.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .lookerDashboardQualifiedName("String0")
             .lookerExploreQualifiedName("String0")
             .lookerFieldDataType("String0")
+            .lookerLookQualifiedName("String0")
+            .lookerTileQualifiedName("String0")
             .lookerTimesUsed(123)
             .lookerViewQualifiedName("String0")
             .model(LookerModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -404,6 +409,7 @@ public class LookerFieldTest {
             .project(LookerProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .projectName("String0")
             .sourceDefinition("String0")
+            .tile(LookerTile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .view(LookerView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

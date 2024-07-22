@@ -395,6 +395,8 @@ public class LookerTileTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .dashboard(LookerDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .field(LookerField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .field(LookerField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .look(LookerLook.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .lookId(123)
             .lookmlLinkId("String0")

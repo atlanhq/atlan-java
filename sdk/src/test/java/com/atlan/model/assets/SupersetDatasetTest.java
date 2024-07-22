@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataContractTest {
+public class SupersetDatasetTest {
 
-    private static final DataContract full = DataContract._internal()
+    private static final SupersetDataset full = SupersetDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,8 @@ public class DataContractTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .supersetDashboardId(123456789L)
+            .supersetDashboardQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -394,28 +396,24 @@ public class DataContractTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataContractAssetCertified(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractAssetGuid("String0")
-            .dataContractAssetLatest(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractJson("String0")
-            .dataContractNextVersion(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractPreviousVersion(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractSpec("String0")
-            .dataContractVersion(123456789L)
+            .supersetDashboard(SupersetDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .supersetDatasetDatasourceName("String0")
+            .supersetDatasetId(123456789L)
+            .supersetDatasetType("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataContract frodo;
+    private static SupersetDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"DataContract.builderEquivalency"})
+    @Test(groups = {"SupersetDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataContract.serialize"},
-            dependsOnGroups = {"DataContract.builderEquivalency"})
+            groups = {"SupersetDataset.serialize"},
+            dependsOnGroups = {"SupersetDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -424,17 +422,17 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.deserialize"},
-            dependsOnGroups = {"DataContract.serialize"})
+            groups = {"SupersetDataset.deserialize"},
+            dependsOnGroups = {"SupersetDataset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataContract.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SupersetDataset.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SupersetDataset.equivalency"},
+            dependsOnGroups = {"SupersetDataset.serialize", "SupersetDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -443,8 +441,8 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SupersetDataset.equivalency"},
+            dependsOnGroups = {"SupersetDataset.serialize", "SupersetDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -33,6 +33,9 @@ public interface ILookerDashboard {
 
     public static final String TYPE_NAME = "LookerDashboard";
 
+    /** Fields that are used in this dashboard. */
+    RelationField FIELDS = new RelationField("fields");
+
     /** Folder in which the dashboard exists. */
     RelationField FOLDER = new RelationField("folder");
 
@@ -320,6 +323,9 @@ public interface ILookerDashboard {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Fields that are used in this dashboard. */
+    SortedSet<ILookerField> getFields();
 
     /** TBC */
     SortedSet<IFile> getFiles();

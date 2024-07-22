@@ -20,6 +20,10 @@ public enum StemmedFields implements AtlanSearchableField {
     PRESET_DASHBOARD_CHANGED_BY_NAME("presetDashboardChangedByName.stemmed"),
     /** TBC */
     PRESET_DATASET_DATASOURCE_NAME("presetDatasetDatasourceName.stemmed"),
+    /** Name of the user who changed the dashboard. */
+    SUPERSET_DASHBOARD_CHANGED_BY_NAME("supersetDashboardChangedByName.stemmed"),
+    /** Name of the datasource for the dataset. */
+    SUPERSET_DATASET_DATASOURCE_NAME("supersetDatasetDatasourceName.stemmed"),
     ;
 
     @Getter(onMethod_ = {@Override})

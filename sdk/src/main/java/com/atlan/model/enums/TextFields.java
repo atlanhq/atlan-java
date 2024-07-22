@@ -188,8 +188,14 @@ public enum TextFields implements AtlanSearchableField {
     GOOGLE_PROJECT_NAME("googleProjectName.text"),
     /** Help text for this field. */
     INLINE_HELP_TEXT("inlineHelpText"),
+    /** Unique name of the dashboard in which this field is used. */
+    LOOKER_DASHBOARD_QUALIFIED_NAME("lookerDashboardQualifiedName.text"),
     /** Unique name of the Explore in which this field exists. */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
+    /** Unique name of the look in which this field is used. */
+    LOOKER_LOOK_QUALIFIED_NAME("lookerLookQualifiedName.text"),
+    /** Unique name of the tile in which this field is used. */
+    LOOKER_TILE_QUALIFIED_NAME("lookerTileQualifiedName.text"),
     /** Unique name of the view in which this field exists. */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName.text"),
     /** Simple name of the Matillion group to which the project belongs. */
@@ -386,6 +392,14 @@ public enum TextFields implements AtlanSearchableField {
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
     /** Name of the Spark app containing this Spark Job For eg. extract_raw_data */
     SPARK_APP_NAME("sparkAppName"),
+    /** Description markdown of the chart. */
+    SUPERSET_CHART_DESCRIPTION_MARKDOWN("supersetChartDescriptionMarkdown"),
+    /** Name of the user who changed the dashboard. */
+    SUPERSET_DASHBOARD_CHANGED_BY_NAME("supersetDashboardChangedByName"),
+    /** Unique name of the dashboard in which this asset exists. */
+    SUPERSET_DASHBOARD_QUALIFIED_NAME("supersetDashboardQualifiedName.text"),
+    /** Name of the datasource for the dataset. */
+    SUPERSET_DATASET_DATASOURCE_NAME("supersetDatasetDatasourceName"),
     /** Unique name of the top-level domain in which this asset exists. */
     SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName.text"),
     /** All super types of an asset. */

@@ -36,6 +36,9 @@ public interface ILookerLook {
     /** Dashboard in which this Look is used. */
     RelationField DASHBOARD = new RelationField("dashboard");
 
+    /** Fields that are used in this look. */
+    RelationField FIELDS = new RelationField("fields");
+
     /** Folder in which this Look exists. */
     RelationField FOLDER = new RelationField("folder");
 
@@ -335,6 +338,9 @@ public interface ILookerLook {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Fields that are used in this look. */
+    SortedSet<ILookerField> getFields();
 
     /** TBC */
     SortedSet<IFile> getFiles();
