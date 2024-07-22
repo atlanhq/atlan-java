@@ -148,8 +148,8 @@ object TestsCleanup {
         val enums = client.typeDefs.list(AtlanTypeCategory.ENUM)
             .enumDefs
             .stream()
-            .filter { it.displayName.startsWith(prefix) }
-            .map { TypeDefDetails(it.displayName, it.name) }
+            .filter { it.name.startsWith(prefix) }
+            .map { TypeDefDetails(it.name, it.name) }
             .toList()
         enums.forEach { e ->
             logger.info { "Purging enum: ${e.internalName}" }
