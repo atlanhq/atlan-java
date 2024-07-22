@@ -46,6 +46,11 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Fields that are used in this dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<ILookerField> fields;
+
     /** Folder in which the dashboard exists. */
     @Attribute
     ILookerFolder folder;

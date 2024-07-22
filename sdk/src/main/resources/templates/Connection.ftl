@@ -273,7 +273,7 @@
      * @param connectorType the name of the type of the connection's connector
      * @return a unique name for the connection
      */
-    public static String generateQualifiedName(AtlanConnectorType connectorType) {
+    public static synchronized String generateQualifiedName(AtlanConnectorType connectorType) {
         return generateQualifiedName(connectorType.getValue());
     }
 
@@ -283,8 +283,13 @@
      * @param connectorType the name of the type of the connection's connector
      * @return a unique name for the connection
      */
-    private static String generateQualifiedName(String connectorType) {
+    private static synchronized String generateQualifiedName(String connectorType) {
         long now = System.currentTimeMillis() / 1000;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            log.warn("Connection qualifiedName construction interrupted - exclusivity cannot be guaranteed.", e);
+        }
         return "default/" + connectorType + "/" + now;
     }
 

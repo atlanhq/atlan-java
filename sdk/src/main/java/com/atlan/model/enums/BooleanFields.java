@@ -190,6 +190,10 @@ public enum BooleanFields implements AtlanSearchableField {
     SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED("snowflakePipeIsAutoIngestEnabled"),
     /** Whether this stream is stale (true) or not (false). */
     SNOWFLAKE_STREAM_IS_STALE("snowflakeStreamIsStale"),
+    /** Whether the dashboard is manager externally (true) or not (false). */
+    SUPERSET_DASHBOARD_IS_MANAGED_EXTERNALLY("supersetDashboardIsManagedExternally"),
+    /** Whether the dashboard is published (true) or not (false). */
+    SUPERSET_DASHBOARD_IS_PUBLISHED("supersetDashboardIsPublished"),
     /** flag to make task read/unread */
     TASK_IS_READ("taskIsRead"),
     /** Whether to upload to S3, GCP, or another storage location (true) or not (false). */

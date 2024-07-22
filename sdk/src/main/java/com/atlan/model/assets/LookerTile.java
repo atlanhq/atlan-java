@@ -50,6 +50,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     ILookerDashboard dashboard;
 
+    /** Fields that are used in the tile. */
+    @Attribute
+    @Singular
+    SortedSet<ILookerField> fields;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

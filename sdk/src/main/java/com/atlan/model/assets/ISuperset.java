@@ -8,10 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -25,70 +23,21 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Looker field in Atlan.
+ * Base class for all Superset types.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ILookerField {
+public interface ISuperset {
 
-    public static final String TYPE_NAME = "LookerField";
+    public static final String TYPE_NAME = "Superset";
 
-    /** Dashboard in which this field is used. */
-    RelationField DASHBOARD = new RelationField("dashboard");
+    /** Identifier of the dashboard in which this asset exists, in Superset. */
+    NumericField SUPERSET_DASHBOARD_ID = new NumericField("supersetDashboardId", "supersetDashboardId");
 
-    /** Explore in which this field exists. */
-    RelationField EXPLORE = new RelationField("explore");
-
-    /** Look in which this field is used. */
-    RelationField LOOK = new RelationField("look");
-
-    /** Unique name of the dashboard in which this field is used. */
-    KeywordTextField LOOKER_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
-            "lookerDashboardQualifiedName", "lookerDashboardQualifiedName", "lookerDashboardQualifiedName.text");
-
-    /** Unique name of the Explore in which this field exists. */
-    KeywordTextField LOOKER_EXPLORE_QUALIFIED_NAME = new KeywordTextField(
-            "lookerExploreQualifiedName", "lookerExploreQualifiedName", "lookerExploreQualifiedName.text");
-
-    /** Deprecated. */
-    KeywordField LOOKER_FIELD_DATA_TYPE = new KeywordField("lookerFieldDataType", "lookerFieldDataType");
-
-    /** Unique name of the look in which this field is used. */
-    KeywordTextField LOOKER_LOOK_QUALIFIED_NAME =
-            new KeywordTextField("lookerLookQualifiedName", "lookerLookQualifiedName", "lookerLookQualifiedName.text");
-
-    /** Unique name of the tile in which this field is used. */
-    KeywordTextField LOOKER_TILE_QUALIFIED_NAME =
-            new KeywordTextField("lookerTileQualifiedName", "lookerTileQualifiedName", "lookerTileQualifiedName.text");
-
-    /** Deprecated. */
-    NumericField LOOKER_TIMES_USED = new NumericField("lookerTimesUsed", "lookerTimesUsed");
-
-    /** Unique name of the view in which this field exists. */
-    KeywordTextField LOOKER_VIEW_QUALIFIED_NAME =
-            new KeywordTextField("lookerViewQualifiedName", "lookerViewQualifiedName", "lookerViewQualifiedName.text");
-
-    /** Model in which this field exists. */
-    RelationField MODEL = new RelationField("model");
-
-    /** Name of the model in which this field exists. */
-    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
-
-    /** Project in which this field exists. */
-    RelationField PROJECT = new RelationField("project");
-
-    /** Name of the project in which this field exists. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
-
-    /** Deprecated. */
-    KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
-
-    /** Tile in which this field is used. */
-    RelationField TILE = new RelationField("tile");
-
-    /** View in which this field exists. */
-    RelationField VIEW = new RelationField("view");
+    /** Unique name of the dashboard in which this asset exists. */
+    KeywordTextField SUPERSET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "supersetDashboardQualifiedName", "supersetDashboardQualifiedName", "supersetDashboardQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -333,9 +282,6 @@ public interface ILookerField {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Dashboard in which this field is used. */
-    ILookerDashboard getDashboard();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -350,9 +296,6 @@ public interface ILookerField {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Explore in which this field exists. */
-    ILookerExplore getExplore();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -402,30 +345,6 @@ public interface ILookerField {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Look in which this field is used. */
-    ILookerLook getLook();
-
-    /** Unique name of the dashboard in which this field is used. */
-    String getLookerDashboardQualifiedName();
-
-    /** Unique name of the Explore in which this field exists. */
-    String getLookerExploreQualifiedName();
-
-    /** Deprecated. */
-    String getLookerFieldDataType();
-
-    /** Unique name of the look in which this field is used. */
-    String getLookerLookQualifiedName();
-
-    /** Unique name of the tile in which this field is used. */
-    String getLookerTileQualifiedName();
-
-    /** Deprecated. */
-    Integer getLookerTimesUsed();
-
-    /** Unique name of the view in which this field exists. */
-    String getLookerViewQualifiedName();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -434,12 +353,6 @@ public interface ILookerField {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
-
-    /** Model in which this field exists. */
-    ILookerModel getModel();
-
-    /** Name of the model in which this field exists. */
-    String getModelName();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -465,12 +378,6 @@ public interface ILookerField {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Project in which this field exists. */
-    ILookerProject getProject();
-
-    /** Name of the project in which this field exists. */
-    String getProjectName();
-
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
@@ -494,9 +401,6 @@ public interface ILookerField {
 
     /** Name of the user who created this asset, in the source system. */
     String getSourceCreatedBy();
-
-    /** Deprecated. */
-    String getSourceDefinition();
 
     /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
     String getSourceEmbedURL();
@@ -567,17 +471,17 @@ public interface ILookerField {
     /** Subtype of this asset. */
     String getSubType();
 
+    /** Identifier of the dashboard in which this asset exists, in Superset. */
+    Long getSupersetDashboardId();
+
+    /** Unique name of the dashboard in which this asset exists. */
+    String getSupersetDashboardQualifiedName();
+
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
-    /** Tile in which this field is used. */
-    ILookerTile getTile();
-
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
-
-    /** View in which this field exists. */
-    ILookerView getView();
 
     /** View score for this asset. */
     Double getViewScore();

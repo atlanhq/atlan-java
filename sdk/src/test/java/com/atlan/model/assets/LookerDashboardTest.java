@@ -394,6 +394,8 @@ public class LookerDashboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .field(LookerField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .field(LookerField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .folder(LookerFolder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .folderName("String0")
             .look(LookerLook.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

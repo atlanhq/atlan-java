@@ -28,6 +28,7 @@ import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.exists
 import kotlin.io.path.isDirectory
 import kotlin.io.path.isRegularFile
 import kotlin.io.path.pathString
@@ -505,33 +506,49 @@ object Utils {
         return if (preferUpload) {
             uploadResult
         } else {
-            val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
-            val cred = MAPPER.readValue<Credential>(contents)
             val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
             val preppedKey = getOrDefault(key?.trimStart('/'), "")
-            if (preppedKey.isBlank()) {
-                return getInputFiles(uploadResult, outputDirectory, preferUpload, prefix)[0]
-            }
-            when (cred.authType) {
-                "s3" -> {
-                    val s3 = S3Credential(cred)
-                    val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+            val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
+            return if (credFile.exists()) {
+                val contents = credFile.readText()
+                val cred = MAPPER.readValue<Credential>(contents)
+                if (preppedKey.isBlank()) {
+                    return getInputFiles(uploadResult, outputDirectory, preferUpload, prefix)[0]
                 }
-                "gcs" -> {
-                    val gcs = GCSCredential(cred)
-                    val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                when (cred.authType) {
+                    "s3" -> {
+                        val s3 = S3Credential(cred)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                    }
+
+                    "gcs" -> {
+                        val gcs = GCSCredential(cred)
+                        val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                    }
+
+                    "adls" -> {
+                        val adls = ADLSCredential(cred)
+                        val sync = ADLSSync(
+                            adls.storageAccount,
+                            adls.containerName,
+                            logger,
+                            adls.tenantId,
+                            adls.clientId,
+                            adls.clientSecret,
+                        )
+                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                    }
+
+                    else -> {
+                        logger.warn { "Unknown source ${cred.authType} -- skipping." }
+                        ""
+                    }
                 }
-                "adls" -> {
-                    val adls = ADLSCredential(cred)
-                    val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
-                    getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
-                }
-                else -> {
-                    logger.warn { "Unknown source ${cred.authType} -- skipping." }
-                    ""
-                }
+            } else {
+                val sync = getBackingStore()
+                getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
             }
         }
     }
@@ -569,28 +586,44 @@ object Utils {
                 listOf(uploadResult)
             }
         } else {
-            val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
-            val cred = MAPPER.readValue<Credential>(contents)
-            when (cred.authType) {
-                "s3" -> {
-                    val s3 = S3Credential(cred)
-                    val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                    getInputFiles(sync, outputDirectory, prefix)
+            val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
+            return if (credFile.exists()) {
+                val contents = credFile.readText()
+                val cred = MAPPER.readValue<Credential>(contents)
+                when (cred.authType) {
+                    "s3" -> {
+                        val s3 = S3Credential(cred)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                        getInputFiles(sync, outputDirectory, prefix)
+                    }
+
+                    "gcs" -> {
+                        val gcs = GCSCredential(cred)
+                        val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                        getInputFiles(sync, outputDirectory, prefix)
+                    }
+
+                    "adls" -> {
+                        val adls = ADLSCredential(cred)
+                        val sync = ADLSSync(
+                            adls.storageAccount,
+                            adls.containerName,
+                            logger,
+                            adls.tenantId,
+                            adls.clientId,
+                            adls.clientSecret,
+                        )
+                        getInputFiles(sync, outputDirectory, prefix)
+                    }
+
+                    else -> {
+                        logger.warn { "Unknown source ${cred.authType} -- skipping." }
+                        listOf()
+                    }
                 }
-                "gcs" -> {
-                    val gcs = GCSCredential(cred)
-                    val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                    getInputFiles(sync, outputDirectory, prefix)
-                }
-                "adls" -> {
-                    val adls = ADLSCredential(cred)
-                    val sync = ADLSSync(adls.storageAccount, adls.containerName, logger, adls.tenantId, adls.clientId, adls.clientSecret)
-                    getInputFiles(sync, outputDirectory, prefix)
-                }
-                else -> {
-                    logger.warn { "Unknown source ${cred.authType} -- skipping." }
-                    listOf()
-                }
+            } else {
+                val sync = getBackingStore()
+                getInputFiles(sync, outputDirectory, prefix)
             }
         }
     }
@@ -627,6 +660,7 @@ object Utils {
 
     /**
      * Upload the provided output file to the object store defined by the credentials available.
+     * Note: if no credentials are provided, the default (in-tenant) object store will be used.
      *
      * @param outputFile path and filename of the file to upload
      * @param prefix (path / directory) where the file should be uploaded in object store
@@ -637,34 +671,40 @@ object Utils {
         prefix: String? = null,
         key: String? = null,
     ) {
-        val contents = Paths.get("/tmp", "credentials", "success", "result-0.json").readText()
-        val cred = MAPPER.readValue<Credential>(contents)
-        val sync: ObjectStorageSyncer? = when (cred.authType) {
-            "s3" -> {
-                val s3 = S3Credential(cred)
-                S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-            }
+        val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
+        val sync: ObjectStorageSyncer? = if (credFile.exists()) {
+            val contents = credFile.readText()
+            val cred = MAPPER.readValue<Credential>(contents)
+            when (cred.authType) {
+                "s3" -> {
+                    val s3 = S3Credential(cred)
+                    S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                }
 
-            "gcs" -> {
-                val gcs = GCSCredential(cred)
-                GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-            }
+                "gcs" -> {
+                    val gcs = GCSCredential(cred)
+                    GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                }
 
-            "adls" -> {
-                val adls = ADLSCredential(cred)
-                ADLSSync(
-                    adls.storageAccount,
-                    adls.containerName,
-                    logger,
-                    adls.tenantId,
-                    adls.clientId,
-                    adls.clientSecret,
-                )
+                "adls" -> {
+                    val adls = ADLSCredential(cred)
+                    ADLSSync(
+                        adls.storageAccount,
+                        adls.containerName,
+                        logger,
+                        adls.tenantId,
+                        adls.clientId,
+                        adls.clientSecret,
+                    )
+                }
+
+                else -> {
+                    logger.warn { "Unknown target ${cred.authType} -- skipping." }
+                    null
+                }
             }
-            else -> {
-                logger.warn { "Unknown target ${cred.authType} -- skipping." }
-                null
-            }
+        } else {
+            getBackingStore()
         }
         sync?.let { uploadOutputFile(it, outputFile, prefix, key) } ?: {
             throw IllegalStateException("No valid target to upload output file found.")

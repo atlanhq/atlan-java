@@ -46,6 +46,10 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Dashboard in which this field is used. */
+    @Attribute
+    ILookerDashboard dashboard;
+
     /** Explore in which this field exists. */
     @Attribute
     ILookerExplore explore;
@@ -65,6 +69,14 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** Look in which this field is used. */
+    @Attribute
+    ILookerLook look;
+
+    /** Unique name of the dashboard in which this field is used. */
+    @Attribute
+    String lookerDashboardQualifiedName;
+
     /** Unique name of the Explore in which this field exists. */
     @Attribute
     String lookerExploreQualifiedName;
@@ -72,6 +84,14 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /** Deprecated. */
     @Attribute
     String lookerFieldDataType;
+
+    /** Unique name of the look in which this field is used. */
+    @Attribute
+    String lookerLookQualifiedName;
+
+    /** Unique name of the tile in which this field is used. */
+    @Attribute
+    String lookerTileQualifiedName;
 
     /** Deprecated. */
     @Attribute
@@ -115,6 +135,10 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /** Deprecated. */
     @Attribute
     String sourceDefinition;
+
+    /** Tile in which this field is used. */
+    @Attribute
+    ILookerTile tile;
 
     /** View in which this field exists. */
     @Attribute

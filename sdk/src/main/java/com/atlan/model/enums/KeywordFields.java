@@ -456,8 +456,10 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_CATEGORY("dataCategory"),
     /** Unique identifier of the asset associated with this data contract. */
     DATA_CONTRACT_ASSET_GUID("dataContractAssetGuid"),
-    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    /** (Deprecated) Replaced by dataContractSpec attribute. */
     DATA_CONTRACT_JSON("dataContractJson"),
+    /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
+    DATA_CONTRACT_SPEC("dataContractSpec"),
     /** Search DSL used to define which assets are part of this data product. */
     DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
     /** Playbook filter to define which assets are part of this data product. */
@@ -726,10 +728,16 @@ public enum KeywordFields implements AtlanSearchableField {
     LONG_DESCRIPTION("longDescription"),
     /** Raw SQL query string. */
     LONG_RAW_QUERY("longRawQuery"),
+    /** Unique name of the dashboard in which this field is used. */
+    LOOKER_DASHBOARD_QUALIFIED_NAME("lookerDashboardQualifiedName"),
     /** Unique name of the Explore in which this field exists. */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName"),
     /** Deprecated. */
     LOOKER_FIELD_DATA_TYPE("lookerFieldDataType"),
+    /** Unique name of the look in which this field is used. */
+    LOOKER_LOOK_QUALIFIED_NAME("lookerLookQualifiedName"),
+    /** Unique name of the tile in which this field is used. */
+    LOOKER_TILE_QUALIFIED_NAME("lookerTileQualifiedName"),
     /** File name of this view. */
     LOOKER_VIEW_FILE_NAME("lookerViewFileName"),
     /** File path of this view within the project. */
@@ -1346,6 +1354,20 @@ public enum KeywordFields implements AtlanSearchableField {
     SUB_DATA_TYPE("subDataType"),
     /** Subtype of this asset. */
     SUB_TYPE("subType"),
+    /** Data stored for the chart in key value pairs. */
+    SUPERSET_CHART_FORM_DATA("supersetChartFormData"),
+    /** Name of the user who changed the dashboard. */
+    SUPERSET_DASHBOARD_CHANGED_BY_NAME("supersetDashboardChangedByName.keyword"),
+    /** URL of the user profile that changed the dashboard */
+    SUPERSET_DASHBOARD_CHANGED_BY_URL("supersetDashboardChangedByURL"),
+    /** Unique name of the dashboard in which this asset exists. */
+    SUPERSET_DASHBOARD_QUALIFIED_NAME("supersetDashboardQualifiedName"),
+    /** URL for the dashboard thumbnail image in superset. */
+    SUPERSET_DASHBOARD_THUMBNAIL_URL("supersetDashboardThumbnailURL"),
+    /** Name of the datasource for the dataset. */
+    SUPERSET_DATASET_DATASOURCE_NAME("supersetDatasetDatasourceName.keyword"),
+    /** Type of the dataset in superset. */
+    SUPERSET_DATASET_TYPE("supersetDatasetType"),
     /** Unique name of the top-level domain in which this asset exists. */
     SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName"),
     /** All super types of an asset. */

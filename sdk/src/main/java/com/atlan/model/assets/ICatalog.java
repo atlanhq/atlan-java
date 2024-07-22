@@ -536,6 +536,15 @@ public interface ICatalog {
             case SparkJob.TYPE_NAME:
                 ref = SparkJob.refByQualifiedName(qualifiedName);
                 break;
+            case SupersetChart.TYPE_NAME:
+                ref = SupersetChart.refByQualifiedName(qualifiedName);
+                break;
+            case SupersetDashboard.TYPE_NAME:
+                ref = SupersetDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case SupersetDataset.TYPE_NAME:
+                ref = SupersetDataset.refByQualifiedName(qualifiedName);
+                break;
             case Table.TYPE_NAME:
                 ref = Table.refByQualifiedName(qualifiedName);
                 break;

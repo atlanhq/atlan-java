@@ -42,7 +42,7 @@ public interface IDataContract {
     /** Asset this contract controls or will control. */
     RelationField DATA_CONTRACT_ASSET_LATEST = new RelationField("dataContractAssetLatest");
 
-    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    /** (Deprecated) Replaced by dataContractSpec attribute. */
     KeywordField DATA_CONTRACT_JSON = new KeywordField("dataContractJson", "dataContractJson");
 
     /** Data contract instance that holds the next version of this contract. */
@@ -50,6 +50,9 @@ public interface IDataContract {
 
     /** Data contract instance that holds the previous version of this contract. */
     RelationField DATA_CONTRACT_PREVIOUS_VERSION = new RelationField("dataContractPreviousVersion");
+
+    /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
+    KeywordField DATA_CONTRACT_SPEC = new KeywordField("dataContractSpec", "dataContractSpec");
 
     /** Version of the contract. */
     NumericField DATA_CONTRACT_VERSION = new NumericField("dataContractVersion", "dataContractVersion");
@@ -306,7 +309,7 @@ public interface IDataContract {
     /** Asset this contract controls or will control. */
     IAsset getDataContractAssetLatest();
 
-    /** Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number). */
+    /** (Deprecated) Replaced by dataContractSpec attribute. */
     String getDataContractJson();
 
     /** Latest version of the data contract (in any status) for this asset. */
@@ -320,6 +323,9 @@ public interface IDataContract {
 
     /** Data contract instance that holds the previous version of this contract. */
     IDataContract getDataContractPreviousVersion();
+
+    /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
+    String getDataContractSpec();
 
     /** Version of the contract. */
     Long getDataContractVersion();

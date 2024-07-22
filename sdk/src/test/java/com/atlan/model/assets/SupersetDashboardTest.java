@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataContractTest {
+public class SupersetDashboardTest {
 
-    private static final DataContract full = DataContract._internal()
+    private static final SupersetDashboard full = SupersetDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,8 @@ public class DataContractTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .supersetDashboardId(123456789L)
+            .supersetDashboardQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -394,28 +396,30 @@ public class DataContractTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataContractAssetCertified(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractAssetGuid("String0")
-            .dataContractAssetLatest(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractJson("String0")
-            .dataContractNextVersion(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractPreviousVersion(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataContractSpec("String0")
-            .dataContractVersion(123456789L)
+            .supersetChart(SupersetChart.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .supersetChart(SupersetChart.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .supersetDashboardChangedByName("String0")
+            .supersetDashboardChangedByURL("String0")
+            .supersetDashboardChartCount(123456789L)
+            .supersetDashboardIsManagedExternally(true)
+            .supersetDashboardIsPublished(true)
+            .supersetDashboardThumbnailURL("String0")
+            .supersetDataset(SupersetDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .supersetDataset(SupersetDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataContract frodo;
+    private static SupersetDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"DataContract.builderEquivalency"})
+    @Test(groups = {"SupersetDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataContract.serialize"},
-            dependsOnGroups = {"DataContract.builderEquivalency"})
+            groups = {"SupersetDashboard.serialize"},
+            dependsOnGroups = {"SupersetDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -424,17 +428,17 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.deserialize"},
-            dependsOnGroups = {"DataContract.serialize"})
+            groups = {"SupersetDashboard.deserialize"},
+            dependsOnGroups = {"SupersetDashboard.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataContract.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, SupersetDashboard.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SupersetDashboard.equivalency"},
+            dependsOnGroups = {"SupersetDashboard.serialize", "SupersetDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -443,8 +447,8 @@ public class DataContractTest {
     }
 
     @Test(
-            groups = {"DataContract.equivalency"},
-            dependsOnGroups = {"DataContract.serialize", "DataContract.deserialize"})
+            groups = {"SupersetDashboard.equivalency"},
+            dependsOnGroups = {"SupersetDashboard.serialize", "SupersetDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
