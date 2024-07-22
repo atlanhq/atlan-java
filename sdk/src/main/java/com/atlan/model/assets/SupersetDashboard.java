@@ -502,6 +502,17 @@ public class SupersetDashboard extends Asset
     }
 
     /**
+     * Generate a unique Preset workspace name.
+     *
+     * @param connectionQualifiedName unique name of the connection
+     * @param name for the workspace
+     * @return a unique name for the workspace
+     */
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
+    }
+
+    /**
      * Remove the system description from a SupersetDashboard.
      *
      * @param qualifiedName of the SupersetDashboard
