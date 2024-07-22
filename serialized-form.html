@@ -9617,7 +9617,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>dataContractJson</h4>
 <pre>java.lang.String dataContractJson</pre>
-<div class="block">Actual content of the contract in JSON string format. Any changes to this string should create a new instance (with new sequential version number).</div>
+<div class="block">(Deprecated) Replaced by dataContractSpec attribute.</div>
 </li>
 <li class="blockList">
 <h4>dataContractNextVersion</h4>
@@ -9628,6 +9628,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dataContractPreviousVersion</h4>
 <pre><a href="com/atlan/model/assets/IDataContract.html" title="interface in com.atlan.model.assets">IDataContract</a> dataContractPreviousVersion</pre>
 <div class="block">Data contract instance that holds the previous version of this contract.</div>
+</li>
+<li class="blockList">
+<h4>dataContractSpec</h4>
+<pre>java.lang.String dataContractSpec</pre>
+<div class="block">Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number).</div>
 </li>
 <li class="blockList">
 <h4>dataContractVersion</h4>
@@ -14148,6 +14153,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>fields</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILookerField.html" title="interface in com.atlan.model.assets">ILookerField</a>&gt; fields</pre>
+<div class="block">Fields that are used in this dashboard.</div>
+</li>
+<li class="blockList">
 <h4>folder</h4>
 <pre><a href="com/atlan/model/assets/ILookerFolder.html" title="interface in com.atlan.model.assets">ILookerFolder</a> folder</pre>
 <div class="block">Folder in which the dashboard exists.</div>
@@ -14340,6 +14350,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>dashboard</h4>
+<pre><a href="com/atlan/model/assets/ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a> dashboard</pre>
+<div class="block">Dashboard in which this field is used.</div>
+</li>
+<li class="blockList">
 <h4>explore</h4>
 <pre><a href="com/atlan/model/assets/ILookerExplore.html" title="interface in com.atlan.model.assets">ILookerExplore</a> explore</pre>
 <div class="block">Explore in which this field exists.</div>
@@ -14360,6 +14375,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>look</h4>
+<pre><a href="com/atlan/model/assets/ILookerLook.html" title="interface in com.atlan.model.assets">ILookerLook</a> look</pre>
+<div class="block">Look in which this field is used.</div>
+</li>
+<li class="blockList">
+<h4>lookerDashboardQualifiedName</h4>
+<pre>java.lang.String lookerDashboardQualifiedName</pre>
+<div class="block">Unique name of the dashboard in which this field is used.</div>
+</li>
+<li class="blockList">
 <h4>lookerExploreQualifiedName</h4>
 <pre>java.lang.String lookerExploreQualifiedName</pre>
 <div class="block">Unique name of the Explore in which this field exists.</div>
@@ -14368,6 +14393,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>lookerFieldDataType</h4>
 <pre>java.lang.String lookerFieldDataType</pre>
 <div class="block">Deprecated.</div>
+</li>
+<li class="blockList">
+<h4>lookerLookQualifiedName</h4>
+<pre>java.lang.String lookerLookQualifiedName</pre>
+<div class="block">Unique name of the look in which this field is used.</div>
+</li>
+<li class="blockList">
+<h4>lookerTileQualifiedName</h4>
+<pre>java.lang.String lookerTileQualifiedName</pre>
+<div class="block">Unique name of the tile in which this field is used.</div>
 </li>
 <li class="blockList">
 <h4>lookerTimesUsed</h4>
@@ -14418,6 +14453,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>sourceDefinition</h4>
 <pre>java.lang.String sourceDefinition</pre>
 <div class="block">Deprecated.</div>
+</li>
+<li class="blockList">
+<h4>tile</h4>
+<pre><a href="com/atlan/model/assets/ILookerTile.html" title="interface in com.atlan.model.assets">ILookerTile</a> tile</pre>
+<div class="block">Tile in which this field is used.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -14540,6 +14580,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dashboard</h4>
 <pre><a href="com/atlan/model/assets/ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a> dashboard</pre>
 <div class="block">Dashboard in which this Look is used.</div>
+</li>
+<li class="blockList">
+<h4>fields</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILookerField.html" title="interface in com.atlan.model.assets">ILookerField</a>&gt; fields</pre>
+<div class="block">Fields that are used in this look.</div>
 </li>
 <li class="blockList">
 <h4>folder</h4>
@@ -14909,6 +14954,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dashboard</h4>
 <pre><a href="com/atlan/model/assets/ILookerDashboard.html" title="interface in com.atlan.model.assets">ILookerDashboard</a> dashboard</pre>
 <div class="block">Dashboard in which this tile exists.</div>
+</li>
+<li class="blockList">
+<h4>fields</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILookerField.html" title="interface in com.atlan.model.assets">ILookerField</a>&gt; fields</pre>
+<div class="block">Fields that are used in the tile.</div>
 </li>
 <li class="blockList">
 <h4>inputToAirflowTasks</h4>
@@ -25191,6 +25241,264 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>typeName</h4>
 <pre>java.lang.String typeName</pre>
 <div class="block">Fixed typeName for StakeholderTitles.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.SupersetChart">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/SupersetChart.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SupersetChart</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>supersetChartDescriptionMarkdown</h4>
+<pre>java.lang.String supersetChartDescriptionMarkdown</pre>
+<div class="block">Description markdown of the chart.</div>
+</li>
+<li class="blockList">
+<h4>supersetChartFormData</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; supersetChartFormData</pre>
+<div class="block">Data stored for the chart in key value pairs.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboard</h4>
+<pre><a href="com/atlan/model/assets/ISupersetDashboard.html" title="interface in com.atlan.model.assets">ISupersetDashboard</a> supersetDashboard</pre>
+<div class="block">SupersetDashboard asset containing this SupersetChart.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardId</h4>
+<pre>java.lang.Long supersetDashboardId</pre>
+<div class="block">Identifier of the dashboard in which this asset exists, in Superset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardQualifiedName</h4>
+<pre>java.lang.String supersetDashboardQualifiedName</pre>
+<div class="block">Unique name of the dashboard in which this asset exists.</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for SupersetCharts.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.SupersetDashboard">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/SupersetDashboard.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SupersetDashboard</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>supersetCharts</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISupersetChart.html" title="interface in com.atlan.model.assets">ISupersetChart</a>&gt; supersetCharts</pre>
+<div class="block">SupersetCharts assets contained within this SupersetDashboard.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardChangedByName</h4>
+<pre>java.lang.String supersetDashboardChangedByName</pre>
+<div class="block">Name of the user who changed the dashboard.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardChangedByURL</h4>
+<pre>java.lang.String supersetDashboardChangedByURL</pre>
+<div class="block">URL of the user profile that changed the dashboard</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardChartCount</h4>
+<pre>java.lang.Long supersetDashboardChartCount</pre>
+<div class="block">Count of charts present in the dashboard.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardId</h4>
+<pre>java.lang.Long supersetDashboardId</pre>
+<div class="block">Identifier of the dashboard in which this asset exists, in Superset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardIsManagedExternally</h4>
+<pre>java.lang.Boolean supersetDashboardIsManagedExternally</pre>
+<div class="block">Whether the dashboard is manager externally (true) or not (false).</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardIsPublished</h4>
+<pre>java.lang.Boolean supersetDashboardIsPublished</pre>
+<div class="block">Whether the dashboard is published (true) or not (false).</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardQualifiedName</h4>
+<pre>java.lang.String supersetDashboardQualifiedName</pre>
+<div class="block">Unique name of the dashboard in which this asset exists.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardThumbnailURL</h4>
+<pre>java.lang.String supersetDashboardThumbnailURL</pre>
+<div class="block">URL for the dashboard thumbnail image in superset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDatasets</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISupersetDataset.html" title="interface in com.atlan.model.assets">ISupersetDataset</a>&gt; supersetDatasets</pre>
+<div class="block">SupersetDatasets assets contained within this SupersetDashboard.</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for SupersetDashboards.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.atlan.model.assets.SupersetDataset">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/SupersetDataset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SupersetDataset</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboard</h4>
+<pre><a href="com/atlan/model/assets/ISupersetDashboard.html" title="interface in com.atlan.model.assets">ISupersetDashboard</a> supersetDashboard</pre>
+<div class="block">SupersetDashboard asset containing this SupersetDataset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardId</h4>
+<pre>java.lang.Long supersetDashboardId</pre>
+<div class="block">Identifier of the dashboard in which this asset exists, in Superset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDashboardQualifiedName</h4>
+<pre>java.lang.String supersetDashboardQualifiedName</pre>
+<div class="block">Unique name of the dashboard in which this asset exists.</div>
+</li>
+<li class="blockList">
+<h4>supersetDatasetDatasourceName</h4>
+<pre>java.lang.String supersetDatasetDatasourceName</pre>
+<div class="block">Name of the datasource for the dataset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDatasetId</h4>
+<pre>java.lang.Long supersetDatasetId</pre>
+<div class="block">Id of the dataset in superset.</div>
+</li>
+<li class="blockList">
+<h4>supersetDatasetType</h4>
+<pre>java.lang.String supersetDatasetType</pre>
+<div class="block">Type of the dataset in superset.</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for SupersetDatasets.</div>
 </li>
 </ul>
 </li>
