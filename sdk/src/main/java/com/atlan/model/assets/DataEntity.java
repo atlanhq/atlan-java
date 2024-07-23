@@ -11,6 +11,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -125,177 +126,177 @@ public  class DataEntity extends Asset implements IDataEntity, IDataModeling, IC
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataAttribute> dataAttributes;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataEntityFullyQualifiedName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataEntityId;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataEntitySubjectArea;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelDomain;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityQualifiedName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEnvironment;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelId;
 
     /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelNamespace;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelQualifiedName;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<String> dataModelVersionQualifiedNames;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataModelVersion> dataModelVersions;
 
     /** Tasks to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
     /** Processes to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> inputToSparkJobs;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IGlossaryTerm> mappedGlossaryTerms;
 
     /** Tasks from which this asset is output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** Processes from which this asset is produced as output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataEntity> sourceDataEntities;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataEntity> sourceRelatedDataEntities;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataEntity> targetDataEntities;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataEntity> targetRelatedDataEntities;
 
     /**
@@ -629,6 +630,61 @@ public  class DataEntity extends Asset implements IDataEntity, IDataModeling, IC
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataEntity.
+     *
+     * @param name of the DataEntity
+     * @param datamodelversion in which the DatraEntity should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the DataEntity, as a builder
+     * @throws InvalidRequestException if the datamodelversion provided is without a qualifiedName
+     */
+    public static DataEntityBuilder<?, ?> creator(String name, DataModelVersion datamodelversion)
+        throws InvalidRequestException {
+        validateRelationship(
+            DataModelVersion.TYPE_NAME,
+            Map.of(
+                "connectionQualifiedName", datamodelversion.getConnectionQualifiedName(),
+                "qualifiedName", datamodelversion.getQualifiedName()));
+        return creator(name, datamodelversion.getConnectionQualifiedName(), datamodelversion.getQualifiedName())
+            .dataModelVersion(datamodelversion.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataEntity.
+     *
+     * @param name of the DataEntity
+     * @param dataModelVersionQualifiedName unique name of the datamodelversion in which the dataentity exists
+     * @return the minimal object necessary to create the dataentity, as a builder
+     */
+    public static DataEntityBuilder<?, ?> creator(String name, String dataModelVersionQualifiedName) {
+        String dataModelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dataModelVersionQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dataModelQualifiedName);
+        return creator(name, connectionQualifiedName, dataModelVersionQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataEntity.
+     *
+     * @param name of the DataEntity
+     * @param connectionQualifiedName unique name of the connection in which to create the DataEntity
+     * @param dataModelVersionQualifiedName unique name of the DataModelVersion in which to create the DataEntity
+     * @return the minimal object necessary to create the dataentity, as a builder
+     */
+    public static DataEntityBuilder<?, ?> creator(
+        String name, String connectionQualifiedName, String dataModelVersionQualifiedName) {
+//                AtlanConnectorType connectorType =
+//         Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return DataEntity._internal()
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(dataModelVersionQualifiedName + "/" + name)
+            .connectorType(AtlanConnectorType.DATA_MODELING)
+            .dataModelVersionQualifiedName(dataModelVersionQualifiedName)
+            .dataModelVersion(DataModelVersion.refByQualifiedName(dataModelVersionQualifiedName))
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

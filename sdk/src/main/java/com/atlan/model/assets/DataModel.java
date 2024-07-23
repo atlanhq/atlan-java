@@ -11,6 +11,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -121,149 +122,149 @@ public  class DataModel extends Asset implements IDataModel, IDataModeling, ICat
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataEntityId;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelDomain;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityQualifiedName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEnvironment;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelId;
 
     /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelNamespace;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelOwningApplicationSEALId;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelQualifiedName;
 
     /** TBC */
     @Attribute
     @Date
-    
-    
+
+
     Long dataModelRefreshTimestamp;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     DataModelTool dataModelTool;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     DataModelType dataModelType;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<String> dataModelVersionQualifiedNames;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataModelVersion> dataModelVersions;
 
     /** Tasks to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
     /** Processes to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> inputToSparkJobs;
 
     /** Tasks from which this asset is output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** Processes from which this asset is produced as output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
@@ -600,6 +601,22 @@ public  class DataModel extends Asset implements IDataModel, IDataModeling, ICat
     }
 
     /**
+     * Builds the minimal object necessary to create a DataModeling connections DataModel.
+     *
+     * @param name of the DataModel
+     * @param connectionQualifiedName unique name of the connection through which the DataModel is accessible
+     * @return the minimal object necessary to create the datamodel, as a builder
+     */
+    public static DataModelBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return DataModel._internal()
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
+            .name(name)
+            .connectionQualifiedName(connectionQualifiedName)
+            .connectorType(AtlanConnectorType.DATA_MODELING);
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataModel.
      *
      * @param qualifiedName of the DataModel
@@ -627,6 +644,17 @@ public  class DataModel extends Asset implements IDataModel, IDataModeling, ICat
             "name", this.getName()
         ));
         return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Generate a unique DataModel workspace name.
+     *
+     * @param connectionQualifiedName unique name of the connection
+     * @param name for the DataModel
+     * @return a unique name for the DataModel
+     */
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

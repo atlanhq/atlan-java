@@ -11,6 +11,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -120,128 +121,128 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IDataEntity> dataEntities;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataEntityId;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     IDataModel dataModel;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelDomain;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEntityQualifiedName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelEnvironment;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelId;
 
     /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelName;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelNamespace;
 
     /** TBC */
     @Attribute
-    
-    
-    
+
+
+
     String dataModelQualifiedName;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<String> dataModelVersionQualifiedNames;
 
     /** Tasks to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
     /** Processes to which this asset provides input. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> inputToSparkJobs;
 
     /** Tasks from which this asset is output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** Processes from which this asset is produced as output. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
@@ -575,6 +576,60 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataModelVersion.
+     *
+     * @param name of the DataModelVersion
+     * @param datamodel in which the DataModelVersion should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the DataModelVersion, as a builder
+     * @throws InvalidRequestException if the datamodel provided is without a qualifiedName
+     */
+    public static DataModelVersionBuilder<?, ?> creator(String name, DataModel datamodel)
+        throws InvalidRequestException {
+        validateRelationship(
+            DataModel.TYPE_NAME,
+            Map.of(
+                "connectionQualifiedName", datamodel.getConnectionQualifiedName(),
+                "qualifiedName", datamodel.getQualifiedName()));
+        return creator(name, datamodel.getConnectionQualifiedName(), datamodel.getQualifiedName())
+            .dataModel(datamodel.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataModelVersion.
+     *
+     * @param name of the DataModelVersion
+     * @param dataModelQualifiedName unique name of the datamodel in which the datamodelversion exists
+     * @return the minimal object necessary to create the datamodelversion, as a builder
+     */
+    public static DataModelVersionBuilder<?, ?> creator(String name, String dataModelQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dataModelQualifiedName);
+        return creator(name, connectionQualifiedName, dataModelQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataModeling DataModelVersion.
+     *
+     * @param name of the DataModelVersion
+     * @param connectionQualifiedName unique name of the connection in which to create the DataModelVersion
+     * @param dataModelQualifiedName unique name of the DataModel in which to create the DataModelVersion
+     * @return the minimal object necessary to create the datamodelversion, as a builder
+     */
+    public static DataModelVersionBuilder<?, ?> creator(
+        String name, String connectionQualifiedName, String dataModelQualifiedName) {
+//                AtlanConnectorType connectorType =
+//         Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return DataModelVersion._internal()
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(dataModelQualifiedName + "/" + name)
+            .connectorType(AtlanConnectorType.DATA_MODELING)
+            .dataModelQualifiedName(dataModelQualifiedName)
+            .dataModel(DataModel.refByQualifiedName(dataModelQualifiedName))
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
