@@ -49,7 +49,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
         SupersetDashboard toCreate = SupersetDashboard.creator(DASHBOARD_NAME, connection.getQualifiedName())
                 .build();
         AssetMutationResponse response = toCreate.save();
-        Asset one = response.getUpdatedAssets().get(0);
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof SupersetDashboard);
         dashboard = (SupersetDashboard) one;
         assertNotNull(dashboard.getGuid());
