@@ -140,6 +140,8 @@ public enum NumericFields implements AtlanSearchableField {
     DATASET_COUNT("datasetCount"),
     /** Version of the contract. */
     DATA_CONTRACT_VERSION("dataContractVersion"),
+    /** TBC */
+    DATA_MODEL_REFRESH_TIMESTAMP("dataModelRefreshTimestamp"),
     /** Timestamp when the score of this data product was last updated. */
     DATA_PRODUCT_SCORE_UPDATED_AT("dataProductScoreUpdatedAt"),
     /** Score of this data product. */
