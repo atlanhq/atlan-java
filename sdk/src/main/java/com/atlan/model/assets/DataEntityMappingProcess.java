@@ -117,65 +117,65 @@ public  class DataEntityMappingProcess extends Asset implements IDataEntityMappi
 
     /** Tasks that exist within this process. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IAirflowTask> airflowTasks;
 
     /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
-    
-    
-    
+
+
+
     String ast;
 
     /** Code that ran within the process. */
     @Attribute
-    
-    
-    
+
+
+
     String code;
 
     /** Processes that detail column-level lineage for this process. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<IColumnProcess> columnProcesses;
 
     /** Assets that are inputs to this process. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ICatalog> inputs;
 
     /** Matillion component that contains the logic for this lineage process. */
     @Attribute
-    
-    
-    
+
+
+
     IMatillionComponent matillionComponent;
 
     /** Assets that are outputs from this process. */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ICatalog> outputs;
 
     /** TBC */
     @Attribute
-    
+
     @Singular
-    
+
     SortedSet<ISparkJob> sparkJobs;
 
     /** SQL query that ran to produce the outputs. */
     @Attribute
-    
-    
-    
+
+
+
     String sql;
 
     /**
@@ -509,6 +509,39 @@ public  class DataEntityMappingProcess extends Asset implements IDataEntityMappi
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataEntityMappingProcess
+     *
+     * @param sourceQualifiedName unique name of the source DataEntity
+     * @param targetQualifiedName unique name of the target DataEntity
+     * @param connectionQualifiedName unique name of the connection in which to create the DataEntityMappingProcess
+     * @return the minimal object necessary to create the DataEntityMappingProcess, as a builder
+     */
+    public static DataEntityMappingProcessBuilder<?, ?> creator(String sourceQualifiedName, String targetQualifiedName, String connectionQualifiedName){
+        List<ICatalog> inputs = Collections.singletonList(DataEntity.refByQualifiedName(sourceQualifiedName));
+        List<ICatalog> outputs = Collections.singletonList(DataEntity.refByQualifiedName(targetQualifiedName));
+        return DataEntityMappingProcess._internal()
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .qualifiedName(targetQualifiedName)
+            .name(generateProcessName(sourceQualifiedName, targetQualifiedName))
+            .connectorType(AtlanConnectorType.DATA_MODELING)
+            .connectionQualifiedName(connectionQualifiedName)
+            .inputs(inputs)
+            .outputs(outputs);
+    }
+
+    /**
+     * Builds the minimal string name for DataEntityMappingProcess name using the source and target QualifiedName.
+     *
+     * @param sourceQualifiedName
+     * @param targetQualifiedName
+     * @return the name for DataEntityMappingProcess
+     */
+    public static String generateProcessName(String sourceQualifiedName, String targetQualifiedName){
+        return sourceQualifiedName.substring(sourceQualifiedName.lastIndexOf(('/') + 1)) + ">" + targetQualifiedName.substring(targetQualifiedName.lastIndexOf(('/') + 1));
+
     }
 
     /**
