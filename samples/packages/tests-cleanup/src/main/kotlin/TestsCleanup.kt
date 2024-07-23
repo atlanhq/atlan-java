@@ -162,8 +162,9 @@ object TestsCleanup {
             .map { TypeDefDetails(it.displayName, it.name) }
             .toList()
         list.forEach { cm ->
+            val badgeQNPrefix = "badges/global/${cm.internalName}."
             val badges = Badge.select()
-                .where(Badge.QUALIFIED_NAME.startsWith(Badge.generateQualifiedName(cm.name, "")))
+                .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
                 .stream()
                 .map { it.guid }
                 .toList()
