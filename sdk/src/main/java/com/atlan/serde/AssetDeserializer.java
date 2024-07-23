@@ -239,11 +239,10 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             // Translate these IDs in to human-readable names
             for (JsonNode element : classificationNames) {
                 String tagId = element.asText();
-                String name;
+                String name = null;
                 try {
                     name = client.getAtlanTagCache().getNameForId(tagId);
                 } catch (NotFoundException e) {
-                    name = Serde.DELETED_AUDIT_OBJECT;
                     log.debug(
                             "Unable to find tag with ID {}, deserializing as {}.",
                             tagId,
@@ -251,6 +250,12 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                             e);
                 } catch (AtlanException e) {
                     throw new IOException(e);
+                }
+                if (name == null) {
+                    // Note: the name could be null here either because it was not found in the
+                    // first place (NotFoundException), or because it is already tracked as deleted
+                    // (in which case it'll come back from getNameForId as null rather than a NFE).
+                    name = Serde.DELETED_AUDIT_OBJECT;
                 }
                 clsNames.add(name);
             }
