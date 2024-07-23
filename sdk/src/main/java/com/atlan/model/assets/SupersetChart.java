@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -429,6 +430,60 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset chart.
+     *
+     * @param name of the chart
+     * @param dashboard in which the chart should be created, which must have at least
+     *                   a qualifiedName
+     * @return the minimal request necessary to create the chart, as a builder
+     * @throws InvalidRequestException if the dashboard provided is without a qualifiedName
+     */
+    public static SupersetChartBuilder<?, ?> creator(String name, SupersetDashboard dashboard)
+            throws InvalidRequestException {
+        validateRelationship(
+                SupersetDashboard.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", dashboard.getConnectionQualifiedName(),
+                        "qualifiedName", dashboard.getQualifiedName()));
+        return creator(name, dashboard.getConnectionQualifiedName(), dashboard.getQualifiedName())
+                .supersetDashboard(dashboard.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset chart.
+     *
+     * @param name of the chart
+     * @param dashboardQualifiedName unique name of the dashboard in which the chart exists
+     * @return the minimal object necessary to create the chart, as a builder
+     */
+    public static SupersetChartBuilder<?, ?> creator(String name, String dashboardQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(dashboardQualifiedName);
+        return creator(name, connectionQualifiedName, dashboardQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Superset chart.
+     *
+     * @param name of the chart
+     * @param connectionQualifiedName unique name of the connection in which to create the SupersetChart
+     * @param dashboardQualifiedName unique name of the SupersetDashboard in which to create the SupersetChart
+     * @return the minimal object necessary to create the chart, as a builder
+     */
+    public static SupersetChartBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String dashboardQualifiedName) {
+        //        AtlanConnectorType connectorType =
+        // Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return SupersetChart._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(dashboardQualifiedName + "/" + name)
+                .connectorType(AtlanConnectorType.SUPERSET)
+                .supersetDashboardQualifiedName(dashboardQualifiedName)
+                .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

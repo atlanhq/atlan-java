@@ -105,6 +105,10 @@ hidden const PRESET: Type = new {
   value = "preset"
   category = "bi"
 }
+hidden const SUPERSET: Type = new {
+  value = "superset"
+  category = "bi"
+}
 hidden const API: Type = new {
   value = "api"
   category = "API"
