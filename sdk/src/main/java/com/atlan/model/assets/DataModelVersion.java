@@ -1,115 +1,44 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022- Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.SortOptions;
-import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
-import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.admin.ApiToken;
-import com.atlan.model.core.AssetDeletionResponse;
 import com.atlan.model.core.AssetFilter;
-import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.AssetResponse;
-import com.atlan.model.core.AtlanTag;
-import com.atlan.model.core.ConnectionCreationResponse;
-import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanDeleteType;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.AtlanPolicyAction;
-import com.atlan.model.enums.AuthPolicyCategory;
-import com.atlan.model.enums.AuthPolicyResourceCategory;
-import com.atlan.model.enums.AuthPolicyType;
-import com.atlan.model.enums.PersonaMetadataAction;
-import com.atlan.model.enums.PersonaGlossaryAction;
-import com.atlan.model.enums.PurposeMetadataAction;
-import com.atlan.model.enums.PersonaDomainAction;
-import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
-import com.atlan.model.fields.AtlanField;
-import com.atlan.model.mesh.DataProductAssetsDSL;
-import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.search.FluentSearch;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
-import com.atlan.model.assets.IDataEntity;
-import com.atlan.model.assets.IDataModel;
-import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.assets.ISparkJob;
-import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.assets.ISparkJob;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.util.StringUtils;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.util.QueryFactory;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
-import com.atlan.model.assets.Attribute;
-import com.atlan.model.assets.Date;
-import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.IGlossaryTerm;
-import com.atlan.model.assets.IDataModeling;
-import com.atlan.model.assets.ICatalog;
-import com.atlan.model.assets.IAsset;
-import com.atlan.model.assets.IReferenceable;
-
-import javax.annotation.processing.Generated;
-
 /**
  * TBC
  */
-@Generated(value="com.atlan.generators.ModelGeneratorV2")
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-
-public  class DataModelVersion extends Asset implements IDataModelVersion, IDataModeling, ICatalog, IAsset, IReferenceable {
+public class DataModelVersion extends Asset
+        implements IDataModelVersion, IDataModeling, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DataModelVersion";
@@ -121,128 +50,82 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
 
     /** TBC */
     @Attribute
-
     @Singular
-
     SortedSet<IDataEntity> dataEntities;
 
     /** TBC */
     @Attribute
-
-
-
     String dataEntityId;
 
     /** TBC */
     @Attribute
-
-
-
     IDataModel dataModel;
 
     /** TBC */
     @Attribute
-
-
-
     String dataModelDomain;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-
-
-
     String dataModelEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
     @Attribute
-
-
-
     String dataModelEntityQualifiedName;
 
     /** TBC */
     @Attribute
-
-
-
     String dataModelEnvironment;
 
     /** TBC */
     @Attribute
-
-
-
     String dataModelId;
 
     /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-
-
-
     String dataModelName;
 
     /** TBC */
     @Attribute
-
-
-
     String dataModelNamespace;
 
     /** TBC */
     @Attribute
-
-
-
     String dataModelQualifiedName;
 
     /** TBC */
     @Attribute
-
     @Singular
-
     SortedSet<String> dataModelVersionQualifiedNames;
 
     /** Tasks to which this asset provides input. */
     @Attribute
-
     @Singular
-
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
     /** Processes to which this asset provides input. */
     @Attribute
-
     @Singular
-
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-
     @Singular
-
     SortedSet<ISparkJob> inputToSparkJobs;
 
     /** Tasks from which this asset is output. */
     @Attribute
-
     @Singular
-
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** Processes from which this asset is produced as output. */
     @Attribute
-
     @Singular
-
     SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
-
     @Singular
-
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
@@ -266,7 +149,7 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
             return refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
         }
         throw new InvalidRequestException(
-            ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
+                ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, TYPE_NAME, "guid, qualifiedName");
     }
 
     /**
@@ -383,9 +266,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      */
     @Deprecated
     public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder()
-            .client(client)
-            .filter(QueryFactory.type(TYPE_NAME));
+        AssetFilter.AssetFilterBuilder builder =
+                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
         if (!includeArchived) {
             builder.filter(QueryFactory.active());
         }
@@ -479,7 +361,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataModelVersion does not exist or the provided GUID is not a DataModelVersion
      */
     @JsonIgnore
-    public static DataModelVersion get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+    public static DataModelVersion get(AtlanClient client, String id, boolean includeRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -551,7 +434,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @deprecated see {@link #get(AtlanClient, String)} instead
      */
     @Deprecated
-    public static DataModelVersion retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+    public static DataModelVersion retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
         return get(client, qualifiedName);
     }
 
@@ -588,14 +472,14 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @throws InvalidRequestException if the datamodel provided is without a qualifiedName
      */
     public static DataModelVersionBuilder<?, ?> creator(String name, DataModel datamodel)
-        throws InvalidRequestException {
+            throws InvalidRequestException {
         validateRelationship(
-            DataModel.TYPE_NAME,
-            Map.of(
-                "connectionQualifiedName", datamodel.getConnectionQualifiedName(),
-                "qualifiedName", datamodel.getQualifiedName()));
+                DataModel.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", datamodel.getConnectionQualifiedName(),
+                        "qualifiedName", datamodel.getQualifiedName()));
         return creator(name, datamodel.getConnectionQualifiedName(), datamodel.getQualifiedName())
-            .dataModel(datamodel.trimToReference());
+                .dataModel(datamodel.trimToReference());
     }
 
     /**
@@ -619,17 +503,17 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the minimal object necessary to create the datamodelversion, as a builder
      */
     public static DataModelVersionBuilder<?, ?> creator(
-        String name, String connectionQualifiedName, String dataModelQualifiedName) {
-//                AtlanConnectorType connectorType =
-//         Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+            String name, String connectionQualifiedName, String dataModelQualifiedName) {
+        //                AtlanConnectorType connectorType =
+        //         Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return DataModelVersion._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .name(name)
-            .qualifiedName(dataModelQualifiedName + "/" + name)
-            .connectorType(AtlanConnectorType.DATA_MODELING)
-            .dataModelQualifiedName(dataModelQualifiedName)
-            .dataModel(DataModel.refByQualifiedName(dataModelQualifiedName))
-            .connectionQualifiedName(connectionQualifiedName);
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(dataModelQualifiedName + "/" + name)
+                .connectorType(AtlanConnectorType.DATA_MODELING)
+                .dataModelQualifiedName(dataModelQualifiedName)
+                .dataModel(DataModel.refByQualifiedName(dataModelQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -655,10 +539,11 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      */
     @Override
     public DataModelVersionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 
@@ -683,7 +568,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataModelVersion removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -708,7 +594,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeUserDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataModelVersion removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -733,7 +620,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataModelVersion removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -746,8 +634,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
+    public static DataModelVersion updateCertificate(
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
@@ -761,9 +649,11 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion updateCertificate(AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+    public static DataModelVersion updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DataModelVersion) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DataModelVersion)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -787,7 +677,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -818,8 +709,10 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @throws AtlanException on any API problems
      */
     public static DataModelVersion updateAnnouncement(
-            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (DataModelVersion) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (DataModelVersion)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -843,7 +736,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the updated DataModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataModelVersion removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
@@ -871,8 +765,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the DataModelVersion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DataModelVersion replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DataModelVersion) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -901,7 +795,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the DataModelVersion that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DataModelVersion appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DataModelVersion) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -930,7 +825,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @return the DataModelVersion that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DataModelVersion removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DataModelVersion removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DataModelVersion) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -986,12 +882,12 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
             boolean restrictLineagePropagation)
             throws AtlanException {
         return appendAtlanTags(
-            Atlan.getDefaultClient(),
-            qualifiedName,
-            atlanTagNames,
-            propagate,
-            removePropagationsOnDelete,
-            restrictLineagePropagation);
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
     }
 
     /**
@@ -1017,13 +913,13 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
             boolean restrictLineagePropagation)
             throws AtlanException {
         return (DataModelVersion) Asset.appendAtlanTags(
-            client,
-            TYPE_NAME,
-            qualifiedName,
-            atlanTagNames,
-            propagate,
-            removePropagationsOnDelete,
-            restrictLineagePropagation);
+                client,
+                TYPE_NAME,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
     }
 
     /**
@@ -1035,8 +931,7 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
-    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
     }
 
@@ -1133,7 +1028,8 @@ public  class DataModelVersion extends Asset implements IDataModelVersion, IData
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataModelVersion
      */
-    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName) throws AtlanException {
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

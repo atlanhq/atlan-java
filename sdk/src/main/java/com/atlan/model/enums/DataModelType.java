@@ -1,19 +1,17 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
-import com.atlan.model.enums.AtlanEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
-import javax.annotation.processing.Generated;
-
-@Generated(value="com.atlan.generators.ModelGeneratorV2")
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum DataModelType implements AtlanEnum {
     CONCEPTUAL_DATA_MODEL("Conceptual Data Model"),
     LOGICAL_DATA_MODEL("Logical Data Model"),
     PHYSICAL_DATA_MODEL("Physical Data Model"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

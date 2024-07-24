@@ -1,19 +1,17 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
-import com.atlan.model.enums.AtlanEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
-import javax.annotation.processing.Generated;
-
-@Generated(value="com.atlan.generators.ModelGeneratorV2")
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum DataGlossary implements AtlanEnum {
     DATA_CONCEPTS("Data Concepts"),
     DATA_ELEMENTS("Data Elements"),
     KYC_TERMS("KYC Terms"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

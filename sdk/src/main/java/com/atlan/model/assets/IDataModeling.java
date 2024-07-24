@@ -1,81 +1,31 @@
-/* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2023 Atlan Pte. Ltd. */
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.AtlanPolicyAction;
-import com.atlan.model.enums.AuthPolicyCategory;
-import com.atlan.model.enums.AuthPolicyResourceCategory;
-import com.atlan.model.enums.AuthPolicyType;
-import com.atlan.model.enums.PersonaMetadataAction;
-import com.atlan.model.enums.PersonaGlossaryAction;
-import com.atlan.model.enums.PurposeMetadataAction;
-import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
-import com.atlan.model.fields.BooleanField;
+import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.KeywordTextStemmedField;
-import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.NumericRankField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.SearchableRelationship;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.assets.IGlossaryTerm;
-import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.assets.IDataContract;
-import com.atlan.model.assets.IDataContract;
-import com.atlan.model.assets.IFile;
-import com.atlan.model.assets.IDataProduct;
-import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.assets.ISparkJob;
-import com.atlan.model.assets.ILink;
-import com.atlan.model.assets.IMCIncident;
-import com.atlan.model.assets.IMCMonitor;
-import com.atlan.model.assets.IMetric;
-import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.ILineageProcess;
-import com.atlan.model.assets.ISparkJob;
-import com.atlan.model.assets.IDataProduct;
-import com.atlan.model.assets.IReadme;
-import com.atlan.model.assets.ISchemaRegistrySubject;
-import com.atlan.model.assets.ISodaCheck;
-import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.structs.PopularityInsights;
-import com.atlan.model.structs.PopularityInsights;
-import com.atlan.model.structs.PopularityInsights;
-import com.atlan.model.structs.PopularityInsights;
-import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
-import com.atlan.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-
 import javax.annotation.processing.Generated;
 
 /**
  * TBC
  */
-@Generated(value="com.atlan.generators.ModelGeneratorV2")
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IDataModeling {
@@ -89,10 +39,12 @@ public interface IDataModeling {
     KeywordField DATA_MODEL_DOMAIN = new KeywordField("dataModelDomain", "dataModelDomain");
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
-    KeywordTextField DATA_MODEL_ENTITY_NAME = new KeywordTextField("dataModelEntityName", "dataModelEntityName.keyword", "dataModelEntityName");
+    KeywordTextField DATA_MODEL_ENTITY_NAME =
+            new KeywordTextField("dataModelEntityName", "dataModelEntityName.keyword", "dataModelEntityName");
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
-    KeywordField DATA_MODEL_ENTITY_QUALIFIED_NAME = new KeywordField("dataModelEntityQualifiedName", "dataModelEntityQualifiedName");
+    KeywordField DATA_MODEL_ENTITY_QUALIFIED_NAME =
+            new KeywordField("dataModelEntityQualifiedName", "dataModelEntityQualifiedName");
 
     /** TBC */
     KeywordField DATA_MODEL_ENVIRONMENT = new KeywordField("dataModelEnvironment", "dataModelEnvironment");
@@ -110,9 +62,8 @@ public interface IDataModeling {
     KeywordField DATA_MODEL_QUALIFIED_NAME = new KeywordField("dataModelQualifiedName", "dataModelQualifiedName");
 
     /** TBC */
-    KeywordField DATA_MODEL_VERSION_QUALIFIED_NAMES = new KeywordField("dataModelVersionQualifiedNames", "dataModelVersionQualifiedNames");
-
-
+    KeywordField DATA_MODEL_VERSION_QUALIFIED_NAMES =
+            new KeywordField("dataModelVersionQualifiedNames", "dataModelVersionQualifiedNames");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
