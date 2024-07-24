@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class GlossaryTermTest {
+public class DataEntityMappingProcessTest {
 
-    private static final GlossaryTerm full = GlossaryTerm._internal()
+    private static final DataEntityMappingProcess full = DataEntityMappingProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,20 @@ public class GlossaryTermTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .ast("String0")
+            .code("String0")
+            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sql("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -382,64 +396,20 @@ public class GlossaryTermTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .abbreviation("String0")
-            .additionalAttribute("key1", "value1")
-            .additionalAttribute("key2", "value2")
-            .anchor(Glossary.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .antonym(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .antonym(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .assignedEntity(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .assignedEntity(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .category(GlossaryCategory.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .category(GlossaryCategory.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .classify(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .classify(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .example("String0")
-            .example("String1")
-            .isATerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .isATerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .longDescription("String0")
-            .mappedDataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedDataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .mappedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .preferredTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .preferredTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .preferredToTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .preferredToTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .replacedByTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .replacedByTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .replacementTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .replacementTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .seeAlsoOne(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .seeAlsoOne(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .shortDescription("String0")
-            .synonym(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .synonym(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .termType(AtlasGlossaryTermType.DOCUMENT)
-            .translatedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .translatedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .translationTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .translationTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .usage("String0")
-            .validValue(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .validValue(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .validValueFor(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .validValueFor(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static GlossaryTerm frodo;
+    private static DataEntityMappingProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"GlossaryTerm.builderEquivalency"})
+    @Test(groups = {"DataEntityMappingProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"GlossaryTerm.serialize"},
-            dependsOnGroups = {"GlossaryTerm.builderEquivalency"})
+            groups = {"DataEntityMappingProcess.serialize"},
+            dependsOnGroups = {"DataEntityMappingProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -448,17 +418,17 @@ public class GlossaryTermTest {
     }
 
     @Test(
-            groups = {"GlossaryTerm.deserialize"},
-            dependsOnGroups = {"GlossaryTerm.serialize"})
+            groups = {"DataEntityMappingProcess.deserialize"},
+            dependsOnGroups = {"DataEntityMappingProcess.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, GlossaryTerm.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DataEntityMappingProcess.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"GlossaryTerm.equivalency"},
-            dependsOnGroups = {"GlossaryTerm.serialize", "GlossaryTerm.deserialize"})
+            groups = {"DataEntityMappingProcess.equivalency"},
+            dependsOnGroups = {"DataEntityMappingProcess.serialize", "DataEntityMappingProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -467,8 +437,8 @@ public class GlossaryTermTest {
     }
 
     @Test(
-            groups = {"GlossaryTerm.equivalency"},
-            dependsOnGroups = {"GlossaryTerm.serialize", "GlossaryTerm.deserialize"})
+            groups = {"DataEntityMappingProcess.equivalency"},
+            dependsOnGroups = {"DataEntityMappingProcess.serialize", "DataEntityMappingProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

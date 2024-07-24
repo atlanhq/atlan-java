@@ -452,6 +452,14 @@ public enum KeywordFields implements AtlanSearchableField {
     DATASOURCE_FIELD_TYPE("datasourceFieldType"),
     /** Unique name of the datasource in which this datasource field exists. */
     DATASOURCE_QUALIFIED_NAME("datasourceQualifiedName"),
+    /** TBC */
+    DATA_ATTRIBUTE_FULLY_QUALIFIED_NAME("dataAttributeFullyQualifiedName"),
+    /** TBC */
+    DATA_ATTRIBUTE_ID("dataAttributeId"),
+    /** TBC */
+    DATA_ATTRIBUTE_MULTIPLICITY("dataAttributeMultiplicity"),
+    /** TBC */
+    DATA_ATTRIBUTE_TYPE("dataAttributeType"),
     /** Data category of this field. */
     DATA_CATEGORY("dataCategory"),
     /** Unique identifier of the asset associated with this data contract. */
@@ -460,6 +468,38 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_CONTRACT_JSON("dataContractJson"),
     /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
     DATA_CONTRACT_SPEC("dataContractSpec"),
+    /** TBC */
+    DATA_ENTITY_FULLY_QUALIFIED_NAME("dataEntityFullyQualifiedName"),
+    /** TBC */
+    DATA_ENTITY_ID("dataEntityId"),
+    /** TBC */
+    DATA_ENTITY_QUALIFIED_NAME("dataEntityQualifiedName"),
+    /** TBC */
+    DATA_ENTITY_SUBJECT_AREA("dataEntitySubjectArea"),
+    /** TBC */
+    DATA_MODEL_DOMAIN("dataModelDomain"),
+    /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
+    DATA_MODEL_ENTITY_NAME("dataModelEntityName.keyword"),
+    /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
+    DATA_MODEL_ENTITY_QUALIFIED_NAME("dataModelEntityQualifiedName"),
+    /** TBC */
+    DATA_MODEL_ENVIRONMENT("dataModelEnvironment"),
+    /** TBC */
+    DATA_MODEL_ID("dataModelId"),
+    /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
+    DATA_MODEL_NAME("dataModelName.keyword"),
+    /** TBC */
+    DATA_MODEL_NAMESPACE("dataModelNamespace"),
+    /** TBC */
+    DATA_MODEL_OWNING_APPLICATION_SEAL_ID("dataModelOwningApplicationSEALId"),
+    /** TBC */
+    DATA_MODEL_QUALIFIED_NAME("dataModelQualifiedName"),
+    /** TBC */
+    DATA_MODEL_TOOL("dataModelTool"),
+    /** TBC */
+    DATA_MODEL_TYPE("dataModelType"),
+    /** TBC */
+    DATA_MODEL_VERSION_QUALIFIED_NAMES("dataModelVersionQualifiedNames"),
     /** Search DSL used to define which assets are part of this data product. */
     DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
     /** Playbook filter to define which assets are part of this data product. */

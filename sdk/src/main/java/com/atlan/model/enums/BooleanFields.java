@@ -42,6 +42,18 @@ public enum BooleanFields implements AtlanSearchableField {
     COGNOS_IS_DISABLED("cognosIsDisabled"),
     /** Whether the Cognos asset is hidden from the ui */
     COGNOS_IS_HIDDEN("cognosIsHidden"),
+    /** TBC */
+    DATA_ATTRIBUTE_DERIVED_INDICATOR("dataAttributeDerivedIndicator"),
+    /** TBC */
+    DATA_ATTRIBUTE_DIRECT_IDENTIFIER_INDICATOR("dataAttributeDirectIdentifierIndicator"),
+    /** TBC */
+    DATA_ATTRIBUTE_FOREIGN_KEY_INDICATOR("dataAttributeForeignKeyIndicator"),
+    /** TBC */
+    DATA_ATTRIBUTE_NULLABILITY("dataAttributeNullability"),
+    /** TBC */
+    DATA_ATTRIBUTE_PERSONAL_IDENTIFIER_INDICATOR("dataAttributePersonalIdentifierIndicator"),
+    /** TBC */
+    DATA_ATTRIBUTE_PRIMARY_KEY_INDICATOR("dataAttributePrimaryKeyIndicator"),
     /** Whether the function is stored or executed externally (true) or internally (false). */
     FUNCTION_IS_EXTERNAL("functionIsExternal"),
     /** Whether the function must re-compute if there are no underlying changes in the values (false) or not (true). */

@@ -417,6 +417,10 @@ hidden const PREFECT: Type = new {
   value = "prefect"
   category = "elt"
 }
+hidden const DATA_MODELING: Type = new {
+  value = "datamodeling"
+  category = "database"
+}
 
 class Type {
   value: String

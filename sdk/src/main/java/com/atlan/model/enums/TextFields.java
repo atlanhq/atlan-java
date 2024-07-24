@@ -130,6 +130,10 @@ public enum TextFields implements AtlanSearchableField {
     CUBE_PARENT_FIELD_NAME("cubeParentFieldName"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
+    /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
+    DATA_MODEL_ENTITY_NAME("dataModelEntityName"),
+    /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
+    DATA_MODEL_NAME("dataModelName"),
     /** Title of the Google Data Studio asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
     /** Data type of values in this field. */

@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class GlossaryTermTest {
+public class DataEntityTest {
 
-    private static final GlossaryTerm full = GlossaryTerm._internal()
+    private static final DataEntity full = DataEntity._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,29 @@ public class GlossaryTermTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .dataEntityId("String0")
+            .dataModelDomain("String0")
+            .dataModelEntityName("String0")
+            .dataModelEntityQualifiedName("String0")
+            .dataModelEnvironment("String0")
+            .dataModelId("String0")
+            .dataModelName("String0")
+            .dataModelNamespace("String0")
+            .dataModelQualifiedName("String0")
+            .dataModelVersionQualifiedName("String0")
+            .dataModelVersionQualifiedName("String1")
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -382,64 +405,36 @@ public class GlossaryTermTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .abbreviation("String0")
-            .additionalAttribute("key1", "value1")
-            .additionalAttribute("key2", "value2")
-            .anchor(Glossary.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .antonym(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .antonym(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .assignedEntity(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .assignedEntity(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .category(GlossaryCategory.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .category(GlossaryCategory.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .classify(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .classify(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .example("String0")
-            .example("String1")
-            .isATerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .isATerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .longDescription("String0")
-            .mappedDataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedDataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .mappedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .preferredTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .preferredTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .preferredToTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .preferredToTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .replacedByTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .replacedByTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .replacementTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .replacementTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .seeAlsoOne(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .seeAlsoOne(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .shortDescription("String0")
-            .synonym(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .synonym(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .termType(AtlasGlossaryTermType.DOCUMENT)
-            .translatedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .translatedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .translationTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .translationTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .usage("String0")
-            .validValue(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .validValue(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .validValueFor(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .validValueFor(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dataEntityFullyQualifiedName("String0")
+            .dataEntitySubjectArea("String0")
+            .dataModelVersion(DataModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dataModelVersion(DataModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .mappedGlossaryTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .mappedGlossaryTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sourceDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sourceDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sourceRelatedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sourceRelatedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .targetDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .targetDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .targetRelatedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .targetRelatedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static GlossaryTerm frodo;
+    private static DataEntity frodo;
     private static String serialized;
 
-    @Test(groups = {"GlossaryTerm.builderEquivalency"})
+    @Test(groups = {"DataEntity.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"GlossaryTerm.serialize"},
-            dependsOnGroups = {"GlossaryTerm.builderEquivalency"})
+            groups = {"DataEntity.serialize"},
+            dependsOnGroups = {"DataEntity.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -448,17 +443,17 @@ public class GlossaryTermTest {
     }
 
     @Test(
-            groups = {"GlossaryTerm.deserialize"},
-            dependsOnGroups = {"GlossaryTerm.serialize"})
+            groups = {"DataEntity.deserialize"},
+            dependsOnGroups = {"DataEntity.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, GlossaryTerm.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DataEntity.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"GlossaryTerm.equivalency"},
-            dependsOnGroups = {"GlossaryTerm.serialize", "GlossaryTerm.deserialize"})
+            groups = {"DataEntity.equivalency"},
+            dependsOnGroups = {"DataEntity.serialize", "DataEntity.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -467,8 +462,8 @@ public class GlossaryTermTest {
     }
 
     @Test(
-            groups = {"GlossaryTerm.equivalency"},
-            dependsOnGroups = {"GlossaryTerm.serialize", "GlossaryTerm.deserialize"})
+            groups = {"DataEntity.equivalency"},
+            dependsOnGroups = {"DataEntity.serialize", "DataEntity.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
