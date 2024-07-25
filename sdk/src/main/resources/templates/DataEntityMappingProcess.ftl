@@ -46,4 +46,21 @@
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a DataEntityMappingProcess, from a potentially
+     * more-complete DataEntityMappingProcess object.
+     *
+     * @return the minimal object necessary to update the DataEntityMappingProcess, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for DataEntityMappingProcess are not found in the initial object
+     */
+    @Override
+    public DataEntityMappingProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
+        return updater(this.getQualifiedName(), this.getName());
+    }
 </#macro>
