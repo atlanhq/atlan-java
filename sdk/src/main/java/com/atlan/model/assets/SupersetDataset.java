@@ -478,12 +478,12 @@ public class SupersetDataset extends Asset
      */
     public static SupersetDatasetBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String dashboardQualifiedName) {
-        // AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return SupersetDataset._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(dashboardQualifiedName + "/" + name)
-                .connectorType(AtlanConnectorType.SUPERSET)
+                .connectorType(connectorType)
                 .supersetDashboardQualifiedName(dashboardQualifiedName)
                 .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
@@ -518,17 +518,6 @@ public class SupersetDataset extends Asset
                         "qualifiedName", this.getQualifiedName(),
                         "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique Superset workspace name.
-     *
-     * @param connectionQualifiedName unique name of the connection
-     * @param name for the workspace
-     * @return a unique name for the workspace
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String name) {
-        return connectionQualifiedName + "/" + name;
     }
 
     /**

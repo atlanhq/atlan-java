@@ -474,13 +474,12 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      */
     public static SupersetChartBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String dashboardQualifiedName) {
-        //        AtlanConnectorType connectorType =
-        // Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return SupersetChart._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(dashboardQualifiedName + "/" + name)
-                .connectorType(AtlanConnectorType.SUPERSET)
+                .connectorType(connectorType)
                 .supersetDashboardQualifiedName(dashboardQualifiedName)
                 .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
