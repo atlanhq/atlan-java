@@ -37,7 +37,6 @@ object Importer {
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val glossariesFilename = Utils.getOrDefault(config.glossariesFile, "")
         val dataProductsFilename = Utils.getOrDefault(config.dataProductsFile, "")
-        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetsKey = Utils.getOrDefault(config.assetsKey, "")
         val glossariesKey = Utils.getOrDefault(config.glossariesKey, "")
         val dataProductsKey = Utils.getOrDefault(config.dataProductsKey, "")
@@ -57,9 +56,9 @@ object Importer {
         val dataProductsFailOnErrors = Utils.getOrDefault(config.dataProductsFailOnErrors, true)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        val assetsFileProvided = (directUpload && assetsFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && assetsKey.isNotBlank())
-        val glossariesFileProvided = (directUpload && glossariesFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && glossariesKey.isNotBlank())
-        val dataProductsFileProvided = (directUpload && dataProductsFilename.isNotBlank()) || (!directUpload && cloudDetails.isNotBlank() && dataProductsKey.isNotBlank())
+        val assetsFileProvided = (directUpload && assetsFilename.isNotBlank()) || (!directUpload && assetsKey.isNotBlank())
+        val glossariesFileProvided = (directUpload && glossariesFilename.isNotBlank()) || (!directUpload && glossariesKey.isNotBlank())
+        val dataProductsFileProvided = (directUpload && dataProductsFilename.isNotBlank()) || (!directUpload && dataProductsKey.isNotBlank())
         if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)

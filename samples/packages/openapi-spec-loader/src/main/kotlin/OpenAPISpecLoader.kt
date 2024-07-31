@@ -31,7 +31,6 @@ object OpenAPISpecLoader {
         val importType = Utils.getOrDefault(config.importType, "URL")
         val specUrl = Utils.getOrDefault(config.specUrl, "")
         val specFilename = Utils.getOrDefault(config.specFile, "")
-        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val specKey = Utils.getOrDefault(config.specKey, "")
         val batchSize = 20
 
@@ -41,7 +40,7 @@ object OpenAPISpecLoader {
         val connectionQN =
             Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
 
-        val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && cloudDetails.isNotBlank() && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
+        val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
         if (!specFileProvided) {
             logger.error { "No input file was provided for the OpenAPI spec." }
             exitProcess(1)

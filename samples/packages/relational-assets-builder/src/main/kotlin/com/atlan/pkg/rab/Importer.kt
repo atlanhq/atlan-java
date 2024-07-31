@@ -46,7 +46,6 @@ object Importer {
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
-        val assetsCloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetsKey = Utils.getOrDefault(config.assetsKey, "")
         val assetAttrsToOverwrite =
             CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
@@ -57,7 +56,7 @@ object Importer {
         val assetsFileProvided = (
             assetsUpload && assetsFilename.isNotBlank()
             ) || (
-            !assetsUpload && assetsCloudDetails.isNotBlank() && assetsKey.isNotBlank()
+            !assetsUpload && assetsKey.isNotBlank()
             )
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
