@@ -509,6 +509,7 @@ object Utils {
             val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
             val preppedKey = getOrDefault(key?.trimStart('/'), "")
             val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
+            val preppedPath = if (preppedPrefix.isBlank()) preppedKey else "$preppedPrefix/$preppedKey"
             return if (credFile.exists()) {
                 val contents = credFile.readText()
                 val cred = MAPPER.readValue<Credential>(contents)
@@ -519,13 +520,13 @@ object Utils {
                     "s3" -> {
                         val s3 = S3Credential(cred)
                         val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                        getInputFile(sync, outputDirectory, preppedPath)
                     }
 
                     "gcs" -> {
                         val gcs = GCSCredential(cred)
                         val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                        getInputFile(sync, outputDirectory, preppedPath)
                     }
 
                     "adls" -> {
@@ -538,7 +539,7 @@ object Utils {
                             adls.clientId,
                             adls.clientSecret,
                         )
-                        getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                        getInputFile(sync, outputDirectory, preppedPath)
                     }
 
                     else -> {
@@ -548,7 +549,7 @@ object Utils {
                 }
             } else {
                 val sync = getBackingStore()
-                getInputFile(sync, outputDirectory, "$preppedPrefix/$preppedKey")
+                getInputFile(sync, outputDirectory, preppedPath)
             }
         }
     }
@@ -727,7 +728,8 @@ object Utils {
     ) {
         val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
         val preppedKey = getOrDefault(key?.trimStart('/'), File(outputFile).name) // default to filename from the output file
-        syncer.uploadTo(outputFile, "$preppedPrefix/$preppedKey")
+        val preppedPath = if (preppedPrefix.isBlank()) preppedKey else "$preppedPrefix/$preppedKey"
+        syncer.uploadTo(outputFile, preppedPath)
     }
 
     /**
