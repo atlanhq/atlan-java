@@ -35,13 +35,12 @@ object Loader {
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
         val lineageUpload = Utils.getOrDefault(config.lineageImportType, "DIRECT") == "DIRECT"
         val lineageFilename = Utils.getOrDefault(config.lineageFile, "")
-        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val lineageKey = Utils.getOrDefault(config.lineageKey, "")
         val lineageFailOnErrors = Utils.getOrDefault(config.lineageFailOnErrors, true)
         val lineageAssetSemantic = Utils.getCreationHandling(config.lineageUpsertSemantic, AssetCreationHandling.PARTIAL)
         val lineageCaseSensitive = Utils.getOrDefault(config.lineageCaseSensitive, true)
 
-        val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && cloudDetails.isNotBlank() && lineageKey.isNotBlank())
+        val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageKey.isNotBlank())
         if (!lineageFileProvided) {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)

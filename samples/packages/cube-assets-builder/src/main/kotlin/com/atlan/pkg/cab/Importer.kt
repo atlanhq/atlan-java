@@ -58,7 +58,6 @@ object Importer {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.assetsImportType, "DIRECT") == "DIRECT"
-        val cloudDetails = Utils.getOrDefault(config.cloudSource, "")
         val assetsKey = Utils.getOrDefault(config.assetsKey, "")
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
         val assetAttrsToOverwrite =
@@ -67,7 +66,7 @@ object Importer {
         val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && cloudDetails.isNotBlank() && assetsKey.isNotBlank())
+        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsKey.isNotBlank())
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
