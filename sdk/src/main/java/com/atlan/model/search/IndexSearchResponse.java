@@ -37,11 +37,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     private static final long serialVersionUID = 2L;
     private static final long MASS_EXTRACT_THRESHOLD = 100000L;
 
-    private static final int CHARACTERISTICS = Spliterator.NONNULL
-            | Spliterator.IMMUTABLE
-            | Spliterator.ORDERED
-            | Spliterator.SIZED
-            | Spliterator.SUBSIZED;
+    private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
     /** Connectivity to the Atlan tenant where the search was run. */
     @Setter
