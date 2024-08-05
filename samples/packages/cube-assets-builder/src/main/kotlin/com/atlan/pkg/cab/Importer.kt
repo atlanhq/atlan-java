@@ -157,6 +157,7 @@ object Importer {
             trackBatches,
             fieldSeparator,
         )
+        fieldImporter.preprocess()
         fieldImporter.import()
 
         // Retrieve the qualifiedName of the cube that was imported

@@ -49,7 +49,36 @@ abstract class CSVImporter(
     private val tableViewAgnostic: Boolean = false,
     private val failOnErrors: Boolean = true,
     private val fieldSeparator: Char = ',',
-) : AssetGenerator {
+) : AssetGenerator, CSVPreprocessor {
+
+    /** {@inheritDoc} */
+    override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
+        // By default, do nothing and simply return the row we received (noop)
+        return row
+    }
+
+    /**
+     * Preprocess the CSV file.
+     *
+     * @param outputFile (optional) name of the output file into which to write preprocessed row values
+     * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values
+     */
+    open fun preprocess(outputFile: String? = null, outputHeaders: List<String>? = null) {
+        CSVReader(
+            filename,
+            updateOnly,
+            trackBatches,
+            caseSensitive,
+            AssetBatch.CustomMetadataHandling.MERGE,
+            creationHandling,
+            tableViewAgnostic,
+            fieldSeparator,
+        ).use { csv ->
+            val start = System.currentTimeMillis()
+            csv.preprocess(this, logger, outputFile, outputHeaders)
+            logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
+        }
+    }
 
     /**
      * Actually run the import.

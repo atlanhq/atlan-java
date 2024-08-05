@@ -47,6 +47,7 @@ class CSVReader @JvmOverloads constructor(
 
     private val reader: CsvReader<CsvRecord>
     private val counter: CsvReader<CsvRecord>
+    private val preproc: CsvReader<CsvRecord>
     private val header: List<String> = CSVXformer.getHeader(path, fieldSeparator)
     private val typeIdx: Int = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
     private val qualifiedNameIdx: Int = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
@@ -66,6 +67,33 @@ class CSVReader @JvmOverloads constructor(
             .ignoreDifferentFieldCount(false)
         reader = builder.ofCsvRecord(inputFile)
         counter = builder.ofCsvRecord(inputFile)
+        preproc = builder.ofCsvRecord(inputFile)
+    }
+
+    /**
+     * Preprocess the CSV file row-by-row, optionally outputting a transformed file.
+     *
+     * @param csvPreprocessor preprocess for a row of CSV values
+     * @param logger through which to report the overall progress
+     * @param outputFile (optional) name of the output file into which to write preprocessed row values
+     * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values
+     */
+    fun preprocess(csvPreprocessor: CSVPreprocessor, logger: KLogger, outputFile: String? = null, outputHeaders: List<String>? = null) {
+        if (outputFile != null) {
+            logger.info { "Transforming input CSV file to $outputFile..." }
+            CSVWriter(outputFile).use { csv ->
+                csv.writeHeader(outputHeaders ?: header)
+                preproc.stream().skip(1).parallel().forEach { r: CsvRecord ->
+                    val transformed = csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
+                    csv.writeRecord(transformed)
+                }
+            }
+        } else {
+            logger.info { "Preprocessing input CSV file..." }
+            preproc.stream().skip(1).parallel().forEach { r: CsvRecord ->
+                csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
+            }
+        }
     }
 
     /**

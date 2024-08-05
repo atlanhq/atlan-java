@@ -58,6 +58,18 @@ class FieldImporter(
     }
 
     /** {@inheritDoc} */
+    override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
+        val fieldLevel = getFieldLevel(row, header)
+        // Consider whether we need to update the maximum depth of fields we need to load
+        val currentMax = maxFieldLevel.get()
+        val maxDepth = max(fieldLevel, currentMax)
+        if (maxDepth > currentMax) {
+            maxFieldLevel.set(maxDepth)
+        }
+        return row
+    }
+
+    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Import fields by level, top-to-bottom, and stop when we hit a level with no fields
         logger.info { "Loading fields in multiple passes, by level..." }
@@ -86,18 +98,7 @@ class FieldImporter(
             // represents something other than a field, short-circuit
             return false
         }
-        val fieldLevel = if (row[parentIdx].isBlank()) {
-            1L
-        } else {
-            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
-            (parentPath.size + 1).toLong()
-        }
-        // Consider whether we need to update the maximum depth of categories we need to load
-        val currentMax = maxFieldLevel.get()
-        val maxDepth = max(fieldLevel, currentMax)
-        if (maxDepth > currentMax) {
-            maxFieldLevel.set(maxDepth)
-        }
+        val fieldLevel = getFieldLevel(row, header)
         if (fieldLevel != levelToProcess) {
             // If this category is a different level than we are currently processing,
             // short-circuit
@@ -115,5 +116,22 @@ class FieldImporter(
         return CubeField.creator(name, parentQN)
             .cubeFieldLevel(levelToProcess)
             .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+    }
+
+    /**
+     * Calculate the level of the field in a given row of the CSV.
+     *
+     * @param row of values in the CSV
+     * @param header names of columns for the CSV
+     * @return numeric level of the (nested) field
+     */
+    private fun getFieldLevel(row: List<String>, header: List<String>): Long {
+        val parentIdx = header.indexOf(PARENT_FIELD_QN)
+        return if (row[parentIdx].isBlank()) {
+            1L
+        } else {
+            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
+            (parentPath.size + 1).toLong()
+        }
     }
 }
