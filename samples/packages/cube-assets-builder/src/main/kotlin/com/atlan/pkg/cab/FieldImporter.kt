@@ -46,37 +46,50 @@ class FieldImporter(
     trackBatches,
     fieldSeparator,
 ) {
-    private var levelToProcess = 0L
+    private var generationToProcess = 0L
 
-    // Maximum depth of any field in the CSV -- will be updated on first pass through the CSV
-    // file by includeRow() method
-    private val maxFieldLevel = AtomicLong(1)
+    // Maximum depth of any field in the CSV (overall and by hierarchy)
+    private val maxFieldGeneration = AtomicLong(1)
+    private val maxGenerationByHierarchy: MutableMap<String, AtomicLong> = mutableMapOf()
 
     companion object {
         const val PARENT_FIELD_QN = "parentFieldQualifiedName"
         const val FIELD_NAME = "fieldName"
+        const val CUBE_NAME = "cubeName"
+        const val DIMENSION_NAME = "cubeDimensionName"
+        const val HIERARCHY_NAME = "cubeHierarchyName"
     }
 
     /** {@inheritDoc} */
     override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
-        val fieldLevel = getFieldLevel(row, header)
+        val fieldGeneration = getFieldGeneration(row, header)
+        val hierarchy = getHierarchy(row, header)
         // Consider whether we need to update the maximum depth of fields we need to load
-        val currentMax = maxFieldLevel.get()
-        val maxDepth = max(fieldLevel, currentMax)
+        val currentMax = maxFieldGeneration.get()
+        val maxDepth = max(fieldGeneration, currentMax)
         if (maxDepth > currentMax) {
-            maxFieldLevel.set(maxDepth)
+            maxFieldGeneration.set(maxDepth)
+        }
+        val currentMaxInHierarchy = maxGenerationByHierarchy[hierarchy]?.get() ?: 0L
+        val maxInHierarchy = max(fieldGeneration, currentMaxInHierarchy)
+        if (maxInHierarchy > currentMaxInHierarchy) {
+            if (!maxGenerationByHierarchy.containsKey(hierarchy)) {
+                maxGenerationByHierarchy[hierarchy] = AtomicLong(maxInHierarchy)
+            } else {
+                maxGenerationByHierarchy[hierarchy]!!.set(maxInHierarchy)
+            }
         }
         return row
     }
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        // Import fields by level, top-to-bottom, and stop when we hit a level with no fields
-        logger.info { "Loading fields in multiple passes, by level..." }
+        // Import fields by generation, top-to-bottom, and stop when we hit a generation with no fields
+        logger.info { "Loading fields in multiple passes, by generation..." }
         var combinedResults: ImportResults? = null
-        while (levelToProcess < maxFieldLevel.get()) {
-            levelToProcess += 1
-            logger.info { "--- Loading level $levelToProcess fields... ---" }
+        while (generationToProcess < maxFieldGeneration.get()) {
+            generationToProcess += 1
+            logger.info { "--- Loading generation $generationToProcess fields... ---" }
             val results = super.import(columnsToSkip)
             if (combinedResults == null) {
                 combinedResults = results
@@ -98,9 +111,9 @@ class FieldImporter(
             // represents something other than a field, short-circuit
             return false
         }
-        val fieldLevel = getFieldLevel(row, header)
-        if (fieldLevel != levelToProcess) {
-            // If this category is a different level than we are currently processing,
+        val fieldGeneration = getFieldGeneration(row, header)
+        if (fieldGeneration != generationToProcess) {
+            // If this category is a different generation than we are currently processing,
             // short-circuit
             return false
         }
@@ -113,9 +126,28 @@ class FieldImporter(
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
+        val level = getFieldLevel(deserializer.row, deserializer.heading)
         return CubeField.creator(name, parentQN)
-            .cubeFieldLevel(levelToProcess)
+            .cubeFieldLevel(level)
+            .cubeFieldLevel(generationToProcess) // TODO: replace with -> .cubeFieldGeneration(generationToProcess)
             .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+    }
+
+    /**
+     * Calculate the generation of the field in a given row of the CSV.
+     *
+     * @param row of values in the CSV
+     * @param header names of columns for the CSV
+     * @return numeric generation of the (nested) field
+     */
+    private fun getFieldGeneration(row: List<String>, header: List<String>): Long {
+        val parentIdx = header.indexOf(PARENT_FIELD_QN)
+        return if (row[parentIdx].isBlank()) {
+            1L
+        } else {
+            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
+            (parentPath.size + 1).toLong()
+        }
     }
 
     /**
@@ -126,12 +158,23 @@ class FieldImporter(
      * @return numeric level of the (nested) field
      */
     private fun getFieldLevel(row: List<String>, header: List<String>): Long {
-        val parentIdx = header.indexOf(PARENT_FIELD_QN)
-        return if (row[parentIdx].isBlank()) {
-            1L
-        } else {
-            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
-            (parentPath.size + 1).toLong()
-        }
+        val generation = getFieldGeneration(row, header)
+        val hierarchy = getHierarchy(row, header)
+        val maxLevel = maxGenerationByHierarchy[hierarchy]!!.get()
+        return maxLevel - generation + 1
+    }
+
+    /**
+     * Determine the hierarchy for the field on the provided row.
+     *
+     * @param row of values in the CSV
+     * @param header names of columns for the CSV
+     * @return unique name for the hierarchy on the row
+     */
+    private fun getHierarchy(row: List<String>, header: List<String>): String {
+        val cubeIdx = header.indexOf(CUBE_NAME)
+        val dimIdx = header.indexOf(DIMENSION_NAME)
+        val hierIdx = header.indexOf(HIERARCHY_NAME)
+        return "${row[cubeIdx]}${Importer.QN_DELIMITER}${row[dimIdx]}${Importer.QN_DELIMITER}${row[hierIdx]}"
     }
 }
