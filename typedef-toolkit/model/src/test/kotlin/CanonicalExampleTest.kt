@@ -152,7 +152,7 @@ object CanonicalExampleTest {
     @Test
     fun testCustomRelationships() {
         assertNotNull(model.customRelationshipDefs)
-        assertEquals(2, model.customRelationshipDefs!!.size)
+        assertEquals(3, model.customRelationshipDefs!!.size)
     }
 
     @Test
@@ -188,5 +188,21 @@ object CanonicalExampleTest {
         assertEquals(Model.Cardinality.SET, r2.endDef1.cardinality)
         assertEquals(Model.Cardinality.SINGLE, r2.endDef2.cardinality)
         assertEquals(Model.PropagationType.NONE, r2.propagateTags)
+
+        val r3 = model.customRelationshipDefs!![2]
+        assertNotNull(r3)
+        assertEquals("custom_from_field_custom_to_field", r3.name)
+        assertEquals("Many-to-many peer-to-peer relationship between CustomFields.", r3.description)
+        assertEquals("CustomField", r3.endDef1.type)
+        assertEquals("CustomField", r3.endDef2.type)
+        assertEquals("customToField", r3.endDef1.name)
+        assertEquals("customFromField", r3.endDef2.name)
+        assertEquals("CustomFields to which this CustomField is related.", r3.endDef1.description)
+        assertEquals("CustomFields from which this CustomField is related.", r3.endDef2.description)
+        assertFalse(r3.endDef1.isContainer)
+        assertFalse(r3.endDef2.isContainer)
+        assertEquals(Model.Cardinality.SET, r3.endDef1.cardinality)
+        assertEquals(Model.Cardinality.SET, r3.endDef2.cardinality)
+        assertEquals(Model.PropagationType.NONE, r3.propagateTags)
     }
 }

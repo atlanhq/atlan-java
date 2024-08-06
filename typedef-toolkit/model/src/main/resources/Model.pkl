@@ -87,6 +87,11 @@ typealias PropagationType = "NONE"|"ONE_TO_TWO"|"TWO_TO_ONE"|"BOTH"
 /// - `SET` for multiple values
 typealias Cardinality = "SINGLE"|"SET"
 
+/// Category of a relationship.
+/// - `AGGREGATION` where one end of the relationship "contains" or "owns" the assets at the other end of the relationship
+/// - `ASSOCIATION` for peer-to-peer (typically 1:1 or m:n) relationships
+typealias RelationshipCategory = "AGGREGATION"|"ASSOCIATION"
+
 /// Metadata shared across other types in the custom model.
 ///
 /// | Variable | | Usage |
@@ -360,16 +365,34 @@ class RelationshipDef extends TypeDef {
   /// Category is set automatically and fixed (should not be changed).
   fixed category = "RELATIONSHIP"
 
-  /// Definition for the first [endpoint][RelationshipEndDef] of the relationship.
-  endDef1: RelationshipEndDef
+  /// Definition for the parent [endpoint][RelationshipEndDef] of the relationship, in a parent-child relationship.
+  hidden parent: RelationshipEndDef?
 
-  /// Definition for the second [endpoint][RelationshipEndDef] of the relationship.
-  endDef2: RelationshipEndDef
+  /// Definition for the child [endpoint][RelationshipEndDef] of the relationship, in a parent-child relationship.
+  hidden children: RelationshipEndDef?
+
+  /// Definition of peer [endpoint][RelationshipEndDef]s in a peer-to-peer relationship.
+  hidden peers: Listing<RelationshipEndDef>?(if (this != null) length == 2 else true)
+
+  /// Whether the peer-to-peer relationship is many-to-many (m:n) (defaults to true).
+  hidden manyToMany: Boolean = true
+
+  /// (Generated) Definition for the first [endpoint][RelationshipEndDef] of the relationship.
+  fixed endDef1: RelationshipEndDef =
+    if (parent != null && children != null) (parent) { isContainer = true }
+    else if (peers != null) (peers[0]) { when (manyToMany) { cardinality = "SET" } }
+    else throw("A relationship must either have both parent and children defined, or peers defined.")
+
+  /// (Generated) Definition for the second [endpoint][RelationshipEndDef] of the relationship.
+  fixed endDef2: RelationshipEndDef =
+    if (parent != null && children != null) children
+    else if (peers != null) (peers[1]) { when (manyToMany) { cardinality = "SET" } }
+    else throw("A relationship must either have both parent and children defined, or peers defined.")
 
   /// Whether Atlan tags should propagate through this relationship, and if so in which direction(s):
   /// - `NONE` tags will not be propagated through this relationship (default)
-  /// - `ONE_TO_TWO` tags will be propagated from endDef1 to endDef2
-  /// - `TWO_TO_ONE` tags will be propagated from endDef2 to endDef1
+  /// - `ONE_TO_TWO` tags will be propagated from endDef1 to endDef2 (parent to child)
+  /// - `TWO_TO_ONE` tags will be propagated from endDef2 to endDef1 (child to parent)
   /// - `BOTH` tags will be propagated in both directions
   propagateTags: PropagationType = "NONE"
 
@@ -381,9 +404,13 @@ class RelationshipDef extends TypeDef {
   /// based on the `endDef1` parameter.
   fixed relationshipLabel = "__\(endDef1.type).\(endDef1.name)"
 
-  /// Kind of relationship -- this will be set automatically based on whether either endDef is defined as
-  /// a container.
-  fixed relationshipCategory = if (endDef1.isContainer || endDef2.isContainer) "AGGREGATION" else "ASSOCIATION"
+  /// Kind of relationship.
+  /// This will be set to 'AGGREGATION' automatically for any 1:n or n:1 relationships, and
+  /// to 'ASSOCIATION' otherwise, but can also be overridden.
+  relationshipCategory: RelationshipCategory =
+    if ((endDef1.cardinality == "SET" && endDef2.cardinality == "SINGLE") || (endDef1.cardinality == "SINGLE" && endDef2.cardinality == "SET"))
+      "AGGREGATION"
+    else "ASSOCIATION"
 
   /// Generated list of [relationship attributes][RelationshipAttributeDef] for the type definition.
   fixed relationshipAttributeDefs: List<RelationshipAttributeDef>? = relationshipAttributes?.fold(List(), (acc: List<RelationshipAttributeDef>, key, value) ->
@@ -416,7 +443,10 @@ class RelationshipEndDef {
   type: String
 
   /// Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship).
-  name: String(camelCase)
+  hidden attribute: String(camelCase)
+
+  /// Name of the attribute on this end of the relationship, that refers to the *other* entity type (other end of the relationship).
+  fixed name: String(camelCase) = attribute
 
   /// Description of the relationship from this end of it.
   description: String
@@ -427,8 +457,10 @@ class RelationshipEndDef {
   /// TBC
   isLegacyAttribute: Boolean = false
 
-  /// Cardinality of this end of the relationship -- this will be set automatically based on `isContainer`.
-  fixed cardinality: Cardinality = if (isContainer) "SET" else "SINGLE"
+  /// Cardinality of this end of the relationship.
+  /// This will be set automatically based on `isContainer` (if true, to 'SET', otherwise to 'SINGLE'),
+  /// but you can also override it according to your specific needs.
+  cardinality: Cardinality = if (isContainer) "SET" else "SINGLE"
 }
 
 /// Definition of an attribute that can be managed on each instance of the relationship.

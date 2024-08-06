@@ -87,15 +87,14 @@ customTypes {
     relationships {
       ["\(a)Dataset"] {
         description = "Containment relationship between \(t)Dataset and \(t)Table."
-        endDef1 {
+        parent {
           type = "\(t)Dataset"
-          name = "\(a)Tables"
+          attribute = "\(a)Tables"
           description = "\(t)Table assets contained within this \(t)Dataset."
-          isContainer = true
         }
-        endDef2 {
+        children {
           type = "\(t)Table"
-          name = "\(a)Dataset"
+          attribute = "\(a)Dataset"
           description = "\(t)Dataset asset containing this \(t)Table."
         }
       }
@@ -127,16 +126,30 @@ customTypes {
     relationships {
       ["\(a)Table"] {
         description = "Containment relationship between \(t)Table and \(t)Field."
-        endDef1 {
+        parent {
           type = "\(t)Table"
-          name = "\(a)Fields"
+          attribute = "\(a)Fields"
           description = "\(t)Field assets contained within this \(t)Table."
-          isContainer = true
         }
-        endDef2 {
+        children {
           type = "\(t)Field"
-          name = "\(a)Table"
+          attribute = "\(a)Table"
           description = "\(t)Table asset containing this \(t)Field."
+        }
+      }
+      ["\(a)Fields"] {
+        description = "Many-to-many peer-to-peer relationship between \(t)Fields."
+        peers {
+          new {
+            type = "\(t)Field"
+            attribute = "\(a)ToField"
+            description = "\(t)Fields to which this \(t)Field is related."
+          }
+          new {
+            type = "\(t)Field"
+            attribute = "\(a)FromField"
+            description = "\(t)Fields from which this \(t)Field is related."
+          }
         }
       }
     }
