@@ -325,7 +325,7 @@ const function getPascalCase(name: String): String =
 /// Turn the provided name into a lower_snake_case_name.
 const function getLowerSnakeCase(text: String): String = getSnakeCase(text).toLowerCase()
 local const function getSnakeCase(text: String): String =
-  text.replaceAll("_", "").replaceAll(Regex("([A-Z]+)([A-Z][a-z])"), "$1_$2").replaceAll(Regex("([a-z])([A-Z])"), "$1_$2")
+  text.replaceAll("_", "").replaceAll(Regex("([A-Z0-9]+)([A-Z][a-z][0-9])"), "$1_$2").replaceAll(Regex("([a-z0-9])([A-Z0-9])"), "$1_$2")
 
 const function getClassName(name: String): String = "\(getPascalCase(name))Cfg"
 
