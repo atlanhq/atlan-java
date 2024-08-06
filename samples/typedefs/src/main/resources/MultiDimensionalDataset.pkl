@@ -133,16 +133,15 @@ customTypes {
     relationships {
       [a] {
         description = "Containment relationship between \(t) (parent) and \(t)\(dimension) (children)."
-        endDef1 {
-          description = "Individual dimensions that make up the cube."
+        parent {
           type = t
-          name = "\(a)\(dimension)s"
-          isContainer = true
+          attribute = "\(a)\(dimension)s"
+          description = "Individual dimensions that make up the cube."
         }
-        endDef2 {
-          description = "Cube in which this dimension exists."
+        children {
           type = "\(t)\(dimension)"
-          name = a
+          attribute = a
+          description = "Cube in which this dimension exists."
         }
       }
     }
@@ -164,16 +163,15 @@ customTypes {
     relationships {
       ["\(a)\(dimension)"] {
         description = "Containment relationship between \(t)\(dimension) (parent) and \(t)\(hierarchy) (children)."
-        endDef1 {
-          description = "Individual hierarchies that make up the dimension."
+        parent {
           type = "\(t)\(dimension)"
-          name = "\(a)Hierarchies"
-          isContainer = true
+          attribute = "\(a)Hierarchies"
+          description = "Individual hierarchies that make up the dimension."
         }
-        endDef2 {
-          description = "Dimension in which this hierarchy exists."
+        children {
           type = "\(t)\(hierarchy)"
-          name = "\(a)\(dimension)"
+          attribute = "\(a)\(dimension)"
+          description = "Dimension in which this hierarchy exists."
         }
       }
     }
@@ -216,30 +214,28 @@ customTypes {
     relationships {
       ["\(a)\(hierarchy)"] {
         description = "Containment relationship between \(t)\(hierarchy) (parent) and \(t)\(field) (children)."
-        endDef1 {
-          description = "Individual fields that make up the hierarchy."
+        parent {
           type = "\(t)\(hierarchy)"
-          name = "\(a)\(field)s"
-          isContainer = true
+          attribute = "\(a)\(field)s"
+          description = "Individual fields that make up the hierarchy."
         }
-        endDef2 {
-          description = "Hierarchy in which this field exists."
+        children {
           type = "\(t)\(field)"
-          name = "\(a)\(hierarchy)"
+          attribute = "\(a)\(hierarchy)"
+          description = "Hierarchy in which this field exists."
         }
       }
       ["\(a)Parent\(field)"] {
         description = "Hierarchical nesting relationship between \(t)\(field)s."
-        endDef1 {
+        parent {
+          type = "\(t)\(field)"
+          attribute = "\(a)Nested\(field)s"
           description = "Individual fields nested within this cube field."
-          type = "\(t)\(field)"
-          name = "\(a)Nested\(field)s"
-          isContainer = true
         }
-        endDef2 {
-          description = "Parent field in which this field is nested."
+        children {
           type = "\(t)\(field)"
-          name = "\(a)Parent\(field)"
+          attribute = "\(a)Parent\(field)"
+          description = "Parent field in which this field is nested."
         }
       }
     }
