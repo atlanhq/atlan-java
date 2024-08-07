@@ -2,10 +2,10 @@
    Copyright 2024 Atlan Pte. Ltd. */
 amends "modulepath:/Model.pkl"
 
-t = "DataModel"
+t = "DM"
 a = t.decapitalize()
 
-local dataModel = "Container"
+local dataModel = "DataModel"
 local dmVersion = "Version"
 local dmEntity = "Entity"
 local dmAttribute = "Attribute"
@@ -23,13 +23,13 @@ shared {
     description = "Assets used to model data and information."
     superTypes { "Catalog" }
     attributes {
-      ["\(a)\(attrName)"] {
+      ["\(a)\(dataModel)\(attrName)"] {
         label = "Model"
         description = "Simple name of the model in which this asset exists, or empty if it is itself a data model."
         type = "string"
         indexAs = "both"
       }
-      ["\(a)\(qualifiedName)"] {
+      ["\(a)\(dataModel)\(qualifiedName)"] {
         description = "Unique name of the model in which this asset exists, or empty if it is itself a data model."
         type = "string"
         indexAs = "keyword"
@@ -56,11 +56,11 @@ shared {
         type = "string"
         indexAs = "keyword"
       }
-      // TODO: namespace, domain, etc
+      // TODO: namespace, domain, subjectArea, etc?
     }
   }
   ui {
-    svgName = "MultiDimensional.svg"
+    svgName = "MultiDimensional.svg" // TODO: pick an overall icon for data models
     filters {
       ["\(t)\(dataModel)"] {
         attribute = "\(a)\(qualifiedName)"
@@ -71,8 +71,8 @@ shared {
     }
     breadcrumb {
       ["\(t)\(dataModel)"] {
-        q = "\(a)\(qualifiedName)"
-        n = "\(a)\(attrName)"
+        q = "\(a)\(dataModel)\(qualifiedName)"
+        n = "\(a)\(dataModel)\(attrName)"
       }
       ["\(t)\(dmVersion)"] {
         q = "\(a)\(dmVersion)\(qualifiedName)"
@@ -109,7 +109,7 @@ customTypes {
     label = dmVersion
     icon = modelIcon
     description = "Instance of a version of a data model in Atlan."
-    parentQualifiedName = "\(a)\(qualifiedName)"
+    parentQualifiedName = "\(a)\(dataModel)\(qualifiedName)"
     attributes {
       ["\(a)\(dmEntity)Count"] {
         label = dmEntity.decapitalize()
@@ -128,7 +128,7 @@ customTypes {
         }
         children {
           type = "\(t)\(dmVersion)"
-          attribute = a
+          attribute = "\(a)\(dataModel)"
           description = "Data model for which this version exists."
         }
       }
@@ -160,6 +160,21 @@ customTypes {
           type = "\(t)\(dmEntity)"
           attribute = "\(a)\(dmVersion)"
           description = "Data model version in which this entity exists."
+        }
+      }
+      ["data_model_entity_mapped_entities"] { // TODO: is this really peer-to-peer, or parent-child (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
+        description = "Peer-to-peer mappings between data entities."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)ToEntities"
+            description = "Entities to which this entity is mapped."
+          }
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)FromEntities"
+            description = "Entities from which this entity is mapped."
+          }
         }
       }
     }
