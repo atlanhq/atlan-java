@@ -674,6 +674,17 @@ local class TypeDefFile {
   relationshipDefs: List<RelationshipDef>?
 }
 
+/// Get a set of unique icon names for the module.
+/// - `m` the model to get unique icon names for
+local const function getUniqueIcons(m): Set<String> = new Listing {
+  for (_, asset: CustomAssetType in m.customTypes) {
+    asset.icon.svg
+    when (asset.icon.activeVariant) {
+      asset.icon.svgActive
+    }
+  }
+}.toSet()
+
 /// Set up multiple outputs for the module, one for each custom type definition.
 /// - `m` the model to generate outputs for
 const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
@@ -683,57 +694,52 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
       ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
     }
   }
-  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
     renderer = new Renderers.IndexL3 { model = m }
   }
-  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/index.ts"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/index.ts"] = new FileOutput {
     renderer = new Renderers.IndexL2 { model = m }
   }
-  ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/methods.ts"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/methods.ts"] = new FileOutput {
     renderer = new Renderers.Methods { model = m }
   }
-  ["frontend/src/constant/source/index.ts-snippet"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/index.ts-snippet"] = new FileOutput {
     renderer = new Renderers.IndexL1 { model = m }
   }
-  ["frontend/src/components/common/widgets/summary/types/parentAssetInline.vue-snippet"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/components/common/widgets/summary/types/parentAssetInline.vue-snippet"] = new FileOutput {
     renderer = new Renderers.ParentAssetInline { model = m }
   }
-  ["frontend/src/locales/en.json-snippet"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/locales/en.json-snippet"] = new FileOutput {
     renderer = new Renderers.Localizations { model = m }
   }
-  for (_, asset: CustomAssetType in m.customTypes) {
-    ["frontend/src/assets/images/icons/\(asset.icon.svg)-PLACEHOLDER"] = new FileOutput {
+  for (iconName: String in getUniqueIcons(m)) {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/assets/images/icons/\(iconName)-PLACEHOLDER"] = new FileOutput {
       text = "REPLACE WITH ACTUAL SVG FILE"
     }
-    when (asset.icon.activeVariant) {
-      ["frontend/src/assets/images/icons/\(asset.icon.svgActive)-PLACEHOLDER"] = new FileOutput {
-        text = "REPLACE WITH ACTUAL SVG FILE"
-      }
-    }
   }
-  ["frontend/src/components/common/icon/iconMap.ts-snippet"] = new FileOutput {
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/components/common/icon/iconMap.ts-snippet"] = new FileOutput {
     renderer = new Renderers.IconMap { model = m }
   }
-  ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
+  ["frontend/\(m.shared.supertypeDefinition.name)/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
   when (m.customTypes != null) {
-    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/assetTypes.ts"] = new FileOutput {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/assetTypes.ts"] = new FileOutput {
       renderer = new Renderers.AssetTypes { model = m }
     }
-    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/getAssetTypes.ts"] = new FileOutput {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/getAssetTypes.ts"] = new FileOutput {
       renderer = new Renderers.GetAssetTypes { model = m }
     }
-    ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/hierarchyFilters.ts"] = new FileOutput {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/hierarchyFilters.ts"] = new FileOutput {
       renderer = new Renderers.HierarchyFilters { model = m }
     }
-    ["frontend/src/constant/projection.ts-snippet"] = new FileOutput {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/projection.ts-snippet"] = new FileOutput {
       renderer = new Renderers.Projection { model = m }
     }
-    ["frontend/src/composables/discovery/useBody.ts-snippet"] = new FileOutput {
+    ["frontend/\(m.shared.supertypeDefinition.name)/src/composables/discovery/useBody.ts-snippet"] = new FileOutput {
       renderer = new Renderers.UseBody { model = m }
     }
     for (typeName, asset in m.customTypes) {
-      ["frontend/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
-      ["frontend/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize()).ts"] = new FileOutput {
+      ["frontend/\(m.shared.supertypeDefinition.name)/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+      ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize()).ts"] = new FileOutput {
         renderer = new Renderers.Attributes {
           model = m
           assetType = typeName
