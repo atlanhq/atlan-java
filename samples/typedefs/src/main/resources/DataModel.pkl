@@ -234,7 +234,7 @@ customTypes {
           ["MANY-TO-MANY"] { description = "Entities (E) can be associated with multiple other entities (F), and entities (F) can be associated with multiple entities (E)." }
         }
       }
-   }
+    }
     relationships {
        ["data_model_entity_data_model_entities"] {
         description = "Peer-to-peer relationship between data entity association and data entity."
