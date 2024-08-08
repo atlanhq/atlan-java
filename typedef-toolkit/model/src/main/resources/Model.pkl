@@ -181,7 +181,7 @@ open class TypeDef {
   typeVersion: String = "1.0"
 
   /// Generated list of [attributes][AttributeDef] for the type definition.
-  fixed attributeDefs: List<AttributeDef> = if (attributes != null)
+  fixed attributeDefs: List<AttributeDef>? = if (attributes != null)
     attributes.fold(List(), (acc: List<AttributeDef>, key, value) ->
       let (attrDef =
         (value) { name = key } // Set the name from the map's key
@@ -510,6 +510,8 @@ class EnumDef extends TypeDef {
     )
       acc.add(elementDef)
   )
+
+  fixed attributeDefs = null
 }
 
 /// Definition of a single valid value for an enumeration.
