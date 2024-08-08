@@ -9,8 +9,11 @@ local dataModel = "DataModel"
 local dmVersion = "Version"
 local dmEntity = "Entity"
 local dmAttribute = "Attribute"
-local qualifiedName = "QualifiedName"
+local dmEntityAssociation = "EntityAssociation"
+local dmAttributeAssociation = "AttributeAssociation"
+
 local attrName = "Name"
+local qualifiedName = "QualifiedName"
 
 local modelIcon = new Icon {
   name = "GenericDB"
@@ -105,6 +108,7 @@ customTypes {
       }
     }
   }
+
   ["\(t)\(dmVersion)"] {
     label = dmVersion
     icon = modelIcon
@@ -134,6 +138,7 @@ customTypes {
       }
     }
   }
+
   ["\(t)\(dmEntity)"] {
     label = dmEntity
     labelPlural = "Entities"
@@ -162,23 +167,94 @@ customTypes {
           description = "Data model version in which this entity exists."
         }
       }
-      ["data_model_entity_mapped_entities"] { // TODO: is this really peer-to-peer, or parent-child (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
+      ["data_model_entity_mapped_entities"] {
+        // TODO: is this really peer-to-peer, or parent-child
+        // (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
         description = "Peer-to-peer mappings between data entities."
         peers {
           new {
             type = "\(t)\(dmEntity)"
-            attribute = "\(a)ToEntities"
+            attribute = "\(a)MappedToEntities"
             description = "Entities to which this entity is mapped."
           }
           new {
             type = "\(t)\(dmEntity)"
-            attribute = "\(a)FromEntities"
+            attribute = "\(a)MappedFromEntities"
             description = "Entities from which this entity is mapped."
+          }
+        }
+      }
+      ["data_model_entity_data_model_entities"] {
+        description = "Peer-to-peer relationship between data entity and data entity association."
+        peers {
+          new {
+            type = "\(t)\(dmEntityAssociation)"
+            attribute = "\(a)RelatedToEntities"
+            description = "Entity association to which this entity is related."
+          }
+          new {
+            type = "\(t)\(dmEntityAssociation)"
+            attribute = "\(a)RelatedFromEntities"
+            description = "Entity association from which this entity is related."
           }
         }
       }
     }
   }
+
+  ["\(t)\(dmEntityAssociation)"] {
+    label = dmEntityAssociation
+    icon = modelIcon
+    description = "Instance of a data entity association in Atlan."
+    attributes {
+      ["\(a)Cardinality"] {
+        label = "cardinality"
+        description = "Cardinality of the data entity association."
+        type = "enum"
+        enumName = "\(t)CardinalityType"
+      }
+      ["\(a)Label"] {
+        label = "label"
+        description = "Label of the data entity association."
+        type = "string"
+      }
+      ["\(a)OwnerSealId"] {
+        label = "ownerSealId"
+        description = "Owner seal ID of the data entity association."
+        type = "string"
+      }
+    }
+    enums {
+      ["\(t)CardinalityType"] {
+        description = "Valid values for \(t)EntityAssociation cardinality."
+        validValues {
+          ["ONE-TO-ONE"] { description = "An entity (E) is connected to at most one other entity (F), and vice versa." }
+          ["ONE-TO-MANY"] { description = "An entity (E) can be associated with multiple entities (F), but each entity (F) is associated with at most one entity (E)." }
+          ["MANY-TO-ONE"] { description = "Multiple entities (E) can be connected to the same entity (F), but each entity (F) is associated with at most one entity (E)." }
+          ["MANY-TO-MANY"] { description = "Entities (E) can be associated with multiple other entities (F), and entities (F) can be associated with multiple entities (E)." }
+        }
+      }
+   }
+    relationships {
+       ["data_model_entity_data_model_entities"] {
+        description = "Peer-to-peer relationship between data entity association and data entity."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)EntityTo"
+            description = "Entity to which this association is related."
+          }
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)EntityFrom"
+            description = "Entity from which this association is related."
+          }
+        }
+        manyToMany = false
+      }
+    }
+  }
+
   ["\(t)\(dmAttribute)"] {
     label = dmAttribute
     icon = modelIcon
@@ -200,6 +276,91 @@ customTypes {
           attribute = "\(a)\(dmEntity)"
           description = "Entity in which this attribute exists."
         }
+      }
+      ["data_model_attribute_mapped_attributes"] {
+        // TODO: is this really peer-to-peer, or parent-child
+        // (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
+        description = "Peer-to-peer mappings between data attributes."
+        peers {
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)MappedToAttributes"
+            description = "Attributes to which this attribute is mapped."
+          }
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)MappedFromAttributes"
+            description = "Attributes from which this attribute is mapped."
+          }
+        }
+      }
+      ["data_model_attribute_data_model_attributes"] {
+        description = "Peer-to-peer relationship between data attribute and data attribute association."
+        peers {
+          new {
+            type = "\(t)\(dmAttributeAssociation)"
+            attribute = "\(a)RelatedToAttributes"
+            description = "Attribute association to which this attribute is related."
+          }
+          new {
+            type = "\(t)\(dmAttributeAssociation)"
+            attribute = "\(a)RelatedFromAttributes"
+            description = "Attribute association from which this attribute is related."
+          }
+        }
+      }
+    }
+  }
+
+  ["\(t)\(dmAttributeAssociation)"] {
+    label = dmAttributeAssociation
+    icon = modelIcon
+    description = "Instance of a data attribute association in Atlan."
+    attributes {
+      ["\(a)Cardinality"] {
+        label = "cardinality"
+        description = "Cardinality of the data attribute association."
+        type = "enum"
+        enumName = "\(t)CardinalityType"
+      }
+      ["\(a)Label"] {
+        label = "label"
+        description = "Label of the data attribute association."
+        type = "string"
+      }
+      ["\(a)OwnerSealId"] {
+        label = "ownerSealId"
+        description = "Owner seal ID of the data attribute association."
+        type = "string"
+      }
+    }
+    enums {
+      ["\(t)CardinalityType"] {
+        description = "Valid values for \(t)AttributeAssociation cardinality."
+        validValues {
+          ["ONE-TO-ONE"] { description = "An attribute (A) is associated with at most one other attribute (B), and vice versa." }
+          ["ONE-TO-MANY"] { description = "An attribute (A) can be associated with multiple attributes (B), but each attribute (B) is associated with at most one attribute (A)." }
+          ["MANY-TO-ONE"] { description = "Multiple attributes (A) can be associated with the same attribute (B), but each attribute (B) is associated with at most one attribute (A)." }
+          ["MANY-TO-MANY"] { description = "Attributes (A) can be associated with multiple other attributes (B), and attributes (B) can be associated with multiple attributes (A)." }
+        }
+      }
+    }
+    relationships {
+      ["data_model_attribute_data_model_attributes"] {
+        description = "Peer-to-peer relationship between data attribute association and data attribute."
+        peers {
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)AttributeTo"
+            description = "Attribute to which this association is related."
+          }
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)AttributeFrom"
+            description = "Attribute from which this association is related."
+          }
+        }
+        manyToMany = false
       }
     }
   }
