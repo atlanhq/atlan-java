@@ -334,17 +334,6 @@ customTypes {
         type = "string"
       }
     }
-    enums {
-      ["\(t)CardinalityType"] {
-        description = "Valid values for \(t)AttributeAssociation cardinality."
-        validValues {
-          ["ONE-TO-ONE"] { description = "An attribute (A) is associated with at most one other attribute (B), and vice versa." }
-          ["ONE-TO-MANY"] { description = "An attribute (A) can be associated with multiple attributes (B), but each attribute (B) is associated with at most one attribute (A)." }
-          ["MANY-TO-ONE"] { description = "Multiple attributes (A) can be associated with the same attribute (B), but each attribute (B) is associated with at most one attribute (A)." }
-          ["MANY-TO-MANY"] { description = "Attributes (A) can be associated with multiple other attributes (B), and attributes (B) can be associated with multiple attributes (A)." }
-        }
-      }
-    }
     relationships {
       ["data_model_attribute_data_model_attributes"] {
         description = "Peer-to-peer relationship between data attribute association and data attribute."
