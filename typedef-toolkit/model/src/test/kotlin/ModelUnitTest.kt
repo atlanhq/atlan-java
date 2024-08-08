@@ -117,6 +117,6 @@ class ModelUnitTest {
     }
 
     private fun getAttribute(model: Model): Model.AttributeDef {
-        return model.shared.supertypeDefinition.attributeDefs[0]
+        return model.shared.supertypeDefinition.attributeDefs!![0]
     }
 }
