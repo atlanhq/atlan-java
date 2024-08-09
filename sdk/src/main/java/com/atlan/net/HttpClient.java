@@ -252,7 +252,22 @@ public abstract class HttpClient {
         }
 
         if (response != null) {
-            if (response.code() == 403) {
+            if (response.code() == 401) {
+                // Retry authentication on an authentication failure (token could have expired)
+                String userId = request.client().getUserId();
+                if (userId != null) {
+                    try {
+                        log.info(" ... authentication failed, attempting to exchange new token for user: {}", userId);
+                        String token = request.client().impersonate.user(userId);
+                        request.client().setApiToken(token);
+                        return true;
+                    } catch (AtlanException e) {
+                        log.warn(" ... attempt to impersonate user {} failed, not retrying.", userId, exception);
+                    }
+                }
+                // If there is no user to impersonate, no need to retry, just short-circuit to failure
+                return false;
+            } else if (response.code() == 403) {
                 // Retry on permission failure (since these are granted asynchronously)
                 log.debug(" ... no permission for the operation (yet), will retry: {}", response.body(), exception);
             } else if (response.code() >= 500) {
