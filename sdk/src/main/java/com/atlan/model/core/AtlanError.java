@@ -48,6 +48,15 @@ public class AtlanError extends AtlanObject {
     /** Details about where the error occurred. */
     Map<String, String> errorDetailsMap;
 
+    /** TBC */
+    String servlet;
+
+    /** Response code for unauthorized calls. */
+    String status;
+
+    /** Path attempted to access for an unauthorized call. */
+    String url;
+
     /**
      * Find the code within the error.
      *
@@ -60,6 +69,8 @@ public class AtlanError extends AtlanObject {
             return error;
         } else if (code != null) {
             return "" + code;
+        } else if (status != null && !status.isEmpty()) {
+            return status;
         } else {
             return "(unknown)";
         }
@@ -74,6 +85,9 @@ public class AtlanError extends AtlanObject {
         if (errorMessage != null && !errorMessage.isEmpty()) {
             return errorMessage;
         } else if (message != null && !message.isEmpty()) {
+            if (url != null && !url.isEmpty()) {
+                return message + " (" + url + ")";
+            }
             return message;
         } else if (errorDescription != null && !errorDescription.isEmpty()) {
             return errorDescription;

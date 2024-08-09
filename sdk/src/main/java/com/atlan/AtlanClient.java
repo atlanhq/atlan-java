@@ -57,6 +57,11 @@ public class AtlanClient {
     @Setter
     private volatile String apiToken;
 
+    /** Unique identifier (GUID) of the user this client impersonates. */
+    @Getter
+    @Setter
+    private volatile String userId = null;
+
     /** Proxy to tunnel all Atlan connections. */
     @Getter
     @Setter

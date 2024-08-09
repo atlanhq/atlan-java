@@ -114,6 +114,7 @@ object Utils {
                 }
                 userId.isNotEmpty() -> {
                     logger.info { "No API token found, attempting to impersonate user: $userId" }
+                    Atlan.getDefaultClient().userId = userId
                     Atlan.getDefaultClient().impersonate.user(userId)
                 }
                 else -> {
