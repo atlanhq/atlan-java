@@ -27,6 +27,7 @@ import com.atlan.model.fields.NumericRankField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 <#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
@@ -116,7 +117,7 @@ public interface I${className} {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

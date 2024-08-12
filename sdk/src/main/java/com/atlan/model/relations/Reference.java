@@ -4,6 +4,7 @@ package com.atlan.model.relations;
 
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Attribute;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;
@@ -199,8 +200,9 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     /** Status of the relationship (when this is a related entity). */
     AtlanStatus relationshipStatus;
 
-    /** Attributes specific to the relationship (unused). */
-    Map<String, Object> relationshipAttributes;
+    /** Attributes specific to the relationship. */
+    @Attribute
+    RelationshipAttributes relationshipAttributes;
 
     /**
      * Attribute(s) that uniquely identify the entity (when this is a related entity).

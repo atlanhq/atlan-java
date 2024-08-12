@@ -9,6 +9,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -70,107 +71,114 @@ public class AssetSerializer extends StdSerializer<Asset> {
         try {
             for (String fieldName : ReflectionCache.getFieldNames(clazz)) {
                 if (ReflectionCache.isAttribute(clazz, fieldName)) {
-                    // If the field should be attribute-nested...
-                    Object attrValue;
-                    Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
-                    if (nullFields.contains(fieldName)) {
-                        // If the value should be serialized as null, then
-                        // set the value to the serializable null
-                        if (type == List.class || type == Set.class || type == SortedSet.class) {
-                            attrValue = Removable.EMPTY_LIST;
-                        } else {
-                            attrValue = Removable.NULL;
+                    if (fieldName.equals("relationshipAttributes")) {
+                        RelationshipAttributes ra = asset.getRelationshipAttributes();
+                        if (ra != null && ra.getAll() != null) {
+                            attributes.putAll(ra.getAll());
                         }
                     } else {
-                        // Otherwise, pickup the value from the top-level
-                        // attribute so that we can move that value across
-                        attrValue = ReflectionCache.getValue(asset, fieldName);
-                    }
-                    if (attrValue != null) {
-                        // Ignore null values and empty collections
-                        boolean skip = (attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
-                                || (attrValue instanceof Map && ((Map<?, ?>) attrValue).isEmpty());
-                        if (!skip) {
-                            if (fieldName.equals("mappedAtlanTagName")) {
-                                String mappedName;
-                                try {
-                                    mappedName = client.getAtlanTagCache().getIdForName(attrValue.toString());
-                                } catch (NotFoundException e) {
-                                    mappedName = Serde.DELETED_AUDIT_OBJECT;
-                                } catch (AtlanException e) {
-                                    throw new IOException("Unable to serialize mappedAtlanTagName.", e);
-                                }
-                                attrValue = mappedName;
-                            } else if (fieldName.equals("purposeAtlanTags") && attrValue instanceof Collection) {
-                                List<String> mappedNames = new ArrayList<>();
-                                for (Object one : (Collection<?>) attrValue) {
-                                    try {
-                                        mappedNames.add(
-                                                client.getAtlanTagCache().getIdForName(one.toString()));
-                                    } catch (NotFoundException e) {
-                                        mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
-                                    } catch (AtlanException e) {
-                                        throw new IOException("Unable to serialize purposeAtlanTags.", e);
-                                    }
-                                }
-                                attrValue = mappedNames;
+                        // If the field should be attribute-nested...
+                        Object attrValue;
+                        Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
+                        if (nullFields.contains(fieldName)) {
+                            // If the value should be serialized as null, then
+                            // set the value to the serializable null
+                            if (type == List.class || type == Set.class || type == SortedSet.class) {
+                                attrValue = Removable.EMPTY_LIST;
+                            } else {
+                                attrValue = Removable.NULL;
                             }
-                            // Add the value we've derived above to the attribute map for nesting
-                            String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
-                            // Note: the value could be a singular reference, or a collection of references...
-                            if (attrValue instanceof Collection) {
-                                // If it is in a collection, check whether the first value is a reference
-                                // (there should always be one, as earlier condition would exclude empty
-                                // collections)
-                                Collection<?> values = (Collection<?>) attrValue;
-                                Optional<?> first = values.stream().findFirst();
-                                if (first.isPresent() && first.get() instanceof Reference) {
-                                    List<Object> appends = new ArrayList<>();
-                                    List<Object> removes = new ArrayList<>();
-                                    List<Object> replace = new ArrayList<>();
-                                    for (Object value : values) {
-                                        Reference relationship = (Reference) value;
-                                        switch (relationship.getSemantic()) {
-                                            case APPEND:
-                                                appends.add(relationship);
-                                                break;
-                                            case REMOVE:
-                                                removes.add(relationship);
-                                                break;
-                                            default:
-                                                replace.add(relationship);
-                                                break;
+                        } else {
+                            // Otherwise, pickup the value from the top-level
+                            // attribute so that we can move that value across
+                            attrValue = ReflectionCache.getValue(asset, fieldName);
+                        }
+                        if (attrValue != null) {
+                            // Ignore null values and empty collections
+                            boolean skip = (attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
+                                    || (attrValue instanceof Map && ((Map<?, ?>) attrValue).isEmpty());
+                            if (!skip) {
+                                if (fieldName.equals("mappedAtlanTagName")) {
+                                    String mappedName;
+                                    try {
+                                        mappedName = client.getAtlanTagCache().getIdForName(attrValue.toString());
+                                    } catch (NotFoundException e) {
+                                        mappedName = Serde.DELETED_AUDIT_OBJECT;
+                                    } catch (AtlanException e) {
+                                        throw new IOException("Unable to serialize mappedAtlanTagName.", e);
+                                    }
+                                    attrValue = mappedName;
+                                } else if (fieldName.equals("purposeAtlanTags") && attrValue instanceof Collection) {
+                                    List<String> mappedNames = new ArrayList<>();
+                                    for (Object one : (Collection<?>) attrValue) {
+                                        try {
+                                            mappedNames.add(
+                                                    client.getAtlanTagCache().getIdForName(one.toString()));
+                                        } catch (NotFoundException e) {
+                                            mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
+                                        } catch (AtlanException e) {
+                                            throw new IOException("Unable to serialize purposeAtlanTags.", e);
                                         }
                                     }
-                                    if (!appends.isEmpty()) {
-                                        appendRelationships.put(serializeName, appends);
+                                    attrValue = mappedNames;
+                                }
+                                // Add the value we've derived above to the attribute map for nesting
+                                String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                                // Note: the value could be a singular reference, or a collection of references...
+                                if (attrValue instanceof Collection) {
+                                    // If it is in a collection, check whether the first value is a reference
+                                    // (there should always be one, as earlier condition would exclude empty
+                                    // collections)
+                                    Collection<?> values = (Collection<?>) attrValue;
+                                    Optional<?> first = values.stream().findFirst();
+                                    if (first.isPresent() && first.get() instanceof Reference) {
+                                        List<Object> appends = new ArrayList<>();
+                                        List<Object> removes = new ArrayList<>();
+                                        List<Object> replace = new ArrayList<>();
+                                        for (Object value : values) {
+                                            Reference relationship = (Reference) value;
+                                            switch (relationship.getSemantic()) {
+                                                case APPEND:
+                                                    appends.add(relationship);
+                                                    break;
+                                                case REMOVE:
+                                                    removes.add(relationship);
+                                                    break;
+                                                default:
+                                                    replace.add(relationship);
+                                                    break;
+                                            }
+                                        }
+                                        if (!appends.isEmpty()) {
+                                            appendRelationships.put(serializeName, appends);
+                                        }
+                                        if (!removes.isEmpty()) {
+                                            removeRelationships.put(serializeName, removes);
+                                        }
+                                        if (!replace.isEmpty()) {
+                                            attributes.put(serializeName, replace);
+                                        }
+                                    } else {
+                                        attributes.put(serializeName, attrValue);
                                     }
-                                    if (!removes.isEmpty()) {
-                                        removeRelationships.put(serializeName, removes);
-                                    }
-                                    if (!replace.isEmpty()) {
-                                        attributes.put(serializeName, replace);
+                                } else if (attrValue instanceof Reference) {
+                                    // If the value is a relationship, put it into the appropriate portion of
+                                    // the request based on its semantic
+                                    Reference relationship = (Reference) attrValue;
+                                    switch (relationship.getSemantic()) {
+                                        case APPEND:
+                                            appendRelationships.put(serializeName, attrValue);
+                                            break;
+                                        case REMOVE:
+                                            removeRelationships.put(serializeName, attrValue);
+                                            break;
+                                        default:
+                                            attributes.put(serializeName, attrValue);
+                                            break;
                                     }
                                 } else {
                                     attributes.put(serializeName, attrValue);
                                 }
-                            } else if (attrValue instanceof Reference) {
-                                // If the value is a relationship, put it into the appropriate portion of
-                                // the request based on its semantic
-                                Reference relationship = (Reference) attrValue;
-                                switch (relationship.getSemantic()) {
-                                    case APPEND:
-                                        appendRelationships.put(serializeName, attrValue);
-                                        break;
-                                    case REMOVE:
-                                        removeRelationships.put(serializeName, attrValue);
-                                        break;
-                                    default:
-                                        attributes.put(serializeName, attrValue);
-                                        break;
-                                }
-                            } else {
-                                attributes.put(serializeName, attrValue);
                             }
                         }
                     }

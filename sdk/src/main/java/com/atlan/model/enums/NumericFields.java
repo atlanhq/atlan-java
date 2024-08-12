@@ -140,8 +140,6 @@ public enum NumericFields implements AtlanSearchableField {
     DATASET_COUNT("datasetCount"),
     /** Version of the contract. */
     DATA_CONTRACT_VERSION("dataContractVersion"),
-    /** TBC */
-    DATA_MODEL_REFRESH_TIMESTAMP("dataModelRefreshTimestamp"),
     /** Timestamp when the score of this data product was last updated. */
     DATA_PRODUCT_SCORE_UPDATED_AT("dataProductScoreUpdatedAt"),
     /** Score of this data product. */
@@ -184,6 +182,12 @@ public enum NumericFields implements AtlanSearchableField {
     DYNAMO_DB_TABLE_LSI_COUNT("dynamoDBTableLSICount"),
     /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
     DYNAMO_DB_WRITE_CAPACITY_UNITS("dynamoDBWriteCapacityUnits"),
+    /** Number of attributes in the entity. */
+    D_M_ATTRIBUTE_COUNT("dMAttributeCount"),
+    /** Number of entities in the version. */
+    D_M_ENTITY_COUNT("dMEntityCount"),
+    /** Number of versions of the data model. */
+    D_M_VERSION_COUNT("dMVersionCount"),
     /** TBC */
     END_TIME("endTime"),
     /** Number of fields in this object. */
@@ -240,6 +244,8 @@ public enum NumericFields implements AtlanSearchableField {
     MATILLION_PROJECT_JOB_COUNT("matillionProjectJobCount"),
     /** Maximum length of this field. */
     MAX_LENGTH("maxLength"),
+    /** Number of alerts associated with this monitor. */
+    MC_MONITOR_ALERT_COUNT("mcMonitorAlertCount"),
     /** Rate at which this monitor is breached. */
     MC_MONITOR_BREACH_RATE("mcMonitorBreachRate"),
     /** Number of incidents associated with this monitor. */
