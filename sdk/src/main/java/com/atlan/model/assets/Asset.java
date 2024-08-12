@@ -283,10 +283,20 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     AtlanIcon assetIcon;
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcAlertQualifiedNames;
+
     /** List of Monte Carlo incident names attached to this asset. */
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentNames;
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentPriorities;
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     @Attribute

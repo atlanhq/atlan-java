@@ -190,8 +190,14 @@ public interface ISnowflakeDynamicTable {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
     /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();

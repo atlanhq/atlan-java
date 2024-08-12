@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataEntityTest {
+public class DMEntityAssociationTest {
 
-    private static final DataEntity full = DataEntity._internal()
+    private static final DMEntityAssociation full = DMEntityAssociation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,12 @@ public class DataEntityTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dataEntityId("String0")
-            .dataModelDomain("String0")
-            .dataModelEntityName("String0")
-            .dataModelEntityQualifiedName("String0")
-            .dataModelEnvironment("String0")
-            .dataModelId("String0")
-            .dataModelName("String0")
-            .dataModelNamespace("String0")
-            .dataModelQualifiedName("String0")
-            .dataModelVersionQualifiedName("String0")
-            .dataModelVersionQualifiedName("String1")
+            .dMDataModelName("String0")
+            .dMDataModelQualifiedName("String0")
+            .dMEntityName("String0")
+            .dMEntityQualifiedName("String0")
+            .dMVersionName("String0")
+            .dMVersionQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -137,8 +132,12 @@ public class DataEntityTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetMcAlertQualifiedName("String0")
+            .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
+            .assetMcIncidentPriority("String0")
+            .assetMcIncidentPriority("String1")
             .assetMcIncidentQualifiedName("String0")
             .assetMcIncidentQualifiedName("String1")
             .assetMcIncidentSeverity("String0")
@@ -405,36 +404,29 @@ public class DataEntityTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dataEntityFullyQualifiedName("String0")
-            .dataEntitySubjectArea("String0")
-            .dataModelVersion(DataModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataModelVersion(DataModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .mappedGlossaryTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedGlossaryTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sourceDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sourceDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sourceRelatedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sourceRelatedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .targetDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .targetDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .targetRelatedDataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .targetRelatedDataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMCardinality(DMCardinalityType.ONE_TO_ONE)
+            .dMLabel("String0")
+            .dMOwnerSealId("String0")
+            .dMRelatedFromEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedFromEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedToEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedToEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataEntity frodo;
+    private static DMEntityAssociation frodo;
     private static String serialized;
 
-    @Test(groups = {"DataEntity.builderEquivalency"})
+    @Test(groups = {"DMEntityAssociation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataEntity.serialize"},
-            dependsOnGroups = {"DataEntity.builderEquivalency"})
+            groups = {"DMEntityAssociation.serialize"},
+            dependsOnGroups = {"DMEntityAssociation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -443,17 +435,17 @@ public class DataEntityTest {
     }
 
     @Test(
-            groups = {"DataEntity.deserialize"},
-            dependsOnGroups = {"DataEntity.serialize"})
+            groups = {"DMEntityAssociation.deserialize"},
+            dependsOnGroups = {"DMEntityAssociation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataEntity.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DMEntityAssociation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataEntity.equivalency"},
-            dependsOnGroups = {"DataEntity.serialize", "DataEntity.deserialize"})
+            groups = {"DMEntityAssociation.equivalency"},
+            dependsOnGroups = {"DMEntityAssociation.serialize", "DMEntityAssociation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -462,8 +454,8 @@ public class DataEntityTest {
     }
 
     @Test(
-            groups = {"DataEntity.equivalency"},
-            dependsOnGroups = {"DataEntity.serialize", "DataEntity.deserialize"})
+            groups = {"DMEntityAssociation.equivalency"},
+            dependsOnGroups = {"DMEntityAssociation.serialize", "DMEntityAssociation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

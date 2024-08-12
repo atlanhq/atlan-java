@@ -216,7 +216,13 @@ public interface ILineageProcess {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** TBC */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentQualifiedNames();

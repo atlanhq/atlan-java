@@ -683,6 +683,24 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
      * to this method.
      *
+     * @param attributes (checked) to retrieve for each category in the hierarchy
+     * @param relatedAttributes (checked) to retrieve for each relationship attribute retrieved for each category in the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(List<AtlanField> attributes, List<AtlanField> relatedAttributes)
+            throws AtlanException {
+        return getHierarchy(Atlan.getDefaultClient(), attributes, relatedAttributes);
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
+     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
+     * to this method.
+     *
      * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
      * @param attributes (unchecked) to retrieve for each category in the hierarchy
      * @return a traversable category hierarchy
@@ -729,6 +747,25 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(AtlanClient client, List<AtlanField> attributes) throws AtlanException {
+        return getHierarchy(client, attributes, null);
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
+     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
+     * to this method.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
+     * @param attributes (checked) to retrieve for each category in the hierarchy
+     * @param relatedAttributes (checked) to retrieve for each relationship attribute retrieved for each category in the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(
+            AtlanClient client, List<AtlanField> attributes, List<AtlanField> relatedAttributes) throws AtlanException {
         if (qualifiedName == null) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
@@ -739,6 +776,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                 .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
                 .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
                 .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .includesOnRelations(relatedAttributes == null ? Collections.emptyList() : relatedAttributes)
                 .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
                 .stream()
                 .filter(a -> a instanceof GlossaryCategory)
