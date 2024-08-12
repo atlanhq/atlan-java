@@ -84,6 +84,8 @@ public enum TextFields implements AtlanSearchableField {
     ASSET_DBT_TAGS("assetDbtTags.text"),
     /** Unique identifier of this asset in dbt. */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId"),
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    ASSET_MC_ALERT_QUALIFIED_NAMES("assetMcAlertQualifiedNames.text"),
     /** List of Monte Carlo incident names attached to this asset. */
     ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames"),
     /** List of unique Monte Carlo incident names attached to this asset. */
@@ -130,10 +132,6 @@ public enum TextFields implements AtlanSearchableField {
     CUBE_PARENT_FIELD_NAME("cubeParentFieldName"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
-    /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
-    DATA_MODEL_ENTITY_NAME("dataModelEntityName"),
-    /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
-    DATA_MODEL_NAME("dataModelName"),
     /** Title of the Google Data Studio asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
     /** Data type of values in this field. */
@@ -174,6 +172,12 @@ public enum TextFields implements AtlanSearchableField {
     DESCRIPTION("description"),
     /** Human-readable name of this asset used for display purposes (in user interface). */
     DISPLAY_NAME("displayName"),
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    D_M_DATA_MODEL_NAME("dMDataModelName"),
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    D_M_ENTITY_NAME("dMEntityName"),
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    D_M_VERSION_NAME("dMVersionName"),
     /** Lifecycle rules for this bucket. */
     GCS_BUCKET_LIFECYCLE_RULES("gcsBucketLifecycleRules"),
     /** Simple name of the bucket in which this object exists. */

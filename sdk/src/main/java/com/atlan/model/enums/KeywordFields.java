@@ -216,8 +216,12 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_WORKFLOW_LAST_UPDATED("assetDbtWorkflowLastUpdated"),
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     ASSET_ICON("assetIcon"),
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    ASSET_MC_ALERT_QUALIFIED_NAMES("assetMcAlertQualifiedNames"),
     /** List of Monte Carlo incident names attached to this asset. */
     ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames.keyword"),
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    ASSET_MC_INCIDENT_PRIORITIES("assetMcIncidentPriorities"),
     /** List of unique Monte Carlo incident names attached to this asset. */
     ASSET_MC_INCIDENT_QUALIFIED_NAMES("assetMcIncidentQualifiedNames"),
     /** List of Monte Carlo incident severities associated with this asset. */
@@ -452,14 +456,6 @@ public enum KeywordFields implements AtlanSearchableField {
     DATASOURCE_FIELD_TYPE("datasourceFieldType"),
     /** Unique name of the datasource in which this datasource field exists. */
     DATASOURCE_QUALIFIED_NAME("datasourceQualifiedName"),
-    /** TBC */
-    DATA_ATTRIBUTE_FULLY_QUALIFIED_NAME("dataAttributeFullyQualifiedName"),
-    /** TBC */
-    DATA_ATTRIBUTE_ID("dataAttributeId"),
-    /** TBC */
-    DATA_ATTRIBUTE_MULTIPLICITY("dataAttributeMultiplicity"),
-    /** TBC */
-    DATA_ATTRIBUTE_TYPE("dataAttributeType"),
     /** Data category of this field. */
     DATA_CATEGORY("dataCategory"),
     /** Unique identifier of the asset associated with this data contract. */
@@ -468,38 +464,6 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_CONTRACT_JSON("dataContractJson"),
     /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
     DATA_CONTRACT_SPEC("dataContractSpec"),
-    /** TBC */
-    DATA_ENTITY_FULLY_QUALIFIED_NAME("dataEntityFullyQualifiedName"),
-    /** TBC */
-    DATA_ENTITY_ID("dataEntityId"),
-    /** TBC */
-    DATA_ENTITY_QUALIFIED_NAME("dataEntityQualifiedName"),
-    /** TBC */
-    DATA_ENTITY_SUBJECT_AREA("dataEntitySubjectArea"),
-    /** TBC */
-    DATA_MODEL_DOMAIN("dataModelDomain"),
-    /** Simple name of the entity in which this asset exists, or empty if it is itself an entity. */
-    DATA_MODEL_ENTITY_NAME("dataModelEntityName.keyword"),
-    /** Unique name of the entity in which this asset exists, or empty if it is itself an entity. */
-    DATA_MODEL_ENTITY_QUALIFIED_NAME("dataModelEntityQualifiedName"),
-    /** TBC */
-    DATA_MODEL_ENVIRONMENT("dataModelEnvironment"),
-    /** TBC */
-    DATA_MODEL_ID("dataModelId"),
-    /** Simple name of the data model in which this asset exists, or empty if it is itself a data model. */
-    DATA_MODEL_NAME("dataModelName.keyword"),
-    /** TBC */
-    DATA_MODEL_NAMESPACE("dataModelNamespace"),
-    /** TBC */
-    DATA_MODEL_OWNING_APPLICATION_SEAL_ID("dataModelOwningApplicationSEALId"),
-    /** TBC */
-    DATA_MODEL_QUALIFIED_NAME("dataModelQualifiedName"),
-    /** TBC */
-    DATA_MODEL_TOOL("dataModelTool"),
-    /** TBC */
-    DATA_MODEL_TYPE("dataModelType"),
-    /** TBC */
-    DATA_MODEL_VERSION_QUALIFIED_NAMES("dataModelVersionQualifiedNames"),
     /** Search DSL used to define which assets are part of this data product. */
     DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
     /** Playbook filter to define which assets are part of this data product. */
@@ -650,6 +614,26 @@ public enum KeywordFields implements AtlanSearchableField {
     DYNAMO_DB_SORT_KEY("dynamoDBSortKey"),
     /** Status of the DynamoDB Asset */
     DYNAMO_DB_STATUS("dynamoDBStatus"),
+    /** Cardinality of the data attribute association. */
+    D_M_CARDINALITY("dMCardinality"),
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    D_M_DATA_MODEL_NAME("dMDataModelName.keyword"),
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    D_M_DATA_MODEL_QUALIFIED_NAME("dMDataModelQualifiedName"),
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    D_M_ENTITY_NAME("dMEntityName.keyword"),
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    D_M_ENTITY_QUALIFIED_NAME("dMEntityQualifiedName"),
+    /** Label of the data attribute association. */
+    D_M_LABEL("dMLabel"),
+    /** Owner seal ID of the data attribute association. */
+    D_M_OWNER_SEAL_ID("dMOwnerSealId"),
+    /** Type of the data model. */
+    D_M_TYPE("dMType"),
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    D_M_VERSION_NAME("dMVersionName.keyword"),
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    D_M_VERSION_QUALIFIED_NAME("dMVersionQualifiedName"),
     /** Unused. Exmaples of the term. */
     EXAMPLES("examples"),
     /** External location of this partition, for example: an S3 object location. */
@@ -828,6 +812,8 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
     /** Identifier of this incident, from Monte Carlo. */
     MC_INCIDENT_ID("mcIncidentId"),
+    /** Priority of this incident inherited from monitor. */
+    MC_INCIDENT_PRIORITY("mcIncidentPriority"),
     /** Severity of this incident. */
     MC_INCIDENT_SEVERITY("mcIncidentSeverity"),
     /** State of this incident. */
@@ -844,6 +830,8 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_MONITOR_ID("mcMonitorId"),
     /** Namespace of this monitor. */
     MC_MONITOR_NAMESPACE("mcMonitorNamespace.keyword"),
+    /** Priority of this monitor. */
+    MC_MONITOR_PRIORITY("mcMonitorPriority"),
     /** Comparison logic used for the rule. */
     MC_MONITOR_RULE_COMPARISONS("mcMonitorRuleComparisons"),
     /** SQL code for custom SQL rules. */

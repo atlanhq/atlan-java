@@ -76,6 +76,10 @@ public class MCIncident extends Asset
     @Attribute
     String mcIncidentId;
 
+    /** Priority of this incident inherited from monitor. */
+    @Attribute
+    String mcIncidentPriority;
+
     /** Severity of this incident. */
     @Attribute
     String mcIncidentSeverity;

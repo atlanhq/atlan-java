@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataAttributeMappingProcessTest {
+public class DMVersionTest {
 
-    private static final DataAttributeMappingProcess full = DataAttributeMappingProcess._internal()
+    private static final DMVersion full = DMVersion._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,20 +59,24 @@ public class DataAttributeMappingProcessTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
+            .dMDataModelName("String0")
+            .dMDataModelQualifiedName("String0")
+            .dMEntityName("String0")
+            .dMEntityQualifiedName("String0")
+            .dMVersionName("String0")
+            .dMVersionQualifiedName("String0")
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -128,8 +132,12 @@ public class DataAttributeMappingProcessTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetMcAlertQualifiedName("String0")
+            .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
+            .assetMcIncidentPriority("String0")
+            .assetMcIncidentPriority("String1")
             .assetMcIncidentQualifiedName("String0")
             .assetMcIncidentQualifiedName("String1")
             .assetMcIncidentSeverity("String0")
@@ -396,20 +404,24 @@ public class DataAttributeMappingProcessTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .dMDataModel(DMDataModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMEntityCount(123456789L)
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataAttributeMappingProcess frodo;
+    private static DMVersion frodo;
     private static String serialized;
 
-    @Test(groups = {"DataAttributeMappingProcess.builderEquivalency"})
+    @Test(groups = {"DMVersion.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataAttributeMappingProcess.serialize"},
-            dependsOnGroups = {"DataAttributeMappingProcess.builderEquivalency"})
+            groups = {"DMVersion.serialize"},
+            dependsOnGroups = {"DMVersion.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -418,17 +430,17 @@ public class DataAttributeMappingProcessTest {
     }
 
     @Test(
-            groups = {"DataAttributeMappingProcess.deserialize"},
-            dependsOnGroups = {"DataAttributeMappingProcess.serialize"})
+            groups = {"DMVersion.deserialize"},
+            dependsOnGroups = {"DMVersion.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataAttributeMappingProcess.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DMVersion.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataAttributeMappingProcess.equivalency"},
-            dependsOnGroups = {"DataAttributeMappingProcess.serialize", "DataAttributeMappingProcess.deserialize"})
+            groups = {"DMVersion.equivalency"},
+            dependsOnGroups = {"DMVersion.serialize", "DMVersion.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -437,8 +449,8 @@ public class DataAttributeMappingProcessTest {
     }
 
     @Test(
-            groups = {"DataAttributeMappingProcess.equivalency"},
-            dependsOnGroups = {"DataAttributeMappingProcess.serialize", "DataAttributeMappingProcess.deserialize"})
+            groups = {"DMVersion.equivalency"},
+            dependsOnGroups = {"DMVersion.serialize", "DMVersion.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

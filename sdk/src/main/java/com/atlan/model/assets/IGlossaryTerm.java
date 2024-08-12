@@ -58,12 +58,6 @@ public interface IGlossaryTerm {
     KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
 
     /** TBC */
-    RelationField MAPPED_DATA_ATTRIBUTES = new RelationField("mappedDataAttributes");
-
-    /** TBC */
-    RelationField MAPPED_DATA_ENTITIES = new RelationField("mappedDataEntities");
-
-    /** TBC */
     RelationField PREFERRED_TERMS = new RelationField("preferredTerms");
 
     /** TBC */
@@ -274,7 +268,13 @@ public interface IGlossaryTerm {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
+    /** TBC */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** TBC */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentQualifiedNames();
@@ -434,12 +434,6 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getLongDescription();
-
-    /** TBC */
-    SortedSet<IDataAttribute> getMappedDataAttributes();
-
-    /** TBC */
-    SortedSet<IDataEntity> getMappedDataEntities();
 
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();

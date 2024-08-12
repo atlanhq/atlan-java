@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataModelVersionTest {
+public class DMDataModelTest {
 
-    private static final DataModelVersion full = DataModelVersion._internal()
+    private static final DMDataModel full = DMDataModel._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,12 @@ public class DataModelVersionTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dataEntityId("String0")
-            .dataModelDomain("String0")
-            .dataModelEntityName("String0")
-            .dataModelEntityQualifiedName("String0")
-            .dataModelEnvironment("String0")
-            .dataModelId("String0")
-            .dataModelName("String0")
-            .dataModelNamespace("String0")
-            .dataModelQualifiedName("String0")
-            .dataModelVersionQualifiedName("String0")
-            .dataModelVersionQualifiedName("String1")
+            .dMDataModelName("String0")
+            .dMDataModelQualifiedName("String0")
+            .dMEntityName("String0")
+            .dMEntityQualifiedName("String0")
+            .dMVersionName("String0")
+            .dMVersionQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -137,8 +132,12 @@ public class DataModelVersionTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetMcAlertQualifiedName("String0")
+            .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
+            .assetMcIncidentPriority("String0")
+            .assetMcIncidentPriority("String1")
             .assetMcIncidentQualifiedName("String0")
             .assetMcIncidentQualifiedName("String1")
             .assetMcIncidentSeverity("String0")
@@ -405,23 +404,24 @@ public class DataModelVersionTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dataModel(DataModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMType("String0")
+            .dMVersionCount(123456789L)
+            .dMVersion(DMVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMVersion(DMVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataModelVersion frodo;
+    private static DMDataModel frodo;
     private static String serialized;
 
-    @Test(groups = {"DataModelVersion.builderEquivalency"})
+    @Test(groups = {"DMDataModel.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataModelVersion.serialize"},
-            dependsOnGroups = {"DataModelVersion.builderEquivalency"})
+            groups = {"DMDataModel.serialize"},
+            dependsOnGroups = {"DMDataModel.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -430,17 +430,17 @@ public class DataModelVersionTest {
     }
 
     @Test(
-            groups = {"DataModelVersion.deserialize"},
-            dependsOnGroups = {"DataModelVersion.serialize"})
+            groups = {"DMDataModel.deserialize"},
+            dependsOnGroups = {"DMDataModel.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataModelVersion.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DMDataModel.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataModelVersion.equivalency"},
-            dependsOnGroups = {"DataModelVersion.serialize", "DataModelVersion.deserialize"})
+            groups = {"DMDataModel.equivalency"},
+            dependsOnGroups = {"DMDataModel.serialize", "DMDataModel.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -449,8 +449,8 @@ public class DataModelVersionTest {
     }
 
     @Test(
-            groups = {"DataModelVersion.equivalency"},
-            dependsOnGroups = {"DataModelVersion.serialize", "DataModelVersion.deserialize"})
+            groups = {"DMDataModel.equivalency"},
+            dependsOnGroups = {"DMDataModel.serialize", "DMDataModel.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
