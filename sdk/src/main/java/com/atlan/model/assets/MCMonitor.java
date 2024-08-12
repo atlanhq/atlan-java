@@ -78,6 +78,10 @@ public class MCMonitor extends Asset
     @Attribute
     String mcMonitorAlertCondition;
 
+    /** Number of alerts associated with this monitor. */
+    @Attribute
+    Long mcMonitorAlertCount;
+
     /** Assets impacted by this monitor. */
     @Attribute
     @Singular
@@ -98,6 +102,10 @@ public class MCMonitor extends Asset
     /** Namespace of this monitor. */
     @Attribute
     String mcMonitorNamespace;
+
+    /** Priority of this monitor. */
+    @Attribute
+    String mcMonitorPriority;
 
     /** Comparison logic used for the rule. */
     @Attribute

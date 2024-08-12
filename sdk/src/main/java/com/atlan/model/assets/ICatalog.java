@@ -161,23 +161,29 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
-            case DataAttribute.TYPE_NAME:
-                ref = DataAttribute.refByQualifiedName(qualifiedName);
+            case DMAttribute.TYPE_NAME:
+                ref = DMAttribute.refByQualifiedName(qualifiedName);
+                break;
+            case DMAttributeAssociation.TYPE_NAME:
+                ref = DMAttributeAssociation.refByQualifiedName(qualifiedName);
+                break;
+            case DMDataModel.TYPE_NAME:
+                ref = DMDataModel.refByQualifiedName(qualifiedName);
+                break;
+            case DMEntity.TYPE_NAME:
+                ref = DMEntity.refByQualifiedName(qualifiedName);
+                break;
+            case DMEntityAssociation.TYPE_NAME:
+                ref = DMEntityAssociation.refByQualifiedName(qualifiedName);
+                break;
+            case DMVersion.TYPE_NAME:
+                ref = DMVersion.refByQualifiedName(qualifiedName);
                 break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
             case DataDomain.TYPE_NAME:
                 ref = DataDomain.refByQualifiedName(qualifiedName);
-                break;
-            case DataEntity.TYPE_NAME:
-                ref = DataEntity.refByQualifiedName(qualifiedName);
-                break;
-            case DataModel.TYPE_NAME:
-                ref = DataModel.refByQualifiedName(qualifiedName);
-                break;
-            case DataModelVersion.TYPE_NAME:
-                ref = DataModelVersion.refByQualifiedName(qualifiedName);
                 break;
             case DataProduct.TYPE_NAME:
                 ref = DataProduct.refByQualifiedName(qualifiedName);
@@ -777,8 +783,14 @@ public interface ICatalog {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
     /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();

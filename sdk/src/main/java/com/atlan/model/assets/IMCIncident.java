@@ -38,6 +38,9 @@ public interface IMCIncident {
     /** Identifier of this incident, from Monte Carlo. */
     KeywordField MC_INCIDENT_ID = new KeywordField("mcIncidentId", "mcIncidentId");
 
+    /** Priority of this incident inherited from monitor. */
+    KeywordField MC_INCIDENT_PRIORITY = new KeywordField("mcIncidentPriority", "mcIncidentPriority");
+
     /** Severity of this incident. */
     KeywordField MC_INCIDENT_SEVERITY = new KeywordField("mcIncidentSeverity", "mcIncidentSeverity");
 
@@ -209,8 +212,14 @@ public interface IMCIncident {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
     /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();
@@ -370,6 +379,9 @@ public interface IMCIncident {
 
     /** Identifier of this incident, from Monte Carlo. */
     String getMcIncidentId();
+
+    /** Priority of this incident inherited from monitor. */
+    String getMcIncidentPriority();
 
     /** Severity of this incident. */
     String getMcIncidentSeverity();

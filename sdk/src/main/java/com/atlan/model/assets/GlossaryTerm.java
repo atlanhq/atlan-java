@@ -102,16 +102,6 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<IDataAttribute> mappedDataAttributes;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDataEntity> mappedDataEntities;
-
-    /** TBC */
-    @Attribute
-    @Singular
     SortedSet<IGlossaryTerm> preferredTerms;
 
     /** TBC */

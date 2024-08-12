@@ -41,6 +41,9 @@ public interface IMCMonitor {
     /** Condition on which the monitor produces an alert. */
     TextField MC_MONITOR_ALERT_CONDITION = new TextField("mcMonitorAlertCondition", "mcMonitorAlertCondition");
 
+    /** Number of alerts associated with this monitor. */
+    NumericField MC_MONITOR_ALERT_COUNT = new NumericField("mcMonitorAlertCount", "mcMonitorAlertCount");
+
     /** Assets impacted by this monitor. */
     RelationField MC_MONITOR_ASSETS = new RelationField("mcMonitorAssets");
 
@@ -56,6 +59,9 @@ public interface IMCMonitor {
     /** Namespace of this monitor. */
     KeywordTextField MC_MONITOR_NAMESPACE =
             new KeywordTextField("mcMonitorNamespace", "mcMonitorNamespace.keyword", "mcMonitorNamespace");
+
+    /** Priority of this monitor. */
+    KeywordField MC_MONITOR_PRIORITY = new KeywordField("mcMonitorPriority", "mcMonitorPriority");
 
     /** Comparison logic used for the rule. */
     KeywordField MC_MONITOR_RULE_COMPARISONS = new KeywordField("mcMonitorRuleComparisons", "mcMonitorRuleComparisons");
@@ -250,8 +256,14 @@ public interface IMCMonitor {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
     /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();
@@ -415,6 +427,9 @@ public interface IMCMonitor {
     /** Condition on which the monitor produces an alert. */
     String getMcMonitorAlertCondition();
 
+    /** Number of alerts associated with this monitor. */
+    Long getMcMonitorAlertCount();
+
     /** Assets impacted by this monitor. */
     SortedSet<IAsset> getMcMonitorAssets();
 
@@ -429,6 +444,9 @@ public interface IMCMonitor {
 
     /** Namespace of this monitor. */
     String getMcMonitorNamespace();
+
+    /** Priority of this monitor. */
+    String getMcMonitorPriority();
 
     /** Comparison logic used for the rule. */
     List<MCRuleComparison> getMcMonitorRuleComparisons();

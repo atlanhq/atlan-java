@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataAttributeTest {
+public class DMAttributeTest {
 
-    private static final DataAttribute full = DataAttribute._internal()
+    private static final DMAttribute full = DMAttribute._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,12 @@ public class DataAttributeTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dataEntityId("String0")
-            .dataModelDomain("String0")
-            .dataModelEntityName("String0")
-            .dataModelEntityQualifiedName("String0")
-            .dataModelEnvironment("String0")
-            .dataModelId("String0")
-            .dataModelName("String0")
-            .dataModelNamespace("String0")
-            .dataModelQualifiedName("String0")
-            .dataModelVersionQualifiedName("String0")
-            .dataModelVersionQualifiedName("String1")
+            .dMDataModelName("String0")
+            .dMDataModelQualifiedName("String0")
+            .dMEntityName("String0")
+            .dMEntityQualifiedName("String0")
+            .dMVersionName("String0")
+            .dMVersionQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -137,8 +132,12 @@ public class DataAttributeTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetMcAlertQualifiedName("String0")
+            .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
+            .assetMcIncidentPriority("String0")
+            .assetMcIncidentPriority("String1")
             .assetMcIncidentQualifiedName("String0")
             .assetMcIncidentQualifiedName("String1")
             .assetMcIncidentSeverity("String0")
@@ -405,39 +404,27 @@ public class DataAttributeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataAttributeDerivedIndicator(true)
-            .dataAttributeDirectIdentifierIndicator(true)
-            .dataAttributeForeignKeyIndicator(true)
-            .dataAttributeFullyQualifiedName("String0")
-            .dataAttributeId("String0")
-            .dataAttributeMultiplicity("String0")
-            .dataAttributeNullability(true)
-            .dataAttributePersonalIdentifierIndicator(true)
-            .dataAttributePrimaryKeyIndicator(true)
-            .dataAttributeType("String0")
-            .dataEntity(DataEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataEntity(DataEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dataEntityQualifiedName("String0")
-            .mappedGlossaryTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .mappedGlossaryTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sourceDataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sourceDataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .targetDataAttribute(DataAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .targetDataAttribute(DataAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMAttributeFrom(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMAttributeTo(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMMappedFromAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMMappedFromAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMMappedToAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMMappedToAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataAttribute frodo;
+    private static DMAttribute frodo;
     private static String serialized;
 
-    @Test(groups = {"DataAttribute.builderEquivalency"})
+    @Test(groups = {"DMAttribute.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataAttribute.serialize"},
-            dependsOnGroups = {"DataAttribute.builderEquivalency"})
+            groups = {"DMAttribute.serialize"},
+            dependsOnGroups = {"DMAttribute.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -446,17 +433,17 @@ public class DataAttributeTest {
     }
 
     @Test(
-            groups = {"DataAttribute.deserialize"},
-            dependsOnGroups = {"DataAttribute.serialize"})
+            groups = {"DMAttribute.deserialize"},
+            dependsOnGroups = {"DMAttribute.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataAttribute.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DMAttribute.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataAttribute.equivalency"},
-            dependsOnGroups = {"DataAttribute.serialize", "DataAttribute.deserialize"})
+            groups = {"DMAttribute.equivalency"},
+            dependsOnGroups = {"DMAttribute.serialize", "DMAttribute.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -465,8 +452,8 @@ public class DataAttributeTest {
     }
 
     @Test(
-            groups = {"DataAttribute.equivalency"},
-            dependsOnGroups = {"DataAttribute.serialize", "DataAttribute.deserialize"})
+            groups = {"DMAttribute.equivalency"},
+            dependsOnGroups = {"DMAttribute.serialize", "DMAttribute.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

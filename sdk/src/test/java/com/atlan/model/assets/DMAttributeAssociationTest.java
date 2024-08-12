@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DataModelTest {
+public class DMAttributeAssociationTest {
 
-    private static final DataModel full = DataModel._internal()
+    private static final DMAttributeAssociation full = DMAttributeAssociation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,12 @@ public class DataModelTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dataEntityId("String0")
-            .dataModelDomain("String0")
-            .dataModelEntityName("String0")
-            .dataModelEntityQualifiedName("String0")
-            .dataModelEnvironment("String0")
-            .dataModelId("String0")
-            .dataModelName("String0")
-            .dataModelNamespace("String0")
-            .dataModelQualifiedName("String0")
-            .dataModelVersionQualifiedName("String0")
-            .dataModelVersionQualifiedName("String1")
+            .dMDataModelName("String0")
+            .dMDataModelQualifiedName("String0")
+            .dMEntityName("String0")
+            .dMEntityQualifiedName("String0")
+            .dMVersionName("String0")
+            .dMVersionQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -137,8 +132,12 @@ public class DataModelTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetMcAlertQualifiedName("String0")
+            .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
+            .assetMcIncidentPriority("String0")
+            .assetMcIncidentPriority("String1")
             .assetMcIncidentQualifiedName("String0")
             .assetMcIncidentQualifiedName("String1")
             .assetMcIncidentSeverity("String0")
@@ -405,26 +404,29 @@ public class DataModelTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataModelOwningApplicationSEALId("String0")
-            .dataModelRefreshTimestamp(123456789L)
-            .dataModelTool(DataModelTool.MAGIC_DRAW)
-            .dataModelType(DataModelType.CONCEPTUAL_DATA_MODEL)
-            .dataModelVersion(DataModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dataModelVersion(DataModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMCardinality(DMCardinalityType.ONE_TO_ONE)
+            .dMLabel("String0")
+            .dMOwnerSealId("String0")
+            .dMRelatedFromAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedFromAttribute(
+                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedToAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedToAttribute(
+                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DataModel frodo;
+    private static DMAttributeAssociation frodo;
     private static String serialized;
 
-    @Test(groups = {"DataModel.builderEquivalency"})
+    @Test(groups = {"DMAttributeAssociation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DataModel.serialize"},
-            dependsOnGroups = {"DataModel.builderEquivalency"})
+            groups = {"DMAttributeAssociation.serialize"},
+            dependsOnGroups = {"DMAttributeAssociation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -433,17 +435,17 @@ public class DataModelTest {
     }
 
     @Test(
-            groups = {"DataModel.deserialize"},
-            dependsOnGroups = {"DataModel.serialize"})
+            groups = {"DMAttributeAssociation.deserialize"},
+            dependsOnGroups = {"DMAttributeAssociation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DataModel.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DMAttributeAssociation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DataModel.equivalency"},
-            dependsOnGroups = {"DataModel.serialize", "DataModel.deserialize"})
+            groups = {"DMAttributeAssociation.equivalency"},
+            dependsOnGroups = {"DMAttributeAssociation.serialize", "DMAttributeAssociation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -452,8 +454,8 @@ public class DataModelTest {
     }
 
     @Test(
-            groups = {"DataModel.equivalency"},
-            dependsOnGroups = {"DataModel.serialize", "DataModel.deserialize"})
+            groups = {"DMAttributeAssociation.equivalency"},
+            dependsOnGroups = {"DMAttributeAssociation.serialize", "DMAttributeAssociation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

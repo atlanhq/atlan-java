@@ -224,9 +224,17 @@ public interface IAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     KeywordField ASSET_ICON = new KeywordField("assetIcon", "assetIcon");
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES = new KeywordTextField(
+            "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames.text");
+
     /** List of Monte Carlo incident names attached to this asset. */
     KeywordTextField ASSET_MC_INCIDENT_NAMES =
             new KeywordTextField("assetMcIncidentNames", "assetMcIncidentNames.keyword", "assetMcIncidentNames");
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    KeywordField ASSET_MC_INCIDENT_PRIORITIES =
+            new KeywordField("assetMcIncidentPriorities", "assetMcIncidentPriorities");
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     KeywordTextField ASSET_MC_INCIDENT_QUALIFIED_NAMES = new KeywordTextField(
@@ -668,8 +676,14 @@ public interface IAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
     /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
 
     /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();
