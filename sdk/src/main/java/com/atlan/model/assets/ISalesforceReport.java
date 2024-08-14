@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -45,7 +46,7 @@ public interface ISalesforceReport {
     KeywordField REPORT_TYPE = new KeywordField("reportType", "reportType");
 
     /** Identifier of the report in Salesforce. */
-    KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
+    TextField SOURCE_ID = new TextField("sourceId", "sourceId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

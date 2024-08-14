@@ -12,6 +12,7 @@ import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -35,7 +36,7 @@ public interface IView {
     public static final String TYPE_NAME = "View";
 
     /** Alias for this view. */
-    KeywordField ALIAS = new KeywordField("alias", "alias");
+    TextField ALIAS = new TextField("alias", "alias");
 
     /** Number of columns in this view. */
     NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
@@ -44,7 +45,7 @@ public interface IView {
     RelationField COLUMNS = new RelationField("columns");
 
     /** SQL definition of this view. */
-    KeywordField DEFINITION = new KeywordField("definition", "definition");
+    TextField DEFINITION = new TextField("definition", "definition");
 
     /** Whether preview queries are allowed on this view (true) or not (false). */
     BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");

@@ -301,8 +301,14 @@ public interface IDMAttribute {
     /** Attribute to which this association is related. */
     IDMAttribute getDMAttributeTo();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();

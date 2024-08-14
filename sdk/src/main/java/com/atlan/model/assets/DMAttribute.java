@@ -54,9 +54,17 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     IDMAttribute dMAttributeTo;
 
+    /** A domain of the datam model in which this asset exists. */
+    @Attribute
+    String dMDataModelDomain;
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelName;
+
+    /** A namespace of the data model in which this asset exists. */
+    @Attribute
+    String dMDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute

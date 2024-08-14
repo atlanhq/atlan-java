@@ -8,9 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -40,19 +40,19 @@ public interface ILookerExplore {
     RelationField MODEL = new RelationField("model");
 
     /** Name of the parent model of this Explore. */
-    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
+    TextField MODEL_NAME = new TextField("modelName", "modelName");
 
     /** Project in which this explore exists. */
     RelationField PROJECT = new RelationField("project");
 
     /** Name of the parent project of this Explore. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+    TextField PROJECT_NAME = new TextField("projectName", "projectName");
 
     /** Connection name for the Explore, from Looker. */
-    KeywordField SOURCE_CONNECTION_NAME = new KeywordField("sourceConnectionName", "sourceConnectionName");
+    TextField SOURCE_CONNECTION_NAME = new TextField("sourceConnectionName", "sourceConnectionName");
 
     /** Name of the SQL table used to declare the Explore. */
-    KeywordField SQL_TABLE_NAME = new KeywordField("sqlTableName", "sqlTableName");
+    TextField SQL_TABLE_NAME = new TextField("sqlTableName", "sqlTableName");
 
     /** Name of the view for the Explore. */
     KeywordTextField VIEW_NAME = new KeywordTextField("viewName", "viewName.keyword", "viewName");

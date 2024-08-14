@@ -8,8 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -36,8 +36,7 @@ public interface ISalesforce {
     KeywordTextField API_NAME = new KeywordTextField("apiName", "apiName.keyword", "apiName");
 
     /** Fully-qualified name of the organization in Salesforce. */
-    KeywordField ORGANIZATION_QUALIFIED_NAME =
-            new KeywordField("organizationQualifiedName", "organizationQualifiedName");
+    TextField ORGANIZATION_QUALIFIED_NAME = new TextField("organizationQualifiedName", "organizationQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -9,9 +9,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -38,7 +38,7 @@ public interface IPowerBIReport {
     RelationField DATASET = new RelationField("dataset");
 
     /** Unique name of the dataset used to build this report. */
-    KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
+    TextField DATASET_QUALIFIED_NAME = new TextField("datasetQualifiedName", "datasetQualifiedName");
 
     /** Number of pages in this report. */
     NumericField PAGE_COUNT = new NumericField("pageCount", "pageCount");
@@ -50,13 +50,13 @@ public interface IPowerBIReport {
     RelationField TILES = new RelationField("tiles");
 
     /** Deprecated. See 'sourceUrl' instead. */
-    KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
+    TextField WEB_URL = new TextField("webUrl", "webUrl");
 
     /** Workspace in which this report exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
     /** Unique name of the workspace in which this report exists. */
-    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
+    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -12,6 +12,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -73,16 +74,16 @@ public interface ILookerField {
     RelationField MODEL = new RelationField("model");
 
     /** Name of the model in which this field exists. */
-    KeywordField MODEL_NAME = new KeywordField("modelName", "modelName");
+    TextField MODEL_NAME = new TextField("modelName", "modelName");
 
     /** Project in which this field exists. */
     RelationField PROJECT = new RelationField("project");
 
     /** Name of the project in which this field exists. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+    TextField PROJECT_NAME = new TextField("projectName", "projectName");
 
     /** Deprecated. */
-    KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
+    TextField SOURCE_DEFINITION = new TextField("sourceDefinition", "sourceDefinition");
 
     /** Tile in which this field is used. */
     RelationField TILE = new RelationField("tile");

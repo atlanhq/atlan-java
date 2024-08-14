@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -33,7 +34,7 @@ public interface IDbtSource {
     public static final String TYPE_NAME = "DbtSource";
 
     /** TBC */
-    KeywordField DBT_FRESHNESS_CRITERIA = new KeywordField("dbtFreshnessCriteria", "dbtFreshnessCriteria");
+    TextField DBT_FRESHNESS_CRITERIA = new TextField("dbtFreshnessCriteria", "dbtFreshnessCriteria");
 
     /** TBC */
     KeywordField DBT_STATE = new KeywordField("dbtState", "dbtState");

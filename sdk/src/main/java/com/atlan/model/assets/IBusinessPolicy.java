@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -38,15 +39,15 @@ public interface IBusinessPolicy {
             new KeywordField("businessPolicyBaseParentGuid", "businessPolicyBaseParentGuid");
 
     /** Business Policy Filter ES DSL to denote the associate asset/s involved. */
-    KeywordField BUSINESS_POLICY_FILTER_DSL = new KeywordField("businessPolicyFilterDSL", "businessPolicyFilterDSL");
+    TextField BUSINESS_POLICY_FILTER_DSL = new TextField("businessPolicyFilterDSL", "businessPolicyFilterDSL");
 
     /** Duration for the business policy to complete review. */
     KeywordField BUSINESS_POLICY_REVIEW_PERIOD =
             new KeywordField("businessPolicyReviewPeriod", "businessPolicyReviewPeriod");
 
     /** Selected approval workflow id for business policy */
-    KeywordField BUSINESS_POLICY_SELECTED_APPROVAL_WF =
-            new KeywordField("businessPolicySelectedApprovalWF", "businessPolicySelectedApprovalWF");
+    TextField BUSINESS_POLICY_SELECTED_APPROVAL_WF =
+            new TextField("businessPolicySelectedApprovalWF", "businessPolicySelectedApprovalWF");
 
     /** Type of business policy */
     KeywordField BUSINESS_POLICY_TYPE = new KeywordField("businessPolicyType", "businessPolicyType");

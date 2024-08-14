@@ -15,6 +15,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -65,11 +66,11 @@ public interface IDataProduct {
     RelationField DATA_DOMAIN = new RelationField("dataDomain");
 
     /** Search DSL used to define which assets are part of this data product. */
-    KeywordField DATA_PRODUCT_ASSETS_DSL = new KeywordField("dataProductAssetsDSL", "dataProductAssetsDSL");
+    TextField DATA_PRODUCT_ASSETS_DSL = new TextField("dataProductAssetsDSL", "dataProductAssetsDSL");
 
     /** Playbook filter to define which assets are part of this data product. */
-    KeywordField DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER =
-            new KeywordField("dataProductAssetsPlaybookFilter", "dataProductAssetsPlaybookFilter");
+    TextField DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER =
+            new TextField("dataProductAssetsPlaybookFilter", "dataProductAssetsPlaybookFilter");
 
     /** Criticality of this data product. */
     KeywordField DATA_PRODUCT_CRITICALITY = new KeywordField("dataProductCriticality", "dataProductCriticality");

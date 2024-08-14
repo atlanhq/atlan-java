@@ -12,8 +12,6 @@ import lombok.Getter;
 @Deprecated
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum KeywordFields implements AtlanSearchableField {
-    /** Unused. Abbreviation of the term. */
-    ABBREVIATION("abbreviation"),
     /** Unused. Arbitrary set of additional attributes for the terrm. */
     ADDITIONAL_ATTRIBUTES("additionalAttributes"),
     /** TBC */
@@ -94,8 +92,6 @@ public enum KeywordFields implements AtlanSearchableField {
     AIRFLOW_RUN_TYPE("airflowRunType"),
     /** Version of the run in Airflow. */
     AIRFLOW_RUN_VERSION("airflowRunVersion"),
-    /** Tags assigned to the asset in Airflow. */
-    AIRFLOW_TAGS("airflowTags"),
     /** Identifier for the connection this task accesses. */
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId.keyword"),
     /** Class name for the operator this task uses. */
@@ -104,16 +100,10 @@ public enum KeywordFields implements AtlanSearchableField {
     AIRFLOW_TASK_POOL("airflowTaskPool"),
     /** Queue on which this run happened. */
     AIRFLOW_TASK_QUEUE("airflowTaskQueue"),
-    /** SQL code that executes through this task. */
-    AIRFLOW_TASK_SQL("airflowTaskSql"),
     /** Trigger for the run. */
     AIRFLOW_TASK_TRIGGER_RULE("airflowTaskTriggerRule"),
-    /** Alias for this materialized view. */
+    /** Alias for this partition. */
     ALIAS("alias"),
-    /** Detailed message to include in the announcement on this asset. */
-    ANNOUNCEMENT_MESSAGE("announcementMessage"),
-    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
-    ANNOUNCEMENT_TITLE("announcementTitle"),
     /** Type of announcement on this asset. */
     ANNOUNCEMENT_TYPE("announcementType"),
     /** Name of the user who last updated the announcement. */
@@ -152,8 +142,6 @@ public enum KeywordFields implements AtlanSearchableField {
     API_SPEC_TYPE("apiSpecType"),
     /** Version of the API specification. */
     API_SPEC_VERSION("apiSpecVersion"),
-    /** TBC */
-    ASSET_COVER_IMAGE("assetCoverImage"),
     /** Name of the account in which this asset exists in dbt. */
     ASSET_DBT_ACCOUNT_NAME("assetDbtAccountName.keyword"),
     /** Alias of this asset in dbt. */
@@ -184,8 +172,6 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE("assetDbtJobLastRunStatusMessage.keyword"),
     /** Total duration of the last run of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION("assetDbtJobLastRunTotalDuration"),
-    /** Human-readable total duration of the last run of the job that materialized this asset in dbt. */
-    ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED("assetDbtJobLastRunTotalDurationHumanized"),
     /** URL of the last run of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_LAST_RUN_URL("assetDbtJobLastRunUrl"),
     /** Name of the job that materialized this asset in dbt. */
@@ -196,16 +182,12 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_JOB_SCHEDULE("assetDbtJobSchedule"),
     /** Status of the job that materialized this asset in dbt. */
     ASSET_DBT_JOB_STATUS("assetDbtJobStatus"),
-    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
-    ASSET_DBT_META("assetDbtMeta"),
     /** Name of the package in which this asset exists in dbt. */
     ASSET_DBT_PACKAGE_NAME("assetDbtPackageName.keyword"),
     /** Name of the project in which this asset exists in dbt. */
     ASSET_DBT_PROJECT_NAME("assetDbtProjectName.keyword"),
     /** URL of the semantic layer proxy for this asset in dbt. */
     ASSET_DBT_SEMANTIC_LAYER_PROXY_URL("assetDbtSemanticLayerProxyUrl"),
-    /** Freshness criteria for the source of this asset in dbt. */
-    ASSET_DBT_SOURCE_FRESHNESS_CRITERIA("assetDbtSourceFreshnessCriteria"),
     /** List of tags attached to this asset in dbt. */
     ASSET_DBT_TAGS("assetDbtTags"),
     /** All associated dbt test statuses. */
@@ -214,8 +196,6 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     ASSET_DBT_WORKFLOW_LAST_UPDATED("assetDbtWorkflowLastUpdated"),
-    /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
-    ASSET_ICON("assetIcon"),
     /** List of unique Monte Carlo alert names attached to this asset. */
     ASSET_MC_ALERT_QUALIFIED_NAMES("assetMcAlertQualifiedNames"),
     /** List of Monte Carlo incident names attached to this asset. */
@@ -244,28 +224,14 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_MC_MONITOR_TYPES("assetMcMonitorTypes"),
     /** Array of policy ids governing this asset */
     ASSET_POLICY_GUI_DS("assetPolicyGUIDs"),
-    /** All associated Soda check statuses. */
-    ASSET_SODA_CHECK_STATUSES("assetSodaCheckStatuses"),
     /** Status of data quality from Soda. */
     ASSET_SODA_DQ_STATUS("assetSodaDQStatus"),
     /** TBC */
     ASSET_SODA_SOURCE_URL("assetSodaSourceURL"),
     /** List of tags attached to this asset. */
     ASSET_TAGS("assetTags"),
-    /** Color (in hexadecimal RGB) to use to represent this asset. */
-    ASSET_THEME_HEX("assetThemeHex"),
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
     ASSIGNED_TERMS("__meanings"),
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    AST("ast"),
-    /** TBC */
-    ATLAS_SERVER_DISPLAY_NAME("AtlasServer.displayName"),
-    /** TBC */
-    ATLAS_SERVER_NAME("AtlasServer.name"),
-    /** TBC */
-    ATLAS_USER_PROFILE_NAME("__AtlasUserProfile.name"),
-    /** TBC */
-    ATLAS_USER_SAVED_SEARCH_NAME("__AtlasUserSavedSearch.name"),
     /** TBC */
     AUTH_SERVICE_CONFIG("authServiceConfig"),
     /** TBC */
@@ -306,18 +272,12 @@ public enum KeywordFields implements AtlanSearchableField {
     BADGE_METADATA_ATTRIBUTE("badgeMetadataAttribute"),
     /** Base parent Guid for policy used in version */
     BUSINESS_POLICY_BASE_PARENT_GUID("businessPolicyBaseParentGuid"),
-    /** Business Policy Exception Filter ES DSL to denote the associate asset/s involved. */
-    BUSINESS_POLICY_EXCEPTION_FILTER_DSL("businessPolicyExceptionFilterDSL"),
     /** List of groups who are part of this exception */
     BUSINESS_POLICY_EXCEPTION_GROUPS("businessPolicyExceptionGroups"),
     /** List of users who are part of this exception */
     BUSINESS_POLICY_EXCEPTION_USERS("businessPolicyExceptionUsers"),
-    /** Business Policy Filter ES DSL to denote the associate asset/s involved. */
-    BUSINESS_POLICY_FILTER_DSL("businessPolicyFilterDSL"),
     /** business policy guid for which log are created */
     BUSINESS_POLICY_ID("businessPolicyId"),
-    /** Filter ES DSL to denote the associate asset/s involved. */
-    BUSINESS_POLICY_INCIDENT_FILTER_DSL("businessPolicyIncidentFilterDSL"),
     /** policy ids related to this incident */
     BUSINESS_POLICY_INCIDENT_RELATED_POLICY_GUI_DS("businessPolicyIncidentRelatedPolicyGUIDs"),
     /** business policy type for which log are created */
@@ -326,8 +286,6 @@ public enum KeywordFields implements AtlanSearchableField {
     BUSINESS_POLICY_QUALIFIED_NAME("businessPolicyQualifiedName"),
     /** Duration for the business policy to complete review. */
     BUSINESS_POLICY_REVIEW_PERIOD("businessPolicyReviewPeriod"),
-    /** Selected approval workflow id for business policy */
-    BUSINESS_POLICY_SELECTED_APPROVAL_WF("businessPolicySelectedApprovalWF"),
     /** Type of business policy */
     BUSINESS_POLICY_TYPE("businessPolicyType"),
     /** The owner who activated the calculation view */
@@ -338,32 +296,16 @@ public enum KeywordFields implements AtlanSearchableField {
     CALCULATION_VIEW_QUALIFIED_NAME("calculationViewQualifiedName"),
     /** Categories in which the term is organized, searchable by the qualifiedName of the category. */
     CATEGORIES("__categories"),
-    /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
-    CATEGORY("category"),
     /** TBC */
     CATEGORY_TYPE("categoryType"),
     /** Status of this asset's certification. */
     CERTIFICATE_STATUS("certificateStatus"),
-    /** Human-readable descriptive message used to provide further detail to certificateStatus. */
-    CERTIFICATE_STATUS_MESSAGE("certificateStatusMessage"),
     /** Name of the user who last updated the certification of this asset. */
     CERTIFICATE_UPDATED_BY("certificateUpdatedBy"),
-    /** Notes related to this datasource being cerfified, in Tableau. */
-    CERTIFICATION_NOTE("certificationNote"),
     /** Users that have marked this datasource as cerified, in Tableau. */
     CERTIFIER("certifier"),
-    /** Name of the user who cerified this datasource, in Tableau. */
-    CERTIFIER_DISPLAY_NAME("certifierDisplayName"),
-    /** TBC */
-    CHANNEL_LINK("channelLink"),
-    /** TBC */
-    CLIENT_ID("clientId"),
-    /** Code that ran within the process. */
-    CODE("code"),
     /** Connection string of a cognos datasource */
     COGNOS_DATASOURCE_CONNECTION_STRING("cognosDatasourceConnectionString"),
-    /** Tooltip text present for the Cognos asset */
-    COGNOS_DEFAULT_SCREEN_TIP("cognosDefaultScreenTip"),
     /** ID of the asset in Cognos */
     COGNOS_ID("cognosId"),
     /** Name of the parent asset in Cognos */
@@ -380,10 +322,6 @@ public enum KeywordFields implements AtlanSearchableField {
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName"),
     /** List of values in a histogram that represents the contents of this column. */
     COLUMN_HISTOGRAM("columnHistogram"),
-    /** List of the greatest values in a column. */
-    COLUMN_MAXS("columnMaxs"),
-    /** List of the least values in a column. */
-    COLUMN_MINS("columnMins"),
     /** List of top values in this column. */
     COLUMN_TOP_VALUES("columnTopValues"),
     /** TBC */
@@ -396,18 +334,10 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName"),
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     CONNECTION_SSO_CREDENTIAL_GUID("connectionSSOCredentialGuid"),
-    /** Unused. Only the value of connectorType impacts icons. */
-    CONNECTOR_ICON("connectorIcon"),
-    /** Unused. Only the value of connectorType impacts icons. */
-    CONNECTOR_IMAGE("connectorImage"),
     /** Type of the connector through which this asset is accessible. */
     CONNECTOR_TYPE("connectorName"),
-    /** Constraint that defines this table partition. */
-    CONSTRAINT("constraint"),
     /** Atlan user who created this asset. */
     CREATED_BY("__createdBy"),
-    /** Credential strategy to use for this connection for queries. */
-    CREDENTIAL_STRATEGY("credentialStrategy"),
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     CUBE_DIMENSION_NAME("cubeDimensionName.keyword"),
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
@@ -442,32 +372,12 @@ public enum KeywordFields implements AtlanSearchableField {
     DAAP_VISIBILITY_GROUPS("daapVisibilityGroups"),
     /** list of users for product visibility control */
     DAAP_VISIBILITY_USERS("daapVisibilityUsers"),
-    /** Unique name of the dashboard in which this tile is pinned. */
-    DASHBOARD_QUALIFIED_NAME("dashboardQualifiedName"),
-    /** Type of dashboard in Salesforce. */
-    DASHBOARD_TYPE("dashboardType"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName.keyword"),
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_QUALIFIED_NAME("databaseQualifiedName"),
-    /** Unique name of the dataset used to build this report. */
-    DATASET_QUALIFIED_NAME("datasetQualifiedName"),
-    /** Type of this datasource field. */
-    DATASOURCE_FIELD_TYPE("datasourceFieldType"),
-    /** Unique name of the datasource in which this datasource field exists. */
-    DATASOURCE_QUALIFIED_NAME("datasourceQualifiedName"),
-    /** Data category of this field. */
-    DATA_CATEGORY("dataCategory"),
     /** Unique identifier of the asset associated with this data contract. */
     DATA_CONTRACT_ASSET_GUID("dataContractAssetGuid"),
-    /** (Deprecated) Replaced by dataContractSpec attribute. */
-    DATA_CONTRACT_JSON("dataContractJson"),
-    /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
-    DATA_CONTRACT_SPEC("dataContractSpec"),
-    /** Search DSL used to define which assets are part of this data product. */
-    DATA_PRODUCT_ASSETS_DSL("dataProductAssetsDSL"),
-    /** Playbook filter to define which assets are part of this data product. */
-    DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER("dataProductAssetsPlaybookFilter"),
     /** Criticality of this data product. */
     DATA_PRODUCT_CRITICALITY("dataProductCriticality"),
     /** Information sensitivity of this data product. */
@@ -491,31 +401,17 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     DBT_COLUMN_PROCESS_JOB_STATUS("dbtColumnProcessJobStatus"),
     /** TBC */
-    DBT_COMPILED_SQL("dbtCompiledSQL"),
-    /** TBC */
-    DBT_CONNECTION_CONTEXT("dbtConnectionContext"),
-    /** TBC */
     DBT_ENVIRONMENT_DBT_VERSION("dbtEnvironmentDbtVersion.keyword"),
     /** TBC */
     DBT_ENVIRONMENT_NAME("dbtEnvironmentName.keyword"),
-    /** TBC */
-    DBT_ERROR("dbtError"),
-    /** TBC */
-    DBT_FRESHNESS_CRITERIA("dbtFreshnessCriteria"),
     /** TBC */
     DBT_JOB_NAME("dbtJobName.keyword"),
     /** TBC */
     DBT_JOB_NEXT_RUN_HUMANIZED("dbtJobNextRunHumanized.keyword"),
     /** TBC */
-    DBT_JOB_SCHEDULE("dbtJobSchedule"),
-    /** TBC */
     DBT_JOB_SCHEDULE_CRON_HUMANIZED("dbtJobScheduleCronHumanized.keyword"),
     /** TBC */
     DBT_JOB_STATUS("dbtJobStatus"),
-    /** TBC */
-    DBT_MATERIALIZATION_TYPE("dbtMaterializationType"),
-    /** TBC */
-    DBT_META("dbtMeta"),
     /** TBC */
     DBT_METRIC_FILTERS("dbtMetricFilters"),
     /** TBC */
@@ -531,59 +427,25 @@ public enum KeywordFields implements AtlanSearchableField {
     /** Unique name of this asset in dbt. */
     DBT_QUALIFIED_NAME("dbtQualifiedName"),
     /** TBC */
-    DBT_RAW_SQL("dbtRawSQL"),
-    /** TBC */
     DBT_SEMANTIC_LAYER_PROXY_URL("dbtSemanticLayerProxyUrl"),
     /** TBC */
     DBT_STATE("dbtState"),
     /** TBC */
-    DBT_STATS("dbtStats"),
-    /** TBC */
     DBT_STATUS("dbtStatus"),
-    /** TBC */
-    DBT_TAGS("dbtTags"),
-    /** Compiled code of the test (when the test is defined using Python). */
-    DBT_TEST_COMPILED_CODE("dbtTestCompiledCode"),
-    /** Compiled SQL of the test. */
-    DBT_TEST_COMPILED_SQL("dbtTestCompiledSQL"),
-    /** Error message in the case of state being "error". */
-    DBT_TEST_ERROR("dbtTestError"),
-    /** Language in which the test is written, for example: SQL or Python. */
-    DBT_TEST_LANGUAGE("dbtTestLanguage"),
-    /** Raw code of the test (when the test is defined using Python). */
-    DBT_TEST_RAW_CODE("dbtTestRawCode"),
-    /** Raw SQL of the test. */
-    DBT_TEST_RAW_SQL("dbtTestRawSQL"),
     /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
     DBT_TEST_STATE("dbtTestState"),
     /** Details of the results of the test. For errors, it reads "ERROR". */
     DBT_TEST_STATUS("dbtTestStatus"),
     /** TBC */
     DBT_UNIQUE_ID("dbtUniqueId.keyword"),
-    /** Unique identifier (GUID) for the default credentials to use for this connection. */
-    DEFAULT_CREDENTIAL_GUID("defaultCredentialGuid"),
     /** Unique name of the default database to use for this query. */
     DEFAULT_DATABASE_QUALIFIED_NAME("defaultDatabaseQualifiedName"),
-    /** TBC */
-    DEFAULT_NAVIGATION("defaultNavigation"),
     /** Unique name of the default schema to use for this query. */
     DEFAULT_SCHEMA_QUALIFIED_NAME("defaultSchemaQualifiedName"),
-    /** Default value for this column. */
-    DEFAULT_VALUE("defaultValue"),
-    /** Formula for the default value for this field. */
-    DEFAULT_VALUE_FORMULA("defaultValueFormula"),
-    /** SQL definition of this materialized view. */
-    DEFINITION("definition"),
-    /** TBC */
-    DENY_ASSET_FILTERS("denyAssetFilters"),
     /** TBC */
     DENY_ASSET_TABS("denyAssetTabs"),
     /** TBC */
-    DENY_ASSET_TYPES("denyAssetTypes"),
-    /** TBC */
     DENY_CUSTOM_METADATA_GUIDS("denyCustomMetadataGuids"),
-    /** TBC */
-    DENY_NAVIGATION_PAGES("denyNavigationPages"),
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     DESCRIPTION("description.keyword"),
     /** List of column names on the report. */
@@ -598,8 +460,6 @@ public enum KeywordFields implements AtlanSearchableField {
     DOMO_CARD_TYPE_VALUE("domoCardTypeValue"),
     /** Type of Domo Dataset Column. */
     DOMO_DATASET_COLUMN_TYPE("domoDatasetColumnType"),
-    /** An ISO-8601 representation of the time the DataSet was last run. */
-    DOMO_DATASET_LAST_RUN("domoDatasetLastRun"),
     /** Qualified name of domo dataset of this column. */
     DOMO_DATASET_QUALIFIED_NAME("domoDatasetQualifiedName"),
     /** Id of the Domo dataset. */
@@ -616,8 +476,12 @@ public enum KeywordFields implements AtlanSearchableField {
     DYNAMO_DB_STATUS("dynamoDBStatus"),
     /** Cardinality of the data attribute association. */
     D_M_CARDINALITY("dMCardinality"),
+    /** A domain of the datam model in which this asset exists. */
+    D_M_DATA_MODEL_DOMAIN("dMDataModelDomain.keyword"),
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     D_M_DATA_MODEL_NAME("dMDataModelName.keyword"),
+    /** A namespace of the data model in which this asset exists. */
+    D_M_DATA_MODEL_NAMESPACE("dMDataModelNamespace.keyword"),
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     D_M_DATA_MODEL_QUALIFIED_NAME("dMDataModelQualifiedName"),
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
@@ -628,38 +492,20 @@ public enum KeywordFields implements AtlanSearchableField {
     D_M_LABEL("dMLabel"),
     /** Owner seal ID of the data attribute association. */
     D_M_OWNER_SEAL_ID("dMOwnerSealId"),
+    /** Tool used to create this data model. */
+    D_M_TOOL("dMTool"),
     /** Type of the data model. */
     D_M_TYPE("dMType"),
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     D_M_VERSION_NAME("dMVersionName.keyword"),
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     D_M_VERSION_QUALIFIED_NAME("dMVersionQualifiedName"),
-    /** Unused. Exmaples of the term. */
-    EXAMPLES("examples"),
-    /** External location of this partition, for example: an S3 object location. */
-    EXTERNAL_LOCATION("externalLocation"),
     /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     EXTERNAL_LOCATION_FORMAT("externalLocationFormat"),
-    /** Region of the external location of this partition, for example: S3 region. */
-    EXTERNAL_LOCATION_REGION("externalLocationRegion"),
-    /** Deprecated. */
-    FIELDS("fields"),
-    /** URL giving the online location where the file can be accessed. */
-    FILE_PATH("filePath"),
     /** Type (extension) of the file. */
     FILE_TYPE("fileType"),
-    /** Name of the parent folder in Looker that contains this dashboard. */
-    FOLDER_NAME("folderName"),
-    /** Formula for this field, if it is a calculated field. */
-    FORMULA("formula"),
-    /** Name used internally in Tableau to uniquely identify this field. */
-    FULLY_QUALIFIED_NAME("fullyQualifiedName"),
-    /** TBC */
-    FULL_NAME("fullName"),
     /** Arguments that are passed in to the function. */
     FUNCTION_ARGUMENTS("functionArguments"),
-    /** Code or set of statements that determine the output of the function. */
-    FUNCTION_DEFINITION("functionDefinition"),
     /** Programming language in which the function is written. */
     FUNCTION_LANGUAGE("functionLanguage"),
     /** Data type of the value returned by the function. */
@@ -716,10 +562,6 @@ public enum KeywordFields implements AtlanSearchableField {
     GOOGLE_TAGS("googleTags"),
     /** Globally unique identifier (GUID) of any object in Atlan. */
     GUID("__guid"),
-    /** Host name of this connection's source. */
-    HOST("host"),
-    /** Icon for the link. */
-    ICON("icon"),
     /** Type of icon for the link, for example: image or emoji. */
     ICON_TYPE("iconType"),
     /** Status of this asset's severity. */
@@ -738,20 +580,12 @@ public enum KeywordFields implements AtlanSearchableField {
     KAFKA_TOPIC_NAMES("kafkaTopicNames"),
     /** Unique names of the topics consumed by this consumer group. */
     KAFKA_TOPIC_QUALIFIED_NAMES("kafkaTopicQualifiedNames"),
-    /** Unused. Language of the glossary's contents. */
-    LANGUAGE("language"),
     /** Name of the last run of the crawler that last synchronized this asset. */
     LAST_SYNC_RUN("lastSyncRun"),
     /** Name of the crawler that last synchronized this asset. */
     LAST_SYNC_WORKFLOW_NAME("lastSyncWorkflowName"),
-    /** URL to the resource. */
-    LINK("link"),
     /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
     LINKED_SCHEMA_QUALIFIED_NAME("linkedSchemaQualifiedName"),
-    /** Unused. Detailed definition of the term. See 'readme' instead. */
-    LONG_DESCRIPTION("longDescription"),
-    /** Raw SQL query string. */
-    LONG_RAW_QUERY("longRawQuery"),
     /** Unique name of the dashboard in which this field is used. */
     LOOKER_DASHBOARD_QUALIFIED_NAME("lookerDashboardQualifiedName"),
     /** Unique name of the Explore in which this field exists. */
@@ -764,12 +598,8 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKER_TILE_QUALIFIED_NAME("lookerTileQualifiedName"),
     /** File name of this view. */
     LOOKER_VIEW_FILE_NAME("lookerViewFileName"),
-    /** File path of this view within the project. */
-    LOOKER_VIEW_FILE_PATH("lookerViewFilePath"),
     /** Unique name of the view in which this field exists. */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName"),
-    /** Identifier for the LoomML link. */
-    LOOKML_LINK_ID("lookmlLinkId"),
     /** Name of the classification in Atlan that is mapped to this tag. */
     MAPPED_ATLAN_TAG_NAME("mappedClassificationName"),
     /** Unique identifier of the component in Matillion. */
@@ -782,10 +612,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MATILLION_COMPONENT_LAST_RUN_STATUS("matillionComponentLastRunStatus"),
     /** Job details of the job to which the component internally links. */
     MATILLION_COMPONENT_LINKED_JOB("matillionComponentLinkedJob"),
-    /** SQL queries used by the component. */
-    MATILLION_COMPONENT_SQLS("matillionComponentSqls"),
-    /** List of environments in the project. */
-    MATILLION_ENVIRONMENTS("matillionEnvironments"),
     /** Simple name of the Matillion group to which the project belongs. */
     MATILLION_GROUP_NAME("matillionGroupName.keyword"),
     /** Unique name of the Matillion group to which the project belongs. */
@@ -804,10 +630,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MATILLION_PROJECT_NAME("matillionProjectName.keyword"),
     /** Unique name of the project to which the job belongs. */
     MATILLION_PROJECT_QUALIFIED_NAME("matillionProjectQualifiedName"),
-    /** Current point in time state of a project. */
-    MATILLION_VERSION("matillionVersion"),
-    /** List of versions in the project. */
-    MATILLION_VERSIONS("matillionVersions"),
     /** List of unique names of assets that are part of this Monte Carlo asset. */
     MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
     /** Identifier of this incident, from Monte Carlo. */
@@ -834,8 +656,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_MONITOR_PRIORITY("mcMonitorPriority"),
     /** Comparison logic used for the rule. */
     MC_MONITOR_RULE_COMPARISONS("mcMonitorRuleComparisons"),
-    /** SQL code for custom SQL rules. */
-    MC_MONITOR_RULE_CUSTOM_SQL("mcMonitorRuleCustomSql"),
     /** Schedule details for the rule. */
     MC_MONITOR_RULE_SCHEDULE_CONFIG("mcMonitorRuleScheduleConfig"),
     /** Type of rule for this monitor. */
@@ -848,8 +668,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MC_MONITOR_TYPE("mcMonitorType"),
     /** Name of the warehouse for this monitor. */
     MC_MONITOR_WAREHOUSE("mcMonitorWarehouse"),
-    /** Identifier for the merge result. */
-    MERGE_RESULT_ID("mergeResultId"),
     /** Simple name of the Metabase collection in which this asset exists. */
     METABASE_COLLECTION_NAME("metabaseCollectionName.keyword"),
     /** Unique name of the Metabase collection in which this asset exists. */
@@ -864,12 +682,8 @@ public enum KeywordFields implements AtlanSearchableField {
     METABASE_QUERY_TYPE("metabaseQueryType"),
     /** TBC */
     METABASE_SLUG("metabaseSlug"),
-    /** SQL query used to compute the metric. */
-    METRIC_SQL("metricSQL"),
     /** Type of the metric. */
     METRIC_TYPE("metricType"),
-    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
-    MICRO_STRATEGY_ATTRIBUTE_FORMS("microStrategyAttributeForms"),
     /** List of simple names of attributes related to this metric. */
     MICRO_STRATEGY_ATTRIBUTE_NAMES("microStrategyAttributeNames.keyword"),
     /** List of unique names of attributes related to this metric. */
@@ -880,26 +694,18 @@ public enum KeywordFields implements AtlanSearchableField {
     MICRO_STRATEGY_CUBE_NAMES("microStrategyCubeNames.keyword"),
     /** Unique names of the cubes related to this asset. */
     MICRO_STRATEGY_CUBE_QUALIFIED_NAMES("microStrategyCubeQualifiedNames"),
-    /** Query used to create the cube. */
-    MICRO_STRATEGY_CUBE_QUERY("microStrategyCubeQuery"),
     /** Type of cube, for example: OLAP or MTDI. */
     MICRO_STRATEGY_CUBE_TYPE("microStrategyCubeType"),
-    /** List of chapter names in this dossier. */
-    MICRO_STRATEGY_DOSSIER_CHAPTER_NAMES("microStrategyDossierChapterNames"),
     /** Simple name of the dossier in which this visualization exists. */
     MICRO_STRATEGY_DOSSIER_NAME("microStrategyDossierName.keyword"),
     /** Unique name of the dossier in which this visualization exists. */
     MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME("microStrategyDossierQualifiedName"),
-    /** List of expressions for this fact. */
-    MICRO_STRATEGY_FACT_EXPRESSIONS("microStrategyFactExpressions"),
     /** List of simple names of facts related to this metric. */
     MICRO_STRATEGY_FACT_NAMES("microStrategyFactNames.keyword"),
     /** List of unique names of facts related to this metric. */
     MICRO_STRATEGY_FACT_QUALIFIED_NAMES("microStrategyFactQualifiedNames"),
     /** Location of this asset in MicroStrategy. */
     MICRO_STRATEGY_LOCATION("microStrategyLocation"),
-    /** Text specifiying this metric's expression. */
-    MICRO_STRATEGY_METRIC_EXPRESSION("microStrategyMetricExpression"),
     /** List of simple names of parent metrics of this metric. */
     MICRO_STRATEGY_METRIC_PARENT_NAMES("microStrategyMetricParentNames.keyword"),
     /** List of unique names of parent metrics of this metric. */
@@ -916,8 +722,6 @@ public enum KeywordFields implements AtlanSearchableField {
     MICRO_STRATEGY_REPORT_TYPE("microStrategyReportType"),
     /** Type of visualization. */
     MICRO_STRATEGY_VISUALIZATION_TYPE("microStrategyVisualizationType"),
-    /** Name of the parent model of this Explore. */
-    MODEL_NAME("modelName"),
     /** Type of chart. */
     MODE_CHART_TYPE("modeChartType"),
     /** State of this collection. */
@@ -948,22 +752,14 @@ public enum KeywordFields implements AtlanSearchableField {
     MODIFIED_BY("__modifiedBy"),
     /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
     MONGO_DB_COLLECTION_SUBTYPE("mongoDBCollectionSubtype"),
-    /** Name of the field containing the date in each time series document. */
-    MONGO_DB_COLLECTION_TIME_FIELD("mongoDBCollectionTimeField"),
     /** Closest match to the time span between consecutive incoming measurements. */
     MONGO_DB_COLLECTION_TIME_GRANULARITY("mongoDBCollectionTimeGranularity"),
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     NAME("name.keyword"),
-    /** Text of notes added to the tile. */
-    NOTE_TEXT("noteText"),
     /** Unique name of the object in which this field exists. */
     OBJECT_QUALIFIED_NAME("objectQualifiedName"),
     /** TBC */
     OPERATION("operation"),
-    /** TBC */
-    OPERATION_PARAMS("operationParams"),
-    /** Fully-qualified name of the organization in Salesforce. */
-    ORGANIZATION_QUALIFIED_NAME("organizationQualifiedName"),
     /** Assets that are outputs from this process. */
     OUTPUTS("outputs"),
     /** List of fields that are outputs from this flow. */
@@ -972,12 +768,8 @@ public enum KeywordFields implements AtlanSearchableField {
     OUTPUT_STEPS("outputSteps"),
     /** List of groups who own this asset. */
     OWNER_GROUPS("ownerGroups"),
-    /** TBC */
-    OWNER_NAME("ownerName"),
     /** List of users who own this asset. */
     OWNER_USERS("ownerUsers"),
-    /** TBC */
-    PARAMS("params"),
     /** Parent category in which a subcategory is contained, searchable by the qualifiedName of the category. */
     PARENT_CATEGORY("__parentCategory"),
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
@@ -988,16 +780,12 @@ public enum KeywordFields implements AtlanSearchableField {
     PARENT_DOMAIN_QUALIFIED_NAME("parentDomainQualifiedName"),
     /** Unique name of the parent collection or folder in which this query exists. */
     PARENT_QUALIFIED_NAME("parentQualifiedName"),
-    /** List of sub-partitions in this partition. */
-    PARTITION_LIST("partitionList"),
     /** Partition strategy of this partition. */
     PARTITION_STRATEGY("partitionStrategy"),
     /** TBC */
     PERSONA_GROUPS("personaGroups"),
     /** TBC */
     PERSONA_USERS("personaUsers"),
-    /** List of values from which a user can pick while adding a record. */
-    PICKLIST_VALUES("picklistValues"),
     /** User who pinned this column. */
     PINNED_BY("pinnedBy"),
     /** TBC */
@@ -1040,14 +828,10 @@ public enum KeywordFields implements AtlanSearchableField {
     POWER_BI_COLUMN_SUMMARIZE_BY("powerBIColumnSummarizeBy"),
     /** Endorsement status of this asset, in Power BI. */
     POWER_BI_ENDORSEMENT("powerBIEndorsement"),
-    /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
-    POWER_BI_FORMAT_STRING("powerBIFormatString"),
     /** Name of a column in the same table to use to order this column. */
     POWER_BI_SORT_BY_COLUMN("powerBISortByColumn"),
     /** Unique name of the Power BI table in which this asset exists. */
     POWER_BI_TABLE_QUALIFIED_NAME("powerBITableQualifiedName"),
-    /** Power Query M expressions for the table. */
-    POWER_BI_TABLE_SOURCE_EXPRESSIONS("powerBITableSourceExpressions"),
     /** TBC */
     PRESET_CHART_FORM_DATA("presetChartFormData"),
     /** TBC */
@@ -1074,10 +858,6 @@ public enum KeywordFields implements AtlanSearchableField {
     PREVIEW_CREDENTIAL_STRATEGY("previewCredentialStrategy"),
     /** List of top-level projects and their nested child projects. */
     PROJECT_HIERARCHY("projectHierarchy"),
-    /** Name of the parent project of this Explore. */
-    PROJECT_NAME("projectName"),
-    /** Unique name of the project in which this dashboard exists. */
-    PROJECT_QUALIFIED_NAME("projectQualifiedName"),
     /** All propagated Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag. */
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
     /** TBC */
@@ -1114,20 +894,12 @@ public enum KeywordFields implements AtlanSearchableField {
     QLIK_SPACE_TYPE("qlikSpaceType"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName"),
-    /** Query config for this connection. */
-    QUERY_CONFIG("queryConfig"),
     /** Configuration for the query preview of this materialized view. */
     QUERY_PREVIEW_CONFIG("queryPreviewConfig"),
     /** Username strategy to use for this connection for queries. */
     QUERY_USERNAME_STRATEGY("queryUsernameStrategy"),
     /** Map of unique users who have queried this asset to the number of times they have queried it. */
     QUERY_USER_MAP("queryUserMap"),
-    /** List of field names calculated by this analysis. */
-    QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS("quickSightAnalysisCalculatedFields"),
-    /** List of filter groups used for this analysis. */
-    QUICK_SIGHT_ANALYSIS_FILTER_GROUPS("quickSightAnalysisFilterGroups"),
-    /** List of parameters used for this analysis. */
-    QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS("quickSightAnalysisParameterDeclarations"),
     /** Unique name of the QuickSight analysis in which this visual exists. */
     QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName"),
     /** Status of this analysis, for example: CREATION_IN_PROGRESS, UPDATE_SUCCESSFUL, etc. */
@@ -1150,26 +922,16 @@ public enum KeywordFields implements AtlanSearchableField {
     QUICK_SIGHT_SHEET_ID("quickSightSheetId"),
     /** TBC */
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName.keyword"),
-    /** TBC */
-    RAW_DATA_TYPE_DEFINITION("rawDataTypeDefinition"),
-    /** Deprecated. See 'longRawQuery' instead. */
-    RAW_QUERY("rawQuery"),
     /** Simple name of the query from which this visualization is created. */
     REDASH_QUERY_NAME("redashQueryName.keyword"),
-    /** Parameters of this query. */
-    REDASH_QUERY_PARAMETERS("redashQueryParameters"),
     /** Unique name of the query from which this visualization is created. */
     REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName"),
     /** Schedule for this query. */
     REDASH_QUERY_SCHEDULE("redashQuerySchedule"),
     /** Schdule for this query in readable text for overview tab and filtering. */
     REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized"),
-    /** SQL code of this query. */
-    REDASH_QUERY_SQL("redashQuerySQL"),
     /** Type of this visualization. */
     REDASH_VISUALIZATION_TYPE("redashVisualizationType"),
-    /** Reference to the resource. */
-    REFERENCE("reference"),
     /** Refresh method for this materialized view. */
     REFRESH_METHOD("refreshMethod"),
     /** Refresh mode for this materialized view. */
@@ -1178,18 +940,10 @@ public enum KeywordFields implements AtlanSearchableField {
     REPLICATED_FROM("replicatedFrom"),
     /** TBC */
     REPLICATED_TO("replicatedTo"),
-    /** Unique name of the report in which this page exists. */
-    REPORT_QUALIFIED_NAME("reportQualifiedName"),
     /** Type of report in Salesforce. */
     REPORT_TYPE("reportType"),
     /** Metadata of the resource. */
     RESOURCE_METADATA("resourceMetadata"),
-    /** TBC */
-    RESULT("result"),
-    /** TBC */
-    RESULT_SUMMARY("resultSummary"),
-    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
-    ROLE("role"),
     /** TBC */
     ROLE_ID("roleId"),
     /** Simple name of the bucket in which this object exists. */
@@ -1230,12 +984,6 @@ public enum KeywordFields implements AtlanSearchableField {
     SCHEMA_REGISTRY_SUBJECT_LATEST_SCHEMA_VERSION("schemaRegistrySubjectLatestSchemaVersion"),
     /** Compatibility of the schema across versions. */
     SCHEMA_REGISTRY_SUBJECT_SCHEMA_COMPATIBILITY("schemaRegistrySubjectSchemaCompatibility"),
-    /** TBC */
-    SEARCH_PARAMETERS("searchParameters"),
-    /** TBC */
-    SEARCH_TYPE("searchType"),
-    /** Unused. Brief summary of the term. See 'description' and 'userDescription' instead. */
-    SHORT_DESCRIPTION("shortDescription"),
     /** Simple name of the dataset in which this column exists. */
     SIGMA_DATASET_NAME("sigmaDatasetName.keyword"),
     /** Unique name of the dataset in which this column exists. */
@@ -1244,8 +992,6 @@ public enum KeywordFields implements AtlanSearchableField {
     SIGMA_DATA_ELEMENT_NAME("sigmaDataElementName.keyword"),
     /** Unique name of the data element in which this asset exists. */
     SIGMA_DATA_ELEMENT_QUALIFIED_NAME("sigmaDataElementQualifiedName"),
-    /** TBC */
-    SIGMA_DATA_ELEMENT_QUERY("sigmaDataElementQuery"),
     /** TBC */
     SIGMA_DATA_ELEMENT_TYPE("sigmaDataElementType"),
     /** Simple name of the page on which this asset exists. */
@@ -1266,8 +1012,6 @@ public enum KeywordFields implements AtlanSearchableField {
     SISENSE_DATAMODEL_REVISION("sisenseDatamodelRevision"),
     /** Hostname of the server on which this datamodel was created. */
     SISENSE_DATAMODEL_SERVER("sisenseDatamodelServer"),
-    /** SQL expression of this datamodel table. */
-    SISENSE_DATAMODEL_TABLE_EXPRESSION("sisenseDatamodelTableExpression"),
     /** JSON specifying the LiveQuery settings of this datamodel table. */
     SISENSE_DATAMODEL_TABLE_LIVE_QUERY_SETTINGS("sisenseDatamodelTableLiveQuerySettings"),
     /** JSON specifying the refresh schedule of this datamodel table. */
@@ -1286,8 +1030,6 @@ public enum KeywordFields implements AtlanSearchableField {
     SISENSE_WIDGET_SIZE("sisenseWidgetSize"),
     /** Subtype of this widget. */
     SISENSE_WIDGET_SUB_TYPE("sisenseWidgetSubType"),
-    /** Unique name of the site in which this dashboard exists. */
-    SITE_QUALIFIED_NAME("siteQualifiedName"),
     /** Name of the notification channel for this pipe. */
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName"),
     /** Mode of this stream. */
@@ -1296,32 +1038,16 @@ public enum KeywordFields implements AtlanSearchableField {
     SNOWFLAKE_STREAM_SOURCE_TYPE("snowflakeStreamSourceType"),
     /** Type of this stream, for example: standard, append-only, insert-only, etc. */
     SNOWFLAKE_STREAM_TYPE("snowflakeStreamType"),
-    /** Definition of the check in Soda. */
-    SODA_CHECK_DEFINITION("sodaCheckDefinition"),
     /** Status of the check in Soda. */
     SODA_CHECK_EVALUATION_STATUS("sodaCheckEvaluationStatus"),
     /** Identifier of the check in Soda. */
     SODA_CHECK_ID("sodaCheckId"),
-    /** Connection name for the Explore, from Looker. */
-    SOURCE_CONNECTION_NAME("sourceConnectionName"),
     /** The unit of measure for sourceTotalCost. */
     SOURCE_COST_UNIT("sourceCostUnit"),
     /** Name of the user who created this asset, in the source system. */
     SOURCE_CREATED_BY("sourceCreatedBy"),
-    /** Deprecated. */
-    SOURCE_DEFINITION("sourceDefinition"),
-    /** Deprecated. */
-    SOURCE_DEFINITION_DATABASE("sourceDefinitionDatabase"),
-    /** Deprecated. */
-    SOURCE_DEFINITION_SCHEMA("sourceDefinitionSchema"),
     /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
     SOURCE_EMBED_URL("sourceEmbedURL"),
-    /** Identifier of the dashboard in Salesforce. */
-    SOURCE_ID("sourceId"),
-    /** Unused. Only the value of connectorType impacts icons. */
-    SOURCE_LOGO("sourceLogo"),
-    /** List of owners of this asset, in the source system. */
-    SOURCE_OWNERS("sourceOwners"),
     /** List of most expensive warehouse names. */
     SOURCE_QUERY_COMPUTE_COSTS("sourceQueryComputeCostList"),
     /** List of most expensive warehouses with extra insights. */
@@ -1340,8 +1066,6 @@ public enum KeywordFields implements AtlanSearchableField {
     SOURCE_READ_TOP_USERS("sourceReadTopUserList"),
     /** List of usernames with extra insights for the users who read this asset the most. */
     SOURCE_READ_TOP_USER_RECORDS("sourceReadTopUserRecordList"),
-    /** TBC */
-    SOURCE_SERVER_NAME("sourceServerName"),
     /** Name of the user who last updated this asset, in the source system. */
     SOURCE_UPDATED_BY("sourceUpdatedBy"),
     /** URL to the resource within the source application, used to create a button to view this asset in the source application. */
@@ -1356,28 +1080,18 @@ public enum KeywordFields implements AtlanSearchableField {
     SPARK_RUN_OPEN_LINEAGE_VERSION("sparkRunOpenLineageVersion"),
     /** Spark Version for the Spark Job run eg. 3.4.1 */
     SPARK_RUN_VERSION("sparkRunVersion"),
-    /** SQL query that ran to produce the outputs. */
-    SQL("sql"),
-    /** Name of the SQL table used to declare the Explore. */
-    SQL_TABLE_NAME("sqlTableName"),
     /** TBC */
     STAKEHOLDER_DOMAIN_QUALIFIED_NAME("stakeholderDomainQualifiedName"),
     /** qualified name array representing the Domains for which this StakeholderTitle is applicable */
     STAKEHOLDER_TITLE_DOMAIN_QUALIFIED_NAMES("stakeholderTitleDomainQualifiedNames"),
     /** TBC */
     STAKEHOLDER_TITLE_GUID("stakeholderTitleGuid"),
-    /** Staleness of this materialized view. */
-    STALENESS("staleness"),
     /** Users who have starred this asset. */
     STARRED_BY("starredBy"),
     /** List of usernames with extra information of the users who have starred an asset. */
     STARRED_DETAILS("starredDetailsList"),
     /** Asset status in Atlan (active vs deleted). */
     STATE("__state"),
-    /** Text for the subtitle for text tiles. */
-    SUBTITLE_TEXT("subtitleText"),
-    /** Subcategory of this connection. */
-    SUB_CATEGORY("subCategory"),
     /** Sub-data type of this column. */
     SUB_DATA_TYPE("subDataType"),
     /** Subtype of this asset. */
@@ -1386,12 +1100,8 @@ public enum KeywordFields implements AtlanSearchableField {
     SUPERSET_CHART_FORM_DATA("supersetChartFormData"),
     /** Name of the user who changed the dashboard. */
     SUPERSET_DASHBOARD_CHANGED_BY_NAME("supersetDashboardChangedByName.keyword"),
-    /** URL of the user profile that changed the dashboard */
-    SUPERSET_DASHBOARD_CHANGED_BY_URL("supersetDashboardChangedByURL"),
     /** Unique name of the dashboard in which this asset exists. */
     SUPERSET_DASHBOARD_QUALIFIED_NAME("supersetDashboardQualifiedName"),
-    /** URL for the dashboard thumbnail image in superset. */
-    SUPERSET_DASHBOARD_THUMBNAIL_URL("supersetDashboardThumbnailURL"),
     /** Name of the datasource for the dataset. */
     SUPERSET_DATASET_DATASOURCE_NAME("supersetDatasetDatasourceName.keyword"),
     /** Type of the dataset in superset. */
@@ -1400,16 +1110,8 @@ public enum KeywordFields implements AtlanSearchableField {
     SUPER_DOMAIN_QUALIFIED_NAME("superDomainQualifiedName"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames.keyword"),
-    /** Bin size of this field. */
-    TABLEAU_DATASOURCE_FIELD_BIN_SIZE("tableauDatasourceFieldBinSize"),
-    /** Data category of this field. */
-    TABLEAU_DATASOURCE_FIELD_DATA_CATEGORY("tableauDatasourceFieldDataCategory"),
     /** Data type of this field. */
     TABLEAU_DATASOURCE_FIELD_DATA_TYPE("tableauDatasourceFieldDataType"),
-    /** Formula for this field. */
-    TABLEAU_DATASOURCE_FIELD_FORMULA("tableauDatasourceFieldFormula"),
-    /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
-    TABLEAU_DATASOURCE_FIELD_ROLE("tableauDatasourceFieldRole"),
     /** Data type of the field, from Tableau. */
     TABLEAU_DATA_TYPE("tableauDataType"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
@@ -1428,32 +1130,22 @@ public enum KeywordFields implements AtlanSearchableField {
     TAG_QUALIFIED_NAME("tagQualifiedName"),
     /** TBC */
     TAG_SERVICE("tagService"),
-    /** TBC */
-    TARGET_SERVER_NAME("targetServerName"),
     /** List of actions associated with this task. */
     TASK_ACTIONS("taskActions"),
     /** username of the user who created this task */
     TASK_CREATED_BY("taskCreatedBy"),
     /** action executed by the recipient */
     TASK_EXECUTION_ACTION("taskExecutionAction"),
-    /** comment for the action executed by user */
-    TASK_EXECUTION_COMMENT("taskExecutionComment"),
-    /** contains the payload that is proposed to the task */
-    TASK_PROPOSALS("taskProposals"),
     /** recipient of the task */
     TASK_RECIPIENT("taskRecipient"),
     /** assetId to preview */
     TASK_RELATED_ASSET_GUID("taskRelatedAssetGuid"),
     /** requestor of the task */
     TASK_REQUESTOR("taskRequestor"),
-    /** comment of requestor for the task */
-    TASK_REQUESTOR_COMMENT("taskRequestorComment"),
     /** type of task */
     TASK_TYPE("taskType"),
     /** username of the user who updated this task */
     TASK_UPDATED_BY("taskUpdatedBy"),
-    /** Name of the Atlan workspace in which this asset exists. */
-    TENANT_ID("tenantId"),
     /** TBC */
     TERM_TYPE("termType"),
     /** TBC */
@@ -1472,18 +1164,10 @@ public enum KeywordFields implements AtlanSearchableField {
     THOUGHTSPOT_VIEW_QUALIFIED_NAME("thoughtspotViewQualifiedName"),
     /** Unique name of the worksheet in which this column exists. */
     THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME("thoughtspotWorksheetQualifiedName"),
-    /** Simple name of the top-level project in which this workbook exists. */
-    TOP_LEVEL_PROJECT_NAME("topLevelProjectName"),
-    /** Unique name of the top-level project in which this dashboard exists. */
-    TOP_LEVEL_PROJECT_QUALIFIED_NAME("topLevelProjectQualifiedName"),
     /** All directly-assigned Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag. */
     TRAIT_NAMES("__traitNames"),
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName.keyword"),
-    /** TBC */
-    UI_PARAMETERS("uiParameters"),
-    /** TBC */
-    UNIQUE_NAME("uniqueName"),
     /** Columns upstream to this field. */
     UPSTREAM_COLUMNS("upstreamColumns"),
     /** List of datasources that are upstream of this datasource. */
@@ -1492,18 +1176,10 @@ public enum KeywordFields implements AtlanSearchableField {
     UPSTREAM_FIELDS("upstreamFields"),
     /** List of tables that are upstream of this datasource. */
     UPSTREAM_TABLES("upstreamTables"),
-    /** TBC */
-    URLS("urls"),
-    /** Unused. Intended usage for the term. */
-    USAGE("usage"),
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     USER_DESCRIPTION("userDescription.keyword"),
-    /** TBC */
-    USER_NAME("userName"),
     /** Validations for this column. */
     VALIDATIONS("validations"),
-    /** Base64-encoded string of the variables to use in this query. */
-    VARIABLES_SCHEMA_BASE64("variablesSchemaBase64"),
     /** List of groups who can view assets contained in a collection. (This is only used for certain asset types.) */
     VIEWER_GROUPS("viewerGroups"),
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
@@ -1512,24 +1188,10 @@ public enum KeywordFields implements AtlanSearchableField {
     VIEW_NAME("viewName.keyword"),
     /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     VIEW_QUALIFIED_NAME("viewQualifiedName"),
-    /** Base64-encoded string for the visual query builder. */
-    VISUAL_BUILDER_SCHEMA_BASE64("visualBuilderSchemaBase64"),
-    /** Deprecated. */
-    WEB_URL("webUrl"),
-    /** Unique name of the workbook in which this dashboard exists. */
-    WORKBOOK_QUALIFIED_NAME("workbookQualifiedName"),
-    /** Details of the workflow. */
-    WORKFLOW_CONFIG("workflowConfig"),
     /** Username of the user who created this workflow. */
     WORKFLOW_CREATED_BY("workflowCreatedBy"),
-    /** The comment added by the requester */
-    WORKFLOW_RUN_COMMENT("workflowRunComment"),
-    /** Details of the approval workflow run. */
-    WORKFLOW_RUN_CONFIG("workflowRunConfig"),
     /** Username of the user who created this workflow run. */
     WORKFLOW_RUN_CREATED_BY("workflowRunCreatedBy"),
-    /** Time duration after which a run of this workflow will expire. */
-    WORKFLOW_RUN_EXPIRES_IN("workflowRunExpiresIn"),
     /** The asset for which this run was created. */
     WORKFLOW_RUN_ON_ASSET_GUID("workflowRunOnAssetGuid"),
     /** Status of the run. */
@@ -1548,8 +1210,6 @@ public enum KeywordFields implements AtlanSearchableField {
     WORKFLOW_TYPE("workflowType"),
     /** Username of the user who updated this workflow. */
     WORKFLOW_UPDATED_BY("workflowUpdatedBy"),
-    /** Unique name of the workspace in which this dataset exists. */
-    WORKSPACE_QUALIFIED_NAME("workspaceQualifiedName"),
     ;
 
     @Getter(onMethod_ = {@Override})

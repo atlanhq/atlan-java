@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -34,7 +35,7 @@ public interface IGlossaryTerm {
     public static final String TYPE_NAME = "AtlasGlossaryTerm";
 
     /** TBC */
-    KeywordField ABBREVIATION = new KeywordField("abbreviation", "abbreviation");
+    TextField ABBREVIATION = new TextField("abbreviation", "abbreviation");
 
     /** TBC */
     KeywordField ADDITIONAL_ATTRIBUTES = new KeywordField("additionalAttributes", "additionalAttributes");
@@ -49,13 +50,13 @@ public interface IGlossaryTerm {
     RelationField CLASSIFIES = new RelationField("classifies");
 
     /** TBC */
-    KeywordField EXAMPLES = new KeywordField("examples", "examples");
+    TextField EXAMPLES = new TextField("examples", "examples");
 
     /** TBC */
     RelationField IS_A = new RelationField("isA");
 
     /** TBC */
-    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
+    TextField LONG_DESCRIPTION = new TextField("longDescription", "longDescription");
 
     /** TBC */
     RelationField PREFERRED_TERMS = new RelationField("preferredTerms");
@@ -73,7 +74,7 @@ public interface IGlossaryTerm {
     RelationField SEE_ALSO = new RelationField("seeAlso");
 
     /** TBC */
-    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
+    TextField SHORT_DESCRIPTION = new TextField("shortDescription", "shortDescription");
 
     /** TBC */
     RelationField SYNONYMS = new RelationField("synonyms");
@@ -88,7 +89,7 @@ public interface IGlossaryTerm {
     RelationField TRANSLATION_TERMS = new RelationField("translationTerms");
 
     /** TBC */
-    KeywordField USAGE = new KeywordField("usage", "usage");
+    TextField USAGE = new TextField("usage", "usage");
 
     /** TBC */
     RelationField VALID_VALUES = new RelationField("validValues");

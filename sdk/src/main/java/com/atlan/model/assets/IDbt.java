@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -41,7 +42,7 @@ public interface IDbt {
     KeywordTextField DBT_ALIAS = new KeywordTextField("dbtAlias", "dbtAlias.keyword", "dbtAlias");
 
     /** TBC */
-    KeywordField DBT_CONNECTION_CONTEXT = new KeywordField("dbtConnectionContext", "dbtConnectionContext");
+    TextField DBT_CONNECTION_CONTEXT = new TextField("dbtConnectionContext", "dbtConnectionContext");
 
     /** TBC */
     KeywordTextField DBT_ENVIRONMENT_DBT_VERSION = new KeywordTextField(
@@ -65,7 +66,7 @@ public interface IDbt {
             new KeywordTextField("dbtJobNextRunHumanized", "dbtJobNextRunHumanized.keyword", "dbtJobNextRunHumanized");
 
     /** TBC */
-    KeywordField DBT_JOB_SCHEDULE = new KeywordField("dbtJobSchedule", "dbtJobSchedule");
+    TextField DBT_JOB_SCHEDULE = new TextField("dbtJobSchedule", "dbtJobSchedule");
 
     /** TBC */
     KeywordTextField DBT_JOB_SCHEDULE_CRON_HUMANIZED = new KeywordTextField(
@@ -75,7 +76,7 @@ public interface IDbt {
     KeywordField DBT_JOB_STATUS = new KeywordField("dbtJobStatus", "dbtJobStatus");
 
     /** TBC */
-    KeywordField DBT_META = new KeywordField("dbtMeta", "dbtMeta");
+    TextField DBT_META = new TextField("dbtMeta", "dbtMeta");
 
     /** TBC */
     KeywordTextField DBT_PACKAGE_NAME =
@@ -90,7 +91,7 @@ public interface IDbt {
             new KeywordField("dbtSemanticLayerProxyUrl", "dbtSemanticLayerProxyUrl");
 
     /** TBC */
-    KeywordField DBT_TAGS = new KeywordField("dbtTags", "dbtTags");
+    TextField DBT_TAGS = new TextField("dbtTags", "dbtTags");
 
     /** TBC */
     KeywordTextField DBT_UNIQUE_ID = new KeywordTextField("dbtUniqueId", "dbtUniqueId.keyword", "dbtUniqueId");

@@ -55,9 +55,17 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Singular
     SortedSet<IDMAttribute> dMAttributes;
 
+    /** A domain of the datam model in which this asset exists. */
+    @Attribute
+    String dMDataModelDomain;
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelName;
+
+    /** A namespace of the data model in which this asset exists. */
+    @Attribute
+    String dMDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute

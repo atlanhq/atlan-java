@@ -13,6 +13,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -42,7 +43,7 @@ public interface IConnection {
     BooleanField ALLOW_QUERY_PREVIEW = new BooleanField("allowQueryPreview", "allowQueryPreview");
 
     /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
-    KeywordField CATEGORY = new KeywordField("category", "category");
+    TextField CATEGORY = new TextField("category", "category");
 
     /** TBC */
     KeywordField CONNECTION_DBT_ENVIRONMENTS =
@@ -53,22 +54,22 @@ public interface IConnection {
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
 
     /** Unused. Only the value of connectorType impacts icons. */
-    KeywordField CONNECTOR_ICON = new KeywordField("connectorIcon", "connectorIcon");
+    TextField CONNECTOR_ICON = new TextField("connectorIcon", "connectorIcon");
 
     /** Unused. Only the value of connectorType impacts icons. */
-    KeywordField CONNECTOR_IMAGE = new KeywordField("connectorImage", "connectorImage");
+    TextField CONNECTOR_IMAGE = new TextField("connectorImage", "connectorImage");
 
     /** Credential strategy to use for this connection for queries. */
-    KeywordField CREDENTIAL_STRATEGY = new KeywordField("credentialStrategy", "credentialStrategy");
+    TextField CREDENTIAL_STRATEGY = new TextField("credentialStrategy", "credentialStrategy");
 
     /** Unique identifier (GUID) for the default credentials to use for this connection. */
-    KeywordField DEFAULT_CREDENTIAL_GUID = new KeywordField("defaultCredentialGuid", "defaultCredentialGuid");
+    TextField DEFAULT_CREDENTIAL_GUID = new TextField("defaultCredentialGuid", "defaultCredentialGuid");
 
     /** Whether this connection has popularity insights (true) or not (false). */
     BooleanField HAS_POPULARITY_INSIGHTS = new BooleanField("hasPopularityInsights", "hasPopularityInsights");
 
     /** Host name of this connection's source. */
-    KeywordField HOST = new KeywordField("host", "host");
+    TextField HOST = new TextField("host", "host");
 
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     BooleanField IS_SAMPLE_DATA_PREVIEW_ENABLED =
@@ -97,7 +98,7 @@ public interface IConnection {
             new KeywordField("previewCredentialStrategy", "previewCredentialStrategy");
 
     /** Query config for this connection. */
-    KeywordField QUERY_CONFIG = new KeywordField("queryConfig", "queryConfig");
+    TextField QUERY_CONFIG = new TextField("queryConfig", "queryConfig");
 
     /** Configuration for preview queries. */
     KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
@@ -112,10 +113,10 @@ public interface IConnection {
     NumericField ROW_LIMIT = new NumericField("rowLimit", "rowLimit");
 
     /** Unused. Only the value of connectorType impacts icons. */
-    KeywordField SOURCE_LOGO = new KeywordField("sourceLogo", "sourceLogo");
+    TextField SOURCE_LOGO = new TextField("sourceLogo", "sourceLogo");
 
     /** Subcategory of this connection. */
-    KeywordField SUB_CATEGORY = new KeywordField("subCategory", "subCategory");
+    TextField SUB_CATEGORY = new TextField("subCategory", "subCategory");
 
     /** Whether to upload to S3, GCP, or another storage location (true) or not (false). */
     BooleanField USE_OBJECT_STORAGE = new BooleanField("useObjectStorage", "useObjectStorage");
