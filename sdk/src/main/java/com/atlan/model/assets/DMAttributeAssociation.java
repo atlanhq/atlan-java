@@ -92,16 +92,6 @@ public class DMAttributeAssociation extends Asset
     @Attribute
     String dMOwnerSealId;
 
-    /** Association from this attribute is related. */
-    @Attribute
-    @Singular
-    SortedSet<IDMAttributeAssociation> dMRelatedFromAttributes;
-
-    /** Association to which this attribute is related. */
-    @Attribute
-    @Singular
-    SortedSet<IDMAttributeAssociation> dMRelatedToAttributes;
-
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
     String dMVersionName;

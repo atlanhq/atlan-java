@@ -48,12 +48,6 @@ public interface IDMAttributeAssociation {
     /** Owner seal ID of the data attribute association. */
     KeywordField D_M_OWNER_SEAL_ID = new KeywordField("dMOwnerSealId", "dMOwnerSealId");
 
-    /** Association from this attribute is related. */
-    RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
-
-    /** Association to which this attribute is related. */
-    RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
-
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -335,12 +329,6 @@ public interface IDMAttributeAssociation {
 
     /** Owner seal ID of the data attribute association. */
     String getDMOwnerSealId();
-
-    /** Association from this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
-
-    /** Association to which this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();

@@ -411,12 +411,6 @@ public class DMEntityAssociationTest {
             .dMEntityTo(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMLabel("String0")
             .dMOwnerSealId("String0")
-            .dMRelatedFromEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedFromEntity(
-                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dMRelatedToEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedToEntity(
-                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

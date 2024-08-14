@@ -38,12 +38,6 @@ public interface IDMEntity {
     /** Individual attributes that make up the entity. */
     RelationField D_M_ATTRIBUTES = new RelationField("dMAttributes");
 
-    /** Entity from which this association is related. */
-    RelationField D_M_ENTITY_FROM = new RelationField("dMEntityFrom");
-
-    /** Entity to which this association is related. */
-    RelationField D_M_ENTITY_TO = new RelationField("dMEntityTo");
-
     /** Entities from which this entity is mapped. */
     RelationField D_M_MAPPED_FROM_ENTITIES = new RelationField("dMMappedFromEntities");
 
@@ -326,17 +320,11 @@ public interface IDMEntity {
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
 
-    /** Entity from which this association is related. */
-    IDMEntity getDMEntityFrom();
-
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityName();
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
-
-    /** Entity to which this association is related. */
-    IDMEntity getDMEntityTo();
 
     /** Entities from which this entity is mapped. */
     SortedSet<IDMEntity> getDMMappedFromEntities();

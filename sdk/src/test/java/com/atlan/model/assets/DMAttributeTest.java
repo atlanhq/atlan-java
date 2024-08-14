@@ -406,8 +406,6 @@ public class DMAttributeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dMAttributeFrom(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMAttributeTo(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

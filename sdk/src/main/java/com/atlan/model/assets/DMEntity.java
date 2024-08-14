@@ -71,10 +71,6 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Attribute
     String dMDataModelQualifiedName;
 
-    /** Entity from which this association is related. */
-    @Attribute
-    IDMEntity dMEntityFrom;
-
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityName;
@@ -82,10 +78,6 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityQualifiedName;
-
-    /** Entity to which this association is related. */
-    @Attribute
-    IDMEntity dMEntityTo;
 
     /** Entities from which this entity is mapped. */
     @Attribute

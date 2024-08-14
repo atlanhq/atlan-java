@@ -31,12 +31,6 @@ public interface IDMAttribute {
 
     public static final String TYPE_NAME = "DMAttribute";
 
-    /** Attribute from which this association is related. */
-    RelationField D_M_ATTRIBUTE_FROM = new RelationField("dMAttributeFrom");
-
-    /** Attribute to which this association is related. */
-    RelationField D_M_ATTRIBUTE_TO = new RelationField("dMAttributeTo");
-
     /** Entity in which this attribute exists. */
     RelationField D_M_ENTITY = new RelationField("dMEntity");
 
@@ -300,12 +294,6 @@ public interface IDMAttribute {
 
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
-
-    /** Attribute from which this association is related. */
-    IDMAttribute getDMAttributeFrom();
-
-    /** Attribute to which this association is related. */
-    IDMAttribute getDMAttributeTo();
 
     /** A domain of the datam model in which this asset exists. */
     String getDMDataModelDomain();

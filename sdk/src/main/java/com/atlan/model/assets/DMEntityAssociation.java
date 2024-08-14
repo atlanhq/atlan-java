@@ -91,16 +91,6 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Attribute
     String dMOwnerSealId;
 
-    /** Association from this entity is related. */
-    @Attribute
-    @Singular
-    SortedSet<IDMEntityAssociation> dMRelatedFromEntities;
-
-    /** Association to which this entity is related. */
-    @Attribute
-    @Singular
-    SortedSet<IDMEntityAssociation> dMRelatedToEntities;
-
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
     String dMVersionName;

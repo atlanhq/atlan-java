@@ -46,14 +46,6 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attribute from which this association is related. */
-    @Attribute
-    IDMAttribute dMAttributeFrom;
-
-    /** Attribute to which this association is related. */
-    @Attribute
-    IDMAttribute dMAttributeTo;
-
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;

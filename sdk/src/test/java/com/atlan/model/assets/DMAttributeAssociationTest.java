@@ -411,12 +411,6 @@ public class DMAttributeAssociationTest {
             .dMCardinality(DMCardinalityType.ONE_TO_ONE)
             .dMLabel("String0")
             .dMOwnerSealId("String0")
-            .dMRelatedFromAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedFromAttribute(
-                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dMRelatedToAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedToAttribute(
-                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

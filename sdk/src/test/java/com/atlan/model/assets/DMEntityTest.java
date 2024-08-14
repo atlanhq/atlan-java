@@ -409,8 +409,6 @@ public class DMEntityTest {
             .dMAttributeCount(123456789L)
             .dMAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dMEntityFrom(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMEntityTo(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMMappedToEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
