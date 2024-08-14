@@ -222,19 +222,20 @@ customTypes {
         }
       }
       ["data_model_entity_data_model_entities"] {
-        description = "Peer-to-peer relationship between data entity and data entity association."
+        description = "Peer-to-peer relationship between data entity association and data entity."
         peers {
           new {
-            type = "\(t)\(dmEntityAssociation)"
-            attribute = "\(a)RelatedToEntities"
-            description = "Entity association to which this entity is related."
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)EntityTo"
+            description = "Entity to which this association is related."
           }
           new {
-            type = "\(t)\(dmEntityAssociation)"
-            attribute = "\(a)RelatedFromEntities"
-            description = "Entity association from which this entity is related."
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)EntityFrom"
+            description = "Entity from which this association is related."
           }
         }
+        manyToMany = false
       }
     }
   }
@@ -274,20 +275,19 @@ customTypes {
     }
     relationships {
        ["data_model_entity_data_model_entities"] {
-        description = "Peer-to-peer relationship between data entity association and data entity."
+        description = "Peer-to-peer relationship between data entity and data entity association."
         peers {
           new {
-            type = "\(t)\(dmEntity)"
-            attribute = "\(a)EntityTo"
-            description = "Entity to which this association is related."
+            type = "\(t)\(dmEntityAssociation)"
+            attribute = "\(a)RelatedToEntities"
+            description = "Entity association to which this entity is related."
           }
           new {
-            type = "\(t)\(dmEntity)"
-            attribute = "\(a)EntityFrom"
-            description = "Entity from which this association is related."
+            type = "\(t)\(dmEntityAssociation)"
+            attribute = "\(a)RelatedFromEntities"
+            description = "Entity association from which this entity is related."
           }
         }
-        manyToMany = false
       }
     }
   }
