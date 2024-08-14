@@ -11,6 +11,7 @@ import com.atlan.model.enums.IconType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -37,7 +38,7 @@ public interface ILink {
     RelationField ASSET = new RelationField("asset");
 
     /** Icon for the link. */
-    KeywordField ICON = new KeywordField("icon", "icon");
+    TextField ICON = new TextField("icon", "icon");
 
     /** Type of icon for the link, for example: image or emoji. */
     KeywordField ICON_TYPE = new KeywordField("iconType", "iconType");

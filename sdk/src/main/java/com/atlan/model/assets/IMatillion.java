@@ -8,7 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -32,7 +32,7 @@ public interface IMatillion {
     public static final String TYPE_NAME = "Matillion";
 
     /** Current point in time state of a project. */
-    KeywordField MATILLION_VERSION = new KeywordField("matillionVersion", "matillionVersion");
+    TextField MATILLION_VERSION = new TextField("matillionVersion", "matillionVersion");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

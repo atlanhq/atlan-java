@@ -32,9 +32,17 @@ public interface IDM {
 
     public static final String TYPE_NAME = "DM";
 
+    /** A domain of the datam model in which this asset exists. */
+    KeywordTextField D_M_DATA_MODEL_DOMAIN =
+            new KeywordTextField("dMDataModelDomain", "dMDataModelDomain.keyword", "dMDataModelDomain");
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     KeywordTextField D_M_DATA_MODEL_NAME =
             new KeywordTextField("dMDataModelName", "dMDataModelName.keyword", "dMDataModelName");
+
+    /** A namespace of the data model in which this asset exists. */
+    KeywordTextField D_M_DATA_MODEL_NAMESPACE =
+            new KeywordTextField("dMDataModelNamespace", "dMDataModelNamespace.keyword", "dMDataModelNamespace");
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     KeywordField D_M_DATA_MODEL_QUALIFIED_NAME =
@@ -301,8 +309,14 @@ public interface IDM {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();

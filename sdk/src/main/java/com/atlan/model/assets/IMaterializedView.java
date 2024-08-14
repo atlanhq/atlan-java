@@ -12,6 +12,7 @@ import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -35,7 +36,7 @@ public interface IMaterializedView {
     public static final String TYPE_NAME = "MaterialisedView";
 
     /** TBC */
-    KeywordField ALIAS = new KeywordField("alias", "alias");
+    TextField ALIAS = new TextField("alias", "alias");
 
     /** TBC */
     NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
@@ -44,7 +45,7 @@ public interface IMaterializedView {
     RelationField COLUMNS = new RelationField("columns");
 
     /** TBC */
-    KeywordField DEFINITION = new KeywordField("definition", "definition");
+    TextField DEFINITION = new TextField("definition", "definition");
 
     /** TBC */
     BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
@@ -74,7 +75,7 @@ public interface IMaterializedView {
     NumericField STALE_SINCE_DATE = new NumericField("staleSinceDate", "staleSinceDate");
 
     /** TBC */
-    KeywordField STALENESS = new KeywordField("staleness", "staleness");
+    TextField STALENESS = new TextField("staleness", "staleness");
 
     /** TBC */
     SortedSet<String> getAdminGroups();

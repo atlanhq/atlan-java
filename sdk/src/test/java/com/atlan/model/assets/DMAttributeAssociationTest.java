@@ -59,7 +59,9 @@ public class DMAttributeAssociationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .dMDataModelDomain("String0")
             .dMDataModelName("String0")
+            .dMDataModelNamespace("String0")
             .dMDataModelQualifiedName("String0")
             .dMEntityName("String0")
             .dMEntityQualifiedName("String0")
@@ -404,15 +406,11 @@ public class DMAttributeAssociationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .dMAttributeFrom(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMAttributeTo(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMCardinality(DMCardinalityType.ONE_TO_ONE)
             .dMLabel("String0")
             .dMOwnerSealId("String0")
-            .dMRelatedFromAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedFromAttribute(
-                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dMRelatedToAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMRelatedToAttribute(
-                    DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

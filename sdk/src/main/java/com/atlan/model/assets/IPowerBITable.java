@@ -9,9 +9,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -41,7 +41,7 @@ public interface IPowerBITable {
     RelationField DATASET = new RelationField("dataset");
 
     /** Unique name of the dataset in which this table exists. */
-    KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
+    TextField DATASET_QUALIFIED_NAME = new TextField("datasetQualifiedName", "datasetQualifiedName");
 
     /** Measures that exist within this table. */
     RelationField MEASURES = new RelationField("measures");
@@ -54,11 +54,11 @@ public interface IPowerBITable {
             new NumericField("powerBITableMeasureCount", "powerBITableMeasureCount");
 
     /** Power Query M expressions for the table. */
-    KeywordField POWER_BI_TABLE_SOURCE_EXPRESSIONS =
-            new KeywordField("powerBITableSourceExpressions", "powerBITableSourceExpressions");
+    TextField POWER_BI_TABLE_SOURCE_EXPRESSIONS =
+            new TextField("powerBITableSourceExpressions", "powerBITableSourceExpressions");
 
     /** Unique name of the workspace in which this table exists. */
-    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
+    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

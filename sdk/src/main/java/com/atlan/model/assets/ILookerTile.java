@@ -8,9 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -46,13 +46,13 @@ public interface ILookerTile {
     NumericField LOOK_ID = new NumericField("lookId", "lookId");
 
     /** Identifier for the LoomML link. */
-    KeywordField LOOKML_LINK_ID = new KeywordField("lookmlLinkId", "lookmlLinkId");
+    TextField LOOKML_LINK_ID = new TextField("lookmlLinkId", "lookmlLinkId");
 
     /** Identifier for the merge result. */
-    KeywordField MERGE_RESULT_ID = new KeywordField("mergeResultId", "mergeResultId");
+    TextField MERGE_RESULT_ID = new TextField("mergeResultId", "mergeResultId");
 
     /** Text of notes added to the tile. */
-    KeywordField NOTE_TEXT = new KeywordField("noteText", "noteText");
+    TextField NOTE_TEXT = new TextField("noteText", "noteText");
 
     /** Deprecated. */
     RelationField QUERY = new RelationField("query");
@@ -64,7 +64,7 @@ public interface ILookerTile {
     NumericField RESULT_MAKER_ID = new NumericField("resultMakerID", "resultMakerID");
 
     /** Text for the subtitle for text tiles. */
-    KeywordField SUBTITLE_TEXT = new KeywordField("subtitleText", "subtitleText");
+    TextField SUBTITLE_TEXT = new TextField("subtitleText", "subtitleText");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

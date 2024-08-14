@@ -46,9 +46,17 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** A domain of the datam model in which this asset exists. */
+    @Attribute
+    String dMDataModelDomain;
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelName;
+
+    /** A namespace of the data model in which this asset exists. */
+    @Attribute
+    String dMDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
@@ -61,6 +69,10 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityQualifiedName;
+
+    /** Tool used to create this data model. */
+    @Attribute
+    String dMTool;
 
     /** Type of the data model. */
     @Attribute

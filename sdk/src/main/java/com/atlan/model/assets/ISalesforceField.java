@@ -40,10 +40,10 @@ public interface ISalesforceField {
     KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
 
     /** Formula for the default value for this field. */
-    KeywordField DEFAULT_VALUE_FORMULA = new KeywordField("defaultValueFormula", "defaultValueFormula");
+    TextField DEFAULT_VALUE_FORMULA = new TextField("defaultValueFormula", "defaultValueFormula");
 
     /** Formula for this field, if it is a calculated field. */
-    KeywordField FORMULA = new KeywordField("formula", "formula");
+    TextField FORMULA = new TextField("formula", "formula");
 
     /** Help text for this field. */
     TextField INLINE_HELP_TEXT = new TextField("inlineHelpText", "inlineHelpText.text");
@@ -85,7 +85,7 @@ public interface ISalesforceField {
     NumericField ORDER = new NumericField("order", "order");
 
     /** List of values from which a user can pick while adding a record. */
-    KeywordField PICKLIST_VALUES = new KeywordField("picklistValues", "picklistValues");
+    TextField PICKLIST_VALUES = new TextField("picklistValues", "picklistValues");
 
     /** Total number of digits allowed */
     NumericField PRECISION = new NumericField("precision", "precision");

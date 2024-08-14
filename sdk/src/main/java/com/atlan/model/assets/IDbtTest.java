@@ -9,8 +9,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -43,23 +43,22 @@ public interface IDbtTest {
     RelationField DBT_SOURCES = new RelationField("dbtSources");
 
     /** Compiled code of the test (when the test is defined using Python). */
-    KeywordField DBT_TEST_COMPILED_CODE = new KeywordField("dbtTestCompiledCode", "dbtTestCompiledCode");
+    TextField DBT_TEST_COMPILED_CODE = new TextField("dbtTestCompiledCode", "dbtTestCompiledCode");
 
     /** Compiled SQL of the test. */
-    KeywordField DBT_TEST_COMPILED_SQL = new KeywordField("dbtTestCompiledSQL", "dbtTestCompiledSQL");
+    TextField DBT_TEST_COMPILED_SQL = new TextField("dbtTestCompiledSQL", "dbtTestCompiledSQL");
 
     /** Error message in the case of state being "error". */
-    KeywordField DBT_TEST_ERROR = new KeywordField("dbtTestError", "dbtTestError");
+    TextField DBT_TEST_ERROR = new TextField("dbtTestError", "dbtTestError");
 
     /** Language in which the test is written, for example: SQL or Python. */
-    KeywordField DBT_TEST_LANGUAGE = new KeywordField("dbtTestLanguage", "dbtTestLanguage");
+    TextField DBT_TEST_LANGUAGE = new TextField("dbtTestLanguage", "dbtTestLanguage");
 
     /** Raw code of the test (when the test is defined using Python). */
-    KeywordTextField DBT_TEST_RAW_CODE =
-            new KeywordTextField("dbtTestRawCode", "dbtTestRawCode", "dbtTestRawCode.text");
+    TextField DBT_TEST_RAW_CODE = new TextField("dbtTestRawCode", "dbtTestRawCode.text");
 
     /** Raw SQL of the test. */
-    KeywordTextField DBT_TEST_RAW_SQL = new KeywordTextField("dbtTestRawSQL", "dbtTestRawSQL", "dbtTestRawSQL.text");
+    TextField DBT_TEST_RAW_SQL = new TextField("dbtTestRawSQL", "dbtTestRawSQL.text");
 
     /** Test results. Can be one of, in order of severity, "error", "fail", "warn", "pass". */
     KeywordField DBT_TEST_STATE = new KeywordField("dbtTestState", "dbtTestState");

@@ -11,6 +11,7 @@ import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -57,7 +58,7 @@ public interface IAirflow {
     KeywordField AIRFLOW_RUN_VERSION = new KeywordField("airflowRunVersion", "airflowRunVersion");
 
     /** Tags assigned to the asset in Airflow. */
-    KeywordField AIRFLOW_TAGS = new KeywordField("airflowTags", "airflowTags");
+    TextField AIRFLOW_TAGS = new TextField("airflowTags", "airflowTags");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

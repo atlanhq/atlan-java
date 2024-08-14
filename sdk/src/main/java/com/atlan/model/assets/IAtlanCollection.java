@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -33,7 +34,7 @@ public interface IAtlanCollection {
     public static final String TYPE_NAME = "Collection";
 
     /** TBC */
-    KeywordField ICON = new KeywordField("icon", "icon");
+    TextField ICON = new TextField("icon", "icon");
 
     /** TBC */
     KeywordField ICON_TYPE = new KeywordField("iconType", "iconType");

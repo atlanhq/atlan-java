@@ -8,7 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -32,7 +32,7 @@ public interface ISnowflakeDynamicTable {
     public static final String TYPE_NAME = "SnowflakeDynamicTable";
 
     /** SQL statements used to define the dynamic table. */
-    KeywordField DEFINITION = new KeywordField("definition", "definition");
+    TextField DEFINITION = new TextField("definition", "definition");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

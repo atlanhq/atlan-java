@@ -55,17 +55,21 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Singular
     SortedSet<IDMAttribute> dMAttributes;
 
+    /** A domain of the datam model in which this asset exists. */
+    @Attribute
+    String dMDataModelDomain;
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelName;
 
+    /** A namespace of the data model in which this asset exists. */
+    @Attribute
+    String dMDataModelNamespace;
+
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelQualifiedName;
-
-    /** Entity from which this association is related. */
-    @Attribute
-    IDMEntity dMEntityFrom;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
@@ -74,10 +78,6 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityQualifiedName;
-
-    /** Entity to which this association is related. */
-    @Attribute
-    IDMEntity dMEntityTo;
 
     /** Entities from which this entity is mapped. */
     @Attribute
@@ -88,6 +88,16 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Attribute
     @Singular
     SortedSet<IDMEntity> dMMappedToEntities;
+
+    /** Association from this entity is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMEntityAssociation> dMRelatedFromEntities;
+
+    /** Association to which this entity is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMEntityAssociation> dMRelatedToEntities;
 
     /** Data model version in which this entity exists. */
     @Attribute

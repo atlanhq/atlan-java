@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -36,10 +37,10 @@ public interface ILineageProcess {
     RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
 
     /** TBC */
-    KeywordField AST = new KeywordField("ast", "ast");
+    TextField AST = new TextField("ast", "ast");
 
     /** TBC */
-    KeywordField CODE = new KeywordField("code", "code");
+    TextField CODE = new TextField("code", "code");
 
     /** TBC */
     RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
@@ -57,7 +58,7 @@ public interface ILineageProcess {
     RelationField SPARK_JOBS = new RelationField("sparkJobs");
 
     /** TBC */
-    KeywordField SQL = new KeywordField("sql", "sql");
+    TextField SQL = new TextField("sql", "sql");
 
     /** TBC */
     SortedSet<String> getAdminGroups();

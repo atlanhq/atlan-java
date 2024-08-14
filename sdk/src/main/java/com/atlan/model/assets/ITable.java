@@ -12,6 +12,7 @@ import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -47,13 +48,13 @@ public interface ITable {
     RelationField DIMENSIONS = new RelationField("dimensions");
 
     /** External location of this table, for example: an S3 object location. */
-    KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
+    TextField EXTERNAL_LOCATION = new TextField("externalLocation", "externalLocation");
 
     /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
 
     /** Region of the external location of this table, for example: S3 region. */
-    KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
+    TextField EXTERNAL_LOCATION_REGION = new TextField("externalLocationRegion", "externalLocationRegion");
 
     /** TBC */
     RelationField FACTS = new RelationField("facts");
@@ -74,7 +75,7 @@ public interface ITable {
     NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
 
     /** List of partitions in this table. */
-    KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
+    TextField PARTITION_LIST = new TextField("partitionList", "partitionList");
 
     /** Partition strategy for this table. */
     KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");

@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -43,10 +44,10 @@ public interface IGlossaryCategory {
     RelationField CHILDREN_CATEGORIES = new RelationField("childrenCategories");
 
     /** TBC */
-    KeywordField LONG_DESCRIPTION = new KeywordField("longDescription", "longDescription");
+    TextField LONG_DESCRIPTION = new TextField("longDescription", "longDescription");
 
     /** TBC */
-    KeywordField SHORT_DESCRIPTION = new KeywordField("shortDescription", "shortDescription");
+    TextField SHORT_DESCRIPTION = new TextField("shortDescription", "shortDescription");
 
     /** TBC */
     RelationField TERMS = new RelationField("terms");

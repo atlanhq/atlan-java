@@ -9,8 +9,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -37,7 +37,7 @@ public interface IPowerBITile {
     RelationField DASHBOARD = new RelationField("dashboard");
 
     /** Unique name of the dashboard in which this tile is pinned. */
-    KeywordField DASHBOARD_QUALIFIED_NAME = new KeywordField("dashboardQualifiedName", "dashboardQualifiedName");
+    TextField DASHBOARD_QUALIFIED_NAME = new TextField("dashboardQualifiedName", "dashboardQualifiedName");
 
     /** Dataset in which this tile exists. */
     RelationField DATASET = new RelationField("dataset");
@@ -46,7 +46,7 @@ public interface IPowerBITile {
     RelationField REPORT = new RelationField("report");
 
     /** Unique name of the workspace in which this tile exists. */
-    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
+    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

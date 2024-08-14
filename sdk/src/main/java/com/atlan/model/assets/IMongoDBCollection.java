@@ -73,8 +73,8 @@ public interface IMongoDBCollection {
             "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
 
     /** Name of the field containing the date in each time series document. */
-    KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
-            new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
+    TextField MONGO_DB_COLLECTION_TIME_FIELD =
+            new TextField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
 
     /** Closest match to the time span between consecutive incoming measurements. */
     KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =

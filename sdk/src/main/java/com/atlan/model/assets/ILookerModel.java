@@ -8,8 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -45,7 +45,7 @@ public interface ILookerModel {
     RelationField PROJECT = new RelationField("project");
 
     /** Name of the project in which the model exists. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+    TextField PROJECT_NAME = new TextField("projectName", "projectName");
 
     /** Deprecated. */
     RelationField QUERIES = new RelationField("queries");

@@ -11,6 +11,7 @@ import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -37,7 +38,7 @@ public interface IFile {
     RelationField FILE_ASSETS = new RelationField("fileAssets");
 
     /** URL giving the online location where the file can be accessed. */
-    KeywordField FILE_PATH = new KeywordField("filePath", "filePath");
+    TextField FILE_PATH = new TextField("filePath", "filePath");
 
     /** Type (extension) of the file. */
     KeywordField FILE_TYPE = new KeywordField("fileType", "fileType");

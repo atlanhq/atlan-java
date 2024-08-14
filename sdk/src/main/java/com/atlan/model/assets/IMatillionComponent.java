@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -53,7 +54,7 @@ public interface IMatillionComponent {
             new KeywordField("matillionComponentLinkedJob", "matillionComponentLinkedJob");
 
     /** SQL queries used by the component. */
-    KeywordField MATILLION_COMPONENT_SQLS = new KeywordField("matillionComponentSqls", "matillionComponentSqls");
+    TextField MATILLION_COMPONENT_SQLS = new TextField("matillionComponentSqls", "matillionComponentSqls");
 
     /** Job in which this component exists. */
     RelationField MATILLION_JOB = new RelationField("matillionJob");

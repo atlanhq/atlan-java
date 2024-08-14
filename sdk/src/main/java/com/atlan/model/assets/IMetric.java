@@ -43,7 +43,7 @@ public interface IMetric {
     TextField METRIC_FILTERS = new TextField("metricFilters", "metricFilters");
 
     /** SQL query used to compute the metric. */
-    KeywordField METRIC_SQL = new KeywordField("metricSQL", "metricSQL");
+    TextField METRIC_SQL = new TextField("metricSQL", "metricSQL");
 
     /** List of time grains to be applied to the metric query. */
     TextField METRIC_TIME_GRAINS = new TextField("metricTimeGrains", "metricTimeGrains");

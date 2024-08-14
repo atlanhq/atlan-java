@@ -9,9 +9,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -41,13 +41,13 @@ public interface IPowerBIDashboard {
     RelationField TILES = new RelationField("tiles");
 
     /** Deprecated. See 'sourceUrl' instead. */
-    KeywordField WEB_URL = new KeywordField("webUrl", "webUrl");
+    TextField WEB_URL = new TextField("webUrl", "webUrl");
 
     /** Workspace in which this dashboard exists. */
     RelationField WORKSPACE = new RelationField("workspace");
 
     /** Unique name of the workspace in which this dashboard exists. */
-    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
+    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -8,9 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -40,7 +40,7 @@ public interface ILookerDashboard {
     RelationField FOLDER = new RelationField("folder");
 
     /** Name of the parent folder in Looker that contains this dashboard. */
-    KeywordField FOLDER_NAME = new KeywordField("folderName", "folderName");
+    TextField FOLDER_NAME = new TextField("folderName", "folderName");
 
     /** Looks that are used within this dashboard. */
     RelationField LOOKS = new RelationField("looks");

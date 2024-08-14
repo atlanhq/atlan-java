@@ -11,6 +11,7 @@ import com.atlan.model.enums.QuickSightAnalysisStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -34,19 +35,19 @@ public interface IQuickSightAnalysis {
     public static final String TYPE_NAME = "QuickSightAnalysis";
 
     /** List of field names calculated by this analysis. */
-    KeywordField QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS =
-            new KeywordField("quickSightAnalysisCalculatedFields", "quickSightAnalysisCalculatedFields");
+    TextField QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS =
+            new TextField("quickSightAnalysisCalculatedFields", "quickSightAnalysisCalculatedFields");
 
     /** List of filter groups used for this analysis. */
-    KeywordField QUICK_SIGHT_ANALYSIS_FILTER_GROUPS =
-            new KeywordField("quickSightAnalysisFilterGroups", "quickSightAnalysisFilterGroups");
+    TextField QUICK_SIGHT_ANALYSIS_FILTER_GROUPS =
+            new TextField("quickSightAnalysisFilterGroups", "quickSightAnalysisFilterGroups");
 
     /** TBC */
     RelationField QUICK_SIGHT_ANALYSIS_FOLDERS = new RelationField("quickSightAnalysisFolders");
 
     /** List of parameters used for this analysis. */
-    KeywordField QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS =
-            new KeywordField("quickSightAnalysisParameterDeclarations", "quickSightAnalysisParameterDeclarations");
+    TextField QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS =
+            new TextField("quickSightAnalysisParameterDeclarations", "quickSightAnalysisParameterDeclarations");
 
     /** Status of this analysis, for example: CREATION_IN_PROGRESS, UPDATE_SUCCESSFUL, etc. */
     KeywordField QUICK_SIGHT_ANALYSIS_STATUS = new KeywordField("quickSightAnalysisStatus", "quickSightAnalysisStatus");
