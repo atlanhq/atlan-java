@@ -117,31 +117,12 @@ customTypes {
       ["\(a)Type"] {
         label = "type"
         description = "Type of the data model."
-        type = "enum"
-        enumName = "\(t)Type"
+        type = "string"
       }
       ["\(a)Tool"] {
         label = "tool"
         description = "Tool used to create this data model."
-        type = "enum"
-        enumName = "\(t)Tool"
-      }
-    }
-    enums {
-      ["\(t)Type"] {
-        description = "Valid values for data model type."
-        validValues {
-          ["LOGICAL"] { description = "Logical data model." }
-          ["PHYSICAL"] { description = "Physical data model." }
-          ["CONCEPTUAL"] { description = "Conceptual data model." }
-        }
-      }
-      ["\(t)Tool"] {
-        description = "Valid values for data model tool."
-        validValues {
-          ["ERWIN"] { description = "ERWin." }
-          ["MAGIC_DRAW"] { description = "MagicDraw." }
-        }
+        type = "string"
       }
     }
   }
@@ -221,21 +202,6 @@ customTypes {
           }
         }
       }
-      ["data_model_entity_data_model_entities"] {
-        description = "Peer-to-peer relationship between data entity and data entity association."
-        peers {
-          new {
-            type = "\(t)\(dmEntityAssociation)"
-            attribute = "\(a)RelatedToEntities"
-            description = "Entity association to which this entity is related."
-          }
-          new {
-            type = "\(t)\(dmEntityAssociation)"
-            attribute = "\(a)RelatedFromEntities"
-            description = "Entity association from which this entity is related."
-          }
-        }
-      }
     }
   }
 
@@ -273,21 +239,31 @@ customTypes {
       }
     }
     relationships {
-       ["data_model_entity_data_model_entities"] {
+       ["data_model_entity_data_model_entities_1"] {
         description = "Peer-to-peer relationship between data entity association and data entity."
-        peers {
-          new {
-            type = "\(t)\(dmEntity)"
-            attribute = "\(a)EntityTo"
-            description = "Entity to which this association is related."
-          }
-          new {
-            type = "\(t)\(dmEntity)"
-            attribute = "\(a)EntityFrom"
-            description = "Entity from which this association is related."
-          }
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)RelatedFromEntities"
+          description = "Association from this entity is related."
         }
-        manyToMany = false
+        children {
+          type = "\(t)\(dmEntityAssociation)"
+          attribute = "\(a)EntityTo"
+          description = "Entity to which this association is related."
+        }
+      }
+      ["data_model_entity_data_model_entities_2"] {
+        description = "Peer-to-peer relationship between data entity and data entity association."
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)RelatedToEntities"
+          description = "Association to which this entity is related."
+        }
+        children {
+          type = "\(t)\(dmEntityAssociation)"
+          attribute = "\(a)EntityFrom"
+          description = "Entity from which this association is related."
+        }
       }
     }
   }
@@ -331,21 +307,6 @@ customTypes {
           }
         }
       }
-      ["data_model_attribute_data_model_attributes"] {
-        description = "Peer-to-peer relationship between data attribute and data attribute association."
-        peers {
-          new {
-            type = "\(t)\(dmAttributeAssociation)"
-            attribute = "\(a)RelatedToAttributes"
-            description = "Attribute association to which this attribute is related."
-          }
-          new {
-            type = "\(t)\(dmAttributeAssociation)"
-            attribute = "\(a)RelatedFromAttributes"
-            description = "Attribute association from which this attribute is related."
-          }
-        }
-      }
     }
   }
 
@@ -372,21 +333,31 @@ customTypes {
       }
     }
     relationships {
-      ["data_model_attribute_data_model_attributes"] {
+      ["data_model_attribute_data_model_attributes_1"] {
         description = "Peer-to-peer relationship between data attribute association and data attribute."
-        peers {
-          new {
-            type = "\(t)\(dmAttribute)"
-            attribute = "\(a)AttributeTo"
-            description = "Attribute to which this association is related."
-          }
-          new {
-            type = "\(t)\(dmAttribute)"
-            attribute = "\(a)AttributeFrom"
-            description = "Attribute from which this association is related."
-          }
+        parent {
+          type = "\(t)\(dmAttribute)"
+          attribute = "\(a)RelatedFromAttributes"
+          description = "Association from this attribute is related."
         }
-        manyToMany = false
+        children {
+          type = "\(t)\(dmAttributeAssociation)"
+          attribute = "\(a)AttributeTo"
+          description = "Attribute to which this association is related."
+        }
+      }
+      ["data_model_attribute_data_model_attributes_2"] {
+        description = "Peer-to-peer relationship between data attribute association and data attribute."
+        parent {
+          type = "\(t)\(dmAttribute)"
+          attribute = "\(a)RelatedToAttributes"
+          description = "Association to which this attribute is related."
+        }
+        children {
+          type = "\(t)\(dmAttributeAssociation)"
+          attribute = "\(a)AttributeFrom"
+          description = "Attribute from which this association is related."
+        }
       }
     }
   }
