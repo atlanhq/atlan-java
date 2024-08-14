@@ -28,8 +28,9 @@ public class AdminTest extends AtlanLiveTest {
     private static final DateTimeFormatter SIMPLE_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final LocalDate NOW = LocalDate.now(ZoneId.of("UTC"));
     private static final LocalDate BEFORE = NOW.minusDays(1);
-    private static final String TODAY = SIMPLE_DATE.format(NOW);
+    private static final LocalDate FUTURE = NOW.plusDays(1);
     private static final String YESTERDAY = SIMPLE_DATE.format(BEFORE);
+    private static final String TOMORROW = SIMPLE_DATE.format(FUTURE);
 
     private static AtlanGroup group1 = null;
 
@@ -233,7 +234,7 @@ public class AdminTest extends AtlanLiveTest {
                 .logs
                 .getEvents(KeycloakEventRequest.builder()
                         .dateFrom(YESTERDAY)
-                        .dateTo(TODAY)
+                        .dateTo(TOMORROW)
                         .build());
         List<KeycloakEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
@@ -249,7 +250,7 @@ public class AdminTest extends AtlanLiveTest {
                 .getAdminEvents(AdminEventRequest.builder()
                         .realmId("default")
                         .dateFrom(YESTERDAY)
-                        .dateTo(TODAY)
+                        .dateTo(TOMORROW)
                         .build());
         List<AdminEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
