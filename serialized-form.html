@@ -9061,6 +9061,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension.</div>
 </li>
 <li class="blockList">
+<h4>cubeFieldGeneration</h4>
+<pre>java.lang.Long cubeFieldGeneration</pre>
+<div class="block">Generation of the field in the cube hierarchy.</div>
+</li>
+<li class="blockList">
 <h4>cubeFieldLevel</h4>
 <pre>java.lang.Long cubeFieldLevel</pre>
 <div class="block">Level of the field in the cube hierarchy.</div>
@@ -11562,19 +11567,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
-<h4>dMAttributeFrom</h4>
-<pre><a href="com/atlan/model/assets/IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a> dMAttributeFrom</pre>
-<div class="block">Attribute from which this association is related.</div>
-</li>
-<li class="blockList">
-<h4>dMAttributeTo</h4>
-<pre><a href="com/atlan/model/assets/IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a> dMAttributeTo</pre>
-<div class="block">Attribute to which this association is related.</div>
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
 </li>
 <li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
+</li>
+<li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
 </li>
 <li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
@@ -11605,6 +11610,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dMMappedToAttributes</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a>&gt; dMMappedToAttributes</pre>
 <div class="block">Attributes to which this attribute is mapped.</div>
+</li>
+<li class="blockList">
+<h4>dMRelatedFromAttributes</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMAttributeAssociation.html" title="interface in com.atlan.model.assets">IDMAttributeAssociation</a>&gt; dMRelatedFromAttributes</pre>
+<div class="block">Association from this attribute is related.</div>
+</li>
+<li class="blockList">
+<h4>dMRelatedToAttributes</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMAttributeAssociation.html" title="interface in com.atlan.model.assets">IDMAttributeAssociation</a>&gt; dMRelatedToAttributes</pre>
+<div class="block">Association to which this attribute is related.</div>
 </li>
 <li class="blockList">
 <h4>dMVersionName</h4>
@@ -11668,14 +11683,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>dMAttributeFrom</h4>
+<pre><a href="com/atlan/model/assets/IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a> dMAttributeFrom</pre>
+<div class="block">Attribute from which this association is related.</div>
+</li>
+<li class="blockList">
+<h4>dMAttributeTo</h4>
+<pre><a href="com/atlan/model/assets/IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a> dMAttributeTo</pre>
+<div class="block">Attribute to which this association is related.</div>
+</li>
+<li class="blockList">
 <h4>dMCardinality</h4>
 <pre><a href="com/atlan/model/enums/DMCardinalityType.html" title="enum in com.atlan.model.enums">DMCardinalityType</a> dMCardinality</pre>
 <div class="block">Cardinality of the data attribute association.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
+</li>
+<li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
 </li>
 <li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
@@ -11701,16 +11736,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dMOwnerSealId</h4>
 <pre>java.lang.String dMOwnerSealId</pre>
 <div class="block">Owner seal ID of the data attribute association.</div>
-</li>
-<li class="blockList">
-<h4>dMRelatedFromAttributes</h4>
-<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMAttributeAssociation.html" title="interface in com.atlan.model.assets">IDMAttributeAssociation</a>&gt; dMRelatedFromAttributes</pre>
-<div class="block">Attribute association from which this attribute is related.</div>
-</li>
-<li class="blockList">
-<h4>dMRelatedToAttributes</h4>
-<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMAttributeAssociation.html" title="interface in com.atlan.model.assets">IDMAttributeAssociation</a>&gt; dMRelatedToAttributes</pre>
-<div class="block">Attribute association to which this attribute is related.</div>
 </li>
 <li class="blockList">
 <h4>dMVersionName</h4>
@@ -11774,9 +11799,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h3>Serialized Fields</h3>
 <ul class="blockList">
 <li class="blockList">
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
+</li>
+<li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
 </li>
 <li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
@@ -11792,6 +11827,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dMEntityQualifiedName</h4>
 <pre>java.lang.String dMEntityQualifiedName</pre>
 <div class="block">Unique name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
+</li>
+<li class="blockList">
+<h4>dMTool</h4>
+<pre>java.lang.String dMTool</pre>
+<div class="block">Tool used to create this data model.</div>
 </li>
 <li class="blockList">
 <h4>dMType</h4>
@@ -11880,19 +11920,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Individual attributes that make up the entity.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
 <pre>java.lang.String dMDataModelQualifiedName</pre>
 <div class="block">Unique name of the model in which this asset exists, or empty if it is itself a data model.</div>
-</li>
-<li class="blockList">
-<h4>dMEntityFrom</h4>
-<pre><a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a> dMEntityFrom</pre>
-<div class="block">Entity from which this association is related.</div>
 </li>
 <li class="blockList">
 <h4>dMEntityName</h4>
@@ -11905,11 +11950,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Unique name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
 </li>
 <li class="blockList">
-<h4>dMEntityTo</h4>
-<pre><a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a> dMEntityTo</pre>
-<div class="block">Entity to which this association is related.</div>
-</li>
-<li class="blockList">
 <h4>dMMappedFromEntities</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a>&gt; dMMappedFromEntities</pre>
 <div class="block">Entities from which this entity is mapped.</div>
@@ -11918,6 +11958,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dMMappedToEntities</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a>&gt; dMMappedToEntities</pre>
 <div class="block">Entities to which this entity is mapped.</div>
+</li>
+<li class="blockList">
+<h4>dMRelatedFromEntities</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a>&gt; dMRelatedFromEntities</pre>
+<div class="block">Association from this entity is related.</div>
+</li>
+<li class="blockList">
+<h4>dMRelatedToEntities</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a>&gt; dMRelatedToEntities</pre>
+<div class="block">Association to which this entity is related.</div>
 </li>
 <li class="blockList">
 <h4>dMVersion</h4>
@@ -11991,14 +12041,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Cardinality of the data entity association.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
 <pre>java.lang.String dMDataModelQualifiedName</pre>
 <div class="block">Unique name of the model in which this asset exists, or empty if it is itself a data model.</div>
+</li>
+<li class="blockList">
+<h4>dMEntityFrom</h4>
+<pre><a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a> dMEntityFrom</pre>
+<div class="block">Entity from which this association is related.</div>
 </li>
 <li class="blockList">
 <h4>dMEntityName</h4>
@@ -12011,6 +12076,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Unique name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
 </li>
 <li class="blockList">
+<h4>dMEntityTo</h4>
+<pre><a href="com/atlan/model/assets/IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a> dMEntityTo</pre>
+<div class="block">Entity to which this association is related.</div>
+</li>
+<li class="blockList">
 <h4>dMLabel</h4>
 <pre>java.lang.String dMLabel</pre>
 <div class="block">Label of the data entity association.</div>
@@ -12019,16 +12089,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>dMOwnerSealId</h4>
 <pre>java.lang.String dMOwnerSealId</pre>
 <div class="block">Owner seal ID of the data entity association.</div>
-</li>
-<li class="blockList">
-<h4>dMRelatedFromEntities</h4>
-<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a>&gt; dMRelatedFromEntities</pre>
-<div class="block">Entity association from which this entity is related.</div>
-</li>
-<li class="blockList">
-<h4>dMRelatedToEntities</h4>
-<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a>&gt; dMRelatedToEntities</pre>
-<div class="block">Entity association to which this entity is related.</div>
 </li>
 <li class="blockList">
 <h4>dMVersionName</h4>
@@ -12097,9 +12157,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Data model for which this version exists.</div>
 </li>
 <li class="blockList">
+<h4>dMDataModelDomain</h4>
+<pre>java.lang.String dMDataModelDomain</pre>
+<div class="block">A domain of the datam model in which this asset exists.</div>
+</li>
+<li class="blockList">
 <h4>dMDataModelName</h4>
 <pre>java.lang.String dMDataModelName</pre>
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
+</li>
+<li class="blockList">
+<h4>dMDataModelNamespace</h4>
+<pre>java.lang.String dMDataModelNamespace</pre>
+<div class="block">A namespace of the data model in which this asset exists.</div>
 </li>
 <li class="blockList">
 <h4>dMDataModelQualifiedName</h4>
