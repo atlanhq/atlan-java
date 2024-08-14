@@ -14,6 +14,8 @@ local dmAttributeAssociation = "AttributeAssociation"
 
 local attrName = "Name"
 local qualifiedName = "QualifiedName"
+local domain = "Domain"
+local namespace = "Namespace"
 
 local modelIcon = new Icon {
   name = "GenericDB"
@@ -37,6 +39,18 @@ shared {
         type = "string"
         indexAs = "keyword"
       }
+      ["\(a)\(dataModel)\(domain)"] {
+        label = "Model"
+        description = "A domain of the datam model in which this asset exists."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dataModel)\(namespace)"] {
+        label = "Model"
+        description = "A namespace of the data model in which this asset exists."
+        type = "string"
+        indexAs = "both"
+      }
       ["\(a)\(dmVersion)\(attrName)"] {
         label = "Version"
         description = "Simple name of the version in which this asset exists, or empty if it is itself a data model version."
@@ -59,7 +73,6 @@ shared {
         type = "string"
         indexAs = "keyword"
       }
-      // TODO: namespace, domain, subjectArea, etc?
     }
   }
   ui {
@@ -104,7 +117,31 @@ customTypes {
       ["\(a)Type"] {
         label = "type"
         description = "Type of the data model."
-        type = "string"
+        type = "enum"
+        enumName = "\(t)Type"
+      }
+      ["\(a)Tool"] {
+        label = "tool"
+        description = "Tool used to create this data model."
+        type = "enum"
+        enumName = "\(t)Tool"
+      }
+    }
+    enums {
+      ["\(t)Type"] {
+        description = "Valid values for data model type."
+        validValues {
+          ["LOGICAL"] { description = "Logical data model." }
+          ["PHYSICAL"] { description = "Physical data model." }
+          ["CONCEPTUAL"] { description = "Conceptual data model." }
+        }
+      }
+      ["\(t)Tool"] {
+        description = "Valid values for data model tool."
+        validValues {
+          ["ERWIN"] { description = "ERWin." }
+          ["MAGIC_DRAW"] { description = "MagicDraw." }
+        }
       }
     }
   }
