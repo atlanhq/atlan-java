@@ -46,6 +46,12 @@ public interface IDMAttribute {
     /** Attributes to which this attribute is mapped. */
     RelationField D_M_MAPPED_TO_ATTRIBUTES = new RelationField("dMMappedToAttributes");
 
+    /** Association from this attribute is related. */
+    RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
+
+    /** Association to which this attribute is related. */
+    RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -327,6 +333,12 @@ public interface IDMAttribute {
 
     /** Attributes to which this attribute is mapped. */
     SortedSet<IDMAttribute> getDMMappedToAttributes();
+
+    /** Association from this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
+
+    /** Association to which this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();

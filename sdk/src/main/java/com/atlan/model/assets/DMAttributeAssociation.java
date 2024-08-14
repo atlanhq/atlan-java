@@ -48,6 +48,14 @@ public class DMAttributeAssociation extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Attribute from which this association is related. */
+    @Attribute
+    IDMAttribute dMAttributeFrom;
+
+    /** Attribute to which this association is related. */
+    @Attribute
+    IDMAttribute dMAttributeTo;
+
     /** Cardinality of the data attribute association. */
     @Attribute
     DMCardinalityType dMCardinality;
@@ -84,12 +92,12 @@ public class DMAttributeAssociation extends Asset
     @Attribute
     String dMOwnerSealId;
 
-    /** Attribute association from which this attribute is related. */
+    /** Association from this attribute is related. */
     @Attribute
     @Singular
     SortedSet<IDMAttributeAssociation> dMRelatedFromAttributes;
 
-    /** Attribute association to which this attribute is related. */
+    /** Association to which this attribute is related. */
     @Attribute
     @Singular
     SortedSet<IDMAttributeAssociation> dMRelatedToAttributes;

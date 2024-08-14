@@ -67,6 +67,10 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Attribute
     String dMDataModelQualifiedName;
 
+    /** Entity from which this association is related. */
+    @Attribute
+    IDMEntity dMEntityFrom;
+
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityName;
@@ -74,6 +78,10 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityQualifiedName;
+
+    /** Entity to which this association is related. */
+    @Attribute
+    IDMEntity dMEntityTo;
 
     /** Label of the data entity association. */
     @Attribute
@@ -83,12 +91,12 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Attribute
     String dMOwnerSealId;
 
-    /** Entity association from which this entity is related. */
+    /** Association from this entity is related. */
     @Attribute
     @Singular
     SortedSet<IDMEntityAssociation> dMRelatedFromEntities;
 
-    /** Entity association to which this entity is related. */
+    /** Association to which this entity is related. */
     @Attribute
     @Singular
     SortedSet<IDMEntityAssociation> dMRelatedToEntities;

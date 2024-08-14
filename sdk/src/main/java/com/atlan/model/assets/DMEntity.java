@@ -97,6 +97,16 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Singular
     SortedSet<IDMEntity> dMMappedToEntities;
 
+    /** Association from this entity is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMEntityAssociation> dMRelatedFromEntities;
+
+    /** Association to which this entity is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMEntityAssociation> dMRelatedToEntities;
+
     /** Data model version in which this entity exists. */
     @Attribute
     IDMVersion dMVersion;

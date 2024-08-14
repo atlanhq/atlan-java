@@ -50,6 +50,12 @@ public interface IDMEntity {
     /** Entities to which this entity is mapped. */
     RelationField D_M_MAPPED_TO_ENTITIES = new RelationField("dMMappedToEntities");
 
+    /** Association from this entity is related. */
+    RelationField D_M_RELATED_FROM_ENTITIES = new RelationField("dMRelatedFromEntities");
+
+    /** Association to which this entity is related. */
+    RelationField D_M_RELATED_TO_ENTITIES = new RelationField("dMRelatedToEntities");
+
     /** Data model version in which this entity exists. */
     RelationField D_M_VERSION = new RelationField("dMVersion");
 
@@ -337,6 +343,12 @@ public interface IDMEntity {
 
     /** Entities to which this entity is mapped. */
     SortedSet<IDMEntity> getDMMappedToEntities();
+
+    /** Association from this entity is related. */
+    SortedSet<IDMEntityAssociation> getDMRelatedFromEntities();
+
+    /** Association to which this entity is related. */
+    SortedSet<IDMEntityAssociation> getDMRelatedToEntities();
 
     /** Data model version in which this entity exists. */
     IDMVersion getDMVersion();

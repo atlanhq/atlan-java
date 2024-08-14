@@ -415,6 +415,12 @@ public class DMEntityTest {
             .dMMappedFromEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMMappedToEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedToEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedFromEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedFromEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedToEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedToEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMVersion(DMVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

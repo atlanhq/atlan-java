@@ -34,6 +34,9 @@ public interface ICubeField {
 
     public static final String TYPE_NAME = "CubeField";
 
+    /** Generation of the field in the cube hierarchy. */
+    NumericField CUBE_FIELD_GENERATION = new NumericField("cubeFieldGeneration", "cubeFieldGeneration");
+
     /** Level of the field in the cube hierarchy. */
     NumericField CUBE_FIELD_LEVEL = new NumericField("cubeFieldLevel", "cubeFieldLevel");
 
@@ -315,6 +318,9 @@ public interface ICubeField {
 
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionQualifiedName();
+
+    /** Generation of the field in the cube hierarchy. */
+    Long getCubeFieldGeneration();
 
     /** Level of the field in the cube hierarchy. */
     Long getCubeFieldLevel();
