@@ -9,87 +9,106 @@ import com.atlan.model.enums.AtlasGlossaryTermRelationshipStatus;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.slf4j.Slf4j;
 
-/** Terms that have the same (or a very similar) meaning, in the same language. */
-@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
-@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-@Slf4j
-@SuppressWarnings("cast")
-public class AtlasGlossarySynonym extends GlossaryTerm {
-    // TODO: having a class for the relationship works, but it can only extend ONE of the endDef
-    //  types -- so we'd probably need to create a separate class for each end of the relationship
-    //  (for any relationships where the two ends are different types)?
+public class AtlasGlossarySynonym extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    RA relationshipAttributes;
+    public static final String TYPE_NAME = "AtlasGlossarySynonym";
 
-    /**
-     * Builds the minimal object necessary for creating a term.
-     *
-     * @param name of the term
-     * @param glossary in which the term should be created
-     * @return the minimal request necessary to create the term, as a builder
-     * @throws InvalidRequestException if the glossary provided is without a GUID or qualifiedName
-     */
-    public static AtlasGlossarySynonymBuilder<?, ?> ref(IGlossaryTerm term) throws InvalidRequestException {
-        if (term.getGuid() != null && !term.getGuid().isBlank()) {
-            return _internal().guid(term.getGuid());
-        } else {
-            return _internal()
-                    .uniqueAttributes(UniqueAttributes.builder()
-                            .qualifiedName(term.getQualifiedName())
-                            .build());
+    /** Fixed typeName for AtlasGlossarySynonym. */
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Details about the relationship. */
+    String description;
+
+    /** Expression used to set the relationship. */
+    String expression;
+
+    /** Status of the synonym assignment, typically used by discovery engines. */
+    AtlasGlossaryTermRelationshipStatus status;
+
+    /** User responsible for assessing the relationship and deciding if it should be approved or not. */
+    String steward;
+
+    /** Source of the relationship. */
+    String source;
+
+    /** {@inheritDoc} */
+    @Override
+    public Map<String, Object> getAll() {
+        Map<String, Object> map = new HashMap<>();
+        if (description != null) {
+            map.put("description", description);
         }
+        if (expression != null) {
+            map.put("expression", expression);
+        }
+        if (status != null) {
+            map.put("status", status);
+        }
+        if (steward != null) {
+            map.put("steward", steward);
+        }
+        if (source != null) {
+            map.put("source", source);
+        }
+        return map;
     }
 
+    /** Terms that have the same (or a very similar) meaning, in the same language. */
+    @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
-    @SuperBuilder(toBuilder = true)
+    @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
-    public static final class RA extends RelationshipAttributes {
+    @ToString(callSuper = true)
+    public static final class Synonym extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Details about the relationship. */
-        String description;
+        /** Fixed typeName for AtlasGlossarySynonym. */
+        @Getter(onMethod_ = {@Override})
+        @Builder.Default
+        String relationshipType = AtlasGlossarySynonym.TYPE_NAME;
 
-        /** Expression used to set the relationship. */
-        String expression;
+        /** Relationship attributes specific to AtlasGlossarySynonym. */
+        AtlasGlossarySynonym relationshipAttributes;
+    }
 
-        /** Status of the synonym assignment, typically used by discovery engines. */
-        AtlasGlossaryTermRelationshipStatus status;
+    public abstract static class AtlasGlossarySynonymBuilder<
+                    C extends AtlasGlossarySynonym, B extends AtlasGlossarySynonymBuilder<C, B>>
+            extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
-        /** User responsible for assessing the relationship and deciding if it should be approved or not. */
-        String steward;
-
-        /** Source of the relationship. */
-        String source;
-
-        @Override
-        public Map<String, Object> getAll() {
-            Map<String, Object> map = new HashMap<>();
-            if (description != null) {
-                map.put("description", description);
+        /**
+         * Build the AtlasGlossarySynonym relationship (with attributes) into a related object.
+         *
+         * @param related the related asset to which to build the detailed relationship
+         * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
+         * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
+         */
+        public IGlossaryTerm build(IGlossaryTerm related) throws InvalidRequestException {
+            AtlasGlossarySynonym attributes = build();
+            if (related.getGuid() != null && !related.getGuid().isBlank()) {
+                return Synonym._internal()
+                        .guid(related.getGuid())
+                        .relationshipAttributes(attributes)
+                        .build();
+            } else {
+                return Synonym._internal()
+                        .uniqueAttributes(UniqueAttributes.builder()
+                                .qualifiedName(related.getQualifiedName())
+                                .build())
+                        .relationshipAttributes(attributes)
+                        .build();
             }
-            if (expression != null) {
-                map.put("expression", expression);
-            }
-            if (status != null) {
-                map.put("status", status);
-            }
-            if (steward != null) {
-                map.put("steward", steward);
-            }
-            if (source != null) {
-                map.put("source", source);
-            }
-            return map;
         }
     }
 }

@@ -68,6 +68,9 @@ public class FluentSearch extends CompoundQuery {
     @Singular("_includeOnRelations")
     List<String> _includesOnRelations;
 
+    /** Whether to include relationship attributes on each relationship in the results. */
+    Boolean includeRelationshipAttributes;
+
     /**
      * Translate the Atlan fluent search into an Atlan search request.
      *
@@ -196,6 +199,9 @@ public class FluentSearch extends CompoundQuery {
             request.relationAttributes(includesOnRelations.stream()
                     .map(AtlanField::getAtlanFieldName)
                     .collect(Collectors.toList()));
+        }
+        if (includeRelationshipAttributes != null) {
+            request.requestRelationshipAttrsForSearch(includeRelationshipAttributes);
         }
         return request;
     }
