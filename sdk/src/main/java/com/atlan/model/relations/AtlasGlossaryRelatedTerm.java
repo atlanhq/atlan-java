@@ -22,12 +22,12 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossarySynonym extends RelationshipAttributes {
+public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossarySynonym";
+    public static final String TYPE_NAME = "AtlasGlossaryRelatedTerm";
 
-    /** Fixed typeName for AtlasGlossarySynonyms. */
+    /** Fixed typeName for AtlasGlossaryRelatedTerms. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -75,38 +75,38 @@ public class AtlasGlossarySynonym extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Synonym extends GlossaryTerm {
+    public static final class Seealso extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossarySynonym. */
+        /** Fixed typeName for AtlasGlossaryRelatedTerm. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossarySynonym.TYPE_NAME;
+        String relationshipType = AtlasGlossaryRelatedTerm.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossarySynonym. */
-        AtlasGlossarySynonym relationshipAttributes;
+        /** Relationship attributes specific to AtlasGlossaryRelatedTerm. */
+        AtlasGlossaryRelatedTerm relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossarySynonymBuilder<
-                    C extends AtlasGlossarySynonym, B extends AtlasGlossarySynonymBuilder<C, B>>
+    public abstract static class AtlasGlossaryRelatedTermBuilder<
+                    C extends AtlasGlossaryRelatedTerm, B extends AtlasGlossaryRelatedTermBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossarySynonym relationship (with attributes) into a related object.
+         * Build the AtlasGlossaryRelatedTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm synonym(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossarySynonym attributes = build();
+        public IGlossaryTerm seeAlso(IGlossaryTerm related) throws InvalidRequestException {
+            AtlasGlossaryRelatedTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Synonym._internal()
+                return Seealso._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Synonym._internal()
+                return Seealso._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

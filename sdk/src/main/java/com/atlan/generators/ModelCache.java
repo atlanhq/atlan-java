@@ -30,6 +30,7 @@ public class ModelCache {
     private final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private final Map<String, StructGenerator> structCache = new HashMap<>();
     private final Map<String, AssetGenerator> assetCache = new HashMap<>();
+    private final Map<String, RelationshipGenerator> relationshipCache = new HashMap<>();
     private final Map<String, Set<SearchFieldGenerator.Field>> searchCache = new HashMap<>();
 
     private final Map<String, List<String>> subTypeToSuperTypes = new ConcurrentHashMap<>();
@@ -89,6 +90,10 @@ public class ModelCache {
 
     public AssetGenerator addAssetGenerator(String name, AssetGenerator generator) {
         return assetCache.put(name, generator);
+    }
+
+    public RelationshipGenerator addRelationshipGenerator(String name, RelationshipGenerator generator) {
+        return relationshipCache.put(name, generator);
     }
 
     public List<String> getStructNames() {

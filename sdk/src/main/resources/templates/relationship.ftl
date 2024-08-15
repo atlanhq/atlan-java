@@ -2,6 +2,14 @@
 /* Copyright 2024- Atlan Pte. Ltd. */
 package ${packageRoot}.relations;
 
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.${endDef1TypeName};
+import com.atlan.model.assets.I${endDef1TypeName};
+<#if endDef2AttrName??>
+import com.atlan.model.assets.${endDef2TypeName};
+import com.atlan.model.assets.I${endDef2TypeName};
+</#if>
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
@@ -10,7 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-<#list classAttributes as attribute>
+<#list nonInheritedAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 <#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
 import com.atlan.model.enums.${attribute.type.name};
@@ -60,7 +68,7 @@ public class ${className} extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-<#list classAttributes as attribute>
+<#list nonInheritedAttributes as attribute>
     /** ${attribute.description} */
     <#if attribute.date>@Date</#if>
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
@@ -71,12 +79,11 @@ public class ${className} extends RelationshipAttributes {
     ${attribute.referenceType} ${attribute.renamed};
 
 </#list>
-
     /** {@inheritDoc} */
     @Override
     public Map<String, Object> getAll() {
         Map<String, Object> map = new HashMap<>();
-<#list classAttributes as attribute>
+<#list nonInheritedAttributes as attribute>
         if (${attribute.renamed} != null) {
             map.put("${attribute.renamed}", ${attribute.renamed});
         }
@@ -84,13 +91,33 @@ public class ${className} extends RelationshipAttributes {
         return map;
     }
 
+<#if endDef2AttrName??>
     /** ${description} */
     @Generated(value="${generatorName}")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class ${endDef1.attrName} extends ${endDef1.typeName} {
+    public static final class ${endDef2AttrName?cap_first} extends ${endDef1TypeName} {
+        private static final long serialVersionUID = 2L;
+
+        /** Fixed typeName for ${className}. */
+        @Getter(onMethod_ = {@Override})
+        @Builder.Default
+        String relationshipType = ${className}.TYPE_NAME;
+
+        /** Relationship attributes specific to ${className}. */
+        ${className} relationshipAttributes;
+    }
+
+</#if>
+    /** ${description} */
+    @Generated(value="${generatorName}")
+    @Getter
+    @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    public static final class ${endDef1AttrName?cap_first} extends ${endDef2TypeName} {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for ${className}. */
@@ -106,6 +133,7 @@ public class ${className} extends RelationshipAttributes {
                     C extends ${className}, B extends ${className}Builder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
+<#if endDef2AttrName??>
         /**
          * Build the ${className} relationship (with attributes) into a related object.
          *
@@ -113,15 +141,40 @@ public class ${className} extends RelationshipAttributes {
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public I${endDef1.typeName} build(I${endDef1.typeName} related) throws InvalidRequestException {
+        public I${endDef1TypeName} ${endDef2AttrName}(I${endDef1TypeName} related) throws InvalidRequestException {
             ${className} attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return ${endDef1.attrName}._internal()
+                return ${endDef2AttrName?cap_first}._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return ${endDef1.attrName}._internal()
+                return ${endDef2AttrName?cap_first}._internal()
+                        .uniqueAttributes(UniqueAttributes.builder()
+                                .qualifiedName(related.getQualifiedName())
+                                .build())
+                        .relationshipAttributes(attributes)
+                        .build();
+            }
+        }
+
+</#if>
+        /**
+         * Build the ${className} relationship (with attributes) into a related object.
+         *
+         * @param related the related asset to which to build the detailed relationship
+         * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
+         * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
+         */
+        public I${endDef2TypeName} ${endDef1AttrName}(I${endDef2TypeName} related) throws InvalidRequestException {
+            ${className} attributes = build();
+            if (related.getGuid() != null && !related.getGuid().isBlank()) {
+                return ${endDef1AttrName?cap_first}._internal()
+                        .guid(related.getGuid())
+                        .relationshipAttributes(attributes)
+                        .build();
+            } else {
+                return ${endDef1AttrName?cap_first}._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
