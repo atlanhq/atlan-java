@@ -15,7 +15,7 @@ public class SearchFieldGenerator extends TypeGenerator {
 
     public static final String DIRECTORY = "enums";
 
-    enum IndexType {
+    public enum IndexType {
         KEYWORD("KeywordFields"),
         TEXT("TextFields"),
         RANK_FEATURE("RankFields"),
@@ -262,6 +262,11 @@ public class SearchFieldGenerator extends TypeGenerator {
                 } else {
                     log.warn("Unknown analyzer on attribute {}: {}", attrName, analyzer);
                 }
+            } else if (attributeDef.getIndexType() != null
+                    && attributeDef.getIndexType().toLowerCase(Locale.ROOT).equals("string")) {
+                if (toFilter == SearchFieldGenerator.IndexType.KEYWORD) {
+                    searchable.add(attrName);
+                }
             } else {
                 SearchFieldGenerator.IndexType defIndex = getDefaultIndexForType(getType());
                 if (defIndex == toFilter
@@ -371,6 +376,8 @@ public class SearchFieldGenerator extends TypeGenerator {
                     toUse = SearchFieldGenerator.IndexType.BOOLEAN;
                     break;
                 case "string":
+                    toUse = SearchFieldGenerator.IndexType.TEXT;
+                    break;
                 default:
                     toUse = SearchFieldGenerator.IndexType.KEYWORD;
                     break;

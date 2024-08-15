@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -40,7 +41,7 @@ public interface ISodaCheck {
     RelationField SODA_CHECK_COLUMNS = new RelationField("sodaCheckColumns");
 
     /** Definition of the check in Soda. */
-    KeywordField SODA_CHECK_DEFINITION = new KeywordField("sodaCheckDefinition", "sodaCheckDefinition");
+    TextField SODA_CHECK_DEFINITION = new TextField("sodaCheckDefinition", "sodaCheckDefinition");
 
     /** Status of the check in Soda. */
     KeywordField SODA_CHECK_EVALUATION_STATUS =

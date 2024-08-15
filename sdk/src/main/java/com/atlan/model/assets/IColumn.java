@@ -13,6 +13,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
@@ -79,7 +80,7 @@ public interface IColumn {
             new NumericField("columnMaximumStringLength", "columnMaximumStringLength");
 
     /** List of the greatest values in a column. */
-    KeywordField COLUMN_MAXS = new KeywordField("columnMaxs", "columnMaxs");
+    TextField COLUMN_MAXS = new TextField("columnMaxs", "columnMaxs");
 
     /** Arithmetic mean of the values in a numeric column. */
     NumericField COLUMN_MEAN = new NumericField("columnMean", "columnMean");
@@ -95,7 +96,7 @@ public interface IColumn {
             new NumericField("columnMinimumStringLength", "columnMinimumStringLength");
 
     /** List of the least values in a column. */
-    KeywordField COLUMN_MINS = new KeywordField("columnMins", "columnMins");
+    TextField COLUMN_MINS = new TextField("columnMins", "columnMins");
 
     /** Number of rows in a column that do not contain content. */
     NumericField COLUMN_MISSING_VALUES_COUNT = new NumericField("columnMissingValuesCount", "columnMissingValuesCount");
@@ -144,7 +145,7 @@ public interface IColumn {
     RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
 
     /** Default value for this column. */
-    KeywordField DEFAULT_VALUE = new KeywordField("defaultValue", "defaultValue");
+    TextField DEFAULT_VALUE = new TextField("defaultValue", "defaultValue");
 
     /** Column this foreign key column refers to. */
     RelationField FOREIGN_KEY_FROM = new RelationField("foreignKeyFrom");
@@ -227,7 +228,7 @@ public interface IColumn {
     RelationField QUERIES = new RelationField("queries");
 
     /** TBC */
-    KeywordField RAW_DATA_TYPE_DEFINITION = new KeywordField("rawDataTypeDefinition", "rawDataTypeDefinition");
+    TextField RAW_DATA_TYPE_DEFINITION = new TextField("rawDataTypeDefinition", "rawDataTypeDefinition");
 
     /** Snowflake dynamic table in which this column exists. */
     RelationField SNOWFLAKE_DYNAMIC_TABLE = new RelationField("snowflakeDynamicTable");

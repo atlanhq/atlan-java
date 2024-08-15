@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -39,13 +40,13 @@ public interface ILookerView {
     KeywordField LOOKER_VIEW_FILE_NAME = new KeywordField("lookerViewFileName", "lookerViewFileName");
 
     /** File path of this view within the project. */
-    KeywordField LOOKER_VIEW_FILE_PATH = new KeywordField("lookerViewFilePath", "lookerViewFilePath");
+    TextField LOOKER_VIEW_FILE_PATH = new TextField("lookerViewFilePath", "lookerViewFilePath");
 
     /** Project in which this view exists. */
     RelationField PROJECT = new RelationField("project");
 
     /** Name of the project in which this view exists. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+    TextField PROJECT_NAME = new TextField("projectName", "projectName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

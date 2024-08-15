@@ -8,8 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -33,8 +33,8 @@ public interface IMicroStrategyFact {
     public static final String TYPE_NAME = "MicroStrategyFact";
 
     /** List of expressions for this fact. */
-    KeywordField MICRO_STRATEGY_FACT_EXPRESSIONS =
-            new KeywordField("microStrategyFactExpressions", "microStrategyFactExpressions");
+    TextField MICRO_STRATEGY_FACT_EXPRESSIONS =
+            new TextField("microStrategyFactExpressions", "microStrategyFactExpressions");
 
     /** Metrics that use this fact. */
     RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");

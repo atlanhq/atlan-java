@@ -12,6 +12,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -38,7 +39,7 @@ public interface IPowerBI {
     KeywordField POWER_BI_ENDORSEMENT = new KeywordField("powerBIEndorsement", "powerBIEndorsement");
 
     /** Format of this asset, as specified in the FORMAT_STRING of the MDX cell property. */
-    KeywordField POWER_BI_FORMAT_STRING = new KeywordField("powerBIFormatString", "powerBIFormatString");
+    TextField POWER_BI_FORMAT_STRING = new TextField("powerBIFormatString", "powerBIFormatString");
 
     /** Whether this asset is hidden in Power BI (true) or not (false). */
     BooleanField POWER_BI_IS_HIDDEN = new BooleanField("powerBIIsHidden", "powerBIIsHidden");

@@ -10,7 +10,6 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
@@ -36,7 +35,7 @@ public interface IPowerBIMeasure {
     public static final String TYPE_NAME = "PowerBIMeasure";
 
     /** Unique name of the dataset in which this measure exists. */
-    KeywordField DATASET_QUALIFIED_NAME = new KeywordField("datasetQualifiedName", "datasetQualifiedName");
+    TextField DATASET_QUALIFIED_NAME = new TextField("datasetQualifiedName", "datasetQualifiedName");
 
     /** Whether this measure is external (true) or internal (false). */
     BooleanField POWER_BI_IS_EXTERNAL_MEASURE =
@@ -49,7 +48,7 @@ public interface IPowerBIMeasure {
     RelationField TABLE = new RelationField("table");
 
     /** Unique name of the workspace in which this measure exists. */
-    KeywordField WORKSPACE_QUALIFIED_NAME = new KeywordField("workspaceQualifiedName", "workspaceQualifiedName");
+    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

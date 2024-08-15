@@ -33,6 +33,9 @@ public interface IDMDataModel {
 
     public static final String TYPE_NAME = "DMDataModel";
 
+    /** Tool used to create this data model. */
+    KeywordField D_M_TOOL = new KeywordField("dMTool", "dMTool");
+
     /** Type of the data model. */
     KeywordField D_M_TYPE = new KeywordField("dMType", "dMType");
 
@@ -291,8 +294,14 @@ public interface IDMDataModel {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
@@ -302,6 +311,9 @@ public interface IDMDataModel {
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
+
+    /** Tool used to create this data model. */
+    String getDMTool();
 
     /** Type of the data model. */
     String getDMType();

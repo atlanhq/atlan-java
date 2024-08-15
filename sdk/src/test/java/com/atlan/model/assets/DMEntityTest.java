@@ -59,7 +59,9 @@ public class DMEntityTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .dMDataModelDomain("String0")
             .dMDataModelName("String0")
+            .dMDataModelNamespace("String0")
             .dMDataModelQualifiedName("String0")
             .dMEntityName("String0")
             .dMEntityQualifiedName("String0")
@@ -407,12 +409,16 @@ public class DMEntityTest {
             .dMAttributeCount(123456789L)
             .dMAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dMEntityFrom(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dMEntityTo(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMMappedToEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedToEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedFromEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedFromEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMRelatedToEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMRelatedToEntity(
+                    DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMVersion(DMVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

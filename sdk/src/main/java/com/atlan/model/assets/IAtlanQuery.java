@@ -9,9 +9,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -59,7 +59,7 @@ public interface IAtlanQuery {
     BooleanField IS_VISUAL_QUERY = new BooleanField("isVisualQuery", "isVisualQuery");
 
     /** TBC */
-    KeywordField LONG_RAW_QUERY = new KeywordField("longRawQuery", "longRawQuery");
+    TextField LONG_RAW_QUERY = new TextField("longRawQuery", "longRawQuery");
 
     /** TBC */
     RelationField PARENT = new RelationField("parent");
@@ -69,20 +69,19 @@ public interface IAtlanQuery {
             new KeywordTextField("parentQualifiedName", "parentQualifiedName", "parentQualifiedName.text");
 
     /** TBC */
-    KeywordField RAW_QUERY = new KeywordField("rawQuery", "rawQuery");
+    TextField RAW_QUERY = new TextField("rawQuery", "rawQuery");
 
     /** TBC */
     RelationField TABLES = new RelationField("tables");
 
     /** TBC */
-    KeywordField VARIABLES_SCHEMA_BASE64 = new KeywordField("variablesSchemaBase64", "variablesSchemaBase64");
+    TextField VARIABLES_SCHEMA_BASE64 = new TextField("variablesSchemaBase64", "variablesSchemaBase64");
 
     /** TBC */
     RelationField VIEWS = new RelationField("views");
 
     /** TBC */
-    KeywordField VISUAL_BUILDER_SCHEMA_BASE64 =
-            new KeywordField("visualBuilderSchemaBase64", "visualBuilderSchemaBase64");
+    TextField VISUAL_BUILDER_SCHEMA_BASE64 = new TextField("visualBuilderSchemaBase64", "visualBuilderSchemaBase64");
 
     /** TBC */
     SortedSet<String> getAdminGroups();

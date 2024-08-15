@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -36,10 +37,10 @@ public interface IResource {
     BooleanField IS_GLOBAL = new BooleanField("isGlobal", "isGlobal");
 
     /** URL to the resource. */
-    KeywordField LINK = new KeywordField("link", "link");
+    TextField LINK = new TextField("link", "link");
 
     /** Reference to the resource. */
-    KeywordField REFERENCE = new KeywordField("reference", "reference");
+    TextField REFERENCE = new TextField("reference", "reference");
 
     /** Metadata of the resource. */
     KeywordField RESOURCE_METADATA = new KeywordField("resourceMetadata", "resourceMetadata");

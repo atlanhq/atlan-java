@@ -8,9 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -46,7 +46,7 @@ public interface IDomoDataset {
     RelationField DOMO_DATASET_COLUMNS = new RelationField("domoDatasetColumns");
 
     /** An ISO-8601 representation of the time the DataSet was last run. */
-    KeywordField DOMO_DATASET_LAST_RUN = new KeywordField("domoDatasetLastRun", "domoDatasetLastRun");
+    TextField DOMO_DATASET_LAST_RUN = new TextField("domoDatasetLastRun", "domoDatasetLastRun");
 
     /** Number of rows in the Domo dataset. */
     NumericField DOMO_DATASET_ROW_COUNT = new NumericField("domoDatasetRowCount", "domoDatasetRowCount");

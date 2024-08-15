@@ -12,6 +12,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -43,10 +44,10 @@ public interface IRedashQuery {
             new NumericField("redashQueryLastExecutionRuntime", "redashQueryLastExecutionRuntime");
 
     /** Parameters of this query. */
-    KeywordField REDASH_QUERY_PARAMETERS = new KeywordField("redashQueryParameters", "redashQueryParameters");
+    TextField REDASH_QUERY_PARAMETERS = new TextField("redashQueryParameters", "redashQueryParameters");
 
     /** SQL code of this query. */
-    KeywordField REDASH_QUERY_SQL = new KeywordField("redashQuerySQL", "redashQuerySQL");
+    TextField REDASH_QUERY_SQL = new TextField("redashQuerySQL", "redashQuerySQL");
 
     /** Schedule for this query. */
     KeywordField REDASH_QUERY_SCHEDULE = new KeywordField("redashQuerySchedule", "redashQuerySchedule");

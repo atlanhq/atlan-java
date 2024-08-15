@@ -391,6 +391,9 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                     } else {
                         log.warn("Unknown analyzer on attribute {}: {}", attrName, analyzer);
                     }
+                } else if (attributeDef.getIndexType() != null
+                        && attributeDef.getIndexType().toLowerCase(Locale.ROOT).equals("string")) {
+                    searchable.put(IndexType.KEYWORD, attrName);
                 } else {
                     IndexType defIndex = getDefaultIndexForType(getType());
                     searchable.put(defIndex, attrName);
@@ -463,6 +466,8 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
                     toUse = IndexType.BOOLEAN;
                     break;
                 case "string":
+                    toUse = IndexType.TEXT;
+                    break;
                 default:
                     toUse = IndexType.KEYWORD;
                     break;

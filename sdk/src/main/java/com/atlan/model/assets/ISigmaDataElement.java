@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -41,7 +42,7 @@ public interface ISigmaDataElement {
     RelationField SIGMA_DATA_ELEMENT_FIELDS = new RelationField("sigmaDataElementFields");
 
     /** TBC */
-    KeywordField SIGMA_DATA_ELEMENT_QUERY = new KeywordField("sigmaDataElementQuery", "sigmaDataElementQuery");
+    TextField SIGMA_DATA_ELEMENT_QUERY = new TextField("sigmaDataElementQuery", "sigmaDataElementQuery");
 
     /** TBC */
     KeywordField SIGMA_DATA_ELEMENT_TYPE = new KeywordField("sigmaDataElementType", "sigmaDataElementType");

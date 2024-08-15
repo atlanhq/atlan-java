@@ -67,7 +67,7 @@ public interface IMCMonitor {
     KeywordField MC_MONITOR_RULE_COMPARISONS = new KeywordField("mcMonitorRuleComparisons", "mcMonitorRuleComparisons");
 
     /** SQL code for custom SQL rules. */
-    KeywordField MC_MONITOR_RULE_CUSTOM_SQL = new KeywordField("mcMonitorRuleCustomSql", "mcMonitorRuleCustomSql");
+    TextField MC_MONITOR_RULE_CUSTOM_SQL = new TextField("mcMonitorRuleCustomSql", "mcMonitorRuleCustomSql");
 
     /** Whether the rule is currently snoozed (true) or not (false). */
     BooleanField MC_MONITOR_RULE_IS_SNOOZED = new BooleanField("mcMonitorRuleIsSnoozed", "mcMonitorRuleIsSnoozed");

@@ -36,17 +36,17 @@ public interface IDMEntityAssociation {
     /** Cardinality of the data entity association. */
     KeywordField D_M_CARDINALITY = new KeywordField("dMCardinality", "dMCardinality");
 
+    /** Entity from which this association is related. */
+    RelationField D_M_ENTITY_FROM = new RelationField("dMEntityFrom");
+
+    /** Entity to which this association is related. */
+    RelationField D_M_ENTITY_TO = new RelationField("dMEntityTo");
+
     /** Label of the data entity association. */
     KeywordField D_M_LABEL = new KeywordField("dMLabel", "dMLabel");
 
     /** Owner seal ID of the data entity association. */
     KeywordField D_M_OWNER_SEAL_ID = new KeywordField("dMOwnerSealId", "dMOwnerSealId");
-
-    /** Entity association from which this entity is related. */
-    RelationField D_M_RELATED_FROM_ENTITIES = new RelationField("dMRelatedFromEntities");
-
-    /** Entity association to which this entity is related. */
-    RelationField D_M_RELATED_TO_ENTITIES = new RelationField("dMRelatedToEntities");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -300,11 +300,20 @@ public interface IDMEntityAssociation {
     /** Cardinality of the data entity association. */
     DMCardinalityType getDMCardinality();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
 
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
+
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
+
+    /** Entity from which this association is related. */
+    IDMEntity getDMEntityFrom();
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityName();
@@ -312,17 +321,14 @@ public interface IDMEntityAssociation {
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
 
+    /** Entity to which this association is related. */
+    IDMEntity getDMEntityTo();
+
     /** Label of the data entity association. */
     String getDMLabel();
 
     /** Owner seal ID of the data entity association. */
     String getDMOwnerSealId();
-
-    /** Entity association from which this entity is related. */
-    SortedSet<IDMEntityAssociation> getDMRelatedFromEntities();
-
-    /** Entity association to which this entity is related. */
-    SortedSet<IDMEntityAssociation> getDMRelatedToEntities();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();

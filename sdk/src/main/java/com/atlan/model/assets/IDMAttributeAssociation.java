@@ -33,6 +33,12 @@ public interface IDMAttributeAssociation {
 
     public static final String TYPE_NAME = "DMAttributeAssociation";
 
+    /** Attribute from which this association is related. */
+    RelationField D_M_ATTRIBUTE_FROM = new RelationField("dMAttributeFrom");
+
+    /** Attribute to which this association is related. */
+    RelationField D_M_ATTRIBUTE_TO = new RelationField("dMAttributeTo");
+
     /** Cardinality of the data attribute association. */
     KeywordField D_M_CARDINALITY = new KeywordField("dMCardinality", "dMCardinality");
 
@@ -41,12 +47,6 @@ public interface IDMAttributeAssociation {
 
     /** Owner seal ID of the data attribute association. */
     KeywordField D_M_OWNER_SEAL_ID = new KeywordField("dMOwnerSealId", "dMOwnerSealId");
-
-    /** Attribute association from which this attribute is related. */
-    RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
-
-    /** Attribute association to which this attribute is related. */
-    RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -297,11 +297,23 @@ public interface IDMAttributeAssociation {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Attribute from which this association is related. */
+    IDMAttribute getDMAttributeFrom();
+
+    /** Attribute to which this association is related. */
+    IDMAttribute getDMAttributeTo();
+
     /** Cardinality of the data attribute association. */
     DMCardinalityType getDMCardinality();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
@@ -317,12 +329,6 @@ public interface IDMAttributeAssociation {
 
     /** Owner seal ID of the data attribute association. */
     String getDMOwnerSealId();
-
-    /** Attribute association from which this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
-
-    /** Attribute association to which this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();
