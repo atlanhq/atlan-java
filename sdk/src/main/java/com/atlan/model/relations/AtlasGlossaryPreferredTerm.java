@@ -75,7 +75,7 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Preferredtoterm extends GlossaryTerm {
+    public static final class PreferredToTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryPreferredTerm. */
@@ -93,7 +93,7 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Preferredterm extends GlossaryTerm {
+    public static final class PreferredTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryPreferredTerm. */
@@ -119,12 +119,12 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
         public IGlossaryTerm preferredToTerm(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryPreferredTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Preferredtoterm._internal()
+                return PreferredToTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Preferredtoterm._internal()
+                return PreferredToTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -143,12 +143,12 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
         public IGlossaryTerm preferredTerm(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryPreferredTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Preferredterm._internal()
+                return PreferredTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Preferredterm._internal()
+                return PreferredTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

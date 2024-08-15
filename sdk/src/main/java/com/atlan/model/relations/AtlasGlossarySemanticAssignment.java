@@ -22,15 +22,21 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
+public class AtlasGlossarySemanticAssignment extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossaryRelatedTerm";
+    public static final String TYPE_NAME = "AtlasGlossarySemanticAssignment";
 
-    /** Fixed typeName for AtlasGlossaryRelatedTerms. */
+    /** Fixed typeName for AtlasGlossarySemanticAssignments. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    Integer confidence;
+
+    /** TBC */
+    String createdBy;
 
     /** TBC */
     String description;
@@ -51,6 +57,12 @@ public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
     @Override
     public Map<String, Object> getAll() {
         Map<String, Object> map = new HashMap<>();
+        if (confidence != null) {
+            map.put("confidence", confidence);
+        }
+        if (createdBy != null) {
+            map.put("createdBy", createdBy);
+        }
         if (description != null) {
             map.put("description", description);
         }
@@ -75,38 +87,38 @@ public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class SeeAlso extends GlossaryTerm {
+    public static final class Meaning extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryRelatedTerm. */
+        /** Fixed typeName for AtlasGlossarySemanticAssignment. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryRelatedTerm.TYPE_NAME;
+        String relationshipType = AtlasGlossarySemanticAssignment.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryRelatedTerm. */
-        AtlasGlossaryRelatedTerm relationshipAttributes;
+        /** Relationship attributes specific to AtlasGlossarySemanticAssignment. */
+        AtlasGlossarySemanticAssignment relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossaryRelatedTermBuilder<
-                    C extends AtlasGlossaryRelatedTerm, B extends AtlasGlossaryRelatedTermBuilder<C, B>>
+    public abstract static class AtlasGlossarySemanticAssignmentBuilder<
+                    C extends AtlasGlossarySemanticAssignment, B extends AtlasGlossarySemanticAssignmentBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossaryRelatedTerm relationship (with attributes) into a related object.
+         * Build the AtlasGlossarySemanticAssignment relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm seeAlso(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryRelatedTerm attributes = build();
+        public IGlossaryTerm meaning(IGlossaryTerm related) throws InvalidRequestException {
+            AtlasGlossarySemanticAssignment attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return SeeAlso._internal()
+                return Meaning._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return SeeAlso._internal()
+                return Meaning._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

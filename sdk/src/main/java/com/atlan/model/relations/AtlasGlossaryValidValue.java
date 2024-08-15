@@ -75,7 +75,7 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Validvalue extends GlossaryTerm {
+    public static final class ValidValue extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryValidValue. */
@@ -93,7 +93,7 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Validvaluesfor extends GlossaryTerm {
+    public static final class ValidValuesFor extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryValidValue. */
@@ -119,12 +119,12 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
         public IGlossaryTerm validValue(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryValidValue attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Validvalue._internal()
+                return ValidValue._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Validvalue._internal()
+                return ValidValue._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -143,12 +143,12 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
         public IGlossaryTerm validValuesFor(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryValidValue attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Validvaluesfor._internal()
+                return ValidValuesFor._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Validvaluesfor._internal()
+                return ValidValuesFor._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

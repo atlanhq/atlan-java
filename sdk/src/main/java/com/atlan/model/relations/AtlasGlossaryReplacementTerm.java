@@ -75,7 +75,7 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Replacementterm extends GlossaryTerm {
+    public static final class ReplacementTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryReplacementTerm. */
@@ -93,7 +93,7 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Replacedby extends GlossaryTerm {
+    public static final class ReplacedBy extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryReplacementTerm. */
@@ -119,12 +119,12 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
         public IGlossaryTerm replacementTerm(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Replacementterm._internal()
+                return ReplacementTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Replacementterm._internal()
+                return ReplacementTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -143,12 +143,12 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
         public IGlossaryTerm replacedBy(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Replacedby._internal()
+                return ReplacedBy._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Replacedby._internal()
+                return ReplacedBy._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

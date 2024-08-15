@@ -75,7 +75,7 @@ public class AtlasGlossaryIsARelationship extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Isa extends GlossaryTerm {
+    public static final class IsA extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryIsARelationship. */
@@ -119,12 +119,12 @@ public class AtlasGlossaryIsARelationship extends RelationshipAttributes {
         public IGlossaryTerm isA(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryIsARelationship attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Isa._internal()
+                return IsA._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Isa._internal()
+                return IsA._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

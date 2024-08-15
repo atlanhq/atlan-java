@@ -75,7 +75,7 @@ public class AtlasGlossaryTranslation extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Translationterm extends GlossaryTerm {
+    public static final class TranslationTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryTranslation. */
@@ -93,7 +93,7 @@ public class AtlasGlossaryTranslation extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Translatedterm extends GlossaryTerm {
+    public static final class TranslatedTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for AtlasGlossaryTranslation. */
@@ -119,12 +119,12 @@ public class AtlasGlossaryTranslation extends RelationshipAttributes {
         public IGlossaryTerm translationTerm(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryTranslation attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Translationterm._internal()
+                return TranslationTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Translationterm._internal()
+                return TranslationTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -143,12 +143,12 @@ public class AtlasGlossaryTranslation extends RelationshipAttributes {
         public IGlossaryTerm translatedTerm(IGlossaryTerm related) throws InvalidRequestException {
             AtlasGlossaryTranslation attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Translatedterm._internal()
+                return TranslatedTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Translatedterm._internal()
+                return TranslatedTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
