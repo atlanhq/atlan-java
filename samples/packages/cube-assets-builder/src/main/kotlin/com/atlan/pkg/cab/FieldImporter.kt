@@ -129,7 +129,7 @@ class FieldImporter(
         val level = getFieldLevel(deserializer.row, deserializer.heading)
         return CubeField.creator(name, parentQN)
             .cubeFieldLevel(level)
-            .cubeFieldLevel(generationToProcess) // TODO: replace with -> .cubeFieldGeneration(generationToProcess)
+            .cubeFieldGeneration(generationToProcess)
             .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 
