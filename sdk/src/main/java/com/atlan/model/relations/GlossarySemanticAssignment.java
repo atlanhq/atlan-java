@@ -16,21 +16,27 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Assigns meaning to an asset by linking the term that describes the meaning of the asset. The semantic assignment needs to be a controlled relationship when glossary definitions are used to provide classifications for the data assets and hence define how the data is to be governed.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossarySynonym extends RelationshipAttributes {
+public class GlossarySemanticAssignment extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossarySynonym";
+    public static final String TYPE_NAME = "AtlasGlossarySemanticAssignment";
 
-    /** Fixed typeName for AtlasGlossarySynonyms. */
+    /** Fixed typeName for GlossarySemanticAssignments. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    Integer confidence;
+
+    /** TBC */
+    String createdBy;
 
     /** TBC */
     String description;
@@ -51,6 +57,12 @@ public class AtlasGlossarySynonym extends RelationshipAttributes {
     @Override
     public Map<String, Object> getAll() {
         Map<String, Object> map = new HashMap<>();
+        if (confidence != null) {
+            map.put("confidence", confidence);
+        }
+        if (createdBy != null) {
+            map.put("createdBy", createdBy);
+        }
         if (description != null) {
             map.put("description", description);
         }
@@ -69,44 +81,44 @@ public class AtlasGlossarySynonym extends RelationshipAttributes {
         return map;
     }
 
-    /** TBC */
+    /** Assigns meaning to an asset by linking the term that describes the meaning of the asset. The semantic assignment needs to be a controlled relationship when glossary definitions are used to provide classifications for the data assets and hence define how the data is to be governed. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Synonym extends GlossaryTerm {
+    public static final class AssignedTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossarySynonym. */
+        /** Fixed typeName for GlossarySemanticAssignment. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossarySynonym.TYPE_NAME;
+        String relationshipType = GlossarySemanticAssignment.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossarySynonym. */
-        AtlasGlossarySynonym relationshipAttributes;
+        /** Relationship attributes specific to GlossarySemanticAssignment. */
+        GlossarySemanticAssignment relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossarySynonymBuilder<
-                    C extends AtlasGlossarySynonym, B extends AtlasGlossarySynonymBuilder<C, B>>
+    public abstract static class GlossarySemanticAssignmentBuilder<
+                    C extends GlossarySemanticAssignment, B extends GlossarySemanticAssignmentBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossarySynonym relationship (with attributes) into a related object.
+         * Build the GlossarySemanticAssignment relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm synonym(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossarySynonym attributes = build();
+        public IGlossaryTerm assignedTerm(IGlossaryTerm related) throws InvalidRequestException {
+            GlossarySemanticAssignment attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Synonym._internal()
+                return AssignedTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Synonym._internal()
+                return AssignedTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

@@ -166,6 +166,9 @@ public class ModelCache {
         if (def == null) {
             def = entityDefCache.getOrDefault(originalName, null);
         }
+        if (def == null) {
+            def = relationshipDefCache.getOrDefault(originalName, null);
+        }
         if (def != null) {
             fromTypeDef = def.getDescription();
         }
@@ -177,6 +180,9 @@ public class ModelCache {
         TypeDef def = enumDefCache.getOrDefault(objectName, null);
         if (def == null) {
             def = structDefCache.getOrDefault(objectName, null);
+        }
+        if (def == null) {
+            def = relationshipDefCache.getOrDefault(objectName, null);
         }
         SortedSet<AttributeDef> allAttrs = new TreeSet<>();
         if (def == null && entityDefCache.containsKey(objectName)) {

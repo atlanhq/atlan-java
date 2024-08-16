@@ -39,7 +39,7 @@ public class AssetTestGenerator extends AssetGenerator {
     @Getter
     @Builder
     public static final class TestAttribute {
-        private Attribute<?> details;
+        private SearchableAttribute<?> details;
         private String builderMethod;
         private List<String> values;
         private List<String> rawValues;
@@ -64,9 +64,9 @@ public class AssetTestGenerator extends AssetGenerator {
     }
 
     private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
-        Set<Attribute<?>> attributes = assetGenerator.getNonInheritedAttributes();
+        Set<SearchableAttribute<?>> attributes = assetGenerator.getNonInheritedAttributes();
         if (attributes != null) {
-            for (Attribute<?> attribute : attributes) {
+            for (SearchableAttribute<?> attribute : attributes) {
                 TestAttribute.TestAttributeBuilder builder =
                         TestAttribute.builder().details(attribute);
                 MappedType type = attribute.getType();

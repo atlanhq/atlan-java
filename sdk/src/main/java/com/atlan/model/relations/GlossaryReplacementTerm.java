@@ -16,18 +16,18 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Indicates term(s) must be used instead of another. This is stronger version of the PreferredTerm.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
+public class GlossaryReplacementTerm extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossaryPreferredTerm";
+    public static final String TYPE_NAME = "AtlasGlossaryReplacementTerm";
 
-    /** Fixed typeName for AtlasGlossaryPreferredTerms. */
+    /** Fixed typeName for GlossaryReplacementTerms. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -69,62 +69,62 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
         return map;
     }
 
-    /** TBC */
+    /** Indicates term(s) must be used instead of another. This is stronger version of the PreferredTerm. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class PreferredToTerm extends GlossaryTerm {
+    public static final class ReplacementTerm extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryPreferredTerm. */
+        /** Fixed typeName for GlossaryReplacementTerm. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryPreferredTerm.TYPE_NAME;
+        String relationshipType = GlossaryReplacementTerm.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryPreferredTerm. */
-        AtlasGlossaryPreferredTerm relationshipAttributes;
+        /** Relationship attributes specific to GlossaryReplacementTerm. */
+        GlossaryReplacementTerm relationshipAttributes;
     }
 
-    /** TBC */
+    /** Indicates term(s) must be used instead of another. This is stronger version of the PreferredTerm. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class PreferredTerm extends GlossaryTerm {
+    public static final class ReplacedBy extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryPreferredTerm. */
+        /** Fixed typeName for GlossaryReplacementTerm. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryPreferredTerm.TYPE_NAME;
+        String relationshipType = GlossaryReplacementTerm.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryPreferredTerm. */
-        AtlasGlossaryPreferredTerm relationshipAttributes;
+        /** Relationship attributes specific to GlossaryReplacementTerm. */
+        GlossaryReplacementTerm relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossaryPreferredTermBuilder<
-                    C extends AtlasGlossaryPreferredTerm, B extends AtlasGlossaryPreferredTermBuilder<C, B>>
+    public abstract static class GlossaryReplacementTermBuilder<
+                    C extends GlossaryReplacementTerm, B extends GlossaryReplacementTermBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossaryPreferredTerm relationship (with attributes) into a related object.
+         * Build the GlossaryReplacementTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm preferredToTerm(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryPreferredTerm attributes = build();
+        public IGlossaryTerm replacementTerm(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return PreferredToTerm._internal()
+                return ReplacementTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return PreferredToTerm._internal()
+                return ReplacementTerm._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -134,21 +134,21 @@ public class AtlasGlossaryPreferredTerm extends RelationshipAttributes {
         }
 
         /**
-         * Build the AtlasGlossaryPreferredTerm relationship (with attributes) into a related object.
+         * Build the GlossaryReplacementTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm preferredTerm(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryPreferredTerm attributes = build();
+        public IGlossaryTerm replacedBy(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return PreferredTerm._internal()
+                return ReplacedBy._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return PreferredTerm._internal()
+                return ReplacedBy._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

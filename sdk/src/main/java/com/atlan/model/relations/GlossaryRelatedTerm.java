@@ -16,27 +16,21 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Links terms that may also be of interest. It is like a 'see also' link in a dictionary.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossarySemanticAssignment extends RelationshipAttributes {
+public class GlossaryRelatedTerm extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossarySemanticAssignment";
+    public static final String TYPE_NAME = "AtlasGlossaryRelatedTerm";
 
-    /** Fixed typeName for AtlasGlossarySemanticAssignments. */
+    /** Fixed typeName for GlossaryRelatedTerms. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** TBC */
-    Integer confidence;
-
-    /** TBC */
-    String createdBy;
 
     /** TBC */
     String description;
@@ -57,12 +51,6 @@ public class AtlasGlossarySemanticAssignment extends RelationshipAttributes {
     @Override
     public Map<String, Object> getAll() {
         Map<String, Object> map = new HashMap<>();
-        if (confidence != null) {
-            map.put("confidence", confidence);
-        }
-        if (createdBy != null) {
-            map.put("createdBy", createdBy);
-        }
         if (description != null) {
             map.put("description", description);
         }
@@ -81,44 +69,44 @@ public class AtlasGlossarySemanticAssignment extends RelationshipAttributes {
         return map;
     }
 
-    /** TBC */
+    /** Links terms that may also be of interest. It is like a 'see also' link in a dictionary. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class Meaning extends GlossaryTerm {
+    public static final class SeeAlso extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossarySemanticAssignment. */
+        /** Fixed typeName for GlossaryRelatedTerm. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossarySemanticAssignment.TYPE_NAME;
+        String relationshipType = GlossaryRelatedTerm.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossarySemanticAssignment. */
-        AtlasGlossarySemanticAssignment relationshipAttributes;
+        /** Relationship attributes specific to GlossaryRelatedTerm. */
+        GlossaryRelatedTerm relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossarySemanticAssignmentBuilder<
-                    C extends AtlasGlossarySemanticAssignment, B extends AtlasGlossarySemanticAssignmentBuilder<C, B>>
+    public abstract static class GlossaryRelatedTermBuilder<
+                    C extends GlossaryRelatedTerm, B extends GlossaryRelatedTermBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossarySemanticAssignment relationship (with attributes) into a related object.
+         * Build the GlossaryRelatedTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm meaning(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossarySemanticAssignment attributes = build();
+        public IGlossaryTerm seeAlso(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryRelatedTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return Meaning._internal()
+                return SeeAlso._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return Meaning._internal()
+                return SeeAlso._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

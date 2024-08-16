@@ -3,7 +3,9 @@
 package com.atlan.model.relations;
 
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.IGlossaryCategory;
 import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.enums.AtlasGlossaryTermRelationshipStatus;
 import java.util.HashMap;
@@ -16,18 +18,18 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Organizes terms into categories. A term may be linked with many categories and a category may have many terms linked to it. This relationship may connect terms and categories both in the same glossary or in different glossaries.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossaryValidValue extends RelationshipAttributes {
+public class GlossaryTermCategorization extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossaryValidValue";
+    public static final String TYPE_NAME = "AtlasGlossaryTermCategorization";
 
-    /** Fixed typeName for AtlasGlossaryValidValues. */
+    /** Fixed typeName for GlossaryTermCategorizations. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -36,16 +38,7 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
     String description;
 
     /** TBC */
-    String expression;
-
-    /** TBC */
-    String source;
-
-    /** TBC */
     AtlasGlossaryTermRelationshipStatus status;
-
-    /** TBC */
-    String steward;
 
     /** {@inheritDoc} */
     @Override
@@ -54,77 +47,68 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
         if (description != null) {
             map.put("description", description);
         }
-        if (expression != null) {
-            map.put("expression", expression);
-        }
-        if (source != null) {
-            map.put("source", source);
-        }
         if (status != null) {
             map.put("status", status);
-        }
-        if (steward != null) {
-            map.put("steward", steward);
         }
         return map;
     }
 
-    /** TBC */
+    /** Organizes terms into categories. A term may be linked with many categories and a category may have many terms linked to it. This relationship may connect terms and categories both in the same glossary or in different glossaries. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class ValidValue extends GlossaryTerm {
+    public static final class Category extends GlossaryCategory {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryValidValue. */
+        /** Fixed typeName for GlossaryTermCategorization. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryValidValue.TYPE_NAME;
+        String relationshipType = GlossaryTermCategorization.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryValidValue. */
-        AtlasGlossaryValidValue relationshipAttributes;
+        /** Relationship attributes specific to GlossaryTermCategorization. */
+        GlossaryTermCategorization relationshipAttributes;
     }
 
-    /** TBC */
+    /** Organizes terms into categories. A term may be linked with many categories and a category may have many terms linked to it. This relationship may connect terms and categories both in the same glossary or in different glossaries. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class ValidValuesFor extends GlossaryTerm {
+    public static final class Term extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryValidValue. */
+        /** Fixed typeName for GlossaryTermCategorization. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryValidValue.TYPE_NAME;
+        String relationshipType = GlossaryTermCategorization.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryValidValue. */
-        AtlasGlossaryValidValue relationshipAttributes;
+        /** Relationship attributes specific to GlossaryTermCategorization. */
+        GlossaryTermCategorization relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossaryValidValueBuilder<
-                    C extends AtlasGlossaryValidValue, B extends AtlasGlossaryValidValueBuilder<C, B>>
+    public abstract static class GlossaryTermCategorizationBuilder<
+                    C extends GlossaryTermCategorization, B extends GlossaryTermCategorizationBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossaryValidValue relationship (with attributes) into a related object.
+         * Build the GlossaryTermCategorization relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm validValue(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryValidValue attributes = build();
+        public IGlossaryCategory category(IGlossaryCategory related) throws InvalidRequestException {
+            GlossaryTermCategorization attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return ValidValue._internal()
+                return Category._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return ValidValue._internal()
+                return Category._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -134,21 +118,21 @@ public class AtlasGlossaryValidValue extends RelationshipAttributes {
         }
 
         /**
-         * Build the AtlasGlossaryValidValue relationship (with attributes) into a related object.
+         * Build the GlossaryTermCategorization relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm validValuesFor(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryValidValue attributes = build();
+        public IGlossaryTerm term(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryTermCategorization attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return ValidValuesFor._internal()
+                return Term._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return ValidValuesFor._internal()
+                return Term._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

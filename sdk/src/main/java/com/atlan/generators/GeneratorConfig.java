@@ -41,6 +41,16 @@ public class GeneratorConfig {
             Map.entry("AtlasGlossary", "Glossary"),
             Map.entry("AtlasGlossaryCategory", "GlossaryCategory"),
             Map.entry("AtlasGlossaryTerm", "GlossaryTerm"),
+            Map.entry("AtlasGlossaryAntonym", "GlossaryAntonym"),
+            Map.entry("AtlasGlossarySynonym", "GlossarySynonym"),
+            Map.entry("AtlasGlossaryIsARelationship", "GlossaryIsA"),
+            Map.entry("AtlasGlossaryPreferredTerm", "GlossaryPreferredTerm"),
+            Map.entry("AtlasGlossaryRelatedTerm", "GlossaryRelatedTerm"),
+            Map.entry("AtlasGlossaryReplacementTerm", "GlossaryReplacementTerm"),
+            Map.entry("AtlasGlossarySemanticAssignment", "GlossarySemanticAssignment"),
+            Map.entry("AtlasGlossaryTermCategorization", "GlossaryTermCategorization"),
+            Map.entry("AtlasGlossaryTranslation", "GlossaryTranslation"),
+            Map.entry("AtlasGlossaryValidValue", "GlossaryValidValue"),
             Map.entry("MaterialisedView", "MaterializedView"));
 
     private static final Map<String, String> DEFAULT_SINGULARS = Map.ofEntries(

@@ -16,18 +16,18 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Terms that have the opposite (or near opposite) meaning, in the same language.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
+public class GlossaryAntonym extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossaryRelatedTerm";
+    public static final String TYPE_NAME = "AtlasGlossaryAntonym";
 
-    /** Fixed typeName for AtlasGlossaryRelatedTerms. */
+    /** Fixed typeName for GlossaryAntonyms. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -69,44 +69,44 @@ public class AtlasGlossaryRelatedTerm extends RelationshipAttributes {
         return map;
     }
 
-    /** TBC */
+    /** Terms that have the opposite (or near opposite) meaning, in the same language. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class SeeAlso extends GlossaryTerm {
+    public static final class Antonym extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryRelatedTerm. */
+        /** Fixed typeName for GlossaryAntonym. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryRelatedTerm.TYPE_NAME;
+        String relationshipType = GlossaryAntonym.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryRelatedTerm. */
-        AtlasGlossaryRelatedTerm relationshipAttributes;
+        /** Relationship attributes specific to GlossaryAntonym. */
+        GlossaryAntonym relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossaryRelatedTermBuilder<
-                    C extends AtlasGlossaryRelatedTerm, B extends AtlasGlossaryRelatedTermBuilder<C, B>>
+    public abstract static class GlossaryAntonymBuilder<
+                    C extends GlossaryAntonym, B extends GlossaryAntonymBuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossaryRelatedTerm relationship (with attributes) into a related object.
+         * Build the GlossaryAntonym relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm seeAlso(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryRelatedTerm attributes = build();
+        public IGlossaryTerm antonym(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryAntonym attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return SeeAlso._internal()
+                return Antonym._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return SeeAlso._internal()
+                return Antonym._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

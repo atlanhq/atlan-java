@@ -111,6 +111,7 @@ public class ${className} extends RelationshipAttributes {
     }
 
 </#if>
+<#if className != "GlossarySemanticAssignment">
     /** ${description} */
     @Generated(value="${generatorName}")
     @Getter
@@ -128,6 +129,7 @@ public class ${className} extends RelationshipAttributes {
         /** Relationship attributes specific to ${className}. */
         ${className} relationshipAttributes;
     }
+</#if>
 
     public abstract static class ${className}Builder<
                     C extends ${className}, B extends ${className}Builder<C, B>>
@@ -159,6 +161,7 @@ public class ${className} extends RelationshipAttributes {
         }
 
 </#if>
+<#if className != "GlossarySemanticAssignment">
         /**
          * Build the ${className} relationship (with attributes) into a related object.
          *
@@ -182,5 +185,6 @@ public class ${className} extends RelationshipAttributes {
                         .build();
             }
         }
+</#if>
     }
 }

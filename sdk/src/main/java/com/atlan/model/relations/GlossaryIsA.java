@@ -16,18 +16,18 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Relationship between a more abstract and more concrete concept. For example, this relationship would be use to say that 'Cat' ISA 'Animal'.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
+public class GlossaryIsA extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "AtlasGlossaryReplacementTerm";
+    public static final String TYPE_NAME = "AtlasGlossaryIsARelationship";
 
-    /** Fixed typeName for AtlasGlossaryReplacementTerms. */
+    /** Fixed typeName for GlossaryIsAs. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -69,62 +69,61 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
         return map;
     }
 
-    /** TBC */
+    /** Relationship between a more abstract and more concrete concept. For example, this relationship would be use to say that 'Cat' ISA 'Animal'. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class ReplacementTerm extends GlossaryTerm {
+    public static final class IsA extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryReplacementTerm. */
+        /** Fixed typeName for GlossaryIsA. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryReplacementTerm.TYPE_NAME;
+        String relationshipType = GlossaryIsA.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryReplacementTerm. */
-        AtlasGlossaryReplacementTerm relationshipAttributes;
+        /** Relationship attributes specific to GlossaryIsA. */
+        GlossaryIsA relationshipAttributes;
     }
 
-    /** TBC */
+    /** Relationship between a more abstract and more concrete concept. For example, this relationship would be use to say that 'Cat' ISA 'Animal'. */
     @Generated(value = "com.atlan.generators.ModelGeneratorV2")
     @Getter
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class ReplacedBy extends GlossaryTerm {
+    public static final class Classify extends GlossaryTerm {
         private static final long serialVersionUID = 2L;
 
-        /** Fixed typeName for AtlasGlossaryReplacementTerm. */
+        /** Fixed typeName for GlossaryIsA. */
         @Getter(onMethod_ = {@Override})
         @Builder.Default
-        String relationshipType = AtlasGlossaryReplacementTerm.TYPE_NAME;
+        String relationshipType = GlossaryIsA.TYPE_NAME;
 
-        /** Relationship attributes specific to AtlasGlossaryReplacementTerm. */
-        AtlasGlossaryReplacementTerm relationshipAttributes;
+        /** Relationship attributes specific to GlossaryIsA. */
+        GlossaryIsA relationshipAttributes;
     }
 
-    public abstract static class AtlasGlossaryReplacementTermBuilder<
-                    C extends AtlasGlossaryReplacementTerm, B extends AtlasGlossaryReplacementTermBuilder<C, B>>
+    public abstract static class GlossaryIsABuilder<C extends GlossaryIsA, B extends GlossaryIsABuilder<C, B>>
             extends RelationshipAttributes.RelationshipAttributesBuilder<C, B> {
 
         /**
-         * Build the AtlasGlossaryReplacementTerm relationship (with attributes) into a related object.
+         * Build the GlossaryIsA relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm replacementTerm(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryReplacementTerm attributes = build();
+        public IGlossaryTerm isA(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryIsA attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return ReplacementTerm._internal()
+                return IsA._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return ReplacementTerm._internal()
+                return IsA._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -134,21 +133,21 @@ public class AtlasGlossaryReplacementTerm extends RelationshipAttributes {
         }
 
         /**
-         * Build the AtlasGlossaryReplacementTerm relationship (with attributes) into a related object.
+         * Build the GlossaryIsA relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm replacedBy(IGlossaryTerm related) throws InvalidRequestException {
-            AtlasGlossaryReplacementTerm attributes = build();
+        public IGlossaryTerm classify(IGlossaryTerm related) throws InvalidRequestException {
+            GlossaryIsA attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return ReplacedBy._internal()
+                return Classify._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .build();
             } else {
-                return ReplacedBy._internal()
+                return Classify._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
