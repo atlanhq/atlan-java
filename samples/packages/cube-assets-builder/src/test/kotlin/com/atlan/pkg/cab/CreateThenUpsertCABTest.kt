@@ -155,6 +155,7 @@ class CreateThenUpsertCABTest : PackageTest() {
         CubeField.DISPLAY_NAME,
         CubeField.DESCRIPTION,
         CubeField.CUBE_FIELD_LEVEL,
+        CubeField.CUBE_FIELD_GENERATION,
         CubeField.CUBE_PARENT_FIELD,
         CubeField.CUBE_NESTED_FIELDS,
         CubeField.CUBE_SUB_FIELD_COUNT,
@@ -349,7 +350,8 @@ class CreateThenUpsertCABTest : PackageTest() {
                 "COL1" -> {
                     assertEquals(displayCol1, field.displayName)
                     assertNull(field.cubeParentField)
-                    assertEquals(1, field.cubeFieldLevel)
+                    assertEquals(3, field.cubeFieldLevel)
+                    assertEquals(1, field.cubeFieldGeneration)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
@@ -359,6 +361,7 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertNotNull(field.cubeParentField)
                     assertEquals("COL1", field.cubeParentField.name)
                     assertEquals(2, field.cubeFieldLevel)
+                    assertEquals(2, field.cubeFieldGeneration)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
@@ -367,7 +370,8 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals(displayCol3, field.displayName)
                     assertNotNull(field.cubeParentField)
                     assertEquals("COL2", field.cubeParentField.name)
-                    assertEquals(3, field.cubeFieldLevel)
+                    assertEquals(1, field.cubeFieldLevel)
+                    assertEquals(3, field.cubeFieldGeneration)
                     assertTrue(field.cubeNestedFields.isNullOrEmpty())
                     assertEquals(0, field.cubeSubFieldCount)
                 }
@@ -448,7 +452,8 @@ class CreateThenUpsertCABTest : PackageTest() {
                 "COL4" -> {
                     assertEquals("Test field 4", field.displayName)
                     assertNull(field.cubeParentField)
-                    assertEquals(1, field.cubeFieldLevel)
+                    assertEquals(2, field.cubeFieldLevel)
+                    assertEquals(1, field.cubeFieldGeneration)
                     assertNotNull(field.cubeNestedFields)
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
@@ -457,7 +462,8 @@ class CreateThenUpsertCABTest : PackageTest() {
                     assertEquals("Test field 5", field.displayName)
                     assertNotNull(field.cubeParentField)
                     assertEquals("COL4", field.cubeParentField.name)
-                    assertEquals(2, field.cubeFieldLevel)
+                    assertEquals(1, field.cubeFieldLevel)
+                    assertEquals(2, field.cubeFieldGeneration)
                     assertTrue(field.cubeNestedFields.isNullOrEmpty())
                     assertEquals(0, field.cubeSubFieldCount)
                 }

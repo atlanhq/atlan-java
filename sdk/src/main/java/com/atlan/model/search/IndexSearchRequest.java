@@ -97,6 +97,13 @@ public class IndexSearchRequest extends AtlanObject {
     @Builder.Default
     Boolean allowDeletedRelations = false;
 
+    /**
+     * Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
+     * By default, this is false and therefore relationship-level attributes are not included.
+     */
+    @Builder.Default
+    Boolean requestRelationshipAttrsForSearch = false;
+
     /** Controls how the search is logged (if at all). */
     @Builder.Default
     Metadata requestMetadata =

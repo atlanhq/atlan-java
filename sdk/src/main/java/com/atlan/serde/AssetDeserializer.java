@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
@@ -168,7 +167,8 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     Method method = ReflectionCache.getSetter(builderClass, deserializeName);
                     if (method != null) {
                         try {
-                            Object value = deserialize(relationshipAttributes.get(relnKey), method, deserializeName);
+                            Object value = Serde.deserialize(
+                                    client, relationshipAttributes.get(relnKey), method, deserializeName);
                             boolean set = ReflectionCache.setValue(builder, deserializeName, value);
                             if (set) {
                                 processedAttributes.add(deserializeName);
@@ -194,7 +194,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     Method method = ReflectionCache.getSetter(builderClass, deserializeName);
                     if (method != null) {
                         try {
-                            Object value = deserialize(attributes.get(attrKey), method, deserializeName);
+                            Object value = Serde.deserialize(client, attributes.get(attrKey), method, deserializeName);
                             ReflectionCache.setValue(builder, deserializeName, value);
                         } catch (NoSuchMethodException e) {
                             throw new IOException("Missing fromValue method for enum.", e);
@@ -277,101 +277,5 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         Asset result = builder.build();
         result.setRawJsonObject(root);
         return result;
-    }
-
-    private Object deserialize(JsonNode jsonNode, Method method, String fieldName)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        if (jsonNode.isValueNode()) {
-            return deserializePrimitive(jsonNode, method, fieldName);
-        } else if (jsonNode.isArray()) {
-            return deserializeList((ArrayNode) jsonNode, method, fieldName);
-        } else if (jsonNode.isObject()) {
-            return deserializeObject(jsonNode, method);
-        }
-        return null;
-    }
-
-    private Collection<?> deserializeList(ArrayNode array, Method method, String fieldName)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
-        List<Object> list = new ArrayList<>();
-        for (JsonNode element : array) {
-            Object deserialized = deserializeElement(element, method, fieldName);
-            list.add(deserialized);
-        }
-        if (paramClass == Collection.class || paramClass == List.class) {
-            return list;
-        } else if (paramClass == Set.class || paramClass == SortedSet.class) {
-            return new TreeSet<>(list);
-        } else {
-            throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
-        }
-    }
-
-    private Object deserializeObject(JsonNode jsonObject, Method method) {
-        Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
-        if (paramClass == Map.class
-                && ReflectionCache.getParameterizedTypeOfMethod(method)
-                        .getTypeName()
-                        .equals("java.util.Map<? extends java.lang.String, ? extends java.lang.Long>")) {
-            // TODO: Unclear why this cannot be handled more generically, but nothing else seems to work
-            return client.convertValue(jsonObject, new TypeReference<Map<String, Long>>() {});
-        } else {
-            return client.convertValue(jsonObject, paramClass);
-        }
-    }
-
-    /**
-     * Deserialize a value direct to an object.
-     * @param element to deserialize
-     * @param method to which the deserialized value will be built into an asset
-     * @param fieldName name of the field into which the value is being deserialized
-     * @return the deserialized object
-     * @throws IOException if an array is found nested directly within another array (unsupported)
-     */
-    private Object deserializeElement(JsonNode element, Method method, String fieldName)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        Type paramType = ReflectionCache.getParameterizedTypeOfMethod(method);
-        Class<?> innerClass = ReflectionCache.getClassOfParameterizedType(paramType);
-        if (element.isValueNode()) {
-            if (fieldName.equals("purposeAtlanTags")) {
-                String value;
-                try {
-                    value = client.getAtlanTagCache().getNameForId(element.asText());
-                } catch (NotFoundException e) {
-                    value = Serde.DELETED_AUDIT_OBJECT;
-                } catch (AtlanException e) {
-                    throw new IOException("Unable to deserialize purposeAtlanTags.", e);
-                }
-                return value;
-            }
-            return JacksonUtils.deserializePrimitive(element, method, innerClass);
-        } else if (element.isArray()) {
-            throw new IOException("Directly-nested arrays are not supported.");
-        } else if (element.isObject()) {
-            return client.convertValue(element, innerClass);
-        }
-        return null;
-    }
-
-    private Object deserializePrimitive(JsonNode primitive, Method method, String fieldName)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        if (primitive.isNull()) {
-            // Explicitly deserialize null values to a representation
-            // that we can identify on the object — necessary for audit entries
-            return Removable.NULL;
-        } else {
-            Object value = JacksonUtils.deserializePrimitive(primitive, method);
-            if (fieldName.equals("mappedAtlanTagName")) {
-                try {
-                    value = client.getAtlanTagCache().getNameForId(primitive.asText());
-                } catch (NotFoundException e) {
-                    value = Serde.DELETED_AUDIT_OBJECT;
-                } catch (AtlanException e) {
-                    throw new IOException("Unable to deserialize mappedAtlanTagName.", e);
-                }
-            }
-            return value;
-        }
     }
 }

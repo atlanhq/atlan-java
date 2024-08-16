@@ -2,12 +2,20 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.model.typedefs.EntityDef;
+import com.atlan.model.typedefs.EnumDef;
+import com.atlan.model.typedefs.StructDef;
 import com.atlan.model.typedefs.TypeDef;
+import freemarker.template.TemplateNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
+@Slf4j
 public abstract class TypeGenerator {
 
     protected static final Map<String, String> PRIMITIVE_MAPPINGS = Map.ofEntries(
@@ -99,6 +107,42 @@ public abstract class TypeGenerator {
      */
     private static String getEmbeddedType(String attrType) {
         return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
+    }
+
+    public String getClassTemplateFile() {
+        try {
+            return cfg.getFreemarkerConfig().getTemplate(className + ".ftl").getSourceName();
+        } catch (TemplateNotFoundException e) {
+            // Do nothing - no template to load or otherwise handle
+        } catch (IOException e) {
+            log.error("Error reading template: {}.ftl", className, e);
+        }
+        return null;
+    }
+
+    public boolean isBuiltIn(String orgName, String reTyped) {
+        if (orgName != null) {
+            EntityDef entity = cache.getEntityDefCache().get(orgName);
+            if (entity != null) {
+                return (entity.getServiceType() != null
+                        && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(entity.getServiceType()));
+            } else {
+                StructDef struct = cache.getStructDefCache().get(orgName);
+                if (struct != null) {
+                    return (struct.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(struct.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_STRUCTS.contains(orgName);
+                } else {
+                    EnumDef enumDef = cache.getEnumDefCache().get(orgName);
+                    return (enumDef != null
+                                    && enumDef.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(enumDef.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_ENUMS.contains(orgName)
+                            || (orgName.equals("string") && GeneratorConfig.BUILT_IN_ENUMS.contains(reTyped));
+                }
+            }
+        }
+        return false;
     }
 
     @Getter
