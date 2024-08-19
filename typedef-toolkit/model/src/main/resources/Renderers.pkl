@@ -586,7 +586,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                             }),
         """
         for (relationship: Model.RelationshipDef in relationships) {
-          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer && model.customTypes.getOrNull(relationship.endDef2.type) != null) {
             let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef2.type)!!)
               """
                                   {
@@ -606,7 +606,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                                   },
               """
           }
-          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer) {
+          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer && model.customTypes.getOrNull(relationship.endDef1.type) != null) {
             let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef1.type)!!)
               """
                                   {
@@ -653,7 +653,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                             }),
         """
         for (relationship: Model.RelationshipDef in relationships) {
-          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer) {
+          when (relationship.endDef1.type == assetType.name && relationship.endDef1.isContainer && model.customTypes.getOrNull(relationship.endDef2.type) != null) {
             let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef2.type)!!)
               """
                                   {
@@ -673,7 +673,7 @@ class GetAssetTypes extends TypeScriptRenderer {
                                   },
               """
           }
-          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer) {
+          when (relationship.endDef2.type == assetType.name && relationship.endDef2.isContainer && model.customTypes.getOrNull(relationship.endDef1.type) != null) {
             let (relatedType: Model.CustomAssetType = model.customTypes.getOrNull(relationship.endDef1.type)!!)
               """
                                   {
