@@ -87,6 +87,8 @@ class LakeTagSynchronizerTest : PackageTest() {
     private fun copyTagFile() {
         Paths.get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
             .copyTo(Paths.get(testDirectory, directoryPrefix, "${TAG_FILE_NAME_PREFIX}_1.json"))
+        Paths.get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_2.json")
+            .copyTo(Paths.get(testDirectory, directoryPrefix, "${TAG_FILE_NAME_PREFIX}_2.json"))
     }
 
     private fun createEnums() {
