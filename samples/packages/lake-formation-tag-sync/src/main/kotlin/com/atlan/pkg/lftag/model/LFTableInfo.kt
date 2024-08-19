@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 class LFTableInfo(
     @JsonProperty("Table") var table: LFTable,
-    @JsonProperty("LFTagOnDatabase") var lfTagOnDatabase: List<LFTagPair>,
-    @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair>,
-    @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag>,
+    @JsonProperty("LFTagOnDatabase") var lfTagOnDatabase: List<LFTagPair> = listOf(),
+    @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair> = listOf(),
+    @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag> = listOf(),
 ) {
     fun getTagValuesByTagKey(tagValuesByTagKey: MutableMap<String, MutableSet<String>>): Map<String, Set<String>> {
         lfTagOnDatabase.forEach { lfTagPair ->
