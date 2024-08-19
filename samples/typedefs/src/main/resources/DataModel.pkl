@@ -1,0 +1,364 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Model.pkl"
+
+t = "DM"
+a = t.decapitalize()
+
+local dataModel = "DataModel"
+local dmVersion = "Version"
+local dmEntity = "Entity"
+local dmAttribute = "Attribute"
+local dmEntityAssociation = "EntityAssociation"
+local dmAttributeAssociation = "AttributeAssociation"
+
+local attrName = "Name"
+local qualifiedName = "QualifiedName"
+local domain = "Domain"
+local namespace = "Namespace"
+
+local modelIcon = new Icon {
+  name = "GenericDB"
+  svg = "generic-source.svg"
+}
+
+shared {
+  supertypeDefinition {
+    name = t
+    description = "Assets used to model data and information."
+    superTypes { "Catalog" }
+    attributes {
+      ["\(a)\(dataModel)\(attrName)"] {
+        label = "Model"
+        description = "Simple name of the model in which this asset exists, or empty if it is itself a data model."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dataModel)\(qualifiedName)"] {
+        description = "Unique name of the model in which this asset exists, or empty if it is itself a data model."
+        type = "string"
+        indexAs = "keyword"
+      }
+      ["\(a)\(dataModel)\(domain)"] {
+        label = "Model"
+        description = "A domain of the datam model in which this asset exists."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dataModel)\(namespace)"] {
+        label = "Model"
+        description = "A namespace of the data model in which this asset exists."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dmVersion)\(attrName)"] {
+        label = "Version"
+        description = "Simple name of the version in which this asset exists, or empty if it is itself a data model version."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dmVersion)\(qualifiedName)"] {
+        description = "Unique name of the version in which this asset exists, or empty if it is itself a data model version."
+        type = "string"
+        indexAs = "keyword"
+      }
+      ["\(a)\(dmEntity)\(attrName)"] {
+        label = "Entity"
+        description = "Simple name of the entity in which this asset exists, or empty if it is itself a data model entity."
+        type = "string"
+        indexAs = "both"
+      }
+      ["\(a)\(dmEntity)\(qualifiedName)"] {
+        description = "Unique name of the entity in which this asset exists, or empty if it is itself a data model entity."
+        type = "string"
+        indexAs = "keyword"
+      }
+    }
+  }
+  ui {
+    svgName = "MultiDimensional.svg" // TODO: pick an overall icon for data models
+    filters {
+      ["\(t)\(dataModel)"] {
+        attribute = "\(a)\(qualifiedName)"
+      }
+      ["\(t)\(dmVersion)"] {
+        attribute = "\(a)\(dmVersion)\(qualifiedName)"
+      }
+    }
+    breadcrumb {
+      ["\(t)\(dataModel)"] {
+        q = "\(a)\(dataModel)\(qualifiedName)"
+        n = "\(a)\(dataModel)\(attrName)"
+      }
+      ["\(t)\(dmVersion)"] {
+        q = "\(a)\(dmVersion)\(qualifiedName)"
+        n = "\(a)\(dmVersion)\(attrName)"
+      }
+      ["\(t)\(dmEntity)"] {
+        q = "\(a)\(dmEntity)\(qualifiedName)"
+        n = "\(a)\(dmEntity)\(attrName)"
+      }
+    }
+  }
+}
+
+customTypes {
+  ["\(t)\(dataModel)"] {
+    label = t
+    icon = modelIcon
+    description = "Instance of a data model in Atlan."
+    attributes {
+      ["\(a)\(dmVersion)Count"] {
+        label = dmVersion.decapitalize()
+        description = "Number of versions of the data model."
+        type = "long"
+        childCount = true
+      }
+      ["\(a)Type"] {
+        label = "type"
+        description = "Type of the data model."
+        type = "string"
+      }
+      ["\(a)Tool"] {
+        label = "tool"
+        description = "Tool used to create this data model."
+        type = "string"
+      }
+    }
+  }
+
+  ["\(t)\(dmVersion)"] {
+    label = dmVersion
+    icon = modelIcon
+    description = "Instance of a version of a data model in Atlan."
+    parentQualifiedName = "\(a)\(dataModel)\(qualifiedName)"
+    attributes {
+      ["\(a)\(dmEntity)Count"] {
+        label = dmEntity.decapitalize()
+        description = "Number of entities in the version."
+        type = "long"
+        childCount = true
+      }
+    }
+    relationships {
+      [a] {
+        description = "Containment relationship between \(t) (parent) and \(t)\(dmVersion) (children)."
+        parent {
+          type = "\(t)\(dataModel)"
+          attribute = "\(a)\(dmVersion)s"
+          description = "Individual versions of the data model."
+        }
+        children {
+          type = "\(t)\(dmVersion)"
+          attribute = "\(a)\(dataModel)"
+          description = "Data model for which this version exists."
+        }
+      }
+    }
+  }
+
+  ["\(t)\(dmEntity)"] {
+    label = dmEntity
+    labelPlural = "Entities"
+    icon = modelIcon
+    description = "Instance of an entity within a version of a data model in Atlan."
+    parentQualifiedName = "\(a)\(dmVersion)\(qualifiedName)"
+    attributes {
+      ["\(a)\(dmAttribute)Count"] {
+        label = dmAttribute.decapitalize()
+        description = "Number of attributes in the entity."
+        type = "long"
+        childCount = true
+      }
+    }
+    relationships {
+      ["\(a)\(dmVersion)"] {
+        description = "Containment relationship between \(t)\(dmVersion) (parent) and \(t)\(dmEntity) (children)."
+        parent {
+          type = "\(t)\(dmVersion)"
+          attribute = "\(a)Entities"
+          description = "Individual entities that make up this version of the data model."
+        }
+        children {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)\(dmVersion)"
+          description = "Data model version in which this entity exists."
+        }
+      }
+      ["data_model_entity_mapped_entities"] {
+        // TODO: is this really peer-to-peer, or parent-child
+        // (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
+        description = "Peer-to-peer mappings between data entities."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)MappedToEntities"
+            description = "Entities to which this entity is mapped."
+          }
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)MappedFromEntities"
+            description = "Entities from which this entity is mapped."
+          }
+        }
+      }
+    }
+  }
+
+  ["\(t)\(dmEntityAssociation)"] {
+    label = dmEntityAssociation
+    icon = modelIcon
+    description = "Instance of a data entity association in Atlan."
+    attributes {
+      ["\(a)Cardinality"] {
+        label = "cardinality"
+        description = "Cardinality of the data entity association."
+        type = "enum"
+        enumName = "\(t)CardinalityType"
+      }
+      ["\(a)Label"] {
+        label = "label"
+        description = "Label of the data entity association."
+        type = "string"
+      }
+      ["\(a)OwnerSealId"] {
+        label = "ownerSealId"
+        description = "Owner seal ID of the data entity association."
+        type = "string"
+      }
+    }
+    enums {
+      ["\(t)CardinalityType"] {
+        description = "Valid values for \(t)EntityAssociation cardinality."
+        validValues {
+          ["ONE-TO-ONE"] { description = "An entity (E) is connected to at most one other entity (F), and vice versa." }
+          ["ONE-TO-MANY"] { description = "An entity (E) can be associated with multiple entities (F), but each entity (F) is associated with at most one entity (E)." }
+          ["MANY-TO-ONE"] { description = "Multiple entities (E) can be connected to the same entity (F), but each entity (F) is associated with at most one entity (E)." }
+          ["MANY-TO-MANY"] { description = "Entities (E) can be associated with multiple other entities (F), and entities (F) can be associated with multiple entities (E)." }
+        }
+      }
+    }
+    relationships {
+       ["data_model_entity_data_model_entities_1"] {
+        description = "Peer-to-peer relationship between data entity association and data entity."
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)RelatedFromEntities"
+          description = "Association from this entity is related."
+        }
+        children {
+          type = "\(t)\(dmEntityAssociation)"
+          attribute = "\(a)EntityTo"
+          description = "Entity to which this association is related."
+        }
+      }
+      ["data_model_entity_data_model_entities_2"] {
+        description = "Peer-to-peer relationship between data entity and data entity association."
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)RelatedToEntities"
+          description = "Association to which this entity is related."
+        }
+        children {
+          type = "\(t)\(dmEntityAssociation)"
+          attribute = "\(a)EntityFrom"
+          description = "Entity from which this association is related."
+        }
+      }
+    }
+  }
+
+  ["\(t)\(dmAttribute)"] {
+    label = dmAttribute
+    icon = modelIcon
+    description = "Instance of an attribute within a data model entity in Atlan."
+    parentQualifiedName = "\(a)\(dmEntity)\(qualifiedName)"
+    attributes {
+
+    }
+    relationships {
+      ["\(a)\(dmEntity)"] {
+        description = "Containment relationship between \(t)\(dmEntity) (parent) and \(t)\(dmAttribute) (children)."
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)\(dmAttribute)s"
+          description = "Individual attributes that make up the entity."
+        }
+        children {
+          type = "\(t)\(dmAttribute)"
+          attribute = "\(a)\(dmEntity)"
+          description = "Entity in which this attribute exists."
+        }
+      }
+      ["data_model_attribute_mapped_attributes"] {
+        // TODO: is this really peer-to-peer, or parent-child
+        // (e.g. 1 logical = many physical, but 1 physical only derives from a single logical)?
+        description = "Peer-to-peer mappings between data attributes."
+        peers {
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)MappedToAttributes"
+            description = "Attributes to which this attribute is mapped."
+          }
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)MappedFromAttributes"
+            description = "Attributes from which this attribute is mapped."
+          }
+        }
+      }
+    }
+  }
+
+  ["\(t)\(dmAttributeAssociation)"] {
+    label = dmAttributeAssociation
+    icon = modelIcon
+    description = "Instance of a data attribute association in Atlan."
+    attributes {
+      ["\(a)Cardinality"] {
+        label = "cardinality"
+        description = "Cardinality of the data attribute association."
+        type = "enum"
+        enumName = "\(t)CardinalityType"
+      }
+      ["\(a)Label"] {
+        label = "label"
+        description = "Label of the data attribute association."
+        type = "string"
+      }
+      ["\(a)OwnerSealId"] {
+        label = "ownerSealId"
+        description = "Owner seal ID of the data attribute association."
+        type = "string"
+      }
+    }
+    relationships {
+      ["data_model_attribute_data_model_attributes_1"] {
+        description = "Peer-to-peer relationship between data attribute association and data attribute."
+        parent {
+          type = "\(t)\(dmAttribute)"
+          attribute = "\(a)RelatedFromAttributes"
+          description = "Association from this attribute is related."
+        }
+        children {
+          type = "\(t)\(dmAttributeAssociation)"
+          attribute = "\(a)AttributeTo"
+          description = "Attribute to which this association is related."
+        }
+      }
+      ["data_model_attribute_data_model_attributes_2"] {
+        description = "Peer-to-peer relationship between data attribute association and data attribute."
+        parent {
+          type = "\(t)\(dmAttribute)"
+          attribute = "\(a)RelatedToAttributes"
+          description = "Association to which this attribute is related."
+        }
+        children {
+          type = "\(t)\(dmAttributeAssociation)"
+          attribute = "\(a)AttributeFrom"
+          description = "Attribute from which this association is related."
+        }
+      }
+    }
+  }
+}
