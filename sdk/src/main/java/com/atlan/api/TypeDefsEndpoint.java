@@ -260,7 +260,9 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         if (typeDefs != null) {
             for (TypeDef typeDef : typeDefs) {
                 String serviceType = typeDef.getServiceType();
-                if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+                if (typeDef.getCategory() != AtlanTypeCategory.ATLAN_TAG
+                        && serviceType != null
+                        && RESERVED_SERVICE_TYPES.contains(serviceType)) {
                     throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
                 }
                 switch (typeDef.getCategory()) {

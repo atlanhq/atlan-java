@@ -37,8 +37,8 @@ public class SourceTagAttribute extends AtlanStruct {
     String tagAttributeValue;
 
     /** Properties of the attribute. */
-    @Singular
-    Map<String, String> tagAttributeProperties;
+    @Builder.Default
+    Map<String, String> tagAttributeProperties = null;
 
     /**
      * Quickly create a new SourceTagAttribute.

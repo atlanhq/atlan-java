@@ -480,6 +480,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-409-001",
             "Provided service type is reserved for internal Atlan use only: {0}",
             "You cannot create, update or remove any type definitions using this service type, it is reserved for Atlan use only."),
+    EXISTING_TAG(
+            409,
+            "ATLAN-JAVA-409-002",
+            "An Atlan tag already exists with this name, so a new one cannot be created: {0}",
+            "You cannot create an Atlan tag with the same name as one that already exists. Either change the name, or update the existing tag."),
 
     RATE_LIMIT_PASSTHROUGH(
             429,

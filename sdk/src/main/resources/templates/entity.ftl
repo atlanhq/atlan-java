@@ -70,6 +70,7 @@ import ${packageRoot}.assets.I${attribute.type.name};
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.serde.Serde;
 import com.atlan.util.StringUtils;
 import com.atlan.util.QueryFactory;
 <#if className == "Asset">
@@ -105,6 +106,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;

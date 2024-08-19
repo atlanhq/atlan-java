@@ -48,11 +48,11 @@ public class ${className} extends AtlanStruct {
 
 <#list attributes as attribute>
     /** ${attribute.description} */
-    <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
+    <#if attribute.type.container?has_content && attribute.type.container == "Map<">@Builder.Default<#elseif attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>
-    ${attribute.fullType} ${attribute.renamed};
+    ${attribute.fullType} ${attribute.renamed}<#if attribute.type.container?has_content && attribute.type.container == "Map<"> = null</#if>;
 
 </#list>
 <#if className == "BadgeCondition">
