@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AtlanTagCache extends AbstractMassCache {
 
     private Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
-    private final Set<String> deletedIds = ConcurrentHashMap.newKeySet();
-    private final Set<String> deletedNames = ConcurrentHashMap.newKeySet();
+    private Set<String> deletedIds = ConcurrentHashMap.newKeySet();
+    private Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -42,6 +42,8 @@ public class AtlanTagCache extends AbstractMassCache {
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
         mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
+        deletedIds = ConcurrentHashMap.newKeySet();
+        deletedNames = ConcurrentHashMap.newKeySet();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
             cache(typeId, clsDef.getDisplayName());
