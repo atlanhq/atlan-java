@@ -10,6 +10,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -39,14 +41,14 @@ public interface ITableauMetric {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this metric exists. */
-    KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
+    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
 
     /** Unique name of the site in which this metric exists. */
-    KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
+    TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
     /** Unique name of the top-level project in which this metric exists. */
-    KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
-            new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
+    TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
+            new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -538,7 +540,7 @@ public interface ITableauMetric {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

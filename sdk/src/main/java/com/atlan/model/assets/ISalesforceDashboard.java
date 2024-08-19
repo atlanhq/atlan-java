@@ -8,9 +8,10 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +20,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -34,7 +34,7 @@ public interface ISalesforceDashboard {
     public static final String TYPE_NAME = "SalesforceDashboard";
 
     /** Type of dashboard in Salesforce. */
-    KeywordField DASHBOARD_TYPE = new KeywordField("dashboardType", "dashboardType");
+    TextField DASHBOARD_TYPE = new TextField("dashboardType", "dashboardType");
 
     /** Organization in which this dashboard exists. */
     RelationField ORGANIZATION = new RelationField("organization");
@@ -46,7 +46,7 @@ public interface ISalesforceDashboard {
     RelationField REPORTS = new RelationField("reports");
 
     /** Identifier of the dashboard in Salesforce. */
-    KeywordField SOURCE_ID = new KeywordField("sourceId", "sourceId");
+    TextField SOURCE_ID = new TextField("sourceId", "sourceId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -544,7 +544,7 @@ public interface ISalesforceDashboard {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

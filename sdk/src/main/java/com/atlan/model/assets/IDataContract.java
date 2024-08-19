@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -43,7 +44,7 @@ public interface IDataContract {
     RelationField DATA_CONTRACT_ASSET_LATEST = new RelationField("dataContractAssetLatest");
 
     /** (Deprecated) Replaced by dataContractSpec attribute. */
-    KeywordField DATA_CONTRACT_JSON = new KeywordField("dataContractJson", "dataContractJson");
+    TextField DATA_CONTRACT_JSON = new TextField("dataContractJson", "dataContractJson");
 
     /** Data contract instance that holds the next version of this contract. */
     RelationField DATA_CONTRACT_NEXT_VERSION = new RelationField("dataContractNextVersion");
@@ -52,7 +53,7 @@ public interface IDataContract {
     RelationField DATA_CONTRACT_PREVIOUS_VERSION = new RelationField("dataContractPreviousVersion");
 
     /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
-    KeywordField DATA_CONTRACT_SPEC = new KeywordField("dataContractSpec", "dataContractSpec");
+    TextField DATA_CONTRACT_SPEC = new TextField("dataContractSpec", "dataContractSpec");
 
     /** Version of the contract. */
     NumericField DATA_CONTRACT_VERSION = new NumericField("dataContractVersion", "dataContractVersion");
@@ -556,7 +557,7 @@ public interface IDataContract {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

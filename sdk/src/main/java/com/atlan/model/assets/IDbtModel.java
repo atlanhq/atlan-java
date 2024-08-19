@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -34,13 +35,13 @@ public interface IDbtModel {
     public static final String TYPE_NAME = "DbtModel";
 
     /** TBC */
-    KeywordField DBT_COMPILED_SQL = new KeywordField("dbtCompiledSQL", "dbtCompiledSQL");
+    TextField DBT_COMPILED_SQL = new TextField("dbtCompiledSQL", "dbtCompiledSQL");
 
     /** TBC */
-    KeywordField DBT_ERROR = new KeywordField("dbtError", "dbtError");
+    TextField DBT_ERROR = new TextField("dbtError", "dbtError");
 
     /** TBC */
-    KeywordField DBT_MATERIALIZATION_TYPE = new KeywordField("dbtMaterializationType", "dbtMaterializationType");
+    TextField DBT_MATERIALIZATION_TYPE = new TextField("dbtMaterializationType", "dbtMaterializationType");
 
     /** Metrics that exist within this model. */
     RelationField DBT_METRICS = new RelationField("dbtMetrics");
@@ -77,10 +78,10 @@ public interface IDbtModel {
     RelationField DBT_MODEL_SQL_ASSETS = new RelationField("dbtModelSqlAssets");
 
     /** TBC */
-    KeywordField DBT_RAW_SQL = new KeywordField("dbtRawSQL", "dbtRawSQL");
+    TextField DBT_RAW_SQL = new TextField("dbtRawSQL", "dbtRawSQL");
 
     /** TBC */
-    KeywordField DBT_STATS = new KeywordField("dbtStats", "dbtStats");
+    TextField DBT_STATS = new TextField("dbtStats", "dbtStats");
 
     /** TBC */
     KeywordField DBT_STATUS = new KeywordField("dbtStatus", "dbtStatus");
@@ -674,7 +675,7 @@ public interface IDbtModel {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

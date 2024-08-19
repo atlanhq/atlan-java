@@ -9,10 +9,11 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,7 +22,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -46,8 +46,8 @@ public interface ISupersetDashboard {
             "supersetDashboardChangedByName.stemmed");
 
     /** URL of the user profile that changed the dashboard */
-    KeywordField SUPERSET_DASHBOARD_CHANGED_BY_URL =
-            new KeywordField("supersetDashboardChangedByURL", "supersetDashboardChangedByURL");
+    TextField SUPERSET_DASHBOARD_CHANGED_BY_URL =
+            new TextField("supersetDashboardChangedByURL", "supersetDashboardChangedByURL");
 
     /** Count of charts present in the dashboard. */
     NumericField SUPERSET_DASHBOARD_CHART_COUNT =
@@ -62,8 +62,8 @@ public interface ISupersetDashboard {
             new BooleanField("supersetDashboardIsPublished", "supersetDashboardIsPublished");
 
     /** URL for the dashboard thumbnail image in superset. */
-    KeywordField SUPERSET_DASHBOARD_THUMBNAIL_URL =
-            new KeywordField("supersetDashboardThumbnailURL", "supersetDashboardThumbnailURL");
+    TextField SUPERSET_DASHBOARD_THUMBNAIL_URL =
+            new TextField("supersetDashboardThumbnailURL", "supersetDashboardThumbnailURL");
 
     /** SupersetDatasets assets contained within this SupersetDashboard. */
     RelationField SUPERSET_DATASETS = new RelationField("supersetDatasets");
@@ -573,7 +573,7 @@ public interface ISupersetDashboard {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

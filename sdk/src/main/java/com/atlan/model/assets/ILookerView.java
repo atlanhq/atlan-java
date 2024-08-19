@@ -10,6 +10,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -18,7 +20,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -39,13 +40,13 @@ public interface ILookerView {
     KeywordField LOOKER_VIEW_FILE_NAME = new KeywordField("lookerViewFileName", "lookerViewFileName");
 
     /** File path of this view within the project. */
-    KeywordField LOOKER_VIEW_FILE_PATH = new KeywordField("lookerViewFilePath", "lookerViewFilePath");
+    TextField LOOKER_VIEW_FILE_PATH = new TextField("lookerViewFilePath", "lookerViewFilePath");
 
     /** Project in which this view exists. */
     RelationField PROJECT = new RelationField("project");
 
     /** Name of the project in which this view exists. */
-    KeywordField PROJECT_NAME = new KeywordField("projectName", "projectName");
+    TextField PROJECT_NAME = new TextField("projectName", "projectName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -537,7 +538,7 @@ public interface ILookerView {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

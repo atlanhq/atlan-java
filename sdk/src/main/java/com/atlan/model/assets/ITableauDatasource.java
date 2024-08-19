@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -34,13 +36,13 @@ public interface ITableauDatasource {
     public static final String TYPE_NAME = "TableauDatasource";
 
     /** Notes related to this datasource being cerfified, in Tableau. */
-    KeywordField CERTIFICATION_NOTE = new KeywordField("certificationNote", "certificationNote");
+    TextField CERTIFICATION_NOTE = new TextField("certificationNote", "certificationNote");
 
     /** Users that have marked this datasource as cerified, in Tableau. */
     KeywordField CERTIFIER = new KeywordField("certifier", "certifier");
 
     /** Name of the user who cerified this datasource, in Tableau. */
-    KeywordField CERTIFIER_DISPLAY_NAME = new KeywordField("certifierDisplayName", "certifierDisplayName");
+    TextField CERTIFIER_DISPLAY_NAME = new TextField("certifierDisplayName", "certifierDisplayName");
 
     /** Fields that exist within this datasource. */
     RelationField FIELDS = new RelationField("fields");
@@ -61,14 +63,14 @@ public interface ITableauDatasource {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this datasource exists. */
-    KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
+    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
 
     /** Unique name of the site in which this datasource exists. */
-    KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
+    TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
     /** Unique name of the top-level project in which this datasource exists. */
-    KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
-            new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
+    TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
+            new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
     /** List of datasources that are upstream of this datasource. */
     KeywordField UPSTREAM_DATASOURCES = new KeywordField("upstreamDatasources", "upstreamDatasources");
@@ -80,7 +82,7 @@ public interface ITableauDatasource {
     RelationField WORKBOOK = new RelationField("workbook");
 
     /** Unique name of the workbook in which this datasource exists. */
-    KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
+    TextField WORKBOOK_QUALIFIED_NAME = new TextField("workbookQualifiedName", "workbookQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -605,7 +607,7 @@ public interface ITableauDatasource {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.EnumDef;
+import com.atlan.model.typedefs.RelationshipDef;
 import com.atlan.model.typedefs.StructDef;
 import freemarker.template.Template;
 import java.io.*;
@@ -23,6 +24,7 @@ public class ModelGenerator extends AbstractGenerator {
         generateEnums();
         generateStructs();
         generateAssets();
+        generateRelationships();
         generateSearchFields();
     }
 
@@ -140,6 +142,30 @@ public class ModelGenerator extends AbstractGenerator {
                 attributeDefOptionsTemplate.process(generator, fs);
             } catch (IOException e) {
                 log.error("Unable to open file output: {}", filename, e);
+            }
+        }
+    }
+
+    private void generateRelationships() throws Exception {
+        Template relationshipTemplate = ftl.getTemplate("relationship.ftl");
+        for (RelationshipDef relationshipDef : cache.getRelationshipDefCache().values()) {
+            RelationshipGenerator generator = new RelationshipGenerator(relationshipDef, cfg);
+            createDirectoryIdempotent(cfg.getPackagePath() + File.separator + RelationshipGenerator.DIRECTORY);
+            // Only generate relationships model if there are any attributes on the relationship
+            if (cfg.includeTypedef(relationshipDef)
+                    && relationshipDef.getAttributeDefs() != null
+                    && !relationshipDef.getAttributeDefs().isEmpty()) {
+                String filename = cfg.getPackagePath() + File.separator + RelationshipGenerator.DIRECTORY
+                        + File.separator + generator.getClassName() + ".java";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    relationshipTemplate.process(generator, fs);
+                    cache.addRelationshipGenerator(relationshipDef.getName(), generator);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+            } else {
+                cache.addRelationshipGenerator(relationshipDef.getName(), generator);
             }
         }
     }

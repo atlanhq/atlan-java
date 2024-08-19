@@ -12,6 +12,8 @@ import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -47,16 +49,16 @@ public interface ITablePartition {
     RelationField COLUMNS = new RelationField("columns");
 
     /** Constraint that defines this table partition. */
-    KeywordField CONSTRAINT = new KeywordField("constraint", "constraint");
+    TextField CONSTRAINT = new TextField("constraint", "constraint");
 
     /** External location of this partition, for example: an S3 object location. */
-    KeywordField EXTERNAL_LOCATION = new KeywordField("externalLocation", "externalLocation");
+    TextField EXTERNAL_LOCATION = new TextField("externalLocation", "externalLocation");
 
     /** Format of the external location of this partition, for example: JSON, CSV, PARQUET, etc. */
     KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
 
     /** Region of the external location of this partition, for example: S3 region. */
-    KeywordField EXTERNAL_LOCATION_REGION = new KeywordField("externalLocationRegion", "externalLocationRegion");
+    TextField EXTERNAL_LOCATION_REGION = new TextField("externalLocationRegion", "externalLocationRegion");
 
     /** Whether this partition is further partitioned (true) or not (false). */
     BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
@@ -77,7 +79,7 @@ public interface ITablePartition {
     NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
 
     /** List of sub-partitions in this partition. */
-    KeywordField PARTITION_LIST = new KeywordField("partitionList", "partitionList");
+    TextField PARTITION_LIST = new TextField("partitionList", "partitionList");
 
     /** Partition strategy of this partition. */
     KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
@@ -686,7 +688,7 @@ public interface ITablePartition {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

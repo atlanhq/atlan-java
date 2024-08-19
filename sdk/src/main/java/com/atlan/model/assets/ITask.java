@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.Action;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,7 +22,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -44,7 +45,7 @@ public interface ITask {
     KeywordField TASK_EXECUTION_ACTION = new KeywordField("taskExecutionAction", "taskExecutionAction");
 
     /** comment for the action executed by user */
-    KeywordField TASK_EXECUTION_COMMENT = new KeywordField("taskExecutionComment", "taskExecutionComment");
+    TextField TASK_EXECUTION_COMMENT = new TextField("taskExecutionComment", "taskExecutionComment");
 
     /** Time (epoch) at which the task expires . */
     NumericField TASK_EXPIRES_AT = new NumericField("taskExpiresAt", "taskExpiresAt");
@@ -53,7 +54,7 @@ public interface ITask {
     BooleanField TASK_IS_READ = new BooleanField("taskIsRead", "taskIsRead");
 
     /** contains the payload that is proposed to the task */
-    KeywordField TASK_PROPOSALS = new KeywordField("taskProposals", "taskProposals");
+    TextField TASK_PROPOSALS = new TextField("taskProposals", "taskProposals");
 
     /** recipient of the task */
     KeywordField TASK_RECIPIENT = new KeywordField("taskRecipient", "taskRecipient");
@@ -65,7 +66,7 @@ public interface ITask {
     KeywordField TASK_REQUESTOR = new KeywordField("taskRequestor", "taskRequestor");
 
     /** comment of requestor for the task */
-    KeywordField TASK_REQUESTOR_COMMENT = new KeywordField("taskRequestorComment", "taskRequestorComment");
+    TextField TASK_REQUESTOR_COMMENT = new TextField("taskRequestorComment", "taskRequestorComment");
 
     /** type of task */
     KeywordField TASK_TYPE = new KeywordField("taskType", "taskType");
@@ -569,7 +570,7 @@ public interface ITask {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

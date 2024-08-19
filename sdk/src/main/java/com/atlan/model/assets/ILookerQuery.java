@@ -8,8 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -18,7 +19,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -33,7 +33,7 @@ public interface ILookerQuery {
     public static final String TYPE_NAME = "LookerQuery";
 
     /** Deprecated. */
-    KeywordField FIELDS = new KeywordField("fields", "fields");
+    TextField FIELDS = new TextField("fields", "fields");
 
     /** Deprecated. */
     RelationField LOOKS = new RelationField("looks");
@@ -42,13 +42,13 @@ public interface ILookerQuery {
     RelationField MODEL = new RelationField("model");
 
     /** Deprecated. */
-    KeywordField SOURCE_DEFINITION = new KeywordField("sourceDefinition", "sourceDefinition");
+    TextField SOURCE_DEFINITION = new TextField("sourceDefinition", "sourceDefinition");
 
     /** Deprecated. */
-    KeywordField SOURCE_DEFINITION_DATABASE = new KeywordField("sourceDefinitionDatabase", "sourceDefinitionDatabase");
+    TextField SOURCE_DEFINITION_DATABASE = new TextField("sourceDefinitionDatabase", "sourceDefinitionDatabase");
 
     /** Deprecated. */
-    KeywordField SOURCE_DEFINITION_SCHEMA = new KeywordField("sourceDefinitionSchema", "sourceDefinitionSchema");
+    TextField SOURCE_DEFINITION_SCHEMA = new TextField("sourceDefinitionSchema", "sourceDefinitionSchema");
 
     /** Deprecated. */
     RelationField TILES = new RelationField("tiles");
@@ -549,7 +549,7 @@ public interface ILookerQuery {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

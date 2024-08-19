@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -40,7 +41,7 @@ public interface ISodaCheck {
     RelationField SODA_CHECK_COLUMNS = new RelationField("sodaCheckColumns");
 
     /** Definition of the check in Soda. */
-    KeywordField SODA_CHECK_DEFINITION = new KeywordField("sodaCheckDefinition", "sodaCheckDefinition");
+    TextField SODA_CHECK_DEFINITION = new TextField("sodaCheckDefinition", "sodaCheckDefinition");
 
     /** Status of the check in Soda. */
     KeywordField SODA_CHECK_EVALUATION_STATUS =
@@ -551,7 +552,7 @@ public interface ISodaCheck {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

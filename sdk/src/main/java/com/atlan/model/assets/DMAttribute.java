@@ -46,17 +46,17 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attribute from which this association is related. */
+    /** A domain of the datam model in which this asset exists. */
     @Attribute
-    IDMAttribute dMAttributeFrom;
-
-    /** Attribute to which this association is related. */
-    @Attribute
-    IDMAttribute dMAttributeTo;
+    String dMDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelName;
+
+    /** A namespace of the data model in which this asset exists. */
+    @Attribute
+    String dMDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
@@ -83,6 +83,16 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     @Singular
     SortedSet<IDMAttribute> dMMappedToAttributes;
+
+    /** Association from this attribute is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMAttributeAssociation> dMRelatedFromAttributes;
+
+    /** Association to which this attribute is related. */
+    @Attribute
+    @Singular
+    SortedSet<IDMAttributeAssociation> dMRelatedToAttributes;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute

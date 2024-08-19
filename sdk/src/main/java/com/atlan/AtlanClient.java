@@ -166,6 +166,10 @@ public class AtlanClient {
     @Getter
     private final AssetDeserializer assetDeserializer;
 
+    /** Client-aware relationship attributes deserializer. */
+    @Getter
+    private final RelationshipAttributesDeserializer relationshipAttributesDeserializer;
+
     /** Client-aware custom metadata deserializer. */
     @Getter
     private final CustomMetadataAuditDeserializer customMetadataAuditDeserializer;
@@ -220,6 +224,7 @@ public class AtlanClient {
         roleCache = new RoleCache(roles);
         userCache = new UserCache(users, apiTokens);
         assetDeserializer = new AssetDeserializer(this);
+        relationshipAttributesDeserializer = new RelationshipAttributesDeserializer(this);
         customMetadataAuditDeserializer = new CustomMetadataAuditDeserializer(this);
         atlanTagDeserializer = new AtlanTagDeserializer(this);
     }

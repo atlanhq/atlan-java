@@ -5,6 +5,7 @@ package com.atlan.cache;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Date;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.serde.Removable;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -270,6 +271,33 @@ public class ReflectionCache {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Set the value of a field on a specific asset (via its mutable builder).
+     *
+     * @param builder for the asset through which to set the property
+     * @param fieldName name of the property to set
+     * @param value value to set on the property
+     * @throws NoSuchMethodException if there is no setter on the builder to set this field
+     * @throws IllegalAccessException if the setter cannot be accessed to set this field
+     * @throws InvocationTargetException if the provided builder cannot be used
+     */
+    public static void setValue(
+            RelationshipAttributes.RelationshipAttributesBuilder<?, ?> builder, String fieldName, Object value)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        Method setter = getSetter(builder.getClass(), fieldName);
+        if (setter != null) {
+            if (value instanceof Removable) {
+                builder.nullField(fieldName);
+            } else if (value instanceof String && ((String) value).isEmpty()) {
+                builder.nullField(fieldName);
+            } else if (value == null) {
+                builder.nullField(fieldName);
+            } else {
+                setter.invoke(builder, value);
+            }
+        }
     }
 
     /**

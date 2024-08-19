@@ -15,7 +15,7 @@ public class SearchFieldGenerator extends TypeGenerator {
 
     public static final String DIRECTORY = "enums";
 
-    enum IndexType {
+    public enum IndexType {
         KEYWORD("KeywordFields"),
         TEXT("TextFields"),
         RANK_FEATURE("RankFields"),
@@ -206,7 +206,7 @@ public class SearchFieldGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static class Field extends AssetGenerator.Attribute<Field> implements Comparable<Field> {
+    public static class Field extends SearchableAttribute<Field> implements Comparable<Field> {
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<Field> comparator =
@@ -261,6 +261,11 @@ public class SearchFieldGenerator extends TypeGenerator {
                     }
                 } else {
                     log.warn("Unknown analyzer on attribute {}: {}", attrName, analyzer);
+                }
+            } else if (attributeDef.getIndexType() != null
+                    && attributeDef.getIndexType().toLowerCase(Locale.ROOT).equals("string")) {
+                if (toFilter == SearchFieldGenerator.IndexType.KEYWORD) {
+                    searchable.add(attrName);
                 }
             } else {
                 SearchFieldGenerator.IndexType defIndex = getDefaultIndexForType(getType());
@@ -371,6 +376,8 @@ public class SearchFieldGenerator extends TypeGenerator {
                     toUse = SearchFieldGenerator.IndexType.BOOLEAN;
                     break;
                 case "string":
+                    toUse = SearchFieldGenerator.IndexType.TEXT;
+                    break;
                 default:
                     toUse = SearchFieldGenerator.IndexType.KEYWORD;
                     break;

@@ -12,6 +12,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -20,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -33,6 +33,9 @@ import javax.annotation.processing.Generated;
 public interface ICubeField {
 
     public static final String TYPE_NAME = "CubeField";
+
+    /** Generation of the field in the cube hierarchy. */
+    NumericField CUBE_FIELD_GENERATION = new NumericField("cubeFieldGeneration", "cubeFieldGeneration");
 
     /** Level of the field in the cube hierarchy. */
     NumericField CUBE_FIELD_LEVEL = new NumericField("cubeFieldLevel", "cubeFieldLevel");
@@ -316,6 +319,9 @@ public interface ICubeField {
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionQualifiedName();
 
+    /** Generation of the field in the cube hierarchy. */
+    Long getCubeFieldGeneration();
+
     /** Level of the field in the cube hierarchy. */
     Long getCubeFieldLevel();
 
@@ -578,7 +584,7 @@ public interface ICubeField {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

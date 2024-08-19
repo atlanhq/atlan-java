@@ -11,6 +11,8 @@ import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -57,7 +58,7 @@ public interface IAirflow {
     KeywordField AIRFLOW_RUN_VERSION = new KeywordField("airflowRunVersion", "airflowRunVersion");
 
     /** Tags assigned to the asset in Airflow. */
-    KeywordField AIRFLOW_TAGS = new KeywordField("airflowTags", "airflowTags");
+    TextField AIRFLOW_TAGS = new TextField("airflowTags", "airflowTags");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -558,7 +559,7 @@ public interface IAirflow {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

@@ -13,6 +13,8 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,7 +23,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -70,7 +71,7 @@ public interface IAirflowTask {
     NumericField AIRFLOW_TASK_RETRY_NUMBER = new NumericField("airflowTaskRetryNumber", "airflowTaskRetryNumber");
 
     /** SQL code that executes through this task. */
-    KeywordField AIRFLOW_TASK_SQL = new KeywordField("airflowTaskSql", "airflowTaskSql");
+    TextField AIRFLOW_TASK_SQL = new TextField("airflowTaskSql", "airflowTaskSql");
 
     /** Trigger for the run. */
     KeywordField AIRFLOW_TASK_TRIGGER_RULE = new KeywordField("airflowTaskTriggerRule", "airflowTaskTriggerRule");
@@ -628,7 +629,7 @@ public interface IAirflowTask {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

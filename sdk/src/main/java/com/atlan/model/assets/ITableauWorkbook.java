@@ -10,6 +10,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -45,17 +47,17 @@ public interface ITableauWorkbook {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this workbook exists. */
-    KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
+    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
 
     /** Unique name of the site in which this workbook exists. */
-    KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
+    TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
     /** Simple name of the top-level project in which this workbook exists. */
-    KeywordField TOP_LEVEL_PROJECT_NAME = new KeywordField("topLevelProjectName", "topLevelProjectName");
+    TextField TOP_LEVEL_PROJECT_NAME = new TextField("topLevelProjectName", "topLevelProjectName");
 
     /** Unique name of the top-level project in which this workbook exists. */
-    KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
-            new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
+    TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
+            new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
     /** Worksheets that exist within this workbook. */
     RelationField WORKSHEETS = new RelationField("worksheets");
@@ -562,7 +564,7 @@ public interface ITableauWorkbook {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

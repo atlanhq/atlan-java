@@ -126,6 +126,8 @@ public enum NumericFields implements AtlanSearchableField {
     CUBE_DIMENSION_COUNT("cubeDimensionCount"),
     /** Number of total fields in the cube hierarchy. */
     CUBE_FIELD_COUNT("cubeFieldCount"),
+    /** Generation of the field in the cube hierarchy. */
+    CUBE_FIELD_GENERATION("cubeFieldGeneration"),
     /** Level of the field in the cube hierarchy. */
     CUBE_FIELD_LEVEL("cubeFieldLevel"),
     /** Number of hierarchies in the cube dimension. */

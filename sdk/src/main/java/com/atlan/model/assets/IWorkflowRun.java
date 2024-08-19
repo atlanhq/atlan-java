@@ -12,6 +12,8 @@ import com.atlan.model.enums.WorkflowRunStatus;
 import com.atlan.model.enums.WorkflowRunType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -20,7 +22,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -35,10 +36,10 @@ public interface IWorkflowRun {
     public static final String TYPE_NAME = "WorkflowRun";
 
     /** The comment added by the requester */
-    KeywordField WORKFLOW_RUN_COMMENT = new KeywordField("workflowRunComment", "workflowRunComment");
+    TextField WORKFLOW_RUN_COMMENT = new TextField("workflowRunComment", "workflowRunComment");
 
     /** Details of the approval workflow run. */
-    KeywordField WORKFLOW_RUN_CONFIG = new KeywordField("workflowRunConfig", "workflowRunConfig");
+    TextField WORKFLOW_RUN_CONFIG = new TextField("workflowRunConfig", "workflowRunConfig");
 
     /** Username of the user who created this workflow run. */
     KeywordField WORKFLOW_RUN_CREATED_BY = new KeywordField("workflowRunCreatedBy", "workflowRunCreatedBy");
@@ -551,7 +552,7 @@ public interface IWorkflowRun {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

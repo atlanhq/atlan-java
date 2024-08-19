@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -17,7 +18,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -31,12 +31,6 @@ public interface IDMAttribute {
 
     public static final String TYPE_NAME = "DMAttribute";
 
-    /** Attribute from which this association is related. */
-    RelationField D_M_ATTRIBUTE_FROM = new RelationField("dMAttributeFrom");
-
-    /** Attribute to which this association is related. */
-    RelationField D_M_ATTRIBUTE_TO = new RelationField("dMAttributeTo");
-
     /** Entity in which this attribute exists. */
     RelationField D_M_ENTITY = new RelationField("dMEntity");
 
@@ -45,6 +39,12 @@ public interface IDMAttribute {
 
     /** Attributes to which this attribute is mapped. */
     RelationField D_M_MAPPED_TO_ATTRIBUTES = new RelationField("dMMappedToAttributes");
+
+    /** Association from this attribute is related. */
+    RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
+
+    /** Association to which this attribute is related. */
+    RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -295,14 +295,14 @@ public interface IDMAttribute {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Attribute from which this association is related. */
-    IDMAttribute getDMAttributeFrom();
-
-    /** Attribute to which this association is related. */
-    IDMAttribute getDMAttributeTo();
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
@@ -321,6 +321,12 @@ public interface IDMAttribute {
 
     /** Attributes to which this attribute is mapped. */
     SortedSet<IDMAttribute> getDMMappedToAttributes();
+
+    /** Association from this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
+
+    /** Association to which this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();
@@ -554,7 +560,7 @@ public interface IDMAttribute {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

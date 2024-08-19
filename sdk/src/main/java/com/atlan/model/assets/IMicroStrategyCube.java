@@ -10,6 +10,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -36,7 +38,7 @@ public interface IMicroStrategyCube {
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
     /** Query used to create the cube. */
-    KeywordField MICRO_STRATEGY_CUBE_QUERY = new KeywordField("microStrategyCubeQuery", "microStrategyCubeQuery");
+    TextField MICRO_STRATEGY_CUBE_QUERY = new TextField("microStrategyCubeQuery", "microStrategyCubeQuery");
 
     /** Type of cube, for example: OLAP or MTDI. */
     KeywordField MICRO_STRATEGY_CUBE_TYPE = new KeywordField("microStrategyCubeType", "microStrategyCubeType");
@@ -567,7 +569,7 @@ public interface IMicroStrategyCube {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

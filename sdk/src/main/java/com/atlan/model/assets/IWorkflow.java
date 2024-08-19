@@ -12,6 +12,8 @@ import com.atlan.model.enums.WorkflowStatus;
 import com.atlan.model.enums.WorkflowType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -20,7 +22,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -35,7 +36,7 @@ public interface IWorkflow {
     public static final String TYPE_NAME = "Workflow";
 
     /** Details of the workflow. */
-    KeywordField WORKFLOW_CONFIG = new KeywordField("workflowConfig", "workflowConfig");
+    TextField WORKFLOW_CONFIG = new TextField("workflowConfig", "workflowConfig");
 
     /** Username of the user who created this workflow. */
     KeywordField WORKFLOW_CREATED_BY = new KeywordField("workflowCreatedBy", "workflowCreatedBy");
@@ -44,7 +45,7 @@ public interface IWorkflow {
     NumericField WORKFLOW_DELETED_AT = new NumericField("workflowDeletedAt", "workflowDeletedAt");
 
     /** Time duration after which a run of this workflow will expire. */
-    KeywordField WORKFLOW_RUN_EXPIRES_IN = new KeywordField("workflowRunExpiresIn", "workflowRunExpiresIn");
+    TextField WORKFLOW_RUN_EXPIRES_IN = new TextField("workflowRunExpiresIn", "workflowRunExpiresIn");
 
     /** Status of the workflow. */
     KeywordField WORKFLOW_STATUS = new KeywordField("workflowStatus", "workflowStatus");
@@ -539,7 +540,7 @@ public interface IWorkflow {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

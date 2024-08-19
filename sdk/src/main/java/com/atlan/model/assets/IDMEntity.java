@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -18,7 +19,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -38,17 +38,17 @@ public interface IDMEntity {
     /** Individual attributes that make up the entity. */
     RelationField D_M_ATTRIBUTES = new RelationField("dMAttributes");
 
-    /** Entity from which this association is related. */
-    RelationField D_M_ENTITY_FROM = new RelationField("dMEntityFrom");
-
-    /** Entity to which this association is related. */
-    RelationField D_M_ENTITY_TO = new RelationField("dMEntityTo");
-
     /** Entities from which this entity is mapped. */
     RelationField D_M_MAPPED_FROM_ENTITIES = new RelationField("dMMappedFromEntities");
 
     /** Entities to which this entity is mapped. */
     RelationField D_M_MAPPED_TO_ENTITIES = new RelationField("dMMappedToEntities");
+
+    /** Association from this entity is related. */
+    RelationField D_M_RELATED_FROM_ENTITIES = new RelationField("dMRelatedFromEntities");
+
+    /** Association to which this entity is related. */
+    RelationField D_M_RELATED_TO_ENTITIES = new RelationField("dMRelatedToEntities");
 
     /** Data model version in which this entity exists. */
     RelationField D_M_VERSION = new RelationField("dMVersion");
@@ -308,14 +308,17 @@ public interface IDMEntity {
     /** Individual attributes that make up the entity. */
     SortedSet<IDMAttribute> getDMAttributes();
 
+    /** A domain of the datam model in which this asset exists. */
+    String getDMDataModelDomain();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
 
+    /** A namespace of the data model in which this asset exists. */
+    String getDMDataModelNamespace();
+
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
-
-    /** Entity from which this association is related. */
-    IDMEntity getDMEntityFrom();
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityName();
@@ -323,14 +326,17 @@ public interface IDMEntity {
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
 
-    /** Entity to which this association is related. */
-    IDMEntity getDMEntityTo();
-
     /** Entities from which this entity is mapped. */
     SortedSet<IDMEntity> getDMMappedFromEntities();
 
     /** Entities to which this entity is mapped. */
     SortedSet<IDMEntity> getDMMappedToEntities();
+
+    /** Association from this entity is related. */
+    SortedSet<IDMEntityAssociation> getDMRelatedFromEntities();
+
+    /** Association to which this entity is related. */
+    SortedSet<IDMEntityAssociation> getDMRelatedToEntities();
 
     /** Data model version in which this entity exists. */
     IDMVersion getDMVersion();
@@ -567,7 +573,7 @@ public interface IDMEntity {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

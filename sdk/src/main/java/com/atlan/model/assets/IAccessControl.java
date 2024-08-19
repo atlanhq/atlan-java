@@ -13,6 +13,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -21,7 +23,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -36,25 +37,25 @@ public interface IAccessControl {
     public static final String TYPE_NAME = "AccessControl";
 
     /** TBC */
-    KeywordField CHANNEL_LINK = new KeywordField("channelLink", "channelLink");
+    TextField CHANNEL_LINK = new TextField("channelLink", "channelLink");
 
     /** TBC */
-    KeywordField DEFAULT_NAVIGATION = new KeywordField("defaultNavigation", "defaultNavigation");
+    TextField DEFAULT_NAVIGATION = new TextField("defaultNavigation", "defaultNavigation");
 
     /** TBC */
-    KeywordField DENY_ASSET_FILTERS = new KeywordField("denyAssetFilters", "denyAssetFilters");
+    TextField DENY_ASSET_FILTERS = new TextField("denyAssetFilters", "denyAssetFilters");
 
     /** TBC */
     KeywordField DENY_ASSET_TABS = new KeywordField("denyAssetTabs", "denyAssetTabs");
 
     /** TBC */
-    KeywordField DENY_ASSET_TYPES = new KeywordField("denyAssetTypes", "denyAssetTypes");
+    TextField DENY_ASSET_TYPES = new TextField("denyAssetTypes", "denyAssetTypes");
 
     /** TBC */
     KeywordField DENY_CUSTOM_METADATA_GUIDS = new KeywordField("denyCustomMetadataGuids", "denyCustomMetadataGuids");
 
     /** TBC */
-    KeywordField DENY_NAVIGATION_PAGES = new KeywordField("denyNavigationPages", "denyNavigationPages");
+    TextField DENY_NAVIGATION_PAGES = new TextField("denyNavigationPages", "denyNavigationPages");
 
     /** TBC */
     KeywordField DISPLAY_PREFERENCES = new KeywordField("displayPreferences", "displayPreferences");
@@ -552,7 +553,7 @@ public interface IAccessControl {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

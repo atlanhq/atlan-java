@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -34,7 +35,7 @@ public interface ICognos {
     public static final String TYPE_NAME = "Cognos";
 
     /** Tooltip text present for the Cognos asset */
-    KeywordField COGNOS_DEFAULT_SCREEN_TIP = new KeywordField("cognosDefaultScreenTip", "cognosDefaultScreenTip");
+    TextField COGNOS_DEFAULT_SCREEN_TIP = new TextField("cognosDefaultScreenTip", "cognosDefaultScreenTip");
 
     /** ID of the asset in Cognos */
     KeywordField COGNOS_ID = new KeywordField("cognosId", "cognosId");
@@ -564,7 +565,7 @@ public interface ICognos {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

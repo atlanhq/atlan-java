@@ -11,6 +11,8 @@ import com.atlan.model.enums.IncidentSeverity;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +21,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -34,8 +35,8 @@ public interface IBusinessPolicyIncident {
     public static final String TYPE_NAME = "BusinessPolicyIncident";
 
     /** Filter ES DSL to denote the associate asset/s involved. */
-    KeywordField BUSINESS_POLICY_INCIDENT_FILTER_DSL =
-            new KeywordField("businessPolicyIncidentFilterDSL", "businessPolicyIncidentFilterDSL");
+    TextField BUSINESS_POLICY_INCIDENT_FILTER_DSL =
+            new TextField("businessPolicyIncidentFilterDSL", "businessPolicyIncidentFilterDSL");
 
     /** count of noncompliant assets in the incident */
     NumericField BUSINESS_POLICY_INCIDENT_NONCOMPLIANT_COUNT =
@@ -514,7 +515,7 @@ public interface IBusinessPolicyIncident {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

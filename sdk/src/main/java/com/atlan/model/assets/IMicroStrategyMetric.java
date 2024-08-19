@@ -8,9 +8,10 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -66,8 +67,8 @@ public interface IMicroStrategyMetric {
     RelationField MICRO_STRATEGY_METRIC_CHILDREN = new RelationField("microStrategyMetricChildren");
 
     /** Text specifiying this metric's expression. */
-    KeywordField MICRO_STRATEGY_METRIC_EXPRESSION =
-            new KeywordField("microStrategyMetricExpression", "microStrategyMetricExpression");
+    TextField MICRO_STRATEGY_METRIC_EXPRESSION =
+            new TextField("microStrategyMetricExpression", "microStrategyMetricExpression");
 
     /** List of simple names of parent metrics of this metric. */
     KeywordTextField MICRO_STRATEGY_METRIC_PARENT_NAMES = new KeywordTextField(
@@ -637,7 +638,7 @@ public interface IMicroStrategyMetric {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

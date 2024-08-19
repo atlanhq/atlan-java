@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -34,42 +36,42 @@ public interface ITableauCalculatedField {
     public static final String TYPE_NAME = "TableauCalculatedField";
 
     /** Data category of this field. */
-    KeywordField DATA_CATEGORY = new KeywordField("dataCategory", "dataCategory");
+    TextField DATA_CATEGORY = new TextField("dataCategory", "dataCategory");
 
     /** Datasource in which this calculated field exists. */
     RelationField DATASOURCE = new RelationField("datasource");
 
     /** Unique name of the datasource in which this calculated field exists. */
-    KeywordField DATASOURCE_QUALIFIED_NAME = new KeywordField("datasourceQualifiedName", "datasourceQualifiedName");
+    TextField DATASOURCE_QUALIFIED_NAME = new TextField("datasourceQualifiedName", "datasourceQualifiedName");
 
     /** Formula for this calculated field. */
-    KeywordField FORMULA = new KeywordField("formula", "formula");
+    TextField FORMULA = new TextField("formula", "formula");
 
     /** List of top-level projects and their nested projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this calculated field exists. */
-    KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
+    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
 
     /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
-    KeywordField ROLE = new KeywordField("role", "role");
+    TextField ROLE = new TextField("role", "role");
 
     /** Unique name of the site in which this calculated field exists. */
-    KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
+    TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
     /** Data type of the field, from Tableau. */
     KeywordTextField TABLEAU_DATA_TYPE =
             new KeywordTextField("tableauDataType", "tableauDataType", "tableauDataType.text");
 
     /** Unique name of the top-level project in which this calculated field exists. */
-    KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
-            new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
+    TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
+            new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
     /** List of fields that are upstream to this calculated field. */
     KeywordField UPSTREAM_FIELDS = new KeywordField("upstreamFields", "upstreamFields");
 
     /** Unique name of the workbook in which this calculated field exists. */
-    KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
+    TextField WORKBOOK_QUALIFIED_NAME = new TextField("workbookQualifiedName", "workbookQualifiedName");
 
     /** Worksheets that use this calculated field. */
     RelationField WORKSHEETS = new RelationField("worksheets");
@@ -588,7 +590,7 @@ public interface ITableauCalculatedField {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

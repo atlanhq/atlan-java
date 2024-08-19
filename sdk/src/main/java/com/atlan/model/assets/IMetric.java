@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -19,7 +20,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -43,7 +43,7 @@ public interface IMetric {
     TextField METRIC_FILTERS = new TextField("metricFilters", "metricFilters");
 
     /** SQL query used to compute the metric. */
-    KeywordField METRIC_SQL = new KeywordField("metricSQL", "metricSQL");
+    TextField METRIC_SQL = new TextField("metricSQL", "metricSQL");
 
     /** List of time grains to be applied to the metric query. */
     TextField METRIC_TIME_GRAINS = new TextField("metricTimeGrains", "metricTimeGrains");
@@ -550,7 +550,7 @@ public interface IMetric {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

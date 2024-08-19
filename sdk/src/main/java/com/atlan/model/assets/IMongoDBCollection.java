@@ -14,6 +14,7 @@ import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -73,8 +74,8 @@ public interface IMongoDBCollection {
             "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
 
     /** Name of the field containing the date in each time series document. */
-    KeywordField MONGO_DB_COLLECTION_TIME_FIELD =
-            new KeywordField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
+    TextField MONGO_DB_COLLECTION_TIME_FIELD =
+            new TextField("mongoDBCollectionTimeField", "mongoDBCollectionTimeField");
 
     /** Closest match to the time span between consecutive incoming measurements. */
     KeywordField MONGO_DB_COLLECTION_TIME_GRANULARITY =
@@ -730,7 +731,7 @@ public interface IMongoDBCollection {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

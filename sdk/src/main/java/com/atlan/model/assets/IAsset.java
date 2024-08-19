@@ -17,6 +17,7 @@ import com.atlan.model.fields.NumericRankField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -25,7 +26,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -47,10 +47,10 @@ public interface IAsset {
     KeywordField ADMIN_USERS = new KeywordField("adminUsers", "adminUsers");
 
     /** Detailed message to include in the announcement on this asset. */
-    KeywordField ANNOUNCEMENT_MESSAGE = new KeywordField("announcementMessage", "announcementMessage");
+    TextField ANNOUNCEMENT_MESSAGE = new TextField("announcementMessage", "announcementMessage");
 
     /** Brief title for the announcement on this asset. Required when announcementType is specified. */
-    KeywordField ANNOUNCEMENT_TITLE = new KeywordField("announcementTitle", "announcementTitle");
+    TextField ANNOUNCEMENT_TITLE = new TextField("announcementTitle", "announcementTitle");
 
     /** Type of announcement on this asset. */
     KeywordField ANNOUNCEMENT_TYPE = new KeywordField("announcementType", "announcementType");
@@ -62,7 +62,7 @@ public interface IAsset {
     KeywordField ANNOUNCEMENT_UPDATED_BY = new KeywordField("announcementUpdatedBy", "announcementUpdatedBy");
 
     /** TBC */
-    KeywordField ASSET_COVER_IMAGE = new KeywordField("assetCoverImage", "assetCoverImage");
+    TextField ASSET_COVER_IMAGE = new TextField("assetCoverImage", "assetCoverImage");
 
     /** Name of the account in which this asset exists in dbt. */
     KeywordTextField ASSET_DBT_ACCOUNT_NAME =
@@ -157,8 +157,8 @@ public interface IAsset {
             new KeywordField("assetDbtJobLastRunTotalDuration", "assetDbtJobLastRunTotalDuration");
 
     /** Human-readable total duration of the last run of the job that materialized this asset in dbt. */
-    KeywordField ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED =
-            new KeywordField("assetDbtJobLastRunTotalDurationHumanized", "assetDbtJobLastRunTotalDurationHumanized");
+    TextField ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION_HUMANIZED =
+            new TextField("assetDbtJobLastRunTotalDurationHumanized", "assetDbtJobLastRunTotalDurationHumanized");
 
     /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
     NumericField ASSET_DBT_JOB_LAST_RUN_UPDATED_AT =
@@ -189,7 +189,7 @@ public interface IAsset {
     KeywordField ASSET_DBT_JOB_STATUS = new KeywordField("assetDbtJobStatus", "assetDbtJobStatus");
 
     /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
-    KeywordField ASSET_DBT_META = new KeywordField("assetDbtMeta", "assetDbtMeta");
+    TextField ASSET_DBT_META = new TextField("assetDbtMeta", "assetDbtMeta");
 
     /** Name of the package in which this asset exists in dbt. */
     KeywordTextField ASSET_DBT_PACKAGE_NAME =
@@ -204,8 +204,8 @@ public interface IAsset {
             new KeywordField("assetDbtSemanticLayerProxyUrl", "assetDbtSemanticLayerProxyUrl");
 
     /** Freshness criteria for the source of this asset in dbt. */
-    KeywordField ASSET_DBT_SOURCE_FRESHNESS_CRITERIA =
-            new KeywordField("assetDbtSourceFreshnessCriteria", "assetDbtSourceFreshnessCriteria");
+    TextField ASSET_DBT_SOURCE_FRESHNESS_CRITERIA =
+            new TextField("assetDbtSourceFreshnessCriteria", "assetDbtSourceFreshnessCriteria");
 
     /** List of tags attached to this asset in dbt. */
     KeywordTextField ASSET_DBT_TAGS = new KeywordTextField("assetDbtTags", "assetDbtTags", "assetDbtTags.text");
@@ -222,7 +222,7 @@ public interface IAsset {
             new KeywordField("assetDbtWorkflowLastUpdated", "assetDbtWorkflowLastUpdated");
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
-    KeywordField ASSET_ICON = new KeywordField("assetIcon", "assetIcon");
+    TextField ASSET_ICON = new TextField("assetIcon", "assetIcon");
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES = new KeywordTextField(
@@ -284,7 +284,7 @@ public interface IAsset {
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
 
     /** All associated Soda check statuses. */
-    KeywordField ASSET_SODA_CHECK_STATUSES = new KeywordField("assetSodaCheckStatuses", "assetSodaCheckStatuses");
+    TextField ASSET_SODA_CHECK_STATUSES = new TextField("assetSodaCheckStatuses", "assetSodaCheckStatuses");
 
     /** Status of data quality from Soda. */
     KeywordField ASSET_SODA_DQ_STATUS = new KeywordField("assetSodaDQStatus", "assetSodaDQStatus");
@@ -302,14 +302,14 @@ public interface IAsset {
     KeywordTextField ASSET_TAGS = new KeywordTextField("assetTags", "assetTags", "assetTags.text");
 
     /** Color (in hexadecimal RGB) to use to represent this asset. */
-    KeywordField ASSET_THEME_HEX = new KeywordField("assetThemeHex", "assetThemeHex");
+    TextField ASSET_THEME_HEX = new TextField("assetThemeHex", "assetThemeHex");
 
     /** Status of this asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
             new KeywordTextField("certificateStatus", "certificateStatus", "certificateStatus.text");
 
     /** Human-readable descriptive message used to provide further detail to certificateStatus. */
-    KeywordField CERTIFICATE_STATUS_MESSAGE = new KeywordField("certificateStatusMessage", "certificateStatusMessage");
+    TextField CERTIFICATE_STATUS_MESSAGE = new TextField("certificateStatusMessage", "certificateStatusMessage");
 
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     NumericField CERTIFICATE_UPDATED_AT = new NumericField("certificateUpdatedAt", "certificateUpdatedAt");
@@ -435,7 +435,7 @@ public interface IAsset {
     NumericField SOURCE_LAST_READ_AT = new NumericField("sourceLastReadAt", "sourceLastReadAt");
 
     /** List of owners of this asset, in the source system. */
-    KeywordField SOURCE_OWNERS = new KeywordField("sourceOwners", "sourceOwners");
+    TextField SOURCE_OWNERS = new TextField("sourceOwners", "sourceOwners");
 
     /** List of most expensive warehouses with extra insights. */
     KeywordField SOURCE_QUERY_COMPUTE_COST_RECORDS =
@@ -505,7 +505,7 @@ public interface IAsset {
     KeywordField SUB_TYPE = new KeywordField("subType", "subType");
 
     /** Name of the Atlan workspace in which this asset exists. */
-    KeywordField TENANT_ID = new KeywordField("tenantId", "tenantId");
+    TextField TENANT_ID = new TextField("tenantId", "tenantId");
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     KeywordTextField USER_DESCRIPTION =
@@ -980,7 +980,7 @@ public interface IAsset {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).

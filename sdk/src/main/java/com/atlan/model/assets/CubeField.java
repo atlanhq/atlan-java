@@ -57,6 +57,10 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Attribute
     String cubeDimensionQualifiedName;
 
+    /** Generation of the field in the cube hierarchy. */
+    @Attribute
+    Long cubeFieldGeneration;
+
     /** Level of the field in the cube hierarchy. */
     @Attribute
     Long cubeFieldLevel;

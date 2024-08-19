@@ -11,6 +11,8 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -37,46 +39,45 @@ public interface ITableauDatasourceField {
     RelationField DATASOURCE = new RelationField("datasource");
 
     /** Type of this datasource field. */
-    KeywordField DATASOURCE_FIELD_TYPE = new KeywordField("datasourceFieldType", "datasourceFieldType");
+    TextField DATASOURCE_FIELD_TYPE = new TextField("datasourceFieldType", "datasourceFieldType");
 
     /** Unique name of the datasource in which this datasource field exists. */
-    KeywordField DATASOURCE_QUALIFIED_NAME = new KeywordField("datasourceQualifiedName", "datasourceQualifiedName");
+    TextField DATASOURCE_QUALIFIED_NAME = new TextField("datasourceQualifiedName", "datasourceQualifiedName");
 
     /** Name used internally in Tableau to uniquely identify this field. */
-    KeywordField FULLY_QUALIFIED_NAME = new KeywordField("fullyQualifiedName", "fullyQualifiedName");
+    TextField FULLY_QUALIFIED_NAME = new TextField("fullyQualifiedName", "fullyQualifiedName");
 
     /** List of top-level projects and their nested child projects. */
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this datasource field exists. */
-    KeywordField PROJECT_QUALIFIED_NAME = new KeywordField("projectQualifiedName", "projectQualifiedName");
+    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
 
     /** Unique name of the site in which this datasource field exists. */
-    KeywordField SITE_QUALIFIED_NAME = new KeywordField("siteQualifiedName", "siteQualifiedName");
+    TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
     /** Bin size of this field. */
-    KeywordField TABLEAU_DATASOURCE_FIELD_BIN_SIZE =
-            new KeywordField("tableauDatasourceFieldBinSize", "tableauDatasourceFieldBinSize");
+    TextField TABLEAU_DATASOURCE_FIELD_BIN_SIZE =
+            new TextField("tableauDatasourceFieldBinSize", "tableauDatasourceFieldBinSize");
 
     /** Data category of this field. */
-    KeywordField TABLEAU_DATASOURCE_FIELD_DATA_CATEGORY =
-            new KeywordField("tableauDatasourceFieldDataCategory", "tableauDatasourceFieldDataCategory");
+    TextField TABLEAU_DATASOURCE_FIELD_DATA_CATEGORY =
+            new TextField("tableauDatasourceFieldDataCategory", "tableauDatasourceFieldDataCategory");
 
     /** Data type of this field. */
     KeywordTextField TABLEAU_DATASOURCE_FIELD_DATA_TYPE = new KeywordTextField(
             "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType.text");
 
     /** Formula for this field. */
-    KeywordField TABLEAU_DATASOURCE_FIELD_FORMULA =
-            new KeywordField("tableauDatasourceFieldFormula", "tableauDatasourceFieldFormula");
+    TextField TABLEAU_DATASOURCE_FIELD_FORMULA =
+            new TextField("tableauDatasourceFieldFormula", "tableauDatasourceFieldFormula");
 
     /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
-    KeywordField TABLEAU_DATASOURCE_FIELD_ROLE =
-            new KeywordField("tableauDatasourceFieldRole", "tableauDatasourceFieldRole");
+    TextField TABLEAU_DATASOURCE_FIELD_ROLE = new TextField("tableauDatasourceFieldRole", "tableauDatasourceFieldRole");
 
     /** Unique name of the top-level project in which this datasource field exists. */
-    KeywordField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
-            new KeywordField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
+    TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
+            new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
 
     /** Columns upstream to this field. */
     KeywordField UPSTREAM_COLUMNS = new KeywordField("upstreamColumns", "upstreamColumns");
@@ -88,7 +89,7 @@ public interface ITableauDatasourceField {
     KeywordField UPSTREAM_TABLES = new KeywordField("upstreamTables", "upstreamTables");
 
     /** Unique name of the workbook in which this datasource field exists. */
-    KeywordField WORKBOOK_QUALIFIED_NAME = new KeywordField("workbookQualifiedName", "workbookQualifiedName");
+    TextField WORKBOOK_QUALIFIED_NAME = new TextField("workbookQualifiedName", "workbookQualifiedName");
 
     /** Worksheets that use this datasource field. */
     RelationField WORKSHEETS = new RelationField("worksheets");
@@ -622,7 +623,7 @@ public interface ITableauDatasourceField {
     AtlanStatus getRelationshipStatus();
 
     /** Attributes specific to the relationship (unused). */
-    Map<String, Object> getRelationshipAttributes();
+    RelationshipAttributes getRelationshipAttributes();
 
     /**
      * Attribute(s) that uniquely identify the asset (when this is a related asset).
