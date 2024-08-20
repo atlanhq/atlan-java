@@ -94,6 +94,8 @@ public enum KeywordFields implements AtlanSearchableField {
     AIRFLOW_RUN_VERSION("airflowRunVersion"),
     /** Identifier for the connection this task accesses. */
     AIRFLOW_TASK_CONNECTION_ID("airflowTaskConnectionId.keyword"),
+    /** Group name for the task. */
+    AIRFLOW_TASK_GROUP_NAME("airflowTaskGroupName"),
     /** Class name for the operator this task uses. */
     AIRFLOW_TASK_OPERATOR_CLASS("airflowTaskOperatorClass.keyword"),
     /** Pool on which this run happened. */
@@ -142,6 +144,14 @@ public enum KeywordFields implements AtlanSearchableField {
     API_SPEC_TYPE("apiSpecType"),
     /** Version of the API specification. */
     API_SPEC_VERSION("apiSpecVersion"),
+    /** Simple name of the application in which this asset exists, or empty if it is itself an application. */
+    APP_APPLICATION_NAME("appApplicationName.keyword"),
+    /** Unique name of the application in which this asset exists, or empty if it is itself an application. */
+    APP_APPLICATION_QUALIFIED_NAME("appApplicationQualifiedName"),
+    /** Simple name of the application component in which this asset exists, or empty if it is itself an application component. */
+    APP_COMPONENT_NAME("appComponentName.keyword"),
+    /** Unique name of the application component in which this asset exists, or empty if it is itself an application component. */
+    APP_COMPONENT_QUALIFIED_NAME("appComponentQualifiedName"),
     /** Name of the account in which this asset exists in dbt. */
     ASSET_DBT_ACCOUNT_NAME("assetDbtAccountName.keyword"),
     /** Alias of this asset in dbt. */
@@ -488,10 +498,12 @@ public enum KeywordFields implements AtlanSearchableField {
     D_M_ENTITY_NAME("dMEntityName.keyword"),
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     D_M_ENTITY_QUALIFIED_NAME("dMEntityQualifiedName"),
+    /** Type of the data entity. */
+    D_M_ENTITY_TYPE("dMEntityType"),
     /** Label of the data attribute association. */
     D_M_LABEL("dMLabel"),
-    /** Owner seal ID of the data attribute association. */
-    D_M_OWNER_SEAL_ID("dMOwnerSealId"),
+    /** Subject area of the entity. */
+    D_M_SUBJECT_AREA("dMSubjectArea"),
     /** Tool used to create this data model. */
     D_M_TOOL("dMTool"),
     /** Type of the data model. */

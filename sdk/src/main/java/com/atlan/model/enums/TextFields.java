@@ -72,6 +72,10 @@ public enum TextFields implements AtlanSearchableField {
     API_SPEC_SERVICE_ALIAS("apiSpecServiceAlias.text"),
     /** URL to the terms of service for the API specification. */
     API_SPEC_TERMS_OF_SERVICE_URL("apiSpecTermsOfServiceURL.text"),
+    /** Simple name of the application in which this asset exists, or empty if it is itself an application. */
+    APP_APPLICATION_NAME("appApplicationName"),
+    /** Simple name of the application component in which this asset exists, or empty if it is itself an application component. */
+    APP_COMPONENT_NAME("appComponentName"),
     /** TBC */
     ASSET_COVER_IMAGE("assetCoverImage"),
     /** Name of the account in which this asset exists in dbt. */

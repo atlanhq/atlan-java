@@ -49,6 +49,14 @@ public class PowerBIDatasource extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Connection details of the datasource. */
     @Attribute
     @Singular

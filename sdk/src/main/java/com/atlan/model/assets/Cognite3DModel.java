@@ -47,6 +47,14 @@ public class Cognite3DModel extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Asset in which this 3D model exists. */
     @Attribute
     ICogniteAsset cogniteAsset;

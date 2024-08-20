@@ -46,6 +46,14 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;

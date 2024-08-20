@@ -47,6 +47,14 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Cardinality of the data entity association. */
     @Attribute
     DMCardinalityType dMCardinality;
@@ -86,10 +94,6 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     /** Label of the data entity association. */
     @Attribute
     String dMLabel;
-
-    /** Owner seal ID of the data entity association. */
-    @Attribute
-    String dMOwnerSealId;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute

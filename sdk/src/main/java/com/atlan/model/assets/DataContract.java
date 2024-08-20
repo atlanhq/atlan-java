@@ -46,6 +46,14 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Asset this contract controls. */
     @Attribute
     IAsset dataContractAssetCertified;

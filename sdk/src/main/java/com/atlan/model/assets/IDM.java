@@ -84,6 +84,12 @@ public interface IDM {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
+
     /** TBC */
     String getAssetCoverImage();
 

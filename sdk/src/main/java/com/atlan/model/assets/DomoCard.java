@@ -47,6 +47,14 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Number of dashboards linked to this card. */
     @Attribute
     Long domoCardDashboardCount;

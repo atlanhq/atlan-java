@@ -48,6 +48,14 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** TBC */
     @Attribute
     IAsset fileAssets;

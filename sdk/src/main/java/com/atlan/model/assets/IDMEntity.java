@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -38,6 +40,12 @@ public interface IDMEntity {
     /** Individual attributes that make up the entity. */
     RelationField D_M_ATTRIBUTES = new RelationField("dMAttributes");
 
+    /** Type of the data entity. */
+    KeywordField D_M_ENTITY_TYPE = new KeywordField("dMEntityType", "dMEntityType");
+
+    /** Whether this is a root entity or not. */
+    BooleanField D_M_IS_ROOT = new BooleanField("dMIsRoot", "dMIsRoot");
+
     /** Entities from which this entity is mapped. */
     RelationField D_M_MAPPED_FROM_ENTITIES = new RelationField("dMMappedFromEntities");
 
@@ -49,6 +57,9 @@ public interface IDMEntity {
 
     /** Association to which this entity is related. */
     RelationField D_M_RELATED_TO_ENTITIES = new RelationField("dMRelatedToEntities");
+
+    /** Subject area of the entity. */
+    KeywordField D_M_SUBJECT_AREA = new KeywordField("dMSubjectArea", "dMSubjectArea");
 
     /** Data model version in which this entity exists. */
     RelationField D_M_VERSION = new RelationField("dMVersion");
@@ -76,6 +87,12 @@ public interface IDMEntity {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -326,6 +343,12 @@ public interface IDMEntity {
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
 
+    /** Type of the data entity. */
+    String getDMEntityType();
+
+    /** Whether this is a root entity or not. */
+    Boolean getDMIsRoot();
+
     /** Entities from which this entity is mapped. */
     SortedSet<IDMEntity> getDMMappedFromEntities();
 
@@ -337,6 +360,9 @@ public interface IDMEntity {
 
     /** Association to which this entity is related. */
     SortedSet<IDMEntityAssociation> getDMRelatedToEntities();
+
+    /** Subject area of the entity. */
+    String getDMSubjectArea();
 
     /** Data model version in which this entity exists. */
     IDMVersion getDMVersion();

@@ -32,6 +32,8 @@ public enum NumericFields implements AtlanSearchableField {
     AIRFLOW_TASK_RETRY_NUMBER("airflowTaskRetryNumber"),
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     ANNOUNCEMENT_UPDATED_AT("announcementUpdatedAt"),
+    /** Number of components in the application. */
+    APP_COMPONENT_COUNT("appComponentCount"),
     /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     ASSET_DBT_JOB_LAST_RUN("assetDbtJobLastRun"),
     /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
@@ -188,6 +190,10 @@ public enum NumericFields implements AtlanSearchableField {
     D_M_ATTRIBUTE_COUNT("dMAttributeCount"),
     /** Number of entities in the version. */
     D_M_ENTITY_COUNT("dMEntityCount"),
+    /** Precision of the attribute. */
+    D_M_PRECISION("dMPrecision"),
+    /** Scale of the attribute. */
+    D_M_SCALE("dMScale"),
     /** Number of versions of the data model. */
     D_M_VERSION_COUNT("dMVersionCount"),
     /** TBC */

@@ -99,6 +99,10 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Attribute
     String airflowTaskConnectionId;
 
+    /** Group name for the task. */
+    @Attribute
+    String airflowTaskGroupName;
+
     /** Class name for the operator this task uses. */
     @Attribute
     String airflowTaskOperatorClass;
@@ -130,6 +134,14 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     /** Trigger for the run. */
     @Attribute
     String airflowTaskTriggerRule;
+
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
 
     /** Tasks to which this asset provides input. */
     @Attribute

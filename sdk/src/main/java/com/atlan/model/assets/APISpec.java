@@ -110,6 +110,14 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecVersion;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

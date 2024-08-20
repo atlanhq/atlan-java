@@ -67,6 +67,8 @@ public class DMAttributeTest {
             .dMEntityQualifiedName("String0")
             .dMVersionName("String0")
             .dMVersionQualifiedName("String0")
+            .appApplicationImplemented(AppApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appComponentImplemented(AppComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -406,17 +408,23 @@ public class DMAttributeTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .dMDerivedIndicator(true)
             .dMEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dMForeignKeyIndicator(true)
+            .dMIsNullable(true)
             .dMMappedFromAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMMappedToAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedToAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMPrecision(123456789L)
+            .dMPrimaryKeyIndicator(true)
             .dMRelatedFromAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMRelatedFromAttribute(
                     DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMRelatedToAttribute(DMAttributeAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMRelatedToAttribute(
                     DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMScale(123456789L)
             .build();
 
     private static final int hash = full.hashCode();

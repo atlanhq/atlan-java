@@ -7,7 +7,7 @@ a = t.decapitalize()
 
 local application = "Application"
 local component = "Component"
-local asset = "Asset"
+local catalog = "Catalog"
 
 local attrName = "Name"
 local qualifiedName = "QualifiedName"
@@ -21,7 +21,7 @@ shared {
   supertypeDefinition {
     name = t
     description = "Assets used to model applications and their componentry."
-    superTypes { "Catalog" }
+    superTypes { catalog }
     attributes {
       ["\(a)\(application)\(attrName)"] {
         label = "Application"
@@ -88,12 +88,12 @@ customTypes {
         description = "Implementation of an application by one or more assets."
         parent {
           type = "\(t)\(application)"
-          attribute = "\(a)\(asset)s"
+          attribute = "\(a)ImplementedByAssets"
           description = "Assets that implement the application."
         }
         children {
-          type = asset
-          attribute = "\(a)\(application)"
+          type = catalog
+          attribute = "\(a)\(application)Implemented"
           description = "Application that is implemented by this asset."
         }
       }
@@ -123,12 +123,12 @@ customTypes {
         peers {
           new {
             type = "\(t)\(component)"
-            attribute = "\(a)\(asset)"
+            attribute = "\(a)\(component)ImplementedByAsset"
             description = "Asset that implements this component."
           }
           new {
-            type = "\(t)\(asset)"
-            attribute = "\(a)\(component)"
+            type = catalog
+            attribute = "\(a)\(component)Implemented"
             description = "Application component that is implemented by this asset."
           }
         }

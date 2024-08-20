@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("cast")
 public class ADLSObject extends Asset
-        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSObject, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
@@ -136,6 +136,14 @@ public class ADLSObject extends Asset
     /** Whether this object supports version-level immutability (true) or not (false). */
     @Attribute
     Boolean adlsObjectVersionLevelImmutabilitySupport;
+
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
 
     /** Location of this asset in Azure. */
     @Attribute

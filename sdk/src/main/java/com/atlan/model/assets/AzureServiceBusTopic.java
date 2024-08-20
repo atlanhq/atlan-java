@@ -47,6 +47,14 @@ public class AzureServiceBusTopic extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** AzureServiceBusNamespace asset containing this AzureServiceBusTopic. */
     @Attribute
     IAzureServiceBusNamespace azureServiceBusNamespace;

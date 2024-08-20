@@ -47,6 +47,14 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
