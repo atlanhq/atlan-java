@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":6,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":6,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -199,197 +199,211 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appApplicationImplemented(com.atlan.model.assets.IAppApplication)">appApplicationImplemented</a></span>&#8203;(<a href="IAppApplication.html" title="interface in com.atlan.model.assets">IAppApplication</a>&nbsp;appApplicationImplemented)</code></th>
+<td class="colLast">
+<div class="block">Application that is implemented by this asset.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appComponentImplemented(com.atlan.model.assets.IAppComponent)">appComponentImplemented</a></span>&#8203;(<a href="IAppComponent.html" title="interface in com.atlan.model.assets">IAppComponent</a>&nbsp;appComponentImplemented)</code></th>
+<td class="colLast">
+<div class="block">Application component that is implemented by this asset.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract <a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputs()">clearInputs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputToAirflowTasks()">clearInputToAirflowTasks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputToProcesses()">clearInputToProcesses</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearInputToSparkJobs()">clearInputToSparkJobs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromAirflowTasks()">clearOutputFromAirflowTasks</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromProcesses()">clearOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputFromSparkJobs()">clearOutputFromSparkJobs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearOutputs()">clearOutputs</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#input(com.atlan.model.assets.ICatalog)">input</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;input)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputs(java.util.Collection)">inputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;inputs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)">inputToAirflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToAirflowTasks(java.util.Collection)">inputToAirflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;inputToAirflowTasks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcess(com.atlan.model.assets.ILineageProcess)">inputToProcess</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;inputToProcess)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToProcesses(java.util.Collection)">inputToProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;inputToProcesses)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToSparkJob(com.atlan.model.assets.ISparkJob)">inputToSparkJob</a></span>&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;inputToSparkJob)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inputToSparkJobs(java.util.Collection)">inputToSparkJobs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;inputToSparkJobs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#output(com.atlan.model.assets.ICatalog)">output</a></span>&#8203;(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;output)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromAirflowTask(com.atlan.model.assets.IAirflowTask)">outputFromAirflowTask</a></span>&#8203;(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;outputFromAirflowTask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromAirflowTasks(java.util.Collection)">outputFromAirflowTasks</a></span>&#8203;(java.util.Collection&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;outputFromAirflowTasks)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromProcess(com.atlan.model.assets.ILineageProcess)">outputFromProcess</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;outputFromProcess)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromProcesses(java.util.Collection)">outputFromProcesses</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;outputFromProcesses)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromSparkJob(com.atlan.model.assets.ISparkJob)">outputFromSparkJob</a></span>&#8203;(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;outputFromSparkJob)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputFromSparkJobs(java.util.Collection)">outputFromSparkJobs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;outputFromSparkJobs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#outputs(java.util.Collection)">outputs</a></span>&#8203;(java.util.Collection&lt;? extends <a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt;&nbsp;outputs)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process(com.atlan.model.assets.ILineageProcess)">process</a></span>&#8203;(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;process)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkAppName(java.lang.String)">sparkAppName</a></span>&#8203;(java.lang.String&nbsp;sparkAppName)</code></th>
 <td class="colLast">
 <div class="block">Name of the Spark app containing this Spark Job For eg.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkMaster(java.lang.String)">sparkMaster</a></span>&#8203;(java.lang.String&nbsp;sparkMaster)</code></th>
 <td class="colLast">
 <div class="block">The Spark master URL eg.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkRunEndTime(java.lang.Long)">sparkRunEndTime</a></span>&#8203;(java.lang.Long&nbsp;sparkRunEndTime)</code></th>
 <td class="colLast">
 <div class="block">End time of the Spark Job eg.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkRunOpenLineageState(com.atlan.model.enums.OpenLineageRunState)">sparkRunOpenLineageState</a></span>&#8203;(<a href="../enums/OpenLineageRunState.html" title="enum in com.atlan.model.enums">OpenLineageRunState</a>&nbsp;sparkRunOpenLineageState)</code></th>
 <td class="colLast">
 <div class="block">OpenLineage state of the Spark Job run eg.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkRunOpenLineageVersion(java.lang.String)">sparkRunOpenLineageVersion</a></span>&#8203;(java.lang.String&nbsp;sparkRunOpenLineageVersion)</code></th>
 <td class="colLast">
 <div class="block">OpenLineage Version of the Spark Job run eg.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkRunStartTime(java.lang.Long)">sparkRunStartTime</a></span>&#8203;(java.lang.Long&nbsp;sparkRunStartTime)</code></th>
 <td class="colLast">
 <div class="block">Start time of the Spark Job eg.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sparkRunVersion(java.lang.String)">sparkRunVersion</a></span>&#8203;(java.lang.String&nbsp;sparkRunVersion)</code></th>
 <td class="colLast">
 <div class="block">Spark Version for the Spark Job run eg.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
@@ -486,6 +500,34 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">C</a> extends <a href="SparkJob.html" title="class in com.atlan.model.assets">SparkJob</a>,&#8203;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a> extends <a href="SparkJob.SparkJobBuilder.html" title="class in com.atlan.model.assets">SparkJob.SparkJobBuilder</a>&lt;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">C</a>,&#8203;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="appApplicationImplemented(com.atlan.model.assets.IAppApplication)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appApplicationImplemented</h4>
+<pre class="methodSignature">public&nbsp;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a>&nbsp;appApplicationImplemented&#8203;(<a href="IAppApplication.html" title="interface in com.atlan.model.assets">IAppApplication</a>&nbsp;appApplicationImplemented)</pre>
+<div class="block">Application that is implemented by this asset.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="appComponentImplemented(com.atlan.model.assets.IAppComponent)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>appComponentImplemented</h4>
+<pre class="methodSignature">public&nbsp;<a href="SparkJob.SparkJobBuilder.html" title="type parameter in SparkJob.SparkJobBuilder">B</a>&nbsp;appComponentImplemented&#8203;(<a href="IAppComponent.html" title="interface in com.atlan.model.assets">IAppComponent</a>&nbsp;appComponentImplemented)</pre>
+<div class="block">Application component that is implemented by this asset.</div>
+<dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>

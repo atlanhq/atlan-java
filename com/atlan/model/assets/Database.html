@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":9,"i17":10,"i18":9,"i19":9,"i20":9,"i21":9,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":9,"i54":9,"i55":9,"i56":9,"i57":9,"i58":9,"i59":9,"i60":9,"i61":9,"i62":9,"i63":9,"i64":9,"i65":9,"i66":9,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9,"i72":9,"i73":9,"i74":9,"i75":41,"i76":41,"i77":41,"i78":41,"i79":9,"i80":9,"i81":9,"i82":9,"i83":10,"i84":10,"i85":10,"i86":10,"i87":9,"i88":9,"i89":9,"i90":9,"i91":9};
+var data = {"i0":9,"i1":41,"i2":41,"i3":41,"i4":41,"i5":41,"i6":41,"i7":41,"i8":41,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":10,"i16":9,"i17":10,"i18":9,"i19":9,"i20":9,"i21":9,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":9,"i56":9,"i57":9,"i58":9,"i59":9,"i60":9,"i61":9,"i62":9,"i63":9,"i64":9,"i65":9,"i66":9,"i67":9,"i68":9,"i69":9,"i70":9,"i71":9,"i72":9,"i73":9,"i74":9,"i75":9,"i76":9,"i77":41,"i78":41,"i79":41,"i80":41,"i81":9,"i82":9,"i83":9,"i84":9,"i85":10,"i86":10,"i87":10,"i88":10,"i89":9,"i90":9,"i91":9,"i92":9,"i93":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -248,7 +248,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></h3>
-<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></li>
+<code><a href="ICatalog.html#APP_APPLICATION_IMPLEMENTED">APP_APPLICATION_IMPLEMENTED</a>, <a href="ICatalog.html#APP_COMPONENT_IMPLEMENTED">APP_COMPONENT_IMPLEMENTED</a>, <a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="fields.inherited.from.class.com.atlan.model.assets.IDatabase">
@@ -509,228 +509,242 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 </td>
 </tr>
 <tr id="i22" class="altColor">
+<td class="colFirst"><code><a href="IAppApplication.html" title="interface in com.atlan.model.assets">IAppApplication</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAppApplicationImplemented()">getAppApplicationImplemented</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Application that is implemented by this asset.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code><a href="IAppComponent.html" title="interface in com.atlan.model.assets">IAppComponent</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAppComponentImplemented()">getAppComponentImplemented</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Application component that is implemented by this asset.</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCalculationViewName()">getCalculationViewName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCalculationViewQualifiedName()">getCalculationViewQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseName()">getDatabaseName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabaseQualifiedName()">getDatabaseQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtModels()">getDbtModels</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtSources()">getDbtSources</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtTests()">getDbtTests</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToAirflowTasks()">getInputToAirflowTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tasks to which this asset provides input.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToProcesses()">getInputToProcesses</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Processes to which this asset provides input.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getInputToSparkJobs()">getInputToSparkJobs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsProfiled()">getIsProfiled</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether this asset has been profiled (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastProfiledAt()">getLastProfiledAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromAirflowTasks()">getOutputFromAirflowTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tasks from which this asset is output.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromProcesses()">getOutputFromProcesses</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Processes from which this asset is produced as output.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCount()">getQueryCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of times this asset has been queried.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserCount()">getQueryUserCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of unique users who have queried this asset.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserMap()">getQueryUserMap</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaCount()">getSchemaCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of schemas in this database.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaName()">getSchemaName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaQualifiedName()">getSchemaQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemas()">getSchemas</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Schemas that exist within this database.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSqlDbtModels()">getSqlDbtModels</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSqlDBTSources()">getSqlDBTSources</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName()">getTableName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableQualifiedName()">getTableQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Databases.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewName()">getViewName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewQualifiedName()">getViewQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Database by GUID.</div>
 </td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid,
          <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
@@ -738,14 +752,14 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Reference to a Database by GUID.</div>
 </td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Database by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i58" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../relations/Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></th>
@@ -753,7 +767,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Reference to a Database by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i59" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -762,7 +776,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the announcement from a Database.</div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i60" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -770,7 +784,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the announcement from a Database.</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i61" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;qualifiedName,
@@ -779,7 +793,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove an Atlan tag from a Database.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i62" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAtlanTag(java.lang.String,java.lang.String)">removeAtlanTag</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
               java.lang.String&nbsp;atlanTagName)</code></th>
@@ -787,7 +801,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove an Atlan tag from a Database.</div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i63" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -796,7 +810,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the certificate from a Database.</div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -804,7 +818,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the certificate from a Database.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -813,7 +827,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the system description from a Database.</div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -821,7 +835,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the system description from a Database.</div>
 </td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -830,7 +844,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the owners from a Database.</div>
 </td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name)</code></th>
@@ -838,7 +852,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the owners from a Database.</div>
 </td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
            java.lang.String&nbsp;qualifiedName,
@@ -847,7 +861,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove terms from a Database, without replacing all existing terms linked to the Database.</div>
 </td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></th>
@@ -855,7 +869,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove terms from a Database, without replacing all existing terms linked to the Database.</div>
 </td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                      java.lang.String&nbsp;qualifiedName,
@@ -864,7 +878,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the user's description from a Database.</div>
 </td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -872,7 +886,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Remove the user's description from a Database.</div>
 </td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             java.lang.String&nbsp;qualifiedName,
@@ -882,7 +896,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Replace the terms linked to the Database.</div>
 </td>
 </tr>
-<tr id="i72" class="altColor">
+<tr id="i74" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -891,7 +905,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Replace the terms linked to the Database.</div>
 </td>
 </tr>
-<tr id="i73" class="rowColor">
+<tr id="i75" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(com.atlan.AtlanClient,java.lang.String)">restore</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -899,14 +913,14 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Restore the archived (soft-deleted) Database to active.</div>
 </td>
 </tr>
-<tr id="i74" class="altColor">
+<tr id="i76" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) Database to active.</div>
 </td>
 </tr>
-<tr id="i75" class="rowColor">
+<tr id="i77" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(com.atlan.AtlanClient,java.lang.String)">retrieveByGuid</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
               java.lang.String&nbsp;guid)</code></th>
@@ -916,7 +930,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 </div>
 </td>
 </tr>
-<tr id="i76" class="altColor">
+<tr id="i78" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
@@ -925,7 +939,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 </div>
 </td>
 </tr>
-<tr id="i77" class="rowColor">
+<tr id="i79" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(com.atlan.AtlanClient,java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                        java.lang.String&nbsp;qualifiedName)</code></th>
@@ -935,7 +949,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 </div>
 </td>
 </tr>
-<tr id="i78" class="altColor">
+<tr id="i80" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -944,28 +958,28 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 </div>
 </td>
 </tr>
-<tr id="i79" class="rowColor">
+<tr id="i81" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select()">select</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Database assets.</div>
 </td>
 </tr>
-<tr id="i80" class="altColor">
+<tr id="i82" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(boolean)">select</a></span>&#8203;(boolean&nbsp;includeArchived)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Database assets.</div>
 </td>
 </tr>
-<tr id="i81" class="rowColor">
+<tr id="i83" class="rowColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">
 <div class="block">Start a fluent search that will return all Database assets.</div>
 </td>
 </tr>
-<tr id="i82" class="altColor">
+<tr id="i84" class="altColor">
 <td class="colFirst"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(com.atlan.AtlanClient,boolean)">select</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
       boolean&nbsp;includeArchived)</code></th>
@@ -973,16 +987,16 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Start a fluent search that will return all Database assets.</div>
 </td>
 </tr>
-<tr id="i83" class="rowColor">
+<tr id="i85" class="rowColor">
 <td class="colFirst"><code><a href="Database.DatabaseBuilder.html" title="class in com.atlan.model.assets">Database.DatabaseBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i84" class="altColor">
+<tr id="i86" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i85" class="rowColor">
+<tr id="i87" class="rowColor">
 <td class="colFirst"><code><a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToReference()">trimToReference</a></span>()</code></th>
 <td class="colLast">
@@ -990,7 +1004,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
  more-complete Database object.</div>
 </td>
 </tr>
-<tr id="i86" class="altColor">
+<tr id="i88" class="altColor">
 <td class="colFirst"><code><a href="Database.DatabaseBuilder.html" title="class in com.atlan.model.assets">Database.DatabaseBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -998,7 +1012,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
  more-complete Database object.</div>
 </td>
 </tr>
-<tr id="i87" class="rowColor">
+<tr id="i89" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                   java.lang.String&nbsp;qualifiedName,
@@ -1009,7 +1023,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Update the announcement on a Database.</div>
 </td>
 </tr>
-<tr id="i88" class="altColor">
+<tr id="i90" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -1019,7 +1033,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Update the announcement on a Database.</div>
 </td>
 </tr>
-<tr id="i89" class="rowColor">
+<tr id="i91" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
                  java.lang.String&nbsp;qualifiedName,
@@ -1029,7 +1043,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Update the certificate on a Database.</div>
 </td>
 </tr>
-<tr id="i90" class="altColor">
+<tr id="i92" class="altColor">
 <td class="colFirst"><code>static <a href="Database.html" title="class in com.atlan.model.assets">Database</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/CertificateStatus.html" title="enum in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
@@ -1038,7 +1052,7 @@ implements <a href="IDatabase.html" title="interface in com.atlan.model.assets">
 <div class="block">Update the certificate on a Database.</div>
 </td>
 </tr>
-<tr id="i91" class="rowColor">
+<tr id="i93" class="rowColor">
 <td class="colFirst"><code>static <a href="Database.DatabaseBuilder.html" title="class in com.atlan.model.assets">Database.DatabaseBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -2449,6 +2463,42 @@ public static&nbsp;void&nbsp;addAtlanTags&#8203;(<a href="../../AtlanClient.html
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#toBuilder()">toBuilder</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getAppApplicationImplemented()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAppApplicationImplemented</h4>
+<pre class="methodSignature">public&nbsp;<a href="IAppApplication.html" title="interface in com.atlan.model.assets">IAppApplication</a>&nbsp;getAppApplicationImplemented()</pre>
+<div class="block">Application that is implemented by this asset.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ICatalog.html#getAppApplicationImplemented()">getAppApplicationImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IDatabase.html#getAppApplicationImplemented()">getAppApplicationImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="IDatabase.html" title="interface in com.atlan.model.assets">IDatabase</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ISQL.html#getAppApplicationImplemented()">getAppApplicationImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="getAppComponentImplemented()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAppComponentImplemented</h4>
+<pre class="methodSignature">public&nbsp;<a href="IAppComponent.html" title="interface in com.atlan.model.assets">IAppComponent</a>&nbsp;getAppComponentImplemented()</pre>
+<div class="block">Application component that is implemented by this asset.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ICatalog.html#getAppComponentImplemented()">getAppComponentImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="IDatabase.html#getAppComponentImplemented()">getAppComponentImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="IDatabase.html" title="interface in com.atlan.model.assets">IDatabase</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="ISQL.html#getAppComponentImplemented()">getAppComponentImplemented</a></code>&nbsp;in interface&nbsp;<code><a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></code></dd>
 </dl>
 </li>
 </ul>
