@@ -180,6 +180,11 @@ customTypes {
         description = "Whether this is a root entity or not."
         type = "boolean"
       }
+      ["\(a)EntityType"] {
+        label = "type"
+        description = "Type of the data entity."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmVersion)"] {
