@@ -47,6 +47,7 @@ class FieldImporter(
     trackBatches,
     fieldSeparator,
 ) {
+    private val leafNodeLevel = 1L
     private var generationToProcess = 0L
 
     // Maximum depth of any field in the CSV (overall and by hierarchy)
@@ -69,7 +70,7 @@ class FieldImporter(
             val path = getFieldPath(hierarchyPath, row, header)
             if (!maxLevelByPath.containsKey(path)) {
                 // If path not yet seen, treat it as a leaf (for now)
-                maxLevelByPath[path] = AtomicLong(0L)
+                maxLevelByPath[path] = AtomicLong(leafNodeLevel)
             }
             bubbleUpParentLevel(path, hierarchyPath)
             // Consider whether we need to update the maximum depth of fields we need to load
@@ -94,7 +95,7 @@ class FieldImporter(
             val levelFromThisChild = maxLevelByPath[path]!!.get() + 1
             val parentPath = StringUtils.getParentQualifiedNameFromQualifiedName(path, Importer.QN_DELIMITER)
             if (parentPath != null) {
-                val currentParentLevel = maxLevelByPath[parentPath]?.get() ?: 0L
+                val currentParentLevel = maxLevelByPath[parentPath]?.get() ?: leafNodeLevel
                 // Logic for level calculation:
                 //  - If there are no children, level = 0
                 //  - Else level = max(child) + 1
@@ -187,7 +188,7 @@ class FieldImporter(
      */
     private fun getFieldLevel(row: List<String>, header: List<String>): Long {
         val path = getFieldPath(getHierarchyPath(row, header), row, header)
-        return maxLevelByPath[path]?.get() ?: 0L
+        return maxLevelByPath[path]?.get() ?: leafNodeLevel
     }
 
     /**
