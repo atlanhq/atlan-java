@@ -8,6 +8,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.util.StringUtils
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
@@ -50,7 +51,7 @@ class FieldImporter(
 
     // Maximum depth of any field in the CSV (overall and by hierarchy)
     private val maxFieldGeneration = AtomicLong(1)
-    private val maxGenerationByHierarchy: MutableMap<String, AtomicLong> = mutableMapOf()
+    private val maxLevelByPath: MutableMap<String, AtomicLong> = mutableMapOf()
 
     companion object {
         const val PARENT_FIELD_QN = "parentFieldQualifiedName"
@@ -62,24 +63,51 @@ class FieldImporter(
 
     /** {@inheritDoc} */
     override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
-        val fieldGeneration = getFieldGeneration(row, header)
-        val hierarchy = getHierarchy(row, header)
-        // Consider whether we need to update the maximum depth of fields we need to load
-        val currentMax = maxFieldGeneration.get()
-        val maxDepth = max(fieldGeneration, currentMax)
-        if (maxDepth > currentMax) {
-            maxFieldGeneration.set(maxDepth)
-        }
-        val currentMaxInHierarchy = maxGenerationByHierarchy[hierarchy]?.get() ?: 0L
-        val maxInHierarchy = max(fieldGeneration, currentMaxInHierarchy)
-        if (maxInHierarchy > currentMaxInHierarchy) {
-            if (!maxGenerationByHierarchy.containsKey(hierarchy)) {
-                maxGenerationByHierarchy[hierarchy] = AtomicLong(maxInHierarchy)
-            } else {
-                maxGenerationByHierarchy[hierarchy]!!.set(maxInHierarchy)
+        if (row[typeIdx] == typeNameFilter) {
+            // Only build up the details if this is in fact a field row
+            val hierarchyPath = getHierarchyPath(row, header)
+            val path = getFieldPath(hierarchyPath, row, header)
+            if (!maxLevelByPath.containsKey(path)) {
+                // If path not yet seen, treat it as a leaf (for now)
+                maxLevelByPath[path] = AtomicLong(0L)
+            }
+            bubbleUpParentLevel(path, hierarchyPath)
+            // Consider whether we need to update the maximum depth of fields we need to load
+            val currentMax = maxFieldGeneration.get()
+            val fieldGeneration = getFieldGeneration(row, header)
+            val maxDepth = max(fieldGeneration, currentMax)
+            if (maxDepth > currentMax) {
+                maxFieldGeneration.set(maxDepth)
             }
         }
         return row
+    }
+
+    /**
+     * Recursively bubble-up setting the parent level(s) based on lower-field level updates.
+     *
+     * @param path of the field from which to bubble up levels
+     * @param hierarchyPath path of the hierarchy for the field
+     */
+    private fun bubbleUpParentLevel(path: String, hierarchyPath: String) {
+        if (path != hierarchyPath) { // Short-circuit once we reach hierarchy level (no need to bubble up further)
+            val levelFromThisChild = maxLevelByPath[path]!!.get() + 1
+            val parentPath = StringUtils.getParentQualifiedNameFromQualifiedName(path, Importer.QN_DELIMITER)
+            if (parentPath != null) {
+                val currentParentLevel = maxLevelByPath[parentPath]?.get() ?: 0L
+                // Logic for level calculation:
+                //  - If there are no children, level = 0
+                //  - Else level = max(child) + 1
+                if (levelFromThisChild >= currentParentLevel) {
+                    if (maxLevelByPath.containsKey(parentPath)) {
+                        maxLevelByPath[parentPath]!!.set(levelFromThisChild)
+                    } else {
+                        maxLevelByPath[parentPath] = AtomicLong(levelFromThisChild)
+                    }
+                }
+                bubbleUpParentLevel(parentPath, hierarchyPath)
+            }
+        }
     }
 
     /** {@inheritDoc} */
@@ -113,7 +141,7 @@ class FieldImporter(
         }
         val fieldGeneration = getFieldGeneration(row, header)
         if (fieldGeneration != generationToProcess) {
-            // If this category is a different generation than we are currently processing,
+            // If this field is a different generation than we are currently processing,
             // short-circuit
             return false
         }
@@ -158,20 +186,37 @@ class FieldImporter(
      * @return numeric level of the (nested) field
      */
     private fun getFieldLevel(row: List<String>, header: List<String>): Long {
-        val generation = getFieldGeneration(row, header)
-        val hierarchy = getHierarchy(row, header)
-        val maxLevel = maxGenerationByHierarchy[hierarchy]!!.get()
-        return maxLevel - generation + 1
+        val path = getFieldPath(getHierarchyPath(row, header), row, header)
+        return maxLevelByPath[path]?.get() ?: 0L
     }
 
     /**
-     * Determine the hierarchy for the field on the provided row.
+     * Calculate the full path for the field on the provided row.
+     *
+     * @param hierarchyPath path of the hierarchy for the field
+     * @param row of values in the CSV
+     * @param header names of columns for the CSV
+     * @return unique path for the field on the row
+     */
+    private fun getFieldPath(hierarchyPath: String, row: List<String>, header: List<String>): String {
+        val parentIdx = header.indexOf(PARENT_FIELD_QN)
+        val nameIdx = header.indexOf(FIELD_NAME)
+        val parentPath = row[parentIdx]
+        return if (parentPath.isBlank()) {
+            "$hierarchyPath${Importer.QN_DELIMITER}${row[nameIdx]}"
+        } else {
+            "$hierarchyPath${Importer.QN_DELIMITER}${row[parentIdx]}${Importer.QN_DELIMITER}${row[nameIdx]}"
+        }
+    }
+
+    /**
+     * Calculate the hierarchy path for the field on the provided row.
      *
      * @param row of values in the CSV
      * @param header names of columns for the CSV
-     * @return unique name for the hierarchy on the row
+     * @return unique path for the hierarchy of the field on the row
      */
-    private fun getHierarchy(row: List<String>, header: List<String>): String {
+    private fun getHierarchyPath(row: List<String>, header: List<String>): String {
         val cubeIdx = header.indexOf(CUBE_NAME)
         val dimIdx = header.indexOf(DIMENSION_NAME)
         val hierIdx = header.indexOf(HIERARCHY_NAME)

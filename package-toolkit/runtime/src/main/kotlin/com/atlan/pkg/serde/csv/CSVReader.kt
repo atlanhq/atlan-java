@@ -83,14 +83,14 @@ class CSVReader @JvmOverloads constructor(
             logger.info { "Transforming input CSV file to $outputFile..." }
             CSVWriter(outputFile).use { csv ->
                 csv.writeHeader(outputHeaders ?: header)
-                preproc.stream().skip(1).parallel().forEach { r: CsvRecord ->
+                preproc.stream().skip(1).forEach { r: CsvRecord ->
                     val transformed = csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                     csv.writeRecord(transformed)
                 }
             }
         } else {
             logger.info { "Preprocessing input CSV file..." }
-            preproc.stream().skip(1).parallel().forEach { r: CsvRecord ->
+            preproc.stream().skip(1).forEach { r: CsvRecord ->
                 csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
             }
         }
