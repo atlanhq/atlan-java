@@ -46,6 +46,14 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

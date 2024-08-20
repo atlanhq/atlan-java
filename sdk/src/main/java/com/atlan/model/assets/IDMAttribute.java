@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -31,8 +33,17 @@ public interface IDMAttribute {
 
     public static final String TYPE_NAME = "DMAttribute";
 
+    /** Whether this attribute is derived indicator or not. */
+    BooleanField D_M_DERIVED_INDICATOR = new BooleanField("dMDerivedIndicator", "dMDerivedIndicator");
+
     /** Entity in which this attribute exists. */
     RelationField D_M_ENTITY = new RelationField("dMEntity");
+
+    /** Whether this attribute is foreign key indicator or not. */
+    BooleanField D_M_FOREIGN_KEY_INDICATOR = new BooleanField("dMForeignKeyIndicator", "dMForeignKeyIndicator");
+
+    /** Whether this attribute is nullable or not. */
+    BooleanField D_M_IS_NULLABLE = new BooleanField("dMIsNullable", "dMIsNullable");
 
     /** Attributes from which this attribute is mapped. */
     RelationField D_M_MAPPED_FROM_ATTRIBUTES = new RelationField("dMMappedFromAttributes");
@@ -40,11 +51,20 @@ public interface IDMAttribute {
     /** Attributes to which this attribute is mapped. */
     RelationField D_M_MAPPED_TO_ATTRIBUTES = new RelationField("dMMappedToAttributes");
 
+    /** Precision of the attribute. */
+    NumericField D_M_PRECISION = new NumericField("dMPrecision", "dMPrecision");
+
+    /** Whether this attribute is primary key indicator or not. */
+    BooleanField D_M_PRIMARY_KEY_INDICATOR = new BooleanField("dMPrimaryKeyIndicator", "dMPrimaryKeyIndicator");
+
     /** Association from this attribute is related. */
     RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
 
     /** Association to which this attribute is related. */
     RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
+
+    /** Scale of the attribute. */
+    NumericField D_M_SCALE = new NumericField("dMScale", "dMScale");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -69,6 +89,12 @@ public interface IDMAttribute {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -307,6 +333,9 @@ public interface IDMAttribute {
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
 
+    /** Whether this attribute is derived indicator or not. */
+    Boolean getDMDerivedIndicator();
+
     /** Entity in which this attribute exists. */
     IDMEntity getDMEntity();
 
@@ -316,17 +345,32 @@ public interface IDMAttribute {
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityQualifiedName();
 
+    /** Whether this attribute is foreign key indicator or not. */
+    Boolean getDMForeignKeyIndicator();
+
+    /** Whether this attribute is nullable or not. */
+    Boolean getDMIsNullable();
+
     /** Attributes from which this attribute is mapped. */
     SortedSet<IDMAttribute> getDMMappedFromAttributes();
 
     /** Attributes to which this attribute is mapped. */
     SortedSet<IDMAttribute> getDMMappedToAttributes();
 
+    /** Precision of the attribute. */
+    Long getDMPrecision();
+
+    /** Whether this attribute is primary key indicator or not. */
+    Boolean getDMPrimaryKeyIndicator();
+
     /** Association from this attribute is related. */
     SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
 
     /** Association to which this attribute is related. */
     SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
+
+    /** Scale of the attribute. */
+    Long getDMScale();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();

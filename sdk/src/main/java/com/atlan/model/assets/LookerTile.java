@@ -46,6 +46,14 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Dashboard in which this tile exists. */
     @Attribute
     ILookerDashboard dashboard;

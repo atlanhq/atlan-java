@@ -67,6 +67,8 @@ public class DMEntityTest {
             .dMEntityQualifiedName("String0")
             .dMVersionName("String0")
             .dMVersionQualifiedName("String0")
+            .appApplicationImplemented(AppApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appComponentImplemented(AppComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -409,6 +411,8 @@ public class DMEntityTest {
             .dMAttributeCount(123456789L)
             .dMAttribute(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMAttribute(DMAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMEntityType("String0")
+            .dMIsRoot(true)
             .dMMappedFromEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMMappedFromEntity(DMEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMMappedToEntity(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -419,6 +423,7 @@ public class DMEntityTest {
             .dMRelatedToEntity(DMEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dMRelatedToEntity(
                     DMEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dMSubjectArea("String0")
             .dMVersion(DMVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

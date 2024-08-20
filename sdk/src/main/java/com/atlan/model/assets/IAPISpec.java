@@ -137,6 +137,12 @@ public interface IAPISpec {
     /** Version of the API specification. */
     String getApiSpecVersion();
 
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
+
     /** TBC */
     String getAssetCoverImage();
 

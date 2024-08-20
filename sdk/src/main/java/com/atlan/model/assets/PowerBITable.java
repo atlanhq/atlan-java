@@ -47,6 +47,14 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Columns that exist within this table. */
     @Attribute
     @Singular

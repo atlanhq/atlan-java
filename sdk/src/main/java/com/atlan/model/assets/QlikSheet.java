@@ -46,6 +46,14 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

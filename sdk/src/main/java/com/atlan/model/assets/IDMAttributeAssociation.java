@@ -45,9 +45,6 @@ public interface IDMAttributeAssociation {
     /** Label of the data attribute association. */
     KeywordField D_M_LABEL = new KeywordField("dMLabel", "dMLabel");
 
-    /** Owner seal ID of the data attribute association. */
-    KeywordField D_M_OWNER_SEAL_ID = new KeywordField("dMOwnerSealId", "dMOwnerSealId");
-
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -71,6 +68,12 @@ public interface IDMAttributeAssociation {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -326,9 +329,6 @@ public interface IDMAttributeAssociation {
 
     /** Label of the data attribute association. */
     String getDMLabel();
-
-    /** Owner seal ID of the data attribute association. */
-    String getDMOwnerSealId();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();

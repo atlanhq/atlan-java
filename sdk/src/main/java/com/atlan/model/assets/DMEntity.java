@@ -46,6 +46,14 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Number of attributes in the entity. */
     @Attribute
     Long dMAttributeCount;
@@ -79,6 +87,14 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Attribute
     String dMEntityQualifiedName;
 
+    /** Type of the data entity. */
+    @Attribute
+    String dMEntityType;
+
+    /** Whether this is a root entity or not. */
+    @Attribute
+    Boolean dMIsRoot;
+
     /** Entities from which this entity is mapped. */
     @Attribute
     @Singular
@@ -98,6 +114,10 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Attribute
     @Singular
     SortedSet<IDMEntityAssociation> dMRelatedToEntities;
+
+    /** Subject area of the entity. */
+    @Attribute
+    String dMSubjectArea;
 
     /** Data model version in which this entity exists. */
     @Attribute

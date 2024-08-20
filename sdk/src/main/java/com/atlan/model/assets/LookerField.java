@@ -46,6 +46,14 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Dashboard in which this field is used. */
     @Attribute
     ILookerDashboard dashboard;

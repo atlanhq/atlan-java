@@ -46,6 +46,14 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Explores that exist within this model. */
     @Attribute
     @Singular

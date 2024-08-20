@@ -109,6 +109,12 @@ public interface IAtlanQuery {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    IAppApplication getAppApplicationImplemented();
+
+    /** TBC */
+    IAppComponent getAppComponentImplemented();
+
+    /** TBC */
     String getAssetCoverImage();
 
     /** TBC */

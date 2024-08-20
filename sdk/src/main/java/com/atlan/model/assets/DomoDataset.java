@@ -46,6 +46,14 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** TBC */
     @Attribute
     @Singular

@@ -31,6 +31,12 @@ public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
 
+    /** Application that is implemented by this asset. */
+    RelationField APP_APPLICATION_IMPLEMENTED = new RelationField("appApplicationImplemented");
+
+    /** Application component that is implemented by this asset. */
+    RelationField APP_COMPONENT_IMPLEMENTED = new RelationField("appComponentImplemented");
+
     /** Tasks to which this asset provides input. */
     RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
 
@@ -79,6 +85,12 @@ public interface ICatalog {
                 break;
             case AirflowTask.TYPE_NAME:
                 ref = AirflowTask.refByQualifiedName(qualifiedName);
+                break;
+            case AppApplication.TYPE_NAME:
+                ref = AppApplication.refByQualifiedName(qualifiedName);
+                break;
+            case AppComponent.TYPE_NAME:
+                ref = AppComponent.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -653,6 +665,12 @@ public interface ICatalog {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
 
     /** TBC */
     String getAssetCoverImage();

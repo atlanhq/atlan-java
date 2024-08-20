@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 public class ADLSContainer extends Asset
-        implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSContainer, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSContainer";
@@ -91,6 +91,14 @@ public class ADLSContainer extends Asset
     @Attribute
     @Singular
     SortedSet<IADLSObject> adlsObjects;
+
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
 
     /** Location of this asset in Azure. */
     @Attribute

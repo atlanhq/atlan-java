@@ -46,6 +46,14 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Deprecated. */
     @Attribute
     @Singular

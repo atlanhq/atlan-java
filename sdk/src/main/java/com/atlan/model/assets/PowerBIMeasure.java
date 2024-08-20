@@ -47,6 +47,14 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Unique name of the dataset in which this measure exists. */
     @Attribute
     String datasetQualifiedName;

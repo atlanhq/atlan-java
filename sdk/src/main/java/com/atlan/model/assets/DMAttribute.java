@@ -46,6 +46,14 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;
@@ -62,6 +70,10 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     String dMDataModelQualifiedName;
 
+    /** Whether this attribute is derived indicator or not. */
+    @Attribute
+    Boolean dMDerivedIndicator;
+
     /** Entity in which this attribute exists. */
     @Attribute
     IDMEntity dMEntity;
@@ -74,6 +86,14 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     String dMEntityQualifiedName;
 
+    /** Whether this attribute is foreign key indicator or not. */
+    @Attribute
+    Boolean dMForeignKeyIndicator;
+
+    /** Whether this attribute is nullable or not. */
+    @Attribute
+    Boolean dMIsNullable;
+
     /** Attributes from which this attribute is mapped. */
     @Attribute
     @Singular
@@ -84,6 +104,14 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Singular
     SortedSet<IDMAttribute> dMMappedToAttributes;
 
+    /** Precision of the attribute. */
+    @Attribute
+    Long dMPrecision;
+
+    /** Whether this attribute is primary key indicator or not. */
+    @Attribute
+    Boolean dMPrimaryKeyIndicator;
+
     /** Association from this attribute is related. */
     @Attribute
     @Singular
@@ -93,6 +121,10 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     @Singular
     SortedSet<IDMAttributeAssociation> dMRelatedToAttributes;
+
+    /** Scale of the attribute. */
+    @Attribute
+    Long dMScale;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute

@@ -46,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 public class ADLSAccount extends Asset
-        implements IADLSAccount, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSAccount, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSAccount";
@@ -108,6 +108,14 @@ public class ADLSAccount extends Asset
     /** Primary disk state of this account. */
     @Attribute
     ADLSAccountStatus adlsPrimaryDiskState;
+
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
 
     /** Location of this asset in Azure. */
     @Attribute

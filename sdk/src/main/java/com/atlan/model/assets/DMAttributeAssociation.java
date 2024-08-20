@@ -48,6 +48,14 @@ public class DMAttributeAssociation extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Attribute from which this association is related. */
     @Attribute
     IDMAttribute dMAttributeFrom;
@@ -87,10 +95,6 @@ public class DMAttributeAssociation extends Asset
     /** Label of the data attribute association. */
     @Attribute
     String dMLabel;
-
-    /** Owner seal ID of the data attribute association. */
-    @Attribute
-    String dMOwnerSealId;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute

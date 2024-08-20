@@ -47,6 +47,14 @@ public class CogniteTimeSeries extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Asset in which this time series exists. */
     @Attribute
     ICogniteAsset cogniteAsset;

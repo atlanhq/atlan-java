@@ -50,6 +50,9 @@ public interface IAirflowTask {
     KeywordTextField AIRFLOW_TASK_CONNECTION_ID = new KeywordTextField(
             "airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
 
+    /** Group name for the task. */
+    KeywordField AIRFLOW_TASK_GROUP_NAME = new KeywordField("airflowTaskGroupName", "airflowTaskGroupName");
+
     /** Class name for the operator this task uses. */
     KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS = new KeywordTextField(
             "airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
@@ -130,6 +133,9 @@ public interface IAirflowTask {
     /** Identifier for the connection this task accesses. */
     String getAirflowTaskConnectionId();
 
+    /** Group name for the task. */
+    String getAirflowTaskGroupName();
+
     /** Class name for the operator this task uses. */
     String getAirflowTaskOperatorClass();
 
@@ -168,6 +174,12 @@ public interface IAirflowTask {
 
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
+
+    /** Application that is implemented by this asset. */
+    IAppApplication getAppApplicationImplemented();
+
+    /** Application component that is implemented by this asset. */
+    IAppComponent getAppComponentImplemented();
 
     /** TBC */
     String getAssetCoverImage();

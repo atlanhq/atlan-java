@@ -46,6 +46,14 @@ public class DMVersion extends Asset implements IDMVersion, IDM, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Data model for which this version exists. */
     @Attribute
     IDMDataModel dMDataModel;

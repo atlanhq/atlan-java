@@ -53,6 +53,14 @@ public class SalesforceDashboard extends Asset
     @Attribute
     String apiName;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Type of dashboard in Salesforce. */
     @Attribute
     String dashboardType;

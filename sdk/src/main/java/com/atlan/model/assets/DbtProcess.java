@@ -51,6 +51,14 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
+    /** Application that is implemented by this asset. */
+    @Attribute
+    IAppApplication appApplicationImplemented;
+
+    /** Application component that is implemented by this asset. */
+    @Attribute
+    IAppComponent appComponentImplemented;
+
     /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
