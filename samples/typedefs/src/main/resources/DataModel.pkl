@@ -170,6 +170,21 @@ customTypes {
         type = "long"
         childCount = true
       }
+      ["\(a)SubjectArea"] {
+        label = "Subject area"
+        description = "Subject area of the entity."
+        type = "string"
+      }
+      ["\(a)IsRoot"] {
+        label = "Is root"
+        description = "Whether this is a root entity or not."
+        type = "boolean"
+      }
+      ["\(a)EntityType"] {
+        label = "type"
+        description = "Type of the data entity."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmVersion)"] {
@@ -221,11 +236,6 @@ customTypes {
         description = "Label of the data entity association."
         type = "string"
       }
-      ["\(a)OwnerSealId"] {
-        label = "ownerSealId"
-        description = "Owner seal ID of the data entity association."
-        type = "string"
-      }
     }
     enums {
       ["\(t)CardinalityType"] {
@@ -274,7 +284,36 @@ customTypes {
     description = "Instance of an attribute within a data model entity in Atlan."
     parentQualifiedName = "\(a)\(dmEntity)\(qualifiedName)"
     attributes {
-
+      ["\(a)IsNullable"] {
+        label = "Is nullable"
+        description = "Whether this attribute is nullable or not."
+        type = "boolean"
+      }
+      ["\(a)PrimaryKeyIndicator"] {
+        label = "Primary key indicator"
+        description = "Whether this attribute is primary key indicator or not."
+        type = "boolean"
+      }
+      ["\(a)ForeignKeyIndicator"] {
+        label = "Foreign key indicator"
+        description = "Whether this attribute is foreign key indicator or not."
+        type = "boolean"
+      }
+      ["\(a)DerivedIndicator"] {
+        label = "Derived indicator"
+        description = "Whether this attribute is derived indicator or not."
+        type = "boolean"
+      }
+      ["\(a)Precision"] {
+        label = "Precision"
+        description = "Precision of the attribute."
+        type = "long"
+      }
+      ["\(a)Scale"] {
+        label = "Scale"
+        description = "Scale of the attribute."
+        type = "long"
+      }
     }
     relationships {
       ["\(a)\(dmEntity)"] {
@@ -324,11 +363,6 @@ customTypes {
       ["\(a)Label"] {
         label = "label"
         description = "Label of the data attribute association."
-        type = "string"
-      }
-      ["\(a)OwnerSealId"] {
-        label = "ownerSealId"
-        description = "Owner seal ID of the data attribute association."
         type = "string"
       }
     }
