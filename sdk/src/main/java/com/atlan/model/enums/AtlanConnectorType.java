@@ -118,6 +118,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
     PREFECT("prefect", AtlanConnectionCategory.ELT),
     DATA_MODELING("dm", AtlanConnectionCategory.DATABASE),
+    APPLICATION("application", AtlanConnectionCategory.SAAS),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     ;
 
