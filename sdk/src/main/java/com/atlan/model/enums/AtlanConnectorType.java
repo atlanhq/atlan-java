@@ -117,7 +117,8 @@ public enum AtlanConnectorType implements AtlanEnum {
     COGNITE("cognite", AtlanConnectionCategory.SAAS),
     SYNDIGO("syndigo", AtlanConnectionCategory.SAAS),
     PREFECT("prefect", AtlanConnectionCategory.ELT),
-    DATA_MODELING("datamodeling", AtlanConnectionCategory.DATABASE),
+    DATA_MODELING("dm", AtlanConnectionCategory.DATABASE),
+    APPLICATION("application", AtlanConnectionCategory.SAAS),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     ;
 
