@@ -907,8 +907,8 @@ implements <a href="IAppComponent.html" title="interface in com.atlan.model.asse
 <td class="colFirst"><code><a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a AppComponent, from a potentially
- more-complete AppComponent object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to an application component, from a potentially
+ more-complete application component object.</div>
 </td>
 </tr>
 <tr id="i74" class="altColor">
@@ -956,7 +956,7 @@ implements <a href="IAppComponent.html" title="interface in com.atlan.model.asse
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a AppComponent.</div>
+<div class="block">Builds the minimal object necessary to update an application component.</div>
 </td>
 </tr>
 </table>
@@ -1088,86 +1088,6 @@ implements <a href="IAppComponent.html" title="interface in com.atlan.model.asse
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="creator(java.lang.String,com.atlan.model.assets.AppApplication)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>creator</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                                  <a href="AppApplication.html" title="class in com.atlan.model.assets">AppApplication</a>&nbsp;application)
-                                                           throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
-<div class="block">Builds the minimal object necessary to create an application component.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application component</dd>
-<dd><code>application</code> - in which the component should be created, which must have at least
-               a qualifiedName</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to create the component, as a builder</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the application provided is without a qualifiedName</dd>
-</dl>
-</li>
-</ul>
-<a id="creator(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>creator</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                                  java.lang.String&nbsp;applicationQualifiedName)</pre>
-<div class="block">Builds the minimal object necessary to create an application component.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application component</dd>
-<dd><code>applicationQualifiedName</code> - unique name of the application in which this component exists</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to create the component, as a builder</dd>
-</dl>
-</li>
-</ul>
-<a id="creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>creator</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                                  java.lang.String&nbsp;connectionQualifiedName,
-                                                                  java.lang.String&nbsp;applicationName,
-                                                                  java.lang.String&nbsp;applicationQualifiedName)</pre>
-<div class="block">Builds the minimal object necessary to create an application component.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application component</dd>
-<dd><code>connectionQualifiedName</code> - unique name of the connection in which to create the AppComponent</dd>
-<dd><code>applicationName</code> - simple name of the AppApplication in which to create the AppComponent</dd>
-<dd><code>applicationQualifiedName</code> - unique name of the AppApplication in which to create the AppComponent</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to create the component, as a builder</dd>
-</dl>
-</li>
-</ul>
-<a id="generateQualifiedName(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>generateQualifiedName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;name,
-                                                     java.lang.String&nbsp;applicationQualifiedName)</pre>
-<div class="block">Generate a unique application component name.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application component</dd>
-<dd><code>applicationQualifiedName</code> - unique name of the application in which this component exists</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a unique name for the component</dd>
-</dl>
-</li>
-</ul>
 <a id="trimToReference()">
 <!--   -->
 </a>
@@ -1629,6 +1549,68 @@ public static&nbsp;<a href="AppComponent.html" title="class in com.atlan.model.a
 </dl>
 </li>
 </ul>
+<a id="creator(java.lang.String,com.atlan.model.assets.AppApplication)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                  <a href="AppApplication.html" title="class in com.atlan.model.assets">AppApplication</a>&nbsp;application)
+                                                           throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Builds the minimal object necessary to create an application component.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application component</dd>
+<dd><code>application</code> - in which the component should be created, which must have at least
+               a qualifiedName</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the component, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the application provided is without a qualifiedName</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                  java.lang.String&nbsp;applicationQualifiedName)</pre>
+<div class="block">Builds the minimal object necessary to create an application component.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application component</dd>
+<dd><code>applicationQualifiedName</code> - unique name of the application in which this component exists</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the component, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                  java.lang.String&nbsp;connectionQualifiedName,
+                                                                  java.lang.String&nbsp;applicationName,
+                                                                  java.lang.String&nbsp;applicationQualifiedName)</pre>
+<div class="block">Builds the minimal object necessary to create an application component.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application component</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection in which to create the AppComponent</dd>
+<dd><code>applicationName</code> - simple name of the AppApplication in which to create the AppComponent</dd>
+<dd><code>applicationQualifiedName</code> - unique name of the AppApplication in which to create the AppComponent</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the component, as a builder</dd>
+</dl>
+</li>
+</ul>
 <a id="updater(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -1637,13 +1619,31 @@ public static&nbsp;<a href="AppComponent.html" title="class in com.atlan.model.a
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                                   java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a AppComponent.</div>
+<div class="block">Builds the minimal object necessary to update an application component.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the AppComponent</dd>
-<dd><code>name</code> - of the AppComponent</dd>
+<dd><code>qualifiedName</code> - of the application component</dd>
+<dd><code>name</code> - of the application component</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the AppComponent, as a builder</dd>
+<dd>the minimal request necessary to update the application component, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="generateQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>generateQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;name,
+                                                     java.lang.String&nbsp;applicationQualifiedName)</pre>
+<div class="block">Generate a unique application component name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application component</dd>
+<dd><code>applicationQualifiedName</code> - unique name of the application in which this component exists</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a unique name for the component</dd>
 </dl>
 </li>
 </ul>
@@ -1655,15 +1655,15 @@ public static&nbsp;<a href="AppComponent.html" title="class in com.atlan.model.a
 <h4>trimToRequired</h4>
 <pre class="methodSignature">public&nbsp;<a href="AppComponent.AppComponentBuilder.html" title="class in com.atlan.model.assets">AppComponent.AppComponentBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
                                                            throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
-<div class="block">Builds the minimal object necessary to apply an update to a AppComponent, from a potentially
- more-complete AppComponent object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to an application component, from a potentially
+ more-complete application component object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the AppComponent, as a builder</dd>
+<dd>the minimal object necessary to update the application component, as a builder</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for AppComponent are not found in the initial object</dd>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for application component are not found in the initial object</dd>
 </dl>
 </li>
 </ul>

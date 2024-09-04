@@ -6296,6 +6296,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Assets that are outputs from this process.</div>
 </li>
 <li class="blockList">
+<h4>powerBIDataflow</h4>
+<pre><a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a> powerBIDataflow</pre>
+<div class="block">PowerBI Dataflow that is associated with this lineage process.</div>
+</li>
+<li class="blockList">
 <h4>sparkJobs</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; sparkJobs</pre>
 <div class="block">TBC</div>
@@ -8617,6 +8622,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Assets that are outputs from this process.</div>
 </li>
 <li class="blockList">
+<h4>powerBIDataflow</h4>
+<pre><a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a> powerBIDataflow</pre>
+<div class="block">PowerBI Dataflow that is associated with this lineage process.</div>
+</li>
+<li class="blockList">
 <h4>process</h4>
 <pre><a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a> process</pre>
 <div class="block">Process in which this task exists.</div>
@@ -8801,6 +8811,157 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.atlan.model.assets.CosmosMongoDBAccount">
+<!--   -->
+</a>
+<h3>Class <a href="com/atlan/model/assets/CosmosMongoDBAccount.html" title="class in com.atlan.model.assets">com.atlan.model.assets.CosmosMongoDBAccount</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements Serializable</h3>
+<dl class="nameValue">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>appApplicationImplemented</h4>
+<pre><a href="com/atlan/model/assets/IAppApplication.html" title="interface in com.atlan.model.assets">IAppApplication</a> appApplicationImplemented</pre>
+<div class="block">Application that is implemented by this asset.</div>
+</li>
+<li class="blockList">
+<h4>appComponentImplemented</h4>
+<pre><a href="com/atlan/model/assets/IAppComponent.html" title="interface in com.atlan.model.assets">IAppComponent</a> appComponentImplemented</pre>
+<div class="block">Application component that is implemented by this asset.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountConsistencyPolicy</h4>
+<pre>java.lang.String cosmosMongoDBAccountConsistencyPolicy</pre>
+<div class="block">The consistency policy configured for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountDocumentEndpoint</h4>
+<pre>java.lang.String cosmosMongoDBAccountDocumentEndpoint</pre>
+<div class="block">The Document Endpoint URL for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountEnableAutomaticFailover</h4>
+<pre>java.lang.Boolean cosmosMongoDBAccountEnableAutomaticFailover</pre>
+<div class="block">Indicates whether automatic failover is enabled for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountEnableMultipleWriteLocations</h4>
+<pre>java.lang.Boolean cosmosMongoDBAccountEnableMultipleWriteLocations</pre>
+<div class="block">Indicates whether multiple write locations are enabled for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountEnablePartitionKeyMonitor</h4>
+<pre>java.lang.Boolean cosmosMongoDBAccountEnablePartitionKeyMonitor</pre>
+<div class="block">Indicates whether partition key monitoring is enabled for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountInstanceId</h4>
+<pre>java.lang.String cosmosMongoDBAccountInstanceId</pre>
+<div class="block">The unique identifier for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountIsVirtualNetworkFilterEnabled</h4>
+<pre>java.lang.Boolean cosmosMongoDBAccountIsVirtualNetworkFilterEnabled</pre>
+<div class="block">Indicates whether the virtual network filter is enabled for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountLocations</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; cosmosMongoDBAccountLocations</pre>
+<div class="block">The locations where the Cosmos MongoDB account is available.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountMongoEndpoint</h4>
+<pre>java.lang.String cosmosMongoDBAccountMongoEndpoint</pre>
+<div class="block">The MongoDB connection endpoint for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountPublicNetworkAccess</h4>
+<pre>java.lang.String cosmosMongoDBAccountPublicNetworkAccess</pre>
+<div class="block">The status of public network access for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountReadLocations</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; cosmosMongoDBAccountReadLocations</pre>
+<div class="block">The read locations configured for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountResourceGroup</h4>
+<pre>java.lang.String cosmosMongoDBAccountResourceGroup</pre>
+<div class="block">The resource group that contains the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountSubscriptionId</h4>
+<pre>java.lang.String cosmosMongoDBAccountSubscriptionId</pre>
+<div class="block">The ID of the subscription to which the Cosmos MongoDB account belongs.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountType</h4>
+<pre>java.lang.String cosmosMongoDBAccountType</pre>
+<div class="block">The type of the Cosmos MongoDB account, such as RU or VCORE.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountWriteLocations</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; cosmosMongoDBAccountWriteLocations</pre>
+<div class="block">The write locations configured for the Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBDatabaseCount</h4>
+<pre>java.lang.Long cosmosMongoDBDatabaseCount</pre>
+<div class="block">Number of databases in this Cosmos MongoDB account.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBDatabases</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICosmosMongoDBDatabase.html" title="interface in com.atlan.model.assets">ICosmosMongoDBDatabase</a>&gt; cosmosMongoDBDatabases</pre>
+<div class="block">Databases that exist within this account.</div>
+</li>
+<li class="blockList">
+<h4>inputToAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="blockList">
+<h4>inputToSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>noSQLSchemaDefinition</h4>
+<pre>java.lang.String noSQLSchemaDefinition</pre>
+<div class="block">Represents attributes for describing the key schema for the table and indexes.</div>
+</li>
+<li class="blockList">
+<h4>outputFromAirflowTasks</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="blockList">
+<h4>outputFromSparkJobs</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockListLast">
+<h4>typeName</h4>
+<pre>java.lang.String typeName</pre>
+<div class="block">Fixed typeName for CosmosMongoDBAccounts.</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.atlan.model.assets.CosmosMongoDBCollection">
 <!--   -->
 </a>
@@ -8854,6 +9015,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Database in which the collection exists.</div>
 </li>
 <li class="blockList">
+<h4>cosmosMongoDBDatabaseQualifiedName</h4>
+<pre>java.lang.String cosmosMongoDBDatabaseQualifiedName</pre>
+<div class="block">Unique name of the database in which this collection exists.</div>
+</li>
+<li class="blockList">
 <h4>databaseName</h4>
 <pre>java.lang.String databaseName</pre>
 <div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
@@ -8902,6 +9068,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>facts</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ITable.html" title="interface in com.atlan.model.assets">ITable</a>&gt; facts</pre>
 <div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="blockList">
 <h4>inputToAirflowTasks</h4>
@@ -9119,6 +9315,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -9127,6 +9328,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -9178,6 +9389,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>calculationViewQualifiedName</h4>
 <pre>java.lang.String calculationViewQualifiedName</pre>
 <div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccount</h4>
+<pre><a href="com/atlan/model/assets/ICosmosMongoDBAccount.html" title="interface in com.atlan.model.assets">ICosmosMongoDBAccount</a> cosmosMongoDBAccount</pre>
+<div class="block">Account in which the database exists.</div>
+</li>
+<li class="blockList">
+<h4>cosmosMongoDBAccountQualifiedName</h4>
+<pre>java.lang.String cosmosMongoDBAccountQualifiedName</pre>
+<div class="block">Unique name of the account in which this database exists.</div>
 </li>
 <li class="blockList">
 <h4>cosmosMongoDBCollections</h4>
@@ -10816,6 +11037,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Assets that are outputs from this task.</div>
 </li>
 <li class="blockList">
+<h4>powerBIDataflow</h4>
+<pre><a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a> powerBIDataflow</pre>
+<div class="block">PowerBI Dataflow that is associated with this lineage process.</div>
+</li>
+<li class="blockList">
 <h4>process</h4>
 <pre><a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a> process</pre>
 <div class="block">Process in which this task exists.</div>
@@ -11648,6 +11874,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>outputs</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt; outputs</pre>
 <div class="block">Assets that are outputs from this task.</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflow</h4>
+<pre><a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a> powerBIDataflow</pre>
+<div class="block">PowerBI Dataflow that is associated with this lineage process.</div>
 </li>
 <li class="blockList">
 <h4>sparkJobs</h4>
@@ -13519,6 +13750,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -13669,6 +13930,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -13677,6 +13943,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -13830,6 +14106,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -13980,6 +14286,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -13988,6 +14299,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -14151,6 +14472,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -14301,6 +14652,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -14309,6 +14665,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -15646,6 +16012,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <h4>outputs</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt; outputs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflow</h4>
+<pre><a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a> powerBIDataflow</pre>
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
@@ -20056,6 +20427,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -20271,6 +20672,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -20279,6 +20685,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -20856,6 +21272,31 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>powerBIDataflowChildren</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>&gt; powerBIDataflowChildren</pre>
+<div class="block">Child Dataflows to this PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflowParents</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>&gt; powerBIDataflowParents</pre>
+<div class="block">Parent Dataflows to this PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflowRefreshScheduleFrequency</h4>
+<pre>java.lang.String powerBIDataflowRefreshScheduleFrequency</pre>
+<div class="block">Refresh Schedule frequency for a PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflowRefreshScheduleTimes</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; powerBIDataflowRefreshScheduleTimes</pre>
+<div class="block">Time for the refresh schedule set for a PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
+<h4>powerBIDataflowRefreshScheduleTimeZone</h4>
+<pre>java.lang.String powerBIDataflowRefreshScheduleTimeZone</pre>
+<div class="block">Time zone for the refresh schedule set for a PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
 <h4>powerBIEndorsement</h4>
 <pre><a href="com/atlan/model/enums/PowerBIEndorsementType.html" title="enum in com.atlan.model.enums">PowerBIEndorsementType</a> powerBIEndorsement</pre>
 <div class="block">Endorsement status of this asset, in Power BI.</div>
@@ -20871,9 +21312,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Whether this asset is hidden in Power BI (true) or not (false).</div>
 </li>
 <li class="blockList">
+<h4>powerBIProcesses</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; powerBIProcesses</pre>
+<div class="block">Lineage process that associates this PowerBI Dataflow.</div>
+</li>
+<li class="blockList">
 <h4>powerBITableQualifiedName</h4>
 <pre>java.lang.String powerBITableQualifiedName</pre>
 <div class="block">Unique name of the Power BI table in which this asset exists.</div>
+</li>
+<li class="blockList">
+<h4>tables</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IPowerBITable.html" title="interface in com.atlan.model.assets">IPowerBITable</a>&gt; tables</pre>
+<div class="block">PowerBI Tables that are associated with this Dataflow.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -21460,6 +21911,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>columns</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IPowerBIColumn.html" title="interface in com.atlan.model.assets">IPowerBIColumn</a>&gt; columns</pre>
 <div class="block">Columns that exist within this table.</div>
+</li>
+<li class="blockList">
+<h4>dataflowQualifiedNames</h4>
+<pre>java.util.SortedSet&lt;java.lang.String&gt; dataflowQualifiedNames</pre>
+<div class="block">List of qualified names of associated Power BI Dataflows.</div>
+</li>
+<li class="blockList">
+<h4>dataflows</h4>
+<pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IPowerBIDataflow.html" title="interface in com.atlan.model.assets">IPowerBIDataflow</a>&gt; dataflows</pre>
+<div class="block">PowerBI Dataflow that is associated with this PowerBI Table.</div>
 </li>
 <li class="blockList">
 <h4>dataset</h4>
@@ -26754,6 +27215,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -26899,6 +27390,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -26907,6 +27403,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>
@@ -28230,6 +28736,36 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>icebergCatalogName</h4>
+<pre>java.lang.String icebergCatalogName</pre>
+<div class="block">iceberg table catalog name (can be any user defined name)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogSource</h4>
+<pre>java.lang.String icebergCatalogSource</pre>
+<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableName</h4>
+<pre>java.lang.String icebergCatalogTableName</pre>
+<div class="block">catalog table name (actual table name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergCatalogTableNamespace</h4>
+<pre>java.lang.String icebergCatalogTableNamespace</pre>
+<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+</li>
+<li class="blockList">
+<h4>icebergTableBaseLocation</h4>
+<pre>java.lang.String icebergTableBaseLocation</pre>
+<div class="block">iceberg table base location inside the external volume.</div>
+</li>
+<li class="blockList">
+<h4>icebergTableType</h4>
+<pre>java.lang.String icebergTableType</pre>
+<div class="block">iceberg table type (managed vs unmanaged)</div>
+</li>
+<li class="blockList">
 <h4>inputToAirflowTasks</h4>
 <pre>java.util.SortedSet&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -28375,6 +28911,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">TBC</div>
 </li>
 <li class="blockList">
+<h4>tableExternalVolumeName</h4>
+<pre>java.lang.String tableExternalVolumeName</pre>
+<div class="block">external volume name for the table.</div>
+</li>
+<li class="blockList">
 <h4>tableName</h4>
 <pre>java.lang.String tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -28383,6 +28924,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <h4>tableQualifiedName</h4>
 <pre>java.lang.String tableQualifiedName</pre>
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="blockList">
+<h4>tableRetentionTime</h4>
+<pre>java.lang.Long tableRetentionTime</pre>
+<div class="block">Data retention time in days.</div>
+</li>
+<li class="blockList">
+<h4>tableType</h4>
+<pre><a href="com/atlan/model/enums/TableType.html" title="enum in com.atlan.model.enums">TableType</a> tableType</pre>
+<div class="block">Type of the table.</div>
 </li>
 <li class="blockList">
 <h4>typeName</h4>

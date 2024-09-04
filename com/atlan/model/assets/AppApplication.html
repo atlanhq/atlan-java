@@ -896,8 +896,8 @@ implements <a href="IAppApplication.html" title="interface in com.atlan.model.as
 <td class="colFirst"><code><a href="AppApplication.AppApplicationBuilder.html" title="class in com.atlan.model.assets">AppApplication.AppApplicationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a AppApplication, from a potentially
- more-complete AppApplication object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to an application, from a potentially
+ more-complete application object.</div>
 </td>
 </tr>
 <tr id="i73" class="rowColor">
@@ -945,7 +945,7 @@ implements <a href="IAppApplication.html" title="interface in com.atlan.model.as
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a AppApplication.</div>
+<div class="block">Builds the minimal object necessary to update an application.</div>
 </td>
 </tr>
 </table>
@@ -1077,42 +1077,6 @@ implements <a href="IAppApplication.html" title="interface in com.atlan.model.as
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="creator(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>creator</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AppApplication.AppApplicationBuilder.html" title="class in com.atlan.model.assets">AppApplication.AppApplicationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                                      java.lang.String&nbsp;connectionQualifiedName)</pre>
-<div class="block">Builds the minimal object necessary to create an application.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application</dd>
-<dd><code>connectionQualifiedName</code> - unique name of the connection in which this application exists</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to create the application, as a builder</dd>
-</dl>
-</li>
-</ul>
-<a id="generateQualifiedName(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>generateQualifiedName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;name,
-                                                     java.lang.String&nbsp;connectionQualifiedName)</pre>
-<div class="block">Generate a unique application name.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the application</dd>
-<dd><code>connectionQualifiedName</code> - unique name of the connection in which this application exists</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a unique name for the application</dd>
-</dl>
-</li>
-</ul>
 <a id="trimToReference()">
 <!--   -->
 </a>
@@ -1574,6 +1538,24 @@ public static&nbsp;<a href="AppApplication.html" title="class in com.atlan.model
 </dl>
 </li>
 </ul>
+<a id="creator(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AppApplication.AppApplicationBuilder.html" title="class in com.atlan.model.assets">AppApplication.AppApplicationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                      java.lang.String&nbsp;connectionQualifiedName)</pre>
+<div class="block">Builds the minimal object necessary to create an application.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection in which this application exists</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the application, as a builder</dd>
+</dl>
+</li>
+</ul>
 <a id="updater(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -1582,13 +1564,31 @@ public static&nbsp;<a href="AppApplication.html" title="class in com.atlan.model
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AppApplication.AppApplicationBuilder.html" title="class in com.atlan.model.assets">AppApplication.AppApplicationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                                       java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a AppApplication.</div>
+<div class="block">Builds the minimal object necessary to update an application.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the AppApplication</dd>
-<dd><code>name</code> - of the AppApplication</dd>
+<dd><code>qualifiedName</code> - of the application</dd>
+<dd><code>name</code> - of the application</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the AppApplication, as a builder</dd>
+<dd>the minimal request necessary to update the application, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="generateQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>generateQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;name,
+                                                     java.lang.String&nbsp;connectionQualifiedName)</pre>
+<div class="block">Generate a unique application name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the application</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection in which this application exists</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a unique name for the application</dd>
 </dl>
 </li>
 </ul>
@@ -1600,15 +1600,15 @@ public static&nbsp;<a href="AppApplication.html" title="class in com.atlan.model
 <h4>trimToRequired</h4>
 <pre class="methodSignature">public&nbsp;<a href="AppApplication.AppApplicationBuilder.html" title="class in com.atlan.model.assets">AppApplication.AppApplicationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
                                                                throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
-<div class="block">Builds the minimal object necessary to apply an update to a AppApplication, from a potentially
- more-complete AppApplication object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to an application, from a potentially
+ more-complete application object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the AppApplication, as a builder</dd>
+<dd>the minimal object necessary to update the application, as a builder</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for AppApplication are not found in the initial object</dd>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for application are not found in the initial object</dd>
 </dl>
 </li>
 </ul>
