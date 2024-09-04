@@ -34,6 +34,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.TableType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
@@ -144,6 +145,30 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Singular
     SortedSet<ITable> facts;
+
+    /** iceberg table catalog name (can be any user defined name) */
+    @Attribute
+    String icebergCatalogName;
+
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    @Attribute
+    String icebergCatalogSource;
+
+    /** catalog table name (actual table name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableName;
+
+    /** catalog table namespace (actual database name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableNamespace;
+
+    /** iceberg table base location inside the external volume. */
+    @Attribute
+    String icebergTableBaseLocation;
+
+    /** iceberg table type (managed vs unmanaged) */
+    @Attribute
+    String icebergTableType;
 
     /** Whether this table is currently archived (true) or not (false). */
     @Attribute
@@ -291,6 +316,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** external volume name for the table. */
+    @Attribute
+    String tableExternalVolumeName;
+
     /** TBC */
     @Attribute
     String tableName;
@@ -298,6 +327,14 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** TBC */
     @Attribute
     String tableQualifiedName;
+
+    /** Data retention time in days. */
+    @Attribute
+    Long tableRetentionTime;
+
+    /** Type of the table. */
+    @Attribute
+    TableType tableType;
 
     /** TBC */
     @Attribute

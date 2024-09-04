@@ -194,6 +194,24 @@ public enum TextFields implements AtlanSearchableField {
     CONNECTOR_IMAGE("connectorImage"),
     /** Constraint that defines this table partition. */
     CONSTRAINT("constraint"),
+    /** The consistency policy configured for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_CONSISTENCY_POLICY("cosmosMongoDBAccountConsistencyPolicy"),
+    /** The Document Endpoint URL for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_DOCUMENT_ENDPOINT("cosmosMongoDBAccountDocumentEndpoint"),
+    /** The locations where the Cosmos MongoDB account is available. */
+    COSMOS_MONGO_DB_ACCOUNT_LOCATIONS("cosmosMongoDBAccountLocations"),
+    /** The MongoDB connection endpoint for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_MONGO_ENDPOINT("cosmosMongoDBAccountMongoEndpoint"),
+    /** The status of public network access for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_PUBLIC_NETWORK_ACCESS("cosmosMongoDBAccountPublicNetworkAccess"),
+    /** Unique name of the account in which this database exists. */
+    COSMOS_MONGO_DB_ACCOUNT_QUALIFIED_NAME("cosmosMongoDBAccountQualifiedName.text"),
+    /** The read locations configured for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_READ_LOCATIONS("cosmosMongoDBAccountReadLocations"),
+    /** The write locations configured for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_WRITE_LOCATIONS("cosmosMongoDBAccountWriteLocations"),
+    /** Unique name of the database in which this collection exists. */
+    COSMOS_MONGO_DB_DATABASE_QUALIFIED_NAME("cosmosMongoDBDatabaseQualifiedName.text"),
     /** Credential strategy to use for this connection for queries. */
     CREDENTIAL_STRATEGY("credentialStrategy"),
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
@@ -212,6 +230,8 @@ public enum TextFields implements AtlanSearchableField {
     DASHBOARD_TYPE("dashboardType"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
+    /** List of qualified names of associated Power BI Dataflows. */
+    DATAFLOW_QUALIFIED_NAMES("dataflowQualifiedNames.text"),
     /** Unique name of the dataset used to build this report. */
     DATASET_QUALIFIED_NAME("datasetQualifiedName"),
     /** Type of this datasource field. */

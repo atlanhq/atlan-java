@@ -60,6 +60,16 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Singular
     SortedSet<IPowerBIColumn> columns;
 
+    /** List of qualified names of associated Power BI Dataflows. */
+    @Attribute
+    @Singular
+    SortedSet<String> dataflowQualifiedNames;
+
+    /** PowerBI Dataflow that is associated with this PowerBI Table. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> dataflows;
+
     /** Dataset in which this table exists. */
     @Attribute
     IPowerBIDataset dataset;

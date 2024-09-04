@@ -382,6 +382,9 @@ public interface IColumnProcess {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    IPowerBIDataflow getPowerBIDataflow();
+
     /** Process in which this task exists. */
     ILineageProcess getProcess();
 

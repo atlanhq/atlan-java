@@ -79,6 +79,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
     /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;

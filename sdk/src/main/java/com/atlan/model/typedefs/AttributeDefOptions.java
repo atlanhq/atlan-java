@@ -75,6 +75,7 @@ public class AttributeDefOptions extends AtlanObject {
             Column.TYPE_NAME,
             ColumnProcess.TYPE_NAME,
             Connection.TYPE_NAME,
+            CosmosMongoDBAccount.TYPE_NAME,
             CosmosMongoDBCollection.TYPE_NAME,
             CosmosMongoDBDatabase.TYPE_NAME,
             Cube.TYPE_NAME,

@@ -91,6 +91,29 @@ public class PowerBIDataflow extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Child Dataflows to this PowerBI Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> powerBIDataflowChildren;
+
+    /** Parent Dataflows to this PowerBI Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> powerBIDataflowParents;
+
+    /** Refresh Schedule frequency for a PowerBI Dataflow. */
+    @Attribute
+    String powerBIDataflowRefreshScheduleFrequency;
+
+    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
+    @Attribute
+    String powerBIDataflowRefreshScheduleTimeZone;
+
+    /** Time for the refresh schedule set for a PowerBI Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<String> powerBIDataflowRefreshScheduleTimes;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -103,9 +126,19 @@ public class PowerBIDataflow extends Asset
     @Attribute
     Boolean powerBIIsHidden;
 
+    /** Lineage process that associates this PowerBI Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> powerBIProcesses;
+
     /** Unique name of the Power BI table in which this asset exists. */
     @Attribute
     String powerBITableQualifiedName;
+
+    /** PowerBI Tables that are associated with this Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBITable> tables;
 
     /** Deprecated. See 'sourceUrl' instead. */
     @Attribute

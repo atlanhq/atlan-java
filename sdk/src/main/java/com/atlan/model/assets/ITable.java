@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
@@ -60,6 +61,25 @@ public interface ITable {
     /** TBC */
     RelationField FACTS = new RelationField("facts");
 
+    /** iceberg table catalog name (can be any user defined name) */
+    KeywordField ICEBERG_CATALOG_NAME = new KeywordField("icebergCatalogName", "icebergCatalogName");
+
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    KeywordField ICEBERG_CATALOG_SOURCE = new KeywordField("icebergCatalogSource", "icebergCatalogSource");
+
+    /** catalog table name (actual table name on the catalog side). */
+    KeywordField ICEBERG_CATALOG_TABLE_NAME = new KeywordField("icebergCatalogTableName", "icebergCatalogTableName");
+
+    /** catalog table namespace (actual database name on the catalog side). */
+    KeywordField ICEBERG_CATALOG_TABLE_NAMESPACE =
+            new KeywordField("icebergCatalogTableNamespace", "icebergCatalogTableNamespace");
+
+    /** iceberg table base location inside the external volume. */
+    KeywordField ICEBERG_TABLE_BASE_LOCATION = new KeywordField("icebergTableBaseLocation", "icebergTableBaseLocation");
+
+    /** iceberg table type (managed vs unmanaged) */
+    KeywordField ICEBERG_TABLE_TYPE = new KeywordField("icebergTableType", "icebergTableType");
+
     /** Whether this table is partitioned (true) or not (false). */
     BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
 
@@ -98,6 +118,15 @@ public interface ITable {
 
     /** Size of this table, in bytes. */
     NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
+
+    /** external volume name for the table. */
+    KeywordField TABLE_EXTERNAL_VOLUME_NAME = new KeywordField("tableExternalVolumeName", "tableExternalVolumeName");
+
+    /** Data retention time in days. */
+    NumericField TABLE_RETENTION_TIME = new NumericField("tableRetentionTime", "tableRetentionTime");
+
+    /** Type of the table. */
+    KeywordField TABLE_TYPE = new KeywordField("tableType", "tableType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -423,6 +452,24 @@ public interface ITable {
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
+    /** iceberg table catalog name (can be any user defined name) */
+    String getIcebergCatalogName();
+
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    String getIcebergCatalogSource();
+
+    /** catalog table name (actual table name on the catalog side). */
+    String getIcebergCatalogTableName();
+
+    /** catalog table namespace (actual database name on the catalog side). */
+    String getIcebergCatalogTableNamespace();
+
+    /** iceberg table base location inside the external volume. */
+    String getIcebergTableBaseLocation();
+
+    /** iceberg table type (managed vs unmanaged) */
+    String getIcebergTableType();
+
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
 
@@ -657,11 +704,20 @@ public interface ITable {
     /** Subtype of this asset. */
     String getSubType();
 
+    /** external volume name for the table. */
+    String getTableExternalVolumeName();
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();
+
+    /** Data retention time in days. */
+    Long getTableRetentionTime();
+
+    /** Type of the table. */
+    TableType getTableType();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

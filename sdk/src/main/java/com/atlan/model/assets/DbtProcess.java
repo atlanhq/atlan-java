@@ -195,6 +195,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
     /** TBC */
     @Attribute
     @Singular

@@ -42,6 +42,14 @@ public enum BooleanFields implements AtlanSearchableField {
     COGNOS_IS_DISABLED("cognosIsDisabled"),
     /** Whether the Cognos asset is hidden from the ui */
     COGNOS_IS_HIDDEN("cognosIsHidden"),
+    /** Indicates whether automatic failover is enabled for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_ENABLE_AUTOMATIC_FAILOVER("cosmosMongoDBAccountEnableAutomaticFailover"),
+    /** Indicates whether multiple write locations are enabled for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_ENABLE_MULTIPLE_WRITE_LOCATIONS("cosmosMongoDBAccountEnableMultipleWriteLocations"),
+    /** Indicates whether partition key monitoring is enabled for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_ENABLE_PARTITION_KEY_MONITOR("cosmosMongoDBAccountEnablePartitionKeyMonitor"),
+    /** Indicates whether the virtual network filter is enabled for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_IS_VIRTUAL_NETWORK_FILTER_ENABLED("cosmosMongoDBAccountIsVirtualNetworkFilterEnabled"),
     /** Whether this attribute is derived indicator or not. */
     D_M_DERIVED_INDICATOR("dMDerivedIndicator"),
     /** Whether this attribute is foreign key indicator or not. */

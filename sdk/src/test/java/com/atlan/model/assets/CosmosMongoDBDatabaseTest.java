@@ -434,6 +434,8 @@ public class CosmosMongoDBDatabaseTest {
             .tableQualifiedName("String0")
             .viewName("String0")
             .viewQualifiedName("String0")
+            .cosmosMongoDBAccount(CosmosMongoDBAccount.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cosmosMongoDBAccountQualifiedName("String0")
             .cosmosMongoDBCollection(CosmosMongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cosmosMongoDBCollection(
                     CosmosMongoDBCollection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

@@ -124,6 +124,8 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_VARIANCE("columnVariance"),
     /** number of compliant assets in the policy */
     COMPLIANT_ASSETS_COUNT("compliantAssetsCount"),
+    /** Number of databases in this Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_DATABASE_COUNT("cosmosMongoDBDatabaseCount"),
     /** Number of dimensions in the cube. */
     CUBE_DIMENSION_COUNT("cubeDimensionCount"),
     /** Number of total fields in the cube hierarchy. */
@@ -476,6 +478,8 @@ public enum NumericFields implements AtlanSearchableField {
     SUPERSET_DATASET_ID("supersetDatasetId"),
     /** Number of tables in this schema. */
     TABLE_COUNT("tableCount"),
+    /** Data retention time in days. */
+    TABLE_RETENTION_TIME("tableRetentionTime"),
     /** Time (epoch) at which the task expires . */
     TASK_EXPIRES_AT("taskExpiresAt"),
     /** Number of Columns. */

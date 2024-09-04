@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class TableTest {
+public class CosmosMongoDBAccountTest {
 
-    private static final Table full = Table._internal()
+    private static final CosmosMongoDBAccount full = CosmosMongoDBAccount._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,33 +59,7 @@ public class TableTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .calculationViewName("String0")
-            .calculationViewQualifiedName("String0")
-            .databaseName("String0")
-            .databaseQualifiedName("String0")
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .isProfiled(true)
-            .lastProfiledAt(123456789L)
-            .queryCount(123456789L)
-            .queryCountUpdatedAt(123456789L)
-            .queryUserCount(123456789L)
-            .putQueryUserMap("key1", 123456L)
-            .putQueryUserMap("key2", 654321L)
-            .schemaName("String0")
-            .schemaQualifiedName("String0")
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .tableName("String0")
-            .tableQualifiedName("String0")
-            .viewName("String0")
-            .viewQualifiedName("String0")
+            .noSQLSchemaDefinition("String0")
             .appApplicationImplemented(AppApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .appComponentImplemented(AppComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -427,56 +401,42 @@ public class TableTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .alias("String0")
-            .columnCount(123456789L)
-            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .externalLocation("String0")
-            .externalLocationFormat("String0")
-            .externalLocationRegion("String0")
-            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .icebergCatalogName("String0")
-            .icebergCatalogSource("String0")
-            .icebergCatalogTableName("String0")
-            .icebergCatalogTableNamespace("String0")
-            .icebergTableBaseLocation("String0")
-            .icebergTableType("String0")
-            .isPartitioned(true)
-            .isQueryPreview(true)
-            .isSharded(true)
-            .isTemporary(true)
-            .partitionCount(123456789L)
-            .partitionList("String0")
-            .partitionStrategy("String0")
-            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .putQueryPreviewConfig("key1", "value1")
-            .putQueryPreviewConfig("key2", "value2")
-            .rowCount(123456789L)
-            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sizeBytes(123456789L)
-            .tableExternalVolumeName("String0")
-            .tableRetentionTime(123456789L)
-            .tableType(TableType.TEMPORARY)
+            .cosmosMongoDBAccountConsistencyPolicy("String0")
+            .cosmosMongoDBAccountDocumentEndpoint("String0")
+            .cosmosMongoDBAccountEnableAutomaticFailover(true)
+            .cosmosMongoDBAccountEnableMultipleWriteLocations(true)
+            .cosmosMongoDBAccountEnablePartitionKeyMonitor(true)
+            .cosmosMongoDBAccountInstanceId("String0")
+            .cosmosMongoDBAccountIsVirtualNetworkFilterEnabled(true)
+            .cosmosMongoDBAccountLocation("String0")
+            .cosmosMongoDBAccountLocation("String1")
+            .cosmosMongoDBAccountMongoEndpoint("String0")
+            .cosmosMongoDBAccountPublicNetworkAccess("String0")
+            .cosmosMongoDBAccountReadLocation("String0")
+            .cosmosMongoDBAccountReadLocation("String1")
+            .cosmosMongoDBAccountResourceGroup("String0")
+            .cosmosMongoDBAccountSubscriptionId("String0")
+            .cosmosMongoDBAccountType("String0")
+            .cosmosMongoDBAccountWriteLocation("String0")
+            .cosmosMongoDBAccountWriteLocation("String1")
+            .cosmosMongoDBDatabaseCount(123456789L)
+            .cosmosMongoDBDatabase(CosmosMongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cosmosMongoDBDatabase(
+                    CosmosMongoDBDatabase.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static Table frodo;
+    private static CosmosMongoDBAccount frodo;
     private static String serialized;
 
-    @Test(groups = {"Table.builderEquivalency"})
+    @Test(groups = {"CosmosMongoDBAccount.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
+            groups = {"CosmosMongoDBAccount.serialize"},
+            dependsOnGroups = {"CosmosMongoDBAccount.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -485,17 +445,17 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
+            groups = {"CosmosMongoDBAccount.deserialize"},
+            dependsOnGroups = {"CosmosMongoDBAccount.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, Table.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, CosmosMongoDBAccount.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"CosmosMongoDBAccount.equivalency"},
+            dependsOnGroups = {"CosmosMongoDBAccount.serialize", "CosmosMongoDBAccount.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -504,8 +464,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"CosmosMongoDBAccount.equivalency"},
+            dependsOnGroups = {"CosmosMongoDBAccount.serialize", "CosmosMongoDBAccount.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

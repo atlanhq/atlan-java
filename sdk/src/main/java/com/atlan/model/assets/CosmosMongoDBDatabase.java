@@ -73,6 +73,14 @@ public class CosmosMongoDBDatabase extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Account in which the database exists. */
+    @Attribute
+    ICosmosMongoDBAccount cosmosMongoDBAccount;
+
+    /** Unique name of the account in which this database exists. */
+    @Attribute
+    String cosmosMongoDBAccountQualifiedName;
+
     /** Collections that exist within this database. */
     @Attribute
     @Singular

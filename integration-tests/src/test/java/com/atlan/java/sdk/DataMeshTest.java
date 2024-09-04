@@ -6,6 +6,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Column;
@@ -16,6 +17,7 @@ import com.atlan.model.assets.DataProduct;
 import com.atlan.model.assets.Database;
 import com.atlan.model.assets.Schema;
 import com.atlan.model.assets.Table;
+import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
@@ -34,6 +36,7 @@ public class DataMeshTest extends AtlanLiveTest {
     private static final String DB_NAME = PREFIX + "-db";
     private static final String SCH_NAME = PREFIX + "-sch";
     private static final String TBL_NAME = PREFIX + "-table";
+    private static final String VIEW_NAME = PREFIX + "-view";
     private static final String COL_NAME = PREFIX + "-col1";
     private static final String DOMAIN_NAME = PREFIX + "-domain";
     private static final String SUB_DOMAIN_NAME = PREFIX + "-subdom";
@@ -43,6 +46,7 @@ public class DataMeshTest extends AtlanLiveTest {
     private static Database database = null;
     private static Schema schema = null;
     private static Table table = null;
+    private static View view = null;
     private static Column col1 = null;
 
     private static DataDomain domain = null;
@@ -118,6 +122,31 @@ public class DataMeshTest extends AtlanLiveTest {
         assertEquals(table.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(table.getSchemaName(), SCH_NAME);
         assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"mesh.create.view"},
+            dependsOnGroups = {"mesh.create.schema"})
+    void createView() throws AtlanException {
+        View toCreate = View.creator(VIEW_NAME, schema).build();
+        AssetMutationResponse response = toCreate.save();
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset parent = response.getUpdatedAssets().get(0);
+        assertTrue(parent instanceof Schema);
+        assertEquals(parent.getGuid(), schema.getGuid());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof View);
+        view = (View) one;
+        assertNotNull(view.getGuid());
+        assertNotNull(view.getQualifiedName());
+        assertEquals(view.getName(), VIEW_NAME);
+        assertEquals(view.getDatabaseName(), DB_NAME);
+        assertEquals(view.getDatabaseQualifiedName(), database.getQualifiedName());
+        assertEquals(view.getSchemaName(), SCH_NAME);
+        assertEquals(view.getSchemaQualifiedName(), schema.getQualifiedName());
     }
 
     @Test(
@@ -258,6 +287,28 @@ public class DataMeshTest extends AtlanLiveTest {
                 + "\"dataset\": \"" + TBL_NAME + "\","
                 + "\"description\": \"" + description + "\""
                 + "}";
+    }
+
+    @Test(
+            groups = {"mesh.update.product"},
+            dependsOnGroups = {"mesh.create.product", "mesh.create.view"})
+    void updateProduct() throws AtlanException {
+        FluentSearch query = Atlan.getDefaultClient()
+                .assets
+                .select()
+                .whereSome(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
+                .whereSome(View.QUALIFIED_NAME.eq(view.getQualifiedName()))
+                .minSomes(1)
+                .build();
+        DataProduct toUpdate = DataProduct.updater(product.getQualifiedName(), PROD_NAME)
+                .assetSelection(Atlan.getDefaultClient(), query)
+                .build();
+        AssetMutationResponse response = toUpdate.save();
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof DataProduct);
+        assertEquals(one.getGuid(), product.getGuid());
     }
 
     @Test(

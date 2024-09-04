@@ -346,6 +346,18 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTION_SSO_CREDENTIAL_GUID("connectionSSOCredentialGuid"),
     /** Type of the connector through which this asset is accessible. */
     CONNECTOR_TYPE("connectorName"),
+    /** The unique identifier for the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_INSTANCE_ID("cosmosMongoDBAccountInstanceId"),
+    /** Unique name of the account in which this database exists. */
+    COSMOS_MONGO_DB_ACCOUNT_QUALIFIED_NAME("cosmosMongoDBAccountQualifiedName"),
+    /** The resource group that contains the Cosmos MongoDB account. */
+    COSMOS_MONGO_DB_ACCOUNT_RESOURCE_GROUP("cosmosMongoDBAccountResourceGroup"),
+    /** The ID of the subscription to which the Cosmos MongoDB account belongs. */
+    COSMOS_MONGO_DB_ACCOUNT_SUBSCRIPTION_ID("cosmosMongoDBAccountSubscriptionId"),
+    /** The type of the Cosmos MongoDB account, such as RU or VCORE. */
+    COSMOS_MONGO_DB_ACCOUNT_TYPE("cosmosMongoDBAccountType"),
+    /** Unique name of the database in which this collection exists. */
+    COSMOS_MONGO_DB_DATABASE_QUALIFIED_NAME("cosmosMongoDBDatabaseQualifiedName"),
     /** Atlan user who created this asset. */
     CREATED_BY("__createdBy"),
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
@@ -386,6 +398,8 @@ public enum KeywordFields implements AtlanSearchableField {
     DATABASE_NAME("databaseName.keyword"),
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_QUALIFIED_NAME("databaseQualifiedName"),
+    /** List of qualified names of associated Power BI Dataflows. */
+    DATAFLOW_QUALIFIED_NAMES("dataflowQualifiedNames"),
     /** Unique identifier of the asset associated with this data contract. */
     DATA_CONTRACT_ASSET_GUID("dataContractAssetGuid"),
     /** Criticality of this data product. */
@@ -574,6 +588,18 @@ public enum KeywordFields implements AtlanSearchableField {
     GOOGLE_TAGS("googleTags"),
     /** Globally unique identifier (GUID) of any object in Atlan. */
     GUID("__guid"),
+    /** iceberg table catalog name (can be any user defined name) */
+    ICEBERG_CATALOG_NAME("icebergCatalogName"),
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    ICEBERG_CATALOG_SOURCE("icebergCatalogSource"),
+    /** catalog table name (actual table name on the catalog side). */
+    ICEBERG_CATALOG_TABLE_NAME("icebergCatalogTableName"),
+    /** catalog table namespace (actual database name on the catalog side). */
+    ICEBERG_CATALOG_TABLE_NAMESPACE("icebergCatalogTableNamespace"),
+    /** iceberg table base location inside the external volume. */
+    ICEBERG_TABLE_BASE_LOCATION("icebergTableBaseLocation"),
+    /** iceberg table type (managed vs unmanaged) */
+    ICEBERG_TABLE_TYPE("icebergTableType"),
     /** Type of icon for the link, for example: image or emoji. */
     ICON_TYPE("iconType"),
     /** Status of this asset's severity. */
@@ -838,6 +864,12 @@ public enum KeywordFields implements AtlanSearchableField {
     POWER_BI_COLUMN_DATA_TYPE("powerBIColumnDataType"),
     /** Aggregate function to use for summarizing this column. */
     POWER_BI_COLUMN_SUMMARIZE_BY("powerBIColumnSummarizeBy"),
+    /** Refresh Schedule frequency for a PowerBI Dataflow. */
+    POWER_BI_DATAFLOW_REFRESH_SCHEDULE_FREQUENCY("powerBIDataflowRefreshScheduleFrequency"),
+    /** Time for the refresh schedule set for a PowerBI Dataflow. */
+    POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIMES("powerBIDataflowRefreshScheduleTimes"),
+    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
+    POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIME_ZONE("powerBIDataflowRefreshScheduleTimeZone"),
     /** Endorsement status of this asset, in Power BI. */
     POWER_BI_ENDORSEMENT("powerBIEndorsement"),
     /** Name of a column in the same table to use to order this column. */
@@ -1126,10 +1158,14 @@ public enum KeywordFields implements AtlanSearchableField {
     TABLEAU_DATASOURCE_FIELD_DATA_TYPE("tableauDatasourceFieldDataType"),
     /** Data type of the field, from Tableau. */
     TABLEAU_DATA_TYPE("tableauDataType"),
+    /** external volume name for the table. */
+    TABLE_EXTERNAL_VOLUME_NAME("tableExternalVolumeName"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_NAME("tableName.keyword"),
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_QUALIFIED_NAME("tableQualifiedName"),
+    /** Type of the table. */
+    TABLE_TYPE("tableType"),
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     TAG_ALLOWED_VALUES("tagAllowedValues"),
     /** Represents associated tag value */

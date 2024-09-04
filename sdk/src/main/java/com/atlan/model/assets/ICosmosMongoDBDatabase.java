@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -31,6 +32,15 @@ import javax.annotation.processing.Generated;
 public interface ICosmosMongoDBDatabase {
 
     public static final String TYPE_NAME = "CosmosMongoDBDatabase";
+
+    /** Account in which the database exists. */
+    RelationField COSMOS_MONGO_DB_ACCOUNT = new RelationField("cosmosMongoDBAccount");
+
+    /** Unique name of the account in which this database exists. */
+    KeywordTextField COSMOS_MONGO_DB_ACCOUNT_QUALIFIED_NAME = new KeywordTextField(
+            "cosmosMongoDBAccountQualifiedName",
+            "cosmosMongoDBAccountQualifiedName",
+            "cosmosMongoDBAccountQualifiedName.text");
 
     /** Collections that exist within this database. */
     RelationField COSMOS_MONGO_DB_COLLECTIONS = new RelationField("cosmosMongoDBCollections");
@@ -295,6 +305,12 @@ public interface ICosmosMongoDBDatabase {
 
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
+
+    /** Account in which the database exists. */
+    ICosmosMongoDBAccount getCosmosMongoDBAccount();
+
+    /** Unique name of the account in which this database exists. */
+    String getCosmosMongoDBAccountQualifiedName();
 
     /** Collections that exist within this database. */
     SortedSet<ICosmosMongoDBCollection> getCosmosMongoDBCollections();

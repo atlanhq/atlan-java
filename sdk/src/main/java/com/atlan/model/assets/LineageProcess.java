@@ -85,6 +85,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ISparkJob> sparkJobs;
 
