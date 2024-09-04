@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":10,"i24":10,"i25":9,"i26":9};
+var data = {"i0":9,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":9,"i24":10,"i25":10,"i26":9,"i27":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -281,116 +281,123 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomAttributes()">getCustomAttributes</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Attribute(s) that handle custom information direct from source systems.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDisplayText()">getDisplayText</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Human-readable name of the entity.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityStatus()">getEntityStatus</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Status of the entity (if this is a related entity).</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGuid()">getGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Globally-unique identifier for the entity.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="RelationshipAttributes.html" title="class in com.atlan.model.relations">RelationshipAttributes</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRelationshipAttributes()">getRelationshipAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attributes specific to the relationship.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRelationshipGuid()">getRelationshipGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier of the relationship (when this is a related entity).</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRelationshipStatus()">getRelationshipStatus</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Status of the relationship (when this is a related entity).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRelationshipType()">getRelationshipType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of the relationship (if this is a related entity).</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Reference.SaveSemantic.html" title="enum in com.atlan.model.relations">Reference.SaveSemantic</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSemantic()">getSemantic</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Semantic for how this relationship should be saved, if used in an asset request on which .save() is called.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the type that defines the entity.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUniqueAttributes()">getUniqueAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attribute(s) that uniquely identify the entity (when this is a related entity).</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isComplete()">isComplete</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, indicates that this object represents a complete view of the entity.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidReference()">isValidReference</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates whether this object can be used as a reference (relationship).</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidReferenceByGuid()">isValidReferenceByGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates whether this object can be used as a valid reference by GUID.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidReferenceByQualifiedName()">isValidReferenceByQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates whether this object can be used as a valid reference by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCompleteObject()">setCompleteObject</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Sets the internal tracking of this object to indicate it is a complete representation of an entity.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>static <a href="Reference.html" title="class in com.atlan.model.relations">Reference</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#to(java.lang.String,java.lang.String)">to</a></span>&#8203;(java.lang.String&nbsp;typeName,
   java.lang.String&nbsp;guid)</code></th>
@@ -398,16 +405,16 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 <div class="block">Quickly create a new reference to another asset, by its GUID.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>protected static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateRelationship(java.lang.String,java.util.Map)">validateRelationship</a></span>&#8203;(java.lang.String&nbsp;typeName,
                     java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
@@ -415,7 +422,7 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 <div class="block">Validate that the required parameters are present to set up a relationship.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validateRequired(java.lang.String,java.util.Map)">validateRequired</a></span>&#8203;(java.lang.String&nbsp;typeName,
                 java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;parameters)</code></th>
@@ -761,6 +768,18 @@ implements java.lang.Comparable&lt;<a href="Reference.html" title="class in com.
 <pre class="methodSignature">public&nbsp;<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;getUniqueAttributes()</pre>
 <div class="block">Attribute(s) that uniquely identify the entity (when this is a related entity).
  If the guid is not provided, these must be provided.</div>
+</li>
+</ul>
+<a id="getCustomAttributes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCustomAttributes</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getCustomAttributes()</pre>
+<div class="block">Attribute(s) that handle custom information direct from source systems. Not to be
+ confused with custom metadata attributes, which are user-defined and user-managed, and
+ are instead found in <code>customMetadataSets</code>.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
