@@ -10,6 +10,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -113,6 +114,34 @@ public class AppApplication extends Asset implements IAppApplication, IApp, ICat
     @Attribute
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /**
+     * Builds the minimal object necessary to create an application.
+     *
+     * @param name of the application
+     * @param connectionQualifiedName unique name of the connection in which this application exists
+     * @return the minimal request necessary to create the application, as a builder
+     */
+    public static AppApplicationBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return AppApplication._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique application name.
+     *
+     * @param name of the application
+     * @param connectionQualifiedName unique name of the connection in which this application exists
+     * @return a unique name for the application
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
+    }
 
     /**
      * Builds the minimal object necessary to create a relationship to a AppApplication, from a potentially
