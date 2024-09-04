@@ -12,6 +12,7 @@ import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DynamoDBStatus;
+import com.atlan.model.enums.TableType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
@@ -162,6 +163,30 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<ITable> facts;
 
+    /** iceberg table catalog name (can be any user defined name) */
+    @Attribute
+    String icebergCatalogName;
+
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    @Attribute
+    String icebergCatalogSource;
+
+    /** catalog table name (actual table name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableName;
+
+    /** catalog table namespace (actual database name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableNamespace;
+
+    /** iceberg table base location inside the external volume. */
+    @Attribute
+    String icebergTableBaseLocation;
+
+    /** iceberg table type (managed vs unmanaged) */
+    @Attribute
+    String icebergTableType;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -297,6 +322,10 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** external volume name for the table. */
+    @Attribute
+    String tableExternalVolumeName;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
@@ -304,6 +333,14 @@ public class DynamoDBTable extends Asset
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
+
+    /** Data retention time in days. */
+    @Attribute
+    Long tableRetentionTime;
+
+    /** Type of the table. */
+    @Attribute
+    TableType tableType;
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute

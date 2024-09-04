@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -35,6 +36,30 @@ public interface IPowerBIDataflow {
 
     /** Datasets used by this dataflow. */
     RelationField DATASETS = new RelationField("datasets");
+
+    /** Child Dataflows to this PowerBI Dataflow. */
+    RelationField POWER_BI_DATAFLOW_CHILDREN = new RelationField("powerBIDataflowChildren");
+
+    /** Parent Dataflows to this PowerBI Dataflow. */
+    RelationField POWER_BI_DATAFLOW_PARENTS = new RelationField("powerBIDataflowParents");
+
+    /** Refresh Schedule frequency for a PowerBI Dataflow. */
+    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_FREQUENCY =
+            new KeywordField("powerBIDataflowRefreshScheduleFrequency", "powerBIDataflowRefreshScheduleFrequency");
+
+    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
+    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIME_ZONE =
+            new KeywordField("powerBIDataflowRefreshScheduleTimeZone", "powerBIDataflowRefreshScheduleTimeZone");
+
+    /** Time for the refresh schedule set for a PowerBI Dataflow. */
+    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIMES =
+            new KeywordField("powerBIDataflowRefreshScheduleTimes", "powerBIDataflowRefreshScheduleTimes");
+
+    /** Lineage process that associates this PowerBI Dataflow. */
+    RelationField POWER_BI_PROCESSES = new RelationField("powerBIProcesses");
+
+    /** PowerBI Tables that are associated with this Dataflow. */
+    RelationField TABLES = new RelationField("tables");
 
     /** Deprecated. See 'sourceUrl' instead. */
     TextField WEB_URL = new TextField("webUrl", "webUrl");
@@ -399,6 +424,21 @@ public interface IPowerBIDataflow {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** Child Dataflows to this PowerBI Dataflow. */
+    SortedSet<IPowerBIDataflow> getPowerBIDataflowChildren();
+
+    /** Parent Dataflows to this PowerBI Dataflow. */
+    SortedSet<IPowerBIDataflow> getPowerBIDataflowParents();
+
+    /** Refresh Schedule frequency for a PowerBI Dataflow. */
+    String getPowerBIDataflowRefreshScheduleFrequency();
+
+    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
+    String getPowerBIDataflowRefreshScheduleTimeZone();
+
+    /** Time for the refresh schedule set for a PowerBI Dataflow. */
+    SortedSet<String> getPowerBIDataflowRefreshScheduleTimes();
+
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
 
@@ -407,6 +447,9 @@ public interface IPowerBIDataflow {
 
     /** Whether this asset is hidden in Power BI (true) or not (false). */
     Boolean getPowerBIIsHidden();
+
+    /** Lineage process that associates this PowerBI Dataflow. */
+    SortedSet<ILineageProcess> getPowerBIProcesses();
 
     /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
@@ -503,6 +546,9 @@ public interface IPowerBIDataflow {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** PowerBI Tables that are associated with this Dataflow. */
+    SortedSet<IPowerBITable> getTables();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

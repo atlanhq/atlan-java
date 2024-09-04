@@ -425,6 +425,12 @@ public class CosmosMongoDBCollectionTest {
             .externalLocationRegion("String0")
             .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .icebergCatalogName("String0")
+            .icebergCatalogSource("String0")
+            .icebergCatalogTableName("String0")
+            .icebergCatalogTableNamespace("String0")
+            .icebergTableBaseLocation("String0")
+            .icebergTableType("String0")
             .isPartitioned(true)
             .isQueryPreview(true)
             .isSharded(true)
@@ -441,6 +447,9 @@ public class CosmosMongoDBCollectionTest {
             .rowCount(123456789L)
             .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sizeBytes(123456789L)
+            .tableExternalVolumeName("String0")
+            .tableRetentionTime(123456789L)
+            .tableType(TableType.TEMPORARY)
             .calculationViewName("String0")
             .calculationViewQualifiedName("String0")
             .databaseName("String0")
@@ -469,6 +478,7 @@ public class CosmosMongoDBCollectionTest {
             .viewName("String0")
             .viewQualifiedName("String0")
             .cosmosMongoDBDatabase(CosmosMongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cosmosMongoDBDatabaseQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();

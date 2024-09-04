@@ -196,6 +196,10 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
     /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;

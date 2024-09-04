@@ -116,34 +116,6 @@ public class AppApplication extends Asset implements IAppApplication, IApp, ICat
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
-     * Builds the minimal object necessary to create an application.
-     *
-     * @param name of the application
-     * @param connectionQualifiedName unique name of the connection in which this application exists
-     * @return the minimal request necessary to create the application, as a builder
-     */
-    public static AppApplicationBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-        return AppApplication._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .name(name)
-                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
-                .connectorType(connectorType)
-                .connectionQualifiedName(connectionQualifiedName);
-    }
-
-    /**
-     * Generate a unique application name.
-     *
-     * @param name of the application
-     * @param connectionQualifiedName unique name of the connection in which this application exists
-     * @return a unique name for the application
-     */
-    public static String generateQualifiedName(String name, String connectionQualifiedName) {
-        return connectionQualifiedName + "/" + name;
-    }
-
-    /**
      * Builds the minimal object necessary to create a relationship to a AppApplication, from a potentially
      * more-complete AppApplication object.
      *
@@ -478,11 +450,28 @@ public class AppApplication extends Asset implements IAppApplication, IApp, ICat
     }
 
     /**
-     * Builds the minimal object necessary to update a AppApplication.
+     * Builds the minimal object necessary to create an application.
      *
-     * @param qualifiedName of the AppApplication
-     * @param name of the AppApplication
-     * @return the minimal request necessary to update the AppApplication, as a builder
+     * @param name of the application
+     * @param connectionQualifiedName unique name of the connection in which this application exists
+     * @return the minimal request necessary to create the application, as a builder
+     */
+    public static AppApplicationBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return AppApplication._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update an application.
+     *
+     * @param qualifiedName of the application
+     * @param name of the application
+     * @return the minimal request necessary to update the application, as a builder
      */
     public static AppApplicationBuilder<?, ?> updater(String qualifiedName, String name) {
         return AppApplication._internal()
@@ -492,11 +481,22 @@ public class AppApplication extends Asset implements IAppApplication, IApp, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AppApplication, from a potentially
-     * more-complete AppApplication object.
+     * Generate a unique application name.
      *
-     * @return the minimal object necessary to update the AppApplication, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AppApplication are not found in the initial object
+     * @param name of the application
+     * @param connectionQualifiedName unique name of the connection in which this application exists
+     * @return a unique name for the application
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to an application, from a potentially
+     * more-complete application object.
+     *
+     * @return the minimal object necessary to update the application, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for application are not found in the initial object
      */
     @Override
     public AppApplicationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

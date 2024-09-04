@@ -8,7 +8,10 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.enums.TableType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -19,22 +22,85 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Snowflake dynamic table in Atlan.
+ * Instance of a Cosmos MongoDB account in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ISnowflakeDynamicTable {
+public interface ICosmosMongoDBAccount {
 
-    public static final String TYPE_NAME = "SnowflakeDynamicTable";
+    public static final String TYPE_NAME = "CosmosMongoDBAccount";
 
-    /** SQL statements used to define the dynamic table. */
-    TextField DEFINITION = new TextField("definition", "definition");
+    /** The consistency policy configured for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_CONSISTENCY_POLICY =
+            new TextField("cosmosMongoDBAccountConsistencyPolicy", "cosmosMongoDBAccountConsistencyPolicy");
+
+    /** The Document Endpoint URL for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_DOCUMENT_ENDPOINT =
+            new TextField("cosmosMongoDBAccountDocumentEndpoint", "cosmosMongoDBAccountDocumentEndpoint");
+
+    /** Indicates whether automatic failover is enabled for the Cosmos MongoDB account. */
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_AUTOMATIC_FAILOVER = new BooleanField(
+            "cosmosMongoDBAccountEnableAutomaticFailover", "cosmosMongoDBAccountEnableAutomaticFailover");
+
+    /** Indicates whether multiple write locations are enabled for the Cosmos MongoDB account. */
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_MULTIPLE_WRITE_LOCATIONS = new BooleanField(
+            "cosmosMongoDBAccountEnableMultipleWriteLocations", "cosmosMongoDBAccountEnableMultipleWriteLocations");
+
+    /** Indicates whether partition key monitoring is enabled for the Cosmos MongoDB account. */
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_PARTITION_KEY_MONITOR = new BooleanField(
+            "cosmosMongoDBAccountEnablePartitionKeyMonitor", "cosmosMongoDBAccountEnablePartitionKeyMonitor");
+
+    /** The unique identifier for the Cosmos MongoDB account. */
+    KeywordField COSMOS_MONGO_DB_ACCOUNT_INSTANCE_ID =
+            new KeywordField("cosmosMongoDBAccountInstanceId", "cosmosMongoDBAccountInstanceId");
+
+    /** Indicates whether the virtual network filter is enabled for the Cosmos MongoDB account. */
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_IS_VIRTUAL_NETWORK_FILTER_ENABLED = new BooleanField(
+            "cosmosMongoDBAccountIsVirtualNetworkFilterEnabled", "cosmosMongoDBAccountIsVirtualNetworkFilterEnabled");
+
+    /** The locations where the Cosmos MongoDB account is available. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_LOCATIONS =
+            new TextField("cosmosMongoDBAccountLocations", "cosmosMongoDBAccountLocations");
+
+    /** The MongoDB connection endpoint for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_MONGO_ENDPOINT =
+            new TextField("cosmosMongoDBAccountMongoEndpoint", "cosmosMongoDBAccountMongoEndpoint");
+
+    /** The status of public network access for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_PUBLIC_NETWORK_ACCESS =
+            new TextField("cosmosMongoDBAccountPublicNetworkAccess", "cosmosMongoDBAccountPublicNetworkAccess");
+
+    /** The read locations configured for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_READ_LOCATIONS =
+            new TextField("cosmosMongoDBAccountReadLocations", "cosmosMongoDBAccountReadLocations");
+
+    /** The resource group that contains the Cosmos MongoDB account. */
+    KeywordField COSMOS_MONGO_DB_ACCOUNT_RESOURCE_GROUP =
+            new KeywordField("cosmosMongoDBAccountResourceGroup", "cosmosMongoDBAccountResourceGroup");
+
+    /** The ID of the subscription to which the Cosmos MongoDB account belongs. */
+    KeywordField COSMOS_MONGO_DB_ACCOUNT_SUBSCRIPTION_ID =
+            new KeywordField("cosmosMongoDBAccountSubscriptionId", "cosmosMongoDBAccountSubscriptionId");
+
+    /** The type of the Cosmos MongoDB account, such as RU or VCORE. */
+    KeywordField COSMOS_MONGO_DB_ACCOUNT_TYPE =
+            new KeywordField("cosmosMongoDBAccountType", "cosmosMongoDBAccountType");
+
+    /** The write locations configured for the Cosmos MongoDB account. */
+    TextField COSMOS_MONGO_DB_ACCOUNT_WRITE_LOCATIONS =
+            new TextField("cosmosMongoDBAccountWriteLocations", "cosmosMongoDBAccountWriteLocations");
+
+    /** Number of databases in this Cosmos MongoDB account. */
+    NumericField COSMOS_MONGO_DB_DATABASE_COUNT =
+            new NumericField("cosmosMongoDBDatabaseCount", "cosmosMongoDBDatabaseCount");
+
+    /** Databases that exist within this account. */
+    RelationField COSMOS_MONGO_DB_DATABASES = new RelationField("cosmosMongoDBDatabases");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -44,9 +110,6 @@ public interface ISnowflakeDynamicTable {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Alias for this table. */
-    String getAlias();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -273,12 +336,6 @@ public interface ISnowflakeDynamicTable {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
-    String getCalculationViewName();
-
-    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
-    String getCalculationViewQualifiedName();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -291,12 +348,6 @@ public interface ISnowflakeDynamicTable {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** Number of columns in this table. */
-    Long getColumnCount();
-
-    /** Columns that exist within this table. */
-    SortedSet<IColumn> getColumns();
-
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
@@ -306,53 +357,71 @@ public interface ISnowflakeDynamicTable {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** The consistency policy configured for the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountConsistencyPolicy();
+
+    /** The Document Endpoint URL for the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountDocumentEndpoint();
+
+    /** Indicates whether automatic failover is enabled for the Cosmos MongoDB account. */
+    Boolean getCosmosMongoDBAccountEnableAutomaticFailover();
+
+    /** Indicates whether multiple write locations are enabled for the Cosmos MongoDB account. */
+    Boolean getCosmosMongoDBAccountEnableMultipleWriteLocations();
+
+    /** Indicates whether partition key monitoring is enabled for the Cosmos MongoDB account. */
+    Boolean getCosmosMongoDBAccountEnablePartitionKeyMonitor();
+
+    /** The unique identifier for the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountInstanceId();
+
+    /** Indicates whether the virtual network filter is enabled for the Cosmos MongoDB account. */
+    Boolean getCosmosMongoDBAccountIsVirtualNetworkFilterEnabled();
+
+    /** The locations where the Cosmos MongoDB account is available. */
+    SortedSet<String> getCosmosMongoDBAccountLocations();
+
+    /** The MongoDB connection endpoint for the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountMongoEndpoint();
+
+    /** The status of public network access for the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountPublicNetworkAccess();
+
+    /** The read locations configured for the Cosmos MongoDB account. */
+    SortedSet<String> getCosmosMongoDBAccountReadLocations();
+
+    /** The resource group that contains the Cosmos MongoDB account. */
+    String getCosmosMongoDBAccountResourceGroup();
+
+    /** The ID of the subscription to which the Cosmos MongoDB account belongs. */
+    String getCosmosMongoDBAccountSubscriptionId();
+
+    /** The type of the Cosmos MongoDB account, such as RU or VCORE. */
+    String getCosmosMongoDBAccountType();
+
+    /** The write locations configured for the Cosmos MongoDB account. */
+    SortedSet<String> getCosmosMongoDBAccountWriteLocations();
+
+    /** Number of databases in this Cosmos MongoDB account. */
+    Long getCosmosMongoDBDatabaseCount();
+
+    /** Databases that exist within this account. */
+    SortedSet<ICosmosMongoDBDatabase> getCosmosMongoDBDatabases();
+
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseName();
-
-    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseQualifiedName();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IDbtTest> getDbtTests();
-
-    /** SQL statements used to define the dynamic table. */
-    String getDefinition();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
 
-    /** TBC */
-    SortedSet<ITable> getDimensions();
-
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** External location of this table, for example: an S3 object location. */
-    String getExternalLocation();
-
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    String getExternalLocationFormat();
-
-    /** Region of the external location of this table, for example: S3 region. */
-    String getExternalLocationRegion();
-
-    /** TBC */
-    SortedSet<ITable> getFacts();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -362,24 +431,6 @@ public interface ISnowflakeDynamicTable {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
-
-    /** iceberg table catalog name (can be any user defined name) */
-    String getIcebergCatalogName();
-
-    /** iceberg table catalog type (glue, polaris, snowflake) */
-    String getIcebergCatalogSource();
-
-    /** catalog table name (actual table name on the catalog side). */
-    String getIcebergCatalogTableName();
-
-    /** catalog table namespace (actual database name on the catalog side). */
-    String getIcebergCatalogTableNamespace();
-
-    /** iceberg table base location inside the external volume. */
-    String getIcebergTableBaseLocation();
-
-    /** iceberg table type (managed vs unmanaged) */
-    String getIcebergTableType();
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
@@ -404,24 +455,6 @@ public interface ISnowflakeDynamicTable {
 
     /** TBC */
     Boolean getIsPartial();
-
-    /** Whether this table is partitioned (true) or not (false). */
-    Boolean getIsPartitioned();
-
-    /** Whether this asset has been profiled (true) or not (false). */
-    Boolean getIsProfiled();
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    Boolean getIsQueryPreview();
-
-    /** Whether this table is a sharded table (true) or not (false). */
-    Boolean getIsSharded();
-
-    /** Whether this table is temporary (true) or not (false). */
-    Boolean getIsTemporary();
-
-    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
-    Long getLastProfiledAt();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -450,6 +483,9 @@ public interface ISnowflakeDynamicTable {
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    String getNoSQLSchemaDefinition();
+
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();
 
@@ -468,65 +504,20 @@ public interface ISnowflakeDynamicTable {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Number of partitions in this table. */
-    Long getPartitionCount();
-
-    /** List of partitions in this table. */
-    String getPartitionList();
-
-    /** Partition strategy for this table. */
-    String getPartitionStrategy();
-
-    /** Partitions that exist within this table. */
-    SortedSet<ITablePartition> getPartitions();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
-    /** Queries that access this table. */
-    SortedSet<IAtlanQuery> getQueries();
-
-    /** Number of times this asset has been queried. */
-    Long getQueryCount();
-
-    /** Time (epoch) at which the query count was last updated, in milliseconds. */
-    Long getQueryCountUpdatedAt();
-
-    /** Configuration for preview queries. */
-    Map<String, String> getQueryPreviewConfig();
-
-    /** Number of unique users who have queried this asset. */
-    Long getQueryUserCount();
-
-    /** Map of unique users who have queried this asset to the number of times they have queried it. */
-    Map<String, Long> getQueryUserMap();
-
     /** README that is linked to this asset. */
     IReadme getReadme();
-
-    /** Number of rows in this table. */
-    Long getRowCount();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
-    /** Schema in which this table exists. */
-    ISchema getSchema();
-
-    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaName();
-
-    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaQualifiedName();
-
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
-
-    /** Size of this table, in bytes. */
-    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -597,12 +588,6 @@ public interface ISnowflakeDynamicTable {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -615,32 +600,11 @@ public interface ISnowflakeDynamicTable {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** external volume name for the table. */
-    String getTableExternalVolumeName();
-
-    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableName();
-
-    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableQualifiedName();
-
-    /** Data retention time in days. */
-    Long getTableRetentionTime();
-
-    /** Type of the table. */
-    TableType getTableType();
-
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
-
-    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewName();
-
-    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();

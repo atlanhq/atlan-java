@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
@@ -36,6 +37,13 @@ public interface IPowerBITable {
 
     /** Columns that exist within this table. */
     RelationField COLUMNS = new RelationField("columns");
+
+    /** List of qualified names of associated Power BI Dataflows. */
+    KeywordTextField DATAFLOW_QUALIFIED_NAMES =
+            new KeywordTextField("dataflowQualifiedNames", "dataflowQualifiedNames", "dataflowQualifiedNames.text");
+
+    /** PowerBI Dataflow that is associated with this PowerBI Table. */
+    RelationField DATAFLOWS = new RelationField("dataflows");
 
     /** Dataset in which this table exists. */
     RelationField DATASET = new RelationField("dataset");
@@ -323,6 +331,12 @@ public interface IPowerBITable {
 
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
+
+    /** List of qualified names of associated Power BI Dataflows. */
+    SortedSet<String> getDataflowQualifiedNames();
+
+    /** PowerBI Dataflow that is associated with this PowerBI Table. */
+    SortedSet<IPowerBIDataflow> getDataflows();
 
     /** Dataset in which this table exists. */
     IPowerBIDataset getDataset();

@@ -544,7 +544,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     public static DataProductBuilder<?, ?> creator(
             AtlanClient client, String name, String domainQualifiedName, FluentSearch assetSelection)
             throws InvalidRequestException {
-        return creator(client, name, domainQualifiedName, IndexSearchDSL.of(assetSelection.toUnfilteredQuery()));
+        return creator(name, domainQualifiedName, "").assetSelection(client, assetSelection);
     }
 
     /**
@@ -580,8 +580,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
                 .parentDomainQualifiedName(domainQualifiedName)
                 .superDomainQualifiedName(StringUtils.getSuperDomainQualifiedName(domainQualifiedName))
                 .dataDomain(DataDomain.refByQualifiedName(domainQualifiedName))
-                .dataProductAssetsDSL(
-                        DataProductAssetsDSL.builder(assetSelection).build().toJson(client))
+                .assetSelection(client, assetSelection)
                 .dataProductAssetsPlaybookFilter("{\"condition\":\"AND\",\"isGroupLocked\":false,\"rules\":[]}")
                 .daapStatus(DataProductStatus.ACTIVE);
     }
@@ -739,6 +738,33 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
         }
         return results;
+    }
+
+    public abstract static class DataProductBuilder<C extends DataProduct, B extends DataProductBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {
+
+        /**
+         * Change the selection of assets for the data product, based on the specified Atlan fluent search.
+         *
+         * @param client connectivity to an Atlan tenant
+         * @param assetSelection fluent search query that defines the assets to include in the data product
+         * @return the builder for the data product, with an updated set of criteria for its assets
+         */
+        public B assetSelection(AtlanClient client, FluentSearch assetSelection) {
+            return assetSelection(client, IndexSearchDSL.of(assetSelection.toUnfilteredQuery()));
+        }
+
+        /**
+         * Change the selection of assets for the data product, based on the specified Atlan search query.
+         *
+         * @param client connectivity to an Atlan tenant
+         * @param assetSelection search query that defines the assets to include in the data product
+         * @return the builder for the data product, with an updated set of criteria for its assets
+         */
+        public B assetSelection(AtlanClient client, IndexSearchDSL assetSelection) {
+            return this.dataProductAssetsDSL(
+                    DataProductAssetsDSL.builder(assetSelection).build().toJson(client));
+        }
     }
 
     /**

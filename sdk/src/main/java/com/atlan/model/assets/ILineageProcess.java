@@ -55,6 +55,9 @@ public interface ILineageProcess {
     KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
 
     /** TBC */
+    RelationField POWER_BI_DATAFLOW = new RelationField("powerBIDataflow");
+
+    /** TBC */
     RelationField SPARK_JOBS = new RelationField("sparkJobs");
 
     /** TBC */
@@ -407,6 +410,9 @@ public interface ILineageProcess {
 
     /** TBC */
     Double getPopularityScore();
+
+    /** TBC */
+    IPowerBIDataflow getPowerBIDataflow();
 
     /** TBC */
     String getQualifiedName();

@@ -71,7 +71,7 @@
      * @return the minimal request necessary to update the application component, as a builder
      */
     public static AppComponentBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AppApplication._internal()
+        return AppComponent._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);

@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DynamoDBSecondaryIndexProjectionType;
 import com.atlan.model.enums.DynamoDBStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -382,6 +383,24 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
+    /** iceberg table catalog name (can be any user defined name) */
+    String getIcebergCatalogName();
+
+    /** iceberg table catalog type (glue, polaris, snowflake) */
+    String getIcebergCatalogSource();
+
+    /** catalog table name (actual table name on the catalog side). */
+    String getIcebergCatalogTableName();
+
+    /** catalog table namespace (actual database name on the catalog side). */
+    String getIcebergCatalogTableNamespace();
+
+    /** iceberg table base location inside the external volume. */
+    String getIcebergTableBaseLocation();
+
+    /** iceberg table type (managed vs unmanaged) */
+    String getIcebergTableType();
+
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
 
@@ -619,11 +638,20 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Subtype of this asset. */
     String getSubType();
 
+    /** external volume name for the table. */
+    String getTableExternalVolumeName();
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();
+
+    /** Data retention time in days. */
+    Long getTableRetentionTime();
+
+    /** Type of the table. */
+    TableType getTableType();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

@@ -78,6 +78,10 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
     /** TBC */
     @Attribute
     @Singular
