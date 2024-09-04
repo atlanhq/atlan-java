@@ -147,6 +147,8 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (pendingTasks != null) {
             builder.pendingTasks(pendingTasks);
         }
+        TreeMap<String, String> customAttributes =
+                JacksonUtils.deserializeObject(client, root, "customAttributes", new TypeReference<>() {});
 
         Class<?> builderClass = builder.getClass();
 
@@ -210,10 +212,11 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             }
         }
 
-        // Custom attributes can come from two places, only one of which should ever have data...
+        // Custom (metadata) attributes can come from two places, only one of which should ever have data...
         Map<String, CustomMetadataAttributes> cm = null;
 
-        // 1. For search results, they're embedded in `attributes` in the form <cmId>.<attrId>
+        // 1. For search results, they're embedded in `attributes` in the form <cmId>.<attrId> (custom metadata)
+        //    or just __customAttributes (source-specific custom attributes)
         if (!leftOverAttributes.isEmpty()) {
             // Translate these into custom metadata structure
             try {
@@ -221,9 +224,21 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             } catch (AtlanException e) {
                 throw new IOException(e);
             }
+            if (leftOverAttributes.containsKey("__customAttributes")) {
+                JsonNode caSearch = leftOverAttributes.get("__customAttributes");
+                if (caSearch != null && !caSearch.isNull()) {
+                    customAttributes = Serde.allInclusiveMapper.readValue(caSearch.asText(), new TypeReference<>() {});
+                }
+            }
         }
 
-        // 2. For asset retrievals, they're all in a `businessAttributes` dict
+        // Note that these are source-provided custom attributes, not custom METADATA attributes (different things)
+        if (customAttributes != null) {
+            builder.customAttributes(customAttributes);
+        }
+
+        // 2. For asset retrievals, they're all in a `businessAttributes` dict (custom metadata)
+        //    or directly under `customAttributes` (source-specific custom attributes, handled above)
         if (businessAttributes != null) {
             // Translate these into custom metadata structure
             try {

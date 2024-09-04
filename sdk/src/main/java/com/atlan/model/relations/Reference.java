@@ -21,6 +21,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("cast")
 public class Reference extends AtlanObject implements Comparable<Reference>, AuditDetail {
     private static final long serialVersionUID = 2L;
 
@@ -207,6 +208,14 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
      * If the guid is not provided, these must be provided.
      */
     UniqueAttributes uniqueAttributes;
+
+    /**
+     * Attribute(s) that handle custom information direct from source systems. Not to be
+     * confused with custom metadata attributes, which are user-defined and user-managed, and
+     * are instead found in {@code customMetadataSets}.
+     */
+    @Singular("customAttribute")
+    Map<String, String> customAttributes;
 
     /** {@inheritDoc} */
     @Override
