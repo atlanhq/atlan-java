@@ -185,7 +185,10 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     // values or empty lists)
                     Object attrValue = ReflectionCache.getValue(asset, fieldName);
                     if (attrValue != null
-                            && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())) {
+                            && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
+                            && !attrValue.equals(Collections.EMPTY_MAP)
+                            && !attrValue.equals(Collections.EMPTY_SET)
+                            && !attrValue.equals(Collections.EMPTY_LIST)) {
                         String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
                         sp.defaultSerializeField(serializeName, attrValue, gen);
                     }

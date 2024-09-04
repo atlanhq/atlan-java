@@ -53,6 +53,13 @@ public interface IReferenceable {
     InternalNumericField UPDATE_TIME =
             new InternalNumericField("updateTime", "__modificationTimestamp", "__modificationTimestamp");
 
+    /**
+     * Any source-provided custom information.
+     * NOTE: this is NOT the same as custom metadata (user-managed), but is an entirely different area of source-managed
+     * custom information.
+     */
+    TextField CUSTOM_ATTRIBUTES = new TextField("__customAttributes", "__customAttributes");
+
     /** Name of the type that defines the entity. */
     String getTypeName();
 
