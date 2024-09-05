@@ -28,35 +28,41 @@ class S3Sync(
     private val accessKey: String = "",
     private val secretKey: String = "",
 ) : ObjectStorageSyncer {
-
-    private val credential = if (accessKey.isNotBlank()) {
-        AwsBasicCredentials.create(accessKey, secretKey)
-    } else {
-        null
-    }
-    private val s3Client = if (credential != null) {
-        S3Client.builder()
-            .credentialsProvider(StaticCredentialsProvider.create(credential))
-            .region(Region.of(region))
-            .build()
-    } else {
-        S3Client.builder()
-            .region(Region.of(region))
-            .build()
-    }
+    private val credential =
+        if (accessKey.isNotBlank()) {
+            AwsBasicCredentials.create(accessKey, secretKey)
+        } else {
+            null
+        }
+    private val s3Client =
+        if (credential != null) {
+            S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(credential))
+                .region(Region.of(region))
+                .build()
+        } else {
+            S3Client.builder()
+                .region(Region.of(region))
+                .build()
+        }
 
     /** {@inheritDoc} */
-    override fun copyFrom(prefix: String, localDirectory: String): List<String> {
+    override fun copyFrom(
+        prefix: String,
+        localDirectory: String,
+    ): List<String> {
         logger.info { "Syncing files from s3://$bucketName/$prefix to $localDirectory" }
 
-        val request = ListObjectsV2Request.builder()
-            .bucket(bucketName)
-            .prefix(prefix)
-            .build()
+        val request =
+            ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .build()
 
-        val localFilesLastModified = File(localDirectory).walkTopDown().filter { it.isFile }.map {
-            it.relativeTo(File(localDirectory)).path to it.lastModified()
-        }.toMap()
+        val localFilesLastModified =
+            File(localDirectory).walkTopDown().filter { it.isFile }.map {
+                it.relativeTo(File(localDirectory)).path to it.lastModified()
+            }.toMap()
 
         val s3FilesToDownload = mutableListOf<String>()
         s3Client.listObjectsV2(request).contents().forEach { file ->
@@ -83,13 +89,18 @@ class S3Sync(
     }
 
     /** {@inheritDoc} */
-    override fun copyLatestFrom(prefix: String, extension: String, localDirectory: String): String {
+    override fun copyLatestFrom(
+        prefix: String,
+        extension: String,
+        localDirectory: String,
+    ): String {
         logger.info { "Copying latest $extension file from s3://$bucketName/$prefix to $localDirectory" }
 
-        val request = ListObjectsV2Request.builder()
-            .bucket(bucketName)
-            .prefix(prefix)
-            .build()
+        val request =
+            ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .build()
 
         val s3FilesToDownload = mutableListOf<String>()
         s3Client.listObjectsV2(request).contents().forEach { file ->
@@ -99,27 +110,32 @@ class S3Sync(
             }
         }
         s3FilesToDownload.sortDescending()
-        val latestFile = if (s3FilesToDownload.isNotEmpty()) {
-            s3FilesToDownload[0]
-        } else {
-            ""
-        }
+        val latestFile =
+            if (s3FilesToDownload.isNotEmpty()) {
+                s3FilesToDownload[0]
+            } else {
+                ""
+            }
 
-        val localFilePath = if (latestFile.isNotBlank()) {
-            val local = File(localDirectory, latestFile).path
-            downloadFrom(
-                File(prefix, latestFile).path,
-                local,
-            )
-            local
-        } else {
-            ""
-        }
+        val localFilePath =
+            if (latestFile.isNotBlank()) {
+                val local = File(localDirectory, latestFile).path
+                downloadFrom(
+                    File(prefix, latestFile).path,
+                    local,
+                )
+                local
+            } else {
+                ""
+            }
         return localFilePath
     }
 
     /** {@inheritDoc} */
-    override fun downloadFrom(remoteKey: String, localFile: String) {
+    override fun downloadFrom(
+        remoteKey: String,
+        localFile: String,
+    ) {
         logger.info { " ... downloading s3://$bucketName/$remoteKey to $localFile" }
         val local = File(localFile)
         if (local.exists()) {
@@ -136,17 +152,22 @@ class S3Sync(
     }
 
     /** {@inheritDoc} */
-    override fun copyTo(localDirectory: String, prefix: String): Boolean {
+    override fun copyTo(
+        localDirectory: String,
+        prefix: String,
+    ): Boolean {
         logger.info { "Syncing files from $localDirectory to s3://$bucketName/$prefix" }
 
         val s3Client = S3Client.builder().region(Region.of(region)).build()
-        val request = ListObjectsV2Request.builder()
-            .bucket(bucketName)
-            .prefix(prefix)
-            .build()
-        val s3FilesLastModified = s3Client.listObjectsV2(request).contents().associate {
-            File(it.key()).relativeTo(File(prefix)).path to it.lastModified().toEpochMilli()
-        }
+        val request =
+            ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(prefix)
+                .build()
+        val s3FilesLastModified =
+            s3Client.listObjectsV2(request).contents().associate {
+                File(it.key()).relativeTo(File(prefix)).path to it.lastModified().toEpochMilli()
+            }
 
         val localFilesToUpload = mutableListOf<String>()
         File(localDirectory).walkTopDown().filter { it.isFile }.forEach { file ->
@@ -170,7 +191,10 @@ class S3Sync(
     }
 
     /** {@inheritDoc} */
-    override fun uploadTo(localFile: String, remoteKey: String) {
+    override fun uploadTo(
+        localFile: String,
+        remoteKey: String,
+    ) {
         logger.info { " ... uploading $localFile to s3://$bucketName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in S3

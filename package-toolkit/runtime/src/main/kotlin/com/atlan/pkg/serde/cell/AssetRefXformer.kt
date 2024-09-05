@@ -157,7 +157,10 @@ object AssetRefXformer {
      * @param candidate the value to check
      * @return true if the value requires special relationship handling, otherwise false
      */
-    fun requiresHandling(fieldName: String, candidate: Any): Boolean {
+    fun requiresHandling(
+        fieldName: String,
+        candidate: Any,
+    ): Boolean {
         return when (fieldName) {
             Asset.LINKS.atlanFieldName -> true
             Asset.README.atlanFieldName -> true

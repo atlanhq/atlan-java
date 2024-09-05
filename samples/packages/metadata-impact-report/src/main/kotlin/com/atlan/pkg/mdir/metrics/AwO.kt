@@ -14,15 +14,15 @@ class AwO(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "AwO - Assets with Owners",
-    "AwO",
-    "**Total active assets in Atlan with owners.** This is useful to monitor the level of basic enrichment of assets across your data ecosystem.",
-    Reporter.CAT_ADOPTION,
-    client,
-    batchSize,
-    logger,
-    notes = "The value for sub-metrics AwOG and AwOU may not add up to this number, as this metric will only count an asset once even if it has both group and individual owners.",
-) {
+        "AwO - Assets with Owners",
+        "AwO",
+        "**Total active assets in Atlan with owners.** This is useful to monitor the level of basic enrichment of assets across your data ecosystem.",
+        Reporter.CAT_ADOPTION,
+        client,
+        batchSize,
+        logger,
+        notes = "The value for sub-metrics AwOG and AwOU may not add up to this number, as this metric will only count an asset once even if it has both group and individual owners.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         val hasIndividualOwner = AwOU(client, batchSize, logger).query().build().toQuery()

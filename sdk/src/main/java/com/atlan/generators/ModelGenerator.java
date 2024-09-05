@@ -9,7 +9,6 @@ import com.atlan.model.typedefs.StructDef;
 import freemarker.template.Template;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,7 +24,6 @@ public class ModelGenerator extends AbstractGenerator {
         generateStructs();
         generateAssets();
         generateRelationships();
-        generateSearchFields();
     }
 
     private void generateEnums() throws Exception {
@@ -166,31 +164,6 @@ public class ModelGenerator extends AbstractGenerator {
                 }
             } else {
                 cache.addRelationshipGenerator(relationshipDef.getName(), generator);
-            }
-        }
-    }
-
-    private void generateSearchFields() throws Exception {
-        Template searchTemplate = ftl.getTemplate("enum_search.ftl");
-        Set<SearchFieldGenerator.IndexType> enumsToGenerate = Set.of(
-                SearchFieldGenerator.IndexType.NUMERIC,
-                SearchFieldGenerator.IndexType.KEYWORD,
-                SearchFieldGenerator.IndexType.TEXT,
-                SearchFieldGenerator.IndexType.STEMMED,
-                SearchFieldGenerator.IndexType.BOOLEAN,
-                SearchFieldGenerator.IndexType.RANK_FEATURE);
-        for (SearchFieldGenerator.IndexType toGenerate : enumsToGenerate) {
-            log.info("Generating for: {}", toGenerate);
-            SearchFieldGenerator generator =
-                    new SearchFieldGenerator(cache.getEntityDefCache().values(), toGenerate, cfg);
-            createDirectoryIdempotent(cfg.getPackagePath() + File.separator + SearchFieldGenerator.DIRECTORY);
-            String filename = cfg.getPackagePath() + File.separator + SearchFieldGenerator.DIRECTORY + File.separator
-                    + generator.getClassName() + ".java";
-            try (BufferedWriter fs = new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
-                searchTemplate.process(generator, fs);
-            } catch (IOException e) {
-                log.error("Unable to open file output: {}", filename, e);
             }
         }
     }

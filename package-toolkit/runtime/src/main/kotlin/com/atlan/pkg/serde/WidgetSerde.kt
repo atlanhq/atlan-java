@@ -21,7 +21,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 
 object WidgetSerde {
-
     // Creates a single static mapper to use across calls
     private val mapper = jacksonObjectMapper()
 
@@ -38,7 +37,10 @@ object WidgetSerde {
     class MultiSelectDeserializer : StdDeserializer<List<String>>(
         TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
     ) {
-        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): List<String> {
+        override fun deserialize(
+            p: JsonParser?,
+            ctxt: DeserializationContext?,
+        ): List<String> {
             val root = p?.codec?.readTree<JsonNode>(p)
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
@@ -66,7 +68,11 @@ object WidgetSerde {
             serialize(value, gen, serializers)
         }
 
-        override fun serialize(value: List<String>?, gen: JsonGenerator?, provider: SerializerProvider?) {
+        override fun serialize(
+            value: List<String>?,
+            gen: JsonGenerator?,
+            provider: SerializerProvider?,
+        ) {
             StringWrapperSerializer.wrap(value, gen, provider)
         }
     }
@@ -82,7 +88,10 @@ object WidgetSerde {
             return deserialize(p, ctxt)
         }
 
-        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): ConnectorAndConnections? {
+        override fun deserialize(
+            p: JsonParser?,
+            ctxt: DeserializationContext?,
+        ): ConnectorAndConnections? {
             val root = p?.codec?.readTree<JsonNode>(p)
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
@@ -106,7 +115,11 @@ object WidgetSerde {
             serialize(value, gen, serializers)
         }
 
-        override fun serialize(value: ConnectorAndConnections?, gen: JsonGenerator?, provider: SerializerProvider?) {
+        override fun serialize(
+            value: ConnectorAndConnections?,
+            gen: JsonGenerator?,
+            provider: SerializerProvider?,
+        ) {
             StringWrapperSerializer.wrap(value, gen, provider)
         }
     }
@@ -122,7 +135,10 @@ object WidgetSerde {
             return deserialize(p, ctxt)
         }
 
-        override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Connection? {
+        override fun deserialize(
+            p: JsonParser?,
+            ctxt: DeserializationContext?,
+        ): Connection? {
             val root = p?.codec?.readTree<JsonNode>(p)
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
@@ -146,13 +162,21 @@ object WidgetSerde {
             serialize(value, gen, serializers)
         }
 
-        override fun serialize(value: Connection?, gen: JsonGenerator?, provider: SerializerProvider?) {
+        override fun serialize(
+            value: Connection?,
+            gen: JsonGenerator?,
+            provider: SerializerProvider?,
+        ) {
             StringWrapperSerializer.wrap(value, gen, provider)
         }
     }
 
     object StringWrapperSerializer {
-        fun wrap(value: Any?, gen: JsonGenerator?, provider: SerializerProvider?) {
+        fun wrap(
+            value: Any?,
+            gen: JsonGenerator?,
+            provider: SerializerProvider?,
+        ) {
             if (value == null) {
                 gen?.writeNull()
             } else {

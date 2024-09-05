@@ -30,26 +30,6 @@
     }
 
     /**
-     * Builds the minimal object necessary for creating a GlossaryCategory. At least one of glossaryGuid or
-     * glossaryQualifiedName must be provided.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique identifier of the GlossaryCategory's glossary
-     * @param glossaryQualifiedName unique name of the GlossaryCategory's glossary
-     * @return the minimal object necessary to create the GlossaryCategory, as a builder
-     * @deprecated see {@link #creator(String, String)} instead
-     */
-    @Deprecated
-    public static GlossaryCategoryBuilder<?, ?> creator(
-            String name, String glossaryGuid, String glossaryQualifiedName) {
-        if (glossaryGuid != null) {
-            return creator(name, glossaryGuid);
-        } else {
-            return creator(name, glossaryQualifiedName);
-        }
-    }
-
-    /**
      * Builds the minimal object necessary to update a GlossaryCategory.
      *
      * @param qualifiedName of the GlossaryCategory

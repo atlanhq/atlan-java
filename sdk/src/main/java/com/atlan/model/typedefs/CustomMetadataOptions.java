@@ -26,64 +26,6 @@ public class CustomMetadataOptions extends AtlanObject {
      *
      * @param url to an image (for example a .png)
      * @return the necessary options for setting this image as the logo for the custom metadata
-     * @deprecated see {@link #withImage(String)}
-     */
-    @Deprecated
-    public static CustomMetadataOptions withLogoFromURL(String url) {
-        return withLogoFromURL(url, false);
-    }
-
-    /**
-     * Provide custom metadata options that set the logo for the custom metadata to the provided
-     * emoji. The custom metadata will be editable through the UI.
-     *
-     * @param emoji the emoji character to use for the logo
-     * @return the necessary options for setting this emoji character as the logo for the custom metadata
-     * @deprecated see {@link #withEmoji(String)}
-     */
-    @Deprecated
-    public static CustomMetadataOptions withLogoAsEmoji(String emoji) {
-        return withLogoAsEmoji(emoji, false);
-    }
-
-    /**
-     * Provide custom metadata options that set the logo for the custom metadata from the image at
-     * the provided URL.
-     *
-     * @param url to an image (for example a .png)
-     * @param locked if true, the custom metadata cannot be modified through the Atlan UI
-     * @return the necessary options for setting this image as the logo for the custom metadata
-     * @deprecated see {@link #withImage(String, boolean)}
-     */
-    @Deprecated
-    public static CustomMetadataOptions withLogoFromURL(String url, boolean locked) {
-        return CustomMetadataOptions.builder()
-                .logoType(LogoType.IMAGE)
-                .logoUrl(url)
-                .isLocked(Boolean.toString(locked))
-                .build();
-    }
-
-    /**
-     * Provide custom metadata options that set the logo for the custom metadata to the provided
-     * emoji.
-     *
-     * @param emoji the emoji character to use for the logo
-     * @param locked if true, the custom metadata cannot be modified through the Atlan UI
-     * @return the necessary options for setting this emoji character as the logo for the custom metadata
-     * @deprecated see {@link #withEmoji(String, boolean)}
-     */
-    @Deprecated
-    public static CustomMetadataOptions withLogoAsEmoji(String emoji, boolean locked) {
-        return withEmoji(emoji, locked);
-    }
-
-    /**
-     * Provide custom metadata options that set the logo for the custom metadata from the image at
-     * the provided URL. The custom metadata will be editable through the UI.
-     *
-     * @param url to an image (for example a .png)
-     * @return the necessary options for setting this image as the logo for the custom metadata
      */
     public static CustomMetadataOptions withImage(String url) {
         return withImage(url, false);

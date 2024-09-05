@@ -249,6 +249,11 @@ pkl {
 
 tasks.getByName("genPklConnectors") {
     dependsOn(":package-toolkit:config:generateBuildInfo")
+    finalizedBy(
+        ":package-toolkit:runtime:sourcesJar",
+        ":package-toolkit:runtime:javadocJar",
+        ":package-toolkit:runtime:test",
+    )
 }
 
 java {

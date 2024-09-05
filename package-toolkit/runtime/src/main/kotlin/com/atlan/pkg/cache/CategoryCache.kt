@@ -27,7 +27,11 @@ object CategoryCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
+    override fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int,
+        maxRetries: Int,
+    ): Asset? {
         try {
             val category =
                 GlossaryCategory.select()
@@ -77,7 +81,11 @@ object CategoryCache : AssetCache() {
      * @param glossaryName name of the glossary for which to bulk-cache categories
      * @param attributes (checked) to retrieve for each category in the hierarchy
      */
-    fun traverseAndCacheHierarchy(glossaryName: String, attributes: List<AtlanField>, relatedAttributes: List<AtlanField> = listOf()): List<GlossaryCategory> {
+    fun traverseAndCacheHierarchy(
+        glossaryName: String,
+        attributes: List<AtlanField>,
+        relatedAttributes: List<AtlanField> = listOf(),
+    ): List<GlossaryCategory> {
         val categories = mutableListOf<GlossaryCategory>()
         logger.info { "Caching entire hierarchy for $glossaryName, up-front..." }
         val glossary = GlossaryCache.getByIdentity(glossaryName)
@@ -116,11 +124,12 @@ object CategoryCache : AssetCache() {
             is GlossaryCategory -> {
                 // Note: this only works as long as we always ensure that categories are loaded
                 // in level-order (parents before children)
-                val parentIdentity = if (asset.parentCategory == null) {
-                    ""
-                } else {
-                    getIdentity(asset.parentCategory.guid)
-                }
+                val parentIdentity =
+                    if (asset.parentCategory == null) {
+                        ""
+                    } else {
+                        getIdentity(asset.parentCategory.guid)
+                    }
                 return if (parentIdentity.isNullOrBlank()) {
                     "${asset.name}${GLOSSARY_DELIMITER}${asset.anchor.name}"
                 } else {

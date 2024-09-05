@@ -13,15 +13,15 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 object CanonicalExampleTest {
-
     lateinit var model: Model
 
     @BeforeClass
     fun modelEval() {
         val source = ModuleSource.path("src/test/resources/CanonicalExample.pkl")
-        model = ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
-            evaluator.evaluate(source).to<Model>()
-        }
+        model =
+            ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
+                evaluator.evaluate(source).to<Model>()
+            }
     }
 
     @Test

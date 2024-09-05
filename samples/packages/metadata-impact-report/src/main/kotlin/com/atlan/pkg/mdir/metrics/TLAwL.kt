@@ -14,15 +14,15 @@ class TLAwL(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "TLAwL - Table-Level Assets with Lineage",
-    "TLAwL",
-    "**Total active table-level assets in Atlan (tables, views, materialized views) *with* lineage.** This is useful to:\n" +
-        "- Monitor the footprint of data stores in your data ecosystem for which you can do root-cause and impact analysis",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "TLAwL - Table-Level Assets with Lineage",
+        "TLAwL",
+        "**Total active table-level assets in Atlan (tables, views, materialized views) *with* lineage.** This is useful to:\n" +
+            "- Monitor the footprint of data stores in your data ecosystem for which you can do root-cause and impact analysis",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

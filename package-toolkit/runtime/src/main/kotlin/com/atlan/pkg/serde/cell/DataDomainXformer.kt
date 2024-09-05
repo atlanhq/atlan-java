@@ -11,7 +11,6 @@ import com.atlan.pkg.cache.DataDomainCache
  * Static object to transform data domain references.
  */
 object DataDomainXformer {
-
     const val DATA_PRODUCT_DELIMITER = "@@@"
     const val DATA_DOMAIN_DELIMITER = "@"
 

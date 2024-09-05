@@ -24,10 +24,11 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
     private val c1 = makeUnique("ema1")
     private val connectorType = AtlanConnectorType.AWS_SITE_WISE
 
-    private val files = listOf(
-        "asset-export.csv",
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            "asset-export.csv",
+            "debug.log",
+        )
 
     private fun createConnections() {
         Connection.creator(c1, connectorType)
@@ -44,22 +45,25 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
         batch.add(db1)
         val sch1 = Schema.creator("sch1", db1).build()
         batch.add(sch1)
-        val tbl1 = Table.creator("tbl1", sch1)
-            .userDescription("Must have some enrichment to be included!")
-            .build()
+        val tbl1 =
+            Table.creator("tbl1", sch1)
+                .userDescription("Must have some enrichment to be included!")
+                .build()
         batch.add(tbl1)
         batch.flush()
     }
 
     private fun archiveTable() {
         val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(connection))
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(connection))
+                .toRequest()
         val response = retrySearchUntil(request, 1)
-        val guids = response.stream()
-            .map { it.guid }
-            .toList()
+        val guids =
+            response.stream()
+                .map { it.guid }
+                .toList()
         Atlan.getDefaultClient().assets.delete(guids, AtlanDeleteType.SOFT).block()
     }
 
@@ -87,10 +91,11 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
     @Test
     fun activeAssetMigrated() {
         val targetConnection = Connection.findByName(c1, connectorType)[0]!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
-            .includeOnResults(Table.STATUS)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
+                .includeOnResults(Table.STATUS)
+                .toRequest()
         var count = 0
         var status = AtlanStatus.DELETED
         while (status == AtlanStatus.DELETED && count < Atlan.getDefaultClient().maxNetworkRetries) {

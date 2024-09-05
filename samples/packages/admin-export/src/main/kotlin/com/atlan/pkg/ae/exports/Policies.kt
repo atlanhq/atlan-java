@@ -17,7 +17,6 @@ class Policies(
     private val connectionMap: Map<String, ConnectionId>,
     private val logger: KLogger,
 ) {
-
     fun export() {
         logger.info { "Exporting policies, ${ if (includeNative) "including" else "excluding" } out-of-the-box..." }
         val sheet = xlsx.createSheet("Policies")
@@ -63,7 +62,10 @@ class Policies(
             }
     }
 
-    private fun getResources(client: AtlanClient, policy: AuthPolicy): String {
+    private fun getResources(
+        client: AtlanClient,
+        policy: AuthPolicy,
+    ): String {
         if (policy.accessControl?.typeName == "Purpose") {
             // In this case the "resources" are tags, so we should translate the tag names
             return policy.policyResources?.joinToString("\n") {

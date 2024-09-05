@@ -11,7 +11,6 @@ import com.atlan.pkg.cache.GlossaryCache
  * Static object to transform glossary assignment references.
  */
 object GlossaryXformer {
-
     const val GLOSSARY_DELIMITER = "@@@"
 
     /**

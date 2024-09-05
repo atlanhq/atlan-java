@@ -46,16 +46,15 @@ abstract class AssetImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : CSVImporter(
-    filename,
-    logger,
-    typeNameFilter,
-    attrsToOverwrite,
-    creationHandling = creationHandling,
-    batchSize = batchSize,
-    trackBatches = trackBatches,
-    fieldSeparator = fieldSeparator,
-) {
-
+        filename,
+        logger,
+        typeNameFilter,
+        attrsToOverwrite,
+        creationHandling = creationHandling,
+        batchSize = batchSize,
+        trackBatches = trackBatches,
+        fieldSeparator = fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
@@ -77,7 +76,11 @@ abstract class AssetImporter(
         const val ENTITY_NAME = "entityName"
 
         /** {@inheritDoc} */
-        override fun getQualifiedNameDetails(row: List<String>, header: List<String>, typeName: String): QualifiedNameDetails {
+        override fun getQualifiedNameDetails(
+            row: List<String>,
+            header: List<String>,
+            typeName: String,
+        ): QualifiedNameDetails {
             val parent: QualifiedNameDetails?
             val current: String
             when (typeName) {
@@ -105,12 +108,14 @@ abstract class AssetImporter(
                 }
                 else -> throw IllegalStateException("Unknown SQL type: $typeName")
             }
-            val unique = parent?.let {
-                if (parent.uniqueQN.isBlank()) current else "${parent.uniqueQN}/$current"
-            } ?: current
-            val partial = parent?.let {
-                if (parent.partialQN.isBlank()) current else "${parent.partialQN}/$current"
-            } ?: ""
+            val unique =
+                parent?.let {
+                    if (parent.uniqueQN.isBlank()) current else "${parent.uniqueQN}/$current"
+                } ?: current
+            val partial =
+                parent?.let {
+                    if (parent.partialQN.isBlank()) current else "${parent.partialQN}/$current"
+                } ?: ""
             return QualifiedNameDetails(
                 unique,
                 partial,

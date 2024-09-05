@@ -108,21 +108,23 @@ object CustomMetadataExtender {
         } else {
             val attrs = mutableListOf<AttributeDef>()
             cm.attributeDefs.forEach { attr ->
-                val options = attr.options.toBuilder()
-                    .applicableConnections(connectionQNs)
-                    .applicableGlossaries(glossaryQNs)
-                    .applicableDomains(domainQNs)
-                    .build()
+                val options =
+                    attr.options.toBuilder()
+                        .applicableConnections(connectionQNs)
+                        .applicableGlossaries(glossaryQNs)
+                        .applicableDomains(domainQNs)
+                        .build()
                 attrs.add(
                     attr.toBuilder()
                         .options(options)
                         .build(),
                 )
             }
-            val revised = cm.toBuilder()
-                .clearAttributeDefs()
-                .attributeDefs(attrs)
-                .build()
+            val revised =
+                cm.toBuilder()
+                    .clearAttributeDefs()
+                    .attributeDefs(attrs)
+                    .build()
             try {
                 revised.update()
             } catch (e: AtlanException) {

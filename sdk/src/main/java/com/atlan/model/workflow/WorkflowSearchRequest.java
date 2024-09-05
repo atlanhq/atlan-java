@@ -192,36 +192,6 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
     }
 
     /**
-     * Find workflows based on their type (prefix).
-     *
-     * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
-     * @param maxResults the maximum number of results to retrieve
-     * @return the list of workflows of the provided type, with the most-recently created first
-     * @throws AtlanException on any API communication issue
-     * @deprecated see {@link #findByType(AtlanPackageType, int)} for the replacement
-     */
-    @Deprecated
-    public static List<WorkflowSearchResult> findByType(String prefix, int maxResults) throws AtlanException {
-        return findByType(Atlan.getDefaultClient(), prefix, maxResults);
-    }
-
-    /**
-     * Find workflows based on their type (prefix).
-     *
-     * @param client connectivity to the Atlan tenant on which to find the workflows
-     * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
-     * @param maxResults the maximum number of results to retrieve
-     * @return the list of workflows of the provided type, with the most-recently created first
-     * @throws AtlanException on any API communication issue
-     * @deprecated see {@link #findByType(AtlanClient, AtlanPackageType, int)} for the replacement
-     */
-    @Deprecated
-    public static List<WorkflowSearchResult> findByType(AtlanClient client, String prefix, int maxResults)
-            throws AtlanException {
-        return findByPrefix(client, prefix, maxResults);
-    }
-
-    /**
      * Find workflows based on their type.
      *
      * @param type of the workflow

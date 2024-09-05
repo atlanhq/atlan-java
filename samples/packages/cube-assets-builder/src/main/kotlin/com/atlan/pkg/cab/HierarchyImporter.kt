@@ -34,15 +34,15 @@ class HierarchyImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
-    preprocessed.preprocessedFile,
-    attrsToOverwrite,
-    creationHandling,
-    batchSize,
-    CubeHierarchy.TYPE_NAME,
-    KotlinLogging.logger {},
-    trackBatches,
-    fieldSeparator,
-) {
+        preprocessed.preprocessedFile,
+        attrsToOverwrite,
+        creationHandling,
+        batchSize,
+        CubeHierarchy.TYPE_NAME,
+        KotlinLogging.logger {},
+        trackBatches,
+        fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(CubeHierarchy.CUBE_HIERARCHY_NAME.atlanFieldName)?.let { it as String } ?: ""

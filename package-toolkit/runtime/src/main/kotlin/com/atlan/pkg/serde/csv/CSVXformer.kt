@@ -37,11 +37,12 @@ abstract class CSVXformer(
 
     init {
         val input = Paths.get(inputFile)
-        val builder = CsvReader.builder()
-            .fieldSeparator(fieldSeparator)
-            .quoteCharacter('"')
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
+        val builder =
+            CsvReader.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter('"')
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
         header = getHeader(inputFile, fieldSeparator)
         reader = builder.ofCsvRecord(input)
         counter = builder.ofCsvRecord(input)
@@ -55,13 +56,17 @@ abstract class CSVXformer(
          * @param fieldSeparator field separator used within the CSV file (defaults to ',' if not specified)
          * @return a list of the header names, in order
          */
-        fun getHeader(file: String, fieldSeparator: Char = ','): List<String> {
+        fun getHeader(
+            file: String,
+            fieldSeparator: Char = ',',
+        ): List<String> {
             val input = Paths.get(file)
-            val builder = CsvReader.builder()
-                .fieldSeparator(fieldSeparator)
-                .quoteCharacter('"')
-                .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+            val builder =
+                CsvReader.builder()
+                    .fieldSeparator(fieldSeparator)
+                    .quoteCharacter('"')
+                    .skipEmptyLines(true)
+                    .ignoreDifferentFieldCount(false)
             builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
                 return one.map { obj: CsvRecord ->

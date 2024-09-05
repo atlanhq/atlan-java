@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0 */
+// SPDX-License-Identifier: Apache-2.0
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarName = "cube-assets-builder"
 

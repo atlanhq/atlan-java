@@ -16,10 +16,11 @@ import java.math.BigDecimal
 class ExportRawViewsTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val files = listOf(
-        "debug.log",
-        "adoption-export.xlsx",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+            "adoption-export.xlsx",
+        )
 
     override fun setup() {
         setup(

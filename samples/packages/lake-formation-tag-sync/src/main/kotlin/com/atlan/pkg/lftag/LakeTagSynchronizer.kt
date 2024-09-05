@@ -38,7 +38,11 @@ object LakeTagSynchronizer {
         }
     }
 
-    private fun sync(config: LakeFormationTagSyncCfg, outputDirectory: String, failOnErrors: Boolean): Boolean {
+    private fun sync(
+        config: LakeFormationTagSyncCfg,
+        outputDirectory: String,
+        failOnErrors: Boolean,
+    ): Boolean {
         val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
@@ -46,12 +50,13 @@ object LakeTagSynchronizer {
 
         val mapper = jacksonObjectMapper()
 
-        val files = Utils.getInputFiles(
-            "$outputDirectory/$assetPrefix",
-            outputDirectory,
-            skipObjectStore,
-            assetPrefix,
-        )
+        val files =
+            Utils.getInputFiles(
+                "$outputDirectory/$assetPrefix",
+                outputDirectory,
+                skipObjectStore,
+                assetPrefix,
+            )
         val tagFileNames = mutableListOf<String>()
         val connectionMap = mutableMapOf<String, String>()
         val metadataMap = mutableMapOf<String, String>()
@@ -81,13 +86,14 @@ object LakeTagSynchronizer {
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             val lfTagData = createMissingEnums(tagFileName, mapper, metadataMap)
             csvProducer.transform(lfTagData, csvFileName)
-            val importConfig = AssetImportCfg(
-                assetsFile = csvFileName,
-                assetsUpsertSemantic = "update",
-                assetsFailOnErrors = failOnErrors,
-                assetsBatchSize = batchSize,
-                assetsFieldSeparator = ",",
-            )
+            val importConfig =
+                AssetImportCfg(
+                    assetsFile = csvFileName,
+                    assetsUpsertSemantic = "update",
+                    assetsFailOnErrors = failOnErrors,
+                    assetsBatchSize = batchSize,
+                    assetsFieldSeparator = ",",
+                )
             val result = Importer.import(importConfig, outputDirectory)
             combinedResults = combinedResults?.combinedWith(result) ?: result
         }

@@ -34,15 +34,15 @@ class TableImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
-    preprocessed.preprocessedFile,
-    attrsToOverwrite,
-    creationHandling,
-    batchSize,
-    Table.TYPE_NAME,
-    KotlinLogging.logger {},
-    trackBatches,
-    fieldSeparator,
-) {
+        preprocessed.preprocessedFile,
+        attrsToOverwrite,
+        creationHandling,
+        batchSize,
+        Table.TYPE_NAME,
+        KotlinLogging.logger {},
+        trackBatches,
+        fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(ENTITY_NAME)?.let { it as String } ?: ""

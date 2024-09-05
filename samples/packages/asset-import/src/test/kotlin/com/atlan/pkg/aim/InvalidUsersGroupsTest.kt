@@ -23,10 +23,11 @@ class InvalidUsersGroupsTest : PackageTest() {
 
     private val testFile = "input.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for glossaries and tags
@@ -34,9 +35,10 @@ class InvalidUsersGroupsTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{GLOSSARY1}}", glossary1)
-                    .replace("{{GLOSSARY2}}", glossary2)
+                val revised =
+                    line
+                        .replace("{{GLOSSARY1}}", glossary1)
+                        .replace("{{GLOSSARY2}}", glossary2)
                 output.appendText("$revised\n")
             }
         }

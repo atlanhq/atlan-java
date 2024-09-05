@@ -50,9 +50,13 @@ abstract class CSVImporter(
     private val failOnErrors: Boolean = true,
     private val fieldSeparator: Char = ',',
 ) : AssetGenerator, CSVPreprocessor {
-
     /** {@inheritDoc} */
-    override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
+    override fun preprocessRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): List<String> {
         // By default, do nothing and simply return the row we received (noop)
         return row
     }
@@ -63,7 +67,10 @@ abstract class CSVImporter(
      * @param outputFile (optional) name of the output file into which to write preprocessed row values
      * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values
      */
-    open fun preprocess(outputFile: String? = null, outputHeaders: List<String>? = null) {
+    open fun preprocess(
+        outputFile: String? = null,
+        outputHeaders: List<String>? = null,
+    ) {
         CSVReader(
             filename,
             updateOnly,
@@ -110,24 +117,32 @@ abstract class CSVImporter(
     }
 
     /** {@inheritDoc} */
-    override fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization? {
+    override fun buildFromRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+        skipColumns: Set<String>,
+    ): RowDeserialization? {
         // Deserialize the objects represented in that row (could be more than one due to flattening
         // of in particular things like READMEs and Links)
         if (includeRow(row, header, typeIdx, qnIdx)) {
-            val typeName = typeNameFilter.ifBlank {
-                row.getOrElse(typeIdx) { "" }
-            }
+            val typeName =
+                typeNameFilter.ifBlank {
+                    row.getOrElse(typeIdx) { "" }
+                }
             val qualifiedName = row.getOrElse(qnIdx) { "" }
-            val deserializer = RowDeserializer(
-                heading = header,
-                row = row,
-                typeIdx = typeIdx,
-                qnIdx = qnIdx,
-                typeName = typeName,
-                qualifiedName = qualifiedName,
-                logger = logger,
-                skipColumns = skipColumns,
-            )
+            val deserializer =
+                RowDeserializer(
+                    heading = header,
+                    row = row,
+                    typeIdx = typeIdx,
+                    qnIdx = qnIdx,
+                    typeName = typeName,
+                    qualifiedName = qualifiedName,
+                    logger = logger,
+                    skipColumns = skipColumns,
+                )
             val assets = deserializer.getAssets(getBuilder(deserializer))
             if (assets != null) {
                 val builder = assets.primary
@@ -148,7 +163,12 @@ abstract class CSVImporter(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
         return row[typeIdx] == typeNameFilter
     }
 
@@ -160,12 +180,17 @@ abstract class CSVImporter(
      * @param builder the builder against which to clear the field
      * @return true if the field was cleared, false otherwise
      */
-    internal fun clearField(field: AtlanField, candidate: Asset, builder: Asset.AssetBuilder<*, *>): Boolean {
+    internal fun clearField(
+        field: AtlanField,
+        candidate: Asset,
+        builder: Asset.AssetBuilder<*, *>,
+    ): Boolean {
         try {
-            val getter = ReflectionCache.getGetter(
-                Serde.getAssetClassForType(candidate.typeName),
-                field.atlanFieldName,
-            )
+            val getter =
+                ReflectionCache.getGetter(
+                    Serde.getAssetClassForType(candidate.typeName),
+                    field.atlanFieldName,
+                )
             val value = getter.invoke(candidate)
             if (value == null ||
                 (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
@@ -209,7 +234,11 @@ abstract class CSVImporter(
          * @param logger through which to record information
          * @return parsed list of attribute names to be cleared
          */
-        fun attributesToClear(attrNames: MutableList<String>, fileInfo: String, logger: KLogger): List<AtlanField> {
+        fun attributesToClear(
+            attrNames: MutableList<String>,
+            fileInfo: String,
+            logger: KLogger,
+        ): List<AtlanField> {
             if (attrNames.contains(Asset.CERTIFICATE_STATUS.atlanFieldName)) {
                 attrNames.add(Asset.CERTIFICATE_STATUS_MESSAGE.atlanFieldName)
             }

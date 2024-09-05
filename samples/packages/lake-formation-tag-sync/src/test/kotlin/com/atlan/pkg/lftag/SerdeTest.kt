@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
-   Copyright 2023 Atlan Pte. Ltd. */
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
 import com.atlan.pkg.lftag.model.ColumnLFTag
@@ -17,61 +17,63 @@ import kotlin.test.assertNotNull
 private const val TAG_KEY = "privacy_sensitivity"
 private const val CATALOG_ID = "614518280298"
 private const val JSON = """{"TagKey":"$TAG_KEY","TagValues":["public"],"CatalogId":"$CATALOG_ID"}"""
-val TABLE_INFO_JSON = """
+val TABLE_INFO_JSON =
+    """
+    {
+      "Table": {
+        "CatalogId": "614518280298",
+        "DatabaseName": "dev_atlan_dev",
+        "Name": "stg_customer_categories"
+      },
+      "LFTagOnDatabase": [
         {
-          "Table": {
-            "CatalogId": "614518280298",
-            "DatabaseName": "dev_atlan_dev",
-            "Name": "stg_customer_categories"
-          },
-          "LFTagOnDatabase": [
+          "CatalogId": "614518280298",
+          "TagKey": "security_classification",
+          "TagValues": [
+            "public"
+          ]
+        }
+      ],
+      "LFTagsOnTable": [
+        {
+          "CatalogId": "614518280298",
+          "TagKey": "security_classification",
+          "TagValues": [
+            "public"
+          ]
+        }
+      ],
+      "LFTagsOnColumns": [
+        {
+          "Name": "club_code",
+          "LFTags": [
             {
               "CatalogId": "614518280298",
               "TagKey": "security_classification",
               "TagValues": [
-                "public"
-              ]
-            }
-          ],
-          "LFTagsOnTable": [
-            {
-              "CatalogId": "614518280298",
-              "TagKey": "security_classification",
-              "TagValues": [
-                "public"
-              ]
-            }
-          ],
-          "LFTagsOnColumns": [
-            {
-              "Name": "club_code",
-              "LFTags": [
-                {
-                  "CatalogId": "614518280298",
-                  "TagKey": "security_classification",
-                  "TagValues": [
-                    "private"
-                  ]
-                }
+                "private"
               ]
             }
           ]
         }
-""".trimIndent()
+      ]
+    }
+    """.trimIndent()
 private val mapper = jacksonObjectMapper()
-class SerdeTest {
 
+class SerdeTest {
     private val tagValues = listOf("public")
 
     @Test
     fun whenDeserializableTableThenSuccess() {
-        val json = """
-        {
-            "CatalogId": "614518280298",
-            "DatabaseName": "dev_atlan_dev",
-            "Name": "stg_customer_categories"
-        }
-        """.trimIndent()
+        val json =
+            """
+            {
+                "CatalogId": "614518280298",
+                "DatabaseName": "dev_atlan_dev",
+                "Name": "stg_customer_categories"
+            }
+            """.trimIndent()
         val table = mapper.readValue(json, LFTable::class.java)
         assertEquals("614518280298", table.catalogId)
         assertEquals("dev_atlan_dev", table.databaseName)
@@ -111,20 +113,21 @@ class SerdeTest {
 
     @Test
     fun whenDeserializableColumnLFTagThenSuccess() {
-        val json = """
-        {
-          "Name": "club_code",
-          "LFTags": [
+        val json =
+            """
             {
-              "CatalogId": "614518280298",
-              "TagKey": "security_classification",
-              "TagValues": [
-                "public"
+              "Name": "club_code",
+              "LFTags": [
+                {
+                  "CatalogId": "614518280298",
+                  "TagKey": "security_classification",
+                  "TagValues": [
+                    "public"
+                  ]
+                }
               ]
             }
-          ]
-        }
-        """.trimIndent()
+            """.trimIndent()
         val columnLFTag = mapper.readValue(json, ColumnLFTag::class.java)
         assertEquals("club_code", columnLFTag.name)
         assertEquals(1, columnLFTag.lfTags.size)

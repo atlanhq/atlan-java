@@ -16,12 +16,9 @@ import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.LineageListRequest;
 import com.atlan.model.lineage.LineageListResponse;
-import com.atlan.model.lineage.LineageRequest;
-import com.atlan.model.lineage.LineageResponse;
 import com.atlan.model.search.*;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
-import com.atlan.util.QueryFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -43,7 +40,6 @@ public class AssetEndpoint extends AtlasEndpoint {
     private static final String guid_endpoint = "/entity/guid/";
     private static final String unique_attr_endpoint = "/entity/uniqueAttribute/type/";
     private static final String search_endpoint = "/search/indexsearch";
-    private static final String lineage_endpoint = "/lineage/getlineage";
     private static final String lineage_list_endpoint = "/lineage/list";
 
     public AssetEndpoint(AtlanClient client) {
@@ -76,39 +72,6 @@ public class AssetEndpoint extends AtlasEndpoint {
                 FluentSearch.builder(client).where(FluentSearch.superType("Referenceable"));
         if (!includeArchived) {
             builder.where(CompoundQuery.ACTIVE);
-        }
-        return builder;
-    }
-
-    /**
-     * Start an asset filter that will return all Table assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Table assets will be included.
-     *
-     * @return an asset filter that includes all Table assets
-     * @deprecated replaced by {@link #select()}
-     */
-    @Deprecated
-    public AssetFilter.AssetFilterBuilder all() {
-        return all(false);
-    }
-
-    /**
-     * Start an asset filter that will return all Table assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Tables will be included
-     * @return an asset filter that includes all Table assets
-     * @deprecated replaced by {@link #select(boolean)}
-     */
-    @Deprecated
-    public AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().client(client);
-        if (!includeArchived) {
-            builder.filter(QueryFactory.active());
         }
         return builder;
     }
@@ -1155,37 +1118,6 @@ public class AssetEndpoint extends AtlasEndpoint {
                 client, ApiResource.RequestMethod.POST, url, request, IndexSearchResponse.class, options);
         response.setClient(client);
         return response;
-    }
-
-    /**
-     * Fetch the requested lineage. This is an older, slower operation that may be deprecated
-     * in the future. If possible, use the lineage list operation instead.
-     *
-     * @param request detailing the search query, parameters, and so on to run
-     * @return the results of the search
-     * @throws AtlanException on any API interaction problems
-     * @deprecated use {@link #lineage(LineageListRequest)} instead
-     */
-    @Deprecated
-    public LineageResponse lineage(LineageRequest request) throws AtlanException {
-        return lineage(request, null);
-    }
-
-    /**
-     * Fetch the requested lineage. This is an older, slower operation that may be deprecated
-     * in the future. If possible, use the lineage list operation instead.
-     *
-     * @param request detailing the search query, parameters, and so on to run
-     * @param options to override default client settings
-     * @return the results of the search
-     * @throws AtlanException on any API interaction problems
-     * @deprecated use {@link #lineage(LineageListRequest)} instead
-     */
-    @Deprecated
-    public LineageResponse lineage(LineageRequest request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), lineage_endpoint);
-        return ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, request, LineageResponse.class, options);
     }
 
     /**

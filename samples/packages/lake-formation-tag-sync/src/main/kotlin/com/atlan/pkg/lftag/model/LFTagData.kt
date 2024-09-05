@@ -8,6 +8,7 @@ class LFTagData(
     @JsonProperty("TableList") var tableList: List<LFTableInfo>,
 ) {
     val tagValuesByTagKey = mutableMapOf<String, MutableSet<String>>()
+
     init {
         tableList.forEach { tableInfo ->
             tableInfo.getTagValuesByTagKey(tagValuesByTagKey)

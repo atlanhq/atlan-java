@@ -10,7 +10,6 @@ import org.testng.annotations.Test
 import kotlin.test.assertFailsWith
 
 object DuplicateInputsTest {
-
     @Test
     fun modelEvalFails() {
         val source = ModuleSource.path("src/test/resources/DuplicateInputsTest.pkl")

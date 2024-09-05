@@ -10,11 +10,12 @@ import kotlin.test.Test
 class OnlyGlossariesTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val files = listOf(
-        "glossary-export.csv",
-        "debug.log",
-        "asset-export.csv",
-    )
+    private val files =
+        listOf(
+            "glossary-export.csv",
+            "debug.log",
+            "asset-export.csv",
+        )
 
     override fun setup() {
         setup(

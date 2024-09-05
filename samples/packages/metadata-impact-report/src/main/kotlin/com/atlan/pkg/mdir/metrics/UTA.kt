@@ -14,15 +14,15 @@ class UTA(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "UTA - Usage-Tracked Assets",
-    "UTA",
-    "**Total active assets in Atlan for which queries are tracked through usage metadata.** This is useful to:\n" +
-        "- Identity the relative footprint of your data store ecosystem for which you can monitor the usage-based metrics",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "UTA - Usage-Tracked Assets",
+        "UTA",
+        "**Total active assets in Atlan for which queries are tracked through usage metadata.** This is useful to:\n" +
+            "- Identity the relative footprint of your data store ecosystem for which you can monitor the usage-based metrics",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

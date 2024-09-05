@@ -199,6 +199,7 @@ object AtlanTagXformer {
     private class LocalTagCache : AbstractLazyCache() {
         private val idToTag = ConcurrentHashMap<String, ITag>()
         private val tagAttributes = listOf(Asset.NAME)
+
         override fun lookupById(sourceTagQN: String?) {
             if (sourceTagQN != null) {
                 Atlan.getDefaultClient().assets.select()
@@ -259,6 +260,7 @@ object AtlanTagXformer {
      */
     private class LocalConnectionCache : AbstractLazyCache() {
         private val connectionAttributes = listOf(Connection.CONNECTOR_TYPE)
+
         override fun lookupById(connectionQN: String?) {
             if (connectionQN != null) {
                 Connection.select()

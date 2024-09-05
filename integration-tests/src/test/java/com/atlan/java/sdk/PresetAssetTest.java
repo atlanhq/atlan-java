@@ -335,7 +335,8 @@ public class PresetAssetTest extends AtlanLiveTest {
                 "preset.search.*",
                 "preset.update.*",
                 "preset.purge.chart"
-            })
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

@@ -54,7 +54,10 @@ object Importer {
      * @param outputDirectory (optional) into which to write any logs or preprocessing information
      * @return the qualifiedName of the cube that was imported, or null if no cube was loaded
      */
-    fun import(config: CubeAssetsBuilderCfg, outputDirectory: String = "tmp"): String? {
+    fun import(
+        config: CubeAssetsBuilderCfg,
+        outputDirectory: String = "tmp",
+    ): String? {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.assetsImportType, "DIRECT") == "DIRECT"
@@ -74,13 +77,14 @@ object Importer {
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
-        val assetsInput = Utils.getInputFile(
-            assetsFilename,
-            outputDirectory,
-            assetsUpload,
-            Utils.getOrDefault(config.assetsPrefix, ""),
-            assetsKey,
-        )
+        val assetsInput =
+            Utils.getInputFile(
+                assetsFilename,
+                outputDirectory,
+                assetsUpload,
+                Utils.getOrDefault(config.assetsPrefix, ""),
+                assetsKey,
+            )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 
         // Only cache links and terms if there are any in the CSV, otherwise this
@@ -101,69 +105,75 @@ object Importer {
         // Note: we force-track the batches here to ensure any created connections are cached
         // (without tracking, any connections created will NOT be cached, either, which will then cause issues
         // with the subsequent processing steps.)
-        val connectionImporter = ConnectionImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            1,
-            true,
-            fieldSeparator,
-        )
+        val connectionImporter =
+            ConnectionImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                1,
+                true,
+                fieldSeparator,
+            )
         connectionImporter.import()
 
         logger.info { " --- Importing cubes... ---" }
-        val cubeImporter = CubeImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            true,
-            fieldSeparator,
-        )
+        val cubeImporter =
+            CubeImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                true,
+                fieldSeparator,
+            )
         val cubeImporterResults = cubeImporter.import()
 
         logger.info { " --- Importing dimensions... ---" }
-        val dimensionImporter = DimensionImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val dimensionImporter =
+            DimensionImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         dimensionImporter.import()
 
         logger.info { " --- Importing hierarchies... ---" }
-        val hierarchyImporter = HierarchyImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val hierarchyImporter =
+            HierarchyImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         hierarchyImporter.import()
 
         logger.info { " --- Importing fields... ---" }
-        val fieldImporter = FieldImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val fieldImporter =
+            FieldImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         fieldImporter.preprocess()
         fieldImporter.import()
 
         // Retrieve the qualifiedName of the cube that was imported
-        val cubeQN = cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
-            Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
-        }
+        val cubeQN =
+            cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
+                Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
+            }
 
         val runAssetRemoval = Utils.getOrDefault(config.deltaSemantic, "full") == "full"
         if (runAssetRemoval) {
@@ -176,24 +186,26 @@ object Importer {
                 val cubeName = preprocessedDetails.cubeName
                 val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQN"
                 val objectStore = if (!skipObjectStore) Utils.getBackingStore() else null
-                val lastCubesFile = if (previousFileDirect.isNotBlank()) {
-                    transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
-                } else if (skipObjectStore) {
-                    ""
-                } else {
-                    objectStore!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
-                }
+                val lastCubesFile =
+                    if (previousFileDirect.isNotBlank()) {
+                        transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
+                    } else if (skipObjectStore) {
+                        ""
+                    } else {
+                        objectStore!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
+                    }
                 if (lastCubesFile.isNotBlank()) {
                     // If there was a previous file, calculate the delta to see what we need
                     // to delete
-                    val assetRemover = AssetRemover(
-                        ConnectionCache.getIdentityMap(),
-                        AssetImporter.Companion,
-                        logger,
-                        listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-                        cubeQN,
-                        purgeAssets,
-                    )
+                    val assetRemover =
+                        AssetRemover(
+                            ConnectionCache.getIdentityMap(),
+                            AssetImporter.Companion,
+                            logger,
+                            listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+                            cubeQN,
+                            purgeAssets,
+                        )
                     assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, lastCubesFile)
                     if (assetRemover.hasAnythingToDelete()) {
                         assetRemover.deleteAssets()
@@ -218,25 +230,35 @@ object Importer {
      * @param cubeQualifiedName the qualified name of the cube to which the file belongs
      * @param extension the extension to add to the file in object storage
      */
-    fun uploadToBackingStore(objectStore: ObjectStorageSyncer, localFile: String, cubeQualifiedName: String, extension: String) {
+    fun uploadToBackingStore(
+        objectStore: ObjectStorageSyncer,
+        localFile: String,
+        cubeQualifiedName: String,
+        extension: String,
+    ) {
         val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQualifiedName"
-        val sortedTime = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
-            .withZone(ZoneId.of("UTC"))
-            .format(Instant.now())
+        val sortedTime =
+            DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
+                .withZone(ZoneId.of("UTC"))
+                .format(Instant.now())
         Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
     }
 
-    private fun preprocessCSV(originalFile: String, fieldSeparator: Char): PreprocessedCsv {
+    private fun preprocessCSV(
+        originalFile: String,
+        fieldSeparator: Char,
+    ): PreprocessedCsv {
         // Setup
         val quoteCharacter = '"'
         val inputFile = Paths.get(originalFile)
 
         // Open the CSV reader and writer
-        val reader = CsvReader.builder()
-            .fieldSeparator(fieldSeparator)
-            .quoteCharacter(quoteCharacter)
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
+        val reader =
+            CsvReader.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter(quoteCharacter)
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
 
         // Start processing...
         reader.ofCsvRecord(inputFile).use { tmp ->
@@ -298,7 +320,11 @@ object Importer {
         }
     }
 
-    private fun transformPreviousRaw(previousRaw: String, cubeName: String, fieldSeparator: Char): String {
+    private fun transformPreviousRaw(
+        previousRaw: String,
+        cubeName: String,
+        fieldSeparator: Char,
+    ): String {
         logger.info { "Found previous raw file, transforming it for comparison: $previousRaw" }
         val preprocessedPrevious = preprocessCSV(previousRaw, fieldSeparator)
         val previousCubeName = preprocessedPrevious.cubeName

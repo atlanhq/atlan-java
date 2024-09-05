@@ -14,14 +14,14 @@ class AwDC(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "AwDC - Assets with Descriptions Crawled",
-    "AwDC",
-    "**Total active assets in Atlan with descriptions crawled from some source.** This is distinct from assets whose description has been provided solely through the Atlan UI.",
-    Reporter.CAT_ADOPTION,
-    client,
-    batchSize,
-    logger,
-) {
+        "AwDC - Assets with Descriptions Crawled",
+        "AwDC",
+        "**Total active assets in Atlan with descriptions crawled from some source.** This is distinct from assets whose description has been provided solely through the Atlan UI.",
+        Reporter.CAT_ADOPTION,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

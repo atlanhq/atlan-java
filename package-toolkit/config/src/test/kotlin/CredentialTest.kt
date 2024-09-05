@@ -13,15 +13,15 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 object CredentialTest {
-
     lateinit var credential: Credential
 
     @BeforeClass
     fun modelEval() {
         val source = ModuleSource.path("src/test/resources/CredentialTest.pkl")
-        credential = ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
-            evaluator.evaluate(source).to<Credential>()
-        }
+        credential =
+            ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
+                evaluator.evaluate(source).to<Credential>()
+            }
     }
 
     @Test

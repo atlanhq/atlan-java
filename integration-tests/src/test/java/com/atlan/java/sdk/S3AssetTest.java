@@ -459,7 +459,8 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"s3.purge.connection"},
-            dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"})
+            dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"},
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

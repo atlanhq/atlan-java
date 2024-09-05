@@ -14,15 +14,15 @@ class GCM(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "GCM - Glossary Categories Managed",
-    "GCM",
-    "**Total active categories across glossaries in Atlan.** This is useful to:\n" +
-        "- Monitor how extensively organized concepts are in Atlan",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "GCM - Glossary Categories Managed",
+        "GCM",
+        "**Total active categories across glossaries in Atlan.** This is useful to:\n" +
+            "- Monitor how extensively organized concepts are in Atlan",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return GlossaryCategory.select(client)

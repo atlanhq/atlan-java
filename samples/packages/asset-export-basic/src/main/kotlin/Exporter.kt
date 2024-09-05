@@ -17,7 +17,10 @@ object Exporter {
         export(config, outputDirectory)
     }
 
-    fun export(config: AssetExportBasicCfg, outputDirectory: String) {
+    fun export(
+        config: AssetExportBasicCfg,
+        outputDirectory: String,
+    ) {
         val batchSize = 300
         val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
         val limitToAssets = Utils.getAsList(config.assetTypesToInclude)
@@ -29,15 +32,16 @@ object Exporter {
 
         val cmFields = getAllCustomMetadataFields()
 
-        val ctx = Context(
-            assetsExportScope,
-            limitToAssets,
-            limitToAttributes,
-            assetsQualifiedNamePrefix,
-            includeDescription,
-            includeArchived,
-            cmFields,
-        )
+        val ctx =
+            Context(
+                assetsExportScope,
+                limitToAssets,
+                limitToAttributes,
+                assetsQualifiedNamePrefix,
+                includeDescription,
+                includeArchived,
+                cmFields,
+            )
 
         val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
@@ -93,8 +97,9 @@ object Exporter {
     }
 
     fun getAllCustomMetadataFields(): List<CustomMetadataField> {
-        val customMetadataDefs = Atlan.getDefaultClient().customMetadataCache
-            .getAllCustomAttributes(false, true)
+        val customMetadataDefs =
+            Atlan.getDefaultClient().customMetadataCache
+                .getAllCustomAttributes(false, true)
         val cmFields = mutableListOf<CustomMetadataField>()
         for ((setName, attributes) in customMetadataDefs) {
             for (attribute in attributes) {

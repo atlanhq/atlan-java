@@ -58,7 +58,10 @@ class AssetRemover(
      * @throws IOException if there is no typeName column in the CSV file
      */
     @Throws(IOException::class)
-    fun calculateDeletions(currentFile: String, previousFile: String) {
+    fun calculateDeletions(
+        currentFile: String,
+        previousFile: String,
+    ) {
         logger.info { " --- Calculating delta... ---" }
         logger.info { " ... latest file: $currentFile" }
         logger.info { " ... previous file: $previousFile" }
@@ -105,11 +108,12 @@ class AssetRemover(
             )
         }
         val inputFile = Paths.get(filename)
-        val builder = CsvReader.builder()
-            .fieldSeparator(',')
-            .quoteCharacter('"')
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
+        val builder =
+            CsvReader.builder()
+                .fieldSeparator(',')
+                .quoteCharacter('"')
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
         val reader = builder.ofCsvRecord(inputFile)
         val set = mutableSetOf<AssetBatch.AssetIdentity>()
         reader.stream().skip(1).forEach { r: CsvRecord ->
@@ -162,21 +166,23 @@ class AssetRemover(
      * @param qualifiedNamesToDelete the list of qualifiedNames to query all at the same time
      */
     private fun translate(qualifiedNamesToDelete: List<String>) {
-        val builder = client.assets.select()
-            .pageSize(QUERY_BATCH)
-            .where(Asset.QUALIFIED_NAME.`in`(qualifiedNamesToDelete))
+        val builder =
+            client.assets.select()
+                .pageSize(QUERY_BATCH)
+                .where(Asset.QUALIFIED_NAME.`in`(qualifiedNamesToDelete))
         if (removeTypes.isNotEmpty()) {
             builder.where(FluentSearch.assetTypes(removeTypes))
         }
         if (removalPrefix.isNotBlank()) {
             builder.where(Asset.QUALIFIED_NAME.startsWith(removalPrefix))
         }
-        val response = builder
-            .toRequestBuilder()
-            .excludeMeanings(true)
-            .excludeAtlanTags(true)
-            .build()
-            .search()
+        val response =
+            builder
+                .toRequestBuilder()
+                .excludeMeanings(true)
+                .excludeAtlanTags(true)
+                .build()
+                .search()
         response.forEach { validateResult(it) }
     }
 

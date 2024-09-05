@@ -27,13 +27,14 @@ object DataProductCache : AssetCache() {
             val domain = DataDomainCache.getByIdentity(domainIdentity)
             if (domain != null) {
                 try {
-                    val request = DataProduct.select()
-                        .where(DataProduct.NAME.eq(productName))
-                        .includesOnResults(includesOnResults)
-                        .includeOnResults(DataProduct.STATUS)
-                        .includesOnRelations(includesOnRelations)
-                        .pageSize(50)
-                        .toRequest()
+                    val request =
+                        DataProduct.select()
+                            .where(DataProduct.NAME.eq(productName))
+                            .includesOnResults(includesOnResults)
+                            .includeOnResults(DataProduct.STATUS)
+                            .includesOnRelations(includesOnRelations)
+                            .pageSize(50)
+                            .toRequest()
                     var response = request.search()
                     while (response != null && response.approximateCount > 0) {
                         for (candidate in response) {
@@ -62,7 +63,11 @@ object DataProductCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
+    override fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int,
+        maxRetries: Int,
+    ): Asset? {
         try {
             val dp =
                 DataProduct.select()

@@ -10,14 +10,14 @@ import com.atlan.model.assets.Asset
  * Static object to transform (really to validate) user references.
  */
 object UserXformer {
-
-    val FIELDS = setOf(
-        Asset.OWNER_USERS.atlanFieldName,
-        Asset.ADMIN_USERS.atlanFieldName,
-        Asset.VIEWER_USERS.atlanFieldName,
-        Asset.SOURCE_READ_RECENT_USERS.atlanFieldName,
-        Asset.SOURCE_READ_TOP_USERS.atlanFieldName,
-    )
+    val FIELDS =
+        setOf(
+            Asset.OWNER_USERS.atlanFieldName,
+            Asset.ADMIN_USERS.atlanFieldName,
+            Asset.VIEWER_USERS.atlanFieldName,
+            Asset.SOURCE_READ_RECENT_USERS.atlanFieldName,
+            Asset.SOURCE_READ_TOP_USERS.atlanFieldName,
+        )
 
     /**
      * Encodes (serializes) a user into a string form.

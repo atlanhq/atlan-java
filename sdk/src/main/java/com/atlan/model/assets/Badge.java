@@ -8,13 +8,11 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.AssetFilter;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.BadgeCondition;
-import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -135,71 +133,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     }
 
     /**
-     * Start an asset filter that will return all Badge assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Badge assets will be included.
-     *
-     * @return an asset filter that includes all Badge assets
-     * @deprecated replaced by {@link #select()}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all() {
-        return all(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start an asset filter that will return all Badge assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Badge assets will be included.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return an asset filter that includes all Badge assets
-     * @deprecated replaced by {@link #select(AtlanClient)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
-        return all(client, false);
-    }
-
-    /**
-     * Start an asset filter that will return all Badge assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Badges will be included
-     * @return an asset filter that includes all Badge assets
-     * @deprecated replaced by {@link #select(boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
-        return all(Atlan.getDefaultClient(), includeArchived);
-    }
-
-    /**
-     * Start an asset filter that will return all Badge assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) Badges will be included
-     * @return an asset filter that includes all Badge assets
-     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder =
-                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
-        if (!includeArchived) {
-            builder.filter(QueryFactory.active());
-        }
-        return builder;
-    }
-
-    /**
      * Reference to a Badge by GUID. Use this to create a relationship to this Badge,
      * where the relationship should be replaced.
      *
@@ -306,60 +239,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Retrieves a Badge by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Badge to retrieve
-     * @return the requested full Badge, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static Badge retrieveByGuid(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Retrieves a Badge by its GUID, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the Badge to retrieve
-     * @return the requested full Badge, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static Badge retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        return get(client, guid);
-    }
-
-    /**
-     * Retrieves a Badge by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Badge to retrieve
-     * @return the requested full Badge, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static Badge retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return get(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Retrieves a Badge by its qualifiedName, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param qualifiedName of the Badge to retrieve
-     * @return the requested full Badge, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static Badge retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        return get(client, qualifiedName);
     }
 
     /**

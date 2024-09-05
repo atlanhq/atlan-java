@@ -20,107 +20,129 @@ import java.util.stream.Stream
  * @param path location and filename of the CSV file to produce
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
-class CSVWriter @JvmOverloads constructor(path: String, fieldSeparator: Char = ',') : Closeable {
+class CSVWriter
+    @JvmOverloads
+    constructor(path: String, fieldSeparator: Char = ',') : Closeable {
+        private val writer =
+            CsvWriter.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter('"')
+                .quoteStrategy(QuoteStrategies.NON_EMPTY)
+                .lineDelimiter(LineDelimiter.PLATFORM)
+                .build(ThreadSafeWriter(path))
 
-    private val writer = CsvWriter.builder()
-        .fieldSeparator(fieldSeparator)
-        .quoteCharacter('"')
-        .quoteStrategy(QuoteStrategies.NON_EMPTY)
-        .lineDelimiter(LineDelimiter.PLATFORM)
-        .build(ThreadSafeWriter(path))
+        private val header = mutableListOf<String>()
 
-    private val header = mutableListOf<String>()
+        /**
+         * Write a header row into the CSV file.
+         *
+         * @param values to use for the header
+         */
+        fun writeHeader(values: Iterable<String>) {
+            header.addAll(values)
+            writeRecord(values)
+        }
 
-    /**
-     * Write a header row into the CSV file.
-     *
-     * @param values to use for the header
-     */
-    fun writeHeader(values: Iterable<String>) {
-        header.addAll(values)
-        writeRecord(values)
-    }
-
-    /**
-     * Write a row of data into the CSV file, where key of the map is the column name and the value
-     * is the value to write for that column of the row of data.
-     * Note: be sure you have first called {@code writeHeader} to output the header row.
-     *
-     * @param values map keyed by column name with values for the row of data
-     */
-    fun writeRecord(values: Map<String, String?>?) {
-        if (values != null) {
-            val list = mutableListOf<String>()
-            header.forEach { name ->
-                list.add(values.getOrDefault(name, "") ?: "")
+        /**
+         * Write a row of data into the CSV file, where key of the map is the column name and the value
+         * is the value to write for that column of the row of data.
+         * Note: be sure you have first called {@code writeHeader} to output the header row.
+         *
+         * @param values map keyed by column name with values for the row of data
+         */
+        fun writeRecord(values: Map<String, String?>?) {
+            if (values != null) {
+                val list = mutableListOf<String>()
+                header.forEach { name ->
+                    list.add(values.getOrDefault(name, "") ?: "")
+                }
+                writeRecord(list)
             }
-            writeRecord(list)
+        }
+
+        /**
+         * Write a row of data into the CSV file, where the values are already sequenced
+         * in the same order as the header columns.
+         *
+         * @param values to use for the row of data
+         */
+        fun writeRecord(values: Iterable<String?>?) {
+            if (values != null) {
+                synchronized(writer) { writer.writeRecord(values) }
+            }
+        }
+
+        /**
+         * Parallel-write the provided asset stream into the CSV file.
+         * (For the highest performance, we recommend sending in a parallel stream of assets.)
+         *
+         * @param stream of assets, typically from a FluentSearch (parallel stream recommended)
+         * @param assetToRow translator from an asset object to a row of CSV values
+         * @param totalAssetCount the total number of assets that will be output (used for logging / completion tracking)
+         * @param pageSize the page size being used by the asset stream
+         * @param logger through which to report the overall progress
+         */
+        fun streamAssets(
+            stream: Stream<Asset>,
+            assetToRow: RowGenerator,
+            totalAssetCount: Long,
+            pageSize: Int,
+            logger: KLogger,
+        ) {
+            logger.info("Extracting a total of {} assets...", totalAssetCount)
+            val count = AtomicLong(0)
+            val map = ConcurrentHashMap<String, String>()
+            stream.forEach { a: Asset ->
+                writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
+            }
+            logger.info("Total unique assets extracted: {}", map.size)
+        }
+
+        /**
+         * Append assets that have already been retrieved (not being streamed) into the CSV file.
+         * This is useful, for example, where information is cached up-front and thus need not be re-retrieved.
+         *
+         * @param list of assets, pre-retrieved
+         * @param assetToRow translator from an asset object into a row of CSV values
+         * @param totalAssetCount the total number of assets that will be output (used for logging / completion tracking)
+         * @param pageSize the page size to use for periodically logging progress
+         * @param logger through which to report the overall progress
+         */
+        fun appendAssets(
+            list: List<Asset>,
+            assetToRow: RowGenerator,
+            totalAssetCount: Long,
+            pageSize: Int,
+            logger: KLogger,
+        ) {
+            val count = AtomicLong(0)
+            val map = ConcurrentHashMap<String, String>()
+            list.forEach { a: Asset ->
+                writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
+            }
+        }
+
+        private fun writeAsset(
+            a: Asset,
+            assetToRow: RowGenerator,
+            count: AtomicLong,
+            totalAssetCount: Long,
+            pageSize: Int,
+            map: ConcurrentHashMap<String, String>,
+            logger: KLogger,
+        ) {
+            val duplicate = map.put(a.guid, a.typeName + "::" + a.guid)
+            if (duplicate != null) {
+                logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
+            }
+            val values = assetToRow.buildFromAsset(a)
+            writeRecord(values)
+            Utils.logProgress(count, totalAssetCount, logger, pageSize)
+        }
+
+        /** {@inheritDoc}  */
+        @Throws(IOException::class)
+        override fun close() {
+            writer.close()
         }
     }
-
-    /**
-     * Write a row of data into the CSV file, where the values are already sequenced
-     * in the same order as the header columns.
-     *
-     * @param values to use for the row of data
-     */
-    fun writeRecord(values: Iterable<String?>?) {
-        if (values != null) {
-            synchronized(writer) { writer.writeRecord(values) }
-        }
-    }
-
-    /**
-     * Parallel-write the provided asset stream into the CSV file.
-     * (For the highest performance, we recommend sending in a parallel stream of assets.)
-     *
-     * @param stream of assets, typically from a FluentSearch (parallel stream recommended)
-     * @param assetToRow translator from an asset object to a row of CSV values
-     * @param totalAssetCount the total number of assets that will be output (used for logging / completion tracking)
-     * @param pageSize the page size being used by the asset stream
-     * @param logger through which to report the overall progress
-     */
-    fun streamAssets(stream: Stream<Asset>, assetToRow: RowGenerator, totalAssetCount: Long, pageSize: Int, logger: KLogger) {
-        logger.info("Extracting a total of {} assets...", totalAssetCount)
-        val count = AtomicLong(0)
-        val map = ConcurrentHashMap<String, String>()
-        stream.forEach { a: Asset ->
-            writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
-        }
-        logger.info("Total unique assets extracted: {}", map.size)
-    }
-
-    /**
-     * Append assets that have already been retrieved (not being streamed) into the CSV file.
-     * This is useful, for example, where information is cached up-front and thus need not be re-retrieved.
-     *
-     * @param list of assets, pre-retrieved
-     * @param assetToRow translator from an asset object into a row of CSV values
-     * @param totalAssetCount the total number of assets that will be output (used for logging / completion tracking)
-     * @param pageSize the page size to use for periodically logging progress
-     * @param logger through which to report the overall progress
-     */
-    fun appendAssets(list: List<Asset>, assetToRow: RowGenerator, totalAssetCount: Long, pageSize: Int, logger: KLogger) {
-        val count = AtomicLong(0)
-        val map = ConcurrentHashMap<String, String>()
-        list.forEach { a: Asset ->
-            writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
-        }
-    }
-
-    private fun writeAsset(a: Asset, assetToRow: RowGenerator, count: AtomicLong, totalAssetCount: Long, pageSize: Int, map: ConcurrentHashMap<String, String>, logger: KLogger) {
-        val duplicate = map.put(a.guid, a.typeName + "::" + a.guid)
-        if (duplicate != null) {
-            logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
-        }
-        val values = assetToRow.buildFromAsset(a)
-        writeRecord(values)
-        Utils.logProgress(count, totalAssetCount, logger, pageSize)
-    }
-
-    /** {@inheritDoc}  */
-    @Throws(IOException::class)
-    override fun close() {
-        writer.close()
-    }
-}

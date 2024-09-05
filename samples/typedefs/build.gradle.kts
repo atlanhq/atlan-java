@@ -4,6 +4,9 @@ plugins {
 }
 
 tasks {
+    jar {
+        dependsOn("genPklTypedefs")
+    }
     assemble {
         dependsOn("genPklTypedefs")
     }
@@ -20,4 +23,11 @@ pkl {
             multipleFileOutputDir.set(layout.projectDirectory.dir("build"))
         }
     }
+}
+
+tasks.getByName("genPklTypedefs") {
+    dependsOn(
+        ":typedef-toolkit:model:genKotlin",
+        ":typedef-toolkit:model:generateBuildInfo",
+    )
 }

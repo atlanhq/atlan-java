@@ -18,7 +18,11 @@ class ThreadSafeWriter(filePath: String) : Writer(), Closeable {
     /** {@inheritDoc}  */
     @Synchronized
     @Throws(IOException::class)
-    override fun write(cbuf: CharArray, off: Int, len: Int) {
+    override fun write(
+        cbuf: CharArray,
+        off: Int,
+        len: Int,
+    ) {
         writer.write(cbuf, off, len)
     }
 

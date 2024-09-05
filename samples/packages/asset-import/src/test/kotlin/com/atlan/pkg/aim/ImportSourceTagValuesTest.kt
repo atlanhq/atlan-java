@@ -25,10 +25,11 @@ class ImportSourceTagValuesTest : PackageTest() {
 
     private val testFile = "source_tag_values.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile(connectionQN: String) {
         // Prepare a copy of the file with unique names for glossaries and tags
@@ -36,9 +37,10 @@ class ImportSourceTagValuesTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{CONNECTION}}", connectionQN)
-                    .replace("{{TABLE}}", table)
+                val revised =
+                    line
+                        .replace("{{CONNECTION}}", connectionQN)
+                        .replace("{{TABLE}}", table)
                 output.appendText("$revised\n")
             }
         }
@@ -74,10 +76,11 @@ class ImportSourceTagValuesTest : PackageTest() {
         val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         val snowflakeQN = snowflakeConnection.qualifiedName
         val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
-        val request = Table.select()
-            .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeQN))
-            .where(Table.NAME.eq(table))
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeQN))
+                .where(Table.NAME.eq(table))
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val result = response.assets.getOrNull(0)
         assertNotNull(result)

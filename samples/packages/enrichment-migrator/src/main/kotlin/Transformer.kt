@@ -12,29 +12,31 @@ class Transformer(
     private val logger: KLogger,
     private val fieldSeparator: Char,
 ) : CSVXformer(
-    inputFile,
-    header,
-    logger,
-    fieldSeparator,
-) {
+        inputFile,
+        header,
+        logger,
+        fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         // Pick the fields to include in the output based on the header,
         // and replace the source connection with the target connection
-        val values = header.map {
-            val raw = if (it == Asset.STATUS.atlanFieldName) {
-                // Add the status column as explicitly ACTIVE (to convert any included archived assets)
-                AtlanStatus.ACTIVE.value
-            } else {
-                inputRow[it] ?: ""
-            }
-            if (ctx.targetDatabaseName.isNotBlank()) {
-                val regex = "(^|[/])${ctx.sourceDatabaseName}($|[/])".toRegex()
-                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(regex, "$1${ctx.targetDatabaseName}$2")
-            } else {
-                raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
-            }
-        }.toList()
+        val values =
+            header.map {
+                val raw =
+                    if (it == Asset.STATUS.atlanFieldName) {
+                        // Add the status column as explicitly ACTIVE (to convert any included archived assets)
+                        AtlanStatus.ACTIVE.value
+                    } else {
+                        inputRow[it] ?: ""
+                    }
+                if (ctx.targetDatabaseName.isNotBlank()) {
+                    val regex = "(^|[/])${ctx.sourceDatabaseName}($|[/])".toRegex()
+                    raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN).replace(regex, "$1${ctx.targetDatabaseName}$2")
+                } else {
+                    raw.replace(ctx.sourceConnectionQN, ctx.targetConnectionQN)
+                }
+            }.toList()
         // Wrap them all up in a list (one-to-one row output from input)
         return listOf(values)
     }

@@ -37,16 +37,16 @@ class CategoryImporter(
     private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : GTCImporter(
-    filename = filename,
-    attrsToOverwrite = attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    cache = CategoryCache,
-    typeNameFilter = GlossaryCategory.TYPE_NAME,
-    logger = KotlinLogging.logger {},
-    failOnErrors = failOnErrors,
-    fieldSeparator = fieldSeparator,
-) {
+        filename = filename,
+        attrsToOverwrite = attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        cache = CategoryCache,
+        typeNameFilter = GlossaryCategory.TYPE_NAME,
+        logger = KotlinLogging.logger {},
+        failOnErrors = failOnErrors,
+        fieldSeparator = fieldSeparator,
+    ) {
     private var levelToProcess = 0
 
     // Maximum depth of any category in the CSV -- will be updated on first pass through the CSV
@@ -75,7 +75,12 @@ class CategoryImporter(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
         val nameIdx = header.indexOf(GlossaryCategory.NAME.atlanFieldName)
         val parentIdx = header.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
         val anchorIdx = header.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
@@ -86,12 +91,13 @@ class CategoryImporter(
             // represents something other than a category, short-circuit
             return false
         }
-        val categoryLevel = if (row[parentIdx].isBlank()) {
-            1
-        } else {
-            val parentPath = row[parentIdx].split(GLOSSARY_DELIMITER)[0]
-            parentPath.split(CATEGORY_DELIMITER).size + 1
-        }
+        val categoryLevel =
+            if (row[parentIdx].isBlank()) {
+                1
+            } else {
+                val parentPath = row[parentIdx].split(GLOSSARY_DELIMITER)[0]
+                parentPath.split(CATEGORY_DELIMITER).size + 1
+            }
         // Consider whether we need to update the maximum depth of categories we need to load
         val currentMax = maxCategoryDepth.get()
         val maxDepth = max(categoryLevel, currentMax)
@@ -113,13 +119,14 @@ class CategoryImporter(
         val categoryName = deserializer.getValue(GlossaryCategory.NAME.atlanFieldName)?.let { it as String } ?: ""
         return if (glossaryIdx >= 0 && categoryName.isNotBlank()) {
             val glossaryName = CSVXformer.trimWhitespace(deserializer.row[glossaryIdx].ifBlank { "" })
-            val categoryPath = if (parentCategory == null) {
-                categoryName
-            } else {
-                val parentIdx = deserializer.heading.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
-                val parentPath = CSVXformer.trimWhitespace(deserializer.row[parentIdx].split(GLOSSARY_DELIMITER)[0])
-                "$parentPath$CATEGORY_DELIMITER$categoryName"
-            }
+            val categoryPath =
+                if (parentCategory == null) {
+                    categoryName
+                } else {
+                    val parentIdx = deserializer.heading.indexOf(GlossaryCategory.PARENT_CATEGORY.atlanFieldName)
+                    val parentPath = CSVXformer.trimWhitespace(deserializer.row[parentIdx].split(GLOSSARY_DELIMITER)[0])
+                    "$parentPath$CATEGORY_DELIMITER$categoryName"
+                }
             "$categoryPath$GLOSSARY_DELIMITER$glossaryName"
         } else {
             ""

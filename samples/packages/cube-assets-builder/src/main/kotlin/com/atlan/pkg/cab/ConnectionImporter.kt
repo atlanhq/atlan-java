@@ -34,15 +34,15 @@ class ConnectionImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
-    preprocessed.preprocessedFile,
-    attrsToOverwrite,
-    creationHandling,
-    batchSize,
-    Connection.TYPE_NAME,
-    KotlinLogging.logger {},
-    trackBatches,
-    fieldSeparator,
-) {
+        preprocessed.preprocessedFile,
+        attrsToOverwrite,
+        creationHandling,
+        batchSize,
+        Connection.TYPE_NAME,
+        KotlinLogging.logger {},
+        trackBatches,
+        fieldSeparator,
+    ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
     }
@@ -51,8 +51,9 @@ class ConnectionImporter(
     @Suppress("UNCHECKED_CAST")
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.CONNECTION_NAME.atlanFieldName)?.let { it as String } ?: ""
-        val type = deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
-            ?: throw NoSuchElementException("No typeName provided for the connection, cannot be processed.")
+        val type =
+            deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
+                ?: throw NoSuchElementException("No typeName provided for the connection, cannot be processed.")
         val identity = ConnectionCache.getIdentityForAsset(name, type)
         val existing = ConnectionCache.getByIdentity(identity)
         return if (existing != null) {

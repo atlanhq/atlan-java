@@ -15,17 +15,19 @@ import java.io.File
 class ExportAllPoliciesTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val files = listOf(
-        "debug.log",
-        "admin-export.xlsx",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+            "admin-export.xlsx",
+        )
 
     override fun setup() {
         setup(
             AdminExportCfg(
-                objectsToInclude = listOf(
-                    "policies",
-                ),
+                objectsToInclude =
+                    listOf(
+                        "policies",
+                    ),
                 includeNativePolicies = true,
                 emailAddresses = null,
             ),

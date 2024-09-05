@@ -230,7 +230,10 @@ object Utils {
      * @param runtime the general runtime configuration from the workflow
      * @return the complete configuration for the event-handling pipeline
      */
-    inline fun <reified T : CustomConfig> parseConfig(config: String, runtime: String): T {
+    inline fun <reified T : CustomConfig> parseConfig(
+        config: String,
+        runtime: String,
+    ): T {
         logger.info { "Parsing configuration..." }
         val type = MAPPER.typeFactory.constructType(T::class.java)
         val cfg = MAPPER.readValue<T>(config, type)
@@ -247,7 +250,10 @@ object Utils {
      * @return the actual value or a default, if the actual is null or empty
      */
     @Suppress("UNCHECKED_CAST")
-    inline fun <reified T> getOrDefault(configValue: String?, default: T): T {
+    inline fun <reified T> getOrDefault(
+        configValue: String?,
+        default: T,
+    ): T {
         if (configValue.isNullOrEmpty()) {
             return default
         }
@@ -274,7 +280,10 @@ object Utils {
      * @param default to return if the configValue is either null or empty
      * @return the actual value or a default, if the actual is null or empty
      */
-    fun getOrDefault(configValue: List<String>?, default: List<String>): List<String> {
+    fun getOrDefault(
+        configValue: List<String>?,
+        default: List<String>,
+    ): List<String> {
         return if (configValue.isNullOrEmpty()) default else configValue
     }
 
@@ -286,7 +295,10 @@ object Utils {
      * @param default to return if the configValue is either null or empty
      * @return the actual value or a default, if the actual is null or empty
      */
-    fun getOrDefault(configValue: Number?, default: Number): Number {
+    fun getOrDefault(
+        configValue: Number?,
+        default: Number,
+    ): Number {
         return if (configValue == null || configValue == -1) {
             default
         } else {
@@ -302,7 +314,10 @@ object Utils {
      * @param default to return if the configValue is either null or empty
      * @return the actual value or a default, if the actual is null or empty
      */
-    fun getOrDefault(configValue: Boolean?, default: Boolean): Boolean {
+    fun getOrDefault(
+        configValue: Boolean?,
+        default: Boolean,
+    ): Boolean {
         return configValue ?: default
     }
 
@@ -333,14 +348,14 @@ object Utils {
         val agentPkg = getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", "")
         val agentWfl = getEnvVar("X_ATLAN_AGENT_WORKFLOW_ID", "")
         return """
-    {
-        "user-id": "$userId",
-        "x-atlan-agent": "$agent",
-        "x-atlan-agent-id": "$agentId",
-        "x-atlan-agent-package-name": "$agentPkg",
-        "x-atlan-agent-workflow-id": "$agentWfl"
-    }
-        """.trimIndent()
+            {
+                "user-id": "$userId",
+                "x-atlan-agent": "$agent",
+                "x-atlan-agent-id": "$agentId",
+                "x-atlan-agent-package-name": "$agentPkg",
+                "x-atlan-agent-workflow-id": "$agentWfl"
+            }
+            """.trimIndent()
     }
 
     /**
@@ -377,10 +392,11 @@ object Utils {
         return if (connection != null) {
             logger.info { "Attempting to create new connection..." }
             try {
-                val toCreate = connection
-                    .toBuilder()
-                    .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
-                    .build()
+                val toCreate =
+                    connection
+                        .toBuilder()
+                        .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
+                        .build()
                 val response = toCreate.save().block()
                 response.getResult(toCreate).qualifiedName
             } catch (e: AtlanException) {
@@ -399,7 +415,10 @@ object Utils {
      * @param default default semantic to use if no value was specified
      * @return enumerated semantic
      */
-    fun getCreationHandling(semantic: String?, default: AssetCreationHandling): AssetCreationHandling {
+    fun getCreationHandling(
+        semantic: String?,
+        default: AssetCreationHandling,
+    ): AssetCreationHandling {
         return if (semantic == null) {
             default
         } else {
@@ -440,11 +459,12 @@ object Utils {
         body: String,
         attachments: Collection<File>? = null,
     ) {
-        val builder = EmailBuilder.startingBlank()
-            .from("support@atlan.app")
-            .withRecipients(null, false, recipients, Message.RecipientType.TO)
-            .withSubject(subject)
-            .withPlainText("$body\n\n")
+        val builder =
+            EmailBuilder.startingBlank()
+                .from("support@atlan.app")
+                .withRecipients(null, false, recipients, Message.RecipientType.TO)
+                .withSubject(subject)
+                .withPlainText("$body\n\n")
         attachments?.forEach {
             builder.withAttachment(it.name, FileDataSource(it))
         }
@@ -475,12 +495,16 @@ object Utils {
         return getLink(guid, "products")
     }
 
-    private fun getLink(guid: String, prefix: String): String {
-        val base = if (Atlan.getDefaultClient().isInternal || Atlan.getBaseUrl() == null) {
-            "https://${getEnvVar("DOMAIN", "atlan.com")}"
-        } else {
-            Atlan.getBaseUrl()
-        }
+    private fun getLink(
+        guid: String,
+        prefix: String,
+    ): String {
+        val base =
+            if (Atlan.getDefaultClient().isInternal || Atlan.getBaseUrl() == null) {
+                "https://${getEnvVar("DOMAIN", "atlan.com")}"
+            } else {
+                Atlan.getBaseUrl()
+            }
         return "$base/$prefix/$guid/overview"
     }
 
@@ -532,14 +556,15 @@ object Utils {
 
                     "adls" -> {
                         val adls = ADLSCredential(cred)
-                        val sync = ADLSSync(
-                            adls.storageAccount,
-                            adls.containerName,
-                            logger,
-                            adls.tenantId,
-                            adls.clientId,
-                            adls.clientSecret,
-                        )
+                        val sync =
+                            ADLSSync(
+                                adls.storageAccount,
+                                adls.containerName,
+                                logger,
+                                adls.tenantId,
+                                adls.clientId,
+                                adls.clientSecret,
+                            )
                         getInputFile(sync, outputDirectory, preppedPath)
                     }
 
@@ -607,14 +632,15 @@ object Utils {
 
                     "adls" -> {
                         val adls = ADLSCredential(cred)
-                        val sync = ADLSSync(
-                            adls.storageAccount,
-                            adls.containerName,
-                            logger,
-                            adls.tenantId,
-                            adls.clientId,
-                            adls.clientSecret,
-                        )
+                        val sync =
+                            ADLSSync(
+                                adls.storageAccount,
+                                adls.containerName,
+                                logger,
+                                adls.tenantId,
+                                adls.clientId,
+                                adls.clientSecret,
+                            )
                         getInputFiles(sync, outputDirectory, prefix)
                     }
 
@@ -653,7 +679,11 @@ object Utils {
      * @param outputDirectory local directory into which to download the file
      * @param remote object key in object storage
      */
-    fun getInputFile(syncer: ObjectStorageSyncer, outputDirectory: String, remote: String): String {
+    fun getInputFile(
+        syncer: ObjectStorageSyncer,
+        outputDirectory: String,
+        remote: String,
+    ): String {
         val filename = File(remote).name
         val path = "$outputDirectory${File.separator}$filename"
         syncer.downloadFrom(remote, path)
@@ -674,40 +704,41 @@ object Utils {
         key: String? = null,
     ) {
         val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
-        val sync: ObjectStorageSyncer? = if (credFile.exists()) {
-            val contents = credFile.readText()
-            val cred = MAPPER.readValue<Credential>(contents)
-            when (cred.authType) {
-                "s3" -> {
-                    val s3 = S3Credential(cred)
-                    S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
-                }
+        val sync: ObjectStorageSyncer? =
+            if (credFile.exists()) {
+                val contents = credFile.readText()
+                val cred = MAPPER.readValue<Credential>(contents)
+                when (cred.authType) {
+                    "s3" -> {
+                        val s3 = S3Credential(cred)
+                        S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                    }
 
-                "gcs" -> {
-                    val gcs = GCSCredential(cred)
-                    GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
-                }
+                    "gcs" -> {
+                        val gcs = GCSCredential(cred)
+                        GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
+                    }
 
-                "adls" -> {
-                    val adls = ADLSCredential(cred)
-                    ADLSSync(
-                        adls.storageAccount,
-                        adls.containerName,
-                        logger,
-                        adls.tenantId,
-                        adls.clientId,
-                        adls.clientSecret,
-                    )
-                }
+                    "adls" -> {
+                        val adls = ADLSCredential(cred)
+                        ADLSSync(
+                            adls.storageAccount,
+                            adls.containerName,
+                            logger,
+                            adls.tenantId,
+                            adls.clientId,
+                            adls.clientSecret,
+                        )
+                    }
 
-                else -> {
-                    logger.warn { "Unknown target ${cred.authType} -- skipping." }
-                    null
+                    else -> {
+                        logger.warn { "Unknown target ${cred.authType} -- skipping." }
+                        null
+                    }
                 }
+            } else {
+                getBackingStore()
             }
-        } else {
-            getBackingStore()
-        }
         sync?.let { uploadOutputFile(it, outputFile, prefix, key) } ?: {
             throw IllegalStateException("No valid target to upload output file found.")
         }

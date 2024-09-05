@@ -15,10 +15,11 @@ import java.io.File
 class ExportUsersTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val files = listOf(
-        "debug.log",
-        "admin-export.xlsx",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+            "admin-export.xlsx",
+        )
 
     override fun setup() {
         setup(

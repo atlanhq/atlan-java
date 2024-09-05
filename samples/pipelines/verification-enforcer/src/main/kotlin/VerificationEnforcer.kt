@@ -18,7 +18,6 @@ import org.slf4j.Logger
  * or if not it is automatically reverted to DRAFT.
  */
 object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
-
     const val DEFAULT_ENFORCEMENT_MESSAGE = "To be verified, an asset must have a description, at least one owner, and lineage."
     private lateinit var config: VerificationEnforcerCfg
 
@@ -35,42 +34,46 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
      * Logic for the event processing.
      */
     object Handler : AtlanEventHandler {
+        private val REQUIRED_ATTRS =
+            setOf(
+                Asset.CERTIFICATE_STATUS.atlanFieldName,
+                Asset.DESCRIPTION.atlanFieldName,
+                Asset.USER_DESCRIPTION.atlanFieldName,
+                Asset.OWNER_USERS.atlanFieldName,
+                Asset.OWNER_GROUPS.atlanFieldName,
+                Asset.HAS_LINEAGE.atlanFieldName,
+                Asset.README.atlanFieldName,
+                Asset.ASSIGNED_TERMS.atlanFieldName,
+                Asset.ATLAN_TAGS.atlanFieldName,
+                ICatalog.INPUT_TO_PROCESSES.atlanFieldName,
+                ICatalog.OUTPUT_FROM_PROCESSES.atlanFieldName,
+            )
 
-        private val REQUIRED_ATTRS = setOf(
-            Asset.CERTIFICATE_STATUS.atlanFieldName,
-            Asset.DESCRIPTION.atlanFieldName,
-            Asset.USER_DESCRIPTION.atlanFieldName,
-            Asset.OWNER_USERS.atlanFieldName,
-            Asset.OWNER_GROUPS.atlanFieldName,
-            Asset.HAS_LINEAGE.atlanFieldName,
-            Asset.README.atlanFieldName,
-            Asset.ASSIGNED_TERMS.atlanFieldName,
-            Asset.ATLAN_TAGS.atlanFieldName,
-            ICatalog.INPUT_TO_PROCESSES.atlanFieldName,
-            ICatalog.OUTPUT_FROM_PROCESSES.atlanFieldName,
-        )
-
-        private lateinit var MUST_HAVES: List<String>
-        private lateinit var ASSET_TYPES: List<String>
-        private lateinit var ENFORCEMENT_MESSAGE: String
+        private lateinit var mustHaves: List<String>
+        private lateinit var assetTypes: List<String>
+        private lateinit var enforcementMessage: String
 
         private fun setup() {
             // We must initialize constants _after_ the instantiation of the object,
             // since the config itself will only be populated after instantiation
-            MUST_HAVES = Utils.getOrDefault(config.mustHaves, listOf())
-            ASSET_TYPES = Utils.getOrDefault(config.assetTypes, listOf())
-            ENFORCEMENT_MESSAGE = Utils.getOrDefault(config.enforcementMessage, DEFAULT_ENFORCEMENT_MESSAGE)
+            mustHaves = Utils.getOrDefault(config.mustHaves, listOf())
+            assetTypes = Utils.getOrDefault(config.assetTypes, listOf())
+            enforcementMessage = Utils.getOrDefault(config.enforcementMessage, DEFAULT_ENFORCEMENT_MESSAGE)
         }
 
         // Note: we can just re-use the default validatePrerequisites
 
         /** {@inheritDoc}  */
         @Throws(AtlanException::class)
-        override fun getCurrentState(client: AtlanClient, fromEvent: Asset, logger: Logger): Asset? {
+        override fun getCurrentState(
+            client: AtlanClient,
+            fromEvent: Asset,
+            logger: Logger,
+        ): Asset? {
             setup()
-            val includeTerms = MUST_HAVES.contains("term")
-            val includeTags = MUST_HAVES.contains("tag")
-            return if (fromEvent.typeName in ASSET_TYPES) {
+            val includeTerms = mustHaves.contains("term")
+            val includeTags = mustHaves.contains("tag")
+            return if (fromEvent.typeName in assetTypes) {
                 AtlanEventHandler.getCurrentViewOfAsset(
                     client,
                     fromEvent,
@@ -79,7 +82,9 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
                     includeTags,
                 )
                     ?: throw NotFoundException(
-                        ErrorCode.ASSET_NOT_FOUND_BY_QN, fromEvent.qualifiedName, fromEvent.typeName,
+                        ErrorCode.ASSET_NOT_FOUND_BY_QN,
+                        fromEvent.qualifiedName,
+                        fromEvent.typeName,
                     )
             } else {
                 logger.info(
@@ -93,7 +98,10 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
 
         /** {@inheritDoc}  */
         @Throws(AtlanException::class)
-        override fun calculateChanges(asset: Asset?, logger: Logger): Collection<Asset> {
+        override fun calculateChanges(
+            asset: Asset?,
+            logger: Logger,
+        ): Collection<Asset> {
             // We only need to consider enforcement if the asset is currently verified
             if (asset != null) {
                 if (asset.certificateStatus == CertificateStatus.VERIFIED) {
@@ -105,7 +113,7 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
                         return setOf(
                             asset.trimToRequired()
                                 .certificateStatus(CertificateStatus.DRAFT)
-                                .certificateStatusMessage(ENFORCEMENT_MESSAGE)
+                                .certificateStatusMessage(enforcementMessage)
                                 .build(),
                         )
                     } else {
@@ -135,17 +143,18 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
          */
         private fun valid(asset: Asset): Boolean {
             var overallValid = true
-            for (next in MUST_HAVES) {
-                overallValid = overallValid && when (next) {
-                    "description" -> AtlanEventHandler.hasDescription(asset)
-                    "owner" -> AtlanEventHandler.hasOwner(asset)
-                    "readme" -> AtlanEventHandler.hasReadme(asset)
-                    "tag" -> AtlanEventHandler.hasAtlanTags(asset)
-                    // Only check these last two on non-glossary asset types
-                    "lineage" -> !asset.typeName.startsWith("AtlasGlossary") && AtlanEventHandler.hasLineage(asset)
-                    "term" -> !asset.typeName.startsWith("AtlasGlossary") && AtlanEventHandler.hasAssignedTerms(asset)
-                    else -> false
-                }
+            for (next in mustHaves) {
+                overallValid = overallValid &&
+                    when (next) {
+                        "description" -> AtlanEventHandler.hasDescription(asset)
+                        "owner" -> AtlanEventHandler.hasOwner(asset)
+                        "readme" -> AtlanEventHandler.hasReadme(asset)
+                        "tag" -> AtlanEventHandler.hasAtlanTags(asset)
+                        // Only check these last two on non-glossary asset types
+                        "lineage" -> !asset.typeName.startsWith("AtlasGlossary") && AtlanEventHandler.hasLineage(asset)
+                        "term" -> !asset.typeName.startsWith("AtlasGlossary") && AtlanEventHandler.hasAssignedTerms(asset)
+                        else -> false
+                    }
             }
             return overallValid
         }

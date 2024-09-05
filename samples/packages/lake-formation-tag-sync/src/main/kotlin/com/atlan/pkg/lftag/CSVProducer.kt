@@ -19,13 +19,17 @@ class CSVProducer(
     private val mapper = jacksonObjectMapper()
     private val missingConnectionKeys = mutableSetOf<String>()
     private val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
-    private val headerNames = setOf(
-        Asset.NAME.atlanFieldName,
-        Asset.TYPE_NAME.atlanFieldName,
-        Asset.QUALIFIED_NAME.atlanFieldName,
-    ) + metadataMap.values.toSet()
+    private val headerNames =
+        setOf(
+            Asset.NAME.atlanFieldName,
+            Asset.TYPE_NAME.atlanFieldName,
+            Asset.QUALIFIED_NAME.atlanFieldName,
+        ) + metadataMap.values.toSet()
 
-    fun transform(tagData: LFTagData, fileName: String) {
+    fun transform(
+        tagData: LFTagData,
+        fileName: String,
+    ) {
         CSVWriter(fileName).use { csv ->
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
@@ -34,28 +38,31 @@ class CSVProducer(
                 val (connectionKey, schemaName) = table.databaseName.split('_', limit = 2)
                 if (connectionKey in this.connectionMap) {
                     val schemaQualifiedName = "${connectionMap.getValue(connectionKey)}/$schemaName"
-                    var row = mutableMapOf(
-                        Asset.QUALIFIED_NAME.atlanFieldName to schemaQualifiedName,
-                        Asset.TYPE_NAME.atlanFieldName to Schema.TYPE_NAME,
-                        Asset.NAME.atlanFieldName to schemaName,
-                    )
+                    var row =
+                        mutableMapOf(
+                            Asset.QUALIFIED_NAME.atlanFieldName to schemaQualifiedName,
+                            Asset.TYPE_NAME.atlanFieldName to Schema.TYPE_NAME,
+                            Asset.NAME.atlanFieldName to schemaName,
+                        )
                     tagToMetadataMapper.getTagValues(tableInfo.lfTagOnDatabase, row)
                     csv.writeRecord(row)
                     val qualifiedName = "$schemaQualifiedName/${table.name}"
-                    row = mutableMapOf(
-                        Asset.QUALIFIED_NAME.atlanFieldName to qualifiedName,
-                        Asset.TYPE_NAME.atlanFieldName to Table.TYPE_NAME,
-                        Asset.NAME.atlanFieldName to table.name,
-                    )
+                    row =
+                        mutableMapOf(
+                            Asset.QUALIFIED_NAME.atlanFieldName to qualifiedName,
+                            Asset.TYPE_NAME.atlanFieldName to Table.TYPE_NAME,
+                            Asset.NAME.atlanFieldName to table.name,
+                        )
                     tagToMetadataMapper.getTagValues(tableInfo.lfTagsOnTable, row)
                     csv.writeRecord(row)
                     tableInfo.lfTagsOnColumn.forEach { column ->
                         val columnQualifiedName = "$qualifiedName/${column.name}"
-                        row = mutableMapOf(
-                            Asset.QUALIFIED_NAME.atlanFieldName to columnQualifiedName,
-                            Asset.TYPE_NAME.atlanFieldName to Column.TYPE_NAME,
-                            Asset.NAME.atlanFieldName to column.name,
-                        )
+                        row =
+                            mutableMapOf(
+                                Asset.QUALIFIED_NAME.atlanFieldName to columnQualifiedName,
+                                Asset.TYPE_NAME.atlanFieldName to Column.TYPE_NAME,
+                                Asset.NAME.atlanFieldName to column.name,
+                            )
                         tagToMetadataMapper.getTagValues(column.lfTags, row)
                         csv.writeRecord(row)
                     }

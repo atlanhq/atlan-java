@@ -10,12 +10,12 @@ import com.atlan.model.assets.Asset
  * Static object to transform (really to validate) group references.
  */
 object GroupXformer {
-
-    val FIELDS = setOf(
-        Asset.OWNER_GROUPS.atlanFieldName,
-        Asset.ADMIN_GROUPS.atlanFieldName,
-        Asset.VIEWER_GROUPS.atlanFieldName,
-    )
+    val FIELDS =
+        setOf(
+            Asset.OWNER_GROUPS.atlanFieldName,
+            Asset.ADMIN_GROUPS.atlanFieldName,
+            Asset.VIEWER_GROUPS.atlanFieldName,
+        )
 
     /**
      * Encodes (serializes) a group into a string form.

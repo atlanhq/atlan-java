@@ -22,9 +22,10 @@ class ImportFileTest : PackageTest() {
     private val connectorType = AtlanConnectorType.OPENLINEAGE
     private val testId = makeUnique("oaf")
     private val testFile = "openapi.json"
-    private val files = listOf(
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for domains and products
@@ -60,14 +61,15 @@ class ImportFileTest : PackageTest() {
     @Test
     fun specCreated() {
         val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
-        val request = APISpec.select()
-            .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
-            .includeOnResults(APISpec.NAME)
-            .includeOnResults(APISpec.API_SPEC_TYPE)
-            .includeOnResults(APISpec.API_SPEC_LICENSE_URL)
-            .includeOnResults(APISpec.API_SPEC_TERMS_OF_SERVICE_URL)
-            .includeOnResults(APISpec.API_IS_AUTH_OPTIONAL)
-            .toRequest()
+        val request =
+            APISpec.select()
+                .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
+                .includeOnResults(APISpec.NAME)
+                .includeOnResults(APISpec.API_SPEC_TYPE)
+                .includeOnResults(APISpec.API_SPEC_LICENSE_URL)
+                .includeOnResults(APISpec.API_SPEC_TERMS_OF_SERVICE_URL)
+                .includeOnResults(APISpec.API_IS_AUTH_OPTIONAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val results = response.stream().toList()
         assertEquals(1, results.size)
@@ -83,15 +85,16 @@ class ImportFileTest : PackageTest() {
     @Test
     fun pathsCreated() {
         val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
-        val request = APIPath.select()
-            .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
-            .includeOnResults(APIPath.NAME)
-            .includeOnResults(APIPath.DESCRIPTION)
-            .includeOnResults(APIPath.API_PATH_RAW_URI)
-            .includeOnResults(APIPath.API_PATH_AVAILABLE_OPERATIONS)
-            .includeOnResults(APIPath.API_SPEC)
-            .includeOnRelations(APISpec.QUALIFIED_NAME)
-            .toRequest()
+        val request =
+            APIPath.select()
+                .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
+                .includeOnResults(APIPath.NAME)
+                .includeOnResults(APIPath.DESCRIPTION)
+                .includeOnResults(APIPath.API_PATH_RAW_URI)
+                .includeOnResults(APIPath.API_PATH_AVAILABLE_OPERATIONS)
+                .includeOnResults(APIPath.API_SPEC)
+                .includeOnRelations(APISpec.QUALIFIED_NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 13)
         val results = response.stream().toList()
         assertEquals(13, results.size)

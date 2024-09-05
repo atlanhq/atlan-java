@@ -39,16 +39,18 @@ class DomainImporter(
     private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : CSVImporter(
-    filename,
-    logger = KotlinLogging.logger {},
-    typeNameFilter = DataDomain.TYPE_NAME,
-    attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    failOnErrors = failOnErrors,
-    trackBatches = true, // Always track batches for domain importer, to ensure cache is managed
-    fieldSeparator = fieldSeparator,
-) {
+        filename,
+        logger = KotlinLogging.logger {},
+        typeNameFilter = DataDomain.TYPE_NAME,
+        attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        failOnErrors = failOnErrors,
+        trackBatches = true,
+        fieldSeparator = fieldSeparator,
+    ) {
+    // Note: Always track batches (above) for domain importer, to ensure cache is managed
+
     private var levelToProcess = 0
 
     // Maximum depth of any domain in the CSV -- will be updated on first pass through the CSV
@@ -94,7 +96,12 @@ class DomainImporter(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
         val nameIdx = header.indexOf(DataDomain.NAME.atlanFieldName)
         val parentIdx = header.indexOf(DataDomain.PARENT_DOMAIN.atlanFieldName)
 
@@ -104,11 +111,12 @@ class DomainImporter(
             // represents something other than a domain, short-circuit
             return false
         }
-        val domainLevel = if (row[parentIdx].isBlank()) {
-            1
-        } else {
-            row[parentIdx].split(DATA_DOMAIN_DELIMITER).size + 1
-        }
+        val domainLevel =
+            if (row[parentIdx].isBlank()) {
+                1
+            } else {
+                row[parentIdx].split(DATA_DOMAIN_DELIMITER).size + 1
+            }
         // Consider whether we need to update the maximum depth of categories we need to load
         val currentMax = maxDomainDepth.get()
         val maxDepth = max(domainLevel, currentMax)

@@ -16,7 +16,6 @@ import java.io.File
  * 2. runtime.json -- containing the details of the workflow (X_ATLAN_AGENT_* headers), for injection into audit logs
  */
 class S3ConfigSync {
-
     val logger = KotlinLogging.logger {}
 
     val localPath = "/tmp"

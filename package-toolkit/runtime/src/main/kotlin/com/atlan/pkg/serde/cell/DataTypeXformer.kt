@@ -8,10 +8,10 @@ import com.atlan.model.assets.Column
  * Utility class to convert data types for columns.
  */
 object DataTypeXformer {
-
-    val FIELDS = setOf(
-        Column.DATA_TYPE.atlanFieldName,
-    )
+    val FIELDS =
+        setOf(
+            Column.DATA_TYPE.atlanFieldName,
+        )
 
     /** Types that appear to be spurious values in the data — we will skip these entirely.  */
     private val spuriousValues = setOf("DATA TYPE", "DATA_TYPE", "HIERARCHYID", "NULL")
@@ -26,7 +26,10 @@ object DataTypeXformer {
      * @param fieldName name of the field where the value was found
      * @return a normalized data type for use in Atlan
      */
-    fun decode(type: String?, fieldName: String): String? {
+    fun decode(
+        type: String?,
+        fieldName: String,
+    ): String? {
         if (type.isNullOrBlank()) {
             return null
         }
@@ -81,8 +84,9 @@ object DataTypeXformer {
     fun getMaxLength(sqlType: String?): Long? {
         if (sqlType != null) {
             if (sqlType.contains("(") && !sqlType.contains(",")) {
-                val length = sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(")"))
-                    .trim { it <= ' ' }
+                val length =
+                    sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(")"))
+                        .trim { it <= ' ' }
                 // TODO: should probably make this more general by catching a format exception...
                 if (length != "MAX") {
                     return length.toLong()
@@ -101,8 +105,9 @@ object DataTypeXformer {
     fun getPrecision(sqlType: String?): Int? {
         if (sqlType != null) {
             if (sqlType.contains("(") && sqlType.contains(",")) {
-                val precision = sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(","))
-                    .trim { it <= ' ' }
+                val precision =
+                    sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(","))
+                        .trim { it <= ' ' }
                 return precision.toInt()
             }
         }
@@ -118,8 +123,9 @@ object DataTypeXformer {
     fun getScale(sqlType: String?): Double? {
         if (sqlType != null) {
             if (sqlType.contains("(") && sqlType.contains(",")) {
-                val scale = sqlType.substring(sqlType.indexOf(",") + 1, sqlType.indexOf(")"))
-                    .trim { it <= ' ' }
+                val scale =
+                    sqlType.substring(sqlType.indexOf(",") + 1, sqlType.indexOf(")"))
+                        .trim { it <= ' ' }
                 return scale.toDouble()
             }
         }

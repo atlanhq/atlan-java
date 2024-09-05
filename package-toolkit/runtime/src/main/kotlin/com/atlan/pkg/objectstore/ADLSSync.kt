@@ -32,43 +32,50 @@ class ADLSSync(
     private val clientId: String,
     private val clientSecret: String,
 ) : ObjectStorageSyncer {
-
     private val adlsClient: DataLakeServiceClient?
     private val blobContainerClient: BlobContainerClient?
+
     init {
         if (tenantId.isNotBlank() && clientId.isNotBlank()) {
-            val credential = ClientSecretCredentialBuilder()
-                .tenantId(tenantId)
-                .clientId(clientId)
-                .clientSecret(clientSecret)
-                .build()
-            adlsClient = DataLakeServiceClientBuilder()
-                .endpoint("https://$accountName.dfs.core.windows.net")
-                .credential(credential)
-                .buildClient()
+            val credential =
+                ClientSecretCredentialBuilder()
+                    .tenantId(tenantId)
+                    .clientId(clientId)
+                    .clientSecret(clientSecret)
+                    .build()
+            adlsClient =
+                DataLakeServiceClientBuilder()
+                    .endpoint("https://$accountName.dfs.core.windows.net")
+                    .credential(credential)
+                    .buildClient()
             blobContainerClient = null
         } else {
             // Fallback to using Atlan's backing store if tenantId or clientId is empty
             // (Note: we must use a blob container client here as the file system client
             //  otherwise cannot do any uploads.)
             val credential = StorageSharedKeyCredential(accountName, clientSecret)
-            blobContainerClient = BlobContainerClientBuilder()
-                .endpoint("https://$accountName.blob.core.windows.net")
-                .credential(credential)
-                .containerName(containerName)
-                .buildClient()
+            blobContainerClient =
+                BlobContainerClientBuilder()
+                    .endpoint("https://$accountName.blob.core.windows.net")
+                    .credential(credential)
+                    .containerName(containerName)
+                    .buildClient()
             adlsClient = null
         }
     }
 
     /** {@inheritDoc} */
-    override fun copyFrom(prefix: String, localDirectory: String): List<String> {
+    override fun copyFrom(
+        prefix: String,
+        localDirectory: String,
+    ): List<String> {
         logger.info { "Syncing files from adls://$containerName/$prefix to $localDirectory" }
 
         val filesToDownload = mutableListOf<String>()
-        val localFilesLastModified = File(localDirectory).walkTopDown().filter { it.isFile }.map {
-            it.relativeTo(File(localDirectory)).path to it.lastModified()
-        }.toMap()
+        val localFilesLastModified =
+            File(localDirectory).walkTopDown().filter { it.isFile }.map {
+                it.relativeTo(File(localDirectory)).path to it.lastModified()
+            }.toMap()
 
         if (adlsClient != null) {
             val fsClient = adlsClient.getFileSystemClient(containerName)
@@ -110,7 +117,11 @@ class ADLSSync(
     }
 
     /** {@inheritDoc} */
-    override fun copyLatestFrom(prefix: String, extension: String, localDirectory: String): String {
+    override fun copyLatestFrom(
+        prefix: String,
+        extension: String,
+        localDirectory: String,
+    ): String {
         logger.info { "Copying latest $extension file from gcs://$containerName/$prefix to $localDirectory" }
 
         val filesToDownload = mutableListOf<String>()
@@ -134,27 +145,32 @@ class ADLSSync(
             throw IllegalStateException("No ADLS client configured -- cannot download.")
         }
         filesToDownload.sortDescending()
-        val latestFileKey = if (filesToDownload.isNotEmpty()) {
-            filesToDownload[0]
-        } else {
-            ""
-        }
+        val latestFileKey =
+            if (filesToDownload.isNotEmpty()) {
+                filesToDownload[0]
+            } else {
+                ""
+            }
 
-        val localFilePath = if (latestFileKey.isNotBlank()) {
-            val local = File(localDirectory, latestFileKey).path
-            downloadFrom(
-                latestFileKey,
-                local,
-            )
-            local
-        } else {
-            ""
-        }
+        val localFilePath =
+            if (latestFileKey.isNotBlank()) {
+                val local = File(localDirectory, latestFileKey).path
+                downloadFrom(
+                    latestFileKey,
+                    local,
+                )
+                local
+            } else {
+                ""
+            }
         return localFilePath
     }
 
     /** {@inheritDoc} */
-    override fun downloadFrom(remoteKey: String, localFile: String) {
+    override fun downloadFrom(
+        remoteKey: String,
+        localFile: String,
+    ) {
         logger.info { " ... downloading adls://$containerName/$remoteKey to $localFile" }
         val local = File(localFile)
         if (local.exists()) {
@@ -176,23 +192,27 @@ class ADLSSync(
     }
 
     /** {@inheritDoc} */
-    override fun copyTo(localDirectory: String, prefix: String): Boolean {
+    override fun copyTo(
+        localDirectory: String,
+        prefix: String,
+    ): Boolean {
         logger.info { "Syncing files from $localDirectory to adls://$containerName/$prefix" }
 
         val localFilesToUpload = mutableListOf<String>()
 
-        val filesLastModified = if (adlsClient != null) {
-            val fsClient = adlsClient.getFileSystemClient(containerName)
-            fsClient.listPaths(ListPathsOptions().setPath(prefix), null).associate {
-                File(it.name).relativeTo(File(prefix)).path to it.lastModified.toInstant().toEpochMilli()
+        val filesLastModified =
+            if (adlsClient != null) {
+                val fsClient = adlsClient.getFileSystemClient(containerName)
+                fsClient.listPaths(ListPathsOptions().setPath(prefix), null).associate {
+                    File(it.name).relativeTo(File(prefix)).path to it.lastModified.toInstant().toEpochMilli()
+                }
+            } else if (blobContainerClient != null) {
+                blobContainerClient.listBlobs(ListBlobsOptions().setPrefix(prefix), null).associate {
+                    File(it.name).relativeTo(File(prefix)).path to it.properties.lastModified.toInstant().toEpochMilli()
+                }
+            } else {
+                throw IllegalStateException("No ADLS client configured -- cannot upload.")
             }
-        } else if (blobContainerClient != null) {
-            blobContainerClient.listBlobs(ListBlobsOptions().setPrefix(prefix), null).associate {
-                File(it.name).relativeTo(File(prefix)).path to it.properties.lastModified.toInstant().toEpochMilli()
-            }
-        } else {
-            throw IllegalStateException("No ADLS client configured -- cannot upload.")
-        }
 
         File(localDirectory).walkTopDown().filter { it.isFile }.forEach { file ->
             val key = file.relativeTo(File(localDirectory)).path
@@ -215,7 +235,10 @@ class ADLSSync(
     }
 
     /** {@inheritDoc} */
-    override fun uploadTo(localFile: String, remoteKey: String) {
+    override fun uploadTo(
+        localFile: String,
+        remoteKey: String,
+    ) {
         logger.info { " ... uploading $localFile to adls://$containerName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in ADLS

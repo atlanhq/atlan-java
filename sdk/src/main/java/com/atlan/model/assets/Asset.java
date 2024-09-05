@@ -862,20 +862,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      *
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
-     * @deprecated see {@link #save()} instead
-     */
-    @Deprecated
-    public AssetMutationResponse upsert() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse save() throws AtlanException {
         return save(Atlan.getDefaultClient());
@@ -892,21 +878,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public AssetMutationResponse save(AtlanClient client) throws AtlanException {
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @deprecated see {@link #save(boolean)} instead
-     */
-    @Deprecated
-    public AssetMutationResponse upsert(boolean replaceAtlanTags) throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -945,22 +916,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
-     * @deprecated see {@link #saveMergingCM(boolean)} instead
-     */
-    @Deprecated
-    public AssetMutationResponse upsertMergingCM(boolean replaceAtlanTags) throws AtlanException {
-        return saveMergingCM(Atlan.getDefaultClient(), replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
-     * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
-     *
-     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse saveMergingCM(boolean replaceAtlanTags) throws AtlanException {
         return saveMergingCM(Atlan.getDefaultClient(), replaceAtlanTags);
@@ -979,23 +934,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public AssetMutationResponse saveMergingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.saveMergingCM(List.of(this), replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
-     * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
-     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @deprecated see {@link #saveReplacingCM(boolean)} instead
-     */
-    @Deprecated
-    public AssetMutationResponse upsertReplacingCM(boolean replaceAtlanTags) throws AtlanException {
-        return saveReplacingCM(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -1184,64 +1122,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
-     * Retrieves an asset by its GUID, complete with all of its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param guid of the asset to retrieve
-     * @return the requested full asset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveFull(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid, true);
-    }
-
-    /**
-     * Retrieves an asset by its GUID, complete with all of its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the asset to retrieve
-     * @return the requested full asset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveFull(AtlanClient client, String guid) throws AtlanException {
-        return get(client, guid, true);
-    }
-
-    /**
-     * Retrieves a minimal asset by its GUID, without its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param guid of the asset to retrieve
-     * @return the requested minimal asset, without its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveMinimal(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid, false);
-    }
-
-    /**
-     * Retrieves a minimal asset by its GUID, without its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the asset to retrieve
-     * @return the requested minimal asset, without its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveMinimal(AtlanClient client, String guid) throws AtlanException {
-        return get(client, guid, false);
-    }
-
-    /**
      * Retrieves an asset by its qualifiedName, optionally complete with all of its relationships.
      * The type of the asset will only be determined at runtime.
      *
@@ -1262,55 +1142,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             asset.setCompleteObject();
         }
         return asset;
-    }
-
-    /**
-     * Retrieves an asset by its qualifiedName, optionally complete with all of its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param typeName the type of the asset to retrieve
-     * @param qualifiedName the unique name of the asset to retrieve
-     * @return the requested full asset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, boolean)} instead
-     */
-    @Deprecated
-    protected static Asset retrieveFull(AtlanClient client, String typeName, String qualifiedName)
-            throws AtlanException {
-        return get(client, typeName, qualifiedName, true);
-    }
-
-    /**
-     * Retrieves an asset by its qualifiedName, without its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param typeName the type of the asset to retrieve
-     * @param qualifiedName the unique name of the asset to retrieve
-     * @return the requested minimal asset, without its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
-        return get(Atlan.getDefaultClient(), typeName, qualifiedName, false);
-    }
-
-    /**
-     * Retrieves an asset by its qualifiedName, without its relationships.
-     * The type of the asset will only be determined at runtime.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param typeName the type of the asset to retrieve
-     * @param qualifiedName the unique name of the asset to retrieve
-     * @return the requested minimal asset, without its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
-     * @deprecated see {@link #get(AtlanClient, String, String, boolean)} instead
-     */
-    @Deprecated
-    public static Asset retrieveMinimal(AtlanClient client, String typeName, String qualifiedName)
-            throws AtlanException {
-        return get(client, typeName, qualifiedName, false);
     }
 
     /**
@@ -1551,7 +1382,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             boolean restrictLineagePropagation)
             throws AtlanException {
 
-        Asset existing = retrieveFull(client, typeName, qualifiedName);
+        Asset existing = get(client, typeName, qualifiedName, true);
         if (atlanTagNames == null) {
             return existing;
         } else if (existing != null) {
@@ -1583,55 +1414,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
                     client, minimal.atlanTags(replacementAtlanTags).build());
         }
         return null;
-    }
-
-    /**
-     * Add Atlan tags to an asset.
-     *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the asset
-     * @param typeName type of the asset
-     * @param qualifiedName of the asset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
-     * @deprecated see {@link #appendAtlanTags(AtlanClient, String, String, List)} instead
-     */
-    @Deprecated
-    protected static void addAtlanTags(
-            AtlanClient client, String typeName, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        client.assets.addAtlanTags(typeName, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to an asset.
-     *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the asset
-     * @param typeName type of the asset
-     * @param qualifiedName of the asset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
-     * @deprecated see {@link #appendAtlanTags(AtlanClient, String, String, List, boolean, boolean, boolean)} instead
-     */
-    @Deprecated
-    protected static void addAtlanTags(
-            AtlanClient client,
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        client.assets.addAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -1900,7 +1682,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     private static boolean restore(AtlanClient client, String typeName, String qualifiedName, int retryCount)
             throws AtlanException, InterruptedException {
-        Asset existing = retrieveFull(client, typeName, qualifiedName);
+        Asset existing = get(client, typeName, qualifiedName, true);
         if (existing == null) {
             // Nothing to restore, so cannot be restored
             return false;
@@ -1958,7 +1740,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     protected static Asset appendTerms(
             AtlanClient client, String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        Asset existing = retrieveFull(client, typeName, qualifiedName);
+        Asset existing = get(client, typeName, qualifiedName, true);
         if (terms == null) {
             return existing;
         } else if (existing != null) {
@@ -1997,7 +1779,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     protected static Asset removeTerms(
             AtlanClient client, String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        Asset existing = retrieveFull(client, typeName, qualifiedName);
+        Asset existing = get(client, typeName, qualifiedName, true);
         if (existing != null) {
             Set<IGlossaryTerm> replacementTerms = new TreeSet<>();
             Set<IGlossaryTerm> existingTerms = existing.getAssignedTerms();

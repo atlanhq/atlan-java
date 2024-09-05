@@ -104,7 +104,10 @@ object FieldSerde {
      * @param value the single field's value
      * @return the deserialized form of that field's value
      */
-    fun getCustomMetadataValueFromString(attrDef: AttributeDef, value: String?): Any? {
+    fun getCustomMetadataValueFromString(
+        attrDef: AttributeDef,
+        value: String?,
+    ): Any? {
         return if (value.isNullOrEmpty()) {
             null
         } else if (attrDef.options?.multiValueSelect == true) {
@@ -114,7 +117,10 @@ object FieldSerde {
         }
     }
 
-    private fun getMultiValuedCustomMetadata(attrDef: AttributeDef, value: String?): List<String> {
+    private fun getMultiValuedCustomMetadata(
+        attrDef: AttributeDef,
+        value: String?,
+    ): List<String> {
         return if (value.isNullOrEmpty()) {
             listOf()
         } else {
@@ -122,7 +128,10 @@ object FieldSerde {
         }
     }
 
-    private fun getSingleValuedCustomMetadata(attrDef: AttributeDef, value: String?): Any? {
+    private fun getSingleValuedCustomMetadata(
+        attrDef: AttributeDef,
+        value: String?,
+    ): Any? {
         return if (attrDef.typeName.lowercase() == "date") {
             TimestampXformer.decode(value, "unused")
         } else if (value != null) {
@@ -152,7 +161,10 @@ object FieldSerde {
      * @param qualifiedName of the asset for which to get a relationship
      * @return a relationship reference for that asset
      */
-    fun getRefByQualifiedName(typeName: String, qualifiedName: String): Asset {
+    fun getRefByQualifiedName(
+        typeName: String,
+        qualifiedName: String,
+    ): Asset {
         val assetClass = Serde.getAssetClassForType(typeName)
         val method = assetClass.getMethod("refByQualifiedName", String::class.java)
         return (method.invoke(null, qualifiedName) as Asset)

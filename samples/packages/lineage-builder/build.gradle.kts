@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: Apache-2.0 */
+// SPDX-License-Identifier: Apache-2.0
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarPath = "$rootDir/jars"
 
@@ -22,6 +22,7 @@ tasks {
             include(project(":samples:packages:asset-import"))
         }
         mergeServiceFiles()
+        dependsOn(":package-toolkit:runtime:genPklConnectors")
     }
     jar {
         // Override the default jar task so we get the shadowed jar

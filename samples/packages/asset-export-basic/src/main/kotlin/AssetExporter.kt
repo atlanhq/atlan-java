@@ -38,21 +38,22 @@ class AssetExporter(
     private val filename: String,
     private val batchSize: Int,
 ) : RowGenerator {
-
     private val logger = KotlinLogging.logger {}
 
     fun export() {
-        val assets = getAssetsToExtract()
-            .pageSize(batchSize)
-            .includesOnRelations(getRelatedAttributesToExtract())
-            .includesOnResults(_getAttributesToExtract())
+        val assets =
+            getAssetsToExtract()
+                .pageSize(batchSize)
+                .includesOnRelations(getRelatedAttributesToExtract())
+                .includesOnResults(getFieldsToExtract())
 
         CSVWriter(filename).use { csv ->
-            val headerNames = Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
-                .map(AtlanField::getAtlanFieldName)
-                .collect(Collectors.toList())
+            val headerNames =
+                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
+                    .map(AtlanField::getAtlanFieldName)
+                    .collect(Collectors.toList())
             headerNames.addAll(
-                _getAttributesToExtract().stream()
+                getFieldsToExtract().stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -64,11 +65,12 @@ class AssetExporter(
     }
 
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
-        val builder = Atlan.getDefaultClient().assets
-            .select(ctx.includeArchived)
-            .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
-            .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
-            .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
+        val builder =
+            Atlan.getDefaultClient().assets
+                .select(ctx.includeArchived)
+                .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
+                .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
+                .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
         if (ctx.assetsExportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.DISPLAY_NAME.hasAnyValue())
@@ -94,7 +96,7 @@ class AssetExporter(
         return builder
     }
 
-    private fun _getAttributesToExtract(): MutableList<AtlanField> {
+    private fun getFieldsToExtract(): MutableList<AtlanField> {
         return if (ctx.limitToAttributes.isNotEmpty()) {
             ctx.limitToAttributes.map { SearchableField(it, it) }.toMutableList()
         } else {
@@ -103,45 +105,49 @@ class AssetExporter(
     }
 
     companion object {
-        fun getAttributesToExtract(includeDesc: Boolean, cmFields: List<CustomMetadataField>): MutableList<AtlanField> {
-            val attributeList: MutableList<AtlanField> = if (includeDesc) {
-                mutableListOf(
-                    Asset.NAME,
-                    Asset.DISPLAY_NAME,
-                    Asset.DESCRIPTION,
-                    Asset.USER_DESCRIPTION,
-                    Asset.OWNER_USERS,
-                    Asset.OWNER_GROUPS,
-                    Asset.CERTIFICATE_STATUS,
-                    Asset.CERTIFICATE_STATUS_MESSAGE,
-                    Asset.ANNOUNCEMENT_TYPE,
-                    Asset.ANNOUNCEMENT_TITLE,
-                    Asset.ANNOUNCEMENT_MESSAGE,
-                    Asset.ASSIGNED_TERMS,
-                    Asset.ATLAN_TAGS,
-                    Asset.LINKS,
-                    Asset.README,
-                    Asset.STARRED_DETAILS,
-                )
-            } else {
-                mutableListOf(
-                    Asset.NAME,
-                    Asset.DISPLAY_NAME,
-                    Asset.USER_DESCRIPTION,
-                    Asset.OWNER_USERS,
-                    Asset.OWNER_GROUPS,
-                    Asset.CERTIFICATE_STATUS,
-                    Asset.CERTIFICATE_STATUS_MESSAGE,
-                    Asset.ANNOUNCEMENT_TYPE,
-                    Asset.ANNOUNCEMENT_TITLE,
-                    Asset.ANNOUNCEMENT_MESSAGE,
-                    Asset.ASSIGNED_TERMS,
-                    Asset.ATLAN_TAGS,
-                    Asset.LINKS,
-                    Asset.README,
-                    Asset.STARRED_DETAILS,
-                )
-            }
+        fun getAttributesToExtract(
+            includeDesc: Boolean,
+            cmFields: List<CustomMetadataField>,
+        ): MutableList<AtlanField> {
+            val attributeList: MutableList<AtlanField> =
+                if (includeDesc) {
+                    mutableListOf(
+                        Asset.NAME,
+                        Asset.DISPLAY_NAME,
+                        Asset.DESCRIPTION,
+                        Asset.USER_DESCRIPTION,
+                        Asset.OWNER_USERS,
+                        Asset.OWNER_GROUPS,
+                        Asset.CERTIFICATE_STATUS,
+                        Asset.CERTIFICATE_STATUS_MESSAGE,
+                        Asset.ANNOUNCEMENT_TYPE,
+                        Asset.ANNOUNCEMENT_TITLE,
+                        Asset.ANNOUNCEMENT_MESSAGE,
+                        Asset.ASSIGNED_TERMS,
+                        Asset.ATLAN_TAGS,
+                        Asset.LINKS,
+                        Asset.README,
+                        Asset.STARRED_DETAILS,
+                    )
+                } else {
+                    mutableListOf(
+                        Asset.NAME,
+                        Asset.DISPLAY_NAME,
+                        Asset.USER_DESCRIPTION,
+                        Asset.OWNER_USERS,
+                        Asset.OWNER_GROUPS,
+                        Asset.CERTIFICATE_STATUS,
+                        Asset.CERTIFICATE_STATUS_MESSAGE,
+                        Asset.ANNOUNCEMENT_TYPE,
+                        Asset.ANNOUNCEMENT_TITLE,
+                        Asset.ANNOUNCEMENT_MESSAGE,
+                        Asset.ASSIGNED_TERMS,
+                        Asset.ATLAN_TAGS,
+                        Asset.LINKS,
+                        Asset.README,
+                        Asset.STARRED_DETAILS,
+                    )
+                }
             for (cmField in cmFields) {
                 attributeList.add(cmField)
             }
@@ -149,12 +155,17 @@ class AssetExporter(
         }
 
         fun getRelatedAttributesToExtract(): MutableList<AtlanField> {
+            // Needed for:
+            // - asset referencing
+            // - Link embedding
+            // - README embedding
+            // - assigned term containment
             return mutableListOf(
-                Asset.QUALIFIED_NAME, // for asset referencing
-                Asset.NAME, // for Link embedding
-                Asset.DESCRIPTION, // for README embedding
-                Link.LINK, // for Link embedding
-                GlossaryTerm.ANCHOR, // for assigned term containment
+                Asset.QUALIFIED_NAME,
+                Asset.NAME,
+                Asset.DESCRIPTION,
+                Link.LINK,
+                GlossaryTerm.ANCHOR,
             )
         }
     }
@@ -166,6 +177,6 @@ class AssetExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, _getAttributesToExtract(), logger).getRow()
+        return RowSerializer(asset, getFieldsToExtract(), logger).getRow()
     }
 }

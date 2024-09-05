@@ -33,10 +33,11 @@ class PartialAssetsTest : PackageTest() {
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connection
@@ -44,8 +45,9 @@ class PartialAssetsTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{CONNECTION}", connectionName)
+                val revised =
+                    line
+                        .replace("{CONNECTION}", connectionName)
                 output.appendText("$revised\n")
             }
         }
@@ -58,8 +60,9 @@ class PartialAssetsTest : PackageTest() {
         input.useLines { lines ->
             lines.forEach { line ->
                 if (line.contains("db2/schema2/target_view")) {
-                    val revised = line
-                        .replace("db2/schema2/target_view", "DB2/schema2/Target_View")
+                    val revised =
+                        line
+                            .replace("db2/schema2/target_view", "DB2/schema2/Target_View")
                     output.appendText("$revised\n")
                 } else {
                     output.appendText("$line\n")
@@ -102,11 +105,12 @@ class PartialAssetsTest : PackageTest() {
     @Test(groups = ["lb.pa.create"])
     fun partialSourceCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Table.NAME)
-            .includeOnResults(Table.IS_PARTIAL)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Table.NAME)
+                .includeOnResults(Table.IS_PARTIAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val tables = response.assets
         assertEquals(1, tables.size)
@@ -117,11 +121,12 @@ class PartialAssetsTest : PackageTest() {
     @Test(groups = ["lb.pa.create"])
     fun partialTargetCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.IS_PARTIAL)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.IS_PARTIAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val views = response.assets
         assertEquals(1, views.size)
@@ -132,16 +137,17 @@ class PartialAssetsTest : PackageTest() {
     @Test(groups = ["lb.pa.create"])
     fun lineageProcessCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = LineageProcess.select()
-            .where(LineageProcess.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(LineageProcess.NAME)
-            .includeOnResults(LineageProcess.IS_PARTIAL)
-            .includeOnResults(LineageProcess.SQL)
-            .includeOnResults(LineageProcess.CERTIFICATE_STATUS)
-            .includeOnResults(LineageProcess.ANNOUNCEMENT_TYPE)
-            .includeOnResults(LineageProcess.ANNOUNCEMENT_TITLE)
-            .includeOnResults(LineageProcess.ANNOUNCEMENT_MESSAGE)
-            .toRequest()
+        val request =
+            LineageProcess.select()
+                .where(LineageProcess.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(LineageProcess.NAME)
+                .includeOnResults(LineageProcess.IS_PARTIAL)
+                .includeOnResults(LineageProcess.SQL)
+                .includeOnResults(LineageProcess.CERTIFICATE_STATUS)
+                .includeOnResults(LineageProcess.ANNOUNCEMENT_TYPE)
+                .includeOnResults(LineageProcess.ANNOUNCEMENT_TITLE)
+                .includeOnResults(LineageProcess.ANNOUNCEMENT_MESSAGE)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val lineage = response.assets
         assertEquals(1, lineage.size)
@@ -158,20 +164,22 @@ class PartialAssetsTest : PackageTest() {
     @Test(groups = ["lb.pa.create"])
     fun downstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Table.NAME)
-            .includeOnResults(Table.IS_PARTIAL)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Table.NAME)
+                .includeOnResults(Table.IS_PARTIAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val table = response.assets[0]!!
-        val downstream = FluentLineage.builder(Atlan.getDefaultClient(), table.guid)
-            .direction(AtlanLineageDirection.DOWNSTREAM)
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.IS_PARTIAL)
-            .depth(5)
-            .stream()
-            .toList()
+        val downstream =
+            FluentLineage.builder(Atlan.getDefaultClient(), table.guid)
+                .direction(AtlanLineageDirection.DOWNSTREAM)
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.IS_PARTIAL)
+                .depth(5)
+                .stream()
+                .toList()
         assertEquals(3, downstream.size)
         assertTrue(downstream[0].isPartial)
         assertTrue(downstream[0] is Table)
@@ -187,20 +195,22 @@ class PartialAssetsTest : PackageTest() {
     @Test(groups = ["lb.pa.create"])
     fun upstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.IS_PARTIAL)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.IS_PARTIAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val view = response.assets[0]!!
-        val upstream = FluentLineage.builder(Atlan.getDefaultClient(), view.guid)
-            .direction(AtlanLineageDirection.UPSTREAM)
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.IS_PARTIAL)
-            .depth(5)
-            .stream()
-            .toList()
+        val upstream =
+            FluentLineage.builder(Atlan.getDefaultClient(), view.guid)
+                .direction(AtlanLineageDirection.UPSTREAM)
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.IS_PARTIAL)
+                .depth(5)
+                .stream()
+                .toList()
         assertEquals(3, upstream.size)
         assertTrue(upstream[0].isPartial)
         assertTrue(upstream[0] is View)
@@ -217,18 +227,20 @@ class PartialAssetsTest : PackageTest() {
     fun upsertRevisions() {
         // Convert partial view into full view
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.IS_PARTIAL)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.IS_PARTIAL)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val view = response.assets[0]!!
         assertTrue(view is View)
-        val revised = view.toBuilder()
-            .isPartial(false)
-            .description("And with a description now, too...")
-            .build()
+        val revised =
+            view.toBuilder()
+                .isPartial(false)
+                .description("And with a description now, too...")
+                .build()
         val resp = revised.save()
         val result = resp.getResult(revised)
         assertFalse(result.isPartial)
@@ -250,12 +262,13 @@ class PartialAssetsTest : PackageTest() {
     fun testRevisions() {
         // Validate no portion of the full view has been clobbered by the update
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.IS_PARTIAL)
-            .includeOnResults(View.DESCRIPTION)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.IS_PARTIAL)
+                .includeOnResults(View.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val views = response.assets
         assertEquals(1, views.size)

@@ -44,10 +44,11 @@ class CreateThenUpsertRABTest : PackageTest() {
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
@@ -55,11 +56,12 @@ class CreateThenUpsertRABTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{CONNECTION1}}", conn1)
-                    .replace("{{TAG1}}", tag1)
-                    .replace("{{TAG2}}", tag2)
-                    .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                val revised =
+                    line
+                        .replace("{{CONNECTION1}}", conn1)
+                        .replace("{{TAG1}}", tag1)
+                        .replace("{{TAG2}}", tag2)
+                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -72,9 +74,10 @@ class CreateThenUpsertRABTest : PackageTest() {
         input.useLines { lines ->
             lines.forEach { line ->
                 if (!line.contains("TEST_VIEW")) {
-                    val revised = line
-                        .replace("Test ", "Revised ")
-                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                    val revised =
+                        line
+                            .replace("Test ", "Revised ")
+                            .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                     output.appendText("$revised\n")
                 }
             }
@@ -92,75 +95,80 @@ class CreateThenUpsertRABTest : PackageTest() {
         )
     }
 
-    private val connectionAttrs: List<AtlanField> = listOf(
-        Connection.NAME,
-        Connection.CONNECTOR_TYPE,
-        Connection.ADMIN_ROLES,
-        Connection.ADMIN_GROUPS,
-        Connection.ADMIN_USERS,
-    )
+    private val connectionAttrs: List<AtlanField> =
+        listOf(
+            Connection.NAME,
+            Connection.CONNECTOR_TYPE,
+            Connection.ADMIN_ROLES,
+            Connection.ADMIN_GROUPS,
+            Connection.ADMIN_USERS,
+        )
 
-    private val databaseAttrs: List<AtlanField> = listOf(
-        Database.NAME,
-        Database.CONNECTION_QUALIFIED_NAME,
-        Database.CONNECTOR_TYPE,
-        Database.DISPLAY_NAME,
-        Database.DESCRIPTION,
-        Database.SCHEMA_COUNT,
-        Database.SCHEMAS,
-    )
+    private val databaseAttrs: List<AtlanField> =
+        listOf(
+            Database.NAME,
+            Database.CONNECTION_QUALIFIED_NAME,
+            Database.CONNECTOR_TYPE,
+            Database.DISPLAY_NAME,
+            Database.DESCRIPTION,
+            Database.SCHEMA_COUNT,
+            Database.SCHEMAS,
+        )
 
-    private val schemaAttrs: List<AtlanField> = listOf(
-        Schema.NAME,
-        Schema.CONNECTION_QUALIFIED_NAME,
-        Schema.CONNECTOR_TYPE,
-        Schema.DISPLAY_NAME,
-        Schema.DESCRIPTION,
-        Schema.DATABASE_NAME,
-        Schema.DATABASE_QUALIFIED_NAME,
-        Schema.TABLE_COUNT,
-        Schema.VIEW_COUNT,
-        Schema.TABLES,
-        Schema.VIEWS,
-    )
+    private val schemaAttrs: List<AtlanField> =
+        listOf(
+            Schema.NAME,
+            Schema.CONNECTION_QUALIFIED_NAME,
+            Schema.CONNECTOR_TYPE,
+            Schema.DISPLAY_NAME,
+            Schema.DESCRIPTION,
+            Schema.DATABASE_NAME,
+            Schema.DATABASE_QUALIFIED_NAME,
+            Schema.TABLE_COUNT,
+            Schema.VIEW_COUNT,
+            Schema.TABLES,
+            Schema.VIEWS,
+        )
 
-    private val tableAttrs: List<AtlanField> = listOf(
-        Table.NAME,
-        Table.STATUS,
-        Table.CONNECTION_QUALIFIED_NAME,
-        Table.CONNECTOR_TYPE,
-        Table.DATABASE_NAME,
-        Table.DATABASE_QUALIFIED_NAME,
-        Table.SCHEMA_NAME,
-        Table.SCHEMA_QUALIFIED_NAME,
-        Table.DISPLAY_NAME,
-        Table.DESCRIPTION,
-        Table.CERTIFICATE_STATUS,
-        Table.CERTIFICATE_STATUS_MESSAGE,
-        Table.README,
-        Table.ATLAN_TAGS,
-        Table.COLUMN_COUNT,
-        Table.COLUMNS,
-    )
+    private val tableAttrs: List<AtlanField> =
+        listOf(
+            Table.NAME,
+            Table.STATUS,
+            Table.CONNECTION_QUALIFIED_NAME,
+            Table.CONNECTOR_TYPE,
+            Table.DATABASE_NAME,
+            Table.DATABASE_QUALIFIED_NAME,
+            Table.SCHEMA_NAME,
+            Table.SCHEMA_QUALIFIED_NAME,
+            Table.DISPLAY_NAME,
+            Table.DESCRIPTION,
+            Table.CERTIFICATE_STATUS,
+            Table.CERTIFICATE_STATUS_MESSAGE,
+            Table.README,
+            Table.ATLAN_TAGS,
+            Table.COLUMN_COUNT,
+            Table.COLUMNS,
+        )
 
-    private val columnAttrs: List<AtlanField> = listOf(
-        Column.NAME,
-        Column.STATUS,
-        Column.CONNECTION_QUALIFIED_NAME,
-        Column.CONNECTOR_TYPE,
-        Column.DATABASE_NAME,
-        Column.DATABASE_QUALIFIED_NAME,
-        Column.SCHEMA_NAME,
-        Column.SCHEMA_QUALIFIED_NAME,
-        Column.TABLE_NAME,
-        Column.TABLE_QUALIFIED_NAME,
-        Column.VIEW_NAME,
-        Column.VIEW_QUALIFIED_NAME,
-        Column.DISPLAY_NAME,
-        Column.DESCRIPTION,
-        Column.DATA_TYPE,
-        Column.ORDER,
-    )
+    private val columnAttrs: List<AtlanField> =
+        listOf(
+            Column.NAME,
+            Column.STATUS,
+            Column.CONNECTION_QUALIFIED_NAME,
+            Column.CONNECTOR_TYPE,
+            Column.DATABASE_NAME,
+            Column.DATABASE_QUALIFIED_NAME,
+            Column.SCHEMA_NAME,
+            Column.SCHEMA_QUALIFIED_NAME,
+            Column.TABLE_NAME,
+            Column.TABLE_QUALIFIED_NAME,
+            Column.VIEW_NAME,
+            Column.VIEW_QUALIFIED_NAME,
+            Column.DISPLAY_NAME,
+            Column.DESCRIPTION,
+            Column.DATA_TYPE,
+            Column.ORDER,
+        )
 
     override fun setup() {
         prepFile()
@@ -208,11 +216,12 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateDatabase(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Database.select()
-            .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(databaseAttrs)
-            .includeOnRelations(Schema.NAME)
-            .toRequest()
+        val request =
+            Database.select()
+                .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(databaseAttrs)
+                .includeOnRelations(Schema.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -233,11 +242,12 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Schema.select()
-            .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(schemaAttrs)
-            .includeOnRelations(Asset.NAME)
-            .toRequest()
+        val request =
+            Schema.select()
+                .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(schemaAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -263,12 +273,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateTable(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Table.select()
-            .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(tableAttrs)
-            .includeOnRelations(Asset.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(tableAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -312,13 +323,17 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateColumnsForTable1("Test column 1", "Test column 2")
     }
 
-    private fun validateColumnsForTable1(displayCol1: String, displayCol2: String) {
+    private fun validateColumnsForTable1(
+        displayCol1: String,
+        displayCol2: String,
+    ) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Column.select()
-            .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(Column.TABLE_NAME.eq("TEST_TBL"))
-            .includesOnResults(columnAttrs)
-            .toRequest()
+        val request =
+            Column.select()
+                .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Column.TABLE_NAME.eq("TEST_TBL"))
+                .includesOnResults(columnAttrs)
+                .toRequest()
         val response = retrySearchUntil(request, 2)
         val found = response.assets
         assertEquals(2, found.size)
@@ -359,12 +374,13 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = View.select()
-            .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(tableAttrs)
-            .includeOnRelations(Asset.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(tableAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -395,11 +411,12 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateColumnsForView() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Column.select()
-            .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(Column.VIEW_NAME.eq("TEST_VIEW"))
-            .includesOnResults(columnAttrs)
-            .toRequest()
+        val request =
+            Column.select()
+                .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Column.VIEW_NAME.eq("TEST_VIEW"))
+                .includesOnResults(columnAttrs)
+                .toRequest()
         val response = retrySearchUntil(request, 2)
         val found = response.assets
         assertEquals(2, found.size)
@@ -447,12 +464,13 @@ class CreateThenUpsertRABTest : PackageTest() {
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Column.select()
-            .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(Column.TABLE_NAME.eq("TEST_TBL"))
-            .where(Column.DISPLAY_NAME.startsWith("Revised column"))
-            .includesOnResults(columnAttrs)
-            .toRequest()
+        val request =
+            Column.select()
+                .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Column.TABLE_NAME.eq("TEST_TBL"))
+                .where(Column.DISPLAY_NAME.startsWith("Revised column"))
+                .includesOnResults(columnAttrs)
+                .toRequest()
         retrySearchUntil(request, 2)
     }
 

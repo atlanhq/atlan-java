@@ -150,11 +150,11 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
     private boolean isPagingTimestampQuery(Query candidate) {
         return candidate.isRange()
-                && candidate.range().field().equals(Asset.CREATE_TIME.getInternalFieldName())
-                && candidate.range().gte() != null
-                && candidate.range().gte().to(Long.class) > 0
-                && candidate.range().lt() == null
-                && candidate.range().lte() == null;
+                && candidate.range().untyped().field().equals(Asset.CREATE_TIME.getInternalFieldName())
+                && candidate.range().untyped().gte() != null
+                && candidate.range().untyped().gte().to(Long.class) > 0
+                && candidate.range().untyped().lt() == null
+                && candidate.range().untyped().lte() == null;
     }
 
     private Query getPagingTimestampQuery(long lastTimestamp) {

@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 11
-          distribution: adopt
+          java-version: 17
+          distribution: temurin
       - name: Integration tests
         run: ./gradlew -PintegrationTests integration-tests:test
         env:
@@ -34,8 +34,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          java-version: 11
-          distribution: adopt
+          java-version: 17
+          distribution: temurin
       - name: Integration tests
         run: ./gradlew -PpackageTests test
         env:

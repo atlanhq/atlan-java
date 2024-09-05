@@ -8,7 +8,10 @@ class TagToMetadataMapper(private val metadataMap: Map<String, String>) {
     val missingTagKeys = mutableSetOf<String>()
     private val regex = "::".toRegex()
 
-    fun getTagValues(tags: List<LFTagPair>, row: MutableMap<String, String>) {
+    fun getTagValues(
+        tags: List<LFTagPair>,
+        row: MutableMap<String, String>,
+    ) {
         tags.forEach { tag ->
             val tagKey = if (tag.tagKey.startsWith("subdomain")) "Subdomain" else tag.tagKey
             if (tagKey in metadataMap) {

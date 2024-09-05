@@ -6,7 +6,6 @@ import java.time.Instant
 import java.time.format.DateTimeFormatter
 
 object TimestampXformer {
-
     private val FORMATTER = DateTimeFormatter.ISO_INSTANT
 
     /**

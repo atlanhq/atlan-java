@@ -33,7 +33,10 @@ object OwnerPropagator {
      * @param batchSize maximum number of results to retrieve per page (API request)
      * @return list of tables that were found
      */
-    fun findTables(qnPrefix: String, batchSize: Int): List<Asset> {
+    fun findTables(
+        qnPrefix: String,
+        batchSize: Int,
+    ): List<Asset> {
         val assets = mutableListOf<Asset>()
         Table.select()
             .where(Table.QUALIFIED_NAME.startsWith(qnPrefix))
@@ -54,7 +57,10 @@ object OwnerPropagator {
      * @param tables list of tables to which to propagate owners
      * @param batchSize maximum number of tables to update per batch (API request)
      */
-    fun propagateOwner(tables: List<Asset>, batchSize: Int) {
+    fun propagateOwner(
+        tables: List<Asset>,
+        batchSize: Int,
+    ) {
         val totalCount = tables.size.toLong()
         val batch = AssetBatch(Atlan.getDefaultClient(), batchSize)
         val count = AtomicLong(0)

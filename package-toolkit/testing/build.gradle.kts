@@ -65,6 +65,10 @@ tasks {
             attributes(Pair("Multi-Release", "true"))
         }
     }
+
+    shadowJar {
+        dependsOn(":package-toolkit:runtime:genPklConnectors")
+    }
 }
 
 java {

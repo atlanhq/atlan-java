@@ -36,21 +36,22 @@ class TermImporter(
     private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : GTCImporter(
-    filename = filename,
-    attrsToOverwrite = attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    cache = TermCache,
-    typeNameFilter = GlossaryTerm.TYPE_NAME,
-    logger = KotlinLogging.logger {},
-    failOnErrors = failOnErrors,
-    fieldSeparator = fieldSeparator,
-) {
-    private val secondPassIgnore = setOf(
-        GlossaryTerm.LINKS.atlanFieldName,
-        GlossaryTerm.ATLAN_TAGS.atlanFieldName,
-        GlossaryTerm.README.atlanFieldName,
-    )
+        filename = filename,
+        attrsToOverwrite = attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        cache = TermCache,
+        typeNameFilter = GlossaryTerm.TYPE_NAME,
+        logger = KotlinLogging.logger {},
+        failOnErrors = failOnErrors,
+        fieldSeparator = fieldSeparator,
+    ) {
+    private val secondPassIgnore =
+        setOf(
+            GlossaryTerm.LINKS.atlanFieldName,
+            GlossaryTerm.ATLAN_TAGS.atlanFieldName,
+            GlossaryTerm.README.atlanFieldName,
+        )
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {

@@ -96,12 +96,13 @@ tasks.create<Copy>("generateJava") {
     val templateContext = mapOf("version" to version)
     inputs.properties(templateContext) // for gradle up-to-date check
     from("src/template/java")
-    into("$buildDir/generated/java")
+    into("${layout.buildDirectory.get()}/generated/java")
     expand(templateContext)
+    finalizedBy("generateEffectiveLombokConfig")
 }
 
 tasks.compileJava {
-    sourceSets["main"].java.srcDir("$buildDir/generated/java")
+    sourceSets["main"].java.srcDir("${layout.buildDirectory.get()}/generated/java")
     dependsOn(tasks.getByName("generateJava"))
 }
 

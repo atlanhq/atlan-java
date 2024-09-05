@@ -14,14 +14,14 @@ class AwOG(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "AwOG - Assets with Owners - Groups",
-    "AwOG",
-    "**Total active assets in Atlan with group owners.** This is distinct from assets whose owners are individuals.",
-    Reporter.CAT_ADOPTION,
-    client,
-    batchSize,
-    logger,
-) {
+        "AwOG - Assets with Owners - Groups",
+        "AwOG",
+        "**Total active assets in Atlan with group owners.** This is distinct from assets whose owners are individuals.",
+        Reporter.CAT_ADOPTION,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

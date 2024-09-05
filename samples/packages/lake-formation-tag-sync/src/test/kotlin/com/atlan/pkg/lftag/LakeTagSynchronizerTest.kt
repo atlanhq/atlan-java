@@ -90,13 +90,15 @@ class LakeTagSynchronizerTest : PackageTest() {
     }
 
     private fun createEnums() {
-        val enumDef = EnumDef.creator(
-            enum1,
-            listOf(PUBLIC, NON_PI, FULL_HISTORY),
-        )
-            .build()
+        val enumDef =
+            EnumDef.creator(
+                enum1,
+                listOf(PUBLIC, NON_PI, FULL_HISTORY),
+            )
+                .build()
         enumDef.create()
     }
+
     private fun createCustomMetadata() {
         createEnums()
         CustomMetadataDef.creator(cm1)
@@ -108,11 +110,12 @@ class LakeTagSynchronizerTest : PackageTest() {
     }
 
     private fun createMetadataMap() {
-        val metaDataMap = mapOf(
-            "security_classification" to "$cm1::$attr1",
-            "privacy_sensitivity" to "$cm1::$attr2",
-            "data_load_method" to "$cm1::$attr3",
-        )
+        val metaDataMap =
+            mapOf(
+                "security_classification" to "$cm1::$attr1",
+                "privacy_sensitivity" to "$cm1::$attr2",
+                "data_load_method" to "$cm1::$attr3",
+            )
         Paths.get(testDirectory, directoryPrefix, METADATA_MAP_JSON).toFile()
             .appendText(mapper.writeValueAsString(metaDataMap))
     }

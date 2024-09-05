@@ -39,16 +39,18 @@ abstract class GTCImporter(
     failOnErrors: Boolean,
     fieldSeparator: Char,
 ) : CSVImporter(
-    filename,
-    logger,
-    typeNameFilter,
-    attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    failOnErrors = failOnErrors,
-    trackBatches = true, // Always track batches for GTC importers, to ensure cache is managed
-    fieldSeparator = fieldSeparator,
-) {
+        filename,
+        logger,
+        typeNameFilter,
+        attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        failOnErrors = failOnErrors,
+        trackBatches = true,
+        fieldSeparator = fieldSeparator,
+    ) {
+    // Note: Always track batches (above) for GTC importers, to ensure cache is managed
+
     /** {@inheritDoc} */
     override fun cacheCreated(list: List<Asset>) {
         // Cache any assets that were created by processing

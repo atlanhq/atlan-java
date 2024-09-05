@@ -44,7 +44,10 @@ class ExcelReader(
      * @param headerRow index of the row containing headers (0-based)
      * @return a list of rows, each being a mapping from column name to its value
      */
-    fun getRowsFromSheet(index: Int, headerRow: Int = 0): List<Map<String, String>> {
+    fun getRowsFromSheet(
+        index: Int,
+        headerRow: Int = 0,
+    ): List<Map<String, String>> {
         return getRowsFromSheet(workbook.getSheetAt(index), headerRow)
     }
 
@@ -58,9 +61,13 @@ class ExcelReader(
      * @throws IOException if the requested sheet cannot be found in the provided Excel file
      */
     @Throws(IOException::class)
-    fun getRowsFromSheet(name: String, headerRow: Int = 0): List<Map<String, String>> {
-        val sheet = workbook.getSheet(name)
-            ?: throw IOException("Could not find sheet with name '$name' in the provided Excel file.")
+    fun getRowsFromSheet(
+        name: String,
+        headerRow: Int = 0,
+    ): List<Map<String, String>> {
+        val sheet =
+            workbook.getSheet(name)
+                ?: throw IOException("Could not find sheet with name '$name' in the provided Excel file.")
         return getRowsFromSheet(sheet, headerRow)
     }
 
@@ -71,7 +78,10 @@ class ExcelReader(
      * @param headerRow index of the row containing headers (0-based)
      * @return a list of rows, each being a mapping from column name to its value
      */
-    private fun getRowsFromSheet(data: Sheet, headerRow: Int): List<Map<String, String>> {
+    private fun getRowsFromSheet(
+        data: Sheet,
+        headerRow: Int,
+    ): List<Map<String, String>> {
         val allRows = mutableListOf<Map<String, String>>()
         val header = getHeaders(data.getRow(headerRow))
         for (row in data) {
@@ -81,13 +91,14 @@ class ExcelReader(
                 for (cell in row) {
                     val colIdx = cell.columnIndex
                     val colName = header[colIdx]
-                    val value = when (cell.cellType) {
-                        CellType.NUMERIC -> BigDecimal("" + cell.numericCellValue).toPlainString()
-                        CellType.BOOLEAN -> "" + cell.booleanCellValue
-                        CellType.FORMULA -> cell.cellFormula
-                        CellType.STRING -> cell.richStringCellValue.string
-                        else -> cell.richStringCellValue.string
-                    }
+                    val value =
+                        when (cell.cellType) {
+                            CellType.NUMERIC -> BigDecimal("" + cell.numericCellValue).toPlainString()
+                            CellType.BOOLEAN -> "" + cell.booleanCellValue
+                            CellType.FORMULA -> cell.cellFormula
+                            CellType.STRING -> cell.richStringCellValue.string
+                            else -> cell.richStringCellValue.string
+                        }
                     rowMapping[colName] = value
                 }
                 if (rowMapping.isNotEmpty()) {

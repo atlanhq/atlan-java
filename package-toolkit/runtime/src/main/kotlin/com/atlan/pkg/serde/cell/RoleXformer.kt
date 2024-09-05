@@ -10,10 +10,10 @@ import com.atlan.model.assets.Asset
  * Static object to transform (really to validate) role references.
  */
 object RoleXformer {
-
-    val FIELDS = setOf(
-        Asset.ADMIN_ROLES.atlanFieldName,
-    )
+    val FIELDS =
+        setOf(
+            Asset.ADMIN_ROLES.atlanFieldName,
+        )
 
     /**
      * Encodes (serializes) a role into a string form.

@@ -25,18 +25,17 @@ class DLAxL(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "DLAxL - Dashboard-Level Assets without Lineage",
-    "DLAxL",
-    "**Total active BI dashboard-level assets in Atlan that do *not* have any lineage.** This is useful to:\n" +
-        "- Check whether you expect lineage for these dashboards\n" +
-        "- If not, whether these dashboards are actually used or could be removed to reduce overheads",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False positives could exist, when lineage is missing due to: not all data tools being loaded, improper sequence of crawling data tools, or due to bugs or lack of lineage support for the data tools involved.",
-) {
-
+        "DLAxL - Dashboard-Level Assets without Lineage",
+        "DLAxL",
+        "**Total active BI dashboard-level assets in Atlan that do *not* have any lineage.** This is useful to:\n" +
+            "- Check whether you expect lineage for these dashboards\n" +
+            "- If not, whether these dashboards are actually used or could be removed to reduce overheads",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False positives could exist, when lineage is missing due to: not all data tools being loaded, improper sequence of crawling data tools, or due to bugs or lack of lineage support for the data tools involved.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()
@@ -62,20 +61,21 @@ class DLAxL(
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {
-        val parentName = when (asset) {
-            is LookerDashboard -> asset.folder?.name ?: ""
-            is MetabaseDashboard -> asset.metabaseCollection?.name ?: ""
-            is MicroStrategyReport -> asset.microStrategyProject?.name ?: ""
-            is ModeReport -> asset.modeWorkspaceName ?: ""
-            is PowerBIDashboard -> asset.workspace?.name ?: ""
-            is PresetDashboard -> asset.presetWorkspace?.name ?: ""
-            is QlikChart -> asset.qlikSpaceQualifiedName ?: ""
-            is QuickSightDashboard -> asset.quickSightSheetName ?: ""
-            is SigmaPage -> asset.sigmaWorkbook?.name ?: ""
-            is SisenseDashboard -> asset.sisenseFolder?.name ?: ""
-            is TableauDashboard -> asset.projectQualifiedName ?: ""
-            else -> ""
-        }
+        val parentName =
+            when (asset) {
+                is LookerDashboard -> asset.folder?.name ?: ""
+                is MetabaseDashboard -> asset.metabaseCollection?.name ?: ""
+                is MicroStrategyReport -> asset.microStrategyProject?.name ?: ""
+                is ModeReport -> asset.modeWorkspaceName ?: ""
+                is PowerBIDashboard -> asset.workspace?.name ?: ""
+                is PresetDashboard -> asset.presetWorkspace?.name ?: ""
+                is QlikChart -> asset.qlikSpaceQualifiedName ?: ""
+                is QuickSightDashboard -> asset.quickSightSheetName ?: ""
+                is SigmaPage -> asset.sigmaWorkbook?.name ?: ""
+                is SisenseDashboard -> asset.sisenseFolder?.name ?: ""
+                is TableauDashboard -> asset.projectQualifiedName ?: ""
+                else -> ""
+            }
         return listOf(
             asset.connectorType?.value ?: "",
             parentName,

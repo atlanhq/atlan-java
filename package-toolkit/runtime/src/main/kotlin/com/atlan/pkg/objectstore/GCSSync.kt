@@ -24,23 +24,28 @@ class GCSSync(
     private val logger: KLogger,
     private val credentials: String,
 ) : ObjectStorageSyncer {
-    private val storage = if (credentials.isNotBlank()) {
-        StorageOptions.newBuilder().setProjectId(projectId)
-            .setCredentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
-            .build().service
-    } else {
-        StorageOptions.newBuilder().setProjectId(projectId).build().service
-    }
+    private val storage =
+        if (credentials.isNotBlank()) {
+            StorageOptions.newBuilder().setProjectId(projectId)
+                .setCredentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
+                .build().service
+        } else {
+            StorageOptions.newBuilder().setProjectId(projectId).build().service
+        }
 
     /** {@inheritDoc} */
-    override fun copyFrom(prefix: String, localDirectory: String): List<String> {
+    override fun copyFrom(
+        prefix: String,
+        localDirectory: String,
+    ): List<String> {
         logger.info { "Syncing files from gcs://$bucketName/$prefix to $localDirectory" }
 
         val bucket = storage.get(bucketName)
 
-        val localFilesLastModified = File(localDirectory).walkTopDown().filter { it.isFile }.map {
-            it.relativeTo(File(localDirectory)).path to it.lastModified()
-        }.toMap()
+        val localFilesLastModified =
+            File(localDirectory).walkTopDown().filter { it.isFile }.map {
+                it.relativeTo(File(localDirectory)).path to it.lastModified()
+            }.toMap()
 
         val filesToDownload = mutableListOf<String>()
         bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().forEach { file ->
@@ -68,7 +73,11 @@ class GCSSync(
     }
 
     /** {@inheritDoc} */
-    override fun copyLatestFrom(prefix: String, extension: String, localDirectory: String): String {
+    override fun copyLatestFrom(
+        prefix: String,
+        extension: String,
+        localDirectory: String,
+    ): String {
         logger.info { "Copying latest $extension file from gcs://$bucketName/$prefix to $localDirectory" }
 
         val bucket = storage.get(bucketName)
@@ -83,27 +92,32 @@ class GCSSync(
             }
         }
         filesToDownload.sortDescending()
-        val latestFileKey = if (filesToDownload.isNotEmpty()) {
-            filesToDownload[0]
-        } else {
-            ""
-        }
+        val latestFileKey =
+            if (filesToDownload.isNotEmpty()) {
+                filesToDownload[0]
+            } else {
+                ""
+            }
 
-        val localFilePath = if (latestFileKey.isNotBlank()) {
-            val local = File(localDirectory, latestFileKey).path
-            downloadFrom(
-                latestFileKey,
-                local,
-            )
-            local
-        } else {
-            ""
-        }
+        val localFilePath =
+            if (latestFileKey.isNotBlank()) {
+                val local = File(localDirectory, latestFileKey).path
+                downloadFrom(
+                    latestFileKey,
+                    local,
+                )
+                local
+            } else {
+                ""
+            }
         return localFilePath
     }
 
     /** {@inheritDoc} */
-    override fun downloadFrom(remoteKey: String, localFile: String) {
+    override fun downloadFrom(
+        remoteKey: String,
+        localFile: String,
+    ) {
         logger.info { " ... downloading gcs://$bucketName/$remoteKey to $localFile" }
         val local = File(localFile)
         if (local.exists()) {
@@ -119,15 +133,19 @@ class GCSSync(
     }
 
     /** {@inheritDoc} */
-    override fun copyTo(localDirectory: String, prefix: String): Boolean {
+    override fun copyTo(
+        localDirectory: String,
+        prefix: String,
+    ): Boolean {
         logger.info { "Syncing files from $localDirectory to gcs://$bucketName/$prefix" }
 
         val bucket = storage.get(bucketName)
 
-        val filesLastModified = bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().associate {
-            val info = it.asBlobInfo()
-            File(info.name).relativeTo(File(prefix)).path to info.updateTimeOffsetDateTime.toInstant().toEpochMilli()
-        }
+        val filesLastModified =
+            bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().associate {
+                val info = it.asBlobInfo()
+                File(info.name).relativeTo(File(prefix)).path to info.updateTimeOffsetDateTime.toInstant().toEpochMilli()
+            }
 
         val localFilesToUpload = mutableListOf<String>()
         File(localDirectory).walkTopDown().filter { it.isFile }.forEach { file ->
@@ -151,7 +169,10 @@ class GCSSync(
     }
 
     /** {@inheritDoc} */
-    override fun uploadTo(localFile: String, remoteKey: String) {
+    override fun uploadTo(
+        localFile: String,
+        remoteKey: String,
+    ) {
         logger.info { " ... uploading $localFile to gcs://$bucketName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in GCS

@@ -134,22 +134,6 @@
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
-     * @deprecated see {@link #save()} instead
-     */
-    @Deprecated
-    @Override
-    public ConnectionCreationResponse upsert() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
     public ConnectionCreationResponse save() throws AtlanException {
@@ -186,24 +170,6 @@
             }
         }
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
-     * @deprecated see {@link #save(boolean)} instead
-     */
-    @Deprecated
-    @Override
-    public ConnectionCreationResponse upsert(boolean replaceAtlanTags)
-            throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**

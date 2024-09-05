@@ -25,6 +25,7 @@ tasks {
             include(dependency("io.netty:netty-transport-native-epoll:4.1.100.Final:linux-x86_64"))
         }
         mergeServiceFiles()
+        dependsOn(":package-toolkit:runtime:genPklConnectors")
     }
 
     jar {

@@ -31,7 +31,6 @@ public class ModelCache {
     private final Map<String, StructGenerator> structCache = new HashMap<>();
     private final Map<String, AssetGenerator> assetCache = new HashMap<>();
     private final Map<String, RelationshipGenerator> relationshipCache = new HashMap<>();
-    private final Map<String, Set<SearchFieldGenerator.Field>> searchCache = new HashMap<>();
 
     private final Map<String, List<String>> subTypeToSuperTypes = new ConcurrentHashMap<>();
 
@@ -239,18 +238,6 @@ public class ModelCache {
             }
             cacheInheritance(leftOvers);
         }
-    }
-
-    public void addSearchFieldToCache(String className, String attrName, SearchFieldGenerator.Field field) {
-        String attrQName = getAttrQualifiedName(className, attrName);
-        if (!searchCache.containsKey(attrQName)) {
-            searchCache.put(attrQName, new TreeSet<>());
-        }
-        searchCache.get(attrQName).add(field);
-    }
-
-    public Set<SearchFieldGenerator.Field> getCachedSearchFields(String className, String attrName) {
-        return searchCache.get(getAttrQualifiedName(className, attrName));
     }
 
     public Set<String> getAllSuperTypesForType(String typeName) {

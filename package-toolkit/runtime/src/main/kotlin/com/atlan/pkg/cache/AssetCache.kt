@@ -49,7 +49,10 @@ abstract class AssetCache {
      * @param maxRetries maximum number of times to retry the lookup if not found immediately
      * @return the asset with the specified GUID, or null if no such asset is in the cache
      */
-    fun getByGuid(guid: String, maxRetries: Int = 0): Asset? {
+    fun getByGuid(
+        guid: String,
+        maxRetries: Int = 0,
+    ): Asset? {
         if (this.ignore.containsKey(guid)) {
             return null
         }
@@ -98,7 +101,10 @@ abstract class AssetCache {
      * @param guid unique identifier (GUID) of the asset
      * @param asset to cache
      */
-    fun addByGuid(guid: String, asset: Asset?) {
+    fun addByGuid(
+        guid: String,
+        asset: Asset?,
+    ) {
         if (asset != null && !isArchived(guid, asset)) {
             val identity = getIdentityForAsset(asset)
             byIdentity[identity] = guid
@@ -115,7 +121,10 @@ abstract class AssetCache {
      * @param identity of the asset
      * @param asset to cache
      */
-    fun addByIdentity(identity: String, asset: Asset?) {
+    fun addByIdentity(
+        identity: String,
+        asset: Asset?,
+    ) {
         if (asset != null && !isArchived(identity, asset)) {
             byIdentity[identity] = asset.guid
             toIdentity[asset.guid] = identity
@@ -150,7 +159,10 @@ abstract class AssetCache {
      * @param asset the asset to check
      * @return true if the asset is archived, false otherwise
      */
-    private fun isArchived(id: String, asset: Asset): Boolean {
+    private fun isArchived(
+        id: String,
+        asset: Asset,
+    ): Boolean {
         return if (asset.status != AtlanStatus.ACTIVE) {
             logger.warn { "Unable to cache archived asset: $id" }
             addToIgnore(id)
@@ -178,7 +190,11 @@ abstract class AssetCache {
      * @param maxRetries maximum number of retries to attempt if not found on first lookup
      * @return the asset, from Atlan
      */
-    abstract fun lookupAssetByGuid(guid: String?, currentAttempt: Int = 0, maxRetries: Int = 0): Asset?
+    abstract fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int = 0,
+        maxRetries: Int = 0,
+    ): Asset?
 
     /**
      * Create a unique, reconstructable identity for the provided asset.

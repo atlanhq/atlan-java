@@ -23,7 +23,11 @@ object DataDomainCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
+    override fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int,
+        maxRetries: Int,
+    ): Asset? {
         try {
             val dataDomain =
                 DataDomain.select()
@@ -56,11 +60,12 @@ object DataDomainCache : AssetCache() {
             is DataDomain -> {
                 // Note: this only works as long as we always ensure that domains are loaded
                 // in level-order (parents before children)
-                val parentIdentity = if (asset.parentDomain == null) {
-                    ""
-                } else {
-                    getIdentity(asset.parentDomain.guid)
-                }
+                val parentIdentity =
+                    if (asset.parentDomain == null) {
+                        ""
+                    } else {
+                        getIdentity(asset.parentDomain.guid)
+                    }
                 return if (parentIdentity.isNullOrBlank()) {
                     asset.name
                 } else {

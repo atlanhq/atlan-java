@@ -20,17 +20,16 @@ class TLAxU(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "TLAxU - Table-Level Assets without Updates",
-    "TLAxU",
-    "**Total active table-level assets in Atlan that have *not* been updated (at source) in the last 90 days or more.** This is useful to:\n" +
-        "- Identify tables that may be unused, and could be removed to save storage costs",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False positives could exist, when the metadata crawled from source has not been refreshed in the last 90 days or more.",
-) {
-
+        "TLAxU - Table-Level Assets without Updates",
+        "TLAxU",
+        "**Total active table-level assets in Atlan that have *not* been updated (at source) in the last 90 days or more.** This is useful to:\n" +
+            "- Identify tables that may be unused, and could be removed to save storage costs",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False positives could exist, when the metadata crawled from source has not been refreshed in the last 90 days or more.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         val stale = Instant.now().minus(90, ChronoUnit.DAYS).toEpochMilli()

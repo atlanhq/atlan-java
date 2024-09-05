@@ -129,7 +129,7 @@ public class AtlanTagTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeTags() throws AtlanException {
         deleteAtlanTag(TAG_WITH_ICON);
-        deleteAtlanTag(TAG_WITH_IMAGE);
         deleteAtlanTag(TAG_WITH_EMOJI);
+        deleteAtlanTag(TAG_WITH_IMAGE);
     }
 }
