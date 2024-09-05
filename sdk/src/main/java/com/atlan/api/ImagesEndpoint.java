@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 /**
  * API endpoints for managing images that can be uploaded to Atlan.
@@ -51,7 +52,8 @@ public class ImagesEndpoint extends HeraclesEndpoint {
     public AtlanImage upload(String fromUrl, RequestOptions options)
             throws AtlanException, MalformedURLException, IOException {
         URL url = new URL(fromUrl);
-        return upload(url.openStream(), url.getFile(), options);
+        File path = new File(url.getFile());
+        return upload(url.openStream(), path.getName(), options);
     }
 
     /**
@@ -102,7 +104,8 @@ public class ImagesEndpoint extends HeraclesEndpoint {
      */
     public AtlanImage upload(InputStream imageSrc, String filename, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
+        Map<String, String> extras = Map.of("name", "image");
         return ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, imageSrc, filename, AtlanImage.class, options);
+                client, ApiResource.RequestMethod.POST, url, imageSrc, filename, AtlanImage.class, extras, options);
     }
 }

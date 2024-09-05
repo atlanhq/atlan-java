@@ -17,13 +17,12 @@ import java.nio.charset.Charset;
 public class MultipartProcessor {
     private final String boundary;
     private static final String LINE_BREAK = "\r\n";
-    private OutputStream outputStream;
-    private PrintWriter writer;
+    private final OutputStream outputStream;
+    private final PrintWriter writer;
 
     /** Constructs a new multipart body builder. */
     public MultipartProcessor(OutputStream outputStream, String boundary, Charset charset) throws IOException {
         this.boundary = boundary;
-
         this.outputStream = outputStream;
         this.writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
     }
@@ -35,8 +34,11 @@ public class MultipartProcessor {
      * @param value field value
      */
     public void addFormField(String name, String value) {
-        writer.append("--" + boundary).append(LINE_BREAK);
-        writer.append("Content-Disposition: form-data; name=\"" + name + "\"").append(LINE_BREAK);
+        writer.append("--").append(boundary).append(LINE_BREAK);
+        writer.append("Content-Disposition: form-data; name=\"")
+                .append(name)
+                .append("\"")
+                .append(LINE_BREAK);
         writer.append(LINE_BREAK);
         writer.append(value).append(LINE_BREAK);
         writer.flush();
@@ -62,7 +64,6 @@ public class MultipartProcessor {
 
         String probableContentType = URLConnection.guessContentTypeFromName(fileName);
         writer.append("Content-Type: ").append(probableContentType).append(LINE_BREAK);
-        writer.append("Content-Transfer-Encoding: binary").append(LINE_BREAK);
         writer.append(LINE_BREAK);
         writer.flush();
 
@@ -79,21 +80,19 @@ public class MultipartProcessor {
      * @throws IOException Thrown on errors reading / writing.
      */
     private void streamToOutput(InputStream inputStream) throws IOException {
-        try {
+        try (inputStream) {
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
             outputStream.flush();
-        } finally {
-            inputStream.close();
         }
     }
 
     /** Adds the final boundary to the multipart message and closes streams. */
     public void finish() throws IOException {
-        writer.append("--" + boundary + "--").append(LINE_BREAK);
+        writer.append("--").append(boundary).append("--").append(LINE_BREAK);
         writer.flush();
         writer.close();
         outputStream.flush();
