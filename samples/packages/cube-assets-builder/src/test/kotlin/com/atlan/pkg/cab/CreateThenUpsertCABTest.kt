@@ -43,11 +43,12 @@ class CreateThenUpsertCABTest : PackageTest() {
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
 
-    private val files = listOf(
-        testFile,
-        revisedFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            revisedFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
@@ -55,11 +56,12 @@ class CreateThenUpsertCABTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{CONNECTION1}}", conn1)
-                    .replace("{{TAG1}}", tag1)
-                    .replace("{{TAG2}}", tag2)
-                    .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                val revised =
+                    line
+                        .replace("{{CONNECTION1}}", conn1)
+                        .replace("{{TAG1}}", tag1)
+                        .replace("{{TAG2}}", tag2)
+                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -72,9 +74,10 @@ class CreateThenUpsertCABTest : PackageTest() {
         input.useLines { lines ->
             lines.forEach { line ->
                 if (!line.contains("TEST_HIERARCHY2")) {
-                    val revised = line
-                        .replace("Test ", "Revised ")
-                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                    val revised =
+                        line
+                            .replace("Test ", "Revised ")
+                            .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
                     output.appendText("$revised\n")
                 }
             }
@@ -92,74 +95,79 @@ class CreateThenUpsertCABTest : PackageTest() {
         )
     }
 
-    private val connectionAttrs: List<AtlanField> = listOf(
-        Connection.NAME,
-        Connection.CONNECTOR_TYPE,
-        Connection.ADMIN_ROLES,
-        Connection.ADMIN_GROUPS,
-        Connection.ADMIN_USERS,
-    )
+    private val connectionAttrs: List<AtlanField> =
+        listOf(
+            Connection.NAME,
+            Connection.CONNECTOR_TYPE,
+            Connection.ADMIN_ROLES,
+            Connection.ADMIN_GROUPS,
+            Connection.ADMIN_USERS,
+        )
 
-    private val cubeAttrs: List<AtlanField> = listOf(
-        Cube.NAME,
-        Cube.CONNECTION_QUALIFIED_NAME,
-        Cube.CONNECTOR_TYPE,
-        Cube.DISPLAY_NAME,
-        Cube.DESCRIPTION,
-        Cube.CUBE_DIMENSIONS,
-        Cube.CUBE_DIMENSION_COUNT,
-    )
+    private val cubeAttrs: List<AtlanField> =
+        listOf(
+            Cube.NAME,
+            Cube.CONNECTION_QUALIFIED_NAME,
+            Cube.CONNECTOR_TYPE,
+            Cube.DISPLAY_NAME,
+            Cube.DESCRIPTION,
+            Cube.CUBE_DIMENSIONS,
+            Cube.CUBE_DIMENSION_COUNT,
+        )
 
-    private val dimensionAttrs: List<AtlanField> = listOf(
-        CubeDimension.NAME,
-        CubeDimension.CONNECTION_QUALIFIED_NAME,
-        CubeDimension.CONNECTOR_TYPE,
-        CubeDimension.DISPLAY_NAME,
-        CubeDimension.DESCRIPTION,
-        CubeDimension.CUBE_NAME,
-        CubeDimension.CUBE_QUALIFIED_NAME,
-        CubeDimension.CUBE_HIERARCHIES,
-        CubeDimension.CUBE_HIERARCHY_COUNT,
-    )
+    private val dimensionAttrs: List<AtlanField> =
+        listOf(
+            CubeDimension.NAME,
+            CubeDimension.CONNECTION_QUALIFIED_NAME,
+            CubeDimension.CONNECTOR_TYPE,
+            CubeDimension.DISPLAY_NAME,
+            CubeDimension.DESCRIPTION,
+            CubeDimension.CUBE_NAME,
+            CubeDimension.CUBE_QUALIFIED_NAME,
+            CubeDimension.CUBE_HIERARCHIES,
+            CubeDimension.CUBE_HIERARCHY_COUNT,
+        )
 
-    private val hierarchyAttrs: List<AtlanField> = listOf(
-        CubeHierarchy.NAME,
-        CubeHierarchy.STATUS,
-        CubeHierarchy.CONNECTION_QUALIFIED_NAME,
-        CubeHierarchy.CONNECTOR_TYPE,
-        CubeHierarchy.CUBE_NAME,
-        CubeHierarchy.CUBE_QUALIFIED_NAME,
-        CubeHierarchy.CUBE_DIMENSION_NAME,
-        CubeHierarchy.CUBE_DIMENSION_QUALIFIED_NAME,
-        CubeHierarchy.DISPLAY_NAME,
-        CubeHierarchy.DESCRIPTION,
-        CubeHierarchy.CERTIFICATE_STATUS,
-        CubeHierarchy.CERTIFICATE_STATUS_MESSAGE,
-        CubeHierarchy.README,
-        CubeHierarchy.ATLAN_TAGS,
-        CubeHierarchy.CUBE_FIELDS,
-        CubeHierarchy.CUBE_FIELD_COUNT,
-    )
+    private val hierarchyAttrs: List<AtlanField> =
+        listOf(
+            CubeHierarchy.NAME,
+            CubeHierarchy.STATUS,
+            CubeHierarchy.CONNECTION_QUALIFIED_NAME,
+            CubeHierarchy.CONNECTOR_TYPE,
+            CubeHierarchy.CUBE_NAME,
+            CubeHierarchy.CUBE_QUALIFIED_NAME,
+            CubeHierarchy.CUBE_DIMENSION_NAME,
+            CubeHierarchy.CUBE_DIMENSION_QUALIFIED_NAME,
+            CubeHierarchy.DISPLAY_NAME,
+            CubeHierarchy.DESCRIPTION,
+            CubeHierarchy.CERTIFICATE_STATUS,
+            CubeHierarchy.CERTIFICATE_STATUS_MESSAGE,
+            CubeHierarchy.README,
+            CubeHierarchy.ATLAN_TAGS,
+            CubeHierarchy.CUBE_FIELDS,
+            CubeHierarchy.CUBE_FIELD_COUNT,
+        )
 
-    private val fieldAttrs: List<AtlanField> = listOf(
-        CubeField.NAME,
-        CubeField.STATUS,
-        CubeField.CONNECTION_QUALIFIED_NAME,
-        CubeField.CONNECTOR_TYPE,
-        CubeField.CUBE_NAME,
-        CubeField.CUBE_QUALIFIED_NAME,
-        CubeField.CUBE_DIMENSION_NAME,
-        CubeField.CUBE_DIMENSION_QUALIFIED_NAME,
-        CubeField.CUBE_HIERARCHY_NAME,
-        CubeField.CUBE_HIERARCHY_QUALIFIED_NAME,
-        CubeField.DISPLAY_NAME,
-        CubeField.DESCRIPTION,
-        CubeField.CUBE_FIELD_LEVEL,
-        CubeField.CUBE_FIELD_GENERATION,
-        CubeField.CUBE_PARENT_FIELD,
-        CubeField.CUBE_NESTED_FIELDS,
-        CubeField.CUBE_SUB_FIELD_COUNT,
-    )
+    private val fieldAttrs: List<AtlanField> =
+        listOf(
+            CubeField.NAME,
+            CubeField.STATUS,
+            CubeField.CONNECTION_QUALIFIED_NAME,
+            CubeField.CONNECTOR_TYPE,
+            CubeField.CUBE_NAME,
+            CubeField.CUBE_QUALIFIED_NAME,
+            CubeField.CUBE_DIMENSION_NAME,
+            CubeField.CUBE_DIMENSION_QUALIFIED_NAME,
+            CubeField.CUBE_HIERARCHY_NAME,
+            CubeField.CUBE_HIERARCHY_QUALIFIED_NAME,
+            CubeField.DISPLAY_NAME,
+            CubeField.DESCRIPTION,
+            CubeField.CUBE_FIELD_LEVEL,
+            CubeField.CUBE_FIELD_GENERATION,
+            CubeField.CUBE_PARENT_FIELD,
+            CubeField.CUBE_NESTED_FIELDS,
+            CubeField.CUBE_SUB_FIELD_COUNT,
+        )
 
     override fun setup() {
         prepFile()
@@ -208,11 +216,12 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     private fun validateCube(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = Cube.select()
-            .where(Cube.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(cubeAttrs)
-            .includeOnRelations(Schema.NAME)
-            .toRequest()
+        val request =
+            Cube.select()
+                .where(Cube.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(cubeAttrs)
+                .includeOnRelations(Schema.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -231,13 +240,17 @@ class CreateThenUpsertCABTest : PackageTest() {
         validateDimension("Test dimension")
     }
 
-    private fun validateDimension(displayName: String, expectedCount: Long = 2) {
+    private fun validateDimension(
+        displayName: String,
+        expectedCount: Long = 2,
+    ) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeDimension.select()
-            .where(CubeDimension.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .includesOnResults(dimensionAttrs)
-            .includeOnRelations(Asset.NAME)
-            .toRequest()
+        val request =
+            CubeDimension.select()
+                .where(CubeDimension.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(dimensionAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -249,9 +262,10 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals("TEST_CUBE", dim.cubeName)
         assertTrue(dim.cubeQualifiedName.endsWith("/TEST_CUBE"))
         assertEquals(expectedCount.toInt(), dim.cubeHierarchies.size)
-        val hierarchyNames = dim.cubeHierarchies.stream()
-            .map { it.name }
-            .toList()
+        val hierarchyNames =
+            dim.cubeHierarchies.stream()
+                .map { it.name }
+                .toList()
         assertTrue(hierarchyNames.contains("TEST_HIERARCHY1"))
         if (expectedCount > 1) assertTrue(hierarchyNames.contains("TEST_HIERARCHY2"))
         assertEquals(expectedCount, dim.cubeHierarchyCount)
@@ -264,13 +278,14 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     private fun validateHierarchy(displayName: String) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeHierarchy.select()
-            .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY1"))
-            .includesOnResults(hierarchyAttrs)
-            .includeOnRelations(Asset.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            CubeHierarchy.select()
+                .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY1"))
+                .includesOnResults(hierarchyAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -287,9 +302,10 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertEquals("Ready to use", hier.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", hier.readme.description)
         assertEquals(2, hier.atlanTags.size)
-        val tagNames = hier.atlanTags.stream()
-            .map { it.typeName }
-            .toList()
+        val tagNames =
+            hier.atlanTags.stream()
+                .map { it.typeName }
+                .toList()
         assertTrue(tagNames.contains(tag1))
         assertTrue(tagNames.contains(tag2))
         hier.atlanTags.forEach { tag ->
@@ -305,9 +321,10 @@ class CreateThenUpsertCABTest : PackageTest() {
             }
         }
         assertEquals(3, hier.cubeFields.size)
-        val colNames = hier.cubeFields.stream()
-            .map { it.name }
-            .toList()
+        val colNames =
+            hier.cubeFields.stream()
+                .map { it.name }
+                .toList()
         assertTrue(colNames.contains("COL1"))
         assertTrue(colNames.contains("COL2"))
         assertTrue(colNames.contains("COL3"))
@@ -319,20 +336,26 @@ class CreateThenUpsertCABTest : PackageTest() {
         validateFieldsForHierarchy1("Test field 1", "Test field 2", "Test field 3")
     }
 
-    private fun validateFieldsForHierarchy1(displayCol1: String, displayCol2: String, displayCol3: String) {
+    private fun validateFieldsForHierarchy1(
+        displayCol1: String,
+        displayCol2: String,
+        displayCol3: String,
+    ) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeField.select()
-            .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY1"))
-            .includesOnResults(fieldAttrs)
-            .includeOnRelations(Asset.NAME)
-            .toRequest()
+        val request =
+            CubeField.select()
+                .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY1"))
+                .includesOnResults(fieldAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 3)
         val found = response.assets
         assertEquals(3, found.size)
-        val fieldNames = found.stream()
-            .map { it.name }
-            .toList()
+        val fieldNames =
+            found.stream()
+                .map { it.name }
+                .toList()
         assertTrue(fieldNames.contains("COL1"))
         assertTrue(fieldNames.contains("COL2"))
         assertTrue(fieldNames.contains("COL3"))
@@ -386,13 +409,14 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     private fun validateHierarchy2() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeHierarchy.select()
-            .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
-            .includesOnResults(hierarchyAttrs)
-            .includeOnRelations(Asset.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            CubeHierarchy.select()
+                .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
+                .includesOnResults(hierarchyAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
@@ -409,9 +433,10 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertTrue(hier.atlanTags.first().propagate)
         assertTrue(hier.atlanTags.first().removePropagationsOnEntityDelete)
         assertTrue(hier.atlanTags.first().restrictPropagationThroughLineage)
-        val fieldNames = hier.cubeFields.stream()
-            .map { it.name }
-            .toList()
+        val fieldNames =
+            hier.cubeFields.stream()
+                .map { it.name }
+                .toList()
         assertTrue(fieldNames.contains("COL4"))
         assertTrue(fieldNames.contains("COL5"))
         assertEquals(2, hier.cubeFieldCount)
@@ -424,18 +449,20 @@ class CreateThenUpsertCABTest : PackageTest() {
 
     private fun validateFieldsForHierarchy2() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeField.select()
-            .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
-            .includesOnResults(fieldAttrs)
-            .includeOnRelations(Asset.NAME)
-            .toRequest()
+        val request =
+            CubeField.select()
+                .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
+                .includesOnResults(fieldAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 2)
         val found = response.assets
         assertEquals(2, found.size)
-        val fieldNames = found.stream()
-            .map { it.name }
-            .toList()
+        val fieldNames =
+            found.stream()
+                .map { it.name }
+                .toList()
         assertTrue(fieldNames.contains("COL4"))
         assertTrue(fieldNames.contains("COL5"))
         found.forEach { field ->
@@ -518,13 +545,14 @@ class CreateThenUpsertCABTest : PackageTest() {
     @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun hierarchy2Gone() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeHierarchy.select()
-            .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
-            .includesOnResults(hierarchyAttrs)
-            .includeOnRelations(Asset.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            CubeHierarchy.select()
+                .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
+                .includesOnResults(hierarchyAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 0)
         assertTrue(response.assets.isNullOrEmpty())
     }
@@ -532,12 +560,13 @@ class CreateThenUpsertCABTest : PackageTest() {
     @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
     fun fieldsForHierarchy2Gone() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val request = CubeField.select()
-            .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-            .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
-            .includesOnResults(fieldAttrs)
-            .includeOnRelations(Asset.NAME)
-            .toRequest()
+        val request =
+            CubeField.select()
+                .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
+                .includesOnResults(fieldAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 0)
         assertTrue(response.assets.isNullOrEmpty())
     }

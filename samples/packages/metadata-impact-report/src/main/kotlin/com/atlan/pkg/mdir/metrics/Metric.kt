@@ -22,7 +22,6 @@ abstract class Metric(
     val caveats: String = "",
     val notes: String = "",
 ) {
-
     companion object {
         const val BYTES_IN_GB = 1073741824.0
 
@@ -34,7 +33,12 @@ abstract class Metric(
          * @param batchSize maximum number of objects to request in any given API call
          * @param logger through which to record information
          */
-        fun get(report: Class<*>, client: AtlanClient, batchSize: Int, logger: KLogger): Metric {
+        fun get(
+            report: Class<*>,
+            client: AtlanClient,
+            batchSize: Int,
+            logger: KLogger,
+        ): Metric {
             return report.getDeclaredConstructor(
                 AtlanClient::class.java,
                 Int::class.java,
@@ -73,7 +77,11 @@ abstract class Metric(
      * @param term the glossary term that defines the metric, to which to associate assets
      * @param batch through which to bulk-process the term assignments
      */
-    fun outputDetailedRecords(xlsx: ExcelWriter, term: GlossaryTerm?, batch: AssetBatch?) {
+    fun outputDetailedRecords(
+        xlsx: ExcelWriter,
+        term: GlossaryTerm?,
+        batch: AssetBatch?,
+    ) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
             val sheet = xlsx.createSheet(getShortName())
@@ -82,13 +90,13 @@ abstract class Metric(
                 val row = getDetailedRecord(asset)
                 xlsx.appendRow(sheet, row)
                 // TODO: requires additional testing
-                /*if (term != null && batch != null && category != Reporter.CAT_HEADLINES) {
-                    batch.add(
-                        asset.trimToRequired()
-                            .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
-                            .build(),
-                    )
-                }*/
+                // if (term != null && batch != null && category != Reporter.CAT_HEADLINES) {
+                //     batch.add(
+                //         asset.trimToRequired()
+                //             .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
+                //             .build(),
+                //     )
+                // }
             }
         }
     }

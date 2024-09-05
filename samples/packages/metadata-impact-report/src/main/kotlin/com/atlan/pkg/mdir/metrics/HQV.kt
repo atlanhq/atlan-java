@@ -17,17 +17,16 @@ class HQV(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "HQV - Heavily-Queried Views",
-    "HQV",
-    "**Views that are frequently queried.** This is useful to:\n" +
-        "- Identity opportunities to materialize the data in the views to potentially reduce compute costs",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False negatives could exist (views not in the list), when: usage data is not tracked for the data stores for those views, or the views are used heavily but only infrequently and not within the last 30 days.",
-) {
-
+        "HQV - Heavily-Queried Views",
+        "HQV",
+        "**Views that are frequently queried.** This is useful to:\n" +
+            "- Identity opportunities to materialize the data in the views to potentially reduce compute costs",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False negatives could exist (views not in the list), when: usage data is not tracked for the data stores for those views, or the views are used heavily but only infrequently and not within the last 30 days.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

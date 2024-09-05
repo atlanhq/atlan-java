@@ -17,17 +17,16 @@ class SUT(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "SUT - Single-User Tables",
-    "SUT",
-    "**Tables that are only queried by a single user.** This is useful to:\n" +
-        "- Identity opportunities to consolidate data needs for users into shared tables, reducing storage costs",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False positives could exist, when the single user listed is a non-personal (system-level) account that may be used by an application or process, rather than an individual user.",
-) {
-
+        "SUT - Single-User Tables",
+        "SUT",
+        "**Tables that are only queried by a single user.** This is useful to:\n" +
+            "- Identity opportunities to consolidate data needs for users into shared tables, reducing storage costs",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False positives could exist, when the single user listed is a non-personal (system-level) account that may be used by an application or process, rather than an individual user.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

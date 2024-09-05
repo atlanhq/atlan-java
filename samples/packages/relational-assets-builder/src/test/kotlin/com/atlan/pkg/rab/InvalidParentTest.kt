@@ -24,10 +24,11 @@ class InvalidParentTest : PackageTest() {
 
     private val testFile = "input.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
@@ -35,20 +36,22 @@ class InvalidParentTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{CONNECTION}", conn1)
+                val revised =
+                    line
+                        .replace("{CONNECTION}", conn1)
                 output.appendText("$revised\n")
             }
         }
     }
 
-    private val connectionAttrs: List<AtlanField> = listOf(
-        Connection.NAME,
-        Connection.CONNECTOR_TYPE,
-        Connection.ADMIN_ROLES,
-        Connection.ADMIN_GROUPS,
-        Connection.ADMIN_USERS,
-    )
+    private val connectionAttrs: List<AtlanField> =
+        listOf(
+            Connection.NAME,
+            Connection.CONNECTOR_TYPE,
+            Connection.ADMIN_ROLES,
+            Connection.ADMIN_GROUPS,
+            Connection.ADMIN_USERS,
+        )
 
     override fun setup() {
         prepFile()

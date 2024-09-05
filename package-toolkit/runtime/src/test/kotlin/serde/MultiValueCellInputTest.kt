@@ -17,7 +17,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class MultiValueCellInputTest {
-
     companion object {
         private val EMPTY = ""
         private val NULL = null

@@ -96,7 +96,10 @@ abstract class PackageTest {
      * @param filename for the log file
      * @param relativeTo (optional) path under which the log file should be present
      */
-    fun validateErrorFreeLog(filename: String = "debug.log", relativeTo: String = testDirectory) {
+    fun validateErrorFreeLog(
+        filename: String = "debug.log",
+        relativeTo: String = testDirectory,
+    ) {
         val file = getFile(filename, relativeTo)
         file.useLines { lines ->
             lines.forEach { line ->
@@ -114,7 +117,12 @@ abstract class PackageTest {
      * @param relativeTo (optional) path under which the log file should be present
      * @return true if the line appears in the log, and false otherwise
      */
-    fun logHasMessage(level: String, message: String, filename: String = "debug.log", relativeTo: String = testDirectory): Boolean {
+    fun logHasMessage(
+        level: String,
+        message: String,
+        filename: String = "debug.log",
+        relativeTo: String = testDirectory,
+    ): Boolean {
         val file = getFile(filename, relativeTo)
         file.useLines { lines ->
             lines.forEach { line ->
@@ -133,7 +141,10 @@ abstract class PackageTest {
      * @param files list of filenames
      * @param relativeTo (optional) path under which the files should be present
      */
-    fun validateFilesExist(files: List<String>, relativeTo: String = testDirectory) {
+    fun validateFilesExist(
+        files: List<String>,
+        relativeTo: String = testDirectory,
+    ) {
         files.forEach {
             val file = validateFile(it, relativeTo)
             assertTrue(file.length() > 0, "File is empty.")
@@ -146,7 +157,10 @@ abstract class PackageTest {
      * @param files list of filenames
      * @param relativeTo (optional) path under whic hthe files should be present
      */
-    fun validateFileExistsButEmpty(files: List<String>, relativeTo: String = testDirectory) {
+    fun validateFileExistsButEmpty(
+        files: List<String>,
+        relativeTo: String = testDirectory,
+    ) {
         files.forEach {
             val file = validateFile(it, relativeTo)
             assertEquals(0, file.length(), "File is empty.")
@@ -161,7 +175,10 @@ abstract class PackageTest {
      * @param expectedSize expected number of results from the search
      * @return the response, either with the expected number of results or after exceeding the retry limit
      */
-    fun retrySearchUntil(request: IndexSearchRequest, expectedSize: Long): IndexSearchResponse {
+    fun retrySearchUntil(
+        request: IndexSearchRequest,
+        expectedSize: Long,
+    ): IndexSearchResponse {
         var count = 1
         var response = request.search()
         while (response.approximateCount < expectedSize && count < Atlan.getMaxNetworkRetries()) {
@@ -173,7 +190,10 @@ abstract class PackageTest {
         return response
     }
 
-    private fun validateFile(filename: String, relativeTo: String): File {
+    private fun validateFile(
+        filename: String,
+        relativeTo: String,
+    ): File {
         val file = getFile(filename, relativeTo)
         assertNotNull(file, "File not found: ${file.path}.")
         assertTrue(file.exists(), "File does not exist: ${file.path}.")
@@ -190,70 +210,71 @@ abstract class PackageTest {
         }
 
         protected val client: AtlanClient = Atlan.getDefaultClient()
-        private val ALPHABET = charArrayOf(
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            '0',
-            'a',
-            'b',
-            'c',
-            'd',
-            'e',
-            'f',
-            'g',
-            'h',
-            'i',
-            'j',
-            'k',
-            'l',
-            'm',
-            'n',
-            'o',
-            'p',
-            'q',
-            'r',
-            's',
-            't',
-            'u',
-            'v',
-            'w',
-            'x',
-            'y',
-            'z',
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F',
-            'G',
-            'H',
-            'I',
-            'J',
-            'K',
-            'L',
-            'M',
-            'N',
-            'O',
-            'P',
-            'Q',
-            'R',
-            'S',
-            'T',
-            'U',
-            'V',
-            'W',
-            'X',
-            'Y',
-            'Z',
-        )
+        private val ALPHABET =
+            charArrayOf(
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '0',
+                'a',
+                'b',
+                'c',
+                'd',
+                'e',
+                'f',
+                'g',
+                'h',
+                'i',
+                'j',
+                'k',
+                'l',
+                'm',
+                'n',
+                'o',
+                'p',
+                'q',
+                'r',
+                's',
+                't',
+                'u',
+                'v',
+                'w',
+                'x',
+                'y',
+                'z',
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F',
+                'G',
+                'H',
+                'I',
+                'J',
+                'K',
+                'L',
+                'M',
+                'N',
+                'O',
+                'P',
+                'Q',
+                'R',
+                'S',
+                'T',
+                'U',
+                'V',
+                'W',
+                'X',
+                'Y',
+                'Z',
+            )
         private const val PREFIX = "jpkg_"
         private const val TAG_REMOVAL_RETRIES = 30
 
@@ -268,7 +289,10 @@ abstract class PackageTest {
      * @param files list of filenames to be removed
      * @param relativeTo (optional) path under which the files exist
      */
-    fun removeFiles(files: List<String>, relativeTo: String = "") {
+    fun removeFiles(
+        files: List<String>,
+        relativeTo: String = "",
+    ) {
         files.forEach {
             val file = getFile(it, relativeTo)
             if (file.exists() && file.isFile) {
@@ -295,18 +319,22 @@ abstract class PackageTest {
      * @param name of the connection
      * @param type of the connector
      */
-    fun removeConnection(name: String, type: AtlanConnectorType) {
+    fun removeConnection(
+        name: String,
+        type: AtlanConnectorType,
+    ) {
         val results = Connection.findByName(name, type)
         if (!results.isNullOrEmpty()) {
             val deletionType = AtlanDeleteType.PURGE
             results.forEach {
-                val assets = client.assets.select(true)
-                    .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
-                    .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
-                    .pageSize(50)
-                    .stream()
-                    .map(Asset::getGuid)
-                    .toList()
+                val assets =
+                    client.assets.select(true)
+                        .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
+                        .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
+                        .pageSize(50)
+                        .stream()
+                        .map(Asset::getGuid)
+                        .toList()
                 if (assets.isNotEmpty()) {
                     val guidList = assets.toList()
                     val totalToDelete = guidList.size
@@ -347,7 +375,10 @@ abstract class PackageTest {
      * @throws ConflictException if the tag cannot be removed because there are still references to it
      */
     @Throws(ConflictException::class)
-    fun removeTag(displayName: String, retryCount: Int = 0) {
+    fun removeTag(
+        displayName: String,
+        retryCount: Int = 0,
+    ) {
         try {
             AtlanTagDef.purge(displayName)
         } catch (e: ConflictException) {
@@ -367,11 +398,12 @@ abstract class PackageTest {
      */
     fun removeGlossary(name: String) {
         val glossary = Glossary.findByName(name)
-        val terms = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val terms =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
+                .stream()
+                .map { it.guid }
+                .toList()
         try {
             if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
             Glossary.purge(glossary.guid)
@@ -380,7 +412,10 @@ abstract class PackageTest {
         }
     }
 
-    private fun getFile(filename: String, relativeTo: String): File {
+    private fun getFile(
+        filename: String,
+        relativeTo: String,
+    ): File {
         return if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
     }
 
@@ -390,11 +425,12 @@ abstract class PackageTest {
      * @param name of the domain
      */
     fun removeDomain(name: String) {
-        val domainGuids = DataDomain.select()
-            .where(DataDomain.NAME.eq(name))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val domainGuids =
+            DataDomain.select()
+                .where(DataDomain.NAME.eq(name))
+                .stream()
+                .map { it.guid }
+                .toList()
         try {
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
         } catch (e: Exception) {
@@ -408,11 +444,12 @@ abstract class PackageTest {
      * @param name of the domain
      */
     fun removeProduct(name: String) {
-        val domainGuids = DataProduct.select()
-            .where(DataProduct.NAME.eq(name))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val domainGuids =
+            DataProduct.select()
+                .where(DataProduct.NAME.eq(name))
+                .stream()
+                .map { it.guid }
+                .toList()
         try {
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
         } catch (e: Exception) {
@@ -426,13 +463,14 @@ abstract class PackageTest {
      * @param cfg for the custom package to run with
      */
     fun setup(cfg: CustomConfig) {
-        cfg.runtime = RuntimeConfig(
-            userId = null,
-            agent = "test",
-            agentId = null,
-            agentPackageName = null,
-            agentWorkflowId = null,
-        )
+        cfg.runtime =
+            RuntimeConfig(
+                userId = null,
+                agent = "test",
+                agentId = null,
+                agentPackageName = null,
+                agentWorkflowId = null,
+            )
         vars.set("NESTED_CONFIG", mapper.writeValueAsString(cfg))
         vars.setup()
     }

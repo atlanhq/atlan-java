@@ -26,34 +26,34 @@ class AUM(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "AUM - Assets Under Management",
-    "AUM",
-    "**Total active assets in Atlan.** This is useful to:\n" +
-        "- Monitor the footprint of your data ecosystem\n" +
-        "- Monitor Atlan's rollout across your complete data ecosystem\n" +
-        "- Provide the basis for calculating a percentage of assets from other metrics relative to the overall footprint of your data ecosystem",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
-
+        "AUM - Assets Under Management",
+        "AUM",
+        "**Total active assets in Atlan.** This is useful to:\n" +
+            "- Monitor the footprint of your data ecosystem\n" +
+            "- Monitor Atlan's rollout across your complete data ecosystem\n" +
+            "- Provide the basis for calculating a percentage of assets from other metrics relative to the overall footprint of your data ecosystem",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     companion object {
-        val EXCLUDE_ASSETS = setOf(
-            Link.TYPE_NAME,
-            Readme.TYPE_NAME,
-            ReadmeTemplate.TYPE_NAME,
-            Badge.TYPE_NAME,
-            LineageProcess.TYPE_NAME,
-            ColumnProcess.TYPE_NAME,
-            DbtProcess.TYPE_NAME,
-            DbtColumnProcess.TYPE_NAME,
-            BIProcess.TYPE_NAME,
-            Persona.TYPE_NAME,
-            Purpose.TYPE_NAME,
-            AuthPolicy.TYPE_NAME,
-            AuthService.TYPE_NAME,
-        )
+        val EXCLUDE_ASSETS =
+            setOf(
+                Link.TYPE_NAME,
+                Readme.TYPE_NAME,
+                ReadmeTemplate.TYPE_NAME,
+                Badge.TYPE_NAME,
+                LineageProcess.TYPE_NAME,
+                ColumnProcess.TYPE_NAME,
+                DbtProcess.TYPE_NAME,
+                DbtColumnProcess.TYPE_NAME,
+                BIProcess.TYPE_NAME,
+                Persona.TYPE_NAME,
+                Purpose.TYPE_NAME,
+                AuthPolicy.TYPE_NAME,
+                AuthService.TYPE_NAME,
+            )
     }
 
     /** {@inheritDoc} */

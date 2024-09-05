@@ -48,7 +48,11 @@ object ConnectionCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
+    override fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int,
+        maxRetries: Int,
+    ): Asset? {
         try {
             val connection =
                 Connection.select()
@@ -96,7 +100,10 @@ object ConnectionCache : AssetCache() {
      * @param type of the connector for the connection (as a valid connector type)
      * @return identity for the connection
      */
-    fun getIdentityForAsset(name: String, type: AtlanConnectorType): String {
+    fun getIdentityForAsset(
+        name: String,
+        type: AtlanConnectorType,
+    ): String {
         return ConnectionXformer.encode(name, type.value)
     }
 
@@ -110,11 +117,12 @@ object ConnectionCache : AssetCache() {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { connection ->
             connection as Connection
-            val connectorType = if (connection.connectorType == null) {
-                "(not enumerated)"
-            } else {
-                connection.connectorType.value
-            }
+            val connectorType =
+                if (connection.connectorType == null) {
+                    "(not enumerated)"
+                } else {
+                    connection.connectorType.value
+                }
             map[AssetResolver.ConnectionIdentity(connection.name, connectorType)] = connection.qualifiedName
         }
         return map
@@ -141,14 +149,15 @@ object ConnectionCache : AssetCache() {
      */
     private fun isAccessible(connection: Asset): Asset {
         try {
-            val candidate = Atlan.getDefaultClient().assets.get(
-                connection.guid,
-                false,
-                false,
-                RequestOptions.from(Atlan.getDefaultClient())
-                    .maxNetworkRetries(MAX_ASYNC_RETRIES)
-                    .build(),
-            )
+            val candidate =
+                Atlan.getDefaultClient().assets.get(
+                    connection.guid,
+                    false,
+                    false,
+                    RequestOptions.from(Atlan.getDefaultClient())
+                        .maxNetworkRetries(MAX_ASYNC_RETRIES)
+                        .build(),
+                )
             if (candidate?.asset == null) {
                 // Since the retry logic in this case is actually embedded in the retrieveMinimal
                 // call, if we get to this point without retrieving the connection we have by

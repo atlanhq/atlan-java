@@ -13,7 +13,6 @@ class Users(
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
 ) {
-
     fun export() {
         logger.info { "Exporting all users..." }
         val sheet = xlsx.createSheet("Users")
@@ -34,19 +33,21 @@ class Users(
             ),
         )
         val client = Atlan.getDefaultClient()
-        val request = UserRequest.builder()
-            .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
-            .column("profileRole")
-            .column("profileRoleOther")
-            .build()
+        val request =
+            UserRequest.builder()
+                .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
+                .column("profileRole")
+                .column("profileRoleOther")
+                .build()
         client.users.list(request).forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName } ?: ""
             val groups = client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name } ?: ""
-            val designation = if (user.attributes?.profileRole?.get(0) == "Other") {
-                user.attributes?.profileRoleOther?.get(0)
-            } else {
-                user.attributes?.profileRole?.get(0)
-            }
+            val designation =
+                if (user.attributes?.profileRole?.get(0) == "Other") {
+                    user.attributes?.profileRoleOther?.get(0)
+                } else {
+                    user.attributes?.profileRole?.get(0)
+                }
             xlsx.appendRow(
                 sheet,
                 listOf(

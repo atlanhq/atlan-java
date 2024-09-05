@@ -15,15 +15,15 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 object CustomPackageTest {
-
     lateinit var config: Config
 
     @BeforeClass
     fun modelEval() {
         val source = ModuleSource.path("src/test/resources/CustomPackageTest.pkl")
-        config = ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
-            evaluator.evaluate(source).to<Config>()
-        }
+        config =
+            ConfigEvaluator.preconfigured().forKotlin().use { evaluator ->
+                evaluator.evaluate(source).to<Config>()
+            }
     }
 
     @Test

@@ -11,7 +11,6 @@ import com.atlan.pkg.cache.CategoryCache
  * Static object to transform category references.
  */
 object GlossaryCategoryXformer {
-
     const val CATEGORY_DELIMITER = "@"
 
     /**

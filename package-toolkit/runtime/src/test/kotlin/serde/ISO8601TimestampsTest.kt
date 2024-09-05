@@ -14,7 +14,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ISO8601TimestampsTest {
-
     companion object {
         private val EMPTY = ""
         private val NULL = null

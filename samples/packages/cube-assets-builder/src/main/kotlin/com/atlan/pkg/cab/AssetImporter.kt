@@ -45,15 +45,14 @@ abstract class AssetImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : CSVImporter(
-    filename,
-    logger,
-    typeNameFilter,
-    attrsToOverwrite,
-    batchSize = batchSize,
-    trackBatches = trackBatches,
-    fieldSeparator = fieldSeparator,
-) {
-
+        filename,
+        logger,
+        typeNameFilter,
+        attrsToOverwrite,
+        batchSize = batchSize,
+        trackBatches = trackBatches,
+        fieldSeparator = fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
@@ -71,7 +70,11 @@ abstract class AssetImporter(
 
     companion object : AssetResolver {
         /** {@inheritDoc} */
-        override fun getQualifiedNameDetails(row: List<String>, header: List<String>, typeName: String): QualifiedNameDetails {
+        override fun getQualifiedNameDetails(
+            row: List<String>,
+            header: List<String>,
+            typeName: String,
+        ): QualifiedNameDetails {
             val parent: QualifiedNameDetails?
             val current: String
             val unique: String
@@ -116,12 +119,13 @@ abstract class AssetImporter(
                         val parentPartial = calculatePath(parentField, hierarchy.partialQN)
                         val grandParentUnique = if (grandParent.isNotBlank()) calculatePath(grandParent, hierarchy.uniqueQN) else hierarchy.uniqueQN
                         val grandParentPartial = if (grandParent.isNotBlank()) calculatePath(grandParent, hierarchy.partialQN) else hierarchy.partialQN
-                        parent = QualifiedNameDetails(
-                            parentUnique,
-                            parentPartial,
-                            grandParentUnique,
-                            grandParentPartial,
-                        )
+                        parent =
+                            QualifiedNameDetails(
+                                parentUnique,
+                                parentPartial,
+                                grandParentUnique,
+                                grandParentPartial,
+                            )
                         unique = CubeField.generateQualifiedName(current, parent.uniqueQN)
                         partial = CubeField.generateQualifiedName(current, parent.partialQN)
                     }
@@ -136,14 +140,18 @@ abstract class AssetImporter(
             )
         }
 
-        private fun calculatePath(parentField: String, appendToPath: String): String {
+        private fun calculatePath(
+            parentField: String,
+            appendToPath: String,
+        ): String {
             return if (!parentField.contains(QN_DELIMITER)) {
                 CubeField.generateQualifiedName(parentField, appendToPath)
             } else {
                 val tokens = parentField.split(QN_DELIMITER)
-                val parentPath = tokens.subList(0, tokens.size - 1).joinToString("/") {
-                    IMultiDimensionalDataset.getSlugForName(it)
-                }
+                val parentPath =
+                    tokens.subList(0, tokens.size - 1).joinToString("/") {
+                        IMultiDimensionalDataset.getSlugForName(it)
+                    }
                 CubeField.generateQualifiedName(
                     tokens[tokens.size - 1],
                     "$appendToPath/$parentPath",

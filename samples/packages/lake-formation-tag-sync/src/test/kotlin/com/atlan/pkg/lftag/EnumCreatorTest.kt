@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
 import com.atlan.Atlan
@@ -15,8 +17,8 @@ private const val TWO = "two"
 private const val THREE = "three"
 
 private const val FOUR = "four"
-private const val attr1 = "An Option"
-private const val attr2 = "A String"
+private const val ATTR1 = "An Option"
+private const val ATTR2 = "A String"
 private const val TAG_KEY_OPTION = "someone"
 private const val TAG_KEY_STRING = "other"
 private val ORIGINAL_VALUES = setOf(ONE, FOUR)
@@ -25,28 +27,30 @@ class EnumCreatorTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
     private val enum1 = makeUnique("lfenum")
     private val cm1 = makeUnique("lftcm")
-    private val tagToMetadataMapper = TagToMetadataMapper(
-        mapOf(
-            TAG_KEY_OPTION to "$cm1::$attr1",
-            TAG_KEY_STRING to "$cm1::$attr2",
-        ),
-    )
+    private val tagToMetadataMapper =
+        TagToMetadataMapper(
+            mapOf(
+                TAG_KEY_OPTION to "$cm1::$ATTR1",
+                TAG_KEY_STRING to "$cm1::$ATTR2",
+            ),
+        )
     private val enumCreator = EnumCreator(tagToMetadataMapper)
     private val enumCache = Atlan.getDefaultClient().enumCache
 
     private fun createEnum() {
-        val enumDef = EnumDef.creator(
-            enum1,
-            listOf(ONE, FOUR),
-        )
-            .build()
+        val enumDef =
+            EnumDef.creator(
+                enum1,
+                listOf(ONE, FOUR),
+            )
+                .build()
         enumDef.create()
     }
 
     private fun createCustomMetadata() {
         CustomMetadataDef.creator(cm1)
-            .attributeDef(AttributeDef.of(attr1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
-            .attributeDef(AttributeDef.of(attr2, AtlanCustomAttributePrimitiveType.STRING, enum1, false))
+            .attributeDef(AttributeDef.of(ATTR1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
+            .attributeDef(AttributeDef.of(ATTR2, AtlanCustomAttributePrimitiveType.STRING, enum1, false))
             .build()
             .create()
     }

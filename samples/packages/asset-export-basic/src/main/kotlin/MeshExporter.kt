@@ -25,14 +25,14 @@ class MeshExporter(
     private val filename: String,
     private val batchSize: Int,
 ) : RowGenerator {
-
     private val logger = KotlinLogging.logger {}
 
     fun export() {
         CSVWriter(filename).use { csv ->
-            val headerNames = Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
-                .map(AtlanField::getAtlanFieldName)
-                .collect(Collectors.toList())
+            val headerNames =
+                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
+                    .map(AtlanField::getAtlanFieldName)
+                    .collect(Collectors.toList())
             headerNames.addAll(
                 getAttributesToExtract().stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
@@ -42,20 +42,22 @@ class MeshExporter(
             val start = System.currentTimeMillis()
 
             // Retrieve all domains up-front
-            val domains = DataDomain.select(ctx.includeArchived)
-                .pageSize(batchSize)
-                .includesOnResults(getAttributesToExtract())
-                .includesOnRelations(getRelatedAttributesToExtract())
-                .stream(true)
-                .toList()
+            val domains =
+                DataDomain.select(ctx.includeArchived)
+                    .pageSize(batchSize)
+                    .includesOnResults(getAttributesToExtract())
+                    .includesOnRelations(getRelatedAttributesToExtract())
+                    .stream(true)
+                    .toList()
             logger.info { "Appending ${domains.size} domains..." }
             csv.appendAssets(domains, this, domains.size.toLong(), batchSize, logger)
 
             // And finally extract all the data products
-            val products = DataProduct.select(ctx.includeArchived)
-                .pageSize(batchSize)
-                .includesOnResults(getAttributesToExtract())
-                .includesOnRelations(getRelatedAttributesToExtract())
+            val products =
+                DataProduct.select(ctx.includeArchived)
+                    .pageSize(batchSize)
+                    .includesOnResults(getAttributesToExtract())
+                    .includesOnRelations(getRelatedAttributesToExtract())
 
             csv.streamAssets(products.stream(true), this, products.count(), batchSize, logger)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
@@ -63,35 +65,36 @@ class MeshExporter(
     }
 
     private fun getAttributesToExtract(): MutableList<AtlanField> {
-        val attributeList: MutableList<AtlanField> = mutableListOf(
-            Asset.NAME,
-            DataDomain.PARENT_DOMAIN,
-            DataProduct.DATA_DOMAIN,
-            Asset.ASSET_COVER_IMAGE,
-            Asset.ASSET_THEME_HEX,
-            Asset.ASSET_ICON,
-            Asset.DISPLAY_NAME,
-            Asset.DESCRIPTION,
-            Asset.USER_DESCRIPTION,
-            Asset.OWNER_USERS,
-            Asset.OWNER_GROUPS,
-            Asset.CERTIFICATE_STATUS,
-            Asset.CERTIFICATE_STATUS_MESSAGE,
-            Asset.ANNOUNCEMENT_TYPE,
-            Asset.ANNOUNCEMENT_TITLE,
-            Asset.ANNOUNCEMENT_MESSAGE,
-            Asset.ATLAN_TAGS,
-            Asset.LINKS,
-            Asset.README,
-            Asset.STARRED_DETAILS,
-            DataProduct.DAAP_CRITICALITY,
-            DataProduct.DAAP_SENSITIVITY,
-            DataProduct.DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER,
-            DataProduct.DATA_PRODUCT_ASSETS_DSL,
-            DataProduct.DAAP_VISIBILITY,
-            DataProduct.DAAP_VISIBILITY_USERS,
-            DataProduct.DAAP_VISIBILITY_GROUPS,
-        )
+        val attributeList: MutableList<AtlanField> =
+            mutableListOf(
+                Asset.NAME,
+                DataDomain.PARENT_DOMAIN,
+                DataProduct.DATA_DOMAIN,
+                Asset.ASSET_COVER_IMAGE,
+                Asset.ASSET_THEME_HEX,
+                Asset.ASSET_ICON,
+                Asset.DISPLAY_NAME,
+                Asset.DESCRIPTION,
+                Asset.USER_DESCRIPTION,
+                Asset.OWNER_USERS,
+                Asset.OWNER_GROUPS,
+                Asset.CERTIFICATE_STATUS,
+                Asset.CERTIFICATE_STATUS_MESSAGE,
+                Asset.ANNOUNCEMENT_TYPE,
+                Asset.ANNOUNCEMENT_TITLE,
+                Asset.ANNOUNCEMENT_MESSAGE,
+                Asset.ATLAN_TAGS,
+                Asset.LINKS,
+                Asset.README,
+                Asset.STARRED_DETAILS,
+                DataProduct.DAAP_CRITICALITY,
+                DataProduct.DAAP_SENSITIVITY,
+                DataProduct.DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER,
+                DataProduct.DATA_PRODUCT_ASSETS_DSL,
+                DataProduct.DAAP_VISIBILITY,
+                DataProduct.DAAP_VISIBILITY_USERS,
+                DataProduct.DAAP_VISIBILITY_GROUPS,
+            )
         for (cmField in ctx.cmFields) {
             attributeList.add(cmField)
         }
@@ -99,11 +102,15 @@ class MeshExporter(
     }
 
     private fun getRelatedAttributesToExtract(): MutableList<AtlanField> {
+        // Needed for:
+        // - asset referencing
+        // - Link embedding
+        // - README embedding
         return mutableListOf(
-            Asset.QUALIFIED_NAME, // for asset referencing
-            Asset.NAME, // for Link embedding
-            Asset.DESCRIPTION, // for README embedding
-            Link.LINK, // for Link embedding
+            Asset.QUALIFIED_NAME,
+            Asset.NAME,
+            Asset.DESCRIPTION,
+            Link.LINK,
         )
     }
 

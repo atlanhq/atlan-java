@@ -159,10 +159,9 @@ public interface IKeywordSearchable {
      * @see #in(Collection)
      */
     static Query in(final String field, final List<String> values, final int minMustMatch) {
-        return TermsSetQuery.of(t -> t.field(field)
-                        .terms(values)
-                        .minimumShouldMatchScript(s ->
-                                s.inline(i -> i.lang(ScriptLanguage.Painless).source("" + minMustMatch))))
+        return TermsSetQuery.of(
+                        t -> t.field(field).terms(values).minimumShouldMatchScript(s -> s.lang(ScriptLanguage.Painless)
+                                .source("" + minMustMatch)))
                 ._toQuery();
     }
 

@@ -34,15 +34,15 @@ class ColumnImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
-    preprocessed.preprocessedFile,
-    attrsToOverwrite,
-    creationHandling,
-    batchSize,
-    Column.TYPE_NAME,
-    KotlinLogging.logger {},
-    trackBatches,
-    fieldSeparator,
-) {
+        preprocessed.preprocessedFile,
+        attrsToOverwrite,
+        creationHandling,
+        batchSize,
+        Column.TYPE_NAME,
+        KotlinLogging.logger {},
+        trackBatches,
+        fieldSeparator,
+    ) {
     companion object {
         const val COLUMN_PARENT_QN = "columnParentQualifiedName"
         const val COLUMN_NAME = "columnName"

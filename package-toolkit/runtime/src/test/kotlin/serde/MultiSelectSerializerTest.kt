@@ -17,16 +17,19 @@ class MultiSelectSerializerTest {
     )
 
     companion object {
-        private val EMPTY = TestClass(
-            property = listOf(),
-        )
+        private val EMPTY =
+            TestClass(
+                property = listOf(),
+            )
         private val NULL = null
-        private val ONE_VALUE = TestClass(
-            property = listOf("ONE"),
-        )
-        private val MULTI_VALUE = TestClass(
-            property = listOf("ONE", "TWO"),
-        )
+        private val ONE_VALUE =
+            TestClass(
+                property = listOf("ONE"),
+            )
+        private val MULTI_VALUE =
+            TestClass(
+                property = listOf("ONE", "TWO"),
+            )
         private val MAPPER = jacksonObjectMapper()
     }
 

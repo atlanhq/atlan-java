@@ -22,7 +22,6 @@ import java.nio.charset.StandardCharsets
  * @param handler the handler that defines actual processing logic
  */
 abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) : Mapper() {
-
     private val logger = KotlinLogging.logger {}
 
     companion object {
@@ -51,7 +50,11 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @param data the Numanflow message itself
      * @return an array of messages that can be passed to further vertexes in the pipeline, often produced by one of the helper methods
      */
-    protected fun processEvent(event: AtlanEvent, keys: Array<String>, data: Datum): MessageList {
+    protected fun processEvent(
+        event: AtlanEvent,
+        keys: Array<String>,
+        data: Datum,
+    ): MessageList {
         try {
             if (!handler.validatePrerequisites(event, logger)) {
                 return failed(keys, data)
@@ -61,11 +64,12 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
             return failed(keys, data)
         }
         return try {
-            val current = handler.getCurrentState(
-                Atlan.getDefaultClient(),
-                event.payload.asset,
-                logger,
-            )
+            val current =
+                handler.getCurrentState(
+                    Atlan.getDefaultClient(),
+                    event.payload.asset,
+                    logger,
+                )
             val updated = handler.calculateChanges(current, logger)
             if (!updated.isEmpty()) {
                 handler.saveChanges(Atlan.getDefaultClient(), updated, logger)
@@ -84,7 +88,10 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
     }
 
     /** {@inheritDoc}  */
-    override fun processMessage(keys: Array<String>, data: Datum): MessageList {
+    override fun processMessage(
+        keys: Array<String>,
+        data: Datum,
+    ): MessageList {
         return try {
             processEvent(getAtlanEvent(data), keys, data)
         } catch (e: IOException) {
@@ -112,7 +119,10 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    protected fun failed(keys: Array<String>, data: Datum): MessageList {
+    protected fun failed(
+        keys: Array<String>,
+        data: Datum,
+    ): MessageList {
         return failed(keys, data.value)
     }
 
@@ -123,19 +133,23 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    protected fun failed(keys: Array<String>, data: ByteArray): MessageList {
+    protected fun failed(
+        keys: Array<String>,
+        data: ByteArray,
+    ): MessageList {
         val map = mapper.readValue<MutableMap<String, Any>>(data.decodeToString())
         if (!map.containsKey(RETRY_COUNT)) {
             map[RETRY_COUNT] = 0
         }
         map[RETRY_COUNT] = (map[RETRY_COUNT] as Int) + 1
-        val tag = if (map[RETRY_COUNT] as Int > MAX_RETRIES) {
-            logger.info { "Routing to: $DLQ (exceeded $MAX_RETRIES retries)" }
-            DLQ
-        } else {
-            logger.info { "Routing to: $RETRY (retry #${map[RETRY_COUNT]})" }
-            RETRY
-        }
+        val tag =
+            if (map[RETRY_COUNT] as Int > MAX_RETRIES) {
+                logger.info { "Routing to: $DLQ (exceeded $MAX_RETRIES retries)" }
+                DLQ
+            } else {
+                logger.info { "Routing to: $RETRY (retry #${map[RETRY_COUNT]})" }
+                RETRY
+            }
         return MessageList.newBuilder()
             .addMessage(Message(mapper.writeValueAsBytes(map), keys, arrayOf(tag)))
             .build()
@@ -148,7 +162,10 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    protected fun succeeded(keys: Array<String>, data: Datum): MessageList {
+    protected fun succeeded(
+        keys: Array<String>,
+        data: Datum,
+    ): MessageList {
         return succeeded(keys, data.value)
     }
 
@@ -159,7 +176,10 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    protected fun succeeded(keys: Array<String>, data: ByteArray): MessageList {
+    protected fun succeeded(
+        keys: Array<String>,
+        data: ByteArray,
+    ): MessageList {
         logger.info { "Routing to: $SUCCESS" }
         return MessageList.newBuilder()
             .addMessage(Message(data, keys, arrayOf(SUCCESS)))

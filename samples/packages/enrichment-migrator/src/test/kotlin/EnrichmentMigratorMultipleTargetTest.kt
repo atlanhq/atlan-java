@@ -25,10 +25,11 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
     private val c2Type = AtlanConnectorType.STARBURST_GALAXY
     private val c3Type = AtlanConnectorType.STARBURST_GALAXY
 
-    private val files = listOf(
-        "asset-export.csv",
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            "asset-export.csv",
+            "debug.log",
+        )
 
     private fun createConnections() {
         val batch = AssetBatch(Atlan.getDefaultClient(), 5)
@@ -56,9 +57,10 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         batch.add(sch2)
         val sch3 = Schema.creator("sch1", db3).build()
         batch.add(sch3)
-        val tbl1 = Table.creator("tbl1", sch1)
-            .description("Some description.")
-            .build()
+        val tbl1 =
+            Table.creator("tbl1", sch1)
+                .description("Some description.")
+                .build()
         batch.add(tbl1)
         val tbl2 = Table.creator("tbl1", sch2).build()
         batch.add(tbl2)
@@ -74,10 +76,11 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         setup(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(
-                    Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!,
-                    Connection.findByName(c3, c3Type)?.get(0)?.qualifiedName!!,
-                ),
+                targetConnection =
+                    listOf(
+                        Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!,
+                        Connection.findByName(c3, c3Type)?.get(0)?.qualifiedName!!,
+                    ),
                 failOnErrors = false,
                 limitType = "INCLUDE",
                 attributesList = listOf("description"),

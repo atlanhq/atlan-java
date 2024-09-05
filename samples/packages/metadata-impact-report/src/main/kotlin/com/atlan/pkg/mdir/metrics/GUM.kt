@@ -14,15 +14,15 @@ class GUM(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "GUM - Glossaries Under Management",
-    "GUM",
-    "**Total active glossaries in Atlan.** This is useful to:\n" +
-        "- Monitor how concepts are broadly organized in Atlan",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "GUM - Glossaries Under Management",
+        "GUM",
+        "**Total active glossaries in Atlan.** This is useful to:\n" +
+            "- Monitor how concepts are broadly organized in Atlan",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return Glossary.select(client)

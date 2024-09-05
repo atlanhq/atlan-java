@@ -38,16 +38,15 @@ class ProductImporter(
     private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : CSVImporter(
-    filename = filename,
-    attrsToOverwrite = attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    typeNameFilter = DataProduct.TYPE_NAME,
-    logger = KotlinLogging.logger {},
-    failOnErrors = failOnErrors,
-    fieldSeparator = fieldSeparator,
-) {
-
+        filename = filename,
+        attrsToOverwrite = attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        typeNameFilter = DataProduct.TYPE_NAME,
+        logger = KotlinLogging.logger {},
+        failOnErrors = failOnErrors,
+        fieldSeparator = fieldSeparator,
+    ) {
     private val cache = DataProductCache
 
     /** {@inheritDoc} */
@@ -89,7 +88,10 @@ class ProductImporter(
      * @param dataDomain domain in which this data product should be contained
      * @return the qualifiedName, calculated from the deserialized values
      */
-    private fun generateQualifiedName(deserializer: RowDeserializer, dataDomain: DataDomain?): String {
+    private fun generateQualifiedName(
+        deserializer: RowDeserializer,
+        dataDomain: DataDomain?,
+    ): String {
         val cacheId = getCacheId(deserializer, dataDomain)
         return cache.getByIdentity(cacheId)?.qualifiedName ?: cacheId
     }
@@ -101,7 +103,10 @@ class ProductImporter(
      * @param dataDomain domain in which this data product should be contained
      * @return the cache identity for the row
      */
-    private fun getCacheId(deserializer: RowDeserializer, dataDomain: DataDomain?): String {
+    private fun getCacheId(
+        deserializer: RowDeserializer,
+        dataDomain: DataDomain?,
+    ): String {
         val productName = deserializer.getValue(DataProduct.NAME.atlanFieldName)
         return if (dataDomain != null) {
             "${productName}$DATA_PRODUCT_DELIMITER${DataDomainXformer.encode(dataDomain)}"

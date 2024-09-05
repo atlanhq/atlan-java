@@ -51,11 +51,12 @@ class ImportGlossariesTest : PackageTest() {
     private val testFile = "input.csv"
     private val revisedFile = "with_desc.csv"
 
-    private val files = listOf(
-        testFile,
-        revisedFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            revisedFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for glossaries and tags
@@ -63,11 +64,12 @@ class ImportGlossariesTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{GLOSSARY1}}", glossary1)
-                    .replace("{{GLOSSARY2}}", glossary2)
-                    .replace("{{TAG1}}", tag1)
-                    .replace("{{TAG2}}", tag2)
+                val revised =
+                    line
+                        .replace("{{GLOSSARY1}}", glossary1)
+                        .replace("{{GLOSSARY2}}", glossary2)
+                        .replace("{{TAG1}}", tag1)
+                        .replace("{{TAG2}}", tag2)
                 output.appendText("$revised\n")
             }
         }
@@ -76,11 +78,12 @@ class ImportGlossariesTest : PackageTest() {
     private fun modifyFile() {
         val input = Paths.get(testDirectory, testFile)
         val output = Paths.get(testDirectory, revisedFile)
-        val builder = CsvReader.builder()
-            .fieldSeparator(',')
-            .quoteCharacter('"')
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
+        val builder =
+            CsvReader.builder()
+                .fieldSeparator(',')
+                .quoteCharacter('"')
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
         val reader = builder.ofCsvRecord(input)
         val header: List<String> = CSVXformer.getHeader(input.toString(), ',')
         val tagsIdx = header.indexOf("atlanTags")
@@ -116,48 +119,51 @@ class ImportGlossariesTest : PackageTest() {
         )
     }
 
-    private val glossaryAttrs: List<AtlanField> = listOf(
-        Glossary.NAME,
-        Glossary.USER_DESCRIPTION,
-        Glossary.OWNER_USERS,
-        Glossary.OWNER_GROUPS,
-        Glossary.CERTIFICATE_STATUS,
-        Glossary.CERTIFICATE_STATUS_MESSAGE,
-    )
+    private val glossaryAttrs: List<AtlanField> =
+        listOf(
+            Glossary.NAME,
+            Glossary.USER_DESCRIPTION,
+            Glossary.OWNER_USERS,
+            Glossary.OWNER_GROUPS,
+            Glossary.CERTIFICATE_STATUS,
+            Glossary.CERTIFICATE_STATUS_MESSAGE,
+        )
 
-    private val categoryAttrs: List<AtlanField> = listOf(
-        GlossaryCategory.NAME,
-        GlossaryCategory.ANCHOR,
-        GlossaryCategory.PARENT_CATEGORY,
-        GlossaryCategory.USER_DESCRIPTION,
-        GlossaryCategory.OWNER_USERS,
-        GlossaryCategory.OWNER_GROUPS,
-    )
+    private val categoryAttrs: List<AtlanField> =
+        listOf(
+            GlossaryCategory.NAME,
+            GlossaryCategory.ANCHOR,
+            GlossaryCategory.PARENT_CATEGORY,
+            GlossaryCategory.USER_DESCRIPTION,
+            GlossaryCategory.OWNER_USERS,
+            GlossaryCategory.OWNER_GROUPS,
+        )
 
-    private val termAttrs: List<AtlanField> = listOf(
-        GlossaryTerm.NAME,
-        GlossaryTerm.ANCHOR,
-        GlossaryTerm.CATEGORIES,
-        GlossaryTerm.DESCRIPTION,
-        GlossaryTerm.USER_DESCRIPTION,
-        GlossaryTerm.OWNER_USERS,
-        GlossaryTerm.OWNER_GROUPS,
-        GlossaryTerm.CERTIFICATE_STATUS,
-        GlossaryTerm.CERTIFICATE_STATUS_MESSAGE,
-        GlossaryTerm.ANNOUNCEMENT_TYPE,
-        GlossaryTerm.ANNOUNCEMENT_TITLE,
-        GlossaryTerm.ANNOUNCEMENT_MESSAGE,
-        GlossaryTerm.ATLAN_TAGS,
-        GlossaryTerm.LINKS,
-        GlossaryTerm.README,
-        GlossaryTerm.SEE_ALSO,
-        GlossaryTerm.PREFERRED_TERMS,
-        GlossaryTerm.SYNONYMS,
-        GlossaryTerm.ANTONYMS,
-        GlossaryTerm.TRANSLATED_TERMS,
-        GlossaryTerm.VALID_VALUES_FOR,
-        GlossaryTerm.CLASSIFIES,
-    )
+    private val termAttrs: List<AtlanField> =
+        listOf(
+            GlossaryTerm.NAME,
+            GlossaryTerm.ANCHOR,
+            GlossaryTerm.CATEGORIES,
+            GlossaryTerm.DESCRIPTION,
+            GlossaryTerm.USER_DESCRIPTION,
+            GlossaryTerm.OWNER_USERS,
+            GlossaryTerm.OWNER_GROUPS,
+            GlossaryTerm.CERTIFICATE_STATUS,
+            GlossaryTerm.CERTIFICATE_STATUS_MESSAGE,
+            GlossaryTerm.ANNOUNCEMENT_TYPE,
+            GlossaryTerm.ANNOUNCEMENT_TITLE,
+            GlossaryTerm.ANNOUNCEMENT_MESSAGE,
+            GlossaryTerm.ATLAN_TAGS,
+            GlossaryTerm.LINKS,
+            GlossaryTerm.README,
+            GlossaryTerm.SEE_ALSO,
+            GlossaryTerm.PREFERRED_TERMS,
+            GlossaryTerm.SYNONYMS,
+            GlossaryTerm.ANTONYMS,
+            GlossaryTerm.TRANSLATED_TERMS,
+            GlossaryTerm.VALID_VALUES_FOR,
+            GlossaryTerm.CLASSIFIES,
+        )
 
     override fun setup() {
         prepFile()
@@ -205,11 +211,12 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
-        val request = GlossaryCategory.select()
-            .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
-            .includesOnResults(categoryAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .toRequest()
+        val request =
+            GlossaryCategory.select()
+                .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
+                .includesOnResults(categoryAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 4)
         val g1categories = response.assets
         assertEquals(4, g1categories.size)
@@ -244,11 +251,12 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.create"])
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
-        val request = GlossaryCategory.select()
-            .where(GlossaryCategory.ANCHOR.eq(g2.qualifiedName))
-            .includesOnResults(categoryAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .toRequest()
+        val request =
+            GlossaryCategory.select()
+                .where(GlossaryCategory.ANCHOR.eq(g2.qualifiedName))
+                .includesOnResults(categoryAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 3)
         val g2categories = response.assets
         assertEquals(3, g2categories.size)
@@ -278,13 +286,14 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
-        val request = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
-            .includesOnResults(termAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .includeOnRelations(Link.LINK)
-            .toRequest()
+        val request =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+                .includesOnResults(termAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .includeOnRelations(Link.LINK)
+                .toRequest()
         val response = retrySearchUntil(request, 4)
         val g1terms = response.assets
         assertEquals(4, g1terms.size)
@@ -303,13 +312,14 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.create"])
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
-        val request = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(g2.qualifiedName))
-            .includesOnResults(termAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .includeOnRelations(Link.LINK)
-            .toRequest()
+        val request =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(g2.qualifiedName))
+                .includesOnResults(termAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .includeOnRelations(Link.LINK)
+                .toRequest()
         val response = retrySearchUntil(request, 3)
         val g2terms = response.assets
         assertEquals(3, g2terms.size)
@@ -413,13 +423,14 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
     fun tagsUnchanged() {
         val g1 = Glossary.findByName(glossary1)!!
-        val request = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
-            .includesOnResults(termAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .includeOnRelations(Link.LINK)
-            .toRequest()
+        val request =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+                .includesOnResults(termAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .includeOnRelations(Link.LINK)
+                .toRequest()
         val response = retrySearchUntil(request, 4)
         val g1terms = response.assets
         assertEquals(4, g1terms.size)
@@ -438,14 +449,15 @@ class ImportGlossariesTest : PackageTest() {
     @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
     fun descriptionsAdded() {
         val g1 = Glossary.findByName(glossary1)!!
-        val request = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
-            .where(GlossaryTerm.DESCRIPTION.hasAnyValue())
-            .includesOnResults(termAttrs)
-            .includeOnRelations(Glossary.NAME)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .includeOnRelations(Link.LINK)
-            .toRequest()
+        val request =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
+                .where(GlossaryTerm.DESCRIPTION.hasAnyValue())
+                .includesOnResults(termAttrs)
+                .includeOnRelations(Glossary.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .includeOnRelations(Link.LINK)
+                .toRequest()
         val response = retrySearchUntil(request, 4)
         val g1terms = response.assets
         assertEquals(4, g1terms.size)

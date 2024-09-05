@@ -26,7 +26,11 @@ object GlossaryCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(guid: String?, currentAttempt: Int, maxRetries: Int): Asset? {
+    override fun lookupAssetByGuid(
+        guid: String?,
+        currentAttempt: Int,
+        maxRetries: Int,
+    ): Asset? {
         try {
             val glossary =
                 Glossary.select()

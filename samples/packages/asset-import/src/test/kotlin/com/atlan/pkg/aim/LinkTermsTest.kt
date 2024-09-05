@@ -42,10 +42,11 @@ class LinkTermsTest : PackageTest() {
     private val testFile = "input.csv"
     private val revisedFile = "case_insensitive.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile(connectionQN: String) {
         // Prepare a copy of the file with unique names for connection and glossary
@@ -53,11 +54,12 @@ class LinkTermsTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{GLOSSARY}", glossaryName)
-                    .replace("{CONNECTION}", connectionQN)
-                    .replace("{TAG1}", tag1)
-                    .replace("{TAG2}", tag2)
+                val revised =
+                    line
+                        .replace("{GLOSSARY}", glossaryName)
+                        .replace("{CONNECTION}", connectionQN)
+                        .replace("{TAG1}", tag1)
+                        .replace("{TAG2}", tag2)
                 output.appendText("$revised\n")
             }
         }
@@ -81,9 +83,10 @@ class LinkTermsTest : PackageTest() {
         input.useLines { lines ->
             lines.forEach { line ->
                 if (line.contains("/schema/test_table2")) {
-                    val revised = line
-                        .replace("/schema/test_table2", "/SCHEMA/Test_Table2")
-                        .replace("View,", "Table,Now with description")
+                    val revised =
+                        line
+                            .replace("/schema/test_table2", "/SCHEMA/Test_Table2")
+                            .replace("View,", "Table,Now with description")
                     output.appendText("$revised\n")
                 } else {
                     output.appendText("$line\n")
@@ -141,14 +144,15 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.create"])
     fun tableCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Table.NAME)
-            .includeOnResults(Table.SOURCE_READ_COUNT)
-            .includeOnResults(Table.SOURCE_READ_USER_COUNT)
-            .includeOnResults(Table.ATLAN_TAGS)
-            .includeOnResults(Table.LAST_ROW_CHANGED_AT)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Table.NAME)
+                .includeOnResults(Table.SOURCE_READ_COUNT)
+                .includeOnResults(Table.SOURCE_READ_USER_COUNT)
+                .includeOnResults(Table.ATLAN_TAGS)
+                .includeOnResults(Table.LAST_ROW_CHANGED_AT)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val tables = response.assets
         assertEquals(1, tables.size)
@@ -162,13 +166,14 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.create"])
     fun viewCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.SOURCE_READ_COUNT)
-            .includeOnResults(View.SOURCE_READ_USER_COUNT)
-            .includeOnResults(View.ATLAN_TAGS)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.SOURCE_READ_COUNT)
+                .includeOnResults(View.SOURCE_READ_USER_COUNT)
+                .includeOnResults(View.ATLAN_TAGS)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val views = response.assets
         assertEquals(1, views.size)
@@ -183,11 +188,12 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.create"])
     fun columnCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Column.select()
-            .where(Column.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Column.NAME)
-            .includeOnResults(Column.ATLAN_TAGS)
-            .toRequest()
+        val request =
+            Column.select()
+                .where(Column.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Column.NAME)
+                .includeOnResults(Column.ATLAN_TAGS)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val columns = response.assets
         assertEquals(1, columns.size)
@@ -198,13 +204,14 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.create"])
     fun termAssigned() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Atlan.getDefaultClient().assets.select()
-            .where(FluentSearch.assetTypes(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
-            .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.ASSIGNED_TERMS)
-            .includeOnRelations(GlossaryTerm.NAME)
-            .toRequest()
+        val request =
+            Atlan.getDefaultClient().assets.select()
+                .where(FluentSearch.assetTypes(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
+                .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.ASSIGNED_TERMS)
+                .includeOnRelations(GlossaryTerm.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 2)
         val tables = response.assets
         assertEquals(2, tables.size)
@@ -236,14 +243,15 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedTable() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = Table.select()
-            .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(Table.NAME)
-            .includeOnResults(Table.ASSIGNED_TERMS)
-            .includeOnResults(Table.DESCRIPTION)
-            .includeOnResults(Table.LAST_ROW_CHANGED_AT)
-            .includeOnRelations(GlossaryTerm.NAME)
-            .toRequest()
+        val request =
+            Table.select()
+                .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(Table.NAME)
+                .includeOnResults(Table.ASSIGNED_TERMS)
+                .includeOnResults(Table.DESCRIPTION)
+                .includeOnResults(Table.LAST_ROW_CHANGED_AT)
+                .includeOnRelations(GlossaryTerm.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val tables = response.assets
         assertEquals(1, tables.size)
@@ -257,13 +265,14 @@ class LinkTermsTest : PackageTest() {
     @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedView() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
-        val request = View.select()
-            .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
-            .includeOnResults(View.NAME)
-            .includeOnResults(View.ASSIGNED_TERMS)
-            .includeOnResults(View.DESCRIPTION)
-            .includeOnRelations(GlossaryTerm.NAME)
-            .toRequest()
+        val request =
+            View.select()
+                .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
+                .includeOnResults(View.NAME)
+                .includeOnResults(View.ASSIGNED_TERMS)
+                .includeOnResults(View.DESCRIPTION)
+                .includeOnRelations(GlossaryTerm.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val views = response.assets
         assertEquals(1, views.size)

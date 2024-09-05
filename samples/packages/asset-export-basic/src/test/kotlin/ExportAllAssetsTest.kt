@@ -12,11 +12,12 @@ import kotlin.test.Test
 class ExportAllAssetsTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
-    private val files = listOf(
-        "asset-export.csv",
-        "debug.log",
-        "glossary-export.csv",
-    )
+    private val files =
+        listOf(
+            "asset-export.csv",
+            "debug.log",
+            "glossary-export.csv",
+        )
 
     override fun setup() {
         setup(

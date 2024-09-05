@@ -10,7 +10,6 @@ import com.atlan.pkg.cache.ConnectionCache
  * Static object to transform connection references.
  */
 object ConnectionXformer {
-
     const val CONNECTION_DELIMITER = "@@@"
 
     /**
@@ -40,7 +39,10 @@ object ConnectionXformer {
      * @param type of the connector for the connection (string value)
      * @return the string-encoded form for that asset
      */
-    fun encode(name: String, type: String): String {
+    fun encode(
+        name: String,
+        type: String,
+    ): String {
         return "$name$CONNECTION_DELIMITER$type"
     }
 

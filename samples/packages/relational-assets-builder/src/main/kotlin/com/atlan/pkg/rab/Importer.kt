@@ -41,7 +41,10 @@ object Importer {
         import(config, outputDirectory)
     }
 
-    fun import(config: RelationalAssetsBuilderCfg, outputDirectory: String = "tmp") {
+    fun import(
+        config: RelationalAssetsBuilderCfg,
+        outputDirectory: String = "tmp",
+    ) {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
@@ -53,10 +56,11 @@ object Importer {
         val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
 
-        val assetsFileProvided = (
-            assetsUpload && assetsFilename.isNotBlank()
+        val assetsFileProvided =
+            (
+                assetsUpload && assetsFilename.isNotBlank()
             ) || (
-            !assetsUpload && assetsKey.isNotBlank()
+                !assetsUpload && assetsKey.isNotBlank()
             )
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
@@ -65,13 +69,14 @@ object Importer {
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
-        val assetsInput = Utils.getInputFile(
-            assetsFilename,
-            outputDirectory,
-            assetsUpload,
-            Utils.getOrDefault(config.assetsPrefix, ""),
-            assetsKey,
-        )
+        val assetsInput =
+            Utils.getInputFile(
+                assetsFilename,
+                outputDirectory,
+                assetsUpload,
+                Utils.getOrDefault(config.assetsPrefix, ""),
+                assetsKey,
+            )
         val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
 
         // Only cache links and terms if there are any in the CSV, otherwise this
@@ -92,105 +97,117 @@ object Importer {
         // Note: we force-track the batches here to ensure any created connections are cached
         // (without tracking, any connections created will NOT be cached, either, which will then cause issues
         // with the subsequent processing steps.)
-        val connectionImporter = ConnectionImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            1,
-            true,
-            fieldSeparator,
-        )
+        val connectionImporter =
+            ConnectionImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                1,
+                true,
+                fieldSeparator,
+            )
         connectionImporter.import()
 
         logger.info { " --- Importing databases... ---" }
-        val databaseImporter = DatabaseImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val databaseImporter =
+            DatabaseImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         databaseImporter.import()
 
         logger.info { " --- Importing schemas... ---" }
-        val schemaImporter = SchemaImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val schemaImporter =
+            SchemaImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         schemaImporter.import()
 
         logger.info { " --- Importing tables... ---" }
-        val tableImporter = TableImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val tableImporter =
+            TableImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         tableImporter.import()
 
         logger.info { " --- Importing views... ---" }
-        val viewImporter = ViewImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val viewImporter =
+            ViewImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         viewImporter.import()
 
         logger.info { " --- Importing materialized views... ---" }
-        val materializedViewImporter = MaterializedViewImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val materializedViewImporter =
+            MaterializedViewImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         materializedViewImporter.import()
 
         logger.info { " --- Importing columns... ---" }
-        val columnImporter = ColumnImporter(
-            preprocessedDetails,
-            assetAttrsToOverwrite,
-            assetsSemantic,
-            batchSize,
-            connectionImporter,
-            trackBatches,
-            fieldSeparator,
-        )
+        val columnImporter =
+            ColumnImporter(
+                preprocessedDetails,
+                assetAttrsToOverwrite,
+                assetsSemantic,
+                batchSize,
+                connectionImporter,
+                trackBatches,
+                fieldSeparator,
+            )
         columnImporter.import()
     }
 
-    private fun preprocessCSV(originalFile: String, fieldSeparator: Char): PreprocessedCsv {
+    private fun preprocessCSV(
+        originalFile: String,
+        fieldSeparator: Char,
+    ): PreprocessedCsv {
         // Setup
         val quoteCharacter = '"'
         val inputFile = Paths.get(originalFile)
         val revisedFile = Paths.get("$originalFile.CSA_RAB.csv")
 
         // Open the CSV reader and writer
-        val reader = CsvReader.builder()
-            .fieldSeparator(fieldSeparator)
-            .quoteCharacter(quoteCharacter)
-            .skipEmptyLines(true)
-            .ignoreDifferentFieldCount(false)
-        val writer = CsvWriter.builder()
-            .fieldSeparator(fieldSeparator)
-            .quoteCharacter(quoteCharacter)
-            .build(revisedFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)
+        val reader =
+            CsvReader.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter(quoteCharacter)
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
+        val writer =
+            CsvWriter.builder()
+                .fieldSeparator(fieldSeparator)
+                .quoteCharacter(quoteCharacter)
+                .build(revisedFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)
 
         // Start processing...
         reader.ofCsvRecord(inputFile).use { tmp ->

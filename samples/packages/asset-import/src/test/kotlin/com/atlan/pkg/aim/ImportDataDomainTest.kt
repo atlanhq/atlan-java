@@ -30,10 +30,11 @@ class ImportDataDomainTest : PackageTest() {
     private lateinit var d3: DataDomain
     private val testFile = "input.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for domains and products
@@ -41,46 +42,49 @@ class ImportDataDomainTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{DATADOMAIN1}}", dataDomain1)
-                    .replace("{{DATADOMAIN2}}", dataDomain2)
-                    .replace("{{DATADOMAIN3}}", dataDomain3)
-                    .replace("{{DATAPRODUCT1}}", dataProduct1)
+                val revised =
+                    line
+                        .replace("{{DATADOMAIN1}}", dataDomain1)
+                        .replace("{{DATADOMAIN2}}", dataDomain2)
+                        .replace("{{DATADOMAIN3}}", dataDomain3)
+                        .replace("{{DATAPRODUCT1}}", dataProduct1)
                 output.appendText("$revised\n")
             }
         }
     }
 
-    private val dataDomainAttrs: List<AtlanField> = listOf(
-        DataDomain.NAME,
-        DataDomain.ASSET_ICON,
-        DataDomain.ASSET_THEME_HEX,
-        DataDomain.ASSET_COVER_IMAGE,
-        DataDomain.USER_DESCRIPTION,
-        DataDomain.OWNER_USERS,
-        DataDomain.OWNER_GROUPS,
-        DataDomain.CERTIFICATE_STATUS,
-        DataDomain.CERTIFICATE_STATUS_MESSAGE,
-        DataDomain.PARENT_DOMAIN,
-        DataDomain.PARENT_DOMAIN_QUALIFIED_NAME,
-        DataDomain.SUPER_DOMAIN_QUALIFIED_NAME,
-        DataDomain.ANNOUNCEMENT_TYPE,
-        DataDomain.ANNOUNCEMENT_TITLE,
-        DataDomain.ANNOUNCEMENT_MESSAGE,
-        DataDomain.README,
-    )
+    private val dataDomainAttrs: List<AtlanField> =
+        listOf(
+            DataDomain.NAME,
+            DataDomain.ASSET_ICON,
+            DataDomain.ASSET_THEME_HEX,
+            DataDomain.ASSET_COVER_IMAGE,
+            DataDomain.USER_DESCRIPTION,
+            DataDomain.OWNER_USERS,
+            DataDomain.OWNER_GROUPS,
+            DataDomain.CERTIFICATE_STATUS,
+            DataDomain.CERTIFICATE_STATUS_MESSAGE,
+            DataDomain.PARENT_DOMAIN,
+            DataDomain.PARENT_DOMAIN_QUALIFIED_NAME,
+            DataDomain.SUPER_DOMAIN_QUALIFIED_NAME,
+            DataDomain.ANNOUNCEMENT_TYPE,
+            DataDomain.ANNOUNCEMENT_TITLE,
+            DataDomain.ANNOUNCEMENT_MESSAGE,
+            DataDomain.README,
+        )
 
-    private val dataProductAttrs: List<AtlanField> = listOf(
-        DataProduct.NAME,
-        DataProduct.ASSET_COVER_IMAGE,
-        DataProduct.USER_DESCRIPTION,
-        DataProduct.OWNER_USERS,
-        DataProduct.OWNER_GROUPS,
-        DataProduct.CERTIFICATE_STATUS,
-        DataProduct.CERTIFICATE_STATUS_MESSAGE,
-        DataProduct.DATA_DOMAIN,
-        DataProduct.README,
-    )
+    private val dataProductAttrs: List<AtlanField> =
+        listOf(
+            DataProduct.NAME,
+            DataProduct.ASSET_COVER_IMAGE,
+            DataProduct.USER_DESCRIPTION,
+            DataProduct.OWNER_USERS,
+            DataProduct.OWNER_GROUPS,
+            DataProduct.CERTIFICATE_STATUS,
+            DataProduct.CERTIFICATE_STATUS_MESSAGE,
+            DataProduct.DATA_DOMAIN,
+            DataProduct.README,
+        )
 
     override fun setup() {
         prepFile()
@@ -165,11 +169,12 @@ class ImportDataDomainTest : PackageTest() {
     }
 
     private fun findDataDomain(domainName: String): DataDomain {
-        val request = DataDomain.select()
-            .where(DataDomain.NAME.eq(domainName))
-            .includesOnResults(dataDomainAttrs)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            DataDomain.select()
+                .where(DataDomain.NAME.eq(domainName))
+                .includesOnResults(dataDomainAttrs)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         val dataDomains = response.stream().filter { a: Asset? -> a is DataDomain }.toList()
         assertEquals(1, dataDomains.size)
@@ -177,11 +182,12 @@ class ImportDataDomainTest : PackageTest() {
     }
 
     private fun findDataProductWithRetry(productName: String): DataProduct {
-        val request = DataProduct.select()
-            .where(DataProduct.NAME.eq(productName))
-            .includesOnResults(dataProductAttrs)
-            .includeOnRelations(Readme.DESCRIPTION)
-            .toRequest()
+        val request =
+            DataProduct.select()
+                .where(DataProduct.NAME.eq(productName))
+                .includesOnResults(dataProductAttrs)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 1)
         return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
     }

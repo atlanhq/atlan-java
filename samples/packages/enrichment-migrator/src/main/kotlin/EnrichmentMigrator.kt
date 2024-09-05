@@ -31,19 +31,21 @@ object EnrichmentMigrator {
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val targetDatabasePattern = Utils.getOrDefault(config.targetDatabasePattern, "")
         val sourceDatabaseName = getSourceDatabaseNames(targetDatabasePattern, sourceConnectionQN, sourcePrefix)
-        val sourceQN = if (sourcePrefix.isBlank()) {
-            sourceConnectionQN
-        } else {
-            "$sourceConnectionQN/$sourcePrefix"
-        }
+        val sourceQN =
+            if (sourcePrefix.isBlank()) {
+                sourceConnectionQN
+            } else {
+                "$sourceConnectionQN/$sourcePrefix"
+            }
 
         // 1. Extract the enriched metadata
-        val extractConfig = AssetExportBasicCfg(
-            exportScope = "ENRICHED_ONLY",
-            qnPrefix = sourceQN,
-            includeGlossaries = false,
-            includeArchived = includeArchived,
-        )
+        val extractConfig =
+            AssetExportBasicCfg(
+                exportScope = "ENRICHED_ONLY",
+                qnPrefix = sourceQN,
+                includeGlossaries = false,
+                includeArchived = includeArchived,
+            )
         Exporter.export(extractConfig, outputDirectory)
         val extractFile = "$outputDirectory${File.separator}asset-export.csv"
 
@@ -73,72 +75,81 @@ object EnrichmentMigrator {
                 start.remove(it)
             }
         }
-        val header = if (includeCM) {
-            cmLimits.forEach {
-                start.add(it)
-            }
-            start.toList()
-        } else {
-            defaultAttrsToExtract.forEach {
-                if (it is CustomMetadataField) {
-                    val fieldName = RowSerde.getHeaderForField(it)
-                    start.add(fieldName)
+        val header =
+            if (includeCM) {
+                cmLimits.forEach {
+                    start.add(it)
                 }
+                start.toList()
+            } else {
+                defaultAttrsToExtract.forEach {
+                    if (it is CustomMetadataField) {
+                        val fieldName = RowSerde.getHeaderForField(it)
+                        start.add(fieldName)
+                    }
+                }
+                cmLimits.forEach {
+                    start.remove(it)
+                }
+                start.toList()
             }
-            cmLimits.forEach {
-                start.remove(it)
-            }
-            start.toList()
-        }
         val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
         targetConnectionQNs.forEach { targetConnectionQN ->
             val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
             targetDatabaseNames.forEach { targetDatabaseName ->
-                val ctx = MigratorContext(
-                    sourceConnectionQN = sourceConnectionQN,
-                    targetConnectionQN = targetConnectionQN,
-                    includeArchived = includeArchived,
-                    sourceDatabaseName = sourceDatabaseName,
-                    targetDatabaseName = targetDatabaseName,
-                )
-                val targetConnectionFilename = if (targetDatabaseName.isNotBlank()) {
-                    "${targetConnectionQN}_$targetDatabaseName".replace("/", "_")
-                } else {
-                    targetConnectionQN.replace("/", "_")
-                }
+                val ctx =
+                    MigratorContext(
+                        sourceConnectionQN = sourceConnectionQN,
+                        targetConnectionQN = targetConnectionQN,
+                        includeArchived = includeArchived,
+                        sourceDatabaseName = sourceDatabaseName,
+                        targetDatabaseName = targetDatabaseName,
+                    )
+                val targetConnectionFilename =
+                    if (targetDatabaseName.isNotBlank()) {
+                        "${targetConnectionQN}_$targetDatabaseName".replace("/", "_")
+                    } else {
+                        targetConnectionQN.replace("/", "_")
+                    }
                 val transformedFile =
                     "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
-                val transformer = Transformer(
-                    ctx,
-                    extractFile,
-                    header.toList(),
-                    logger,
-                    fieldSeparator,
-                )
+                val transformer =
+                    Transformer(
+                        ctx,
+                        extractFile,
+                        header.toList(),
+                        logger,
+                        fieldSeparator,
+                    )
                 transformer.transform(transformedFile)
 
                 // 3. Import the transformed file
-                val importConfig = AssetImportCfg(
-                    assetsFile = transformedFile,
-                    assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = assetsFailOnErrors,
-                    assetsBatchSize = batchSize,
-                    assetsFieldSeparator = fieldSeparator.toString(),
-                )
+                val importConfig =
+                    AssetImportCfg(
+                        assetsFile = transformedFile,
+                        assetsUpsertSemantic = "update",
+                        assetsFailOnErrors = assetsFailOnErrors,
+                        assetsBatchSize = batchSize,
+                        assetsFieldSeparator = fieldSeparator.toString(),
+                    )
                 Importer.import(importConfig, outputDirectory)
             }
         }
     }
 
     @JvmStatic
-    fun getDatabaseNames(connectionQN: String, sourcePrefix: String): List<String> {
-        val databaseNames = Database.select()
-            .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
-            .where(Asset.NAME.regex(sourcePrefix))
-            .sort(Asset.NAME.order(SortOrder.Asc))
-            .stream()
-            .map { it.name }
-            .toList()
+    fun getDatabaseNames(
+        connectionQN: String,
+        sourcePrefix: String,
+    ): List<String> {
+        val databaseNames =
+            Database.select()
+                .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
+                .where(Asset.NAME.regex(sourcePrefix))
+                .sort(Asset.NAME.order(SortOrder.Asc))
+                .stream()
+                .map { it.name }
+                .toList()
         return databaseNames
     }
 

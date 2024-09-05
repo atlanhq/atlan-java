@@ -14,15 +14,15 @@ class GTM(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "GTM - Glossary Terms Managed",
-    "GTM",
-    "**Total active terms across glossaries in Atlan.** This is useful to:\n" +
-        "- Monitor how extensively key data concepts are defined in Atlan",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "GTM - Glossary Terms Managed",
+        "GTM",
+        "**Total active terms across glossaries in Atlan.** This is useful to:\n" +
+            "- Monitor how extensively key data concepts are defined in Atlan",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return GlossaryTerm.select(client)

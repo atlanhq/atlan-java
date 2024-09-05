@@ -14,15 +14,15 @@ class UTQ(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "UTQ - Usage-Tracked Queries",
-    "UTQ",
-    "**Total active queries Atlan has mined as part of tracking usage metadata.** This is useful to:\n" +
-        "- Identity the relative footprint of queries for which you can monitor the usage-based metrics",
-    Reporter.CAT_HEADLINES,
-    client,
-    batchSize,
-    logger,
-) {
+        "UTQ - Usage-Tracked Queries",
+        "UTQ",
+        "**Total active queries Atlan has mined as part of tracking usage metadata.** This is useful to:\n" +
+            "- Identity the relative footprint of queries for which you can monitor the usage-based metrics",
+        Reporter.CAT_HEADLINES,
+        client,
+        batchSize,
+        logger,
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

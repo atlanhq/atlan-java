@@ -55,29 +55,36 @@ object DuplicateDetector {
      * @param types collection of asset types to include
      * @param batchSize: maximum number of assets to look for per API request (page of results)
      */
-    fun findAssets(qnPrefix: String, types: Collection<String>, batchSize: Int) {
-        val request = Atlan.getDefaultClient().assets.select()
-            .where(CompoundQuery.assetTypes(types))
-            .where(Asset.QUALIFIED_NAME.startsWith(qnPrefix))
-            .pageSize(batchSize)
-            .includeOnResults(Table.COLUMNS)
-            .includeOnRelations(Column.NAME)
+    fun findAssets(
+        qnPrefix: String,
+        types: Collection<String>,
+        batchSize: Int,
+    ) {
+        val request =
+            Atlan.getDefaultClient().assets.select()
+                .where(CompoundQuery.assetTypes(types))
+                .where(Asset.QUALIFIED_NAME.startsWith(qnPrefix))
+                .pageSize(batchSize)
+                .includeOnResults(Table.COLUMNS)
+                .includeOnRelations(Column.NAME)
         val totalAssetCount = request.count()
         val count = AtomicLong(0)
         logger.info { "Comparing a total of $totalAssetCount assets..." }
         request.stream(true)
             .forEach { asset ->
-                val columns = when (asset) {
-                    is Table -> asset.columns
-                    is View -> asset.columns
-                    is MaterializedView -> asset.columns
-                    else -> setOf()
-                }
-                val columnNames = columns.stream()
-                    .map(IColumn::getName)
-                    .map { normalize(it) }
-                    .toList()
-                    .toSet()
+                val columns =
+                    when (asset) {
+                        is Table -> asset.columns
+                        is View -> asset.columns
+                        is MaterializedView -> asset.columns
+                        else -> setOf()
+                    }
+                val columnNames =
+                    columns.stream()
+                        .map(IColumn::getName)
+                        .map { normalize(it) }
+                        .toList()
+                        .toSet()
                 val containerKey = AssetKey(asset.typeName, asset.qualifiedName, asset.guid)
                 if (uniqueContainers.put(containerKey, containerKey) == null) {
                     val hash = columnNames.hashCode()
@@ -101,10 +108,11 @@ object DuplicateDetector {
         return try {
             Glossary.findByName(glossaryName).qualifiedName
         } catch (e: NotFoundException) {
-            val glossary = Glossary.creator(glossaryName)
-                .assetIcon(AtlanIcon.COPY)
-                .userDescription("Each term represents a set of potential duplicate assets, based on assets that have the same set of columns (case-insensitive, in any order). The assets that are potential duplicates of each other are all linked to the same term.")
-                .build()
+            val glossary =
+                Glossary.creator(glossaryName)
+                    .assetIcon(AtlanIcon.COPY)
+                    .userDescription("Each term represents a set of potential duplicate assets, based on assets that have the same set of columns (case-insensitive, in any order). The assets that are potential duplicates of each other are all linked to the same term.")
+                    .build()
             logger.info { "Creating glossary to hold duplicates." }
             glossary.save().getResult(glossary).qualifiedName
         }
@@ -117,42 +125,51 @@ object DuplicateDetector {
      * @param glossaryQN qualifiedName of the glossary in which to manage the terms
      * @param batchSize maximum number of assets to update at a time
      */
-    fun termsForDuplicates(glossaryQN: String, batchSize: Int) {
+    fun termsForDuplicates(
+        glossaryQN: String,
+        batchSize: Int,
+    ) {
         val termCount = AtomicLong(0)
         val assetCount = AtomicLong(0)
-        val totalSets = hashToAssetKeys.keys
-            .stream()
-            .filter { hashToAssetKeys[it]?.size!! > 1 }
-            .count()
+        val totalSets =
+            hashToAssetKeys.keys
+                .stream()
+                .filter { hashToAssetKeys[it]?.size!! > 1 }
+                .count()
         logger.info { "Processing $totalSets total sets of duplicates..." }
         hashToAssetKeys.keys.forEach { hash ->
             val keys = hashToAssetKeys[hash]
             if (keys?.size!! > 1) {
                 val columns = hashToColumns[hash]
-                val batch = ParallelBatch(
-                    Atlan.getDefaultClient(),
-                    batchSize,
-                    false,
-                    AssetBatch.CustomMetadataHandling.MERGE,
-                    true,
-                )
+                val batch =
+                    ParallelBatch(
+                        Atlan.getDefaultClient(),
+                        batchSize,
+                        false,
+                        AssetBatch.CustomMetadataHandling.MERGE,
+                        true,
+                    )
                 val termName = "Dup. ($hash)"
-                val term = try {
-                    GlossaryTerm.findByNameFast(termName, glossaryQN)
-                } catch (e: NotFoundException) {
-                    val toCreate = GlossaryTerm.creator(termName, glossaryQN)
-                        .description(
-                            "Assets with the same set of ${columns?.size} columns:\n" + columns?.joinToString(
-                                separator = "\n",
-                            ) { "- $it" },
-                        )
-                        .certificateStatus(CertificateStatus.DRAFT)
-                        .build()
-                    toCreate.save().getResult(toCreate)
-                }
-                val guids = keys.stream()
-                    .map(AssetKey::guid)
-                    .toList()
+                val term =
+                    try {
+                        GlossaryTerm.findByNameFast(termName, glossaryQN)
+                    } catch (e: NotFoundException) {
+                        val toCreate =
+                            GlossaryTerm.creator(termName, glossaryQN)
+                                .description(
+                                    "Assets with the same set of ${columns?.size} columns:\n" +
+                                        columns?.joinToString(
+                                            separator = "\n",
+                                        ) { "- $it" },
+                                )
+                                .certificateStatus(CertificateStatus.DRAFT)
+                                .build()
+                        toCreate.save().getResult(toCreate)
+                    }
+                val guids =
+                    keys.stream()
+                        .map(AssetKey::guid)
+                        .toList()
                 Atlan.getDefaultClient().assets.select()
                     .where(Asset.GUID.`in`(guids))
                     .includeOnResults(Asset.ASSIGNED_TERMS)

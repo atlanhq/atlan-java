@@ -18,23 +18,24 @@ class LineageTransformer(
     private val logger: KLogger,
     private val fieldSeparator: Char,
 ) : CSVXformer(
-    inputFile,
-    lineageHeaders,
-    logger,
-    fieldSeparator,
-) {
+        inputFile,
+        lineageHeaders,
+        logger,
+        fieldSeparator,
+    ) {
     companion object {
         const val XFORM_PREFIX = "Transformation"
         const val XFORM_CONNECTOR = "$XFORM_PREFIX ${AssetTransformer.CONNECTOR}"
         const val XFORM_CONNECTION = "$XFORM_PREFIX ${AssetTransformer.CONNECTION}"
         const val XFORM_IDENTITY = "$XFORM_PREFIX ${AssetTransformer.IDENTITY}"
         const val XFORM_NAME = "$XFORM_PREFIX ${AssetTransformer.NAME}"
-        val INPUT_HEADERS = listOf(
-            XFORM_CONNECTOR,
-            XFORM_CONNECTION,
-            XFORM_IDENTITY,
-            XFORM_NAME,
-        )
+        val INPUT_HEADERS =
+            listOf(
+                XFORM_CONNECTOR,
+                XFORM_CONNECTION,
+                XFORM_IDENTITY,
+                XFORM_NAME,
+            )
     }
 
     /** {@inheritDoc} */
@@ -42,20 +43,22 @@ class LineageTransformer(
         val name = inputRow[XFORM_NAME] ?: ""
         val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, qnMap)
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
-        val source = if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
-            FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
-        } else {
-            logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$sourceQN" }
-            null
-        }
+        val source =
+            if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
+                FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
+            } else {
+                logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$sourceQN" }
+                null
+            }
         val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, qnMap)
         val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
-        val target = if (targetQN.isNotBlank() && targetType.isNotBlank()) {
-            FieldSerde.getRefByQualifiedName(targetType, targetQN)
-        } else {
-            logger.warn { "Unable to translate target into a valid asset reference: $targetType::$targetQN" }
-            null
-        }
+        val target =
+            if (targetQN.isNotBlank() && targetType.isNotBlank()) {
+                FieldSerde.getRefByQualifiedName(targetType, targetQN)
+            } else {
+                logger.warn { "Unable to translate target into a valid asset reference: $targetType::$targetQN" }
+                null
+            }
         if (source != null && target != null) {
             if (source !is ICatalog || target !is ICatalog) {
                 logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
@@ -64,23 +67,25 @@ class LineageTransformer(
                 val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
                 val connectionId = Loader.ConnectionId(xformConnector, xformConnection)
                 val connectionQN = ctx.connectionMap.getOrDefault(connectionId, "")
-                val qualifiedName = LineageProcess.generateQualifiedName(
-                    name,
-                    connectionQN,
-                    inputRow[XFORM_IDENTITY],
-                    listOf(source as ICatalog),
-                    listOf(target as ICatalog),
-                    null,
-                )
-                val row = mutableListOf(
-                    LineageProcess.TYPE_NAME,
-                    qualifiedName,
-                    name,
-                    connectionQN,
-                    xformConnector,
-                    AssetRefXformer.encode(source),
-                    AssetRefXformer.encode(target),
-                )
+                val qualifiedName =
+                    LineageProcess.generateQualifiedName(
+                        name,
+                        connectionQN,
+                        inputRow[XFORM_IDENTITY],
+                        listOf(source as ICatalog),
+                        listOf(target as ICatalog),
+                        null,
+                    )
+                val row =
+                    mutableListOf(
+                        LineageProcess.TYPE_NAME,
+                        qualifiedName,
+                        name,
+                        connectionQN,
+                        xformConnector,
+                        AssetRefXformer.encode(source),
+                        AssetRefXformer.encode(target),
+                    )
                 for (i in row.size until lineageHeaders.size) {
                     // Append other attributes onto the row
                     row.add(inputRow[lineageHeaders[i]] ?: "")

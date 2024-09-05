@@ -22,10 +22,11 @@ class SameNameCategoriesTest : PackageTest() {
 
     private val testFile = "same_name_categories.csv"
 
-    private val files = listOf(
-        testFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            testFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique name for glossary
@@ -33,8 +34,9 @@ class SameNameCategoriesTest : PackageTest() {
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{GLOSSARY}", glossaryName)
+                val revised =
+                    line
+                        .replace("{GLOSSARY}", glossaryName)
                 output.appendText("$revised\n")
             }
         }

@@ -12,7 +12,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class ModelUnitTest {
-
     @Test
     fun noIndexNonString() {
         val model = evaluateModel("NoIndexNonString")

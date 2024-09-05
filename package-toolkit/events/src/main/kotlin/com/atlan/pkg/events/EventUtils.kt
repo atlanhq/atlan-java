@@ -13,7 +13,6 @@ import mu.KotlinLogging
  * Utilities for working with event-processing pipelines.
  */
 object EventUtils {
-
     val logger = KotlinLogging.logger {}
 
     /**

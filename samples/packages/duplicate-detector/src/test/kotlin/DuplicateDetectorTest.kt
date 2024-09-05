@@ -20,9 +20,10 @@ class DuplicateDetectorTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val testId = makeUnique("dd")
-    private val files = listOf(
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+        )
     private val glossaryName = testId
 
     override fun setup() {
@@ -51,13 +52,14 @@ class DuplicateDetectorTest : PackageTest() {
     @Test
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
-        val terms = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
-            .includeOnResults(GlossaryTerm.DESCRIPTION)
-            .includeOnResults(GlossaryTerm.ASSIGNED_ENTITIES)
-            .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS)
-            .stream()
-            .toList()
+        val terms =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
+                .includeOnResults(GlossaryTerm.DESCRIPTION)
+                .includeOnResults(GlossaryTerm.ASSIGNED_ENTITIES)
+                .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS)
+                .stream()
+                .toList()
         assertTrue(terms.size > 0)
         terms.forEach { term ->
             term as GlossaryTerm

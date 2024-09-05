@@ -61,7 +61,8 @@ public interface INumericallySearchable {
      * @param <T> numeric values
      */
     static <T extends Number> Query gt(final String field, final T value) {
-        return RangeQuery.of(r -> r.field(field).gt(JsonData.of(value)))._toQuery();
+        return RangeQuery.of(r -> r.untyped(u -> u.field(field).gt(JsonData.of(value))))
+                ._toQuery();
     }
 
     /**
@@ -84,7 +85,8 @@ public interface INumericallySearchable {
      * @param <T> numeric values
      */
     static <T extends Number> Query gte(final String field, final T value) {
-        return RangeQuery.of(r -> r.field(field).gte(JsonData.of(value)))._toQuery();
+        return RangeQuery.of(r -> r.untyped(u -> u.field(field).gte(JsonData.of(value))))
+                ._toQuery();
     }
 
     /**
@@ -107,7 +109,8 @@ public interface INumericallySearchable {
      * @param <T> numeric values
      */
     static <T extends Number> Query lt(final String field, final T value) {
-        return RangeQuery.of(r -> r.field(field).lt(JsonData.of(value)))._toQuery();
+        return RangeQuery.of(r -> r.untyped(u -> u.field(field).lt(JsonData.of(value))))
+                ._toQuery();
     }
 
     /**
@@ -130,7 +133,8 @@ public interface INumericallySearchable {
      * @param <T> numeric values
      */
     static <T extends Number> Query lte(final String field, final T value) {
-        return RangeQuery.of(r -> r.field(field).lte(JsonData.of(value)))._toQuery();
+        return RangeQuery.of(r -> r.untyped(u -> u.field(field).lte(JsonData.of(value))))
+                ._toQuery();
     }
 
     /**
@@ -155,7 +159,8 @@ public interface INumericallySearchable {
      * @param <T> numeric values
      */
     static <T extends Number> Query between(final String field, final T min, final T max) {
-        return RangeQuery.of(r -> r.field(field).gte(JsonData.of(min)).lte(JsonData.of(max)))
+        return RangeQuery.of(
+                        r -> r.untyped(u -> u.field(field).gte(JsonData.of(min)).lte(JsonData.of(max))))
                 ._toQuery();
     }
 

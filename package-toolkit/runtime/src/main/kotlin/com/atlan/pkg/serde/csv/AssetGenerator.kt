@@ -20,7 +20,13 @@ interface AssetGenerator {
      * @param skipColumns columns to skip, i.e. that need to be handled in a later pass
      * @return the asset(s) built from the values on the row
      */
-    fun buildFromRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int, skipColumns: Set<String>): RowDeserialization?
+    fun buildFromRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+        skipColumns: Set<String>,
+    ): RowDeserialization?
 
     /**
      * Check whether to include this row as part of the processing (true) or not (false).
@@ -31,7 +37,12 @@ interface AssetGenerator {
      * @param qnIdx index of the qualifiedName
      * @return true if the row should be included in the import, or false if not
      */
-    fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean
+    fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean
 
     /**
      * Start a builder for the asset on this row.

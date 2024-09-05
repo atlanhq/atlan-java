@@ -18,17 +18,16 @@ class TLAxQ(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "TLAxQ - Table-Level Assets without Queries",
-    "TLAxQ",
-    "**Total active table-level assets in Atlan that do *not* have any queries.** This is useful to:\n" +
-        "- Identify tables that may be unused, and could be removed to save storage costs",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False positives could exist, when queries are missing due to: a source where usage is not tracked, a lack of freshly-mined usage data, or where the only queries have happened more than 30 days ago.",
-) {
-
+        "TLAxQ - Table-Level Assets without Queries",
+        "TLAxQ",
+        "**Total active table-level assets in Atlan that do *not* have any queries.** This is useful to:\n" +
+            "- Identify tables that may be unused, and could be removed to save storage costs",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False positives could exist, when queries are missing due to: a source where usage is not tracked, a lack of freshly-mined usage data, or where the only queries have happened more than 30 days ago.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()

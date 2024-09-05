@@ -561,7 +561,8 @@ public class QueryFactory {
          * @param <T> numeric values
          */
         public <T extends Number> Query gt(T value) {
-            return RangeQuery.of(r -> r.field(field.getIndexedFieldName()).gt(JsonData.of(value)))
+            return RangeQuery.of(r ->
+                            r.untyped(u -> u.field(field.getIndexedFieldName()).gt(JsonData.of(value))))
                     ._toQuery();
         }
 
@@ -574,7 +575,8 @@ public class QueryFactory {
          * @param <T> numeric values
          */
         public <T extends Number> Query gte(T value) {
-            return RangeQuery.of(r -> r.field(field.getIndexedFieldName()).gte(JsonData.of(value)))
+            return RangeQuery.of(r ->
+                            r.untyped(u -> u.field(field.getIndexedFieldName()).gte(JsonData.of(value))))
                     ._toQuery();
         }
 
@@ -587,7 +589,8 @@ public class QueryFactory {
          * @param <T> numeric values
          */
         public <T extends Number> Query lt(T value) {
-            return RangeQuery.of(r -> r.field(field.getIndexedFieldName()).lt(JsonData.of(value)))
+            return RangeQuery.of(r ->
+                            r.untyped(u -> u.field(field.getIndexedFieldName()).lt(JsonData.of(value))))
                     ._toQuery();
         }
 
@@ -600,7 +603,8 @@ public class QueryFactory {
          * @param <T> numeric values
          */
         public <T extends Number> Query lte(T value) {
-            return RangeQuery.of(r -> r.field(field.getIndexedFieldName()).lte(JsonData.of(value)))
+            return RangeQuery.of(r ->
+                            r.untyped(u -> u.field(field.getIndexedFieldName()).lte(JsonData.of(value))))
                     ._toQuery();
         }
 
@@ -614,9 +618,9 @@ public class QueryFactory {
          * @param <T> numeric values
          */
         public <T extends Number> Query between(T min, T max) {
-            return RangeQuery.of(r -> r.field(field.getIndexedFieldName())
+            return RangeQuery.of(r -> r.untyped(u -> u.field(field.getIndexedFieldName())
                             .gte(JsonData.of(min))
-                            .lte(JsonData.of(max)))
+                            .lte(JsonData.of(max))))
                     ._toQuery();
         }
 

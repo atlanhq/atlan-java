@@ -18,18 +18,17 @@ class TLAxL(
     batchSize: Int,
     logger: KLogger,
 ) : Metric(
-    "TLAxL - Table-Level Assets without Lineage",
-    "TLAxL",
-    "**Total active table-level assets in Atlan that do not have any lineage.** This is useful to:\n" +
-        "- Check whether you expect lineage for these tables, views and materialized views\n" +
-        "- If not, whether these tables, views or materialized views are actually used or could be removed to reduce storage and costs",
-    Reporter.CAT_SAVINGS,
-    client,
-    batchSize,
-    logger,
-    caveats = "False positives could exist, when lineage is missing due to: not all data sources being loaded, improper sequence of crawling data tools, or due to bugs or lack of lineage support for the data sources involved.",
-) {
-
+        "TLAxL - Table-Level Assets without Lineage",
+        "TLAxL",
+        "**Total active table-level assets in Atlan that do not have any lineage.** This is useful to:\n" +
+            "- Check whether you expect lineage for these tables, views and materialized views\n" +
+            "- If not, whether these tables, views or materialized views are actually used or could be removed to reduce storage and costs",
+        Reporter.CAT_SAVINGS,
+        client,
+        batchSize,
+        logger,
+        caveats = "False positives could exist, when lineage is missing due to: not all data sources being loaded, improper sequence of crawling data tools, or due to bugs or lack of lineage support for the data sources involved.",
+    ) {
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()
@@ -65,11 +64,12 @@ class TLAxL(
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {
         val sql = asset as ISQL
-        val size = when (sql) {
-            is Table -> (sql.sizeBytes ?: 0) / BYTES_IN_GB
-            is MaterializedView -> (sql.sizeBytes ?: 0) / BYTES_IN_GB
-            else -> 0.0
-        }
+        val size =
+            when (sql) {
+                is Table -> (sql.sizeBytes ?: 0) / BYTES_IN_GB
+                is MaterializedView -> (sql.sizeBytes ?: 0) / BYTES_IN_GB
+                else -> 0.0
+            }
         val cost = sql.sourceTotalCost ?: 0.0
         return listOf(
             sql.connectorType?.value ?: "",

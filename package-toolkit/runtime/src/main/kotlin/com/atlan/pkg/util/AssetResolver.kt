@@ -29,7 +29,11 @@ interface AssetResolver {
      * @param typeName for which to determine the qualifiedName
      * @return details about the qualifiedName(s) inherent in this row of data
      */
-    fun getQualifiedNameDetails(row: List<String>, header: List<String>, typeName: String): QualifiedNameDetails
+    fun getQualifiedNameDetails(
+        row: List<String>,
+        header: List<String>,
+        typeName: String,
+    ): QualifiedNameDetails
 
     data class QualifiedNameDetails(
         val uniqueQN: String,

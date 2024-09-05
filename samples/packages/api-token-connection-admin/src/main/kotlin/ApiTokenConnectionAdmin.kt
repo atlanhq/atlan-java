@@ -56,11 +56,12 @@ object ApiTokenConnectionAdmin {
      */
     fun getConnectionWithAdmins(connectionQN: String): Asset {
         logger.info { "Looking up connection details: $connectionQN" }
-        val found = Connection.select()
-            .where(Connection.QUALIFIED_NAME.eq(connectionQN))
-            .includeOnResults(Connection.ADMIN_USERS)
-            .stream()
-            .findFirst()
+        val found =
+            Connection.select()
+                .where(Connection.QUALIFIED_NAME.eq(connectionQN))
+                .includeOnResults(Connection.ADMIN_USERS)
+                .stream()
+                .findFirst()
         if (found.isEmpty) {
             logger.error { "Unable to find the specified connection: $connectionQN" }
             exitProcess(6)
@@ -75,15 +76,19 @@ object ApiTokenConnectionAdmin {
      * @param connection the connection to add the API token to, with its existing admin users present
      * @param apiToken the API token to append as a connection admin
      */
-    fun addTokenAsConnectionAdmin(connection: Asset, apiToken: String) {
+    fun addTokenAsConnectionAdmin(
+        connection: Asset,
+        apiToken: String,
+    ) {
         logger.info { "Adding API token $apiToken as connection admin for: ${connection.qualifiedName}" }
         val existingAdmins = connection.adminUsers
         try {
-            val response = connection.trimToRequired()
-                .adminUsers(existingAdmins)
-                .adminUser(apiToken)
-                .build()
-                .save()
+            val response =
+                connection.trimToRequired()
+                    .adminUsers(existingAdmins)
+                    .adminUser(apiToken)
+                    .build()
+                    .save()
             when (val result = response?.getMutation(connection)) {
                 AssetMutationResponse.MutationType.UPDATED -> logger.info { " ... successfully updated the connection with API token as a new admin." }
                 AssetMutationResponse.MutationType.NOOP -> logger.info { " ... API token is already an admin on the connection - no changes made." }

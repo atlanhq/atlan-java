@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
 import org.testng.annotations.Test
@@ -6,7 +8,6 @@ import kotlin.test.assertEquals
 private const val BUSINESS_DOMAIN = "business_domain"
 
 class TagToMetadataMapperTest {
-
     @Test
     fun whenTagKeyFoundGetSetAndAttributeNamesReturnsNames() {
         val tagToMetadataMapper = TagToMetadataMapper(mapOf(BUSINESS_DOMAIN to "Data Domain::Business Domain"))

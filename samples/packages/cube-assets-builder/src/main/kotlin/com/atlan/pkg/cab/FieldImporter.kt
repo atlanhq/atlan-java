@@ -38,15 +38,15 @@ class FieldImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
-    preprocessed.preprocessedFile,
-    attrsToOverwrite,
-    creationHandling,
-    batchSize,
-    CubeField.TYPE_NAME,
-    KotlinLogging.logger {},
-    trackBatches,
-    fieldSeparator,
-) {
+        preprocessed.preprocessedFile,
+        attrsToOverwrite,
+        creationHandling,
+        batchSize,
+        CubeField.TYPE_NAME,
+        KotlinLogging.logger {},
+        trackBatches,
+        fieldSeparator,
+    ) {
     private val leafNodeLevel = 1L
     private var generationToProcess = 0L
 
@@ -63,7 +63,12 @@ class FieldImporter(
     }
 
     /** {@inheritDoc} */
-    override fun preprocessRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): List<String> {
+    override fun preprocessRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): List<String> {
         if (row[typeIdx] == typeNameFilter) {
             // Only build up the details if this is in fact a field row
             val hierarchyPath = getHierarchyPath(row, header)
@@ -90,7 +95,10 @@ class FieldImporter(
      * @param path of the field from which to bubble up levels
      * @param hierarchyPath path of the hierarchy for the field
      */
-    private fun bubbleUpParentLevel(path: String, hierarchyPath: String) {
+    private fun bubbleUpParentLevel(
+        path: String,
+        hierarchyPath: String,
+    ) {
         if (path != hierarchyPath) { // Short-circuit once we reach hierarchy level (no need to bubble up further)
             val levelFromThisChild = maxLevelByPath[path]!!.get() + 1
             val parentPath = StringUtils.getParentQualifiedNameFromQualifiedName(path, Importer.QN_DELIMITER)
@@ -130,7 +138,12 @@ class FieldImporter(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
         val nameIdx = header.indexOf(FIELD_NAME)
         val parentIdx = header.indexOf(PARENT_FIELD_QN)
 
@@ -169,7 +182,10 @@ class FieldImporter(
      * @param header names of columns for the CSV
      * @return numeric generation of the (nested) field
      */
-    private fun getFieldGeneration(row: List<String>, header: List<String>): Long {
+    private fun getFieldGeneration(
+        row: List<String>,
+        header: List<String>,
+    ): Long {
         val parentIdx = header.indexOf(PARENT_FIELD_QN)
         return if (row[parentIdx].isBlank()) {
             1L
@@ -186,7 +202,10 @@ class FieldImporter(
      * @param header names of columns for the CSV
      * @return numeric level of the (nested) field
      */
-    private fun getFieldLevel(row: List<String>, header: List<String>): Long {
+    private fun getFieldLevel(
+        row: List<String>,
+        header: List<String>,
+    ): Long {
         val path = getFieldPath(getHierarchyPath(row, header), row, header)
         return maxLevelByPath[path]?.get() ?: leafNodeLevel
     }
@@ -199,7 +218,11 @@ class FieldImporter(
      * @param header names of columns for the CSV
      * @return unique path for the field on the row
      */
-    private fun getFieldPath(hierarchyPath: String, row: List<String>, header: List<String>): String {
+    private fun getFieldPath(
+        hierarchyPath: String,
+        row: List<String>,
+        header: List<String>,
+    ): String {
         val parentIdx = header.indexOf(PARENT_FIELD_QN)
         val nameIdx = header.indexOf(FIELD_NAME)
         val parentPath = row[parentIdx]
@@ -217,7 +240,10 @@ class FieldImporter(
      * @param header names of columns for the CSV
      * @return unique path for the hierarchy of the field on the row
      */
-    private fun getHierarchyPath(row: List<String>, header: List<String>): String {
+    private fun getHierarchyPath(
+        row: List<String>,
+        header: List<String>,
+    ): String {
         val cubeIdx = header.indexOf(CUBE_NAME)
         val dimIdx = header.indexOf(DIMENSION_NAME)
         val hierIdx = header.indexOf(HIERARCHY_NAME)

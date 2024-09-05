@@ -30,7 +30,10 @@ object Loader {
         import(config, outputDirectory)
     }
 
-    fun import(config: LineageBuilderCfg, outputDirectory: String = "tmp") {
+    fun import(
+        config: LineageBuilderCfg,
+        outputDirectory: String = "tmp",
+    ) {
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
         val lineageUpload = Utils.getOrDefault(config.lineageImportType, "DIRECT") == "DIRECT"
@@ -46,57 +49,62 @@ object Loader {
             exitProcess(1)
         }
 
-        val lineageInput = Utils.getInputFile(
-            lineageFilename,
-            outputDirectory,
-            lineageUpload,
-            Utils.getOrDefault(config.lineagePrefix, ""),
-            lineageKey,
-        )
+        val lineageInput =
+            Utils.getInputFile(
+                lineageFilename,
+                outputDirectory,
+                lineageUpload,
+                Utils.getOrDefault(config.lineagePrefix, ""),
+                lineageKey,
+            )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(lineageFailOnErrors)
             val connectionMap = preloadConnectionMap()
 
-            val ctx = Context(
-                connectionMap = connectionMap,
-                assetSemantic = lineageAssetSemantic,
-            )
+            val ctx =
+                Context(
+                    connectionMap = connectionMap,
+                    assetSemantic = lineageAssetSemantic,
+                )
 
             // 1. Transform the assets, so we can load the prior to creating any lineage relationships
             logger.info { "=== Processing assets... ===" }
             val assetsFile = "$outputDirectory${File.separator}CSA_LB_assets.csv"
-            val assetXform = AssetTransformer(
-                ctx,
-                lineageInput,
-                logger,
-                fieldSeparator,
-            )
+            val assetXform =
+                AssetTransformer(
+                    ctx,
+                    lineageInput,
+                    logger,
+                    fieldSeparator,
+                )
             assetXform.transform(assetsFile)
 
             // 2. Create the assets
-            val importConfig = AssetImportCfg(
-                assetsFile = assetsFile,
-                assetsUpsertSemantic = lineageAssetSemantic.value,
-                assetsFailOnErrors = lineageFailOnErrors,
-                assetsCaseSensitive = lineageCaseSensitive,
-                assetsBatchSize = batchSize,
-                assetsFieldSeparator = fieldSeparator.toString(),
-            )
+            val importConfig =
+                AssetImportCfg(
+                    assetsFile = assetsFile,
+                    assetsUpsertSemantic = lineageAssetSemantic.value,
+                    assetsFailOnErrors = lineageFailOnErrors,
+                    assetsCaseSensitive = lineageCaseSensitive,
+                    assetsBatchSize = batchSize,
+                    assetsFieldSeparator = fieldSeparator.toString(),
+                )
             val assetResults = Importer.import(importConfig, outputDirectory)
 
             val qualifiedNameMap = assetResults?.primary?.qualifiedNames ?: mapOf()
 
             // 3. Transform the lineage, only keeping any rows that have both input and output assets in Atlan
             logger.info { "=== Processing lineage... ===" }
-            val lineageHeaders = mutableListOf(
-                Asset.TYPE_NAME.atlanFieldName,
-                Asset.QUALIFIED_NAME.atlanFieldName,
-                Asset.NAME.atlanFieldName,
-                Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
-                "connectorType",
-                LineageProcess.INPUTS.atlanFieldName,
-                LineageProcess.OUTPUTS.atlanFieldName,
-            )
+            val lineageHeaders =
+                mutableListOf(
+                    Asset.TYPE_NAME.atlanFieldName,
+                    Asset.QUALIFIED_NAME.atlanFieldName,
+                    Asset.NAME.atlanFieldName,
+                    Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
+                    "connectorType",
+                    LineageProcess.INPUTS.atlanFieldName,
+                    LineageProcess.OUTPUTS.atlanFieldName,
+                )
             val lineageFile = "$outputDirectory${File.separator}CSA_LB_lineage.csv"
             // Determine any non-standard lineage fields in the header and append them to the end of
             // the list of standard header fields, so they're passed-through to be used as part of
@@ -105,25 +113,27 @@ object Loader {
             inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
             inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
             inputHeaders.forEach { lineageHeaders.add(it) }
-            val lineageXform = LineageTransformer(
-                ctx,
-                lineageInput,
-                lineageHeaders,
-                qualifiedNameMap,
-                logger,
-                fieldSeparator,
-            )
+            val lineageXform =
+                LineageTransformer(
+                    ctx,
+                    lineageInput,
+                    lineageHeaders,
+                    qualifiedNameMap,
+                    logger,
+                    fieldSeparator,
+                )
             lineageXform.transform(lineageFile)
 
-            // 4. Load the lineage processes
-            val lineageConfig = AssetImportCfg(
-                assetsFile = lineageFile,
-                assetsUpsertSemantic = "upsert", // Note that for these we want a full, not partial, create
-                assetsFailOnErrors = lineageFailOnErrors,
-                assetsCaseSensitive = lineageCaseSensitive,
-                assetsBatchSize = batchSize,
-                assetsFieldSeparator = fieldSeparator.toString(),
-            )
+            // 4. Load the lineage processes (note that for these we want a full, not partial, create)
+            val lineageConfig =
+                AssetImportCfg(
+                    assetsFile = lineageFile,
+                    assetsUpsertSemantic = "upsert",
+                    assetsFailOnErrors = lineageFailOnErrors,
+                    assetsCaseSensitive = lineageCaseSensitive,
+                    assetsBatchSize = batchSize,
+                    assetsFieldSeparator = fieldSeparator.toString(),
+                )
             Importer.import(lineageConfig, outputDirectory)
         }
     }
@@ -132,6 +142,7 @@ object Loader {
         val connectionMap: Map<ConnectionId, String>,
         val assetSemantic: AssetCreationHandling,
     )
+
     data class ConnectionId(
         val type: String,
         val name: String,

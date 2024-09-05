@@ -13,7 +13,6 @@ import java.io.File
  * Note: all configuration is received through environment variables.
  */
 object WriteConfig {
-
     @JvmStatic
     fun main(args: Array<String>) {
         EventUtils.setLogging()
@@ -28,7 +27,10 @@ object WriteConfig {
         File("/tmp", "runtime.json").writeText(runtimeConfig)
 
         logger.info {
-            "The ${Utils.getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", "")} pipeline will now begin running in the background at all times, using this configuration."
+            "The ${Utils.getEnvVar(
+                "X_ATLAN_AGENT_PACKAGE_NAME",
+                "",
+            )} pipeline will now begin running in the background at all times, using this configuration."
         }
     }
 }

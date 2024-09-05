@@ -11,7 +11,11 @@ class EnumCreator(val tagToMetadataMapper: TagToMetadataMapper) {
     private val defaultClient = Atlan.getDefaultClient()
     private val customMetadataCache = defaultClient.customMetadataCache
     private val enumCache = defaultClient.enumCache
-    fun createOptions(tagKey: String, values: Set<String>) {
+
+    fun createOptions(
+        tagKey: String,
+        values: Set<String>,
+    ) {
         val (setName, attributeName) = tagToMetadataMapper.getSetAndAttributeNames(tagKey)
         if (setName.isNotBlank() && attributeName.isNotBlank()) {
             val attrId = customMetadataCache.getAttrIdForName(setName, attributeName)
@@ -23,9 +27,10 @@ class EnumCreator(val tagToMetadataMapper: TagToMetadataMapper) {
                 val currentValues = enum.elementDefs.map { it.value }.toSet()
                 val missingValues = values.minus(currentValues)
                 if (currentValues.isNotEmpty()) {
-                    val response = EnumDef.updater(enumName, missingValues.toList(), false)
-                        .build()
-                        .update()
+                    val response =
+                        EnumDef.updater(enumName, missingValues.toList(), false)
+                            .build()
+                            .update()
                     println(response)
                 }
             } else {

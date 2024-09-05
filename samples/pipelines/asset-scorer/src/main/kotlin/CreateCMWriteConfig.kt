@@ -25,7 +25,6 @@ import kotlin.system.exitProcess
  * in addition to writing out the configuration for the pipeline.
  */
 object CreateCMWriteConfig {
-
     private val logger = KotlinLogging.logger {}
 
     const val CM_SCORING = "Scorecard"
@@ -34,10 +33,11 @@ object CreateCMWriteConfig {
     @JvmStatic
     fun main(args: Array<String>) {
         EventUtils.setLogging()
-        val config = Utils.parseConfig<AssetScorerCfg>(
-            Utils.getEnvVar("NESTED_CONFIG", ""),
-            Utils.buildRuntimeConfig(),
-        )
+        val config =
+            Utils.parseConfig<AssetScorerCfg>(
+                Utils.getEnvVar("NESTED_CONFIG", ""),
+                Utils.buildRuntimeConfig(),
+            )
         Utils.setClient()
         Utils.setWorkflowOpts(config.runtime)
         createCMIfNotExists(config)
@@ -54,40 +54,44 @@ object CreateCMWriteConfig {
         } catch (e: NotFoundException) {
             logger.info { "Creating scorecard custom metadata $CM_SCORING.$CM_ATTR_COMPOSITE_SCORE" }
             try {
-                val initialScore = AttributeDef.of(
-                    CM_ATTR_COMPOSITE_SCORE,
-                    AtlanCustomAttributePrimitiveType.DECIMAL,
-                    null,
-                    false,
-                )
-                    .toBuilder()
-                    .description("Overall composite score for the asset, based on sum of all of its component scores.")
-                    .build()
-                val overallScore = if (config.assetTypes != null) {
-                    initialScore.toBuilder().options(
-                        initialScore.options.toBuilder()
-                            .applicableAssetTypes(config.assetTypes.toSet())
-                            .build(),
+                val initialScore =
+                    AttributeDef.of(
+                        CM_ATTR_COMPOSITE_SCORE,
+                        AtlanCustomAttributePrimitiveType.DECIMAL,
+                        null,
+                        false,
                     )
+                        .toBuilder()
+                        .description("Overall composite score for the asset, based on sum of all of its component scores.")
                         .build()
-                } else {
-                    initialScore
-                }
-                val customMetadataDef = CustomMetadataDef.creator(CM_SCORING)
-                    .attributeDef(overallScore)
-                    .description("Scoring for this asset based on how much of its context is populated.")
-                    .options(CustomMetadataOptions.withIcon(AtlanIcon.GAUGE, AtlanTagColor.GRAY, true))
-                    .build()
+                val overallScore =
+                    if (config.assetTypes != null) {
+                        initialScore.toBuilder().options(
+                            initialScore.options.toBuilder()
+                                .applicableAssetTypes(config.assetTypes.toSet())
+                                .build(),
+                        )
+                            .build()
+                    } else {
+                        initialScore
+                    }
+                val customMetadataDef =
+                    CustomMetadataDef.creator(CM_SCORING)
+                        .attributeDef(overallScore)
+                        .description("Scoring for this asset based on how much of its context is populated.")
+                        .options(CustomMetadataOptions.withIcon(AtlanIcon.GAUGE, AtlanTagColor.GRAY, true))
+                        .build()
                 customMetadataDef.create()
                 logger.info { "Created $CM_SCORING custom metadata structure." }
-                val badge = Badge.creator(CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
-                    .userDescription(
-                        "Overall asset score. Indicates how enriched and ready for re-use this asset is, out of a total possible score of 10.",
-                    )
-                    .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, "3.5", BadgeConditionColor.GREEN))
-                    .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, "3.5", BadgeConditionColor.YELLOW))
-                    .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, "2.5", BadgeConditionColor.RED))
-                    .build()
+                val badge =
+                    Badge.creator(CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
+                        .userDescription(
+                            "Overall asset score. Indicates how enriched and ready for re-use this asset is, out of a total possible score of 10.",
+                        )
+                        .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, "3.5", BadgeConditionColor.GREEN))
+                        .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, "3.5", BadgeConditionColor.YELLOW))
+                        .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, "2.5", BadgeConditionColor.RED))
+                        .build()
                 try {
                     badge.save()
                     logger.info { "Created $CM_SCORING badge." }

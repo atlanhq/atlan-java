@@ -23,10 +23,11 @@ class ImpactReportTest : PackageTest() {
     override val logger = KotlinLogging.logger {}
 
     private val glossaryName = makeUnique("mdir")
-    private val files = listOf(
-        "debug.log",
-        "mdir.xlsx",
-    )
+    private val files =
+        listOf(
+            "debug.log",
+            "mdir.xlsx",
+        )
 
     override fun setup() {
         setup(
@@ -52,11 +53,12 @@ class ImpactReportTest : PackageTest() {
     @Test(groups = ["mdir.create"])
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
-        val request = GlossaryCategory.select()
-            .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
-            .includeOnResults(GlossaryCategory.NAME)
-            .includeOnResults(GlossaryCategory.DESCRIPTION)
-            .toRequest()
+        val request =
+            GlossaryCategory.select()
+                .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
+                .includeOnResults(GlossaryCategory.NAME)
+                .includeOnResults(GlossaryCategory.DESCRIPTION)
+                .toRequest()
         val response = retrySearchUntil(request, 3)
         val categories = response.assets
         assertEquals(3, categories.size)
@@ -72,17 +74,18 @@ class ImpactReportTest : PackageTest() {
     @Test(groups = ["mdir.create"])
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
-        val request = GlossaryTerm.select()
-            .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
-            .includeOnResults(GlossaryTerm.DISPLAY_NAME)
-            .includeOnResults(GlossaryTerm.DESCRIPTION)
-            .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS)
-            .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS_MESSAGE)
-            .includeOnResults(GlossaryTerm.ANNOUNCEMENT_TYPE)
-            .includeOnResults(GlossaryTerm.ANNOUNCEMENT_TITLE)
-            .includeOnResults(GlossaryTerm.CATEGORIES)
-            .includeOnRelations(GlossaryCategory.NAME)
-            .toRequest()
+        val request =
+            GlossaryTerm.select()
+                .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
+                .includeOnResults(GlossaryTerm.DISPLAY_NAME)
+                .includeOnResults(GlossaryTerm.DESCRIPTION)
+                .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS)
+                .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS_MESSAGE)
+                .includeOnResults(GlossaryTerm.ANNOUNCEMENT_TYPE)
+                .includeOnResults(GlossaryTerm.ANNOUNCEMENT_TITLE)
+                .includeOnResults(GlossaryTerm.CATEGORIES)
+                .includeOnRelations(GlossaryCategory.NAME)
+                .toRequest()
         val response = retrySearchUntil(request, 21)
         val terms = response.stream().toList()
         assertEquals(21, terms.size)

@@ -53,27 +53,30 @@ object TestsCleanup {
     }
 
     private fun purgeGlossaries(prefix: String) {
-        val glossaries = Glossary.select()
-            .where(Glossary.NAME.startsWith(prefix))
-            .includeOnResults(Glossary.NAME)
-            .stream()
-            .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
-            .toList()
+        val glossaries =
+            Glossary.select()
+                .where(Glossary.NAME.startsWith(prefix))
+                .includeOnResults(Glossary.NAME)
+                .stream()
+                .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
+                .toList()
         glossaries.forEach { glossary ->
             val qn = glossary.qualifiedName
             val name = glossary.name
-            val terms = GlossaryTerm.select()
-                .where(GlossaryTerm.ANCHOR.eq(qn))
-                .stream()
-                .map { it.guid }
-                .toList()
+            val terms =
+                GlossaryTerm.select()
+                    .where(GlossaryTerm.ANCHOR.eq(qn))
+                    .stream()
+                    .map { it.guid }
+                    .toList()
             logger.info { "Purging ${terms.size} terms from glossary: $name" }
             purgeByGuids(terms)
-            val categories = GlossaryCategory.select()
-                .where(GlossaryCategory.ANCHOR.eq(qn))
-                .stream()
-                .map { it.guid }
-                .toList()
+            val categories =
+                GlossaryCategory.select()
+                    .where(GlossaryCategory.ANCHOR.eq(qn))
+                    .stream()
+                    .map { it.guid }
+                    .toList()
             logger.info { "Purging ${categories.size} categories from glossary: $name" }
             purgeByGuids(categories)
             logger.info { "Purging glossary: $name" }
@@ -84,39 +87,43 @@ object TestsCleanup {
     data class AssetDetails(val name: String, val qualifiedName: String, val guid: String)
 
     private fun purgeProducts(prefix: String) {
-        val list = DataProduct.select()
-            .where(DataProduct.NAME.startsWith(prefix))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val list =
+            DataProduct.select()
+                .where(DataProduct.NAME.startsWith(prefix))
+                .stream()
+                .map { it.guid }
+                .toList()
         logger.info { "Purging ${list.size} data products." }
         purgeByGuids(list)
     }
 
     private fun purgeDomains(prefix: String) {
-        val list = DataDomain.select()
-            .where(DataDomain.NAME.startsWith(prefix))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val list =
+            DataDomain.select()
+                .where(DataDomain.NAME.startsWith(prefix))
+                .stream()
+                .map { it.guid }
+                .toList()
         logger.info { "Purging ${list.size} data domains." }
         purgeByGuids(list)
     }
 
     private fun purgeAssets(prefix: String) {
-        val list = Connection.select()
-            .where(Connection.NAME.startsWith(prefix))
-            .stream()
-            .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
-            .toList()
+        val list =
+            Connection.select()
+                .where(Connection.NAME.startsWith(prefix))
+                .stream()
+                .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
+                .toList()
         list.forEach { connection ->
             val qn = connection.qualifiedName
             val name = connection.name
-            val assets = client.assets.select()
-                .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
-                .stream()
-                .map { it.guid }
-                .toList()
+            val assets =
+                client.assets.select()
+                    .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
+                    .stream()
+                    .map { it.guid }
+                    .toList()
             logger.info { "Purging ${assets.size} assets from connection: $name" }
             purgeByGuids(assets)
             logger.info { "Purging connection: $name" }
@@ -125,49 +132,54 @@ object TestsCleanup {
     }
 
     private fun purgePurposes(prefix: String) {
-        val list = Purpose.select()
-            .where(Purpose.NAME.startsWith(prefix))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val list =
+            Purpose.select()
+                .where(Purpose.NAME.startsWith(prefix))
+                .stream()
+                .map { it.guid }
+                .toList()
         logger.info { "Purging ${list.size} purposes." }
         purgeByGuids(list)
     }
 
     private fun purgePersonas(prefix: String) {
-        val list = Persona.select()
-            .where(Persona.NAME.startsWith(prefix))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val list =
+            Persona.select()
+                .where(Persona.NAME.startsWith(prefix))
+                .stream()
+                .map { it.guid }
+                .toList()
         logger.info { "Purging ${list.size} personas." }
         purgeByGuids(list)
     }
 
     private fun purgeCustomMetadata(prefix: String) {
-        val enums = client.typeDefs.list(AtlanTypeCategory.ENUM)
-            .enumDefs
-            .stream()
-            .filter { it.name.startsWith(prefix) }
-            .map { TypeDefDetails(it.name, it.name) }
-            .toList()
+        val enums =
+            client.typeDefs.list(AtlanTypeCategory.ENUM)
+                .enumDefs
+                .stream()
+                .filter { it.name.startsWith(prefix) }
+                .map { TypeDefDetails(it.name, it.name) }
+                .toList()
         enums.forEach { e ->
             logger.info { "Purging enum: ${e.internalName}" }
             getPrivilegedClient().typeDefs.purge(e.internalName)
         }
-        val list = client.typeDefs.list(AtlanTypeCategory.CUSTOM_METADATA)
-            .customMetadataDefs
-            .stream()
-            .filter { it.displayName.startsWith(prefix) }
-            .map { TypeDefDetails(it.displayName, it.name) }
-            .toList()
+        val list =
+            client.typeDefs.list(AtlanTypeCategory.CUSTOM_METADATA)
+                .customMetadataDefs
+                .stream()
+                .filter { it.displayName.startsWith(prefix) }
+                .map { TypeDefDetails(it.displayName, it.name) }
+                .toList()
         list.forEach { cm ->
             val badgeQNPrefix = "badges/global/${cm.internalName}."
-            val badges = Badge.select()
-                .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
-                .stream()
-                .map { it.guid }
-                .toList()
+            val badges =
+                Badge.select()
+                    .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
+                    .stream()
+                    .map { it.guid }
+                    .toList()
             logger.info { "Purging ${badges.size} badges for custom metadata: ${cm.name}" }
             purgeByGuids(badges)
             logger.info { "Purging custom metadata: ${cm.name}" }
@@ -178,12 +190,13 @@ object TestsCleanup {
     data class TypeDefDetails(val name: String, val internalName: String)
 
     private fun purgeTags(prefix: String) {
-        val list = client.typeDefs.list(AtlanTypeCategory.ATLAN_TAG)
-            .atlanTagDefs
-            .stream()
-            .filter { it.displayName.startsWith(prefix) }
-            .map { TypeDefDetails(it.displayName, it.name) }
-            .toList()
+        val list =
+            client.typeDefs.list(AtlanTypeCategory.ATLAN_TAG)
+                .atlanTagDefs
+                .stream()
+                .filter { it.displayName.startsWith(prefix) }
+                .map { TypeDefDetails(it.displayName, it.name) }
+                .toList()
         list.forEach { cm ->
             logger.info { "Purging Atlan tag: ${cm.name}" }
             getPrivilegedClient().typeDefs.purge(cm.internalName)

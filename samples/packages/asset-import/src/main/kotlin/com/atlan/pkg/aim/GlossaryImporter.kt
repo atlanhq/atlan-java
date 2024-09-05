@@ -32,16 +32,16 @@ class GlossaryImporter(
     private val failOnErrors: Boolean,
     private val fieldSeparator: Char,
 ) : GTCImporter(
-    filename = filename,
-    attrsToOverwrite = attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    cache = GlossaryCache,
-    typeNameFilter = Glossary.TYPE_NAME,
-    logger = KotlinLogging.logger {},
-    failOnErrors = failOnErrors,
-    fieldSeparator = fieldSeparator,
-) {
+        filename = filename,
+        attrsToOverwrite = attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        cache = GlossaryCache,
+        typeNameFilter = Glossary.TYPE_NAME,
+        logger = KotlinLogging.logger {},
+        failOnErrors = failOnErrors,
+        fieldSeparator = fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()

@@ -13,17 +13,17 @@ class AssetTransformer(
     private val logger: KLogger,
     private val fieldSeparator: Char,
 ) : CSVXformer(
-    inputFile,
-    listOf(
-        Asset.QUALIFIED_NAME.atlanFieldName,
-        Asset.TYPE_NAME.atlanFieldName,
-        Asset.NAME.atlanFieldName,
-        "connectorType",
-        Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
-    ),
-    logger,
-    fieldSeparator,
-) {
+        inputFile,
+        listOf(
+            Asset.QUALIFIED_NAME.atlanFieldName,
+            Asset.TYPE_NAME.atlanFieldName,
+            Asset.NAME.atlanFieldName,
+            "connectorType",
+            Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
+        ),
+        logger,
+        fieldSeparator,
+    ) {
     companion object {
         const val TYPE = "Type"
         const val NAME = "Name"
@@ -34,27 +34,37 @@ class AssetTransformer(
         const val SOURCE_TYPE = "$SOURCE_PREFIX $TYPE"
         const val TARGET_PREFIX = "Target"
         const val TARGET_TYPE = "$TARGET_PREFIX $TYPE"
-        val INPUT_HEADERS = listOf(
-            "$SOURCE_PREFIX $TYPE",
-            "$SOURCE_PREFIX $NAME",
-            "$SOURCE_PREFIX $CONNECTOR",
-            "$SOURCE_PREFIX $CONNECTION",
-            "$SOURCE_PREFIX $IDENTITY",
-            "$TARGET_PREFIX $TYPE",
-            "$TARGET_PREFIX $NAME",
-            "$TARGET_PREFIX $CONNECTOR",
-            "$TARGET_PREFIX $CONNECTION",
-            "$TARGET_PREFIX $IDENTITY",
-        )
+        val INPUT_HEADERS =
+            listOf(
+                "$SOURCE_PREFIX $TYPE",
+                "$SOURCE_PREFIX $NAME",
+                "$SOURCE_PREFIX $CONNECTOR",
+                "$SOURCE_PREFIX $CONNECTION",
+                "$SOURCE_PREFIX $IDENTITY",
+                "$TARGET_PREFIX $TYPE",
+                "$TARGET_PREFIX $NAME",
+                "$TARGET_PREFIX $CONNECTOR",
+                "$TARGET_PREFIX $CONNECTION",
+                "$TARGET_PREFIX $IDENTITY",
+            )
 
-        fun getConnectionQN(ctx: Loader.Context, inputRow: Map<String, String>, prefix: String): String {
+        fun getConnectionQN(
+            ctx: Loader.Context,
+            inputRow: Map<String, String>,
+            prefix: String,
+        ): String {
             val connectorType = inputRow["$prefix $CONNECTOR"] ?: ""
             val connectionName = inputRow["$prefix $CONNECTION"] ?: ""
             val connectionId = Loader.ConnectionId(connectorType, connectionName)
             return ctx.connectionMap.getOrDefault(connectionId, "")
         }
 
-        fun getAssetQN(ctx: Loader.Context, inputRow: Map<String, String>, prefix: String, qnMap: Map<AssetIdentity, String> = mapOf()): String {
+        fun getAssetQN(
+            ctx: Loader.Context,
+            inputRow: Map<String, String>,
+            prefix: String,
+            qnMap: Map<AssetIdentity, String> = mapOf(),
+        ): String {
             val assetType = inputRow["$prefix $TYPE"] ?: ""
             val partialQN = inputRow["$prefix $IDENTITY"] ?: ""
             val connectionQN = getConnectionQN(ctx, inputRow, prefix)
@@ -93,7 +103,10 @@ class AssetTransformer(
         return true
     }
 
-    private fun mapAsset(inputRow: Map<String, String>, prefix: String): List<String> {
+    private fun mapAsset(
+        inputRow: Map<String, String>,
+        prefix: String,
+    ): List<String> {
         val connectionQN = getConnectionQN(ctx, inputRow, prefix)
         val assetQN = getAssetQN(ctx, inputRow, prefix)
         return if (assetQN.isNotBlank()) {

@@ -29,11 +29,12 @@ class AssetRemoverTest : PackageTest() {
     private val currentFile = "assets_latest.csv"
     private var remover: AssetRemover? = null
 
-    private val files = listOf(
-        previousFile,
-        currentFile,
-        "debug.log",
-    )
+    private val files =
+        listOf(
+            previousFile,
+            currentFile,
+            "debug.log",
+        )
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
@@ -45,11 +46,15 @@ class AssetRemoverTest : PackageTest() {
         replaceVars(latestIn, latestOut)
     }
 
-    private fun replaceVars(input: File, output: File) {
+    private fun replaceVars(
+        input: File,
+        output: File,
+    ) {
         input.useLines { lines ->
             lines.forEach { line ->
-                val revised = line
-                    .replace("{{CONNECTION1}}", conn1)
+                val revised =
+                    line
+                        .replace("{{CONNECTION1}}", conn1)
                 output.appendText("$revised\n")
             }
         }
@@ -57,9 +62,10 @@ class AssetRemoverTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        val connectionsMap = mapOf(
-            AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
-        )
+        val connectionsMap =
+            mapOf(
+                AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
+            )
         remover = AssetRemover(connectionsMap, AssetImporter.Companion, KotlinLogging.logger {})
         remover!!.calculateDeletions(
             Paths.get(testDirectory, currentFile).toString(),

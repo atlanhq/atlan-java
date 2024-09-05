@@ -20,37 +20,38 @@ class AssetViews(
     fun export() {
         logger.info { "Exporting top $maxAssets most-viewed assets..." }
         val sheet = xlsx.createSheet("Views")
-        val viewCountMap = when (by) {
-            "BY_VIEWS" -> {
-                xlsx.addHeader(
-                    sheet,
-                    mapOf(
-                        "Type" to "Type of asset",
-                        "Qualified name" to "Unique name of the asset",
-                        "Name" to "Simple name for the asset",
-                        "Total views" to "Total number of times the asset has been viewed, possibly by the same user more than once",
-                        "Distinct users" to "Total number of unique users that have viewed the asset",
-                        "Link" to "Link to the asset's profile page in Atlan",
-                    ),
-                )
-                SearchLogRequest.mostViewedAssets(maxAssets, false).associateBy { it.guid }
+        val viewCountMap =
+            when (by) {
+                "BY_VIEWS" -> {
+                    xlsx.addHeader(
+                        sheet,
+                        mapOf(
+                            "Type" to "Type of asset",
+                            "Qualified name" to "Unique name of the asset",
+                            "Name" to "Simple name for the asset",
+                            "Total views" to "Total number of times the asset has been viewed, possibly by the same user more than once",
+                            "Distinct users" to "Total number of unique users that have viewed the asset",
+                            "Link" to "Link to the asset's profile page in Atlan",
+                        ),
+                    )
+                    SearchLogRequest.mostViewedAssets(maxAssets, false).associateBy { it.guid }
+                }
+                "BY_USERS" -> {
+                    xlsx.addHeader(
+                        sheet,
+                        mapOf(
+                            "Type" to "Type of asset",
+                            "Qualified name" to "Unique name of the asset",
+                            "Name" to "Simple name for the asset",
+                            "Distinct users" to "Total number of unique users that have viewed the asset",
+                            "Total views" to "Total number of times the asset has been viewed, possibly by the same user more than once",
+                            "Link" to "Link to the asset's profile page in Atlan",
+                        ),
+                    )
+                    SearchLogRequest.mostViewedAssets(maxAssets, true).associateBy { it.guid }
+                }
+                else -> mapOf()
             }
-            "BY_USERS" -> {
-                xlsx.addHeader(
-                    sheet,
-                    mapOf(
-                        "Type" to "Type of asset",
-                        "Qualified name" to "Unique name of the asset",
-                        "Name" to "Simple name for the asset",
-                        "Distinct users" to "Total number of unique users that have viewed the asset",
-                        "Total views" to "Total number of times the asset has been viewed, possibly by the same user more than once",
-                        "Link" to "Link to the asset's profile page in Atlan",
-                    ),
-                )
-                SearchLogRequest.mostViewedAssets(maxAssets, true).associateBy { it.guid }
-            }
-            else -> mapOf()
-        }
 
         // Then iterate through the unique assets
         val assetMap = getAssetDetails(viewCountMap)
@@ -62,7 +63,11 @@ class AssetViews(
         }
     }
 
-    private fun outputAsset(sheet: Sheet, asset: Asset, views: AssetViews) {
+    private fun outputAsset(
+        sheet: Sheet,
+        asset: Asset,
+        views: AssetViews,
+    ) {
         when (by) {
             "BY_VIEWS" -> {
                 xlsx.appendRow(

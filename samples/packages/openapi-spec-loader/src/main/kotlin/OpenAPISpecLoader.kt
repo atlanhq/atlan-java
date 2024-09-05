@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicLong
 import kotlin.system.exitProcess
 
 object OpenAPISpecLoader {
-
     private val logger = KotlinLogging.logger {}
 
     /**
@@ -34,9 +33,10 @@ object OpenAPISpecLoader {
         val specKey = Utils.getOrDefault(config.specKey, "")
         val batchSize = 20
 
-        val inputQN = config.connectionQualifiedName?.let {
-            if (it.isNotEmpty()) it[0] else null
-        }
+        val inputQN =
+            config.connectionQualifiedName?.let {
+                if (it.isNotEmpty()) it[0] else null
+            }
         val connectionQN =
             Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
 
@@ -51,19 +51,20 @@ object OpenAPISpecLoader {
             exitProcess(4)
         }
 
-        val sourceUrl = when (importType) {
-            "CLOUD" -> {
-                Utils.getInputFile(
-                    specFilename,
-                    outputDirectory,
-                    false,
-                    Utils.getOrDefault(config.specPrefix, ""),
-                    specKey,
-                )
+        val sourceUrl =
+            when (importType) {
+                "CLOUD" -> {
+                    Utils.getInputFile(
+                        specFilename,
+                        outputDirectory,
+                        false,
+                        Utils.getOrDefault(config.specPrefix, ""),
+                        specKey,
+                    )
+                }
+                "DIRECT" -> specFilename
+                else -> specUrl
             }
-            "DIRECT" -> specFilename
-            else -> specUrl
-        }
 
         logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
         loadOpenAPISpec(connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
@@ -76,27 +77,33 @@ object OpenAPISpecLoader {
      * @param spec object for reading from the OpenAPI spec itself
      * @param batchSize maximum number of assets to save per API request
      */
-    fun loadOpenAPISpec(connectionQN: String, spec: OpenAPISpecReader, batchSize: Int) {
-        val toCreate = APISpec.creator(spec.title, connectionQN)
-            .sourceURL(spec.sourceURL)
-            .apiSpecType(spec.openAPIVersion)
-            .description(spec.description)
-            .apiSpecTermsOfServiceURL(spec.termsOfServiceURL)
-            .apiSpecContactEmail(spec.contactEmail)
-            .apiSpecContactName(spec.contactName)
-            .apiSpecContactURL(spec.contactURL)
-            .apiSpecLicenseName(spec.licenseName)
-            .apiSpecLicenseURL(spec.licenseURL)
-            .apiSpecVersion(spec.version)
-            .apiExternalDoc("url", spec.externalDocsURL)
-            .apiExternalDoc("description", spec.externalDocsDescription)
-            .build()
+    fun loadOpenAPISpec(
+        connectionQN: String,
+        spec: OpenAPISpecReader,
+        batchSize: Int,
+    ) {
+        val toCreate =
+            APISpec.creator(spec.title, connectionQN)
+                .sourceURL(spec.sourceURL)
+                .apiSpecType(spec.openAPIVersion)
+                .description(spec.description)
+                .apiSpecTermsOfServiceURL(spec.termsOfServiceURL)
+                .apiSpecContactEmail(spec.contactEmail)
+                .apiSpecContactName(spec.contactName)
+                .apiSpecContactURL(spec.contactURL)
+                .apiSpecLicenseName(spec.licenseName)
+                .apiSpecLicenseURL(spec.licenseURL)
+                .apiSpecVersion(spec.version)
+                .apiExternalDoc("url", spec.externalDocsURL)
+                .apiExternalDoc("description", spec.externalDocsDescription)
+                .build()
         val specQN = toCreate.qualifiedName
         logger.info { "Saving APISpec: $specQN" }
         try {
             val response = toCreate.save()
             val mutation = response.getMutation(toCreate)
-            if (mutation in listOf(
+            if (mutation in
+                listOf(
                     AssetMutationResponse.MutationType.NOOP,
                     AssetMutationResponse.MutationType.UNKNOWN,
                 )
@@ -127,13 +134,14 @@ object OpenAPISpecLoader {
                     addOperationDetails(pathDetails.put, "PUT", operations, desc)
                     addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
                     addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
-                    val path = APIPath.creator(pathUrl, specQN)
-                        .description(desc.toString())
-                        .apiPathRawURI(pathUrl)
-                        .apiPathSummary(pathDetails.summary)
-                        .apiPathAvailableOperations(operations)
-                        .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
-                        .build()
+                    val path =
+                        APIPath.creator(pathUrl, specQN)
+                            .description(desc.toString())
+                            .apiPathRawURI(pathUrl)
+                            .apiPathSummary(pathDetails.summary)
+                            .apiPathAvailableOperations(operations)
+                            .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
+                            .build()
                     batch.add(path)
                     Utils.logProgress(assetCount, totalCount, logger, batchSize)
                 }
@@ -170,7 +178,6 @@ object OpenAPISpecLoader {
      * using the Swagger parser.
      */
     class OpenAPISpecReader(url: String) {
-
         private val spec: OpenAPI
 
         val sourceURL: String

@@ -41,18 +41,18 @@ class AssetImporter(
     private val trackBatches: Boolean = true,
     private val fieldSeparator: Char = ',',
 ) : CSVImporter(
-    filename,
-    logger = KotlinLogging.logger {},
-    attrsToOverwrite = attrsToOverwrite,
-    updateOnly = updateOnly,
-    batchSize = batchSize,
-    caseSensitive = caseSensitive,
-    creationHandling = creationHandling,
-    tableViewAgnostic = tableViewAgnostic,
-    failOnErrors = failOnErrors,
-    trackBatches = trackBatches,
-    fieldSeparator = fieldSeparator,
-) {
+        filename,
+        logger = KotlinLogging.logger {},
+        attrsToOverwrite = attrsToOverwrite,
+        updateOnly = updateOnly,
+        batchSize = batchSize,
+        caseSensitive = caseSensitive,
+        creationHandling = creationHandling,
+        tableViewAgnostic = tableViewAgnostic,
+        failOnErrors = failOnErrors,
+        trackBatches = trackBatches,
+        fieldSeparator = fieldSeparator,
+    ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val typeName = deserializer.typeName
@@ -60,7 +60,12 @@ class AssetImporter(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(row: List<String>, header: List<String>, typeIdx: Int, qnIdx: Int): Boolean {
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
         return row.size >= typeIdx && row[typeIdx].isNotBlank()
     }
 }

@@ -14,7 +14,6 @@ class Personas(
     private val connectionMap: Map<String, AdminExporter.ConnectionId>,
     private val logger: KLogger,
 ) {
-
     fun export() {
         logger.info { "Exporting all personas..." }
         val sheet = xlsx.createSheet("Personas")

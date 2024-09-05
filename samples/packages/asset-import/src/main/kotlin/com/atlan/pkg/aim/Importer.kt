@@ -26,7 +26,10 @@ object Importer {
         import(config, outputDirectory)
     }
 
-    fun import(config: AssetImportCfg, outputDirectory: String = "tmp"): ImportResults? {
+    fun import(
+        config: AssetImportCfg,
+        outputDirectory: String = "tmp",
+    ): ImportResults? {
         val assetsBatchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val glossariesBatchSize = Utils.getOrDefault(config.glossariesBatchSize, 20).toInt()
         val dataProductsBatchSize = Utils.getOrDefault(config.dataProductsBatchSize, 20).toInt()
@@ -67,111 +70,123 @@ object Importer {
         LinkCache.preload()
 
         // Glossaries...
-        val resultsGTC = if (glossariesFileProvided) {
-            val glossariesInput = Utils.getInputFile(
-                glossariesFilename,
-                outputDirectory,
-                directUpload,
-                Utils.getOrDefault(config.glossariesPrefix, ""),
-                glossariesKey,
-            )
-            FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
-            logger.info { "=== Importing glossaries... ===" }
-            val glossaryImporter = GlossaryImporter(
-                glossariesInput,
-                glossaryAttrsToOverwrite,
-                glossariesUpdateOnly,
-                glossariesBatchSize,
-                glossariesFailOnErrors,
-                glossariesFieldSeparator,
-            )
-            val resultsGlossary = glossaryImporter.import()
-            logger.info { "=== Importing categories... ===" }
-            val categoryImporter = CategoryImporter(
-                glossariesInput,
-                glossaryAttrsToOverwrite,
-                glossariesUpdateOnly,
-                glossariesBatchSize,
-                glossariesFailOnErrors,
-                glossariesFieldSeparator,
-            )
-            val resultsCategory = categoryImporter.import()
-            logger.info { "=== Importing terms... ===" }
-            val termImporter = TermImporter(
-                glossariesInput,
-                glossaryAttrsToOverwrite,
-                glossariesUpdateOnly,
-                glossariesBatchSize,
-                glossariesFailOnErrors,
-                glossariesFieldSeparator,
-            )
-            val resultsTerm = termImporter.import()
-            resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
-        } else {
-            null
-        }
+        val resultsGTC =
+            if (glossariesFileProvided) {
+                val glossariesInput =
+                    Utils.getInputFile(
+                        glossariesFilename,
+                        outputDirectory,
+                        directUpload,
+                        Utils.getOrDefault(config.glossariesPrefix, ""),
+                        glossariesKey,
+                    )
+                FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
+                logger.info { "=== Importing glossaries... ===" }
+                val glossaryImporter =
+                    GlossaryImporter(
+                        glossariesInput,
+                        glossaryAttrsToOverwrite,
+                        glossariesUpdateOnly,
+                        glossariesBatchSize,
+                        glossariesFailOnErrors,
+                        glossariesFieldSeparator,
+                    )
+                val resultsGlossary = glossaryImporter.import()
+                logger.info { "=== Importing categories... ===" }
+                val categoryImporter =
+                    CategoryImporter(
+                        glossariesInput,
+                        glossaryAttrsToOverwrite,
+                        glossariesUpdateOnly,
+                        glossariesBatchSize,
+                        glossariesFailOnErrors,
+                        glossariesFieldSeparator,
+                    )
+                val resultsCategory = categoryImporter.import()
+                logger.info { "=== Importing terms... ===" }
+                val termImporter =
+                    TermImporter(
+                        glossariesInput,
+                        glossaryAttrsToOverwrite,
+                        glossariesUpdateOnly,
+                        glossariesBatchSize,
+                        glossariesFailOnErrors,
+                        glossariesFieldSeparator,
+                    )
+                val resultsTerm = termImporter.import()
+                resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
+            } else {
+                null
+            }
 
-        val resultsAssets = if (assetsFileProvided) {
-            val assetsInput = Utils.getInputFile(
-                assetsFilename,
-                outputDirectory,
-                directUpload,
-                Utils.getOrDefault(config.assetsPrefix, ""),
-                assetsKey,
-            )
-            FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
-            logger.info { "=== Importing assets... ===" }
-            val assetImporter = AssetImporter(
-                assetsInput,
-                assetAttrsToOverwrite,
-                assetsUpdateSemantic == AssetCreationHandling.NONE,
-                assetsBatchSize,
-                assetsCaseSensitive,
-                assetsUpdateSemantic,
-                assetsTableViewAgnostic,
-                assetsFailOnErrors,
-                trackBatches,
-                assetsFieldSeparator,
-            )
-            assetImporter.import()
-        } else {
-            null
-        }
+        val resultsAssets =
+            if (assetsFileProvided) {
+                val assetsInput =
+                    Utils.getInputFile(
+                        assetsFilename,
+                        outputDirectory,
+                        directUpload,
+                        Utils.getOrDefault(config.assetsPrefix, ""),
+                        assetsKey,
+                    )
+                FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
+                logger.info { "=== Importing assets... ===" }
+                val assetImporter =
+                    AssetImporter(
+                        assetsInput,
+                        assetAttrsToOverwrite,
+                        assetsUpdateSemantic == AssetCreationHandling.NONE,
+                        assetsBatchSize,
+                        assetsCaseSensitive,
+                        assetsUpdateSemantic,
+                        assetsTableViewAgnostic,
+                        assetsFailOnErrors,
+                        trackBatches,
+                        assetsFieldSeparator,
+                    )
+                assetImporter.import()
+            } else {
+                null
+            }
 
         // Data products...
-        val resultsDDP = if (dataProductsFileProvided) {
-            val dataProductsInput = Utils.getInputFile(
-                dataProductsFilename,
-                outputDirectory,
-                directUpload,
-                Utils.getOrDefault(config.dataProductsPrefix, ""),
-                dataProductsKey,
-            )
-            FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
-            logger.info { "=== Importing domains... ===" }
-            val domainImporter = DomainImporter(
-                dataProductsInput,
-                dataProductAttrsToOverwrite,
-                dataProductsUpdateOnly,
-                dataProductsBatchSize,
-                dataProductsFailOnErrors,
-                dataProductsFieldSeparator,
-            )
-            val resultsDomain = domainImporter.import()
-            logger.info { "=== Importing products... ===" }
-            val productImporter = ProductImporter(
-                dataProductsInput,
-                dataProductAttrsToOverwrite,
-                dataProductsUpdateOnly,
-                dataProductsBatchSize,
-                dataProductsFailOnErrors,
-                dataProductsFieldSeparator,
-            )
-            val resultsProduct = productImporter.import()
-            resultsDomain?.combinedWith(resultsProduct)
-        } else {
-            null
-        }
+        val resultsDDP =
+            if (dataProductsFileProvided) {
+                val dataProductsInput =
+                    Utils.getInputFile(
+                        dataProductsFilename,
+                        outputDirectory,
+                        directUpload,
+                        Utils.getOrDefault(config.dataProductsPrefix, ""),
+                        dataProductsKey,
+                    )
+                FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
+                logger.info { "=== Importing domains... ===" }
+                val domainImporter =
+                    DomainImporter(
+                        dataProductsInput,
+                        dataProductAttrsToOverwrite,
+                        dataProductsUpdateOnly,
+                        dataProductsBatchSize,
+                        dataProductsFailOnErrors,
+                        dataProductsFieldSeparator,
+                    )
+                val resultsDomain = domainImporter.import()
+                logger.info { "=== Importing products... ===" }
+                val productImporter =
+                    ProductImporter(
+                        dataProductsInput,
+                        dataProductAttrsToOverwrite,
+                        dataProductsUpdateOnly,
+                        dataProductsBatchSize,
+                        dataProductsFailOnErrors,
+                        dataProductsFieldSeparator,
+                    )
+                val resultsProduct = productImporter.import()
+                resultsDomain?.combinedWith(resultsProduct)
+            } else {
+                null
+            }
 
         val resultsAssetsGTC = resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
         return resultsDDP?.combinedWith(resultsAssetsGTC) ?: resultsAssetsGTC
