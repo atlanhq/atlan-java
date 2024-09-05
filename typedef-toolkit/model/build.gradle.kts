@@ -77,7 +77,7 @@ tasks.create<Copy>("generateBuildInfo") {
 }
 
 tasks.getByName("makePklPackages") {
-    sourceSets["main"].resources.srcDir("$buildDir/resources/main")
+    sourceSets["main"].resources.srcDir("${layout.buildDirectory.get()}/resources/main")
     dependsOn(tasks.getByName("generateBuildInfo"))
     dependsOn("processResources")
 }
