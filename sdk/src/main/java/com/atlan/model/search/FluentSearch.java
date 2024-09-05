@@ -35,9 +35,6 @@ public class FluentSearch extends CompoundQuery {
         return _internal().client(client);
     }
 
-    /** Client through which to retrieve the assets. */
-    AtlanClient client;
-
     /** Criteria by which to sort the results. */
     @Singular
     List<SortOptions> sorts;

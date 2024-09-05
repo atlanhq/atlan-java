@@ -69,9 +69,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(FluentSearch.superType("Referenceable"));
+                FluentSearch.builder(client).where(Asset.SUPER_TYPE_NAMES.eq("Referenceable"));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }
@@ -353,7 +353,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                     guidList.append("guid=").append(guid).append("&");
                 }
             }
-            if (guidList.length() > 0) {
+            if (!guidList.isEmpty()) {
                 // Remove the final comma
                 guidList.setLength(guidList.length() - 1);
                 String url = String.format(

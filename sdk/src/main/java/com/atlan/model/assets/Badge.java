@@ -10,7 +10,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.BadgeCondition;
 import com.atlan.util.StringUtils;
@@ -125,9 +124,9 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+                FluentSearch.builder(client).where(Asset.TYPE_NAME.eq(TYPE_NAME));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }

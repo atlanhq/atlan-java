@@ -34,9 +34,6 @@ public class AuditSearch extends CompoundQuery {
         return _internal().client(client);
     }
 
-    /** Client through which to retrieve the audit log. */
-    AtlanClient client;
-
     /** Criteria by which to sort the results. */
     @Singular
     List<SortOptions> sorts;
@@ -58,6 +55,73 @@ public class AuditSearch extends CompoundQuery {
     /** Attributes to retrieve for the entity detail in each audit log entry (for internal use, unchecked!). */
     @Singular("_includeOnResults")
     List<String> _includesOnResults;
+
+    /**
+     * Translate the Atlan audit search into an Atlan audit search request.
+     *
+     * @return an Atlan audit search request that encapsulates the audit search
+     */
+    public AuditSearchRequest toRequest() {
+        return _requestBuilder().build();
+    }
+
+    /**
+     * Return the total number of audit entries that will match the supplied criteria,
+     * using the most minimal query possible (retrieves minimal data).
+     *
+     * @return the count of audit entries that will match the supplied criteria
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public long count() throws AtlanException {
+        if (client == null) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+        }
+        // As long as there is a client, build the search request for just a single result (with count)
+        // and then just return the count
+        AuditSearchRequest request = AuditSearchRequest.builder()
+                .dsl(_dsl().size(1).clearAggregations().build())
+                .build();
+        return request.search(client).getTotalCount();
+    }
+
+    /**
+     * Run the audit search to retrieve audit entries that match the supplied criteria.
+     *
+     * @return a stream of audit entries that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<EntityAudit> stream() throws AtlanException {
+        return stream(false);
+    }
+
+    /**
+     * Run the audit search to retrieve audit entries that match the supplied criteria.
+     *
+     * @param parallel if true, returns a parallel stream
+     * @return a stream of audit entries that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<EntityAudit> stream(boolean parallel) throws AtlanException {
+        if (client == null) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+        }
+        if (parallel) {
+            return toRequest().search(client).parallelStream();
+        } else {
+            return toRequest().search(client).stream();
+        }
+    }
+
+    /**
+     * Run the audit search to retrieve audit entries that match the supplied criteria, using a
+     * parallel stream (multiple pages are retrieved in parallel for improved throughput).
+     *
+     * @return a stream of audit entries that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<EntityAudit> parallelStream() throws AtlanException {
+        return stream(true);
+    }
 
     /**
      * Translate the Atlan audit search into an Atlan search DSL builder.
@@ -115,7 +179,7 @@ public class AuditSearch extends CompoundQuery {
          * @return an Atlan audit search request that encapsulates the audit search
          */
         public AuditSearchRequest toRequest() {
-            return toRequestBuilder().build();
+            return build().toRequest();
         }
 
         /**
@@ -126,15 +190,7 @@ public class AuditSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public long count() throws AtlanException {
-            if (client == null) {
-                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
-            }
-            // As long as there is a client, build the search request for just a single result (with count)
-            // and then just return the count
-            AuditSearchRequest request = AuditSearchRequest.builder()
-                    .dsl(build()._dsl().size(1).clearAggregations().build())
-                    .build();
-            return request.search(client).getTotalCount();
+            return build().count();
         }
 
         /**
@@ -144,7 +200,7 @@ public class AuditSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<EntityAudit> stream() throws AtlanException {
-            return stream(false);
+            return build().stream();
         }
 
         /**
@@ -155,15 +211,7 @@ public class AuditSearch extends CompoundQuery {
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<EntityAudit> stream(boolean parallel) throws AtlanException {
-            if (client == null) {
-                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
-            }
-            AuditSearchRequest request = toRequest();
-            if (parallel) {
-                return request.search(client).parallelStream();
-            } else {
-                return request.search(client).stream();
-            }
+            return build().stream(parallel);
         }
     }
 }

@@ -15,7 +15,6 @@ import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.DataMaskingType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AuthPolicyCondition;
 import com.atlan.model.structs.AuthPolicyValiditySchedule;
@@ -202,9 +201,9 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+                FluentSearch.builder(client).where(Asset.TYPE_NAME.eq(TYPE_NAME));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }

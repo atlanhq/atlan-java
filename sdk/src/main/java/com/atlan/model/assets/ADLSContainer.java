@@ -15,7 +15,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.StringUtils;
@@ -215,9 +214,9 @@ public class ADLSContainer extends Asset
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+                FluentSearch.builder(client).where(Asset.TYPE_NAME.eq(TYPE_NAME));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }

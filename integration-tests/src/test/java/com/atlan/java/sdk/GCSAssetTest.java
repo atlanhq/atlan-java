@@ -145,7 +145,7 @@ public class GCSAssetTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.superType(IGCS.TYPE_NAME))
+                .where(Asset.SUPER_TYPE_NAMES.eq(IGCS.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .pageSize(10)
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())

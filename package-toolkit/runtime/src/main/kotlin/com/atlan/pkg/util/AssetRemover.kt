@@ -5,7 +5,6 @@ package com.atlan.pkg.util
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
-import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch
 import de.siegmar.fastcsv.reader.CsvReader
@@ -171,7 +170,7 @@ class AssetRemover(
                 .pageSize(QUERY_BATCH)
                 .where(Asset.QUALIFIED_NAME.`in`(qualifiedNamesToDelete))
         if (removeTypes.isNotEmpty()) {
-            builder.where(FluentSearch.assetTypes(removeTypes))
+            builder.where(Asset.TYPE_NAME.`in`(removeTypes))
         }
         if (removalPrefix.isNotBlank()) {
             builder.where(Asset.QUALIFIED_NAME.startsWith(removalPrefix))

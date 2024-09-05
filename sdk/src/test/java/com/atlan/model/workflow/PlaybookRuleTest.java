@@ -5,9 +5,10 @@ package com.atlan.model.workflow;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.PlaybookActionOperator;
 import com.atlan.model.enums.PlaybookActionType;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import java.io.IOException;
 import org.testng.annotations.Test;
@@ -17,7 +18,7 @@ public class PlaybookRuleTest {
     private static final PlaybookRule full = PlaybookRule.builder()
             .name("name")
             .config(PlaybookRuleConfig.builder()
-                    .query(IndexSearchRequest.builder(CompoundQuery.ACTIVE)
+                    .query(IndexSearchRequest.builder(Asset.STATUS.eq(AtlanStatus.ACTIVE))
                             .attribute("anchor")
                             .relationAttribute("guid")
                             .build())

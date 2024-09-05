@@ -215,7 +215,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.superType(IPreset.TYPE_NAME))
+                .where(Asset.SUPER_TYPE_NAMES.eq(IPreset.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .pageSize(10)
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())

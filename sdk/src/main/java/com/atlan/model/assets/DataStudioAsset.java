@@ -14,7 +14,6 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.GoogleDataStudioAssetType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
@@ -212,9 +211,9 @@ public class DataStudioAsset extends Asset
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+                FluentSearch.builder(client).where(Asset.TYPE_NAME.eq(TYPE_NAME));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }

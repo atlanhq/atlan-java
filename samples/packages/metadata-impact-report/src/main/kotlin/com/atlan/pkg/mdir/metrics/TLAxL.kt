@@ -8,7 +8,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.ISQL
 import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Table
-import com.atlan.model.search.FluentSearch
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.mdir.Reporter
 import mu.KLogger
@@ -33,7 +32,7 @@ class TLAxL(
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
-            .whereNot(FluentSearch.WITH_LINEAGE)
+            .withoutLineage()
             .pageSize(batchSize)
             .sort(Asset.SOURCE_TOTAL_COST.order(SortOrder.Desc))
             .sort(Table.SIZE_BYTES.order(SortOrder.Desc))

@@ -39,7 +39,7 @@ public class SearchLogRequest extends AtlanObject {
 
     public static final List<String> EXCLUDE_USERS = List.of("support", "atlansupport");
 
-    public static final Query VIEWED = FluentSearch.builder()
+    public static final Query VIEWED = FluentSearch._internal()
             .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_PROFILE))
             .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_SIDEBAR))
             .minSomes(1)
@@ -89,7 +89,7 @@ public class SearchLogRequest extends AtlanObject {
         if (excludeUsers != null) {
             exclusion.addAll(excludeUsers);
         }
-        Query viewedByGuid = FluentSearch.builder()
+        Query viewedByGuid = FluentSearch._internal()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(VIEWED)
                 .whereNot(SearchLogEntry.USER.in(exclusion))
@@ -120,7 +120,7 @@ public class SearchLogRequest extends AtlanObject {
         if (excludeUsers != null) {
             exclusion.addAll(excludeUsers);
         }
-        Query viewedByGuid = FluentSearch.builder()
+        Query viewedByGuid = FluentSearch._internal()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(SearchLogEntry.ENTITY_ID.eq(guid))
                 .where(VIEWED)

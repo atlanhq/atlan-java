@@ -7,7 +7,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AtlanEventPayload;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.AssetBatch;
@@ -221,7 +220,7 @@ public interface AtlanEventHandler {
             throws AtlanException {
         IndexSearchRequest request = client.assets
                 .select()
-                .where(CompoundQuery.assetType(fromEvent.getTypeName()))
+                .where(Asset.TYPE_NAME.eq(fromEvent.getTypeName()))
                 .where(Asset.QUALIFIED_NAME.eq(fromEvent.getQualifiedName()))
                 // Include attributes that are mandatory for updates, for some asset types
                 .includeOnResults(IGlossaryTerm.ANCHOR)

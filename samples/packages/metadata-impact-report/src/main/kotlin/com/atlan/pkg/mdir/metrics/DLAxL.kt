@@ -15,7 +15,6 @@ import com.atlan.model.assets.QuickSightDashboard
 import com.atlan.model.assets.SigmaPage
 import com.atlan.model.assets.SisenseDashboard
 import com.atlan.model.assets.TableauDashboard
-import com.atlan.model.search.FluentSearch
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.mdir.Reporter
 import mu.KLogger
@@ -40,7 +39,7 @@ class DLAxL(
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()
             .where(Asset.TYPE_NAME.`in`(DLA.DASHBOARD_LEVEL))
-            .whereNot(FluentSearch.WITH_LINEAGE)
+            .withoutLineage()
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
