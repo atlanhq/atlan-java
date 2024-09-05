@@ -14,7 +14,6 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.AssetBatch;
@@ -154,7 +153,7 @@ public class InstanceManager extends ExtendedModelGenerator {
         AtlanClient client = Atlan.getDefaultClient();
         IndexSearchRequest request = client.assets
                 .select()
-                .where(FluentSearch.assetTypes(List.of(GuacamoleTable.TYPE_NAME, GuacamoleColumn.TYPE_NAME)))
+                .where(Asset.TYPE_NAME.in(List.of(GuacamoleTable.TYPE_NAME, GuacamoleColumn.TYPE_NAME)))
                 .toRequest();
 
         try {
@@ -166,11 +165,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             log.error("Unable to search.", e);
         }
 
-        request = client.assets
-                .select()
-                .where(FluentSearch.assetType(GuacamoleColumn.TYPE_NAME))
-                .where(Asset.NAME.eq("column1"))
-                .toRequest();
+        request = GuacamoleColumn.select(client).where(Asset.NAME.eq("column1")).toRequest();
 
         try {
             IndexSearchResponse response = request.search();
@@ -181,9 +176,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             log.error("Unable to search.", e);
         }
 
-        request = client.assets
-                .select()
-                .where(FluentSearch.assetType(GuacamoleColumn.TYPE_NAME))
+        request = GuacamoleColumn.select(client)
                 .where(GuacamoleColumn.GUACAMOLE_WIDTH.gt(150L))
                 .toRequest();
 
@@ -196,9 +189,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             log.error("Unable to search.", e);
         }
 
-        request = client.assets
-                .select()
-                .where(FluentSearch.assetType(GuacamoleTable.TYPE_NAME))
+        request = GuacamoleTable.select(client)
                 .where(Asset.DESCRIPTION.startsWith("Now"))
                 .toRequest();
 

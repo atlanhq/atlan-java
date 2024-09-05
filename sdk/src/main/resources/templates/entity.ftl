@@ -44,7 +44,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
-import com.atlan.model.search.CompoundQuery;
 <#list classAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 <#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
@@ -245,9 +244,9 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
-                FluentSearch.builder(client).where(CompoundQuery.assetType(TYPE_NAME));
+                FluentSearch.builder(client).where(Asset.TYPE_NAME.eq(TYPE_NAME));
         if (!includeArchived) {
-            builder.where(CompoundQuery.ACTIVE);
+            builder.active();
         }
         return builder;
     }
