@@ -69,8 +69,8 @@ class AssetExporter(
             Atlan.getDefaultClient().assets
                 .select(ctx.includeArchived)
                 .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
-                .whereNot(FluentSearch.superTypes(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
-                .whereNot(FluentSearch.assetTypes(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
+                .whereNot(Asset.SUPER_TYPE_NAMES.`in`(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
+                .whereNot(Asset.TYPE_NAME.`in`(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
         if (ctx.assetsExportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.DISPLAY_NAME.hasAnyValue())
@@ -91,7 +91,7 @@ class AssetExporter(
             }
         }
         if (ctx.limitToAssets.isNotEmpty()) {
-            builder.where(FluentSearch.assetTypes(ctx.limitToAssets))
+            builder.where(Asset.TYPE_NAME.`in`(ctx.limitToAssets))
         }
         return builder
     }

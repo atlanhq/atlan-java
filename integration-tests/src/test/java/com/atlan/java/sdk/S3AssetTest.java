@@ -256,7 +256,7 @@ public class S3AssetTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.superType(IS3.TYPE_NAME))
+                .where(Asset.SUPER_TYPE_NAMES.eq(IS3.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .where(IAWS.AWS_ARN.hasAnyValue())
                 .pageSize(10)
@@ -306,7 +306,7 @@ public class S3AssetTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.superType(IS3.TYPE_NAME))
+                .where(Asset.SUPER_TYPE_NAMES.eq(IS3.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .whereNot(IAWS.AWS_ARN.hasAnyValue())
                 .pageSize(10)

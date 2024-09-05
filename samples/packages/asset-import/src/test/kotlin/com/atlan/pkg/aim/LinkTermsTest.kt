@@ -14,7 +14,6 @@ import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
-import com.atlan.model.search.FluentSearch
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
@@ -206,7 +205,7 @@ class LinkTermsTest : PackageTest() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request =
             Atlan.getDefaultClient().assets.select()
-                .where(FluentSearch.assetTypes(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
+                .where(Asset.TYPE_NAME.`in`(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
                 .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Asset.NAME)
                 .includeOnResults(Asset.ASSIGNED_TERMS)

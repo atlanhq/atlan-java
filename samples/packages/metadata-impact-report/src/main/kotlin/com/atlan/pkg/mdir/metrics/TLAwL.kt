@@ -4,7 +4,6 @@ package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.search.FluentSearch
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.mdir.Reporter
 import mu.KLogger
@@ -27,7 +26,7 @@ class TLAwL(
     override fun query(): FluentSearchBuilder<*, *> {
         return client.assets.select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
-            .where(FluentSearch.WITH_LINEAGE)
+            .withLineage()
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(5))

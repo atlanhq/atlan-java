@@ -12,7 +12,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanLineageDirection;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.*;
-import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import java.util.List;
@@ -228,7 +227,7 @@ public class LineageTest extends AtlanLiveTest {
                     || a instanceof MaterializedView
                     || a instanceof View);
         });
-        List<Asset> results = response.stream().collect(Collectors.toList());
+        List<Asset> results = response.stream().toList();
         assertEquals(results.size(), 5);
         Asset one = results.get(0);
         assertTrue(one instanceof Table);
@@ -326,8 +325,8 @@ public class LineageTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.WITH_LINEAGE)
-                .where(CompoundQuery.superType(ISQL.TYPE_NAME))
+                .withLineage()
+                .where(Asset.SUPER_TYPE_NAMES.eq(ISQL.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .includeOnResults(Asset.NAME)
                 .includeOnResults(Asset.HAS_LINEAGE)

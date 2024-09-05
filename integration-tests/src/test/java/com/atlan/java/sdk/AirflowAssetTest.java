@@ -148,7 +148,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
                 .select()
-                .where(CompoundQuery.superType(IAirflow.TYPE_NAME))
+                .where(Asset.SUPER_TYPE_NAMES.eq(IAirflow.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .pageSize(10)
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
