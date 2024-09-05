@@ -79,25 +79,6 @@ public class AtlanTagDef extends TypeDef {
      *
      * @param displayName the human-readable name for the Atlan tag
      * @param url URL to an image to use for the Atlan tag
-     * @param color the color to use for the Atlan tag
-     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
-     * @throws AtlanException on any issues uploading the image from the provided URL
-     * @deprecated see {@link #creator(String, String)}
-     */
-    @Deprecated
-    public static AtlanTagDefBuilder<?, ?> creator(String displayName, String url, AtlanTagColor color)
-            throws AtlanException {
-        return AtlanTagDef.builder()
-                .name(displayName)
-                .displayName(displayName)
-                .options(AtlanTagOptions.withImage(url, color));
-    }
-
-    /**
-     * Builds the minimal object necessary to create an Atlan tag definition.
-     *
-     * @param displayName the human-readable name for the Atlan tag
-     * @param url URL to an image to use for the Atlan tag
      * @return the minimal request necessary to create the Atlan tag typedef, as a builder
      * @throws AtlanException on any issues uploading the image from the provided URL
      */

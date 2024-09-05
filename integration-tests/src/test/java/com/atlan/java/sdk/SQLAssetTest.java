@@ -966,18 +966,8 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"asset.update.column.addAtlanTagDuplicate"},
-            dependsOnGroups = {"asset.update.column.addAtlanTags"})
-    @SuppressWarnings("deprecation")
-    void updateColumnAddAtlanTagDuplicate() {
-        assertThrows(
-                InvalidRequestException.class,
-                () -> Column.addAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1)));
-    }
-
-    @Test(
             groups = {"asset.update.column.removeAtlanTag"},
-            dependsOnGroups = {"asset.update.column.addAtlanTagDuplicate"})
+            dependsOnGroups = {"asset.update.column.addAtlanTags"})
     void updateColumnRemoveAtlanTag() throws AtlanException {
         Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2);
         Column column = Column.get(column5.getGuid());

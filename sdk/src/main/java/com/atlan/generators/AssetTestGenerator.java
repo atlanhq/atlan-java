@@ -43,7 +43,6 @@ public class AssetTestGenerator extends AssetGenerator {
         private String builderMethod;
         private List<String> values;
         private List<String> rawValues;
-        private Set<SearchFieldGenerator.Field> searchFields;
         private boolean inherited;
         private boolean relationship;
         private String relatedTypeOriginal;
@@ -83,10 +82,7 @@ public class AssetTestGenerator extends AssetGenerator {
                             builderMethod = attribute.getSingular();
                         }
                     }
-                    builder.builderMethod(builderMethod)
-                            .inherited(fromSuperType)
-                            .searchFields(cache.getCachedSearchFields(
-                                    assetGenerator.getOriginalName(), attribute.getOriginalName()));
+                    builder.builderMethod(builderMethod).inherited(fromSuperType);
                     switch (type.getType()) {
                         case PRIMITIVE:
                             addPrimitive(builder, multiValued, type.getName(), type.getContainer());

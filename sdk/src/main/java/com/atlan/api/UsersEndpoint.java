@@ -349,64 +349,6 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
-     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
-     * allow them to login again once completed.
-     *
-     * @param id the unique identifier (GUID) of the user to activate
-     * @return the result of the update to the user
-     * @throws AtlanException on any error during API invocation
-     * @deprecated this operation is no longer allowed programmatically
-     */
-    @Deprecated
-    public UserMinimalResponse activate(String id) throws AtlanException {
-        return activate(id, null);
-    }
-
-    /**
-     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
-     * allow them to login again once completed.
-     *
-     * @param id the unique identifier (GUID) of the user to activate
-     * @param options to override default client settings
-     * @return the result of the update to the user
-     * @throws AtlanException on any error during API invocation
-     * @deprecated this operation is no longer allowed programmatically
-     */
-    @Deprecated
-    public UserMinimalResponse activate(String id, RequestOptions options) throws AtlanException {
-        return update(id, AtlanUser.builder().enabled(true).build(), options);
-    }
-
-    /**
-     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
-     * prevent them logging in once completed.
-     *
-     * @param id the unique identifier (GUID) of the user to deactivate
-     * @return the result of the update to the user
-     * @throws AtlanException on any error during API invocation
-     * @deprecated this operation is no longer allowed programmatically
-     */
-    @Deprecated
-    public UserMinimalResponse deactivate(String id) throws AtlanException {
-        return deactivate(id, null);
-    }
-
-    /**
-     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
-     * prevent them logging in once completed.
-     *
-     * @param id the unique identifier (GUID) of the user to deactivate
-     * @param options to override default client settings
-     * @return the result of the update to the user
-     * @throws AtlanException on any error during API invocation
-     * @deprecated this operation is no longer allowed programmatically
-     */
-    @Deprecated
-    public UserMinimalResponse deactivate(String id, RequestOptions options) throws AtlanException {
-        return update(id, AtlanUser.builder().enabled(false).build(), options);
-    }
-
-    /**
      * Create a new user.
      *
      * @param user the details of the new user

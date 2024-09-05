@@ -163,31 +163,6 @@ public class AtlanGroup extends AtlanObject {
      *
      * @return the list of groups currently defined in Atlan
      * @throws AtlanException on any error during API invocation
-     * @deprecated see {@link #list()} instead
-     */
-    @Deprecated
-    public static List<AtlanGroup> retrieveAll() throws AtlanException {
-        return list();
-    }
-
-    /**
-     * Retrieves all groups currently defined in Atlan.
-     *
-     * @param client connectivity to the Atlan tenant from which to list the groups
-     * @return the list of groups currently defined in Atlan
-     * @throws AtlanException on any error during API invocation
-     * @deprecated see {@link #list(AtlanClient)} instead
-     */
-    @Deprecated
-    public static List<AtlanGroup> retrieveAll(AtlanClient client) throws AtlanException {
-        return list(client);
-    }
-
-    /**
-     * Retrieves all groups currently defined in Atlan.
-     *
-     * @return the list of groups currently defined in Atlan
-     * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> list() throws AtlanException {
         return list(Atlan.getDefaultClient());
@@ -202,39 +177,6 @@ public class AtlanGroup extends AtlanObject {
      */
     public static List<AtlanGroup> list(AtlanClient client) throws AtlanException {
         return client.groups.list();
-    }
-
-    /**
-     * Retrieves all groups with a name that contains the provided string.
-     * (This could include a complete group name, in which case there should be at
-     * most a single item in the returned list, or could be a partial group name
-     * to retrieve all groups with that naming convention.)
-     *
-     * @param alias name (as it appears in the UI) on which to filter the groups
-     * @return all groups whose name (in the UI) contains the provided string
-     * @throws AtlanException on any error during API invocation
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static List<AtlanGroup> retrieveByName(String alias) throws AtlanException {
-        return get(alias);
-    }
-
-    /**
-     * Retrieves all groups with a name that contains the provided string.
-     * (This could include a complete group name, in which case there should be at
-     * most a single item in the returned list, or could be a partial group name
-     * to retrieve all groups with that naming convention.)
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the group
-     * @param alias name (as it appears in the UI) on which to filter the groups
-     * @return all groups whose name (in the UI) contains the provided string
-     * @throws AtlanException on any error during API invocation
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static List<AtlanGroup> retrieveByName(AtlanClient client, String alias) throws AtlanException {
-        return get(client, alias);
     }
 
     /**

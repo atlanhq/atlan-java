@@ -8,12 +8,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.AssetFilter;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
-import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
@@ -190,71 +188,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     }
 
     /**
-     * Start an asset filter that will return all Readme assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Readme assets will be included.
-     *
-     * @return an asset filter that includes all Readme assets
-     * @deprecated replaced by {@link #select()}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all() {
-        return all(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start an asset filter that will return all Readme assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Readme assets will be included.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return an asset filter that includes all Readme assets
-     * @deprecated replaced by {@link #select(AtlanClient)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
-        return all(client, false);
-    }
-
-    /**
-     * Start an asset filter that will return all Readme assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Readmes will be included
-     * @return an asset filter that includes all Readme assets
-     * @deprecated replaced by {@link #select(boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
-        return all(Atlan.getDefaultClient(), includeArchived);
-    }
-
-    /**
-     * Start an asset filter that will return all Readme assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) Readmes will be included
-     * @return an asset filter that includes all Readme assets
-     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder =
-                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
-        if (!includeArchived) {
-            builder.filter(QueryFactory.active());
-        }
-        return builder;
-    }
-
-    /**
      * Reference to a Readme by GUID. Use this to create a relationship to this Readme,
      * where the relationship should be replaced.
      *
@@ -361,60 +294,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Retrieves a Readme by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static Readme retrieveByGuid(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Retrieves a Readme by its GUID, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static Readme retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        return get(client, guid);
-    }
-
-    /**
-     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return get(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param qualifiedName of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static Readme retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
-        return get(client, qualifiedName);
     }
 
     /**

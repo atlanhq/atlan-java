@@ -252,7 +252,8 @@ public class AirflowAssetTest extends AtlanLiveTest {
                 "airflow.search.*",
                 "airflow.update.*",
                 "airflow.purge.task"
-            })
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }

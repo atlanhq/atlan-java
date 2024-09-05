@@ -149,61 +149,6 @@ public class AssetBatch {
      * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @deprecated see constructor without typeName parameter
-     */
-    @Deprecated
-    public AssetBatch(AtlanClient client, String typeName, int maxSize) {
-        this(client, maxSize, false, CustomMetadataHandling.IGNORE);
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved.
-     *
-     * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @deprecated see constructor without typeName parameter
-     */
-    @Deprecated
-    public AssetBatch(
-            AtlanClient client,
-            String typeName,
-            int maxSize,
-            boolean replaceAtlanTags,
-            CustomMetadataHandling customMetadataHandling) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, false);
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved.
-     *
-     * @param client connectivity to Atlan
-     * @param typeName name of the type of assets to batch process (unused, for backwards compatibility only)
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
-     * @deprecated see constructor without typeName parameter
-     */
-    @Deprecated
-    public AssetBatch(
-            AtlanClient client,
-            String typeName,
-            int maxSize,
-            boolean replaceAtlanTags,
-            CustomMetadataHandling customMetadataHandling,
-            boolean captureFailures) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures);
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved.
-     *
-     * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
      * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)

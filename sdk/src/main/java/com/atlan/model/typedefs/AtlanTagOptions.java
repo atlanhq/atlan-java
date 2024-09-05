@@ -57,35 +57,6 @@ public class AtlanTagOptions extends AtlanObject {
     }
 
     /**
-     * Provide Atlan tag options that set the image and color for the tag, using an uploaded image.
-     *
-     * @param url URL to the image to use for the Atlan tag
-     * @param color to use to represent the Atlan tag
-     * @return the necessary options for setting this image and color for the Atlan tag
-     * @throws AtlanException on any API communication issues trying to upload the image
-     * @deprecated see {@link #withImage(String)}
-     */
-    @Deprecated
-    public static AtlanTagOptions withImage(String url, AtlanTagColor color) throws AtlanException {
-        return withImage(Atlan.getDefaultClient(), url, color);
-    }
-
-    /**
-     * Provide Atlan tag options that set the image and color for the tag, using an uploaded image.
-     *
-     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
-     * @param url URL to the image to use for the Atlan tag
-     * @param color to use to represent the Atlan tag
-     * @return the necessary options for setting this image and color for the Atlan tag
-     * @throws AtlanException on any API communication issues trying to upload the image
-     * @deprecated see {@link #withImage(AtlanClient, String)}
-     */
-    @Deprecated
-    public static AtlanTagOptions withImage(AtlanClient client, String url, AtlanTagColor color) throws AtlanException {
-        return withImage(client, url);
-    }
-
-    /**
      * Provide Atlan tag options that set the image for the tag, using an uploaded image.
      *
      * @param url URL to the image to use for the Atlan tag

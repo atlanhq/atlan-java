@@ -30,25 +30,6 @@
     }
 
     /**
-     * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
-     * glossaryQualifiedName must be provided.
-     *
-     * @param name of the term
-     * @param glossaryGuid unique identifier of the term's glossary
-     * @param glossaryQualifiedName unique name of the term's glossary
-     * @return the minimal request necessary to create the term, as a builder
-     * @deprecated see {@link #creator(String, String)} instead
-     */
-    @Deprecated
-    public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
-        if (glossaryGuid != null) {
-            return creator(name, glossaryGuid);
-        } else {
-            return creator(name, glossaryQualifiedName);
-        }
-    }
-
-    /**
      * Builds the minimal object necessary to update a GlossaryTerm.
      *
      * @param qualifiedName of the GlossaryTerm

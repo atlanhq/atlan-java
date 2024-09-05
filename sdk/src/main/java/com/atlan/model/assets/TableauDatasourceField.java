@@ -8,14 +8,12 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.CompoundQuery;
 import com.atlan.model.search.FluentSearch;
-import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -245,71 +243,6 @@ public class TableauDatasourceField extends Asset
     }
 
     /**
-     * Start an asset filter that will return all TableauDatasourceField assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) TableauDatasourceField assets will be included.
-     *
-     * @return an asset filter that includes all TableauDatasourceField assets
-     * @deprecated replaced by {@link #select()}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all() {
-        return all(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start an asset filter that will return all TableauDatasourceField assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) TableauDatasourceField assets will be included.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return an asset filter that includes all TableauDatasourceField assets
-     * @deprecated replaced by {@link #select(AtlanClient)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
-        return all(client, false);
-    }
-
-    /**
-     * Start an asset filter that will return all TableauDatasourceField assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) TableauDatasourceFields will be included
-     * @return an asset filter that includes all TableauDatasourceField assets
-     * @deprecated replaced by {@link #select(boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
-        return all(Atlan.getDefaultClient(), includeArchived);
-    }
-
-    /**
-     * Start an asset filter that will return all TableauDatasourceField assets.
-     * Additional conditions can be chained onto the returned filter before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) TableauDatasourceFields will be included
-     * @return an asset filter that includes all TableauDatasourceField assets
-     * @deprecated replaced by {@link #select(AtlanClient, boolean)}
-     */
-    @Deprecated
-    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder =
-                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
-        if (!includeArchived) {
-            builder.filter(QueryFactory.active());
-        }
-        return builder;
-    }
-
-    /**
      * Reference to a TableauDatasourceField by GUID. Use this to create a relationship to this TableauDatasourceField,
      * where the relationship should be replaced.
      *
@@ -417,61 +350,6 @@ public class TableauDatasourceField extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Retrieves a TableauDatasourceField by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the TableauDatasourceField to retrieve
-     * @return the requested full TableauDatasourceField, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasourceField does not exist or the provided GUID is not a TableauDatasourceField
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static TableauDatasourceField retrieveByGuid(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Retrieves a TableauDatasourceField by its GUID, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param guid of the TableauDatasourceField to retrieve
-     * @return the requested full TableauDatasourceField, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasourceField does not exist or the provided GUID is not a TableauDatasourceField
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static TableauDatasourceField retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        return get(client, guid);
-    }
-
-    /**
-     * Retrieves a TableauDatasourceField by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the TableauDatasourceField to retrieve
-     * @return the requested full TableauDatasourceField, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasourceField does not exist
-     * @deprecated see {@link #get(String)} instead
-     */
-    @Deprecated
-    public static TableauDatasourceField retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        return get(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Retrieves a TableauDatasourceField by its qualifiedName, complete with all of its relationships.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param qualifiedName of the TableauDatasourceField to retrieve
-     * @return the requested full TableauDatasourceField, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasourceField does not exist
-     * @deprecated see {@link #get(AtlanClient, String)} instead
-     */
-    @Deprecated
-    public static TableauDatasourceField retrieveByQualifiedName(AtlanClient client, String qualifiedName)
-            throws AtlanException {
-        return get(client, qualifiedName);
     }
 
     /**
@@ -897,93 +775,6 @@ public class TableauDatasourceField extends Asset
             boolean restrictLineagePropagation)
             throws AtlanException {
         return (TableauDatasourceField) Asset.appendAtlanTags(
-                client,
-                TYPE_NAME,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
-    }
-
-    /**
-     * Add Atlan tags to a TableauDatasourceField.
-     *
-     * @param qualifiedName of the TableauDatasourceField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDatasourceField
-     * @deprecated see {@link #appendAtlanTags(String, List)} instead
-     */
-    @Deprecated
-    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a TableauDatasourceField.
-     *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauDatasourceField
-     * @param qualifiedName of the TableauDatasourceField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDatasourceField
-     * @deprecated see {@link #appendAtlanTags(String, List)} instead
-     */
-    @Deprecated
-    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a TableauDatasourceField.
-     *
-     * @param qualifiedName of the TableauDatasourceField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDatasourceField
-     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
-     */
-    @Deprecated
-    public static void addAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        addAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
-    }
-
-    /**
-     * Add Atlan tags to a TableauDatasourceField.
-     *
-     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauDatasourceField
-     * @param qualifiedName of the TableauDatasourceField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDatasourceField
-     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
-     */
-    @Deprecated
-    public static void addAtlanTags(
-            AtlanClient client,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        Asset.addAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
