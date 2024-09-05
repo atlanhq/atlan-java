@@ -113,6 +113,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#active()" class="member-name-link">active</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a condition that matches only active assets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#archived()" class="member-name-link">archived</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a condition that matches only archived assets.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">C</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -126,34 +136,60 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearWhereSomes()" class="member-name-link">clearWhereSomes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#minSomes(int)" class="member-name-link">minSomes</a><wbr>(int&nbsp;minSomes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#client(com.atlan.AtlanClient)" class="member-name-link">client</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Client through which to run the search.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#minSomes(int)" class="member-name-link">minSomes</a><wbr>(int&nbsp;minSomes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The minimum number of criteria in the "whereSomes" that must match on each search result.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#where(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">where</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;where)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tagged(boolean)" class="member-name-link">tagged</a><wbr>(boolean&nbsp;directly)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tagged(java.util.Collection)" class="member-name-link">tagged</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;atlanTagNames)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
+ provided.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereNot(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">whereNot</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;whereNot)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#where(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">where</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;where)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereNots(java.util.Collection)" class="member-name-link">whereNots</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;whereNots)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereNot(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">whereNot</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;whereNot)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wheres(java.util.Collection)" class="member-name-link">wheres</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;wheres)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereNots(java.util.Collection)" class="member-name-link">whereNots</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;whereNots)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereSome(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">whereSome</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;whereSome)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wheres(java.util.Collection)" class="member-name-link">wheres</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;wheres)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereSomes(java.util.Collection)" class="member-name-link">whereSomes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;whereSomes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereSome(co.elastic.clients.elasticsearch._types.query_dsl.Query)" class="member-name-link">whereSome</a><wbr>(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;whereSome)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#whereSomes(java.util.Collection)" class="member-name-link">whereSomes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends co.elastic.clients.elasticsearch._types.query_dsl.Query&gt;&nbsp;whereSomes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withLineage()" class="member-name-link">withLineage</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a condition that matches only assets with lineage.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withoutLineage()" class="member-name-link">withoutLineage</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a condition that matches only assets without lineage.</div>
+</div>
 </div>
 </div>
 </div>
@@ -185,6 +221,96 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="tagged(java.util.Collection)">
+<h3>tagged</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">tagged</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;atlanTagNames)</span>
+         throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
+ provided. This will match irrespective of the Atlan tag being directly applied to the
+ asset, or if it was propagated to the asset.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags</dd>
+<dt>Returns:</dt>
+<dd>a query that will only match assets that have at least one of the Atlan tags provided</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with the API to refresh the Atlan tag cache</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="tagged(boolean)">
+<h3>tagged</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">tagged</span><wbr><span class="parameters">(boolean&nbsp;directly)</span></div>
+<div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>directly</code> - when true, the asset must have at least one Atlan tag directly assigned (otherwise even propagated tags will suffice)</dd>
+<dt>Returns:</dt>
+<dd>a query that will only match assets that have at least one Atlan tag directly assigned</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="active()">
+<h3>active</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">active</span>()</div>
+<div class="block">Adds a condition that matches only active assets.
+ Note: this is mutually-exclusive with <a href="#archived()"><code>archived()</code></a> -- if you want both, specify neither.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the search builder with a condition that will only match assets that are active</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="archived()">
+<h3>archived</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">archived</span>()</div>
+<div class="block">Adds a condition that matches only archived assets.
+ Note: this is mutually-exclusive with <a href="#active()"><code>active()</code></a> -- if you want both, specify neither.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the search builder with a condition that will only match assets that are active</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withLineage()">
+<h3>withLineage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">withLineage</span>()</div>
+<div class="block">Adds a condition that matches only assets with lineage.
+ Note: this is mutually-exclusive with <a href="#withoutLineage()"><code>withoutLineage()</code></a> -- if you want both, specify neither.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the search builder with a condition that will only match assets that have lineage</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withoutLineage()">
+<h3>withoutLineage</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">withoutLineage</span>()</div>
+<div class="block">Adds a condition that matches only assets without lineage.
+ Note: this is mutually-exclusive with <a href="#withLineage()"><code>withLineage()</code></a> -- if you want both, specify neither.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the search builder with a condition that will only match assets that do NOT have lineage</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="client(com.atlan.AtlanClient)">
+<h3>client</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a></span>&nbsp;<span class="element-name">client</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</span></div>
+<div class="block">Client through which to run the search.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="where(co.elastic.clients.elasticsearch._types.query_dsl.Query)">
 <h3>where</h3>

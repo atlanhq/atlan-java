@@ -45,13 +45,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="AuditSearch.html" title="class in com.atlan.model.search">AuditSearch</a></code>, <code><a href="FluentSearch.html" title="class in com.atlan.model.search">FluentSearch</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CompoundQuery</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">CompoundQuery</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Class to compose compound queries combining various conditions.
  (Along with some static factory methods for some of the most common queries.)</div>
@@ -99,30 +99,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CompoundQuery.CompoundQueryBuilder.html" class="type-name-link" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">C</a> extends <a href="CompoundQuery.html" title="class in com.atlan.model.search">CompoundQuery</a>,<wbr><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a> extends <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;<a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">C</a>,<wbr><a href="CompoundQuery.CompoundQueryBuilder.html" title="type parameter in CompoundQuery.CompoundQueryBuilder">B</a>&gt;&gt;</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<!-- =========== FIELD SUMMARY =========== -->
-<li>
-<section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color"><code><a href="#ACTIVE" class="member-name-link">ACTIVE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color"><code><a href="#ARCHIVED" class="member-name-link">ARCHIVED</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color"><code><a href="#WITH_LINEAGE" class="member-name-link">WITH_LINEAGE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color"><code><a href="#WITHOUT_LINEAGE" class="member-name-link">WITHOUT_LINEAGE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -146,65 +122,20 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#assetType(java.lang.String)" class="member-name-link">assetType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets of the type provided.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#assetTypes(java.util.Collection)" class="member-name-link">assetTypes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;typeNames)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets that are one of the types provided.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#assignedTerm()" class="member-name-link">assignedTerm</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#assignedTerm(java.util.Collection)" class="member-name-link">assignedTerm</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;termQualifiedNames)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#builder()" class="member-name-link">builder</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#superType(java.lang.String)" class="member-name-link">superType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#superTypes(java.util.Collection)" class="member-name-link">superTypes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;typeNames)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will match all assets that are a subtype of one of the types provided.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#tagged(boolean)" class="member-name-link">tagged</a><wbr>(boolean&nbsp;directly)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#tagged(com.atlan.AtlanClient,java.util.Collection)" class="member-name-link">tagged</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;atlanTagNames)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
- provided.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toQuery()" class="member-name-link">toQuery</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toQuery()" class="member-name-link">toQuery</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the Atlan compound query into an Elastic Query object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toUnfilteredQuery()" class="member-name-link">toUnfilteredQuery</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toUnfilteredQuery()" class="member-name-link">toUnfilteredQuery</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the Atlan compound query into an Elastic Query object, with an outer
  bool query and inner filtered bool query (necessary for some UI elements).</div>
 </div>
@@ -220,38 +151,6 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ FIELD DETAIL =========== -->
-<li>
-<section class="field-details" id="field-detail">
-<h2>Field Details</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="ACTIVE">
-<h3>ACTIVE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">ACTIVE</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="ARCHIVED">
-<h3>ARCHIVED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">ARCHIVED</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="WITH_LINEAGE">
-<h3>WITH_LINEAGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">WITH_LINEAGE</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="WITHOUT_LINEAGE">
-<h3>WITHOUT_LINEAGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">WITHOUT_LINEAGE</span></div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -271,115 +170,6 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
-<li>
-<section class="detail" id="assetType(java.lang.String)">
-<h3>assetType</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">assetType</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</span></div>
-<div class="block">Returns a query that will only match assets of the type provided.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeName</code> - for assets to match</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets of the type provided</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="assetTypes(java.util.Collection)">
-<h3>assetTypes</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">assetTypes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;typeNames)</span></div>
-<div class="block">Returns a query that will only match assets that are one of the types provided.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeNames</code> - for assets to match</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets of the types provided</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="superType(java.lang.String)">
-<h3>superType</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">superType</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</span></div>
-<div class="block">Returns a query that will match all assets that are a subtype of the type provided.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeName</code> - of the supertype for assets to match</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets of a subtype of the type provided</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="superTypes(java.util.Collection)">
-<h3>superTypes</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">superTypes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;typeNames)</span></div>
-<div class="block">Returns a query that will match all assets that are a subtype of one of the types provided.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeNames</code> - of the supertypes for assets to match</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets of a subtype of the types provided</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="tagged(com.atlan.AtlanClient,java.util.Collection)">
-<h3>tagged</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">tagged</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;atlanTagNames)</span>
-                                                                      throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
- provided. This will match irrespective of the Atlan tag being directly applied to the
- asset, or if it was propagated to the asset.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to Atlan</dd>
-<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets that have at least one of the Atlan tags provided</dd>
-<dt>Throws:</dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with the API to refresh the Atlan tag cache</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="tagged(boolean)">
-<h3>tagged</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">tagged</span><wbr><span class="parameters">(boolean&nbsp;directly)</span></div>
-<div class="block">Returns a query that will only match assets that have at least one Atlan tag assigned.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>directly</code> - when true, the asset must have at least one Atlan tag directly assigned (otherwise even propagated tags will suffice)</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets that have at least one Atlan tag directly assigned</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="assignedTerm()">
-<h3>assignedTerm</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">assignedTerm</span>()</div>
-<div class="block">Returns a query that will only match assets that have at least one term assigned.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>a query that will only match assets that have at least one term assigned</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="assignedTerm(java.util.Collection)">
-<h3>assignedTerm</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">assignedTerm</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;termQualifiedNames)</span></div>
-<div class="block">Returns a query that will only match assets that have at least one of the terms assigned.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>termQualifiedNames</code> - the qualifiedNames of the terms</dd>
-<dt>Returns:</dt>
-<dd>a query that will only match assets that have at least one of the terms assigned</dd>
-</dl>
-</section>
-</li>
 <li>
 <section class="detail" id="toQuery()">
 <h3>toQuery</h3>
@@ -401,12 +191,6 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the Elastic Query object that represents the compound query</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="builder()">
-<h3>builder</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CompoundQuery.CompoundQueryBuilder.html" title="class in com.atlan.model.search">CompoundQuery.CompoundQueryBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">builder</span>()</div>
 </section>
 </li>
 </ul>
