@@ -11,30 +11,6 @@ dependencies {
     testImplementation(libs.bundles.log4j)
 }
 
-testing {
-    suites {
-        val test by getting(JvmTestSuite::class) {
-            useTestNG()
-            targets {
-                all {
-                    testTask.configure {
-                        testLogging.showStandardStreams = true
-                        options {
-                            val options = this as TestNGOptions
-                            options.suites("src/test/resources/testng.xml")
-                        }
-                    }
-                }
-            }
-            sources {
-                java {
-                    setSrcDirs(listOf("src/test/java"))
-                }
-            }
-        }
-    }
-}
-
 tasks {
     test {
         useTestNG {
@@ -42,6 +18,7 @@ tasks {
             options {
                 parallel = "classes"
                 threadCount = 1
+                testLogging.showStandardStreams = true
             }
         }
         onlyIf {
