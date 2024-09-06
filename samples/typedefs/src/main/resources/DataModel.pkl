@@ -81,25 +81,21 @@ shared {
         label = "Model"
         description = "System date for the data model."
         type = "date"
-        indexAs = "text"
       }
       ["\(a)\(dataModel)\(businessDate)"] {
         label = "Model"
         description = "Business date for the data model."
         type = "date"
-        indexAs = "text"
       }
       ["\(a)\(dataModel)\(expiredAtSystemDate)"] {
         label = "Model"
         description = "System expiration date for the data model."
         type = "date"
-        indexAs = "text"
       }
       ["\(a)\(dataModel)\(expiredAtBusinessDate)"] {
         label = "Model"
         description = "Business expiration date for the data model."
         type = "date"
-        indexAs = "text"
       }
     }
   }
