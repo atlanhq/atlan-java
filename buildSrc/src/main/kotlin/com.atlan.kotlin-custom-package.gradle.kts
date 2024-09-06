@@ -43,26 +43,6 @@ pkl {
     }
 }
 
-testing {
-    suites {
-        val test by getting(JvmTestSuite::class) {
-            useTestNG()
-            targets {
-                all {
-                    testTask.configure {
-                        testLogging.showStandardStreams = true
-                    }
-                }
-            }
-            sources {
-                java {
-                    setSrcDirs(listOf("src/test/kotlin"))
-                }
-            }
-        }
-    }
-}
-
 tasks {
     jar {
         destinationDirectory.set(file(jarPath))
@@ -73,6 +53,7 @@ tasks {
             options {
                 parallel = "classes"
                 threadCount = 1
+                testLogging.showStandardStreams = true
             }
         }
         onlyIf {
