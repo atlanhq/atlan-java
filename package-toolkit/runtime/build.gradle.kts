@@ -53,6 +53,22 @@ dependencies {
     testImplementation(project(":mocks"))
 }
 
+pkl {
+    evaluators {
+        register("genPklConnectors") {
+            sourceModules.add("src/main/resources/csa-connectors-objectstore.pkl")
+            modulePath.from(file("../config/src/main/resources"))
+            outputFormat.set("yaml")
+            multipleFileOutputDir.set(layout.projectDirectory.dir("build"))
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 tasks {
     shadowJar {
         isZip64 = true
@@ -234,31 +250,19 @@ tasks {
     assemble {
         dependsOn("genPklConnectors")
     }
-}
 
-pkl {
-    evaluators {
-        register("genPklConnectors") {
-            sourceModules.add("src/main/resources/csa-connectors-objectstore.pkl")
-            modulePath.from(file("../config/src/main/resources"))
-            outputFormat.set("yaml")
-            multipleFileOutputDir.set(layout.projectDirectory.dir("build"))
-        }
+    getByName("genPklConnectors") {
+        dependsOn(":package-toolkit:config:generateBuildInfo")
     }
-}
-
-tasks.getByName("genPklConnectors") {
-    dependsOn(":package-toolkit:config:generateBuildInfo")
-    finalizedBy(
-        ":package-toolkit:runtime:sourcesJar",
-        ":package-toolkit:runtime:javadocJar",
-        ":package-toolkit:runtime:test",
-    )
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
+    getByName("sourcesJar") {
+        dependsOn("genPklConnectors")
+    }
+    getByName("javadocJar") {
+        dependsOn("genPklConnectors")
+    }
+    getByName("test") {
+        dependsOn("genPklConnectors")
+    }
 }
 
 publishing {

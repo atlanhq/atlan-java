@@ -13,6 +13,11 @@ dependencies {
     implementation(project(":samples:packages:asset-import"))
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 tasks {
     shadowJar {
         isZip64 = true
@@ -30,11 +35,9 @@ tasks {
         actions = listOf()
         doLast { shadowJar }
     }
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
+    getByName("sourcesJar") {
+        dependsOn("genCustomPkg")
+    }
 }
 
 publishing {
