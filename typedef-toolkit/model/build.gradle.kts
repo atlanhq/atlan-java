@@ -128,9 +128,10 @@ signing {
 }
 
 spotless {
-    // For now disable the check, as generated code will not be properly formatted
-    isEnforceCheck = false
-    /*kotlin {
-        ignoreErrorForPath("src/main/kotlin/CustomAtlanModel.kt")
-    }*/
+    // For now disable the check on generated code, as it will not be properly formatted
+    kotlin {
+        targetExclude(
+            "src/main/kotlin/com/atlan/typedef/Model.kt",
+        )
+    }
 }
