@@ -23,5 +23,4 @@ data class AdminExportCfg(
     @JsonProperty("target_prefix") val targetPrefix: String? = null,
     @JsonProperty("target_key") val targetKey: String? = null,
     @JsonProperty("cloud_target") val cloudTarget: String? = null,
-    @JsonProperty("filename") val filename: String? = null,
 ) : CustomConfig()
