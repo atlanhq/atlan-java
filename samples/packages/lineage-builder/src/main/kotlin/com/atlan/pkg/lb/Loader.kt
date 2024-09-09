@@ -67,7 +67,7 @@ object Loader {
                     assetSemantic = lineageAssetSemantic,
                 )
 
-            // 1. Transform the assets, so we can load the prior to creating any lineage relationships
+            // 1. Transform the assets, so we can load them prior to creating any lineage relationships
             logger.info { "=== Processing assets... ===" }
             val assetsFile = "$outputDirectory${File.separator}CSA_LB_assets.csv"
             val assetXform =

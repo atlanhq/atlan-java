@@ -67,30 +67,34 @@ class LineageTransformer(
                 val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
                 val connectionId = Loader.ConnectionId(xformConnector, xformConnection)
                 val connectionQN = ctx.connectionMap.getOrDefault(connectionId, "")
-                val qualifiedName =
-                    LineageProcess.generateQualifiedName(
-                        name,
-                        connectionQN,
-                        inputRow[XFORM_IDENTITY],
-                        listOf(source as ICatalog),
-                        listOf(target as ICatalog),
-                        null,
-                    )
-                val row =
-                    mutableListOf(
-                        LineageProcess.TYPE_NAME,
-                        qualifiedName,
-                        name,
-                        connectionQN,
-                        xformConnector,
-                        AssetRefXformer.encode(source),
-                        AssetRefXformer.encode(target),
-                    )
-                for (i in row.size until lineageHeaders.size) {
-                    // Append other attributes onto the row
-                    row.add(inputRow[lineageHeaders[i]] ?: "")
+                if (connectionQN.isBlank()) {
+                    logger.warn { "Unable to find transformation connection, and therefore cannot create lineage process within it: $xformConnector/$xformConnection" }
+                } else {
+                    val qualifiedName =
+                        LineageProcess.generateQualifiedName(
+                            name,
+                            connectionQN,
+                            inputRow[XFORM_IDENTITY],
+                            listOf(source as ICatalog),
+                            listOf(target as ICatalog),
+                            null,
+                        )
+                    val row =
+                        mutableListOf(
+                            LineageProcess.TYPE_NAME,
+                            qualifiedName,
+                            name,
+                            connectionQN,
+                            xformConnector,
+                            AssetRefXformer.encode(source),
+                            AssetRefXformer.encode(target),
+                        )
+                    for (i in row.size until lineageHeaders.size) {
+                        // Append other attributes onto the row
+                        row.add(inputRow[lineageHeaders[i]] ?: "")
+                    }
+                    return listOf(row)
                 }
-                return listOf(row)
             }
         }
         // If we fall through, we were unable to define the lineage, so write a blank row
