@@ -30,13 +30,14 @@ object AdminExporter {
         val objectsToInclude = Utils.getOrDefault(config.objectsToInclude, listOf("users", "groups"))
         val includeNativePolicies = Utils.getOrDefault(config.includeNativePolicies, false)
         val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
+        val filename = Utils.getOrDefault(config.filename, "admin-export.xlsx")
 
         // Before we start processing, will pre-cache all glossaries,
         // so we can resolve them to meaningful names
         val glossaryMap = preloadGlossaryNameMap()
         val connectionMap = preloadConnectionMap()
 
-        val exportFile = "$outputDirectory${File.separator}admin-export.xlsx"
+        val exportFile = "$outputDirectory${File.separator}$filename"
         ExcelWriter(exportFile).use { xlsx ->
             objectsToInclude.forEach { objectName ->
                 when (objectName) {

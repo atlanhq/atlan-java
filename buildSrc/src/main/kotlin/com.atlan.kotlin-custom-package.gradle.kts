@@ -67,11 +67,15 @@ tasks {
         dependsOn(":package-toolkit:config:generateBuildInfo")
         dependsOn(":package-toolkit:config:processResources")
         dependsOn("compileKotlin")
-        finalizedBy(
-            "assemble",
-            "processResources",
-            "sourcesJar",
-        )
+    }
+    assemble {
+        dependsOn("genCustomPkg")
+    }
+    processResources {
+        dependsOn("genCustomPkg")
+    }
+    processTestResources {
+        dependsOn("genCustomPkg")
     }
 }
 

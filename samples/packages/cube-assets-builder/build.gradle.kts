@@ -8,15 +8,18 @@ plugins {
     signing
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 tasks {
     jar {
         archiveBaseName.set(jarName)
     }
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
+    getByName("sourcesJar") {
+        dependsOn("genCustomPkg")
+    }
 }
 
 publishing {

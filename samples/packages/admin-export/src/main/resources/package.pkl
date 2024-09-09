@@ -98,6 +98,17 @@ uiConfig {
         }
       }
     }
+    ["Options"] {
+      description = "Advanced options"
+      inputs {
+        ["filename"] = new TextInput {
+          title = "Filename"
+          required = false
+          helpText = "Filename to use for the exported Excel file."
+          placeholderText = "admin-export.xlsx"
+        }
+      }
+    }
   }
   rules {
     new UIRule {
