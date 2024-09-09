@@ -74,6 +74,9 @@ tasks {
     processResources {
         dependsOn("genCustomPkg")
     }
+    processTestResources {
+        dependsOn("genCustomPkg")
+    }
 }
 
 kotlin {
