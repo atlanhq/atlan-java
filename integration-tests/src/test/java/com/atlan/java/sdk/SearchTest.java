@@ -12,11 +12,15 @@ import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.IReferenceable;
+import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.model.structs.SourceTagAttachment;
+import com.atlan.model.structs.SourceTagAttachmentValue;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +37,8 @@ public class SearchTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("SRCH");
 
+    private static final String EXISTING_SOURCE_SYNCED_TAG = "Confidential";
+
     private static Glossary glossary = null;
     private static GlossaryCategory category1 = null;
     private static GlossaryCategory category2 = null;
@@ -42,6 +48,41 @@ public class SearchTest extends AtlanLiveTest {
     private static GlossaryTerm term3 = null;
     private static GlossaryTerm term4 = null;
     private static GlossaryTerm term5 = null;
+
+    @Test(groups = {"search."})
+    void findSourceSyncedAssets() throws AtlanException {
+        List<Asset> tables = Table.select().taggedWithValue(EXISTING_SOURCE_SYNCED_TAG, "Highly Restricted").stream()
+                .toList();
+        assertNotNull(tables);
+        assertFalse(tables.isEmpty());
+        for (Asset one : tables) {
+            assertTrue(one instanceof Table);
+            Table table = (Table) one;
+            Set<AtlanTag> tags = table.getAtlanTags();
+            assertNotNull(tags);
+            assertFalse(tags.isEmpty());
+            List<AtlanTag> synced = tags.stream()
+                    .filter(tag -> tag.getTypeName().equals(EXISTING_SOURCE_SYNCED_TAG))
+                    .toList();
+            assertNotNull(synced);
+            assertFalse(synced.isEmpty());
+            for (AtlanTag t : synced) {
+                List<SourceTagAttachment> attachments = t.getSourceTagAttachments();
+                assertNotNull(attachments);
+                assertFalse(attachments.isEmpty());
+                for (SourceTagAttachment sta : attachments) {
+                    List<SourceTagAttachmentValue> values = sta.getSourceTagValues();
+                    assertNotNull(values);
+                    assertFalse(values.isEmpty());
+                    for (SourceTagAttachmentValue value : values) {
+                        String attachedValue = value.getTagAttachmentValue();
+                        assertNotNull(attachedValue);
+                        assertEquals(attachedValue, "Highly Restricted");
+                    }
+                }
+            }
+        }
+    }
 
     @Test(groups = {"search.create.terms"})
     void createAssets() throws AtlanException {

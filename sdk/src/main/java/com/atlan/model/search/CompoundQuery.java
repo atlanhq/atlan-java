@@ -4,9 +4,13 @@ package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.SpanQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.SpanTermQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.SpanWithinQuery;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.ITag;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,12 +18,14 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class to compose compound queries combining various conditions.
  * (Along with some static factory methods for some of the most common queries.)
  */
 @SuperBuilder
+@Slf4j
 public abstract class CompoundQuery {
 
     /** Client through which to run the search. */
@@ -117,6 +123,79 @@ public abstract class CompoundQuery {
                 return whereSome(Asset.ATLAN_TAGS.hasAnyValue())
                         .whereSome(Asset.PROPAGATED_ATLAN_TAGS.hasAnyValue())
                         .minSomes(1);
+            }
+        }
+
+        /**
+         * Returns a query that will match assets that have a specific value for the specified tag
+         * (for source-synced tags).
+         *
+         * @param atlanTagName human-readable name of the Atlan tag
+         * @param value the tag should have to match the query
+         * @return a query that will only match assets that have a particular value assigned for the given Atlan tag
+         * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+         */
+        public B taggedWithValue(String atlanTagName, String value) throws AtlanException {
+            return taggedWithValue(atlanTagName, value, false);
+        }
+
+        /**
+         * Returns a query that will match assets that have a specific value for the specified tag
+         * (for source-synced tags).
+         *
+         * @param atlanTagName human-readable name of the Atlan tag
+         * @param value the tag should have to match the query
+         * @param directly when true, the asset must have the tag and value directly assigned (otherwise even propagated tags with the value will suffice)
+         * @return a query that will only match assets that have a particular value assigned for the given Atlan tag
+         * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+         */
+        public B taggedWithValue(String atlanTagName, String value, boolean directly) throws AtlanException {
+            String tagId = client.getAtlanTagCache().getIdForName(atlanTagName);
+            List<Asset> syncedTags = client.assets.select().where(ITag.MAPPED_ATLAN_TAG_NAME.eq(tagId)).stream()
+                    .toList();
+            String syncedTagQN;
+            if (syncedTags.size() > 1) {
+                syncedTagQN = syncedTags.get(0).getQualifiedName();
+                log.warn(
+                        "Multiple mapped source-synced tags found for tag {} -- using only the first: {}",
+                        atlanTagName,
+                        syncedTagQN);
+            } else if (!syncedTags.isEmpty()) {
+                syncedTagQN = syncedTags.get(0).getQualifiedName();
+            } else {
+                syncedTagQN = "NON_EXISTENT";
+            }
+            List<SpanQuery> littleSpans = new ArrayList<>();
+            littleSpans.add(
+                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentValue"))
+                            ._toSpanQuery());
+            for (String token : value.split(" ")) {
+                littleSpans.add(SpanTermQuery.of(
+                                t -> t.field("__classificationsText.text").value(token))
+                        ._toSpanQuery());
+            }
+            littleSpans.add(
+                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentKey"))
+                            ._toSpanQuery());
+            List<SpanQuery> bigSpans = new ArrayList<>();
+            bigSpans.add(
+                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value(tagId))
+                            ._toSpanQuery());
+            bigSpans.add(
+                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value(syncedTagQN))
+                            ._toSpanQuery());
+            Query span = SpanWithinQuery.of(s -> s.little(l -> l.spanNear(
+                                    n -> n.clauses(littleSpans).slop(0).inOrder(true)))
+                            .big(b -> b.spanNear(
+                                    n -> n.clauses(bigSpans).slop(10000000).inOrder(true))))
+                    ._toQuery();
+            if (directly) {
+                return where(Asset.ATLAN_TAGS.eq(tagId)).where(span);
+            } else {
+                return whereSome(Asset.ATLAN_TAGS.eq(tagId))
+                        .whereSome(Asset.PROPAGATED_ATLAN_TAGS.eq(tagId))
+                        .minSomes(1)
+                        .where(span);
             }
         }
 
