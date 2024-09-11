@@ -330,6 +330,9 @@ public interface IGlossary {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<String> getDomainGUIDs();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */

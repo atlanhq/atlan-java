@@ -75,11 +75,8 @@ public interface IDomoDataset {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
-
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -320,6 +317,9 @@ public interface IDomoDataset {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IDomoCard> getDomoCards();

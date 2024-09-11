@@ -136,7 +136,7 @@
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save() throws AtlanException {
+    public AsyncCreationResponse save() throws AtlanException {
         return save(Atlan.getDefaultClient());
     }
 
@@ -151,7 +151,7 @@
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(AtlanClient client) throws AtlanException {
+    public AsyncCreationResponse save(AtlanClient client) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -183,7 +183,7 @@
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(boolean replaceAtlanTags)
+    public AsyncCreationResponse save(boolean replaceAtlanTags)
             throws AtlanException {
         return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
@@ -200,7 +200,7 @@
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(AtlanClient client, boolean replaceAtlanTags)
+    public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags)
             throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)

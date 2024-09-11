@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -23,23 +24,29 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an application in Atlan.
+ * Instance of an application module in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAppApplication {
+public interface IAppModule {
 
-    public static final String TYPE_NAME = "AppApplication";
+    public static final String TYPE_NAME = "AppModule";
 
-    /** Number of components in the application. */
-    NumericField APP_COMPONENT_COUNT = new NumericField("appComponentCount", "appComponentCount");
+    /** Individual modules of the application. */
+    RelationField APP_CHILD_MODULES = new RelationField("appChildModules");
 
-    /** Individual components of the application. */
-    RelationField APP_COMPONENTS = new RelationField("appComponents");
+    /** Assets that implement the application module. */
+    RelationField APP_MODULE_IMPLEMENTED_BY_ASSETS = new RelationField("appModuleImplementedByAssets");
 
-    /** Assets that implement the application. */
-    RelationField APP_IMPLEMENTED_BY_ASSETS = new RelationField("appImplementedByAssets");
+    /** Type of application module. */
+    KeywordField APP_MODULE_TYPE = new KeywordField("appModuleType", "appModuleType");
+
+    /** Application module in which this module exists. */
+    RelationField APP_PARENT_MODULE = new RelationField("appParentModule");
+
+    /** Number of sub-modules in this application module. */
+    NumericField APP_SUB_MODULE_COUNT = new NumericField("appSubModuleCount", "appSubModuleCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -65,32 +72,23 @@ public interface IAppApplication {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
+    /** Individual modules of the application. */
+    SortedSet<IAppModule> getAppChildModules();
 
-    /** Simple name of the application in which this asset exists, or empty if it is itself an application. */
-    String getAppApplicationName();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
-    /** Unique name of the application in which this asset exists, or empty if it is itself an application. */
-    String getAppApplicationQualifiedName();
+    /** Assets that implement the application module. */
+    SortedSet<ICatalog> getAppModuleImplementedByAssets();
 
-    /** Number of components in the application. */
-    Long getAppComponentCount();
+    /** Type of application module. */
+    String getAppModuleType();
 
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
+    /** Application module in which this module exists. */
+    IAppModule getAppParentModule();
 
-    /** Simple name of the application component in which this asset exists, or empty if it is itself an application component. */
-    String getAppComponentName();
-
-    /** Unique name of the application component in which this asset exists, or empty if it is itself an application component. */
-    String getAppComponentQualifiedName();
-
-    /** Individual components of the application. */
-    SortedSet<IAppComponent> getAppComponents();
-
-    /** Assets that implement the application. */
-    SortedSet<ICatalog> getAppImplementedByAssets();
+    /** Number of sub-modules in this application module. */
+    Long getAppSubModuleCount();
 
     /** TBC */
     String getAssetCoverImage();
@@ -331,6 +329,9 @@ public interface IAppApplication {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

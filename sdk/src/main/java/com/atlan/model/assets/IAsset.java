@@ -343,6 +343,9 @@ public interface IAsset {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     KeywordTextField DISPLAY_NAME = new KeywordTextField("displayName", "displayName.keyword", "displayName");
 
+    /** Array of domain guids linked to this asset */
+    KeywordField DOMAIN_GUI_DS = new KeywordField("domainGUIDs", "domainGUIDs");
+
     /** TBC */
     RelationField FILES = new RelationField("files");
 
@@ -786,6 +789,9 @@ public interface IAsset {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

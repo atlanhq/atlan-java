@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = AzureTag.class, name = AzureTag.TYPE_NAME),
     @JsonSubTypes.Type(value = BadgeCondition.class, name = BadgeCondition.TYPE_NAME),
     @JsonSubTypes.Type(value = ColumnValueFrequencyMap.class, name = ColumnValueFrequencyMap.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtJobRun.class, name = DbtJobRun.TYPE_NAME),
     @JsonSubTypes.Type(value = DbtMetricFilter.class, name = DbtMetricFilter.TYPE_NAME),
     @JsonSubTypes.Type(value = GoogleLabel.class, name = GoogleLabel.TYPE_NAME),
     @JsonSubTypes.Type(value = GoogleTag.class, name = GoogleTag.TYPE_NAME),

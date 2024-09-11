@@ -453,6 +453,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String displayName;
 
+    /** Array of domain guids linked to this asset */
+    @Attribute
+    @Singular
+    SortedSet<String> domainGUIDs;
+
     /** TBC */
     @Attribute
     @Singular

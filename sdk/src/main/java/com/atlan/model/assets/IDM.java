@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -32,9 +33,20 @@ public interface IDM {
 
     public static final String TYPE_NAME = "DM";
 
+    /** Business date for the data model. */
+    NumericField D_M_DATA_MODEL_BUSINESS_DATE = new NumericField("dMDataModelBusinessDate", "dMDataModelBusinessDate");
+
     /** A domain of the datam model in which this asset exists. */
     KeywordTextField D_M_DATA_MODEL_DOMAIN =
             new KeywordTextField("dMDataModelDomain", "dMDataModelDomain.keyword", "dMDataModelDomain");
+
+    /** Business expiration date for the data model. */
+    NumericField D_M_DATA_MODEL_EXPIRED_AT_BUSINESS_DATE =
+            new NumericField("dMDataModelExpiredAtBusinessDate", "dMDataModelExpiredAtBusinessDate");
+
+    /** System expiration date for the data model. */
+    NumericField D_M_DATA_MODEL_EXPIRED_AT_SYSTEM_DATE =
+            new NumericField("dMDataModelExpiredAtSystemDate", "dMDataModelExpiredAtSystemDate");
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     KeywordTextField D_M_DATA_MODEL_NAME =
@@ -47,6 +59,9 @@ public interface IDM {
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     KeywordField D_M_DATA_MODEL_QUALIFIED_NAME =
             new KeywordField("dMDataModelQualifiedName", "dMDataModelQualifiedName");
+
+    /** System date for the data model. */
+    NumericField D_M_DATA_MODEL_SYSTEM_DATE = new NumericField("dMDataModelSystemDate", "dMDataModelSystemDate");
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     KeywordTextField D_M_ENTITY_NAME = new KeywordTextField("dMEntityName", "dMEntityName.keyword", "dMEntityName");
@@ -84,11 +99,8 @@ public interface IDM {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
-
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -315,8 +327,17 @@ public interface IDM {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Business date for the data model. */
+    Long getDMDataModelBusinessDate();
+
     /** A domain of the datam model in which this asset exists. */
     String getDMDataModelDomain();
+
+    /** Business expiration date for the data model. */
+    Long getDMDataModelExpiredAtBusinessDate();
+
+    /** System expiration date for the data model. */
+    Long getDMDataModelExpiredAtSystemDate();
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
@@ -326,6 +347,9 @@ public interface IDM {
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
+
+    /** System date for the data model. */
+    Long getDMDataModelSystemDate();
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityName();
@@ -353,6 +377,9 @@ public interface IDM {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

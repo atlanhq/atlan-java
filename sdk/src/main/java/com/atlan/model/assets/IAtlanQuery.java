@@ -109,10 +109,7 @@ public interface IAtlanQuery {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
-    IAppApplication getAppApplicationImplemented();
-
-    /** TBC */
-    IAppComponent getAppComponentImplemented();
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -386,6 +383,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

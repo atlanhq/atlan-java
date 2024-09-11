@@ -52,11 +52,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** TBC */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** TBC */
     @Attribute

@@ -1,5 +1,82 @@
 <#macro all>
     /**
+     * Builds the minimal object necessary to create a Query.
+     *
+     * @param name of the Query
+     * @param parentFolder in which the Query should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the Query, as a builder
+     * @throws InvalidRequestException if the parentFolder provided is without a qualifiedName
+     */
+    public static AtlanQueryBuilder<?, ?> creator(String name, Folder parentFolder) throws InvalidRequestException {
+        validateRelationship(
+            AtlanCollection.TYPE_NAME,
+            Map.of(
+                "qualifiedName", parentFolder.getQualifiedName(),
+                "collectionQualifiedName", parentFolder.getCollectionQualifiedName()));
+        return creator(
+            name,
+            parentFolder.getCollectionQualifiedName(),
+            parentFolder.getQualifiedName())
+            .parent(parentFolder.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Query.
+     *
+     * @param name of the Query
+     * @param collection in which the Query should be created, which must have at least
+     *               a qualifiedName
+     * @return the minimal request necessary to create the Query, as a builder
+     * @throws InvalidRequestException if the collection provided is without a qualifiedName
+     */
+    public static AtlanQueryBuilder<?, ?> creator(String name, AtlanCollection collection) throws InvalidRequestException {
+        validateRelationship(
+            AtlanCollection.TYPE_NAME,
+            Map.of("qualifiedName", collection.getQualifiedName()));
+        return creator(
+            name,
+            collection.getQualifiedName(),
+            null)
+            .parent(collection.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Query.
+     *
+     * @param name of the Query
+     * @param collectionQualifiedName unique name of the AtlanCollection in which the Query should be created
+     * @param parentFolderQualifiedName unique name of the Folder in which this Query should be created, or null if it should be created directly in the collection
+     * @return the minimal request necessary to create the Query, as a builder
+     */
+    public static AtlanQueryBuilder<?, ?> creator(String name, String collectionQualifiedName, String parentFolderQualifiedName) {
+        String qualifiedName = parentFolderQualifiedName == null ? generateQualifiedName(name, collectionQualifiedName) : generateQualifiedName(name, parentFolderQualifiedName);
+        AtlanQueryBuilder<?, ?> builder = AtlanQuery._internal()
+            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+            .name(name)
+            .qualifiedName(qualifiedName)
+            .collectionQualifiedName(collectionQualifiedName)
+            .parentQualifiedName(collectionQualifiedName)
+            .parent(AtlanCollection.refByQualifiedName(collectionQualifiedName));
+        if (parentFolderQualifiedName != null) {
+            builder.parentQualifiedName(parentFolderQualifiedName)
+                .parent(Folder.refByQualifiedName(parentFolderQualifiedName));
+        }
+        return builder;
+    }
+
+    /**
+     * Generate a unique Query.
+     *
+     * @param name of the Query
+     * @param parentQualifiedName unique name of the collection or folder in which this Query exists
+     * @return a unique name for the Query
+     */
+    public static String generateQualifiedName(String name, String parentQualifiedName) {
+        return parentQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a AtlanQuery.
      *
      * @param qualifiedName of the AtlanQuery
@@ -40,6 +117,28 @@
             "parentQualifiedName", this.getParentQualifiedName()
         ));
         return updater(this.getQualifiedName(), this.getName(), this.getCollectionQualifiedName(), this.getParentQualifiedName());
+    }
+
+    public abstract static class AtlanQueryBuilder<C extends AtlanQuery, B extends AtlanQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {
+
+        private static final String DEFAULT_VARIABLE_SCHEMA =
+                "{\"customvariablesDateTimeFormat\":{\"defaultDateFormat\":\"YYYY-MM-DD\",\"defaultTimeFormat\":\"HH:mm\"},\"customVariables\":[]}";
+
+        public B withRawQuery(String schemaQualifiedName, String query) {
+            String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+            String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+            AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+            return connectionName(connectorType.getValue())
+                    .connectionQualifiedName(connectionQualifiedName)
+                    .connectorType(connectorType)
+                    .defaultDatabaseQualifiedName(databaseQualifiedName)
+                    .defaultSchemaQualifiedName(schemaQualifiedName)
+                    .isVisualQuery(false)
+                    .rawQueryText(query)
+                    .variablesSchemaBase64(Base64.getEncoder()
+                            .encodeToString(DEFAULT_VARIABLE_SCHEMA.getBytes(StandardCharsets.UTF_8)));
+        }
     }
 
     /**

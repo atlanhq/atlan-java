@@ -43,13 +43,9 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Tooltip text present for the Cognos asset */
     @Attribute

@@ -92,13 +92,9 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Tasks to which this asset provides input. */
     @Attribute

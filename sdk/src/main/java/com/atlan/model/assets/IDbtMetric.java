@@ -12,6 +12,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.DbtMetricFilter;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -66,11 +67,8 @@ public interface IDbtMetric {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
-
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -333,6 +331,9 @@ public interface IDbtMetric {
     /** TBC */
     String getDbtJobNextRunHumanized();
 
+    /** List of latest DBT job runs across all environments */
+    List<DbtJobRun> getDbtJobRuns();
+
     /** TBC */
     String getDbtJobSchedule();
 
@@ -377,6 +378,9 @@ public interface IDbtMetric {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

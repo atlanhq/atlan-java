@@ -12,6 +12,7 @@ public enum WorkflowType implements AtlanEnum {
     POLICY("POLICY"),
     CHANGE_MANAGEMENT("CHANGE_MANAGEMENT"),
     PUBLICATION_MANAGEMENT("PUBLICATION_MANAGEMENT"),
+    IMPACT_ANALYSIS("IMPACT_ANALYSIS"),
     ;
 
     @JsonValue

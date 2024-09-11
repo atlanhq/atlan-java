@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.PermissionException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.AtlanCollection;
 import com.atlan.model.assets.Connection;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = false)
 @Slf4j
 @ToString(callSuper = true)
-public class ConnectionCreationResponse extends AssetMutationResponse implements AtlanAsyncMutator {
+public class AsyncCreationResponse extends AssetMutationResponse implements AtlanAsyncMutator {
     private static final long serialVersionUID = 2L;
 
     /**
@@ -54,10 +55,10 @@ public class ConnectionCreationResponse extends AssetMutationResponse implements
     private void retrieveAndCheck(List<Asset> toCheck, int retryCount) throws InterruptedException, ApiException {
         List<Asset> leftovers = new ArrayList<>();
         for (Asset one : toCheck) {
-            if (one instanceof Connection) {
-                log.debug(" ... blocking to confirm connection accessibility: {}", one.getGuid());
-                // Only even attempt to look at an asset if it is a connection, otherwise skip it
-                // entirely
+            if (one instanceof Connection || one instanceof AtlanCollection) {
+                log.debug(" ... blocking to confirm {} accessibility: {}", one.getTypeName(), one.getGuid());
+                // Only even attempt to look at an asset if it is a connection or a collection,
+                // otherwise skip it entirely
                 try {
                     AssetResponse candidate = client.assets.get(
                             one.getGuid(),

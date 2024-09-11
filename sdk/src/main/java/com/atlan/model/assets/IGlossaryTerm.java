@@ -390,6 +390,9 @@ public interface IGlossaryTerm {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<String> getDomainGUIDs();
+
+    /** TBC */
     SortedSet<String> getExamples();
 
     /** TBC */

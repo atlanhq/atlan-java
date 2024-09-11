@@ -43,17 +43,28 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
+    IAppModule appModuleImplemented;
 
-    /** Application component that is implemented by this asset. */
+    /** Business date for the data model. */
     @Attribute
-    IAppComponent appComponentImplemented;
+    @Date
+    Long dMDataModelBusinessDate;
 
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;
+
+    /** Business expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtBusinessDate;
+
+    /** System expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtSystemDate;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
@@ -66,6 +77,11 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelQualifiedName;
+
+    /** System date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelSystemDate;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute

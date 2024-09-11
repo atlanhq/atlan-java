@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AppComponentTest {
+public class AppModuleTest {
 
-    private static final AppComponent full = AppComponent._internal()
+    private static final AppModule full = AppModule._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,12 +59,7 @@ public class AppComponentTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .appApplicationName("String0")
-            .appApplicationQualifiedName("String0")
-            .appComponentName("String0")
-            .appComponentQualifiedName("String0")
-            .appApplicationImplemented(AppApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .appComponentImplemented(AppComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appModuleImplemented(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -185,6 +180,8 @@ public class AppComponentTest {
             .dbtQualifiedName("String0")
             .description("String0")
             .displayName("String0")
+            .domainGUID("String0")
+            .domainGUID("String1")
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .hasContract(true)
@@ -404,22 +401,28 @@ public class AppComponentTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .appApplication(AppApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .appComponentImplementedByAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appChildModule(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appChildModule(AppModule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .appModuleImplementedByAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appModuleImplementedByAsset(
+                    AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .appModuleType("String0")
+            .appParentModule(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .appSubModuleCount(123456789L)
             .build();
 
     private static final int hash = full.hashCode();
-    private static AppComponent frodo;
+    private static AppModule frodo;
     private static String serialized;
 
-    @Test(groups = {"AppComponent.builderEquivalency"})
+    @Test(groups = {"AppModule.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"AppComponent.serialize"},
-            dependsOnGroups = {"AppComponent.builderEquivalency"})
+            groups = {"AppModule.serialize"},
+            dependsOnGroups = {"AppModule.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -428,17 +431,17 @@ public class AppComponentTest {
     }
 
     @Test(
-            groups = {"AppComponent.deserialize"},
-            dependsOnGroups = {"AppComponent.serialize"})
+            groups = {"AppModule.deserialize"},
+            dependsOnGroups = {"AppModule.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, AppComponent.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AppModule.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"AppComponent.equivalency"},
-            dependsOnGroups = {"AppComponent.serialize", "AppComponent.deserialize"})
+            groups = {"AppModule.equivalency"},
+            dependsOnGroups = {"AppModule.serialize", "AppModule.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -447,8 +450,8 @@ public class AppComponentTest {
     }
 
     @Test(
-            groups = {"AppComponent.equivalency"},
-            dependsOnGroups = {"AppComponent.serialize", "AppComponent.deserialize"})
+            groups = {"AppModule.equivalency"},
+            dependsOnGroups = {"AppModule.serialize", "AppModule.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

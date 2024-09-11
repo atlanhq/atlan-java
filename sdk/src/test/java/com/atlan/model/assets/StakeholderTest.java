@@ -189,6 +189,8 @@ public class StakeholderTest {
             .dbtQualifiedName("String0")
             .description("String0")
             .displayName("String0")
+            .domainGUID("String0")
+            .domainGUID("String1")
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .hasContract(true)

@@ -90,11 +90,8 @@ public interface IDMAttribute {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
-
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -321,8 +318,17 @@ public interface IDMAttribute {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Business date for the data model. */
+    Long getDMDataModelBusinessDate();
+
     /** A domain of the datam model in which this asset exists. */
     String getDMDataModelDomain();
+
+    /** Business expiration date for the data model. */
+    Long getDMDataModelExpiredAtBusinessDate();
+
+    /** System expiration date for the data model. */
+    Long getDMDataModelExpiredAtSystemDate();
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelName();
@@ -332,6 +338,9 @@ public interface IDMAttribute {
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     String getDMDataModelQualifiedName();
+
+    /** System date for the data model. */
+    Long getDMDataModelSystemDate();
 
     /** Whether this attribute is derived indicator or not. */
     Boolean getDMDerivedIndicator();
@@ -392,6 +401,9 @@ public interface IDMAttribute {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

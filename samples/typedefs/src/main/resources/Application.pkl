@@ -5,16 +5,12 @@ amends "modulepath:/Model.pkl"
 t = "App"
 a = t.decapitalize()
 
-local application = "Application"
-local component = "Component"
+local mod = "Module"
 local catalog = "Catalog"
 
-local attrName = "Name"
-local qualifiedName = "QualifiedName"
-
 local appIcon = new Icon {
-  name = "GenericDB"
-  svg = "generic-source.svg"
+  name = "Application"
+  svg = "app-window.svg"
 }
 
 shared {
@@ -22,117 +18,56 @@ shared {
     name = t
     description = "Assets used to model applications and their componentry."
     superTypes { catalog }
-    attributes {
-      ["\(a)\(application)\(attrName)"] {
-        label = "Application"
-        description = "Simple name of the application in which this asset exists, or empty if it is itself an application."
-        type = "string"
-        indexAs = "both"
-      }
-      ["\(a)\(application)\(qualifiedName)"] {
-        description = "Unique name of the application in which this asset exists, or empty if it is itself an application."
-        type = "string"
-        indexAs = "keyword"
-      }
-      ["\(a)\(component)\(attrName)"] {
-        label = "Version"
-        description = "Simple name of the application component in which this asset exists, or empty if it is itself an application component."
-        type = "string"
-        indexAs = "both"
-      }
-      ["\(a)\(component)\(qualifiedName)"] {
-        description = "Unique name of the application component in which this asset exists, or empty if it is itself an application component."
-        type = "string"
-        indexAs = "keyword"
-      }
-    }
   }
   ui {
-    svgName = "generic-source.svg" // TODO: pick an overall icon for applications
-    filters {
-      ["\(t)\(application)"] {
-        attribute = "\(a)\(application)\(qualifiedName)"
-      }
-      ["\(t)\(component)"] {
-        attribute = "\(a)\(component)\(qualifiedName)"
-      }
-    }
-    breadcrumb {
-      ["\(t)\(application)"] {
-        q = "\(a)\(application)\(qualifiedName)"
-        n = "\(a)\(application)\(attrName)"
-      }
-      ["\(t)\(component)"] {
-        q = "\(a)\(component)\(qualifiedName)"
-        n = "\(a)\(component)\(attrName)"
-      }
-    }
+    svgName = "app-window.svg" // TODO: pick an overall icon for applications
   }
 }
 
 customTypes {
-  ["\(t)\(application)"] {
+  ["\(t)\(mod)"] {
     label = t
     icon = appIcon
-    description = "Instance of an application in Atlan."
+    description = "Instance of an application module in Atlan."
     attributes {
-      ["\(a)\(component)Count"] {
-        label = component.decapitalize()
-        description = "Number of components in the application."
+      ["\(a)\(mod)Type"] {
+        label = "type"
+        description = "Type of application module."
+        type = "string"
+      }
+      ["\(a)Sub\(mod)Count"] {
+        label = mod.decapitalize()
+        description = "Number of sub-modules in this application module."
         type = "long"
         childCount = true
       }
     }
     relationships {
-      ["\(a)_application_implementation"] {
-        description = "Implementation of an application by one or more assets."
+      ["\(a)_parent_child"] {
+        description = "Hierarchical nesting relationship between \(t)\(mod) (parent) and \(t)\(mod) (children)."
         parent {
-          type = "\(t)\(application)"
-          attribute = "\(a)ImplementedByAssets"
-          description = "Assets that implement the application."
+          type = "\(t)\(mod)"
+          attribute = "\(a)Child\(mod)s"
+          description = "Individual modules of the application."
+        }
+        children {
+          type = "\(t)\(mod)"
+          attribute = "\(a)Parent\(mod)"
+          description = "Application module in which this module exists."
+        }
+      }
+      ["\(a)_module_implementation"] {
+        description = "Implementation of an application module by one or more assets."
+        parent {
+          type = "\(t)\(mod)"
+          attribute = "\(a)\(mod)ImplementedByAssets"
+          description = "Assets that implement the application module."
         }
         children {
           type = catalog
-          attribute = "\(a)\(application)Implemented"
-          description = "Application that is implemented by this asset."
+          attribute = "\(a)\(mod)Implemented"
+          description = "Application module that is implemented by this asset."
         }
-      }
-    }
-  }
-  ["\(t)\(component)"] {
-    label = component
-    icon = appIcon
-    description = "Instance of a component within an application in Atlan."
-    parentQualifiedName = "\(a)\(application)\(qualifiedName)"
-    relationships {
-      ["\(a)_parent_child"] {
-        description = "Containment relationship between \(t)\(application) (parent) and \(t)\(component) (children)."
-        parent {
-          type = "\(t)\(application)"
-          attribute = "\(a)\(component)s"
-          description = "Individual components of the application."
-        }
-        children {
-          type = "\(t)\(component)"
-          attribute = "\(a)\(application)"
-          description = "Application in which this component exists."
-        }
-      }
-      ["\(a)_component_implementation"] {
-        description = "Implementation of an application component by an asset."
-        peers {
-          new {
-            type = "\(t)\(component)"
-            attribute = "\(a)\(component)ImplementedByAsset"
-            description = "Asset that implements this component."
-          }
-          new {
-            type = catalog
-            attribute = "\(a)\(component)Implemented"
-            description = "Application component that is implemented by this asset."
-          }
-        }
-        manyToMany = false
       }
     }
   }

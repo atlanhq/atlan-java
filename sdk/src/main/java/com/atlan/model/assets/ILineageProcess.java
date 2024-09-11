@@ -340,6 +340,9 @@ public interface ILineageProcess {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<String> getDomainGUIDs();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */

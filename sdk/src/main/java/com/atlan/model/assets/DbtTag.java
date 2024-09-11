@@ -13,6 +13,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.SourceTagAttribute;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,13 +46,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** TBC */
     @Attribute
@@ -90,6 +87,11 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     /** TBC */
     @Attribute
     String dbtJobNextRunHumanized;
+
+    /** List of latest DBT job runs across all environments */
+    @Attribute
+    @Singular
+    List<DbtJobRun> dbtJobRuns;
 
     /** TBC */
     @Attribute
