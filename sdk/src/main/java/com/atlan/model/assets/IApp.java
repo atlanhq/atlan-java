@@ -8,8 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -31,22 +29,6 @@ import javax.annotation.processing.Generated;
 public interface IApp {
 
     public static final String TYPE_NAME = "App";
-
-    /** Simple name of the application in which this asset exists, or empty if it is itself an application. */
-    KeywordTextField APP_APPLICATION_NAME =
-            new KeywordTextField("appApplicationName", "appApplicationName.keyword", "appApplicationName");
-
-    /** Unique name of the application in which this asset exists, or empty if it is itself an application. */
-    KeywordField APP_APPLICATION_QUALIFIED_NAME =
-            new KeywordField("appApplicationQualifiedName", "appApplicationQualifiedName");
-
-    /** Simple name of the application component in which this asset exists, or empty if it is itself an application component. */
-    KeywordTextField APP_COMPONENT_NAME =
-            new KeywordTextField("appComponentName", "appComponentName.keyword", "appComponentName");
-
-    /** Unique name of the application component in which this asset exists, or empty if it is itself an application component. */
-    KeywordField APP_COMPONENT_QUALIFIED_NAME =
-            new KeywordField("appComponentQualifiedName", "appComponentQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -72,23 +54,8 @@ public interface IApp {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application that is implemented by this asset. */
-    IAppApplication getAppApplicationImplemented();
-
-    /** Simple name of the application in which this asset exists, or empty if it is itself an application. */
-    String getAppApplicationName();
-
-    /** Unique name of the application in which this asset exists, or empty if it is itself an application. */
-    String getAppApplicationQualifiedName();
-
-    /** Application component that is implemented by this asset. */
-    IAppComponent getAppComponentImplemented();
-
-    /** Simple name of the application component in which this asset exists, or empty if it is itself an application component. */
-    String getAppComponentName();
-
-    /** Unique name of the application component in which this asset exists, or empty if it is itself an application component. */
-    String getAppComponentQualifiedName();
+    /** Application module that is implemented by this asset. */
+    IAppModule getAppModuleImplemented();
 
     /** TBC */
     String getAssetCoverImage();
@@ -329,6 +296,9 @@ public interface IApp {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
 
     /** TBC */
     SortedSet<IFile> getFiles();

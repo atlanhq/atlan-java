@@ -306,6 +306,9 @@ public interface IBIProcess {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 

@@ -46,13 +46,9 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     @Attribute

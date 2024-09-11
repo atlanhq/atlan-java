@@ -43,13 +43,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Asset in which this event exists. */
     @Attribute

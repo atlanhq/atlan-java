@@ -49,13 +49,9 @@ public class SalesforceField extends Asset
     @Attribute
     String apiName;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Data type of values in this field. */
     @Attribute

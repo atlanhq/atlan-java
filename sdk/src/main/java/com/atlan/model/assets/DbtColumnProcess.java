@@ -13,6 +13,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.DbtJobRun;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -49,13 +50,9 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
@@ -111,6 +108,11 @@ public class DbtColumnProcess extends Asset
     /** TBC */
     @Attribute
     String dbtJobNextRunHumanized;
+
+    /** List of latest DBT job runs across all environments */
+    @Attribute
+    @Singular
+    List<DbtJobRun> dbtJobRuns;
 
     /** TBC */
     @Attribute

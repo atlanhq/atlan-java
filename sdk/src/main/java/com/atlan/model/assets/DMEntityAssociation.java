@@ -44,21 +44,32 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Cardinality of the data entity association. */
     @Attribute
     DMCardinalityType dMCardinality;
 
+    /** Business date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelBusinessDate;
+
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;
+
+    /** Business expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtBusinessDate;
+
+    /** System expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtSystemDate;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
@@ -71,6 +82,11 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelQualifiedName;
+
+    /** System date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelSystemDate;
 
     /** Entity from which this association is related. */
     @Attribute

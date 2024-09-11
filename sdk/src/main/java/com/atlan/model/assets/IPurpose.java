@@ -324,6 +324,9 @@ public interface IPurpose {
     /** TBC */
     SortedSet<String> getDisplayPreferences();
 
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 

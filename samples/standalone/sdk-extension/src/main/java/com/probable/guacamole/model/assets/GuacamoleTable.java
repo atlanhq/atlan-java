@@ -12,8 +12,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.IAppApplication;
-import com.atlan.model.assets.IAppComponent;
+import com.atlan.model.assets.IAppModule;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICatalog;
@@ -73,13 +72,9 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     String alias;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute

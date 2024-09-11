@@ -43,13 +43,9 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Fields that exist within this view. */
     @Attribute

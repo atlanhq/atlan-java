@@ -358,6 +358,9 @@ public interface IBusinessPolicy {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
+
     /** Exception assigned to business polices */
     SortedSet<IBusinessPolicyException> getExceptionsForBusinessPolicy();
 

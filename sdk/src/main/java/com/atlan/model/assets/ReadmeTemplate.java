@@ -42,13 +42,9 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Icon to use for the README template. */
     @Attribute

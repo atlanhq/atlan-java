@@ -567,14 +567,15 @@ class AreaUI {
   }
 
   /// (Generated) List of filters, automatically populating the level and parent details.
-  fixed hierarchyFilters: List<FilterUI>?(length <= 2) = filters.fold(List(), (acc: List<FilterUI>, type, value) ->
-    let (fullFilter = (value) {
-      typeName = type
-      level = acc.length + 1
-      parent = acc.getOrNull(acc.length - 1)?.typeName ?? ""
-    })
-    acc.add(fullFilter)
-  )
+  fixed hierarchyFilters: List<FilterUI>?(this == null || length <= 2) =
+    filters?.fold(List(), (acc: List<FilterUI>, type, value) ->
+      let (fullFilter = (value) {
+        typeName = type
+        level = acc.length + 1
+        parent = acc.getOrNull(acc.length - 1)?.typeName ?? ""
+      })
+      acc.add(fullFilter)
+    )
 }
 
 class Breadcrumb {

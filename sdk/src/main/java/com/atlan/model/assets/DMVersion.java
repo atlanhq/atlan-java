@@ -43,21 +43,32 @@ public class DMVersion extends Asset implements IDMVersion, IDM, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application that is implemented by this asset. */
+    /** Application module that is implemented by this asset. */
     @Attribute
-    IAppApplication appApplicationImplemented;
-
-    /** Application component that is implemented by this asset. */
-    @Attribute
-    IAppComponent appComponentImplemented;
+    IAppModule appModuleImplemented;
 
     /** Data model for which this version exists. */
     @Attribute
     IDMDataModel dMDataModel;
 
+    /** Business date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelBusinessDate;
+
     /** A domain of the datam model in which this asset exists. */
     @Attribute
     String dMDataModelDomain;
+
+    /** Business expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtBusinessDate;
+
+    /** System expiration date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelExpiredAtSystemDate;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
@@ -70,6 +81,11 @@ public class DMVersion extends Asset implements IDMVersion, IDM, ICatalog, IAsse
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
     String dMDataModelQualifiedName;
+
+    /** System date for the data model. */
+    @Attribute
+    @Date
+    Long dMDataModelSystemDate;
 
     /** Individual entities that make up this version of the data model. */
     @Attribute
