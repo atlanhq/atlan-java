@@ -1,0 +1,131 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/UI.pkl"
+
+tasks {
+  ["Scope"] {
+    description = "Assets to include"
+    inputs {
+      ["export_scope"] = new Radio {
+        title = "Export scope"
+        required = true
+        possibleValues {
+          ["GLOSSARIES_ONLY"] = "Glossaries only"
+          ["PRODUCTS_ONLY"] = "Products only"
+          ["ENRICHED_ONLY"] = "Enriched only"
+          ["ALL"] = "All"
+        }
+        default = "ENRICHED_ONLY"
+        helpText = "Whether to export only those assets that were enriched by users, or all assets with the qualified name prefix."
+      }
+      ["qn_prefix"] = new TextInput {
+        title = "Qualified name prefix (for assets)"
+        required = false
+        helpText = "Starting value for a qualifiedName that will determine which assets to export."
+        placeholderText = "default"
+        width = 4
+      }
+      ["include_description"] = new BooleanInput {
+        title = "Include description?"
+        required = false
+        helpText = "Whether to extract only user-entered description (No), or to also include system-level description (Yes)."
+        width = 4
+      }
+      ["include_glossaries"] = new BooleanInput {
+        title = "Include glossaries?"
+        required = false
+        helpText = "Whether glossaries (and their terms and categories) should be exported, too."
+        width = 4
+      }
+      ["include_products"] = new BooleanInput {
+        title = "Include data products?"
+        required = false
+        helpText = "Whether data products (and their domains) should be exported, too."
+        width = 4
+      }
+      ["include_archived"] = new BooleanInput {
+        title = "Include archived?"
+        required = false
+        helpText = "Whether to include archived assets in the export (Yes) or only active assets (No)."
+        width = 4
+      }
+      ["asset_types_to_include"] = new TextInput {
+        title = "Asset types to include"
+        required = false
+        hide = true
+        helpText = "Comma-separated list of asset types to include in the export."
+      }
+      ["attributes_to_include"] = new TextInput {
+        title = "Attributes to include"
+        required = false
+        hide = true
+        helpText = "Comma-separated list of attributes to include in the export."
+      }
+    }
+  }
+  ["Delivery"] {
+    description = "Where to send"
+    inputs {
+      ["delivery_type"] = new Radio {
+        title = "Export via"
+        required = true
+        helpText = "Select how you want to receive the exported file(s)."
+        possibleValues {
+          ["DIRECT"] = "Direct download"
+          ["EMAIL"] = "Email"
+          ["CLOUD"] = "Object storage"
+        }
+        default = "DIRECT"
+      }
+      ["email_addresses"] = new TextInput {
+        title = "Email address(es)"
+        helpText = "Provide any email addresses you want the extract sent to, separated by commas."
+        required = false
+        placeholderText = "one@example.com,two@example.com"
+      }
+      ["target_prefix"] = new TextInput {
+        title = "Prefix (path)"
+        helpText = "Enter the directory (path) within the object store into which to upload the exported file(s)."
+        placeholderText = "path/to/files"
+        width = 4
+      }
+      ["cloud_target"] = new CredentialInput {
+        title = "Upload export to"
+        required = true
+        credType = "csa-connectors-objectstore"
+        helpText = "Enter details for the object store to which to upload the exported file(s)."
+      }
+    }
+  }
+}
+rules {
+  new UIRule {
+    whenInputs { ["export_scope"] = "ENRICHED_ONLY" }
+    required {
+      "qn_prefix"
+      "include_description"
+      "include_glossaries"
+      "include_products"
+    }
+  }
+  new UIRule {
+    whenInputs { ["export_scope"] = "ALL" }
+    required {
+      "qn_prefix"
+      "include_description"
+      "include_glossaries"
+      "include_products"
+    }
+  }
+  new UIRule {
+    whenInputs { ["delivery_type"] = "EMAIL" }
+    required { "email_addresses" }
+  }
+  new UIRule {
+    whenInputs { ["delivery_type"] = "CLOUD" }
+    required {
+      "target_prefix"
+      "cloud_target"
+    }
+  }
+}
