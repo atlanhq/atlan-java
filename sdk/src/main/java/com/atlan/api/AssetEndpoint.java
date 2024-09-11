@@ -137,7 +137,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(Asset value) throws AtlanException {
+    public AsyncCreationResponse save(Asset value) throws AtlanException {
         return save(value, null);
     }
 
@@ -150,7 +150,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(Asset value, RequestOptions options) throws AtlanException {
+    public AsyncCreationResponse save(Asset value, RequestOptions options) throws AtlanException {
         return save(value, false, options);
     }
 
@@ -163,7 +163,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(Asset value, boolean replaceAtlanTags) throws AtlanException {
+    public AsyncCreationResponse save(Asset value, boolean replaceAtlanTags) throws AtlanException {
         return save(List.of(value), replaceAtlanTags, null);
     }
 
@@ -177,7 +177,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(Asset value, boolean replaceAtlanTags, RequestOptions options)
+    public AsyncCreationResponse save(Asset value, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         return save(List.of(value), replaceAtlanTags, options);
     }
@@ -191,7 +191,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
+    public AsyncCreationResponse save(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return save(values, replaceAtlanTags, null);
     }
 
@@ -205,7 +205,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse save(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
+    public AsyncCreationResponse save(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
@@ -214,8 +214,8 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
-        ConnectionCreationResponse response = ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, options);
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
         response.setClient(client);
         return response;
     }
@@ -229,8 +229,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse saveMergingCM(List<Asset> values, boolean replaceAtlanTags)
-            throws AtlanException {
+    public AsyncCreationResponse saveMergingCM(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return saveMergingCM(values, replaceAtlanTags, null);
     }
 
@@ -244,8 +243,8 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse saveMergingCM(
-            List<Asset> values, boolean replaceAtlanTags, RequestOptions options) throws AtlanException {
+    public AsyncCreationResponse saveMergingCM(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
+            throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
@@ -253,8 +252,8 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
-        ConnectionCreationResponse response = ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, options);
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
         response.setClient(client);
         return response;
     }
@@ -269,8 +268,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse saveReplacingCM(List<Asset> values, boolean replaceAtlanTags)
-            throws AtlanException {
+    public AsyncCreationResponse saveReplacingCM(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return saveReplacingCM(values, replaceAtlanTags, null);
     }
 
@@ -285,8 +283,8 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public ConnectionCreationResponse saveReplacingCM(
-            List<Asset> values, boolean replaceAtlanTags, RequestOptions options) throws AtlanException {
+    public AsyncCreationResponse saveReplacingCM(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
+            throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
@@ -294,8 +292,8 @@ public class AssetEndpoint extends AtlasEndpoint {
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
-        ConnectionCreationResponse response = ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, options);
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
         response.setClient(client);
         return response;
     }

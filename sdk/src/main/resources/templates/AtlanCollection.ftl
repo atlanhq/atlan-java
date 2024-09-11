@@ -50,6 +50,92 @@
     }
 
     /**
+     * Builds the minimal object necessary to create an AltanCollection.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param name of the AtlanCollection as the user who will own the AtlanCollection
+     * @return the minimal request necessary to create the AtlanCollection, as a builder
+     */
+    public static AtlanCollectionBuilder<?, ?> creator(AtlanClient client, String name) {
+        return AtlanCollection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(client));
+    }
+
+    /**
+     * Generate a unique AltanCollection name.
+     *
+     * @param client connectivity to the Atlan tenant as the user who will own the AtlanCollection
+     * @return a unique name for the AltanCollection
+     */
+    public static String generateQualifiedName(AtlanClient client) {
+        try {
+            String username = client.users.getCurrentUser().getUsername();
+            return "default/collection/" + username + "/" + UUID.randomUUID();
+        } catch (AtlanException e) {
+            log.error("Unable to determine the current user.", e);
+        }
+        return null;
+    }
+
+    /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    @Override
+    public AsyncCreationResponse save() throws AtlanException {
+        return save(Atlan.getDefaultClient());
+    }
+
+    /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @param client connectivity to the Atlan tenant where this collection should be saved
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    @Override
+    public AsyncCreationResponse save(AtlanClient client) throws AtlanException {
+        return client.assets.save(this, false);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
+     * be entirely ignored using this method.
+     *
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    @Override
+    public AsyncCreationResponse save(boolean replaceAtlanTags) throws AtlanException {
+        return save(Atlan.getDefaultClient(), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
+     * be entirely ignored using this method.
+     *
+     * @param client connectivity to the Atlan tenant where this collection should be saved
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    @Override
+    public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
+        return client.assets.save(this, replaceAtlanTags);
+    }
+
+    /**
      * Builds the minimal object necessary to update a AtlanCollection.
      *
      * @param qualifiedName of the AtlanCollection

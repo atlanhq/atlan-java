@@ -14,7 +14,7 @@ import com.atlan.model.assets.MaterializedView;
 import com.atlan.model.assets.Table;
 import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.ConnectionCreationResponse;
+import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.enums.AssetCreationHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
@@ -346,7 +346,7 @@ public class AssetBatch {
      * @throws AtlanException on any problems flushing (submitting) the batch
      */
     public AssetMutationResponse flush() throws AtlanException {
-        ConnectionCreationResponse response = null;
+        AsyncCreationResponse response = null;
         List<Asset> revised = null;
         if (!_batch.isEmpty()) {
             boolean fuzzyMatch = false;

@@ -17,7 +17,6 @@ import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;

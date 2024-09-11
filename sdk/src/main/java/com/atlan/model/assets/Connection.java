@@ -9,7 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.ConnectionCreationResponse;
+import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -520,7 +520,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save() throws AtlanException {
+    public AsyncCreationResponse save() throws AtlanException {
         return save(Atlan.getDefaultClient());
     }
 
@@ -535,7 +535,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(AtlanClient client) throws AtlanException {
+    public AsyncCreationResponse save(AtlanClient client) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -567,7 +567,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(boolean replaceAtlanTags) throws AtlanException {
+    public AsyncCreationResponse save(boolean replaceAtlanTags) throws AtlanException {
         return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
@@ -583,7 +583,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
+    public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
