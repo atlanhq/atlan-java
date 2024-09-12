@@ -2,6 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.objectstore
 
+import java.io.IOException
+
 /**
  * Interface for syncing files between cloud object storage and local file systems.
  */
@@ -42,7 +44,9 @@ interface ObjectStorageSyncer {
      *
      * @param remoteKey from which to download the file
      * @param localFile into which to download the file
+     * @throws IOException on any errors downloading
      */
+    @Throws(IOException::class)
     fun downloadFrom(
         remoteKey: String,
         localFile: String,
@@ -67,7 +71,9 @@ interface ObjectStorageSyncer {
      *
      * @param localFile from which to upload the file
      * @param remoteKey into which to upload the file
+     * @throws IOException on any errors downloading
      */
+    @Throws(IOException::class)
     fun uploadTo(
         localFile: String,
         remoteKey: String,

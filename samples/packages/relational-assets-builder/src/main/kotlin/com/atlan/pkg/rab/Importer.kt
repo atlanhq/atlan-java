@@ -3,6 +3,7 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
@@ -106,7 +107,7 @@ object Importer {
                 true,
                 fieldSeparator,
             )
-        connectionImporter.import()
+        val connectionResults = connectionImporter.import()
 
         logger.info { " --- Importing databases... ---" }
         val databaseImporter =
@@ -119,7 +120,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        databaseImporter.import()
+        val dbResults = databaseImporter.import()
 
         logger.info { " --- Importing schemas... ---" }
         val schemaImporter =
@@ -132,7 +133,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        schemaImporter.import()
+        val schResults = schemaImporter.import()
 
         logger.info { " --- Importing tables... ---" }
         val tableImporter =
@@ -145,7 +146,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        tableImporter.import()
+        val tblResults = tableImporter.import()
 
         logger.info { " --- Importing views... ---" }
         val viewImporter =
@@ -158,7 +159,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        viewImporter.import()
+        val viewResults = viewImporter.import()
 
         logger.info { " --- Importing materialized views... ---" }
         val materializedViewImporter =
@@ -171,7 +172,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        materializedViewImporter.import()
+        val mviewResults = materializedViewImporter.import()
 
         logger.info { " --- Importing columns... ---" }
         val columnImporter =
@@ -184,7 +185,13 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        columnImporter.import()
+        val colResults = columnImporter.import()
+
+        if (Atlan.getDefaultClient().isInternal && trackBatches) {
+            // Only attempt to manage a connection cache if we are running in-cluster
+            val results = dbResults?.combinedWith(schResults)?.combinedWith(tblResults)?.combinedWith(viewResults)?.combinedWith(mviewResults)?.combinedWith(colResults)
+            Utils.updateConnectionCache(added = results?.primary?.created)
+        }
     }
 
     private fun preprocessCSV(

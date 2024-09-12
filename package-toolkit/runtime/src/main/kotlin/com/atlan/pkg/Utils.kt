@@ -5,8 +5,10 @@ package com.atlan.pkg
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.model.Credential
 import com.atlan.pkg.objectstore.ADLSCredential
 import com.atlan.pkg.objectstore.ADLSSync
@@ -24,6 +26,8 @@ import mu.KotlinLogging
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
 import java.io.File
+import java.io.File.separator
+import java.io.IOException
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
@@ -775,6 +779,70 @@ object Utils {
             "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
             "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
+        }
+    }
+
+    /**
+     * Update the connection cache for the provided assets.
+     *
+     * @param added assets that were added
+     * @param removed assets that were deleted
+     */
+    fun updateConnectionCache(
+        added: Collection<Asset>? = null,
+        removed: Collection<Asset>? = null,
+    ) {
+        val sync = getBackingStore()
+        val map = CacheUpdates.build(added, removed)
+        for ((connectionQN, assets) in map) {
+            val paths = mutableListOf("tmp", "cache")
+            paths.addAll(connectionQN.split("/"))
+            val tmpFile = paths.joinToString { "/" }
+            // Retrieve any pre-existing cache first, so we can update it
+            try {
+                sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
+            } catch (e: IOException) {
+                logger.info(e) { "Unable to download pre-existing cache: connection-cache/$connectionQN.sqlite" }
+            }
+            val cache = PersistentConnectionCache(tmpFile)
+            cache.addAssets(assets.added)
+            cache.deleteAssets(assets.removed)
+            // Replace the cache with the updated one
+            try {
+                sync.uploadTo(tmpFile, "connection-cache/$connectionQN.sqlite")
+            } catch (e: IOException) {
+                logger.error(e) { "Unable to upload updated cache: connection-cache/$connectionQN.sqlite" }
+            }
+        }
+    }
+
+    private data class CacheUpdates(
+        val connectionQN: String,
+        val added: MutableList<Asset>,
+        val removed: MutableList<Asset>,
+    ) {
+        companion object {
+            fun build(
+                add: Collection<Asset>?,
+                remove: Collection<Asset>?,
+            ): Map<String, CacheUpdates> {
+                val map = mutableMapOf<String, CacheUpdates>()
+                add?.forEach {
+                    val connectionQN = it.connectionQualifiedName
+                    if (!map.containsKey(connectionQN)) {
+                        map[connectionQN] = CacheUpdates(connectionQN, mutableListOf(), mutableListOf())
+                    }
+                    map[connectionQN]!!.added.add(it)
+                }
+                remove?.forEach {
+                    val connectionQN = it.connectionQualifiedName
+                    if (!map.containsKey(connectionQN)) {
+                        map[connectionQN] = CacheUpdates(connectionQN, mutableListOf(), mutableListOf())
+                    }
+                    map[connectionQN]!!.removed.add(it)
+                }
+                return map
+            }
         }
     }
 }

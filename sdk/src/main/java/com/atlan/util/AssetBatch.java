@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.Column;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.assets.MaterializedView;
 import com.atlan.model.assets.Table;
@@ -511,31 +512,43 @@ public class AssetBatch {
 
     private void track(List<Asset> tracker, Asset candidate) {
         try {
-            tracker.add(candidate
-                    .trimToRequired()
-                    .guid(candidate.getGuid())
-                    .name(candidate.getName())
-                    .build());
+            tracker.add(buildCacheable(candidate.trimToRequired(), candidate));
         } catch (InvalidRequestException e) {
             try {
                 Class<?> assetClass = Serde.getAssetClassForType(candidate.getTypeName());
                 Method method = assetClass.getMethod("_internal");
                 Object result = method.invoke(null);
-                Asset.AssetBuilder<?, ?> builder = (Asset.AssetBuilder<?, ?>) result;
-                tracker.add(builder.guid(candidate.getGuid())
-                        .qualifiedName(candidate.getQualifiedName())
-                        .build());
+                tracker.add(buildCacheable((Asset.AssetBuilder<?, ?>) result, candidate));
             } catch (ClassNotFoundException
                     | NoSuchMethodException
                     | InvocationTargetException
                     | IllegalAccessException eRef) {
-                tracker.add(IndistinctAsset._internal()
-                        .typeName(candidate.getTypeName())
-                        .guid(candidate.getGuid())
-                        .qualifiedName(candidate.getQualifiedName())
-                        .build());
+                tracker.add(buildCacheable(IndistinctAsset._internal().typeName(candidate.getTypeName()), candidate));
             }
         }
+    }
+
+    /**
+     * Construct the minimal asset representation necessary for the asset to be included in a
+     * persistent connection cache.
+     *
+     * @param builder for the asset
+     * @param candidate from which to draw any additional details
+     * @return the minimally-complete, cacheable asset
+     */
+    private Asset buildCacheable(Asset.AssetBuilder<?, ?> builder, Asset candidate) {
+        builder.guid(candidate.getGuid())
+                .qualifiedName(candidate.getQualifiedName())
+                .connectionQualifiedName(candidate.getConnectionQualifiedName())
+                .name(candidate.getName())
+                .tenantId(candidate.getTenantId());
+        if (candidate instanceof Column) {
+            Integer order = ((Column) candidate).getOrder();
+            if (order != null) {
+                ((Column.ColumnBuilder<?, ?>) builder).order(order);
+            }
+        }
+        return builder.build();
     }
 
     /**
@@ -572,6 +585,18 @@ public class AssetBatch {
             } else {
                 this.qualifiedName = qualifiedName;
             }
+        }
+
+        /**
+         * Translate this AssetIdentity into a minimal asset composed of only a type and a qualifiedName.
+         *
+         * @return the minimal asset
+         */
+        public Asset toMinimalAsset() {
+            return IndistinctAsset._internal()
+                    .typeName(typeName)
+                    .qualifiedName(qualifiedName)
+                    .build();
         }
 
         @Override

@@ -13,6 +13,7 @@ import com.azure.storage.file.datalake.models.ListPathsOptions
 import mu.KLogger
 import org.pkl.core.module.ModuleKeyFactories.file
 import java.io.File
+import java.io.IOException
 
 /**
  * Class to generally move data between ADLS and local storage.
@@ -172,22 +173,26 @@ class ADLSSync(
         localFile: String,
     ) {
         logger.info { " ... downloading adls://$containerName/$remoteKey to $localFile" }
-        val local = File(localFile)
-        if (local.exists()) {
-            local.delete()
-        }
-        if (!local.parentFile.exists()) {
-            local.parentFile.mkdirs()
-        }
-        if (adlsClient != null) {
-            val fsClient = adlsClient.getFileSystemClient(containerName)
-            val fileClient = fsClient.getFileClient(remoteKey)
-            fileClient.readToFile(localFile)
-        } else if (blobContainerClient != null) {
-            val blobClient = blobContainerClient.getBlobClient(remoteKey)
-            blobClient.downloadToFile(localFile)
-        } else {
-            throw IllegalStateException("No ADLS client configured -- cannot download.")
+        try {
+            val local = File(localFile)
+            if (local.exists()) {
+                local.delete()
+            }
+            if (!local.parentFile.exists()) {
+                local.parentFile.mkdirs()
+            }
+            if (adlsClient != null) {
+                val fsClient = adlsClient.getFileSystemClient(containerName)
+                val fileClient = fsClient.getFileClient(remoteKey)
+                fileClient.readToFile(localFile)
+            } else if (blobContainerClient != null) {
+                val blobClient = blobContainerClient.getBlobClient(remoteKey)
+                blobClient.downloadToFile(localFile)
+            } else {
+                throw IllegalStateException("No ADLS client configured -- cannot download.")
+            }
+        } catch (e: Exception) {
+            throw IOException(e)
         }
     }
 
@@ -242,15 +247,19 @@ class ADLSSync(
         logger.info { " ... uploading $localFile to adls://$containerName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in ADLS
-        if (adlsClient != null) {
-            val fsClient = adlsClient.getFileSystemClient(containerName)
-            val fileClient = fsClient.getFileClient(remoteKey)
-            fileClient.uploadFromFile(localFile, true)
-        } else if (blobContainerClient != null) {
-            val blobClient = blobContainerClient.getBlobClient(remoteKey)
-            blobClient.uploadFromFile(localFile, true)
-        } else {
-            throw IllegalStateException("No ADLS client configured -- cannot upload.")
+        try {
+            if (adlsClient != null) {
+                val fsClient = adlsClient.getFileSystemClient(containerName)
+                val fileClient = fsClient.getFileClient(remoteKey)
+                fileClient.uploadFromFile(localFile, true)
+            } else if (blobContainerClient != null) {
+                val blobClient = blobContainerClient.getBlobClient(remoteKey)
+                blobClient.uploadFromFile(localFile, true)
+            } else {
+                throw IllegalStateException("No ADLS client configured -- cannot upload.")
+            }
+        } catch (e: Exception) {
+            throw IOException(e)
         }
     }
 }
