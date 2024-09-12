@@ -3,6 +3,7 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
@@ -17,6 +18,7 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetRemover
 import de.siegmar.fastcsv.reader.CsvReader
 import mu.KotlinLogging
@@ -140,7 +142,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        dimensionImporter.import()
+        val dimResults = dimensionImporter.import()
 
         logger.info { " --- Importing hierarchies... ---" }
         val hierarchyImporter =
@@ -153,7 +155,7 @@ object Importer {
                 trackBatches,
                 fieldSeparator,
             )
-        hierarchyImporter.import()
+        val hierResults = hierarchyImporter.import()
 
         logger.info { " --- Importing fields... ---" }
         val fieldImporter =
@@ -167,13 +169,20 @@ object Importer {
                 fieldSeparator,
             )
         fieldImporter.preprocess()
-        fieldImporter.import()
+        val fieldResults = fieldImporter.import()
 
         // Retrieve the qualifiedName of the cube that was imported
         val cubeQN =
             cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
+
+        if (Atlan.getDefaultClient().isInternal && trackBatches) {
+            // Only attempt to manage a connection cache if we are running in-cluster
+            Utils.updateConnectionCache(
+                added = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults),
+            )
+        }
 
         val runAssetRemoval = Utils.getOrDefault(config.deltaSemantic, "full") == "full"
         if (runAssetRemoval) {
