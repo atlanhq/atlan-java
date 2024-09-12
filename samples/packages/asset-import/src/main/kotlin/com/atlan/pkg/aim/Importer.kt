@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.Atlan
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
@@ -187,6 +188,13 @@ object Importer {
             } else {
                 null
             }
+
+        if (Atlan.getDefaultClient().isInternal && trackBatches) {
+            // Only attempt to manage a connection cache if we are running in-cluster
+            Utils.updateConnectionCache(
+                added = ImportResults.getAllModifiedAssets(resultsAssets),
+            )
+        }
 
         val resultsAssetsGTC = resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
         return resultsDDP?.combinedWith(resultsAssetsGTC) ?: resultsAssetsGTC

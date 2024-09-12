@@ -4,6 +4,7 @@ package com.atlan.pkg.lb
 
 import AssetImportCfg
 import LineageBuilderCfg
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
@@ -12,6 +13,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
@@ -90,6 +92,13 @@ object Loader {
                     assetsFieldSeparator = fieldSeparator.toString(),
                 )
             val assetResults = Importer.import(importConfig, outputDirectory)
+
+            if (Atlan.getDefaultClient().isInternal) {
+                // Only attempt to manage a connection cache if we are running in-cluster
+                Utils.updateConnectionCache(
+                    added = ImportResults.getAllModifiedAssets(assetResults),
+                )
+            }
 
             val qualifiedNameMap = assetResults?.primary?.qualifiedNames ?: mapOf()
 
