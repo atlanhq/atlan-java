@@ -51,7 +51,6 @@ class PersistentConnectionCache(
                     statement.executeUpdate("CREATE INDEX name_index ON entities(name COLLATE NOCASE)")
                 }
             }
-            connection.commit()
         }
     }
 
@@ -69,7 +68,6 @@ class PersistentConnectionCache(
                     ps.executeUpdate()
                 }
             }
-            connection.commit()
         }
     }
 
@@ -95,7 +93,6 @@ class PersistentConnectionCache(
                     }
                 }
             }
-            connection.commit()
         }
     }
 
