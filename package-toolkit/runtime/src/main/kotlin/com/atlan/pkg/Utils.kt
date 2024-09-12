@@ -795,14 +795,17 @@ object Utils {
         val sync = getBackingStore()
         val map = CacheUpdates.build(added, removed)
         for ((connectionQN, assets) in map) {
+            logger.info { "Updating connection cache for: $connectionQN" }
             val paths = mutableListOf("tmp", "cache")
             paths.addAll(connectionQN.split("/"))
             val tmpFile = paths.joinToString(separator = "/")
             // Retrieve any pre-existing cache first, so we can update it
             try {
                 sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
+                logger.info { " ... downloaded pre-existing cache to update" }
             } catch (e: IOException) {
-                logger.info(e) { "Unable to download pre-existing cache: connection-cache/$connectionQN.sqlite" }
+                logger.info { " ... unable to download pre-existing cache, creating a new one" }
+                logger.debug(e) { "Location attempted from backing store: connection-cache/$connectionQN.sqlite" }
             }
             val cache = PersistentConnectionCache(tmpFile)
             cache.addAssets(assets.added)
@@ -810,8 +813,9 @@ object Utils {
             // Replace the cache with the updated one
             try {
                 sync.uploadTo(tmpFile, "connection-cache/$connectionQN.sqlite")
+                logger.info { " ... uploaded updated cache" }
             } catch (e: IOException) {
-                logger.error(e) { "Unable to upload updated cache: connection-cache/$connectionQN.sqlite" }
+                logger.error(e) { " ... unable to upload updated cache: connection-cache/$connectionQN.sqlite" }
             }
         }
     }

@@ -20,6 +20,7 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.rab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.writer.CsvWriter
 import mu.KotlinLogging
@@ -189,8 +190,9 @@ object Importer {
 
         if (Atlan.getDefaultClient().isInternal && trackBatches) {
             // Only attempt to manage a connection cache if we are running in-cluster
-            val results = dbResults?.combinedWith(schResults)?.combinedWith(tblResults)?.combinedWith(viewResults)?.combinedWith(mviewResults)?.combinedWith(colResults)
-            Utils.updateConnectionCache(added = results?.primary?.created)
+            Utils.updateConnectionCache(
+                added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
+            )
         }
     }
 

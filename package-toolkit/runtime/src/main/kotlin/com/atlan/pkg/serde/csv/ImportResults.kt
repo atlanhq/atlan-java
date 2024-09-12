@@ -75,4 +75,16 @@ data class ImportResults(
             )
         }
     }
+
+    companion object {
+        fun getAllModifiedAssets(vararg results: ImportResults?): List<Asset> {
+            val list = mutableListOf<Asset>()
+            results.filterNotNull()
+                .forEach { result ->
+                    result.primary.created?.let { list.addAll(it) }
+                    result.primary.updated?.let { list.addAll(it) }
+                }
+            return list
+        }
+    }
 }
