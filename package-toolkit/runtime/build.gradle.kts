@@ -234,6 +234,8 @@ tasks {
             include(dependency("io.projectreactor:reactor-core:.*"))
             include(dependency("org.codehaus.woodstox:stax2-api:.*"))
             include(dependency("org.reactivestreams:reactive-streams:.*"))
+            // SQLite
+            include(dependency("org.xerial:sqlite-jdbc:.*"))
         }
         mergeServiceFiles()
     }

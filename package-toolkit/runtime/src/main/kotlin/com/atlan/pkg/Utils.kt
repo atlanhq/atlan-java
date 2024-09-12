@@ -797,7 +797,7 @@ object Utils {
         for ((connectionQN, assets) in map) {
             val paths = mutableListOf("tmp", "cache")
             paths.addAll(connectionQN.split("/"))
-            val tmpFile = paths.joinToString { "/" }
+            val tmpFile = paths.joinToString(separator = "/")
             // Retrieve any pre-existing cache first, so we can update it
             try {
                 sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
