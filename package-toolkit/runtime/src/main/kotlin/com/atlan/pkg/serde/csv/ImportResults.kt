@@ -75,4 +75,23 @@ data class ImportResults(
             )
         }
     }
+
+    companion object {
+        /**
+         * Retrieve all the assets that were created or updated across any of the provided
+         * import results.
+         *
+         * @param results one or more import results to combine
+         * @return the list of assets that were either created or updated, from across all the provided results
+         */
+        fun getAllModifiedAssets(vararg results: ImportResults?): List<Asset> {
+            val list = mutableListOf<Asset>()
+            results.filterNotNull()
+                .forEach { result ->
+                    result.primary.created?.let { list.addAll(it) }
+                    result.primary.updated?.let { list.addAll(it) }
+                }
+            return list
+        }
+    }
 }
