@@ -9,6 +9,7 @@ import mu.KLogger
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * Class to generally move data between GCS and local storage.
@@ -119,16 +120,20 @@ class GCSSync(
         localFile: String,
     ) {
         logger.info { " ... downloading gcs://$bucketName/$remoteKey to $localFile" }
-        val local = File(localFile)
-        if (local.exists()) {
-            local.delete()
-        }
-        if (!local.parentFile.exists()) {
-            local.parentFile.mkdirs()
-        }
-        val blob = storage.get(bucketName, remoteKey)
-        FileOutputStream(local).use { fos ->
-            blob.downloadTo(fos)
+        try {
+            val local = File(localFile)
+            if (local.exists()) {
+                local.delete()
+            }
+            if (!local.parentFile.exists()) {
+                local.parentFile.mkdirs()
+            }
+            val blob = storage.get(bucketName, remoteKey)
+            FileOutputStream(local).use { fos ->
+                blob.downloadTo(fos)
+            }
+        } catch (e: Exception) {
+            throw IOException(e)
         }
     }
 
@@ -176,10 +181,14 @@ class GCSSync(
         logger.info { " ... uploading $localFile to gcs://$bucketName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in GCS
-        val local = File(localFile)
-        val bucket = storage.get(bucketName)
-        FileInputStream(local).use { fis ->
-            bucket.create(remoteKey, fis)
+        try {
+            val local = File(localFile)
+            val bucket = storage.get(bucketName)
+            FileInputStream(local).use { fis ->
+                bucket.create(remoteKey, fis)
+            }
+        } catch (e: Exception) {
+            throw IOException(e)
         }
     }
 }

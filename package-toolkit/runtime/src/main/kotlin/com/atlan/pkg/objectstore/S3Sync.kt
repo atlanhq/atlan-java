@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.io.File
+import java.io.IOException
 
 /**
  * Class to generally move data between S3 and local storage.
@@ -137,18 +138,22 @@ class S3Sync(
         localFile: String,
     ) {
         logger.info { " ... downloading s3://$bucketName/$remoteKey to $localFile" }
-        val local = File(localFile)
-        if (local.exists()) {
-            local.delete()
+        try {
+            val local = File(localFile)
+            if (local.exists()) {
+                local.delete()
+            }
+            if (!local.parentFile.exists()) {
+                local.parentFile.mkdirs()
+            }
+            val objectKey = File(remoteKey).path
+            s3Client.getObject(
+                GetObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+                local.toPath(),
+            )
+        } catch (e: Exception) {
+            throw IOException(e)
         }
-        if (!local.parentFile.exists()) {
-            local.parentFile.mkdirs()
-        }
-        val objectKey = File(remoteKey).path
-        s3Client.getObject(
-            GetObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
-            local.toPath(),
-        )
     }
 
     /** {@inheritDoc} */
@@ -198,11 +203,15 @@ class S3Sync(
         logger.info { " ... uploading $localFile to s3://$bucketName/$remoteKey" }
         // Note: no need to delete files first (putObject overwrites, including auto-versioning
         // if enabled on the bucket), and no need to create parent prefixes in S3
-        val local = File(localFile)
-        val objectKey = File(remoteKey).path
-        s3Client.putObject(
-            PutObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
-            local.toPath(),
-        )
+        try {
+            val local = File(localFile)
+            val objectKey = File(remoteKey).path
+            s3Client.putObject(
+                PutObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+                local.toPath(),
+            )
+        } catch (e: Exception) {
+            throw IOException(e)
+        }
     }
 }

@@ -5,6 +5,7 @@ package com.atlan.pkg.util
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch
 import de.siegmar.fastcsv.reader.CsvReader
@@ -227,6 +228,9 @@ class AssetRemover(
                             client.assets.delete(batch, deletionType)
                         }
                     }
+            }
+            if (client.isInternal) {
+                Utils.updateConnectionCache(removed = assetsToDelete.keys.map { it.toMinimalAsset() })
             }
         }
     }
