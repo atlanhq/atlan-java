@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 plugins {
     id("com.atlan.java")
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
 group = providers.gradleProperty("GROUP").get()
