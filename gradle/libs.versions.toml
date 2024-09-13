@@ -1,15 +1,15 @@
 [versions]
 jackson = "2.17.2"
 slf4j = "2.0.16"
-elasticsearch = "8.15.0"
+elasticsearch = "8.15.1"
 freemarker = "2.3.33"
 classgraph = "4.8.175"
 testng = "7.10.2"
-log4j = "2.23.1"
+log4j = "2.24.0"
 wiremock = "3.9.1"
 jnanoid = "2.0.0"
-numaflow = "0.6.0"
-awssdk = "2.27.19"
+numaflow = "0.8.0"
+awssdk = "2.28.0"
 gcs = "26.45.0"
 system-stubs = "2.1.6"
 fastcsv = "3.2.0"
@@ -26,7 +26,7 @@ pkl = "0.26.3"
 adls = "12.20.1"
 azure = "1.13.2"
 guava = "33.3.0-jre"
-openlineage = "1.21.1"
+openlineage = "1.22.0"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -72,5 +72,5 @@ poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
-git-publish = { id = "org.ajoberstar.git-publish", version = "3.0.1" }
+git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
 pkl = { id = "org.pkl-lang", version = "0.26.3" }
