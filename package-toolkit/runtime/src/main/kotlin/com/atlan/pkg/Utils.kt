@@ -792,9 +792,9 @@ object Utils {
         added: Collection<Asset>? = null,
         removed: Collection<Asset>? = null,
     ) {
-        val sync = getBackingStore()
         val map = CacheUpdates.build(added, removed)
         logger.info { "Updating connection caches for ${map.size} connections..." }
+        val sync = getBackingStore()
         for ((connectionQN, assets) in map) {
             logger.info { "Updating connection cache for: $connectionQN" }
             val paths = mutableListOf("tmp", "cache")
@@ -835,24 +835,28 @@ object Utils {
                 add?.forEach { asset ->
                     val connectionQN = asset.connectionQualifiedName
                     connectionQN?.let {
-                        map[it]?.added?.add(asset) ?: {
+                        if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
                                     added = mutableListOf(asset),
                                     removed = mutableListOf(),
                                 )
+                        } else {
+                            map[it]!!.added.add(asset)
                         }
                     } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
                 remove?.forEach { asset ->
                     val connectionQN = asset.connectionQualifiedName
                     connectionQN?.let {
-                        map[it]?.removed?.add(asset) ?: {
+                        if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
                                     added = mutableListOf(),
                                     removed = mutableListOf(asset),
                                 )
+                        } else {
+                            map[it]!!.removed.add(asset)
                         }
                     } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
