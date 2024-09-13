@@ -72,5 +72,5 @@ poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
-git-publish = { id = "org.ajoberstar.git-publish", version = "3.0.1" }
+git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
 pkl = { id = "org.pkl-lang", version = "0.26.3" }
