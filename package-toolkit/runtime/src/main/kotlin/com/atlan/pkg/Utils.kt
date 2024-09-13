@@ -794,6 +794,7 @@ object Utils {
     ) {
         val sync = getBackingStore()
         val map = CacheUpdates.build(added, removed)
+        logger.info { "Updating connection caches for ${map.size} connections..." }
         for ((connectionQN, assets) in map) {
             logger.info { "Updating connection cache for: $connectionQN" }
             val paths = mutableListOf("tmp", "cache")
