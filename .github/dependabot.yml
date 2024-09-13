@@ -3,11 +3,11 @@
 # Copyright 2022 Atlan Pte. Ltd.
 version: 2
 updates:
-  - package-ecosystem: maven
+  - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: daily
     open-pull-requests-limit: 100
-    reviewers:
-      - cmgrote
+    allow:
+      - dependency-type: "all"
 ...

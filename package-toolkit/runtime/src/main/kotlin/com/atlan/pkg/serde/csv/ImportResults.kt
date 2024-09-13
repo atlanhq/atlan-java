@@ -89,7 +89,13 @@ data class ImportResults(
             results.filterNotNull()
                 .forEach { result ->
                     result.primary.created?.let { list.addAll(it) }
-                    result.primary.updated?.let { list.addAll(it) }
+                    result.primary.updated?.let {
+                        // Only included updated results if they are full updates (not
+                        // related asset updates)
+                        it.filter { asset ->
+                            !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank()
+                        }.forEach { asset -> list.add(asset) }
+                    }
                 }
             return list
         }
