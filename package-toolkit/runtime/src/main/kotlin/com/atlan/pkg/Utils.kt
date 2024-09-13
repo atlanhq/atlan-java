@@ -821,7 +821,6 @@ object Utils {
     }
 
     private data class CacheUpdates(
-        val connectionQN: String,
         val added: MutableList<Asset>,
         val removed: MutableList<Asset>,
     ) {
@@ -830,20 +829,31 @@ object Utils {
                 add: Collection<Asset>?,
                 remove: Collection<Asset>?,
             ): Map<String, CacheUpdates> {
+                val client = Atlan.getDefaultClient()
                 val map = mutableMapOf<String, CacheUpdates>()
-                add?.forEach {
-                    val connectionQN = it.connectionQualifiedName
-                    if (!map.containsKey(connectionQN)) {
-                        map[connectionQN] = CacheUpdates(connectionQN, mutableListOf(), mutableListOf())
-                    }
-                    map[connectionQN]!!.added.add(it)
+                add?.forEach { asset ->
+                    val connectionQN = asset.connectionQualifiedName
+                    connectionQN?.let {
+                        map[it]?.added?.add(asset) ?: {
+                            map[it] =
+                                CacheUpdates(
+                                    added = mutableListOf(asset),
+                                    removed = mutableListOf(),
+                                )
+                        }
+                    } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
-                remove?.forEach {
-                    val connectionQN = it.connectionQualifiedName
-                    if (!map.containsKey(connectionQN)) {
-                        map[connectionQN] = CacheUpdates(connectionQN, mutableListOf(), mutableListOf())
-                    }
-                    map[connectionQN]!!.removed.add(it)
+                remove?.forEach { asset ->
+                    val connectionQN = asset.connectionQualifiedName
+                    connectionQN?.let {
+                        map[it]?.removed?.add(asset) ?: {
+                            map[it] =
+                                CacheUpdates(
+                                    added = mutableListOf(),
+                                    removed = mutableListOf(asset),
+                                )
+                        }
+                    } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
                 return map
             }
