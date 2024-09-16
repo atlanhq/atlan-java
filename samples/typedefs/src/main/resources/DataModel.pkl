@@ -338,6 +338,11 @@ customTypes {
         description = "Scale of the attribute."
         type = "long"
       }
+      ["\(a)Type"] {
+        label = "Type"
+        description = "Type of the attribute."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmEntity)"] {
