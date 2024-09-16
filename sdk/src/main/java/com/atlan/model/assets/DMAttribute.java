@@ -139,6 +139,10 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Attribute
     Long dMScale;
 
+    /** Type of the attribute. */
+    @Attribute
+    String dMType;
+
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
     String dMVersionName;
