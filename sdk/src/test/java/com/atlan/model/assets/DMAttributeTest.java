@@ -430,6 +430,7 @@ public class DMAttributeTest {
             .dMRelatedToAttribute(
                     DMAttributeAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dMScale(123456789L)
+            .dMType("String0")
             .build();
 
     private static final int hash = full.hashCode();

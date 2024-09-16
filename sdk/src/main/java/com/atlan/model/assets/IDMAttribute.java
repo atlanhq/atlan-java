@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -65,6 +66,9 @@ public interface IDMAttribute {
 
     /** Scale of the attribute. */
     NumericField D_M_SCALE = new NumericField("dMScale", "dMScale");
+
+    /** Type of the attribute. */
+    KeywordField D_M_TYPE = new KeywordField("dMType", "dMType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -380,6 +384,9 @@ public interface IDMAttribute {
 
     /** Scale of the attribute. */
     Long getDMScale();
+
+    /** Type of the attribute. */
+    String getDMType();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getDMVersionName();
