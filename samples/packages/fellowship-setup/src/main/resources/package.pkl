@@ -1,0 +1,48 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Config.pkl"
+import "pkl:semver"
+import "modulepath:/BuildInfo.pkl"
+
+packageId = "@csa/fellowship-setup"
+packageName = "Fellowship Setup"
+version = semver.Version(BuildInfo.VERSION)
+description = "Remove all test assets from a tenant."
+iconUrl = "http://assets.atlan.com/assets/ph-student-light.svg"
+docsUrl = "https://solutions.atlan.com/fellowship-setup/"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "FellowshipSetup"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Configuration"
+      inputs {
+        ["roster"] = new FileUploader {
+          title = "Roster of scholars"
+          fileTypes { "text/csv" }
+          required = true
+          helpText = "Select the file containing roster of scholars for the fellowship."
+          placeholderText = "Select roster CSV file"
+        }
+      }
+    }
+  }
+}
