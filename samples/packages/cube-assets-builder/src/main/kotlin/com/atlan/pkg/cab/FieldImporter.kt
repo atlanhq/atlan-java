@@ -187,10 +187,11 @@ class FieldImporter(
         header: List<String>,
     ): Long {
         val parentIdx = header.indexOf(PARENT_FIELD_QN)
-        return if (row[parentIdx].isBlank()) {
+        val parent = if (parentIdx >= 0) row[parentIdx] else ""
+        return if (parent.isBlank()) {
             1L
         } else {
-            val parentPath = row[parentIdx].split(Importer.QN_DELIMITER)
+            val parentPath = parent.split(Importer.QN_DELIMITER)
             (parentPath.size + 1).toLong()
         }
     }
@@ -225,11 +226,11 @@ class FieldImporter(
     ): String {
         val parentIdx = header.indexOf(PARENT_FIELD_QN)
         val nameIdx = header.indexOf(FIELD_NAME)
-        val parentPath = row[parentIdx]
+        val parentPath = if (parentIdx >= 0) row[parentIdx] else ""
         return if (parentPath.isBlank()) {
             "$hierarchyPath${Importer.QN_DELIMITER}${row[nameIdx]}"
         } else {
-            "$hierarchyPath${Importer.QN_DELIMITER}${row[parentIdx]}${Importer.QN_DELIMITER}${row[nameIdx]}"
+            "$hierarchyPath${Importer.QN_DELIMITER}$parentPath${Importer.QN_DELIMITER}${row[nameIdx]}"
         }
     }
 
