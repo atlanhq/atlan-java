@@ -4,19 +4,9 @@ import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.model.admin.ApiToken
 import com.atlan.model.admin.AtlanUser
-import com.atlan.model.assets.Asset
-import com.atlan.model.assets.Badge
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.DataDomain
-import com.atlan.model.assets.DataProduct
-import com.atlan.model.assets.Glossary
-import com.atlan.model.assets.GlossaryCategory
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Persona
-import com.atlan.model.assets.Purpose
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AtlanDeleteType
-import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.enums.AuthPolicyType
 import com.atlan.model.enums.PersonaMetadataAction
 import com.atlan.pkg.Utils
@@ -24,8 +14,6 @@ import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KotlinLogging
 import java.nio.file.Paths
-import java.util.concurrent.atomic.AtomicLong
-import kotlin.math.round
 import kotlin.system.exitProcess
 
 object FellowshipSetup {
@@ -73,11 +61,13 @@ object FellowshipSetup {
         builder.ofCsvRecord(inputFile).use { reader ->
             reader.stream().skip(1).forEach { r: CsvRecord ->
                 if (r.fieldCount >= 3 && !r.fields[0].isNullOrBlank() && !r.fields[1].isNullOrBlank() && !r.fields[2].isNullOrBlank()) {
-                    scholars.add(Fellowship.Scholar(
-                        firstName = r.fields[0].trim(),
-                        lastName = r.fields[1].trim(),
-                        emailAddress = r.fields[2].trim(),
-                    ))
+                    scholars.add(
+                        Fellowship.Scholar(
+                            firstName = r.fields[0].trim(),
+                            lastName = r.fields[1].trim(),
+                            emailAddress = r.fields[2].trim(),
+                        ),
+                    )
                 }
             }
         }
@@ -100,9 +90,10 @@ object FellowshipSetup {
     private fun createConnections() {
         roster.scholars.forEach {
             logger.info { "Creating unique connection for user: ${it.emailAddress}" }
-            val toCreate = Connection.creator(it.id, AtlanConnectorType.ICEBERG, null, null, SUPER_ADMINS)
-                .description("Connection to uniquely isolate assets for user ID: ${it.id} during the Atlan Engineering Fellowship.")
-                .build()
+            val toCreate =
+                Connection.creator(it.id, AtlanConnectorType.ICEBERG, null, null, SUPER_ADMINS)
+                    .description("Connection to uniquely isolate assets for user ID: ${it.id} during the Atlan Engineering Fellowship.")
+                    .build()
             val response = toCreate.save().block()
             val result = response.getResult(toCreate)
             Fellowship.connections[it.id] = result
@@ -112,11 +103,12 @@ object FellowshipSetup {
     private fun createPersonas() {
         roster.scholars.forEach {
             logger.info { "Creating unique persona for user: ${it.emailAddress}" }
-            val toCreate = Persona.creator(it.id)
-                .description("Access control for user ID ${it.id} during the Atlan Engineering Fellowship.")
-                .personaUsers(SUPER_ADMINS)
-                .personaUser(Fellowship.users[it.id]!!.username)
-                .build()
+            val toCreate =
+                Persona.creator(it.id)
+                    .description("Access control for user ID ${it.id} during the Atlan Engineering Fellowship.")
+                    .personaUsers(SUPER_ADMINS)
+                    .personaUser(Fellowship.users[it.id]!!.username)
+                    .build()
             val response = toCreate.save()
             val result = response.getResult(toCreate)
             Fellowship.personas[it.id] = result
@@ -135,12 +127,13 @@ object FellowshipSetup {
     private fun createApiTokens() {
         roster.scholars.forEach {
             logger.info { "Creating unique API token for user: ${it.emailAddress}" }
-            val token = ApiToken.create(
-                it.id,
-                "Access token for user ID ${it.id} during the Atlan Engineering Fellowship.",
-                setOf(Fellowship.personas[it.id]!!.qualifiedName),
-                -1L,
-            )
+            val token =
+                ApiToken.create(
+                    it.id,
+                    "Access token for user ID ${it.id} during the Atlan Engineering Fellowship.",
+                    setOf(Fellowship.personas[it.id]!!.qualifiedName),
+                    -1L,
+                )
             Fellowship.apiTokens[it.id] = token
         }
     }
@@ -154,7 +147,7 @@ object FellowshipSetup {
                 listOf(it.emailAddress),
                 attachments = listOf(tokenFile),
                 body = EmailBuilder.getPlain(it),
-                html = EmailBuilder.getHTML(it)
+                html = EmailBuilder.getHTML(it),
             )
         }
     }
