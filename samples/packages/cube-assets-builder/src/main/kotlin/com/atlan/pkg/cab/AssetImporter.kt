@@ -107,7 +107,7 @@ abstract class AssetImporter(
                 }
                 CubeField.TYPE_NAME -> {
                     current = CSVXformer.trimWhitespace(row[header.indexOf(FieldImporter.FIELD_NAME)])
-                    val parentField = CSVXformer.trimWhitespace(row[header.indexOf(FieldImporter.PARENT_FIELD_QN)])
+                    val parentField = if (header.indexOf(FieldImporter.PARENT_FIELD_QN) >= 0) CSVXformer.trimWhitespace(row[header.indexOf(FieldImporter.PARENT_FIELD_QN)]) else ""
                     if (parentField.isBlank()) {
                         parent = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
                         unique = CubeField.generateQualifiedName(current, parent.uniqueQN)
