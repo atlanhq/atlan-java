@@ -12,4 +12,5 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class FellowshipSetupCfg(
     @JsonProperty("roster") val roster: String? = null,
+    @JsonProperty("assets") val assets: String? = null,
 ) : CustomConfig()

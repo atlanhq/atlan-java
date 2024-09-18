@@ -7,7 +7,7 @@ import "modulepath:/BuildInfo.pkl"
 packageId = "@csa/fellowship-setup"
 packageName = "Fellowship Setup"
 version = semver.Version(BuildInfo.VERSION)
-description = "Remove all test assets from a tenant."
+description = "Configure a tenant for the Atlan Engineering Fellowship."
 iconUrl = "http://assets.atlan.com/assets/ph-student-light.svg"
 docsUrl = "https://solutions.atlan.com/fellowship-setup/"
 implementationLanguage = "Kotlin"
@@ -32,8 +32,8 @@ preview = true
 
 uiConfig {
   tasks {
-    ["Configuration"] {
-      description = "Configuration"
+    ["Scholars"] {
+      description = "Roster of scholars"
       inputs {
         ["roster"] = new FileUploader {
           title = "Roster of scholars"
@@ -41,6 +41,18 @@ uiConfig {
           required = true
           helpText = "Select the file containing roster of scholars for the fellowship."
           placeholderText = "Select roster CSV file"
+        }
+      }
+    }
+    ["Assets"] {
+      description = "Starter assets"
+      inputs {
+        ["assets"] = new FileUploader {
+          title = "Assets template"
+          fileTypes { "text/csv" }
+          required = true
+          helpText = "Select the file containing assets that should be created for each scholar."
+          placeholderText = "Select assets CSV file"
         }
       }
     }

@@ -30,18 +30,20 @@ object FellowshipSetup {
         val config = Utils.setPackageOps<FellowshipSetupCfg>()
 
         val rosterFilename = Utils.getOrDefault(config.roster, "")
-        if (rosterFilename.isBlank()) {
-            logger.error { "Missing required parameter - you must upload a file with the roster of scholars for in the Fellowship." }
+        val assetsFilename = Utils.getOrDefault(config.assets, "")
+        if (rosterFilename.isBlank() || assetsFilename.isBlank()) {
+            logger.error { "Missing required parameter - you must upload a file with the roster of scholars and assets to use for the Fellowship." }
             exitProcess(1)
         }
 
         client = Atlan.getDefaultClient()
 
         val rosterInput = Utils.getInputFile(rosterFilename, outputDirectory)
+        val assetsInput = Utils.getInputFile(assetsFilename, outputDirectory)
         roster = readRoster(rosterInput)
 
         inviteUsers()
-        createConnections()
+        createConnections(assetsInput, outputDirectory)
         AEFCustomMetadata.create() // NOTE: only do this AFTER connections exist, so it is available on all
         createPersonas()
         createApiTokens()
@@ -86,13 +88,18 @@ object FellowshipSetup {
         }
     }
 
-    private fun createConnections() {
+    private fun createConnections(
+        assetsInput: String,
+        directory: String,
+    ) {
         logger.info { "Creating reference connection." }
-        AEFConnection.create()
+        val refFiles = AEFConnection.create(assetsInput)
         roster.scholars.forEach {
             logger.info { "Creating unique connection for user: ${it.emailAddress}" }
-            AEFConnection.create(it)
+            val schFiles = AEFConnection.create(assetsInput, it)
         }
+        // TODO: Combine the files
+        AEFConnection.loadAssets(inputFiles, directory)
     }
 
     private fun createPersonas() {

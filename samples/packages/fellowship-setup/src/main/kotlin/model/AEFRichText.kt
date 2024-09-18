@@ -25,7 +25,7 @@ object AEFRichText {
 
             We have created an isolated area, protected by these details so that only you can access it. All of the isolated assets will be part of this connection:
 
-            ${client.baseUrl}/assets/${Fellowship.connections[scholar.id]!!.guid}/overview
+            ${client.baseUrl}/assets/${Fellowship.dbConnections[scholar.id]!!.guid}/overview
 
             I hope you're as excited about the week ahead as we are!
 
@@ -271,7 +271,7 @@ object AEFRichText {
                                             <table cellpadding="0" cellspacing="0" border="0" class="bg-green rounded w-auto" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; border-collapse: separate; width: auto; color: #ffffff; border-radius: 2px;" bgcolor="#5eba00">
                                               <tr>
                                                 <td align="center" valign="top" bgcolor="#2026d2" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;" >
-                                                <a href="${client.baseUrl}/assets/${Fellowship.connections[scholar.id]!!.guid}/overview" style="background-color: #2026d2; border: 0px solid #2026d2; border-color:#2026D2; color: #ffffff; display:inline-block; font-size: 16px; font-weight: bold; letter-spacing:0px; line-height: normal;  padding: 12px 32px; text-align:center; text-decoration: none; -webkit-transition: .3s background-color; transition: .3s background-color;">
+                                                <a href="${client.baseUrl}/assets/${Fellowship.dbConnections[scholar.id]!!.guid}/overview" style="background-color: #2026d2; border: 0px solid #2026d2; border-color:#2026D2; color: #ffffff; display:inline-block; font-size: 16px; font-weight: bold; letter-spacing:0px; line-height: normal;  padding: 12px 32px; text-align:center; text-decoration: none; -webkit-transition: .3s background-color; transition: .3s background-color;">
                                                   <span class="btn-span" font-color="#fff" style="color: #ffffff; font-size: 16px; text-decoration: none; font-weight: 600; line-height: 20px;">Your Unique Connection</span>
                                                 </a>
                                                 </td>

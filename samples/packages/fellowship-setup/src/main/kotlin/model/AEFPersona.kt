@@ -42,7 +42,7 @@ object AEFPersona {
         scholar: Fellowship.Scholar?,
     ) {
         if (scholar != null) {
-            val connectionQN = Fellowship.connections[scholar.id]!!.qualifiedName
+            val connectionQN = Fellowship.dbConnections[scholar.id]!!.qualifiedName
             Persona.createMetadataPolicy(
                 "All assets for ${scholar.id}",
                 persona.guid,

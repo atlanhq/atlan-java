@@ -19,7 +19,8 @@ object Fellowship {
     )
 
     val users = mutableMapOf<String, AtlanUser>()
-    val connections = mutableMapOf<String, Connection>()
+    val dbConnections = mutableMapOf<String, Connection>()
+    val biConnections = mutableMapOf<String, Connection>()
     val personas = mutableMapOf<String, Persona>()
     val apiTokens = mutableMapOf<String, ApiToken>()
 }
