@@ -260,6 +260,14 @@ customTypes {
         description = "Label of the data entity association."
         type = "string"
       }
+      ["\(a)EntityToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this entity is related."
+      }
+      ["\(a)EntityFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this entity is related."
+      }
     }
     enums {
       ["\(t)CardinalityType"] {
@@ -393,6 +401,14 @@ customTypes {
         label = "label"
         description = "Label of the data attribute association."
         type = "string"
+      }
+      ["\(a)AttributeToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this attribute is related."
+      }
+      ["\(a)AttributeFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this attribute is related."
       }
     }
     relationships {
