@@ -50,7 +50,11 @@ object AEFPersona {
         }
     }
 
-    private fun createReadOnlyPolicy(personaGuid: String, connectionQN: String, description: String) {
+    private fun createReadOnlyPolicy(
+        personaGuid: String,
+        connectionQN: String,
+        description: String,
+    ) {
         Persona.createMetadataPolicy(
             description,
             personaGuid,
@@ -61,7 +65,11 @@ object AEFPersona {
         ).build().save()
     }
 
-    private fun createAllAccessPolicy(personaGuid: String, connectionQN: String, description: String) {
+    private fun createAllAccessPolicy(
+        personaGuid: String,
+        connectionQN: String,
+        description: String,
+    ) {
         Persona.createMetadataPolicy(
             description,
             personaGuid,

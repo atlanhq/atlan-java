@@ -109,7 +109,10 @@ object AEFConnection {
         return Importer.import(config, directory)
     }
 
-    private fun concatenateFiles(files: List<File>, directory: String): File {
+    private fun concatenateFiles(
+        files: List<File>,
+        directory: String,
+    ): File {
         val output = Paths.get(directory, "combined_assets.csv").toFile()
         output.bufferedWriter().use { writer ->
             for (file in files) {
