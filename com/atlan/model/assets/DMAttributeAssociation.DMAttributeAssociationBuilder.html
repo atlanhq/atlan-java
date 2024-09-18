@@ -150,9 +150,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Attribute from which this association is related.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dMAttributeTo(com.atlan.model.assets.IDMAttribute)" class="member-name-link">dMAttributeTo</a><wbr>(<a href="IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a>&nbsp;dMAttributeTo)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dMAttributeFromQualifiedName(java.lang.String)" class="member-name-link">dMAttributeFromQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dMAttributeFromQualifiedName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique name of the association from this attribute is related.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dMAttributeTo(com.atlan.model.assets.IDMAttribute)" class="member-name-link">dMAttributeTo</a><wbr>(<a href="IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a>&nbsp;dMAttributeTo)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Attribute to which this association is related.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dMAttributeToQualifiedName(java.lang.String)" class="member-name-link">dMAttributeToQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dMAttributeToQualifiedName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique name of the association to which this attribute is related.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dMCardinality(com.atlan.model.enums.DMCardinalityType)" class="member-name-link">dMCardinality</a><wbr>(<a href="../enums/DMCardinalityType.html" title="enum class in com.atlan.model.enums">DMCardinalityType</a>&nbsp;dMCardinality)</code></div>
@@ -357,10 +367,32 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="dMAttributeFromQualifiedName(java.lang.String)">
+<h3>dMAttributeFromQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></span>&nbsp;<span class="element-name">dMAttributeFromQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dMAttributeFromQualifiedName)</span></div>
+<div class="block">Unique name of the association from this attribute is related.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="dMAttributeTo(com.atlan.model.assets.IDMAttribute)">
 <h3>dMAttributeTo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></span>&nbsp;<span class="element-name">dMAttributeTo</span><wbr><span class="parameters">(<a href="IDMAttribute.html" title="interface in com.atlan.model.assets">IDMAttribute</a>&nbsp;dMAttributeTo)</span></div>
 <div class="block">Attribute to which this association is related.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="dMAttributeToQualifiedName(java.lang.String)">
+<h3>dMAttributeToQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DMAttributeAssociation.DMAttributeAssociationBuilder.html" title="type parameter in DMAttributeAssociation.DMAttributeAssociationBuilder">B</a></span>&nbsp;<span class="element-name">dMAttributeToQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dMAttributeToQualifiedName)</span></div>
+<div class="block">Unique name of the association to which this attribute is related.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>

@@ -153,7 +153,7 @@ implements <a href="IDMEntityAssociation.html" title="interface in com.atlan.mod
 <code><a href="IDM.html#D_M_DATA_MODEL_BUSINESS_DATE">D_M_DATA_MODEL_BUSINESS_DATE</a>, <a href="IDM.html#D_M_DATA_MODEL_DOMAIN">D_M_DATA_MODEL_DOMAIN</a>, <a href="IDM.html#D_M_DATA_MODEL_EXPIRED_AT_BUSINESS_DATE">D_M_DATA_MODEL_EXPIRED_AT_BUSINESS_DATE</a>, <a href="IDM.html#D_M_DATA_MODEL_EXPIRED_AT_SYSTEM_DATE">D_M_DATA_MODEL_EXPIRED_AT_SYSTEM_DATE</a>, <a href="IDM.html#D_M_DATA_MODEL_NAME">D_M_DATA_MODEL_NAME</a>, <a href="IDM.html#D_M_DATA_MODEL_NAMESPACE">D_M_DATA_MODEL_NAMESPACE</a>, <a href="IDM.html#D_M_DATA_MODEL_QUALIFIED_NAME">D_M_DATA_MODEL_QUALIFIED_NAME</a>, <a href="IDM.html#D_M_DATA_MODEL_SYSTEM_DATE">D_M_DATA_MODEL_SYSTEM_DATE</a>, <a href="IDM.html#D_M_ENTITY_NAME">D_M_ENTITY_NAME</a>, <a href="IDM.html#D_M_ENTITY_QUALIFIED_NAME">D_M_ENTITY_QUALIFIED_NAME</a>, <a href="IDM.html#D_M_VERSION_NAME">D_M_VERSION_NAME</a>, <a href="IDM.html#D_M_VERSION_QUALIFIED_NAME">D_M_VERSION_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IDMEntityAssociation">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a></h3>
-<code><a href="IDMEntityAssociation.html#D_M_CARDINALITY">D_M_CARDINALITY</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_FROM">D_M_ENTITY_FROM</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_TO">D_M_ENTITY_TO</a>, <a href="IDMEntityAssociation.html#D_M_LABEL">D_M_LABEL</a></code></div>
+<code><a href="IDMEntityAssociation.html#D_M_CARDINALITY">D_M_CARDINALITY</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_FROM">D_M_ENTITY_FROM</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_FROM_QUALIFIED_NAME">D_M_ENTITY_FROM_QUALIFIED_NAME</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_TO">D_M_ENTITY_TO</a>, <a href="IDMEntityAssociation.html#D_M_ENTITY_TO_QUALIFIED_NAME">D_M_ENTITY_TO_QUALIFIED_NAME</a>, <a href="IDMEntityAssociation.html#D_M_LABEL">D_M_LABEL</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -313,19 +313,29 @@ implements <a href="IDMEntityAssociation.html" title="interface in com.atlan.mod
 <div class="block">Entity from which this association is related.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityName()" class="member-name-link">getDMEntityName</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityFromQualifiedName()" class="member-name-link">getDMEntityFromQualifiedName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Simple name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
+<div class="block">Unique name of the association from this entity is related.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityQualifiedName()" class="member-name-link">getDMEntityQualifiedName</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityName()" class="member-name-link">getDMEntityName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Simple name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityQualifiedName()" class="member-name-link">getDMEntityQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityTo()" class="member-name-link">getDMEntityTo</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IDMEntity.html" title="interface in com.atlan.model.assets">IDMEntity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityTo()" class="member-name-link">getDMEntityTo</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Entity to which this association is related.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMEntityToQualifiedName()" class="member-name-link">getDMEntityToQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique name of the association to which this entity is related.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDMLabel()" class="member-name-link">getDMLabel</a>()</code></div>
@@ -1631,6 +1641,17 @@ implements <a href="IDMEntityAssociation.html" title="interface in com.atlan.mod
 </section>
 </li>
 <li>
+<section class="detail" id="getDMEntityFromQualifiedName()">
+<h3>getDMEntityFromQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDMEntityFromQualifiedName</span>()</div>
+<div class="block">Unique name of the association from this entity is related.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IDMEntityAssociation.html#getDMEntityFromQualifiedName()">getDMEntityFromQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getDMEntityName()">
 <h3>getDMEntityName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDMEntityName</span>()</div>
@@ -1664,6 +1685,17 @@ implements <a href="IDMEntityAssociation.html" title="interface in com.atlan.mod
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IDMEntityAssociation.html#getDMEntityTo()">getDMEntityTo</a></code>&nbsp;in interface&nbsp;<code><a href="IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDMEntityToQualifiedName()">
+<h3>getDMEntityToQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDMEntityToQualifiedName</span>()</div>
+<div class="block">Unique name of the association to which this entity is related.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IDMEntityAssociation.html#getDMEntityToQualifiedName()">getDMEntityToQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IDMEntityAssociation.html" title="interface in com.atlan.model.assets">IDMEntityAssociation</a></code></dd>
 </dl>
 </section>
 </li>
