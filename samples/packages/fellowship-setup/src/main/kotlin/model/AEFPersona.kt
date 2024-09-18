@@ -42,25 +42,33 @@ object AEFPersona {
         scholar: Fellowship.Scholar?,
     ) {
         if (scholar != null) {
-            val connectionQN = Fellowship.dbConnections[scholar.id]!!.qualifiedName
-            Persona.createMetadataPolicy(
-                "All assets for ${scholar.id}",
-                persona.guid,
-                AuthPolicyType.ALLOW,
-                PersonaMetadataAction.entries,
-                connectionQN,
-                listOf("entity:$connectionQN"),
-            ).build().save()
+            createAllAccessPolicy(persona.guid, Fellowship.dbConnections[scholar.id]!!.qualifiedName, "All access for ${scholar.id} DB assets")
+            createAllAccessPolicy(persona.guid, Fellowship.biConnections[scholar.id]!!.qualifiedName, "All access for ${scholar.id} BI assets")
         } else {
-            val connectionQN = AEFConnection.referenceConnection.qualifiedName
-            Persona.createMetadataPolicy(
-                "Read-only for AEF Reference assets",
-                persona.guid,
-                AuthPolicyType.ALLOW,
-                listOf(PersonaMetadataAction.READ),
-                connectionQN,
-                listOf("entity:$connectionQN"),
-            ).build().save()
+            createReadOnlyPolicy(persona.guid, AEFConnection.db.qualifiedName, "Read-only for AEF DB assets")
+            createReadOnlyPolicy(persona.guid, AEFConnection.bi.qualifiedName, "Read-only for AEF BI assets")
         }
+    }
+
+    private fun createReadOnlyPolicy(personaGuid: String, connectionQN: String, description: String) {
+        Persona.createMetadataPolicy(
+            description,
+            personaGuid,
+            AuthPolicyType.ALLOW,
+            listOf(PersonaMetadataAction.READ),
+            connectionQN,
+            listOf("entity:$connectionQN"),
+        ).build().save()
+    }
+
+    private fun createAllAccessPolicy(personaGuid: String, connectionQN: String, description: String) {
+        Persona.createMetadataPolicy(
+            description,
+            personaGuid,
+            AuthPolicyType.ALLOW,
+            PersonaMetadataAction.entries,
+            connectionQN,
+            listOf("entity:$connectionQN"),
+        ).build().save()
     }
 }

@@ -110,6 +110,10 @@ jobs:
           path: jars/tests-cleanup-*.jar
       - uses: actions/upload-artifact@v4
         with:
+          name: fellowship-setup
+          path: jars/fellowship-setup-*.jar
+      - uses: actions/upload-artifact@v4
+        with:
           name: asset-scorer
           path: jars/asset-scorer-*.jar
       - uses: actions/upload-artifact@v4
@@ -201,6 +205,7 @@ jobs:
           - owner-propagator
           - relational-assets-builder
           - tests-cleanup
+          - fellowship-setup
           - asset-scorer
           - verification-enforcer
     needs:

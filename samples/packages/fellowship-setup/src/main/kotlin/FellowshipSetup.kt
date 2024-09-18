@@ -12,6 +12,8 @@ import model.AEFCustomMetadata
 import model.AEFPersona
 import model.AEFRichText
 import mu.KotlinLogging
+import parsing.RosterReader
+import java.io.File
 import java.nio.file.Paths
 import kotlin.system.exitProcess
 
@@ -40,7 +42,7 @@ object FellowshipSetup {
 
         val rosterInput = Utils.getInputFile(rosterFilename, outputDirectory)
         val assetsInput = Utils.getInputFile(assetsFilename, outputDirectory)
-        roster = readRoster(rosterInput)
+        roster = RosterReader.parse(rosterInput)
 
         inviteUsers()
         createConnections(assetsInput, outputDirectory)
@@ -48,31 +50,6 @@ object FellowshipSetup {
         createPersonas()
         createApiTokens()
         emailScholars(outputDirectory)
-    }
-
-    private fun readRoster(rosterInput: String): Fellowship.Roster {
-        val scholars = mutableListOf<Fellowship.Scholar>()
-        val inputFile = Paths.get(rosterInput)
-        val builder =
-            CsvReader.builder()
-                .fieldSeparator(',')
-                .quoteCharacter('"')
-                .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
-        builder.ofCsvRecord(inputFile).use { reader ->
-            reader.stream().skip(1).forEach { r: CsvRecord ->
-                if (r.fieldCount >= 3 && !r.fields[0].isNullOrBlank() && !r.fields[1].isNullOrBlank() && !r.fields[2].isNullOrBlank()) {
-                    scholars.add(
-                        Fellowship.Scholar(
-                            firstName = r.fields[0].trim(),
-                            lastName = r.fields[1].trim(),
-                            emailAddress = r.fields[2].trim(),
-                        ),
-                    )
-                }
-            }
-        }
-        return Fellowship.Roster(scholars.toSet())
     }
 
     private fun inviteUsers() {
@@ -93,13 +70,13 @@ object FellowshipSetup {
         directory: String,
     ) {
         logger.info { "Creating reference connection." }
-        val refFiles = AEFConnection.create(assetsInput)
+        val files = mutableListOf<File>()
+        files.add(AEFConnection.create(assetsInput)) // NOTE: This must be first to retain header line at top!
         roster.scholars.forEach {
             logger.info { "Creating unique connection for user: ${it.emailAddress}" }
-            val schFiles = AEFConnection.create(assetsInput, it)
+            files.add(AEFConnection.create(assetsInput, it))
         }
-        // TODO: Combine the files
-        AEFConnection.loadAssets(inputFiles, directory)
+        AEFConnection.loadAssets(files, directory)
     }
 
     private fun createPersonas() {

@@ -12,19 +12,21 @@ import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.util.AssetBatch
 import java.io.File
 import java.nio.file.Paths
+import kotlin.io.path.bufferedWriter
 
 object AEFConnection {
     val DB_CONNECTOR_TYPE = AtlanConnectorType.ICEBERG
     val BI_CONNECTOR_TYPE = AtlanConnectorType.SIGMA
     val SUPER_ADMINS = listOf("chris")
+    private const val REF_CONNECTION_NAME = "AEF Reference"
     lateinit var db: Connection
     lateinit var bi: Connection
 
     fun create(
         assetsInput: String,
         scholar: Fellowship.Scholar? = null,
-    ): Map<String, File> {
-        val connectionName = scholar?.id ?: "AEF Reference"
+    ): File {
+        val connectionName = scholar?.id ?: REF_CONNECTION_NAME
         val description =
             if (scholar != null) {
                 "Connection to uniquely isolate assets for user ID: ${scholar.id} during the Atlan Engineering Fellowship."
@@ -64,7 +66,7 @@ object AEFConnection {
         connDB: Connection,
         connBI: Connection,
         assetsInput: String,
-    ): Map<String, File> {
+    ): File {
         return prepFile(assetsInput, connDB, connBI)
     }
 
@@ -72,13 +74,15 @@ object AEFConnection {
         assetsInput: String,
         connDB: Connection,
         connBI: Connection,
-    ): Map<String, File> {
+    ): File {
         // Start by replacing the variables with proper connection qualifiedNames
         val input = Paths.get(assetsInput).toFile()
         val suffix = connDB.qualifiedName.substringAfterLast('/')
         val output = Paths.get("/tmp/${input.nameWithoutExtension}_$suffix.csv").toFile()
+        // Skip the header line if this is anything other than the reference connection
+        val skipLines = if (connDB.name == REF_CONNECTION_NAME) 0 else 1
         input.useLines { lines ->
-            lines.forEach { line ->
+            lines.drop(skipLines).forEach { line ->
                 val revised =
                     line
                         .replace("{{DB_CONNECTION}}", connDB.qualifiedName)
@@ -86,34 +90,36 @@ object AEFConnection {
                 output.appendText("$revised\n")
             }
         }
-
-        // TODO: Then break the single file into many, by asset type
-        val fileMap = mutableMapOf<String, File>()
-
-        // And return the list of separate files in the order they should be loaded
-        return fileMap
+        return output
     }
 
-    // TODO: Really we want to run this once per asset-typed file (all databases across all connections, all tables across all connections, etc)
-    // TODO: Actually, ^^ won't help -- will still iterate internally to update different connection caches per run
-    // TODO: Bigger fix == update the AIM package so that it can load multiple files (in order) before updating the connection cache
     fun loadAssets(
         inputFiles: List<File>,
         directory: String,
     ): ImportResults? {
-        var combinedResults: ImportResults? = null
-        inputFiles.forEach {
-            val config =
-                AssetImportCfg(
-                    importType = "DIRECT",
-                    assetsFile = it.path,
-                    assetsUpsertSemantic = "upsert",
-                    assetsFailOnErrors = false,
-                    trackBatches = true,
-                )
-            val results = Importer.import(config, directory)
-            combinedResults = combinedResults?.combinedWith(results) ?: results
+        val singleFile = concatenateFiles(inputFiles, directory)
+        val config =
+            AssetImportCfg(
+                importType = "DIRECT",
+                assetsFile = singleFile.path,
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = false,
+                trackBatches = true,
+            )
+        return Importer.import(config, directory)
+    }
+
+    private fun concatenateFiles(files: List<File>, directory: String): File {
+        val output = Paths.get(directory, "combined_assets.csv").toFile()
+        output.bufferedWriter().use { writer ->
+            for (file in files) {
+                file.useLines { lines ->
+                    lines.forEach { line ->
+                        writer.appendLine(line)
+                    }
+                }
+            }
         }
-        return combinedResults
+        return output
     }
 }
