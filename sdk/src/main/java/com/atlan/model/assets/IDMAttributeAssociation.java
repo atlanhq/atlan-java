@@ -36,8 +36,16 @@ public interface IDMAttributeAssociation {
     /** Attribute from which this association is related. */
     RelationField D_M_ATTRIBUTE_FROM = new RelationField("dMAttributeFrom");
 
+    /** Unique name of the association from this attribute is related. */
+    KeywordField D_M_ATTRIBUTE_FROM_QUALIFIED_NAME =
+            new KeywordField("dMAttributeFromQualifiedName", "dMAttributeFromQualifiedName");
+
     /** Attribute to which this association is related. */
     RelationField D_M_ATTRIBUTE_TO = new RelationField("dMAttributeTo");
+
+    /** Unique name of the association to which this attribute is related. */
+    KeywordField D_M_ATTRIBUTE_TO_QUALIFIED_NAME =
+            new KeywordField("dMAttributeToQualifiedName", "dMAttributeToQualifiedName");
 
     /** Cardinality of the data attribute association. */
     KeywordField D_M_CARDINALITY = new KeywordField("dMCardinality", "dMCardinality");
@@ -300,8 +308,14 @@ public interface IDMAttributeAssociation {
     /** Attribute from which this association is related. */
     IDMAttribute getDMAttributeFrom();
 
+    /** Unique name of the association from this attribute is related. */
+    String getDMAttributeFromQualifiedName();
+
     /** Attribute to which this association is related. */
     IDMAttribute getDMAttributeTo();
+
+    /** Unique name of the association to which this attribute is related. */
+    String getDMAttributeToQualifiedName();
 
     /** Cardinality of the data attribute association. */
     DMCardinalityType getDMCardinality();

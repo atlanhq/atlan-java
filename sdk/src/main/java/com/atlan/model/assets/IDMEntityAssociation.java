@@ -39,8 +39,15 @@ public interface IDMEntityAssociation {
     /** Entity from which this association is related. */
     RelationField D_M_ENTITY_FROM = new RelationField("dMEntityFrom");
 
+    /** Unique name of the association from this entity is related. */
+    KeywordField D_M_ENTITY_FROM_QUALIFIED_NAME =
+            new KeywordField("dMEntityFromQualifiedName", "dMEntityFromQualifiedName");
+
     /** Entity to which this association is related. */
     RelationField D_M_ENTITY_TO = new RelationField("dMEntityTo");
+
+    /** Unique name of the association to which this entity is related. */
+    KeywordField D_M_ENTITY_TO_QUALIFIED_NAME = new KeywordField("dMEntityToQualifiedName", "dMEntityToQualifiedName");
 
     /** Label of the data entity association. */
     KeywordField D_M_LABEL = new KeywordField("dMLabel", "dMLabel");
@@ -327,6 +334,9 @@ public interface IDMEntityAssociation {
     /** Entity from which this association is related. */
     IDMEntity getDMEntityFrom();
 
+    /** Unique name of the association from this entity is related. */
+    String getDMEntityFromQualifiedName();
+
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getDMEntityName();
 
@@ -335,6 +345,9 @@ public interface IDMEntityAssociation {
 
     /** Entity to which this association is related. */
     IDMEntity getDMEntityTo();
+
+    /** Unique name of the association to which this entity is related. */
+    String getDMEntityToQualifiedName();
 
     /** Label of the data entity association. */
     String getDMLabel();
