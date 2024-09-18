@@ -92,6 +92,10 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Attribute
     IDMEntity dMEntityFrom;
 
+    /** Unique name of the association from this entity is related. */
+    @Attribute
+    String dMEntityFromQualifiedName;
+
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
     String dMEntityName;
@@ -103,6 +107,10 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     /** Entity to which this association is related. */
     @Attribute
     IDMEntity dMEntityTo;
+
+    /** Unique name of the association to which this entity is related. */
+    @Attribute
+    String dMEntityToQualifiedName;
 
     /** Label of the data entity association. */
     @Attribute

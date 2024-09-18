@@ -53,9 +53,17 @@ public class DMAttributeAssociation extends Asset
     @Attribute
     IDMAttribute dMAttributeFrom;
 
+    /** Unique name of the association from this attribute is related. */
+    @Attribute
+    String dMAttributeFromQualifiedName;
+
     /** Attribute to which this association is related. */
     @Attribute
     IDMAttribute dMAttributeTo;
+
+    /** Unique name of the association to which this attribute is related. */
+    @Attribute
+    String dMAttributeToQualifiedName;
 
     /** Cardinality of the data attribute association. */
     @Attribute
