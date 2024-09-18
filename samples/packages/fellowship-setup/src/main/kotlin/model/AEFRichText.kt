@@ -1,9 +1,12 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
+package model
+
+import Fellowship
 import com.atlan.Atlan
 
-object EmailBuilder {
-    fun getPlain(scholar: Fellowship.Scholar): String {
+object AEFRichText {
+    fun getPlainTextEmail(scholar: Fellowship.Scholar): String {
         val client = Atlan.getDefaultClient()
         return """
             Hi ${scholar.firstName},
@@ -31,7 +34,7 @@ object EmailBuilder {
             """.trimIndent()
     }
 
-    fun getHTML(scholar: Fellowship.Scholar): String {
+    fun getHTMLEmail(scholar: Fellowship.Scholar): String {
         val client = Atlan.getDefaultClient()
         return """
             <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -232,7 +235,7 @@ object EmailBuilder {
                                 <table cellpadding="0" cellspacing="0" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; border-collapse: collapse; width: 100%;">
                                   <tr>
                                     <td class="content text-center" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; padding: 40px 48px 10px 48px;" align="center">
-                                      <p class="h1" style="font-weight: 600; font-size: 20px; line-height: 1.3; margin: 0 0 .5em;">Hi ${scholar.firstName} &em; welcome to the Atlan Engineering Fellowship!</p>
+                                      <p class="h1" style="font-weight: 600; font-size: 20px; line-height: 1.3; margin: 0 0 .5em;">Hi ${scholar.firstName} &#8212; welcome to the Atlan Engineering Fellowship!</p>
                                       <p style="margin: 0 0 1em;"></p>
                                     </td>
                                   </tr>
@@ -255,9 +258,7 @@ object EmailBuilder {
                                   <tr>
                                     <td class="content text-center" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; padding: 0px 48px 20px 48px;" align="center">
                                       <p class="h1" style="font-weight: 400; font-size: 16px; line-height: 1.3; margin: 0 0 .5em;">
-                                        To access the tenant programmatically, use the API token provided at the end of this message. We have created an isolated area, protected by these details so that only you can access it.
-                                        <br/><br/>
-                                        We hope you're as excited about the week ahead as we are!<br/>So happy you're here. 💙
+                                        To access the tenant programmatically, use the API token attached.
                                       </p>
                                       <p style="margin: 0 0 1em;"></p>
                                     </td>
@@ -271,7 +272,7 @@ object EmailBuilder {
                                               <tr>
                                                 <td align="center" valign="top" bgcolor="#2026d2" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;" >
                                                 <a href="${client.baseUrl}/assets/${Fellowship.connections[scholar.id]!!.guid}/overview" style="background-color: #2026d2; border: 0px solid #2026d2; border-color:#2026D2; color: #ffffff; display:inline-block; font-size: 16px; font-weight: bold; letter-spacing:0px; line-height: normal;  padding: 12px 32px; text-align:center; text-decoration: none; -webkit-transition: .3s background-color; transition: .3s background-color;">
-                                                  <span class="btn-span" font-color="#fff" style="color: #ffffff; font-size: 16px; text-decoration: none; font-weight: 600; line-height: 20px;">Isolated Connection</span>
+                                                  <span class="btn-span" font-color="#fff" style="color: #ffffff; font-size: 16px; text-decoration: none; font-weight: 600; line-height: 20px;">Your Unique Connection</span>
                                                 </a>
                                                 </td>
                                               </tr>
@@ -279,12 +280,13 @@ object EmailBuilder {
                                           </td>
                                         </tr>
                                       </table>
+                                      <p style="margin: 0 0 1em;"></p>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td class="content text-center" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; padding: 0px 48px 40px 48px;" align="left">
-                                      <p class="h1" style="font-weight: 400; font-size: 14px; line-height: 1.3; margin: 30px 0 .5em;">
-                                        ${Fellowship.apiTokens[scholar.id]!!.attributes.accessToken}
+                                    <td class="content text-center" style="font-family: Open Sans, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, Helvetica, Arial, sans-serif; padding: 0px 48px 20px 48px;" align="center">
+                                      <p class="h1" style="font-weight: 400; font-size: 16px; line-height: 1.3; margin: 0 0 .5em;">
+                                        We hope you're as excited about the week ahead as we are!<br/>So happy you're here. 💙
                                       </p>
                                       <p style="margin: 0 0 1em;"></p>
                                     </td>
@@ -316,6 +318,19 @@ object EmailBuilder {
             </center>
             </body>
             </html>
+            """.trimIndent()
+    }
+
+    fun getConnectionReadme(): String {
+        return """
+            <h1>Welcome to the Atlan Engineering Fellowship! 🎓</h1>
+            <p>Why have we brought you to this page?</p><p></p>
+            <p>This <a target="_blank" rel="noopener noreferrer nofollow" href="https://developer.atlan.com/concepts/review/#connections">connection</a> is the root of all <em>your</em> assets in Atlan. You, and only you, will have complete control over all the assets in it. So no need to worry about anyone else messing about with your metadata!</p><p></p>
+            <p>Some useful points of reference for your journey:</p>
+            <ul>
+                <li><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://developer.atlan.com/getting-started/intro/">Getting started</a> with extending Atlan</p></li>
+            </ul>
+            <p>Looking forward to all the amazing stuff you'll do this week! 💙</p>
             """.trimIndent()
     }
 }

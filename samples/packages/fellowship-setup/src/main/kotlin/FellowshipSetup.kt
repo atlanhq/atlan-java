@@ -4,14 +4,13 @@ import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.model.admin.ApiToken
 import com.atlan.model.admin.AtlanUser
-import com.atlan.model.assets.Connection
-import com.atlan.model.assets.Persona
-import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AuthPolicyType
-import com.atlan.model.enums.PersonaMetadataAction
 import com.atlan.pkg.Utils
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import model.AEFConnection
+import model.AEFCustomMetadata
+import model.AEFPersona
+import model.AEFRichText
 import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.system.exitProcess
@@ -21,7 +20,6 @@ object FellowshipSetup {
 
     private lateinit var client: AtlanClient
     private lateinit var roster: Fellowship.Roster
-    private val SUPER_ADMINS = listOf("chris")
 
     /**
      * Actually run the logic to clean up test assets.
@@ -44,6 +42,7 @@ object FellowshipSetup {
 
         inviteUsers()
         createConnections()
+        AEFCustomMetadata.create() // NOTE: only do this AFTER connections exist, so it is available on all
         createPersonas()
         createApiTokens()
         emailScholars(outputDirectory)
@@ -88,39 +87,20 @@ object FellowshipSetup {
     }
 
     private fun createConnections() {
+        logger.info { "Creating reference connection." }
+        AEFConnection.create()
         roster.scholars.forEach {
             logger.info { "Creating unique connection for user: ${it.emailAddress}" }
-            val toCreate =
-                Connection.creator(it.id, AtlanConnectorType.ICEBERG, null, null, SUPER_ADMINS)
-                    .description("Connection to uniquely isolate assets for user ID: ${it.id} during the Atlan Engineering Fellowship.")
-                    .build()
-            val response = toCreate.save().block()
-            val result = response.getResult(toCreate)
-            Fellowship.connections[it.id] = result
+            AEFConnection.create(it)
         }
     }
 
     private fun createPersonas() {
+        logger.info { "Creating reference persona." }
+        AEFPersona.create()
         roster.scholars.forEach {
             logger.info { "Creating unique persona for user: ${it.emailAddress}" }
-            val toCreate =
-                Persona.creator(it.id)
-                    .description("Access control for user ID ${it.id} during the Atlan Engineering Fellowship.")
-                    .personaUsers(SUPER_ADMINS)
-                    .personaUser(Fellowship.users[it.id]!!.username)
-                    .build()
-            val response = toCreate.save()
-            val result = response.getResult(toCreate)
-            Fellowship.personas[it.id] = result
-            val connectionQN = Fellowship.connections[it.id]!!.qualifiedName
-            Persona.createMetadataPolicy(
-                "All assets for ${it.id}",
-                result.guid,
-                AuthPolicyType.ALLOW,
-                PersonaMetadataAction.entries,
-                connectionQN,
-                listOf("entity:$connectionQN"),
-            ).build().save()
+            AEFPersona.create(it)
         }
     }
 
@@ -146,8 +126,8 @@ object FellowshipSetup {
                 "[Atlan Engineering Fellowship] Onboarding",
                 listOf(it.emailAddress),
                 attachments = listOf(tokenFile),
-                body = EmailBuilder.getPlain(it),
-                html = EmailBuilder.getHTML(it),
+                body = AEFRichText.getPlainTextEmail(it),
+                html = AEFRichText.getHTMLEmail(it),
             )
         }
     }
