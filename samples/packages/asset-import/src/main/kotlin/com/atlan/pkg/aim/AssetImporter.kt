@@ -265,10 +265,11 @@ class AssetImporter(
             //  - Import assets in tiered order, top-to-bottom
             //  - Stop when we have processed all the types in the file
             val typeLoadingOrder = getLoadOrder(typesInFile)
+            logger.info { "Asset loading order: $typeLoadingOrder" }
             var combinedResults: ImportResults? = null
             typeLoadingOrder.forEach {
                 typeToProcess = it
-                logger.info { "Loading $typeToProcess assets..." }
+                logger.info { "--- Importing $typeToProcess assets... ---" }
                 val results = super.import(columnsToSkip)
                 combinedResults = combinedResults?.combinedWith(results) ?: results
             }

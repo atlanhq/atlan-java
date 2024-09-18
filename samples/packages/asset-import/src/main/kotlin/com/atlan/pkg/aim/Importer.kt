@@ -145,6 +145,11 @@ object Importer {
                         trackBatches,
                         assetsFieldSeparator,
                     )
+                if (assetsUpdateSemantic != AssetCreationHandling.NONE) {
+                    // If we are creating any assets, we need to preprocess the file
+                    // to determine the dependency order to load it
+                    assetImporter.preprocess()
+                }
                 assetImporter.import()
             } else {
                 null
