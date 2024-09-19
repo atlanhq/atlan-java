@@ -5,6 +5,7 @@ import com.atlan.AtlanClient
 import com.atlan.model.admin.ApiToken
 import com.atlan.model.admin.AtlanUser
 import com.atlan.pkg.Utils
+import com.atlan.pkg.serde.csv.ImportResults
 import model.AEFConnection
 import model.AEFCustomMetadata
 import model.AEFPersona
@@ -43,8 +44,9 @@ object FellowshipSetup {
         roster = RosterReader.parse(rosterInput)
 
         inviteUsers()
-        createConnections(assetsInput, outputDirectory)
+        val assetFiles = createConnections(assetsInput)
         AEFCustomMetadata.create() // NOTE: only do this AFTER connections exist, so it is available on all
+        loadAssets(assetFiles, outputDirectory) // NOTE: only do this AFTER custom metadata exists, so it can be loaded
         createPersonas()
         createApiTokens()
         emailScholars(outputDirectory)
@@ -65,8 +67,7 @@ object FellowshipSetup {
 
     private fun createConnections(
         assetsInput: String,
-        directory: String,
-    ) {
+    ): List<File> {
         logger.info { "Creating reference connection." }
         val files = mutableListOf<File>()
         files.add(AEFConnection.create(assetsInput)) // NOTE: This must be first to retain header line at top!
@@ -74,7 +75,14 @@ object FellowshipSetup {
             logger.info { "Creating unique connection for user: ${it.emailAddress}" }
             files.add(AEFConnection.create(assetsInput, it))
         }
-        AEFConnection.loadAssets(files, directory)
+        return files
+    }
+
+    private fun loadAssets(
+        files: List<File>,
+        directory: String,
+    ): ImportResults? {
+        return AEFConnection.loadAssets(files, directory)
     }
 
     private fun createPersonas() {

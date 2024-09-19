@@ -85,6 +85,8 @@ object AEFConnection {
             lines.drop(skipLines).forEach { line ->
                 val revised =
                     line
+                        .replace("{{DB_TYPE}}", connDB.connectorType.value)
+                        .replace("{{BI_CONN_NAME}}", connBI.name)
                         .replace("{{DB_CONNECTION}}", connDB.qualifiedName)
                         .replace("{{BI_CONNECTION}}", connBI.qualifiedName)
                 output.appendText("$revised\n")
