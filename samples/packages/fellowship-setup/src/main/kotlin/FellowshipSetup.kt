@@ -65,9 +65,7 @@ object FellowshipSetup {
         }
     }
 
-    private fun createConnections(
-        assetsInput: String,
-    ): List<File> {
+    private fun createConnections(assetsInput: String): List<File> {
         logger.info { "Creating reference connection." }
         val files = mutableListOf<File>()
         files.add(AEFConnection.create(assetsInput)) // NOTE: This must be first to retain header line at top!
