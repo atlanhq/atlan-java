@@ -26,6 +26,7 @@ object Exporter {
         val limitToAssets = Utils.getAsList(config.assetTypesToInclude)
         val limitToAttributes = Utils.getAsList(config.attributesToInclude)
         val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
+        val multiAssetPrefixes = Utils.getAsList(config.qnPrefixes)
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
@@ -37,7 +38,7 @@ object Exporter {
                 assetsExportScope,
                 limitToAssets,
                 limitToAttributes,
-                assetsQualifiedNamePrefix,
+                multiAssetPrefixes.ifEmpty { listOf(assetsQualifiedNamePrefix) },
                 includeDescription,
                 includeArchived,
                 cmFields,
@@ -113,7 +114,7 @@ object Exporter {
         val assetsExportScope: String,
         val limitToAssets: List<String>,
         val limitToAttributes: List<String>,
-        val assetsQualifiedNamePrefix: String,
+        val assetsQualifiedNamePrefixes: List<String>,
         val includeDescription: Boolean,
         val includeArchived: Boolean,
         val cmFields: List<CustomMetadataField>,

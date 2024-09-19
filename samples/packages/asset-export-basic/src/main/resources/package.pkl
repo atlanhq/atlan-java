@@ -93,6 +93,12 @@ uiConfig {
           hide = true
           helpText = "Comma-separated list of attributes to include in the export."
         }
+        ["qn_prefixes"] = new TextInput {
+          title = "Multiple qualified name prefixes (for assets)"
+          required = false
+          helpText = "Comma-separated starting values for qualifiedName that will determine which assets to export."
+          hide = true
+        }
       }
     }
     ["Delivery"] {

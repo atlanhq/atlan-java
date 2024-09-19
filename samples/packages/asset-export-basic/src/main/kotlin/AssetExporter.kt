@@ -68,9 +68,17 @@ class AssetExporter(
         val builder =
             Atlan.getDefaultClient().assets
                 .select(ctx.includeArchived)
-                .where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefix))
                 .whereNot(Asset.SUPER_TYPE_NAMES.`in`(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
                 .whereNot(Asset.TYPE_NAME.`in`(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
+        if (ctx.assetsQualifiedNamePrefixes.size > 1) {
+            val assetsQueryBuilder = FluentSearch._internal()
+            ctx.assetsQualifiedNamePrefixes.forEach {
+                assetsQueryBuilder.whereSome(Asset.QUALIFIED_NAME.startsWith(it))
+            }
+            builder.where(assetsQueryBuilder.build().toQuery())
+        } else {
+            builder.where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefixes.first()))
+        }
         if (ctx.assetsExportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.DISPLAY_NAME.hasAnyValue())
