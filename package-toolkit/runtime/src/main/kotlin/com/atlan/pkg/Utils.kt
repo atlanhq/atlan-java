@@ -456,12 +456,14 @@ object Utils {
      * @param recipients collection of email addresses to send the email to
      * @param body content of the email (plain text)
      * @param attachments (optional) attachments to include in the email
+     * @param html (optional) an HTML version of the content of the email
      */
     fun sendEmail(
         subject: String,
         recipients: Collection<String>,
         body: String,
         attachments: Collection<File>? = null,
+        html: String? = null,
     ) {
         val builder =
             EmailBuilder.startingBlank()
@@ -469,6 +471,9 @@ object Utils {
                 .withRecipients(null, false, recipients, Message.RecipientType.TO)
                 .withSubject(subject)
                 .withPlainText("$body\n\n")
+        if (!html.isNullOrBlank()) {
+            builder.withHTMLText("$html\n\n")
+        }
         attachments?.forEach {
             builder.withAttachment(it.name, FileDataSource(it))
         }
