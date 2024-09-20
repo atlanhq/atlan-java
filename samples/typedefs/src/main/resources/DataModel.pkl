@@ -2,8 +2,8 @@
    Copyright 2024 Atlan Pte. Ltd. */
 amends "modulepath:/Model.pkl"
 
-t = "DM"
-a = t.toLowerCase()
+t = "Model"
+a = t.decapitalize()
 
 local dataModel = "DataModel"
 local dmVersion = "Version"
@@ -32,26 +32,26 @@ shared {
     description = "Assets used to model data and information."
     superTypes { "Catalog" }
     attributes {
-      ["\(a)\(dataModel)\(attrName)"] {
+      ["\(a)\(attrName)"] {
         label = "Model"
         description = "Simple name of the model in which this asset exists, or empty if it is itself a data model."
         type = "string"
         indexAs = "both"
       }
-      ["\(a)\(dataModel)\(qualifiedName)"] {
+      ["\(a)\(qualifiedName)"] {
         description = "Unique name of the model in which this asset exists, or empty if it is itself a data model."
         type = "string"
         indexAs = "keyword"
       }
-      ["\(a)\(dataModel)\(domain)"] {
-        label = "Model"
-        description = "A domain of the data model in which this asset exists."
+      ["\(a)\(domain)"] {
+        label = "Domain"
+        description = "Model domain in which this asset exists."
         type = "string"
         indexAs = "both"
       }
-      ["\(a)\(dataModel)\(namespace)"] {
-        label = "Model"
-        description = "A namespace of the data model in which this asset exists."
+      ["\(a)\(namespace)"] {
+        label = "Namespace"
+        description = "Model namespace in which this asset exists."
         type = "string"
         indexAs = "both"
       }
@@ -76,6 +76,11 @@ shared {
         description = "Unique name of the entity in which this asset exists, or empty if it is itself a data model entity."
         type = "string"
         indexAs = "keyword"
+      }
+      ["\(a)Type"] {
+        label = "Type"
+        description = "Type of the model asset (conceptual, logical, physical)."
+        type = "string"
       }
       ["\(a)\(systemDate)"] {
         label = "System date"
@@ -138,11 +143,7 @@ customTypes {
         type = "long"
         childCount = true
       }
-      ["\(a)\(dataModel)Type"] {
-        label = "type"
-        description = "Type of the data model."
-        type = "string"
-      }
+      // TODO: shouldn't this come from the connector instead?
       ["\(a)Tool"] {
         label = "tool"
         description = "Tool used to create this data model."
@@ -157,7 +158,7 @@ customTypes {
     description = "Instance of a version of a data model in Atlan."
     parentQualifiedName = "\(a)\(dataModel)\(qualifiedName)"
     attributes {
-      ["\(a)\(dmEntity)Count"] {
+      ["\(a)\(dmVersion)\(dmEntity)Count"] {
         label = dmEntity.decapitalize()
         description = "Number of entities in the version."
         type = "long"
@@ -188,20 +189,15 @@ customTypes {
     description = "Instance of an entity within a version of a data model in Atlan."
     parentQualifiedName = "\(a)\(dmVersion)\(qualifiedName)"
     attributes {
-      ["\(a)\(dmAttribute)Count"] {
+      ["\(a)\(dmEntity)\(dmAttribute)Count"] {
         label = dmAttribute.decapitalize()
         description = "Number of attributes in the entity."
         type = "long"
         childCount = true
       }
-      ["\(a)SubjectArea"] {
+      ["\(a)\(dmEntity)SubjectArea"] {
         label = "Subject area"
         description = "Subject area of the entity."
-        type = "string"
-      }
-      ["\(a)EntityType"] {
-        label = "type"
-        description = "Type of the data entity."
         type = "string"
       }
     }
@@ -211,7 +207,7 @@ customTypes {
         peers {
           new {
             type = "\(t)\(dmVersion)"
-            attribute = "\(a)Entities"
+            attribute = "\(a)\(dmVersion)Entities"
             description = "Individual entities that make up this version of the data model."
           }
           new {
@@ -228,12 +224,12 @@ customTypes {
         peers {
           new {
             type = "\(t)\(dmEntity)"
-            attribute = "\(a)MappedToEntities"
+            attribute = "\(a)\(dmEntity)MappedToEntities"
             description = "Entities to which this entity is mapped."
           }
           new {
             type = "\(t)\(dmEntity)"
-            attribute = "\(a)MappedFromEntities"
+            attribute = "\(a)\(dmEntity)MappedFromEntities"
             description = "Entities from which this entity is mapped."
           }
         }
@@ -246,24 +242,24 @@ customTypes {
     icon = modelIcon
     description = "Instance of a data entity association in Atlan."
     attributes {
-      ["\(a)Cardinality"] {
+      ["\(a)\(dmEntityAssociation)Cardinality"] {
         label = "cardinality"
         description = "Cardinality of the data entity association."
         type = "enum"
         enumName = "\(t)CardinalityType"
       }
-      ["\(a)Label"] {
+      ["\(a)\(dmEntityAssociation)Label"] {
         label = "label"
         description = "Label of the data entity association."
         type = "string"
       }
-      ["\(a)EntityToQualifiedName"] {
+      ["\(a)\(dmEntityAssociation)ToQualifiedName"] {
         type = "string"
         description = "Unique name of the association to which this entity is related."
       }
-      ["\(a)EntityFromQualifiedName"] {
+      ["\(a)\(dmEntityAssociation)FromQualifiedName"] {
         type = "string"
-        description = "Unique name of the association from this entity is related."
+        description = "Unique name of the association from which this entity is related."
       }
     }
     enums {
@@ -282,12 +278,12 @@ customTypes {
         description = "Peer-to-peer relationship between data entity association and data entity."
         parent {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)RelatedFromEntities"
-          description = "Association from this entity is related."
+          attribute = "\(a)\(dmEntity)RelatedFromEntities"
+          description = "Association from which this entity is related."
         }
         children {
           type = "\(t)\(dmEntityAssociation)"
-          attribute = "\(a)EntityTo"
+          attribute = "\(a)\(dmEntityAssociation)To"
           description = "Entity to which this association is related."
         }
       }
@@ -295,12 +291,12 @@ customTypes {
         description = "Peer-to-peer relationship between data entity and data entity association."
         parent {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)RelatedToEntities"
+          attribute = "\(a)\(dmEntity)RelatedToEntities"
           description = "Association to which this entity is related."
         }
         children {
           type = "\(t)\(dmEntityAssociation)"
-          attribute = "\(a)EntityFrom"
+          attribute = "\(a)\(dmEntityAssociation)From"
           description = "Entity from which this association is related."
         }
       }
@@ -313,37 +309,37 @@ customTypes {
     description = "Instance of an attribute within a data model entity in Atlan."
     parentQualifiedName = "\(a)\(dmEntity)\(qualifiedName)"
     attributes {
-      ["\(a)IsNullable"] {
+      ["\(a)\(dmAttribute)IsNullable"] {
         label = "Is nullable"
         description = "When true, the values in this attribute can be null."
         type = "boolean"
       }
-      ["\(a)IsPrimary"] {
+      ["\(a)\(dmAttribute)IsPrimary"] {
         label = "Primary key"
         description = "When true, this attribute forms the primary key for the entity."
         type = "boolean"
       }
-      ["\(a)IsForeign"] {
+      ["\(a)\(dmAttribute)IsForeign"] {
         label = "Foreign key"
         description = "When true, this attribute is a foreign key to another entity."
         type = "boolean"
       }
-      ["\(a)IsDerived"] {
+      ["\(a)\(dmAttribute)IsDerived"] {
         label = "Derived"
         description = "When true, the values in this attribute are derived data."
         type = "boolean"
       }
-      ["\(a)Precision"] {
+      ["\(a)\(dmAttribute)Precision"] {
         label = "Precision"
         description = "Precision of the attribute."
         type = "long"
       }
-      ["\(a)Scale"] {
+      ["\(a)\(dmAttribute)Scale"] {
         label = "Scale"
         description = "Scale of the attribute."
         type = "long"
       }
-      ["\(a)DataType"] {
+      ["\(a)\(dmAttribute)DataType"] {
         label = "Type"
         description = "Type of the attribute."
         type = "string"
@@ -355,12 +351,12 @@ customTypes {
         peers {
           new {
             type = "\(t)\(dmEntity)"
-            attribute = "\(a)\(dmAttribute)s"
+            attribute = "\(a)\(dmEntity)\(dmAttribute)s"
             description = "Individual attributes that make up the entity."
           }
           new {
             type = "\(t)\(dmAttribute)"
-            attribute = "\(a)Entities"
+            attribute = "\(a)\(dmAttribute)Entities"
             description = "Entity (or versions of an entity) in which this attribute exists."
           }
         }
@@ -372,12 +368,12 @@ customTypes {
         peers {
           new {
             type = "\(t)\(dmAttribute)"
-            attribute = "\(a)MappedToAttributes"
+            attribute = "\(a)\(dmAttribute)MappedToAttributes"
             description = "Attributes to which this attribute is mapped."
           }
           new {
             type = "\(t)\(dmAttribute)"
-            attribute = "\(a)MappedFromAttributes"
+            attribute = "\(a)\(dmAttribute)MappedFromAttributes"
             description = "Attributes from which this attribute is mapped."
           }
         }
@@ -390,24 +386,24 @@ customTypes {
     icon = modelIcon
     description = "Instance of a data attribute association in Atlan."
     attributes {
-      ["\(a)Cardinality"] {
+      ["\(a)\(dmAttributeAssociation)Cardinality"] {
         label = "cardinality"
         description = "Cardinality of the data attribute association."
         type = "enum"
         enumName = "\(t)CardinalityType"
       }
-      ["\(a)Label"] {
+      ["\(a)\(dmAttributeAssociation)Label"] {
         label = "label"
         description = "Label of the data attribute association."
         type = "string"
       }
-      ["\(a)AttributeToQualifiedName"] {
+      ["\(a)\(dmAttributeAssociation)ToQualifiedName"] {
         type = "string"
         description = "Unique name of the association to which this attribute is related."
       }
-      ["\(a)AttributeFromQualifiedName"] {
+      ["\(a)\(dmAttributeAssociation)FromQualifiedName"] {
         type = "string"
-        description = "Unique name of the association from this attribute is related."
+        description = "Unique name of the association from which this attribute is related."
       }
     }
     relationships {
@@ -415,12 +411,12 @@ customTypes {
         description = "Peer-to-peer relationship between data attribute association and data attribute."
         parent {
           type = "\(t)\(dmAttribute)"
-          attribute = "\(a)RelatedFromAttributes"
-          description = "Association from this attribute is related."
+          attribute = "\(a)\(dmAttribute)RelatedFromAttributes"
+          description = "Association from which this attribute is related."
         }
         children {
           type = "\(t)\(dmAttributeAssociation)"
-          attribute = "\(a)AttributeTo"
+          attribute = "\(a)\(dmAttributeAssociation)To"
           description = "Attribute to which this association is related."
         }
       }
@@ -428,12 +424,12 @@ customTypes {
         description = "Peer-to-peer relationship between data attribute association and data attribute."
         parent {
           type = "\(t)\(dmAttribute)"
-          attribute = "\(a)RelatedToAttributes"
+          attribute = "\(a)\(dmAttribute)RelatedToAttributes"
           description = "Association to which this attribute is related."
         }
         children {
           type = "\(t)\(dmAttributeAssociation)"
-          attribute = "\(a)AttributeFrom"
+          attribute = "\(a)\(dmAttributeAssociation)From"
           description = "Attribute from which this association is related."
         }
       }
