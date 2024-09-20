@@ -93,10 +93,6 @@ public class AnomaloCheck extends Asset
     @Attribute
     String anomaloCheckType;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

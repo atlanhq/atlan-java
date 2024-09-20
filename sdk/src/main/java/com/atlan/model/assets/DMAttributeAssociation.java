@@ -45,85 +45,81 @@ public class DMAttributeAssociation extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Attribute from which this association is related. */
     @Attribute
-    IDMAttribute dMAttributeFrom;
+    IDMAttribute dmAttributeFrom;
 
     /** Unique name of the association from this attribute is related. */
     @Attribute
-    String dMAttributeFromQualifiedName;
+    String dmAttributeFromQualifiedName;
 
     /** Attribute to which this association is related. */
     @Attribute
-    IDMAttribute dMAttributeTo;
+    IDMAttribute dmAttributeTo;
 
     /** Unique name of the association to which this attribute is related. */
     @Attribute
-    String dMAttributeToQualifiedName;
+    String dmAttributeToQualifiedName;
+
+    /** Business date for the asset. */
+    @Attribute
+    @Date
+    Long dmBusinessDate;
 
     /** Cardinality of the data attribute association. */
     @Attribute
-    DMCardinalityType dMCardinality;
+    DMCardinalityType dmCardinality;
 
-    /** Business date for the data model. */
+    /** A domain of the data model in which this asset exists. */
     @Attribute
-    @Date
-    Long dMDataModelBusinessDate;
-
-    /** A domain of the datam model in which this asset exists. */
-    @Attribute
-    String dMDataModelDomain;
-
-    /** Business expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtBusinessDate;
-
-    /** System expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtSystemDate;
+    String dmDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelName;
+    String dmDataModelName;
 
     /** A namespace of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelNamespace;
+    String dmDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelQualifiedName;
-
-    /** System date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelSystemDate;
+    String dmDataModelQualifiedName;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityName;
+    String dmEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityQualifiedName;
+    String dmEntityQualifiedName;
+
+    /** Business expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtBusinessDate;
+
+    /** System expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtSystemDate;
 
     /** Label of the data attribute association. */
     @Attribute
-    String dMLabel;
+    String dmLabel;
+
+    /** System date for the asset. */
+    @Attribute
+    @Date
+    Long dmSystemDate;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionName;
+    String dmVersionName;
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionQualifiedName;
+    String dmVersionQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute

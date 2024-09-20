@@ -43,10 +43,6 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dashboards that exist within this folder. */
     @Attribute
     @Singular

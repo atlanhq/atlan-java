@@ -44,10 +44,6 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

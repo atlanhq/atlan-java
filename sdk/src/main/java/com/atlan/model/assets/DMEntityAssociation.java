@@ -44,85 +44,81 @@ public class DMEntityAssociation extends Asset implements IDMEntityAssociation, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
+    /** Business date for the asset. */
     @Attribute
-    IAppModule appModuleImplemented;
+    @Date
+    Long dmBusinessDate;
 
     /** Cardinality of the data entity association. */
     @Attribute
-    DMCardinalityType dMCardinality;
+    DMCardinalityType dmCardinality;
 
-    /** Business date for the data model. */
+    /** A domain of the data model in which this asset exists. */
     @Attribute
-    @Date
-    Long dMDataModelBusinessDate;
-
-    /** A domain of the datam model in which this asset exists. */
-    @Attribute
-    String dMDataModelDomain;
-
-    /** Business expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtBusinessDate;
-
-    /** System expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtSystemDate;
+    String dmDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelName;
+    String dmDataModelName;
 
     /** A namespace of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelNamespace;
+    String dmDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelQualifiedName;
-
-    /** System date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelSystemDate;
+    String dmDataModelQualifiedName;
 
     /** Entity from which this association is related. */
     @Attribute
-    IDMEntity dMEntityFrom;
+    IDMEntity dmEntityFrom;
 
     /** Unique name of the association from this entity is related. */
     @Attribute
-    String dMEntityFromQualifiedName;
+    String dmEntityFromQualifiedName;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityName;
+    String dmEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityQualifiedName;
+    String dmEntityQualifiedName;
 
     /** Entity to which this association is related. */
     @Attribute
-    IDMEntity dMEntityTo;
+    IDMEntity dmEntityTo;
 
     /** Unique name of the association to which this entity is related. */
     @Attribute
-    String dMEntityToQualifiedName;
+    String dmEntityToQualifiedName;
+
+    /** Business expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtBusinessDate;
+
+    /** System expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtSystemDate;
 
     /** Label of the data entity association. */
     @Attribute
-    String dMLabel;
+    String dmLabel;
+
+    /** System date for the asset. */
+    @Attribute
+    @Date
+    Long dmSystemDate;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionName;
+    String dmVersionName;
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionQualifiedName;
+    String dmVersionQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute

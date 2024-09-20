@@ -100,10 +100,6 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecVersion;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

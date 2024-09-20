@@ -45,10 +45,6 @@ public class PowerBIDataflow extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Datasets used by this dataflow. */
     @Attribute
     @Singular

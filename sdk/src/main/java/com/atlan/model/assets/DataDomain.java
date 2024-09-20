@@ -47,10 +47,6 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Data products that exist within this data domain. */
     @Attribute
     @Singular

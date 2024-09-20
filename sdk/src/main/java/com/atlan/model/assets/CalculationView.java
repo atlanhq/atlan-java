@@ -45,10 +45,6 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Time at which this calculation view was activated at */
     @Attribute
     @Date

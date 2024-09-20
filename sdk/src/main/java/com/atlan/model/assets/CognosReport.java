@@ -43,10 +43,6 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

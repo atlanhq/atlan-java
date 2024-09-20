@@ -98,9 +98,6 @@ public interface IAPI {
     /** Version of the API specification. */
     String getApiSpecVersion();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
-
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 

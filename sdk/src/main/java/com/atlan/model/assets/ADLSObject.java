@@ -134,10 +134,6 @@ public class ADLSObject extends Asset
     @Attribute
     Boolean adlsObjectVersionLevelImmutabilitySupport;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;

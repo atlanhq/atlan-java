@@ -47,10 +47,6 @@ public class GCSObject extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Access control list for this asset. */
     @Attribute
     String gcsAccessControl;
