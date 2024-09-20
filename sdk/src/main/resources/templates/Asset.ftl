@@ -121,7 +121,14 @@
      * @return a builder containing the minimal set of properties required to update this asset
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
-    public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
+    public AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        validateRequired(
+            getTypeName(),
+            Map.of(
+                "qualifiedName", this.getQualifiedName(),
+                "name", this.getName()));
+        return IndistinctAsset.updater(this.getQualifiedName(), this.getName());
+    }
 
     /**
      * Reduce the asset to the minimum set of properties required to relate to it.
@@ -129,7 +136,21 @@
      * @return an asset containing the minimal set of properties required to relate to this asset
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
-    public abstract Asset trimToReference() throws InvalidRequestException;
+    public Asset trimToReference() throws InvalidRequestException {
+        if (this.getGuid() != null && !this.getGuid().isEmpty()) {
+            return IndistinctAsset.refByGuid(this.getGuid());
+        }
+        if (this.getQualifiedName() != null && !this.getQualifiedName().isEmpty()) {
+            return IndistinctAsset.refByQualifiedName(this.getQualifiedName());
+        }
+        if (this.getUniqueAttributes() != null
+            && this.getUniqueAttributes().getQualifiedName() != null
+            && !this.getUniqueAttributes().getQualifiedName().isEmpty()) {
+            return IndistinctAsset.refByQualifiedName(this.getUniqueAttributes().getQualifiedName());
+        }
+        throw new InvalidRequestException(
+            ErrorCode.MISSING_REQUIRED_RELATIONSHIP_PARAM, "Asset", "guid, qualifiedName");
+    }
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.

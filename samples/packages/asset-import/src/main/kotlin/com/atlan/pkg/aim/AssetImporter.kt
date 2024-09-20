@@ -9,6 +9,7 @@ import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.AirflowDag
 import com.atlan.model.assets.AirflowTask
+import com.atlan.model.assets.AnomaloCheck
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AtlanCollection
 import com.atlan.model.assets.AtlanQuery
@@ -665,6 +666,10 @@ class AssetImporter(
                 TypeGrouping(
                     "Soda",
                     listOf(SodaCheck.TYPE_NAME),
+                ),
+                TypeGrouping(
+                    "Anomalo",
+                    listOf(AnomaloCheck.TYPE_NAME),
                 ),
                 TypeGrouping(
                     "MC",
