@@ -77,24 +77,24 @@ shared {
         type = "string"
         indexAs = "keyword"
       }
-      ["\(a)\(dataModel)\(systemDate)"] {
-        label = "Model"
-        description = "System date for the data model."
+      ["\(a)\(systemDate)"] {
+        label = "System date"
+        description = "System date for the asset."
         type = "date"
       }
-      ["\(a)\(dataModel)\(businessDate)"] {
-        label = "Model"
-        description = "Business date for the data model."
+      ["\(a)\(businessDate)"] {
+        label = "Business date"
+        description = "Business date for the asset."
         type = "date"
       }
-      ["\(a)\(dataModel)\(expiredAtSystemDate)"] {
-        label = "Model"
-        description = "System expiration date for the data model."
+      ["\(a)\(expiredAtSystemDate)"] {
+        label = "Expired (system date)"
+        description = "System expiration date for the asset."
         type = "date"
       }
-      ["\(a)\(dataModel)\(expiredAtBusinessDate)"] {
-        label = "Model"
-        description = "Business expiration date for the data model."
+      ["\(a)\(expiredAtBusinessDate)"] {
+        label = "Expired (business date)"
+        description = "Business expiration date for the asset."
         type = "date"
       }
     }
