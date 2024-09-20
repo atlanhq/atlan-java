@@ -102,8 +102,35 @@ public interface ILookerLook {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
+    /** Checks that run on this asset. */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
     /** Application module that is implemented by this asset. */
     IAppModule getAppModuleImplemented();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -569,6 +596,12 @@ public interface ILookerLook {
 
     /** Tiles that exist within this Look. */
     ILookerTile getTile();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

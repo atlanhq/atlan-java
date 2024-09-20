@@ -90,6 +90,33 @@ public interface IGlossaryCategory {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** TBC */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** TBC */
+    Long getAssetAnomaloCheckCount();
+
+    /** TBC */
+    String getAssetAnomaloCheckStatuses();
+
+    /** TBC */
+    String getAssetAnomaloDQStatus();
+
+    /** TBC */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** TBC */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** TBC */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** TBC */
+    String getAssetAnomaloSourceUrl();
+
+    /** TBC */
     String getAssetCoverImage();
 
     /** TBC */
@@ -508,6 +535,12 @@ public interface IGlossaryCategory {
 
     /** TBC */
     SortedSet<IGlossaryTerm> getTerms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** TBC */
     String getUserDescription();
