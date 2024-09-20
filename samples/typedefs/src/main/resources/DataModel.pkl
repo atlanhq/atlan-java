@@ -208,15 +208,17 @@ customTypes {
     relationships {
       ["\(a)\(dmVersion)"] {
         description = "Containment relationship between \(t)\(dmVersion) (parent) and \(t)\(dmEntity) (children)."
-        parent {
-          type = "\(t)\(dmVersion)"
-          attribute = "\(a)Entities"
-          description = "Individual entities that make up this version of the data model."
-        }
-        children {
-          type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmVersion)"
-          description = "Data model version in which this entity exists."
+        peers {
+          new {
+            type = "\(t)\(dmVersion)"
+            attribute = "\(a)Entities"
+            description = "Individual entities that make up this version of the data model."
+          }
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmVersion)s"
+            description = "Data model version(s) in which this entity exists."
+          }
         }
       }
       ["data_model_entity_mapped_entities"] {
@@ -350,15 +352,17 @@ customTypes {
     relationships {
       ["\(a)\(dmEntity)"] {
         description = "Containment relationship between \(t)\(dmEntity) (parent) and \(t)\(dmAttribute) (children)."
-        parent {
-          type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmAttribute)s"
-          description = "Individual attributes that make up the entity."
-        }
-        children {
-          type = "\(t)\(dmAttribute)"
-          attribute = "\(a)\(dmEntity)"
-          description = "Entity in which this attribute exists."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmAttribute)s"
+            description = "Individual attributes that make up the entity."
+          }
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)Entities"
+            description = "Entity (or versions of an entity) in which this attribute exists."
+          }
         }
       }
       ["data_model_attribute_mapped_attributes"] {
