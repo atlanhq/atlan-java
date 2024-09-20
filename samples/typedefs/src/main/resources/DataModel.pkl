@@ -45,7 +45,7 @@ shared {
       }
       ["\(a)\(dataModel)\(domain)"] {
         label = "Model"
-        description = "A domain of the datam model in which this asset exists."
+        description = "A domain of the data model in which this asset exists."
         type = "string"
         indexAs = "both"
       }
