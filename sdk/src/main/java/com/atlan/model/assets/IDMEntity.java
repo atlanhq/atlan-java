@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
@@ -35,34 +34,31 @@ public interface IDMEntity {
     public static final String TYPE_NAME = "DMEntity";
 
     /** Number of attributes in the entity. */
-    NumericField D_M_ATTRIBUTE_COUNT = new NumericField("dMAttributeCount", "dMAttributeCount");
+    NumericField DM_ATTRIBUTE_COUNT = new NumericField("dmAttributeCount", "dmAttributeCount");
 
     /** Individual attributes that make up the entity. */
-    RelationField D_M_ATTRIBUTES = new RelationField("dMAttributes");
+    RelationField DM_ATTRIBUTES = new RelationField("dmAttributes");
 
     /** Type of the data entity. */
-    KeywordField D_M_ENTITY_TYPE = new KeywordField("dMEntityType", "dMEntityType");
-
-    /** Whether this is a root entity or not. */
-    BooleanField D_M_IS_ROOT = new BooleanField("dMIsRoot", "dMIsRoot");
+    KeywordField DM_ENTITY_TYPE = new KeywordField("dmEntityType", "dmEntityType");
 
     /** Entities from which this entity is mapped. */
-    RelationField D_M_MAPPED_FROM_ENTITIES = new RelationField("dMMappedFromEntities");
+    RelationField DM_MAPPED_FROM_ENTITIES = new RelationField("dmMappedFromEntities");
 
     /** Entities to which this entity is mapped. */
-    RelationField D_M_MAPPED_TO_ENTITIES = new RelationField("dMMappedToEntities");
+    RelationField DM_MAPPED_TO_ENTITIES = new RelationField("dmMappedToEntities");
 
     /** Association from this entity is related. */
-    RelationField D_M_RELATED_FROM_ENTITIES = new RelationField("dMRelatedFromEntities");
+    RelationField DM_RELATED_FROM_ENTITIES = new RelationField("dmRelatedFromEntities");
 
     /** Association to which this entity is related. */
-    RelationField D_M_RELATED_TO_ENTITIES = new RelationField("dMRelatedToEntities");
+    RelationField DM_RELATED_TO_ENTITIES = new RelationField("dmRelatedToEntities");
 
     /** Subject area of the entity. */
-    KeywordField D_M_SUBJECT_AREA = new KeywordField("dMSubjectArea", "dMSubjectArea");
+    KeywordField DM_SUBJECT_AREA = new KeywordField("dmSubjectArea", "dmSubjectArea");
 
-    /** Data model version in which this entity exists. */
-    RelationField D_M_VERSION = new RelationField("dMVersion");
+    /** Data model version(s) in which this entity exists. */
+    RelationField DM_VERSIONS = new RelationField("dmVersions");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -88,8 +84,32 @@ public interface IDMEntity {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
+    /** Checks that run on this asset. */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -316,72 +336,6 @@ public interface IDMEntity {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Number of attributes in the entity. */
-    Long getDMAttributeCount();
-
-    /** Individual attributes that make up the entity. */
-    SortedSet<IDMAttribute> getDMAttributes();
-
-    /** Business date for the data model. */
-    Long getDMDataModelBusinessDate();
-
-    /** A domain of the datam model in which this asset exists. */
-    String getDMDataModelDomain();
-
-    /** Business expiration date for the data model. */
-    Long getDMDataModelExpiredAtBusinessDate();
-
-    /** System expiration date for the data model. */
-    Long getDMDataModelExpiredAtSystemDate();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDMDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelQualifiedName();
-
-    /** System date for the data model. */
-    Long getDMDataModelSystemDate();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityQualifiedName();
-
-    /** Type of the data entity. */
-    String getDMEntityType();
-
-    /** Whether this is a root entity or not. */
-    Boolean getDMIsRoot();
-
-    /** Entities from which this entity is mapped. */
-    SortedSet<IDMEntity> getDMMappedFromEntities();
-
-    /** Entities to which this entity is mapped. */
-    SortedSet<IDMEntity> getDMMappedToEntities();
-
-    /** Association from this entity is related. */
-    SortedSet<IDMEntityAssociation> getDMRelatedFromEntities();
-
-    /** Association to which this entity is related. */
-    SortedSet<IDMEntityAssociation> getDMRelatedToEntities();
-
-    /** Subject area of the entity. */
-    String getDMSubjectArea();
-
-    /** Data model version in which this entity exists. */
-    IDMVersion getDMVersion();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -396,6 +350,69 @@ public interface IDMEntity {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Number of attributes in the entity. */
+    Long getDmAttributeCount();
+
+    /** Individual attributes that make up the entity. */
+    SortedSet<IDMAttribute> getDmAttributes();
+
+    /** Business date for the asset. */
+    Long getDmBusinessDate();
+
+    /** A domain of the data model in which this asset exists. */
+    String getDmDataModelDomain();
+
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDmDataModelNamespace();
+
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelQualifiedName();
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityName();
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityQualifiedName();
+
+    /** Type of the data entity. */
+    String getDmEntityType();
+
+    /** Business expiration date for the asset. */
+    Long getDmExpiredAtBusinessDate();
+
+    /** System expiration date for the asset. */
+    Long getDmExpiredAtSystemDate();
+
+    /** Entities from which this entity is mapped. */
+    SortedSet<IDMEntity> getDmMappedFromEntities();
+
+    /** Entities to which this entity is mapped. */
+    SortedSet<IDMEntity> getDmMappedToEntities();
+
+    /** Association from this entity is related. */
+    SortedSet<IDMEntityAssociation> getDmRelatedFromEntities();
+
+    /** Association to which this entity is related. */
+    SortedSet<IDMEntityAssociation> getDmRelatedToEntities();
+
+    /** Subject area of the entity. */
+    String getDmSubjectArea();
+
+    /** System date for the asset. */
+    Long getDmSystemDate();
+
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionName();
+
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionQualifiedName();
+
+    /** Data model version(s) in which this entity exists. */
+    SortedSet<IDMVersion> getDmVersions();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
@@ -576,6 +593,12 @@ public interface IDMEntity {
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

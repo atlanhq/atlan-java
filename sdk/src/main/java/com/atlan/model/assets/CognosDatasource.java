@@ -44,10 +44,6 @@ public class CognosDatasource extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Connection string of a cognos datasource */
     @Attribute
     String cognosDatasourceConnectionString;

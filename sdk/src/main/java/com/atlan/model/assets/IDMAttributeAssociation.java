@@ -34,24 +34,24 @@ public interface IDMAttributeAssociation {
     public static final String TYPE_NAME = "DMAttributeAssociation";
 
     /** Attribute from which this association is related. */
-    RelationField D_M_ATTRIBUTE_FROM = new RelationField("dMAttributeFrom");
+    RelationField DM_ATTRIBUTE_FROM = new RelationField("dmAttributeFrom");
 
     /** Unique name of the association from this attribute is related. */
-    KeywordField D_M_ATTRIBUTE_FROM_QUALIFIED_NAME =
-            new KeywordField("dMAttributeFromQualifiedName", "dMAttributeFromQualifiedName");
+    KeywordField DM_ATTRIBUTE_FROM_QUALIFIED_NAME =
+            new KeywordField("dmAttributeFromQualifiedName", "dmAttributeFromQualifiedName");
 
     /** Attribute to which this association is related. */
-    RelationField D_M_ATTRIBUTE_TO = new RelationField("dMAttributeTo");
+    RelationField DM_ATTRIBUTE_TO = new RelationField("dmAttributeTo");
 
     /** Unique name of the association to which this attribute is related. */
-    KeywordField D_M_ATTRIBUTE_TO_QUALIFIED_NAME =
-            new KeywordField("dMAttributeToQualifiedName", "dMAttributeToQualifiedName");
+    KeywordField DM_ATTRIBUTE_TO_QUALIFIED_NAME =
+            new KeywordField("dmAttributeToQualifiedName", "dmAttributeToQualifiedName");
 
     /** Cardinality of the data attribute association. */
-    KeywordField D_M_CARDINALITY = new KeywordField("dMCardinality", "dMCardinality");
+    KeywordField DM_CARDINALITY = new KeywordField("dmCardinality", "dmCardinality");
 
     /** Label of the data attribute association. */
-    KeywordField D_M_LABEL = new KeywordField("dMLabel", "dMLabel");
+    KeywordField DM_LABEL = new KeywordField("dmLabel", "dmLabel");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -77,8 +77,32 @@ public interface IDMAttributeAssociation {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
+    /** Checks that run on this asset. */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -305,60 +329,6 @@ public interface IDMAttributeAssociation {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Attribute from which this association is related. */
-    IDMAttribute getDMAttributeFrom();
-
-    /** Unique name of the association from this attribute is related. */
-    String getDMAttributeFromQualifiedName();
-
-    /** Attribute to which this association is related. */
-    IDMAttribute getDMAttributeTo();
-
-    /** Unique name of the association to which this attribute is related. */
-    String getDMAttributeToQualifiedName();
-
-    /** Cardinality of the data attribute association. */
-    DMCardinalityType getDMCardinality();
-
-    /** Business date for the data model. */
-    Long getDMDataModelBusinessDate();
-
-    /** A domain of the datam model in which this asset exists. */
-    String getDMDataModelDomain();
-
-    /** Business expiration date for the data model. */
-    Long getDMDataModelExpiredAtBusinessDate();
-
-    /** System expiration date for the data model. */
-    Long getDMDataModelExpiredAtSystemDate();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDMDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelQualifiedName();
-
-    /** System date for the data model. */
-    Long getDMDataModelSystemDate();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityQualifiedName();
-
-    /** Label of the data attribute association. */
-    String getDMLabel();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -373,6 +343,60 @@ public interface IDMAttributeAssociation {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Attribute from which this association is related. */
+    IDMAttribute getDmAttributeFrom();
+
+    /** Unique name of the association from this attribute is related. */
+    String getDmAttributeFromQualifiedName();
+
+    /** Attribute to which this association is related. */
+    IDMAttribute getDmAttributeTo();
+
+    /** Unique name of the association to which this attribute is related. */
+    String getDmAttributeToQualifiedName();
+
+    /** Business date for the asset. */
+    Long getDmBusinessDate();
+
+    /** Cardinality of the data attribute association. */
+    DMCardinalityType getDmCardinality();
+
+    /** A domain of the data model in which this asset exists. */
+    String getDmDataModelDomain();
+
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDmDataModelNamespace();
+
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelQualifiedName();
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityName();
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityQualifiedName();
+
+    /** Business expiration date for the asset. */
+    Long getDmExpiredAtBusinessDate();
+
+    /** System expiration date for the asset. */
+    Long getDmExpiredAtSystemDate();
+
+    /** Label of the data attribute association. */
+    String getDmLabel();
+
+    /** System date for the asset. */
+    Long getDmSystemDate();
+
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionName();
+
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
@@ -553,6 +577,12 @@ public interface IDMAttributeAssociation {
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

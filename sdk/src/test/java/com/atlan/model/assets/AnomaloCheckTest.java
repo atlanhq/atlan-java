@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AppModuleTest {
+public class AnomaloCheckTest {
 
-    private static final AppModule full = AppModule._internal()
+    private static final AnomaloCheck full = AnomaloCheck._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,7 +59,6 @@ public class AppModuleTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .appModuleImplemented(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -83,6 +82,18 @@ public class AppModuleTest {
             .announcementType(AtlanAnnouncementType.INFORMATION)
             .announcementUpdatedAt(123456789L)
             .announcementUpdatedBy("String0")
+            .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .anomaloCheck(AnomaloCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .assetAnomaloAppliedCheckType("String0")
+            .assetAnomaloAppliedCheckType("String1")
+            .assetAnomaloCheckCount(123456789L)
+            .assetAnomaloCheckStatuses("String0")
+            .assetAnomaloDQStatus("String0")
+            .assetAnomaloFailedCheckCount(123456789L)
+            .assetAnomaloFailedCheckType("String0")
+            .assetAnomaloFailedCheckType("String1")
+            .assetAnomaloLastCheckRunAt(123456789L)
+            .assetAnomaloSourceUrl("String0")
             .assetCoverImage("String0")
             .assetDbtAccountName("String0")
             .assetDbtAlias("String0")
@@ -395,34 +406,42 @@ public class AppModuleTest {
                     .build())
             .subType("String0")
             .tenantId("String0")
+            .userDefRelationshipFrom(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .userDefRelationshipFrom(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipTo(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .userDefRelationshipTo(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDescription("String0")
             .viewScore(123.456)
             .viewerGroup("String0")
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .appChildModule(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .appChildModule(AppModule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .appModuleImplementedByAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .appModuleImplementedByAsset(
-                    AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .appModuleType("String0")
-            .appParentModule(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .appSubModuleCount(123456789L)
+            .anomaloCheckAsset(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .anomaloCheckCategoryType("String0")
+            .anomaloCheckHistoricRunStatus("String0")
+            .anomaloCheckIsSystemAdded(true)
+            .anomaloCheckLastRunCompletedAt(123456789L)
+            .anomaloCheckLastRunEvaluatedMessage("String0")
+            .anomaloCheckLastRunUrl("String0")
+            .anomaloCheckLinkedAssetQualifiedName("String0")
+            .anomaloCheckPriorityLevel("String0")
+            .anomaloCheckStatus("String0")
+            .anomaloCheckStatusImageUrl("String0")
+            .anomaloCheckType("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static AppModule frodo;
+    private static AnomaloCheck frodo;
     private static String serialized;
 
-    @Test(groups = {"AppModule.builderEquivalency"})
+    @Test(groups = {"AnomaloCheck.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"AppModule.serialize"},
-            dependsOnGroups = {"AppModule.builderEquivalency"})
+            groups = {"AnomaloCheck.serialize"},
+            dependsOnGroups = {"AnomaloCheck.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -431,17 +450,17 @@ public class AppModuleTest {
     }
 
     @Test(
-            groups = {"AppModule.deserialize"},
-            dependsOnGroups = {"AppModule.serialize"})
+            groups = {"AnomaloCheck.deserialize"},
+            dependsOnGroups = {"AnomaloCheck.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, AppModule.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AnomaloCheck.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"AppModule.equivalency"},
-            dependsOnGroups = {"AppModule.serialize", "AppModule.deserialize"})
+            groups = {"AnomaloCheck.equivalency"},
+            dependsOnGroups = {"AnomaloCheck.serialize", "AnomaloCheck.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -450,8 +469,8 @@ public class AppModuleTest {
     }
 
     @Test(
-            groups = {"AppModule.equivalency"},
-            dependsOnGroups = {"AppModule.serialize", "AppModule.deserialize"})
+            groups = {"AnomaloCheck.equivalency"},
+            dependsOnGroups = {"AnomaloCheck.serialize", "AnomaloCheck.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

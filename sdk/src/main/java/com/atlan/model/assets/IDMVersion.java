@@ -33,13 +33,13 @@ public interface IDMVersion {
     public static final String TYPE_NAME = "DMVersion";
 
     /** Data model for which this version exists. */
-    RelationField D_M_DATA_MODEL = new RelationField("dMDataModel");
+    RelationField DM_DATA_MODEL = new RelationField("dmDataModel");
 
     /** Individual entities that make up this version of the data model. */
-    RelationField D_M_ENTITIES = new RelationField("dMEntities");
+    RelationField DM_ENTITIES = new RelationField("dmEntities");
 
     /** Number of entities in the version. */
-    NumericField D_M_ENTITY_COUNT = new NumericField("dMEntityCount", "dMEntityCount");
+    NumericField DM_ENTITY_COUNT = new NumericField("dmEntityCount", "dmEntityCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -65,8 +65,32 @@ public interface IDMVersion {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
+    /** Checks that run on this asset. */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -293,51 +317,6 @@ public interface IDMVersion {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Data model for which this version exists. */
-    IDMDataModel getDMDataModel();
-
-    /** Business date for the data model. */
-    Long getDMDataModelBusinessDate();
-
-    /** A domain of the datam model in which this asset exists. */
-    String getDMDataModelDomain();
-
-    /** Business expiration date for the data model. */
-    Long getDMDataModelExpiredAtBusinessDate();
-
-    /** System expiration date for the data model. */
-    Long getDMDataModelExpiredAtSystemDate();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDMDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelQualifiedName();
-
-    /** System date for the data model. */
-    Long getDMDataModelSystemDate();
-
-    /** Individual entities that make up this version of the data model. */
-    SortedSet<IDMEntity> getDMEntities();
-
-    /** Number of entities in the version. */
-    Long getDMEntityCount();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityQualifiedName();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -352,6 +331,51 @@ public interface IDMVersion {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Business date for the asset. */
+    Long getDmBusinessDate();
+
+    /** Data model for which this version exists. */
+    IDMDataModel getDmDataModel();
+
+    /** A domain of the data model in which this asset exists. */
+    String getDmDataModelDomain();
+
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDmDataModelNamespace();
+
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelQualifiedName();
+
+    /** Individual entities that make up this version of the data model. */
+    SortedSet<IDMEntity> getDmEntities();
+
+    /** Number of entities in the version. */
+    Long getDmEntityCount();
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityName();
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityQualifiedName();
+
+    /** Business expiration date for the asset. */
+    Long getDmExpiredAtBusinessDate();
+
+    /** System expiration date for the asset. */
+    Long getDmExpiredAtSystemDate();
+
+    /** System date for the asset. */
+    Long getDmSystemDate();
+
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionName();
+
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
@@ -532,6 +556,12 @@ public interface IDMVersion {
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

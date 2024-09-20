@@ -12,7 +12,6 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.IAppModule;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICalculationView;
@@ -74,10 +73,6 @@ public class GuacamoleColumn extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
 
     /** Calculate view in which this column exists. */
     @Attribute

@@ -44,10 +44,6 @@ public class CosmosMongoDBAccount extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** The consistency policy configured for the Cosmos MongoDB account. */
     @Attribute
     String cosmosMongoDBAccountConsistencyPolicy;

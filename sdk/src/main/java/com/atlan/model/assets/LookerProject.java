@@ -43,10 +43,6 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Explores that exist within this project. */
     @Attribute
     @Singular

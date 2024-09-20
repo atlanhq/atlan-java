@@ -43,113 +43,110 @@ public class DMAttribute extends Asset implements IDMAttribute, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
-    /** Business date for the data model. */
+    /** Business date for the asset. */
     @Attribute
     @Date
-    Long dMDataModelBusinessDate;
+    Long dmBusinessDate;
 
-    /** A domain of the datam model in which this asset exists. */
+    /** A domain of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelDomain;
-
-    /** Business expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtBusinessDate;
-
-    /** System expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtSystemDate;
+    String dmDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelName;
+    String dmDataModelName;
 
     /** A namespace of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelNamespace;
+    String dmDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelQualifiedName;
+    String dmDataModelQualifiedName;
 
-    /** System date for the data model. */
+    /** Type of the attribute. */
     @Attribute
-    @Date
-    Long dMDataModelSystemDate;
+    String dmDataType;
 
-    /** Whether this attribute is derived indicator or not. */
+    /** Entity (or versions of an entity) in which this attribute exists. */
     @Attribute
-    Boolean dMDerivedIndicator;
-
-    /** Entity in which this attribute exists. */
-    @Attribute
-    IDMEntity dMEntity;
+    @Singular
+    SortedSet<IDMEntity> dmEntities;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityName;
+    String dmEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityQualifiedName;
+    String dmEntityQualifiedName;
 
-    /** Whether this attribute is foreign key indicator or not. */
+    /** Business expiration date for the asset. */
     @Attribute
-    Boolean dMForeignKeyIndicator;
+    @Date
+    Long dmExpiredAtBusinessDate;
 
-    /** Whether this attribute is nullable or not. */
+    /** System expiration date for the asset. */
     @Attribute
-    Boolean dMIsNullable;
+    @Date
+    Long dmExpiredAtSystemDate;
+
+    /** When true, the values in this attribute are derived data. */
+    @Attribute
+    Boolean dmIsDerived;
+
+    /** When true, this attribute is a foreign key to another entity. */
+    @Attribute
+    Boolean dmIsForeign;
+
+    /** When true, the values in this attribute can be null. */
+    @Attribute
+    Boolean dmIsNullable;
+
+    /** When true, this attribute forms the primary key for the entity. */
+    @Attribute
+    Boolean dmIsPrimary;
 
     /** Attributes from which this attribute is mapped. */
     @Attribute
     @Singular
-    SortedSet<IDMAttribute> dMMappedFromAttributes;
+    SortedSet<IDMAttribute> dmMappedFromAttributes;
 
     /** Attributes to which this attribute is mapped. */
     @Attribute
     @Singular
-    SortedSet<IDMAttribute> dMMappedToAttributes;
+    SortedSet<IDMAttribute> dmMappedToAttributes;
 
     /** Precision of the attribute. */
     @Attribute
-    Long dMPrecision;
-
-    /** Whether this attribute is primary key indicator or not. */
-    @Attribute
-    Boolean dMPrimaryKeyIndicator;
+    Long dmPrecision;
 
     /** Association from this attribute is related. */
     @Attribute
     @Singular
-    SortedSet<IDMAttributeAssociation> dMRelatedFromAttributes;
+    SortedSet<IDMAttributeAssociation> dmRelatedFromAttributes;
 
     /** Association to which this attribute is related. */
     @Attribute
     @Singular
-    SortedSet<IDMAttributeAssociation> dMRelatedToAttributes;
+    SortedSet<IDMAttributeAssociation> dmRelatedToAttributes;
 
     /** Scale of the attribute. */
     @Attribute
-    Long dMScale;
+    Long dmScale;
 
-    /** Type of the attribute. */
+    /** System date for the asset. */
     @Attribute
-    String dMType;
+    @Date
+    Long dmSystemDate;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionName;
+    String dmVersionName;
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionQualifiedName;
+    String dmVersionQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute

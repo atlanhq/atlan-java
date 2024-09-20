@@ -106,10 +106,6 @@ public class ADLSAccount extends Asset
     @Attribute
     ADLSAccountStatus adlsPrimaryDiskState;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;

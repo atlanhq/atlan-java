@@ -44,10 +44,6 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dashboard in which this tile exists. */
     @Attribute
     IPowerBIDashboard dashboard;

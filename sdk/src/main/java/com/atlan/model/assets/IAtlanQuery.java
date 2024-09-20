@@ -109,7 +109,31 @@ public interface IAtlanQuery {
     String getAnnouncementUpdatedBy();
 
     /** TBC */
-    IAppModule getAppModuleImplemented();
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** TBC */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** TBC */
+    Long getAssetAnomaloCheckCount();
+
+    /** TBC */
+    String getAssetAnomaloCheckStatuses();
+
+    /** TBC */
+    String getAssetAnomaloDQStatus();
+
+    /** TBC */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** TBC */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** TBC */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** TBC */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -626,6 +650,12 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** TBC */
     String getUserDescription();

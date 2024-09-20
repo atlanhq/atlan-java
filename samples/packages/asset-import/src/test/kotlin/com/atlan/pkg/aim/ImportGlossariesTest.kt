@@ -231,7 +231,7 @@ class ImportGlossariesTest : PackageTest() {
                 }
                 "Cat2" -> {
                     assertEquals("Test category 2 for asset import package.", category.userDescription)
-                    assertEquals(setOf("chris", "aryaman.bhushan"), category.ownerUsers)
+                    assertEquals(setOf("chris", "aryaman"), category.ownerUsers)
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
                 "Cat1.a" -> {
@@ -501,7 +501,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(1, term.categories.size)
         assertEquals(setOf("Cat2"), term.categories.map(IGlossaryCategory::getName).toSet())
         assertEquals("Test term A for asset import package (single category).", term.userDescription)
-        assertEquals(setOf("chris", "aryaman.bhushan"), term.ownerUsers)
+        assertEquals(setOf("chris", "aryaman"), term.ownerUsers)
         assertTrue(term.ownerGroups.isNullOrEmpty())
         assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
         assertTrue(term.certificateStatusMessage.isNullOrEmpty())

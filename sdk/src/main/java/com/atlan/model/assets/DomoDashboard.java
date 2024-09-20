@@ -43,10 +43,6 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** TBC */
     @Attribute
     @Singular

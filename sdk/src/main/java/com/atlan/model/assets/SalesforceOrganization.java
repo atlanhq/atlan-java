@@ -50,10 +50,6 @@ public class SalesforceOrganization extends Asset
     @Attribute
     String apiName;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dashboards that exist within this organization. */
     @Attribute
     @Singular

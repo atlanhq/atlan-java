@@ -43,10 +43,6 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Fields that are used in this dashboard. */
     @Attribute
     @Singular

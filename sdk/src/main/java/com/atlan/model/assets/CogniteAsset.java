@@ -43,10 +43,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** 3D models that exist within this asset. */
     @Attribute
     @Singular

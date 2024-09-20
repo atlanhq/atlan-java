@@ -45,10 +45,6 @@ public class TableauDatasourceField extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Datasource in which this field exists. */
     @Attribute
     ITableauDatasource datasource;

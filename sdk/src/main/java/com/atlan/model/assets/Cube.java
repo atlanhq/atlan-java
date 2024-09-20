@@ -44,10 +44,6 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Number of dimensions in the cube. */
     @Attribute
     Long cubeDimensionCount;

@@ -44,10 +44,6 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dataflows that use this dataset. */
     @Attribute
     @Singular

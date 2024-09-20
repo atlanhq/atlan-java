@@ -48,10 +48,6 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Calculate view in which this column exists. */
     @Attribute
     ICalculationView calculationView;

@@ -41,10 +41,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Asset that this README describes. */
     @Attribute
     IAsset asset;

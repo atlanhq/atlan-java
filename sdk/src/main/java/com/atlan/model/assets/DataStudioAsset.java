@@ -49,10 +49,6 @@ public class DataStudioAsset extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Owner of the asset, from Google Data Studio. */
     @Attribute
     String dataStudioAssetOwner;

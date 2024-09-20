@@ -89,10 +89,6 @@ public class ADLSContainer extends Asset
     @Singular
     SortedSet<IADLSObject> adlsObjects;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;

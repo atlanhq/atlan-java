@@ -3,7 +3,7 @@
 amends "modulepath:/Model.pkl"
 
 t = "DM"
-a = t.decapitalize()
+a = t.toLowerCase()
 
 local dataModel = "DataModel"
 local dmVersion = "Version"
@@ -16,6 +16,10 @@ local attrName = "Name"
 local qualifiedName = "QualifiedName"
 local domain = "Domain"
 local namespace = "Namespace"
+local systemDate = "SystemDate"
+local businessDate = "BusinessDate"
+local expiredAtSystemDate = "ExpiredAtSystemDate"
+local expiredAtBusinessDate = "ExpiredAtBusinessDate"
 
 local modelIcon = new Icon {
   name = "GenericDB"
@@ -41,7 +45,7 @@ shared {
       }
       ["\(a)\(dataModel)\(domain)"] {
         label = "Model"
-        description = "A domain of the datam model in which this asset exists."
+        description = "A domain of the data model in which this asset exists."
         type = "string"
         indexAs = "both"
       }
@@ -72,6 +76,26 @@ shared {
         description = "Unique name of the entity in which this asset exists, or empty if it is itself a data model entity."
         type = "string"
         indexAs = "keyword"
+      }
+      ["\(a)\(systemDate)"] {
+        label = "System date"
+        description = "System date for the asset."
+        type = "date"
+      }
+      ["\(a)\(businessDate)"] {
+        label = "Business date"
+        description = "Business date for the asset."
+        type = "date"
+      }
+      ["\(a)\(expiredAtSystemDate)"] {
+        label = "Expired (system date)"
+        description = "System expiration date for the asset."
+        type = "date"
+      }
+      ["\(a)\(expiredAtBusinessDate)"] {
+        label = "Expired (business date)"
+        description = "Business expiration date for the asset."
+        type = "date"
       }
     }
   }
@@ -114,7 +138,7 @@ customTypes {
         type = "long"
         childCount = true
       }
-      ["\(a)Type"] {
+      ["\(a)\(dataModel)Type"] {
         label = "type"
         description = "Type of the data model."
         type = "string"
@@ -175,11 +199,6 @@ customTypes {
         description = "Subject area of the entity."
         type = "string"
       }
-      ["\(a)IsRoot"] {
-        label = "Is root"
-        description = "Whether this is a root entity or not."
-        type = "boolean"
-      }
       ["\(a)EntityType"] {
         label = "type"
         description = "Type of the data entity."
@@ -189,15 +208,17 @@ customTypes {
     relationships {
       ["\(a)\(dmVersion)"] {
         description = "Containment relationship between \(t)\(dmVersion) (parent) and \(t)\(dmEntity) (children)."
-        parent {
-          type = "\(t)\(dmVersion)"
-          attribute = "\(a)Entities"
-          description = "Individual entities that make up this version of the data model."
-        }
-        children {
-          type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmVersion)"
-          description = "Data model version in which this entity exists."
+        peers {
+          new {
+            type = "\(t)\(dmVersion)"
+            attribute = "\(a)Entities"
+            description = "Individual entities that make up this version of the data model."
+          }
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmVersion)s"
+            description = "Data model version(s) in which this entity exists."
+          }
         }
       }
       ["data_model_entity_mapped_entities"] {
@@ -235,6 +256,14 @@ customTypes {
         label = "label"
         description = "Label of the data entity association."
         type = "string"
+      }
+      ["\(a)EntityToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this entity is related."
+      }
+      ["\(a)EntityFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this entity is related."
       }
     }
     enums {
@@ -286,22 +315,22 @@ customTypes {
     attributes {
       ["\(a)IsNullable"] {
         label = "Is nullable"
-        description = "Whether this attribute is nullable or not."
+        description = "When true, the values in this attribute can be null."
         type = "boolean"
       }
-      ["\(a)PrimaryKeyIndicator"] {
-        label = "Primary key indicator"
-        description = "Whether this attribute is primary key indicator or not."
+      ["\(a)IsPrimary"] {
+        label = "Primary key"
+        description = "When true, this attribute forms the primary key for the entity."
         type = "boolean"
       }
-      ["\(a)ForeignKeyIndicator"] {
-        label = "Foreign key indicator"
-        description = "Whether this attribute is foreign key indicator or not."
+      ["\(a)IsForeign"] {
+        label = "Foreign key"
+        description = "When true, this attribute is a foreign key to another entity."
         type = "boolean"
       }
-      ["\(a)DerivedIndicator"] {
-        label = "Derived indicator"
-        description = "Whether this attribute is derived indicator or not."
+      ["\(a)IsDerived"] {
+        label = "Derived"
+        description = "When true, the values in this attribute are derived data."
         type = "boolean"
       }
       ["\(a)Precision"] {
@@ -314,19 +343,26 @@ customTypes {
         description = "Scale of the attribute."
         type = "long"
       }
+      ["\(a)DataType"] {
+        label = "Type"
+        description = "Type of the attribute."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmEntity)"] {
         description = "Containment relationship between \(t)\(dmEntity) (parent) and \(t)\(dmAttribute) (children)."
-        parent {
-          type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmAttribute)s"
-          description = "Individual attributes that make up the entity."
-        }
-        children {
-          type = "\(t)\(dmAttribute)"
-          attribute = "\(a)\(dmEntity)"
-          description = "Entity in which this attribute exists."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmAttribute)s"
+            description = "Individual attributes that make up the entity."
+          }
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)Entities"
+            description = "Entity (or versions of an entity) in which this attribute exists."
+          }
         }
       }
       ["data_model_attribute_mapped_attributes"] {
@@ -364,6 +400,14 @@ customTypes {
         label = "label"
         description = "Label of the data attribute association."
         type = "string"
+      }
+      ["\(a)AttributeToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this attribute is related."
+      }
+      ["\(a)AttributeFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this attribute is related."
       }
     }
     relationships {

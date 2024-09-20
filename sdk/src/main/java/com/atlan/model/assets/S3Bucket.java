@@ -46,10 +46,6 @@ public class S3Bucket extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** 12-digit number that uniquely identifies an AWS account. */
     @Attribute
     String awsAccountId;

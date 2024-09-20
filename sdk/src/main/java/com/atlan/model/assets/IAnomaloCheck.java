@@ -8,9 +8,11 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,29 +26,57 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an application module in Atlan.
+ * Instance of a Anomalo Check in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAppModule {
+public interface IAnomaloCheck {
 
-    public static final String TYPE_NAME = "AppModule";
+    public static final String TYPE_NAME = "AnomaloCheck";
 
-    /** Individual modules of the application. */
-    RelationField APP_CHILD_MODULES = new RelationField("appChildModules");
+    /** The asset this Check is linked to. */
+    RelationField ANOMALO_CHECK_ASSET = new RelationField("anomaloCheckAsset");
 
-    /** Assets that implement the application module. */
-    RelationField APP_MODULE_IMPLEMENTED_BY_ASSETS = new RelationField("appModuleImplementedByAssets");
+    /** Category type of the check in Anomalo */
+    KeywordField ANOMALO_CHECK_CATEGORY_TYPE = new KeywordField("anomaloCheckCategoryType", "anomaloCheckCategoryType");
 
-    /** Type of application module. */
-    KeywordField APP_MODULE_TYPE = new KeywordField("appModuleType", "appModuleType");
+    /** Historic run status of the check in Anomalo */
+    TextField ANOMALO_CHECK_HISTORIC_RUN_STATUS =
+            new TextField("anomaloCheckHistoricRunStatus", "anomaloCheckHistoricRunStatus");
 
-    /** Application module in which this module exists. */
-    RelationField APP_PARENT_MODULE = new RelationField("appParentModule");
+    /** Flag to indicate if the check is an out of the box available check */
+    BooleanField ANOMALO_CHECK_IS_SYSTEM_ADDED =
+            new BooleanField("anomaloCheckIsSystemAdded", "anomaloCheckIsSystemAdded");
 
-    /** Number of sub-modules in this application module. */
-    NumericField APP_SUB_MODULE_COUNT = new NumericField("appSubModuleCount", "appSubModuleCount");
+    /** Timestamp when the check was last run */
+    NumericField ANOMALO_CHECK_LAST_RUN_COMPLETED_AT =
+            new NumericField("anomaloCheckLastRunCompletedAt", "anomaloCheckLastRunCompletedAt");
+
+    /** Evaluated message of the latest check run. */
+    TextField ANOMALO_CHECK_LAST_RUN_EVALUATED_MESSAGE =
+            new TextField("anomaloCheckLastRunEvaluatedMessage", "anomaloCheckLastRunEvaluatedMessage");
+
+    /** URL to the latest check run. */
+    TextField ANOMALO_CHECK_LAST_RUN_URL = new TextField("anomaloCheckLastRunUrl", "anomaloCheckLastRunUrl");
+
+    /** QualifiedName of the asset associated with the check */
+    KeywordField ANOMALO_CHECK_LINKED_ASSET_QUALIFIED_NAME =
+            new KeywordField("anomaloCheckLinkedAssetQualifiedName", "anomaloCheckLinkedAssetQualifiedName");
+
+    /** Priority level of the check in Anomalo */
+    KeywordField ANOMALO_CHECK_PRIORITY_LEVEL =
+            new KeywordField("anomaloCheckPriorityLevel", "anomaloCheckPriorityLevel");
+
+    /** Status of the check in Anomalo */
+    KeywordField ANOMALO_CHECK_STATUS = new KeywordField("anomaloCheckStatus", "anomaloCheckStatus");
+
+    /** Image URL for the status of the check in Anomalo */
+    TextField ANOMALO_CHECK_STATUS_IMAGE_URL =
+            new TextField("anomaloCheckStatusImageUrl", "anomaloCheckStatusImageUrl");
+
+    /** Type of check in Anomalo */
+    KeywordField ANOMALO_CHECK_TYPE = new KeywordField("anomaloCheckType", "anomaloCheckType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -72,23 +102,68 @@ public interface IAppModule {
     /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** Individual modules of the application. */
-    SortedSet<IAppModule> getAppChildModules();
+    /** The asset this Check is linked to. */
+    IAsset getAnomaloCheckAsset();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
+    /** Category type of the check in Anomalo */
+    String getAnomaloCheckCategoryType();
 
-    /** Assets that implement the application module. */
-    SortedSet<ICatalog> getAppModuleImplementedByAssets();
+    /** Historic run status of the check in Anomalo */
+    String getAnomaloCheckHistoricRunStatus();
 
-    /** Type of application module. */
-    String getAppModuleType();
+    /** Flag to indicate if the check is an out of the box available check */
+    Boolean getAnomaloCheckIsSystemAdded();
 
-    /** Application module in which this module exists. */
-    IAppModule getAppParentModule();
+    /** Timestamp when the check was last run */
+    Long getAnomaloCheckLastRunCompletedAt();
 
-    /** Number of sub-modules in this application module. */
-    Long getAppSubModuleCount();
+    /** Evaluated message of the latest check run. */
+    String getAnomaloCheckLastRunEvaluatedMessage();
+
+    /** URL to the latest check run. */
+    String getAnomaloCheckLastRunUrl();
+
+    /** QualifiedName of the asset associated with the check */
+    String getAnomaloCheckLinkedAssetQualifiedName();
+
+    /** Priority level of the check in Anomalo */
+    String getAnomaloCheckPriorityLevel();
+
+    /** Status of the check in Anomalo */
+    String getAnomaloCheckStatus();
+
+    /** Image URL for the status of the check in Anomalo */
+    String getAnomaloCheckStatusImageUrl();
+
+    /** Type of check in Anomalo */
+    String getAnomaloCheckType();
+
+    /** Checks that run on this asset. */
+    SortedSet<IAnomaloCheck> getAnomaloChecks();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
 
     /** TBC */
     String getAssetCoverImage();
@@ -509,6 +584,12 @@ public interface IAppModule {
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipFroms();
+
+    /** TBC */
+    SortedSet<IAsset> getUserDefRelationshipTos();
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

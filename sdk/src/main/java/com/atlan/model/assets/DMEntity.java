@@ -43,106 +43,99 @@ public class DMEntity extends Asset implements IDMEntity, IDM, ICatalog, IAsset,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Number of attributes in the entity. */
     @Attribute
-    Long dMAttributeCount;
+    Long dmAttributeCount;
 
     /** Individual attributes that make up the entity. */
     @Attribute
     @Singular
-    SortedSet<IDMAttribute> dMAttributes;
+    SortedSet<IDMAttribute> dmAttributes;
 
-    /** Business date for the data model. */
+    /** Business date for the asset. */
     @Attribute
     @Date
-    Long dMDataModelBusinessDate;
+    Long dmBusinessDate;
 
-    /** A domain of the datam model in which this asset exists. */
+    /** A domain of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelDomain;
-
-    /** Business expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtBusinessDate;
-
-    /** System expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtSystemDate;
+    String dmDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelName;
+    String dmDataModelName;
 
     /** A namespace of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelNamespace;
+    String dmDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelQualifiedName;
-
-    /** System date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelSystemDate;
+    String dmDataModelQualifiedName;
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityName;
+    String dmEntityName;
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     @Attribute
-    String dMEntityQualifiedName;
+    String dmEntityQualifiedName;
 
     /** Type of the data entity. */
     @Attribute
-    String dMEntityType;
+    String dmEntityType;
 
-    /** Whether this is a root entity or not. */
+    /** Business expiration date for the asset. */
     @Attribute
-    Boolean dMIsRoot;
+    @Date
+    Long dmExpiredAtBusinessDate;
+
+    /** System expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtSystemDate;
 
     /** Entities from which this entity is mapped. */
     @Attribute
     @Singular
-    SortedSet<IDMEntity> dMMappedFromEntities;
+    SortedSet<IDMEntity> dmMappedFromEntities;
 
     /** Entities to which this entity is mapped. */
     @Attribute
     @Singular
-    SortedSet<IDMEntity> dMMappedToEntities;
+    SortedSet<IDMEntity> dmMappedToEntities;
 
     /** Association from this entity is related. */
     @Attribute
     @Singular
-    SortedSet<IDMEntityAssociation> dMRelatedFromEntities;
+    SortedSet<IDMEntityAssociation> dmRelatedFromEntities;
 
     /** Association to which this entity is related. */
     @Attribute
     @Singular
-    SortedSet<IDMEntityAssociation> dMRelatedToEntities;
+    SortedSet<IDMEntityAssociation> dmRelatedToEntities;
 
     /** Subject area of the entity. */
     @Attribute
-    String dMSubjectArea;
+    String dmSubjectArea;
 
-    /** Data model version in which this entity exists. */
+    /** System date for the asset. */
     @Attribute
-    IDMVersion dMVersion;
+    @Date
+    Long dmSystemDate;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionName;
+    String dmVersionName;
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionQualifiedName;
+    String dmVersionQualifiedName;
+
+    /** Data model version(s) in which this entity exists. */
+    @Attribute
+    @Singular
+    SortedSet<IDMVersion> dmVersions;
 
     /** Tasks to which this asset provides input. */
     @Attribute
