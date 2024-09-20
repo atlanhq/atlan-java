@@ -199,11 +199,6 @@ customTypes {
         description = "Subject area of the entity."
         type = "string"
       }
-      ["\(a)IsRoot"] {
-        label = "Is root"
-        description = "Whether this is a root entity or not."
-        type = "boolean"
-      }
       ["\(a)EntityType"] {
         label = "type"
         description = "Type of the data entity."
@@ -318,22 +313,22 @@ customTypes {
     attributes {
       ["\(a)IsNullable"] {
         label = "Is nullable"
-        description = "Whether this attribute is nullable or not."
+        description = "When true, the values in this attribute can be null."
         type = "boolean"
       }
-      ["\(a)PrimaryKeyIndicator"] {
-        label = "Primary key indicator"
-        description = "Whether this attribute is primary key indicator or not."
+      ["\(a)IsPrimary"] {
+        label = "Primary key"
+        description = "When true, this attribute forms the primary key for the entity."
         type = "boolean"
       }
-      ["\(a)ForeignKeyIndicator"] {
-        label = "Foreign key indicator"
-        description = "Whether this attribute is foreign key indicator or not."
+      ["\(a)IsForeign"] {
+        label = "Foreign key"
+        description = "When true, this attribute is a foreign key to another entity."
         type = "boolean"
       }
-      ["\(a)DerivedIndicator"] {
-        label = "Derived indicator"
-        description = "Whether this attribute is derived indicator or not."
+      ["\(a)IsDerived"] {
+        label = "Derived"
+        description = "When true, the values in this attribute are derived data."
         type = "boolean"
       }
       ["\(a)Precision"] {
