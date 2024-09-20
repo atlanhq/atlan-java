@@ -138,7 +138,7 @@ customTypes {
         type = "long"
         childCount = true
       }
-      ["\(a)Type"] {
+      ["\(a)\(dataModel)Type"] {
         label = "type"
         description = "Type of the data model."
         type = "string"
@@ -341,7 +341,7 @@ customTypes {
         description = "Scale of the attribute."
         type = "long"
       }
-      ["\(a)Type"] {
+      ["\(a)DataType"] {
         label = "Type"
         description = "Type of the attribute."
         type = "string"
