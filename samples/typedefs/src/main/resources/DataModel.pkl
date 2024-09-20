@@ -16,6 +16,10 @@ local attrName = "Name"
 local qualifiedName = "QualifiedName"
 local domain = "Domain"
 local namespace = "Namespace"
+local systemDate = "SystemDate"
+local businessDate = "BusinessDate"
+local expiredAtSystemDate = "ExpiredAtSystemDate"
+local expiredAtBusinessDate = "ExpiredAtBusinessDate"
 
 local modelIcon = new Icon {
   name = "GenericDB"
@@ -72,6 +76,26 @@ shared {
         description = "Unique name of the entity in which this asset exists, or empty if it is itself a data model entity."
         type = "string"
         indexAs = "keyword"
+      }
+      ["\(a)\(dataModel)\(systemDate)"] {
+        label = "Model"
+        description = "System date for the data model."
+        type = "date"
+      }
+      ["\(a)\(dataModel)\(businessDate)"] {
+        label = "Model"
+        description = "Business date for the data model."
+        type = "date"
+      }
+      ["\(a)\(dataModel)\(expiredAtSystemDate)"] {
+        label = "Model"
+        description = "System expiration date for the data model."
+        type = "date"
+      }
+      ["\(a)\(dataModel)\(expiredAtBusinessDate)"] {
+        label = "Model"
+        description = "Business expiration date for the data model."
+        type = "date"
       }
     }
   }
@@ -236,6 +260,14 @@ customTypes {
         description = "Label of the data entity association."
         type = "string"
       }
+      ["\(a)EntityToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this entity is related."
+      }
+      ["\(a)EntityFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this entity is related."
+      }
     }
     enums {
       ["\(t)CardinalityType"] {
@@ -314,6 +346,11 @@ customTypes {
         description = "Scale of the attribute."
         type = "long"
       }
+      ["\(a)Type"] {
+        label = "Type"
+        description = "Type of the attribute."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmEntity)"] {
@@ -364,6 +401,14 @@ customTypes {
         label = "label"
         description = "Label of the data attribute association."
         type = "string"
+      }
+      ["\(a)AttributeToQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association to which this attribute is related."
+      }
+      ["\(a)AttributeFromQualifiedName"] {
+        type = "string"
+        description = "Unique name of the association from this attribute is related."
       }
     }
     relationships {
