@@ -43,10 +43,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

@@ -45,10 +45,6 @@ public class TableauWorkbook extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dashboards that exist within this workbook. */
     @Attribute
     @Singular

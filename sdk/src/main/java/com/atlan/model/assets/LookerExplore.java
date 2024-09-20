@@ -43,10 +43,6 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Fields that exist within this Explore. */
     @Attribute
     @Singular

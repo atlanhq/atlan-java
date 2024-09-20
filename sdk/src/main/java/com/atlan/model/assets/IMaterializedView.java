@@ -109,9 +109,6 @@ public interface IMaterializedView {
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
     /** TBC */
-    IAppModule getAppModuleImplemented();
-
-    /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
     /** TBC */

@@ -53,10 +53,6 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
-    IAppModule appModuleImplemented;
-
-    /** TBC */
-    @Attribute
     String calculationViewName;
 
     /** TBC */

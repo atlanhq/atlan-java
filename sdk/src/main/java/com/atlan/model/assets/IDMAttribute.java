@@ -34,41 +34,41 @@ public interface IDMAttribute {
 
     public static final String TYPE_NAME = "DMAttribute";
 
-    /** Whether this attribute is derived indicator or not. */
-    BooleanField D_M_DERIVED_INDICATOR = new BooleanField("dMDerivedIndicator", "dMDerivedIndicator");
+    /** Type of the attribute. */
+    KeywordField DM_DATA_TYPE = new KeywordField("dmDataType", "dmDataType");
 
-    /** Entity in which this attribute exists. */
-    RelationField D_M_ENTITY = new RelationField("dMEntity");
+    /** Entity (or versions of an entity) in which this attribute exists. */
+    RelationField DM_ENTITIES = new RelationField("dmEntities");
 
-    /** Whether this attribute is foreign key indicator or not. */
-    BooleanField D_M_FOREIGN_KEY_INDICATOR = new BooleanField("dMForeignKeyIndicator", "dMForeignKeyIndicator");
+    /** When true, the values in this attribute are derived data. */
+    BooleanField DM_IS_DERIVED = new BooleanField("dmIsDerived", "dmIsDerived");
 
-    /** Whether this attribute is nullable or not. */
-    BooleanField D_M_IS_NULLABLE = new BooleanField("dMIsNullable", "dMIsNullable");
+    /** When true, this attribute is a foreign key to another entity. */
+    BooleanField DM_IS_FOREIGN = new BooleanField("dmIsForeign", "dmIsForeign");
+
+    /** When true, the values in this attribute can be null. */
+    BooleanField DM_IS_NULLABLE = new BooleanField("dmIsNullable", "dmIsNullable");
+
+    /** When true, this attribute forms the primary key for the entity. */
+    BooleanField DM_IS_PRIMARY = new BooleanField("dmIsPrimary", "dmIsPrimary");
 
     /** Attributes from which this attribute is mapped. */
-    RelationField D_M_MAPPED_FROM_ATTRIBUTES = new RelationField("dMMappedFromAttributes");
+    RelationField DM_MAPPED_FROM_ATTRIBUTES = new RelationField("dmMappedFromAttributes");
 
     /** Attributes to which this attribute is mapped. */
-    RelationField D_M_MAPPED_TO_ATTRIBUTES = new RelationField("dMMappedToAttributes");
+    RelationField DM_MAPPED_TO_ATTRIBUTES = new RelationField("dmMappedToAttributes");
 
     /** Precision of the attribute. */
-    NumericField D_M_PRECISION = new NumericField("dMPrecision", "dMPrecision");
-
-    /** Whether this attribute is primary key indicator or not. */
-    BooleanField D_M_PRIMARY_KEY_INDICATOR = new BooleanField("dMPrimaryKeyIndicator", "dMPrimaryKeyIndicator");
+    NumericField DM_PRECISION = new NumericField("dmPrecision", "dmPrecision");
 
     /** Association from this attribute is related. */
-    RelationField D_M_RELATED_FROM_ATTRIBUTES = new RelationField("dMRelatedFromAttributes");
+    RelationField DM_RELATED_FROM_ATTRIBUTES = new RelationField("dmRelatedFromAttributes");
 
     /** Association to which this attribute is related. */
-    RelationField D_M_RELATED_TO_ATTRIBUTES = new RelationField("dMRelatedToAttributes");
+    RelationField DM_RELATED_TO_ATTRIBUTES = new RelationField("dmRelatedToAttributes");
 
     /** Scale of the attribute. */
-    NumericField D_M_SCALE = new NumericField("dMScale", "dMScale");
-
-    /** Type of the attribute. */
-    KeywordField D_M_TYPE = new KeywordField("dMType", "dMType");
+    NumericField DM_SCALE = new NumericField("dmScale", "dmScale");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -96,9 +96,6 @@ public interface IDMAttribute {
 
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
-
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -349,78 +346,6 @@ public interface IDMAttribute {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Business date for the data model. */
-    Long getDMDataModelBusinessDate();
-
-    /** A domain of the datam model in which this asset exists. */
-    String getDMDataModelDomain();
-
-    /** Business expiration date for the data model. */
-    Long getDMDataModelExpiredAtBusinessDate();
-
-    /** System expiration date for the data model. */
-    Long getDMDataModelExpiredAtSystemDate();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDMDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelQualifiedName();
-
-    /** System date for the data model. */
-    Long getDMDataModelSystemDate();
-
-    /** Whether this attribute is derived indicator or not. */
-    Boolean getDMDerivedIndicator();
-
-    /** Entity in which this attribute exists. */
-    IDMEntity getDMEntity();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityQualifiedName();
-
-    /** Whether this attribute is foreign key indicator or not. */
-    Boolean getDMForeignKeyIndicator();
-
-    /** Whether this attribute is nullable or not. */
-    Boolean getDMIsNullable();
-
-    /** Attributes from which this attribute is mapped. */
-    SortedSet<IDMAttribute> getDMMappedFromAttributes();
-
-    /** Attributes to which this attribute is mapped. */
-    SortedSet<IDMAttribute> getDMMappedToAttributes();
-
-    /** Precision of the attribute. */
-    Long getDMPrecision();
-
-    /** Whether this attribute is primary key indicator or not. */
-    Boolean getDMPrimaryKeyIndicator();
-
-    /** Association from this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedFromAttributes();
-
-    /** Association to which this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDMRelatedToAttributes();
-
-    /** Scale of the attribute. */
-    Long getDMScale();
-
-    /** Type of the attribute. */
-    String getDMType();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -435,6 +360,78 @@ public interface IDMAttribute {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Business date for the asset. */
+    Long getDmBusinessDate();
+
+    /** A domain of the data model in which this asset exists. */
+    String getDmDataModelDomain();
+
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDmDataModelNamespace();
+
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelQualifiedName();
+
+    /** Type of the attribute. */
+    String getDmDataType();
+
+    /** Entity (or versions of an entity) in which this attribute exists. */
+    SortedSet<IDMEntity> getDmEntities();
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityName();
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityQualifiedName();
+
+    /** Business expiration date for the asset. */
+    Long getDmExpiredAtBusinessDate();
+
+    /** System expiration date for the asset. */
+    Long getDmExpiredAtSystemDate();
+
+    /** When true, the values in this attribute are derived data. */
+    Boolean getDmIsDerived();
+
+    /** When true, this attribute is a foreign key to another entity. */
+    Boolean getDmIsForeign();
+
+    /** When true, the values in this attribute can be null. */
+    Boolean getDmIsNullable();
+
+    /** When true, this attribute forms the primary key for the entity. */
+    Boolean getDmIsPrimary();
+
+    /** Attributes from which this attribute is mapped. */
+    SortedSet<IDMAttribute> getDmMappedFromAttributes();
+
+    /** Attributes to which this attribute is mapped. */
+    SortedSet<IDMAttribute> getDmMappedToAttributes();
+
+    /** Precision of the attribute. */
+    Long getDmPrecision();
+
+    /** Association from this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDmRelatedFromAttributes();
+
+    /** Association to which this attribute is related. */
+    SortedSet<IDMAttributeAssociation> getDmRelatedToAttributes();
+
+    /** Scale of the attribute. */
+    Long getDmScale();
+
+    /** System date for the asset. */
+    Long getDmSystemDate();
+
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionName();
+
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

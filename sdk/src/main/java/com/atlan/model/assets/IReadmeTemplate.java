@@ -67,9 +67,6 @@ public interface IReadmeTemplate {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
-
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 

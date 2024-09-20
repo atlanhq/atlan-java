@@ -49,10 +49,6 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String alias;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;

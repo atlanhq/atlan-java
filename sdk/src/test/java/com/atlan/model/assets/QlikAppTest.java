@@ -67,7 +67,6 @@ public class QlikAppTest {
             .qlikQRI("String0")
             .qlikSpaceId("String0")
             .qlikSpaceQualifiedName("String0")
-            .appModuleImplemented(AppModule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

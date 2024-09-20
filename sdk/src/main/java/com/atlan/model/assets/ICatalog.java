@@ -31,9 +31,6 @@ public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
 
-    /** Application module that is implemented by this asset. */
-    RelationField APP_MODULE_IMPLEMENTED = new RelationField("appModuleImplemented");
-
     /** Tasks to which this asset provides input. */
     RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
 
@@ -85,9 +82,6 @@ public interface ICatalog {
                 break;
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
-                break;
-            case AppModule.TYPE_NAME:
-                ref = AppModule.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -668,9 +662,6 @@ public interface ICatalog {
 
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
-
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();

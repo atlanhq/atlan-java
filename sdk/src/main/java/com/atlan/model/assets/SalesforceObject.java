@@ -49,10 +49,6 @@ public class SalesforceObject extends Asset
     @Attribute
     String apiName;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Number of fields in this object. */
     @Attribute
     Long fieldCount;

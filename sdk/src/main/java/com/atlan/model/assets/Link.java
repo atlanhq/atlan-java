@@ -43,10 +43,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Asset to which the link is attached. */
     @Attribute
     IAsset asset;

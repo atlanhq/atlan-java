@@ -45,10 +45,6 @@ public class CubeHierarchy extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Dimension in which this hierarchy exists. */
     @Attribute
     ICubeDimension cubeDimension;

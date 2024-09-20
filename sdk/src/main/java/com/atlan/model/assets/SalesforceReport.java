@@ -51,10 +51,6 @@ public class SalesforceReport extends Asset
     @Attribute
     String apiName;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** TBC */
     @Attribute
     @Singular

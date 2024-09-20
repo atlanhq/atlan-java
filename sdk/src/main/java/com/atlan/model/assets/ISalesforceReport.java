@@ -79,9 +79,6 @@ public interface ISalesforceReport {
     /** Name of this asset in the Salesforce API. */
     String getApiName();
 
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
-
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 

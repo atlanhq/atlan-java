@@ -132,10 +132,6 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Attribute
     String airflowTaskTriggerRule;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

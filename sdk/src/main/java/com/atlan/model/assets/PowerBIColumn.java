@@ -44,10 +44,6 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
     /** Unique name of the dataset in which this column exists. */
     @Attribute
     String datasetQualifiedName;

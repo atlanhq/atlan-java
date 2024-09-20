@@ -33,47 +33,45 @@ public interface IDM {
 
     public static final String TYPE_NAME = "DM";
 
-    /** Business date for the data model. */
-    NumericField D_M_DATA_MODEL_BUSINESS_DATE = new NumericField("dMDataModelBusinessDate", "dMDataModelBusinessDate");
+    /** Business date for the asset. */
+    NumericField DM_BUSINESS_DATE = new NumericField("dmBusinessDate", "dmBusinessDate");
 
-    /** A domain of the datam model in which this asset exists. */
-    KeywordTextField D_M_DATA_MODEL_DOMAIN =
-            new KeywordTextField("dMDataModelDomain", "dMDataModelDomain.keyword", "dMDataModelDomain");
-
-    /** Business expiration date for the data model. */
-    NumericField D_M_DATA_MODEL_EXPIRED_AT_BUSINESS_DATE =
-            new NumericField("dMDataModelExpiredAtBusinessDate", "dMDataModelExpiredAtBusinessDate");
-
-    /** System expiration date for the data model. */
-    NumericField D_M_DATA_MODEL_EXPIRED_AT_SYSTEM_DATE =
-            new NumericField("dMDataModelExpiredAtSystemDate", "dMDataModelExpiredAtSystemDate");
+    /** A domain of the data model in which this asset exists. */
+    KeywordTextField DM_DATA_MODEL_DOMAIN =
+            new KeywordTextField("dmDataModelDomain", "dmDataModelDomain.keyword", "dmDataModelDomain");
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    KeywordTextField D_M_DATA_MODEL_NAME =
-            new KeywordTextField("dMDataModelName", "dMDataModelName.keyword", "dMDataModelName");
+    KeywordTextField DM_DATA_MODEL_NAME =
+            new KeywordTextField("dmDataModelName", "dmDataModelName.keyword", "dmDataModelName");
 
     /** A namespace of the data model in which this asset exists. */
-    KeywordTextField D_M_DATA_MODEL_NAMESPACE =
-            new KeywordTextField("dMDataModelNamespace", "dMDataModelNamespace.keyword", "dMDataModelNamespace");
+    KeywordTextField DM_DATA_MODEL_NAMESPACE =
+            new KeywordTextField("dmDataModelNamespace", "dmDataModelNamespace.keyword", "dmDataModelNamespace");
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    KeywordField D_M_DATA_MODEL_QUALIFIED_NAME =
-            new KeywordField("dMDataModelQualifiedName", "dMDataModelQualifiedName");
-
-    /** System date for the data model. */
-    NumericField D_M_DATA_MODEL_SYSTEM_DATE = new NumericField("dMDataModelSystemDate", "dMDataModelSystemDate");
+    KeywordField DM_DATA_MODEL_QUALIFIED_NAME =
+            new KeywordField("dmDataModelQualifiedName", "dmDataModelQualifiedName");
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    KeywordTextField D_M_ENTITY_NAME = new KeywordTextField("dMEntityName", "dMEntityName.keyword", "dMEntityName");
+    KeywordTextField DM_ENTITY_NAME = new KeywordTextField("dmEntityName", "dmEntityName.keyword", "dmEntityName");
 
     /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    KeywordField D_M_ENTITY_QUALIFIED_NAME = new KeywordField("dMEntityQualifiedName", "dMEntityQualifiedName");
+    KeywordField DM_ENTITY_QUALIFIED_NAME = new KeywordField("dmEntityQualifiedName", "dmEntityQualifiedName");
+
+    /** Business expiration date for the asset. */
+    NumericField DM_EXPIRED_AT_BUSINESS_DATE = new NumericField("dmExpiredAtBusinessDate", "dmExpiredAtBusinessDate");
+
+    /** System expiration date for the asset. */
+    NumericField DM_EXPIRED_AT_SYSTEM_DATE = new NumericField("dmExpiredAtSystemDate", "dmExpiredAtSystemDate");
+
+    /** System date for the asset. */
+    NumericField DM_SYSTEM_DATE = new NumericField("dmSystemDate", "dmSystemDate");
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    KeywordTextField D_M_VERSION_NAME = new KeywordTextField("dMVersionName", "dMVersionName.keyword", "dMVersionName");
+    KeywordTextField DM_VERSION_NAME = new KeywordTextField("dmVersionName", "dmVersionName.keyword", "dmVersionName");
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    KeywordField D_M_VERSION_QUALIFIED_NAME = new KeywordField("dMVersionQualifiedName", "dMVersionQualifiedName");
+    KeywordField DM_VERSION_QUALIFIED_NAME = new KeywordField("dmVersionQualifiedName", "dmVersionQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -101,9 +99,6 @@ public interface IDM {
 
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
-
-    /** Application module that is implemented by this asset. */
-    IAppModule getAppModuleImplemented();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -354,42 +349,6 @@ public interface IDM {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Business date for the data model. */
-    Long getDMDataModelBusinessDate();
-
-    /** A domain of the datam model in which this asset exists. */
-    String getDMDataModelDomain();
-
-    /** Business expiration date for the data model. */
-    Long getDMDataModelExpiredAtBusinessDate();
-
-    /** System expiration date for the data model. */
-    Long getDMDataModelExpiredAtSystemDate();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDMDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDMDataModelQualifiedName();
-
-    /** System date for the data model. */
-    Long getDMDataModelSystemDate();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDMEntityQualifiedName();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDMVersionQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -404,6 +363,42 @@ public interface IDM {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
+
+    /** Business date for the asset. */
+    Long getDmBusinessDate();
+
+    /** A domain of the data model in which this asset exists. */
+    String getDmDataModelDomain();
+
+    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelName();
+
+    /** A namespace of the data model in which this asset exists. */
+    String getDmDataModelNamespace();
+
+    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
+    String getDmDataModelQualifiedName();
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityName();
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    String getDmEntityQualifiedName();
+
+    /** Business expiration date for the asset. */
+    Long getDmExpiredAtBusinessDate();
+
+    /** System expiration date for the asset. */
+    Long getDmExpiredAtSystemDate();
+
+    /** System date for the asset. */
+    Long getDmSystemDate();
+
+    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionName();
+
+    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
+    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

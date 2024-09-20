@@ -43,78 +43,74 @@ public class DMDataModel extends Asset implements IDMDataModel, IDM, ICatalog, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Application module that is implemented by this asset. */
-    @Attribute
-    IAppModule appModuleImplemented;
-
-    /** Business date for the data model. */
+    /** Business date for the asset. */
     @Attribute
     @Date
-    Long dMDataModelBusinessDate;
+    Long dmBusinessDate;
 
-    /** A domain of the datam model in which this asset exists. */
+    /** A domain of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelDomain;
-
-    /** Business expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtBusinessDate;
-
-    /** System expiration date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelExpiredAtSystemDate;
+    String dmDataModelDomain;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelName;
+    String dmDataModelName;
 
     /** A namespace of the data model in which this asset exists. */
     @Attribute
-    String dMDataModelNamespace;
+    String dmDataModelNamespace;
 
     /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute
-    String dMDataModelQualifiedName;
-
-    /** System date for the data model. */
-    @Attribute
-    @Date
-    Long dMDataModelSystemDate;
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    @Attribute
-    String dMEntityName;
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    @Attribute
-    String dMEntityQualifiedName;
-
-    /** Tool used to create this data model. */
-    @Attribute
-    String dMTool;
+    String dmDataModelQualifiedName;
 
     /** Type of the data model. */
     @Attribute
-    String dMType;
+    String dmDataModelType;
+
+    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    @Attribute
+    String dmEntityName;
+
+    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
+    @Attribute
+    String dmEntityQualifiedName;
+
+    /** Business expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtBusinessDate;
+
+    /** System expiration date for the asset. */
+    @Attribute
+    @Date
+    Long dmExpiredAtSystemDate;
+
+    /** System date for the asset. */
+    @Attribute
+    @Date
+    Long dmSystemDate;
+
+    /** Tool used to create this data model. */
+    @Attribute
+    String dmTool;
 
     /** Number of versions of the data model. */
     @Attribute
-    Long dMVersionCount;
+    Long dmVersionCount;
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionName;
+    String dmVersionName;
 
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
-    String dMVersionQualifiedName;
+    String dmVersionQualifiedName;
 
     /** Individual versions of the data model. */
     @Attribute
     @Singular
-    SortedSet<IDMVersion> dMVersions;
+    SortedSet<IDMVersion> dmVersions;
 
     /** Tasks to which this asset provides input. */
     @Attribute
