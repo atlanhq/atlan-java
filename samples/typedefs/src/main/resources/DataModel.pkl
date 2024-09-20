@@ -3,7 +3,7 @@
 amends "modulepath:/Model.pkl"
 
 t = "DM"
-a = t.decapitalize()
+a = t.toLowerCase()
 
 local dataModel = "DataModel"
 local dmVersion = "Version"
