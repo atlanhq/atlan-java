@@ -374,6 +374,24 @@ public interface ICatalog {
             case ModeWorkspace.TYPE_NAME:
                 ref = ModeWorkspace.refByQualifiedName(qualifiedName);
                 break;
+            case ModelAttribute.TYPE_NAME:
+                ref = ModelAttribute.refByQualifiedName(qualifiedName);
+                break;
+            case ModelAttributeAssociation.TYPE_NAME:
+                ref = ModelAttributeAssociation.refByQualifiedName(qualifiedName);
+                break;
+            case ModelDataModel.TYPE_NAME:
+                ref = ModelDataModel.refByQualifiedName(qualifiedName);
+                break;
+            case ModelEntity.TYPE_NAME:
+                ref = ModelEntity.refByQualifiedName(qualifiedName);
+                break;
+            case ModelEntityAssociation.TYPE_NAME:
+                ref = ModelEntityAssociation.refByQualifiedName(qualifiedName);
+                break;
+            case ModelVersion.TYPE_NAME:
+                ref = ModelVersion.refByQualifiedName(qualifiedName);
+                break;
             case MongoDBCollection.TYPE_NAME:
                 ref = MongoDBCollection.refByQualifiedName(qualifiedName);
                 break;
