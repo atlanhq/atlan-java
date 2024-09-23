@@ -100,6 +100,14 @@ public class AtlanClient {
     @Getter
     private final UserCache userCache;
 
+    /** Cache of connections specific to this client. */
+    @Getter
+    private final ConnectionCache connectionCache;
+
+    /** Cache of source-synced tags specific to this client. */
+    @Getter
+    private final SourceTagCache sourceTagCache;
+
     private final ObjectMapper mapper;
 
     /** Endpoint with operations to manage type definitions. */
@@ -223,6 +231,8 @@ public class AtlanClient {
         groupCache = new GroupCache(groups);
         roleCache = new RoleCache(roles);
         userCache = new UserCache(users, apiTokens);
+        connectionCache = new ConnectionCache(this);
+        sourceTagCache = new SourceTagCache(this);
         assetDeserializer = new AssetDeserializer(this);
         relationshipAttributesDeserializer = new RelationshipAttributesDeserializer(this);
         customMetadataAuditDeserializer = new CustomMetadataAuditDeserializer(this);
