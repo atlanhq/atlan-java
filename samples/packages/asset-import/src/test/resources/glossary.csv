@@ -4,7 +4,7 @@ qualifiedName,typeName,name,anchor,parentCategory,categories,displayName,descrip
 ,AtlasGlossaryCategory,Cat1.a,{{GLOSSARY1}},Cat1@@@{{GLOSSARY1}},,,,Test category 1.a for asset import package (unordered).,chris,,,,,,,,,,,,,,,,,
 ,AtlasGlossaryCategory,Cat1,{{GLOSSARY1}},,,,,Test category 1 for asset import package.,,,,,,,,,,,,,,,,,,
 ,AtlasGlossaryCategory,Cat2,{{GLOSSARY1}},,,,,Test category 2 for asset import package.,"chris
-aryaman.bhushan",,,,,,,,,,,,,,,,,
+aryaman.bhushan@atlan.com",,,,,,,,,,,,,,,,,
 ,AtlasGlossaryCategory,Cat1.a.i,{{GLOSSARY1}},Cat1@Cat1.a@@@{{GLOSSARY1}},,,,Test category 1.a.i for asset import package (unordered).,,,,,,,,,,,,,,,,,,
 ,AtlasGlossaryCategory,Cat3,{{GLOSSARY2}},,,,,Test category 3 for asset import package.,,admins,,,,,,,,,,,,,,,,
 ,AtlasGlossaryCategory,Cat4.a,{{GLOSSARY2}},Cat4@@@{{GLOSSARY2}},,,,Test category 4.a for asset import package (unordered).,,,,,,,,,,,,,,,,,,
@@ -14,7 +14,7 @@ Cat1@Cat1.a@Cat1.a.i@@@{{GLOSSARY1}}",,,Test term 1 for asset import package (mu
 {""typeName"":""Link"",""attributes"":{""name"":""Example"",""link"":""https://www.example.com""}}",<h1>This is term1!</h1>,,Term3@@@{{GLOSSARY1}},TermA@@@{{GLOSSARY1}},,,,,
 ,AtlasGlossaryTerm,Term2,{{GLOSSARY2}},,,,,Test term 2 for asset import package (no categories).,,admins,VERIFIED,,,,,,,<h2>This is term2.</h2>,,Term3@@@{{GLOSSARY1}},TermB@@@{{GLOSSARY2}},TermC@@@{{GLOSSARY1}},,,,
 ,AtlasGlossaryTerm,TermA,{{GLOSSARY1}},,Cat2@@@{{GLOSSARY1}},,,Test term A for asset import package (single category).,"chris
-aryaman.bhushan",,VERIFIED,,information,Look!,Just a test.,{{TAG2}},,,,,,,TermB@@@{{GLOSSARY2}},,,
+aryaman.bhushan@atlan.com",,VERIFIED,,information,Look!,Just a test.,{{TAG2}},,,,,,,TermB@@@{{GLOSSARY2}},,,
 ,AtlasGlossaryTerm,TermB,{{GLOSSARY2}},,Cat3@@@{{GLOSSARY2}},,,Test term B for asset import package (single category).,,,VERIFIED,With a message!,,,,,"{""typeName"":""Link"",""attributes"":{""name"":""Example"",""link"":""https://www.example.com""}}",,,,,,TermA@@@{{GLOSSARY1}},,,Term3@@@{{GLOSSARY1}}
 ,AtlasGlossaryTerm,TermC,{{GLOSSARY1}},,,,,Test term C for asset import package (no categories).,,,VERIFIED,,,,,,,,,,,Term2@@@{{GLOSSARY2}},,,Term1@@@{{GLOSSARY1}},
 ,AtlasGlossaryTerm,TermD,{{GLOSSARY2}},,Cat4@@@{{GLOSSARY2}},,,Test term D for asset import package (single category).,,,DEPRECATED,With a message.,issue,Do not use,A more detailed message on why…,,,,,,,,,,Term1@@@{{GLOSSARY1}},
