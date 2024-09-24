@@ -30,7 +30,7 @@ import kotlin.math.max
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class FieldImporter(
-    private val preprocessed: Importer.PreprocessedCsv,
+    private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
     private val creationHandling: AssetCreationHandling,
     private val batchSize: Int,

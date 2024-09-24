@@ -49,7 +49,7 @@ abstract class CSVImporter(
     private val tableViewAgnostic: Boolean = false,
     private val failOnErrors: Boolean = true,
     private val fieldSeparator: Char = ',',
-) : AssetGenerator, CSVPreprocessor {
+) : AssetGenerator, RowPreprocessor {
     /** {@inheritDoc} */
     override fun preprocessRow(
         row: List<String>,
@@ -70,8 +70,8 @@ abstract class CSVImporter(
     open fun preprocess(
         outputFile: String? = null,
         outputHeaders: List<String>? = null,
-    ) {
-        CSVReader(
+    ): RowPreprocessor.Results {
+        return CSVReader(
             filename,
             updateOnly,
             trackBatches,
@@ -82,8 +82,9 @@ abstract class CSVImporter(
             fieldSeparator,
         ).use { csv ->
             val start = System.currentTimeMillis()
-            csv.preprocess(this, logger, outputFile, outputHeaders)
+            val results = csv.preprocess(this, logger, outputFile, outputHeaders)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
+            results
         }
     }
 
