@@ -217,8 +217,21 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <div class="block">Construct an Atlan tag assignment for an entity that is being created or updated.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(java.lang.String,java.lang.String)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(java.lang.String,com.atlan.model.structs.SourceTagAttachment)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
+ <a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&nbsp;sta)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Construct an Atlan tag assignment for an entity that is being created or updated.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(java.lang.String,java.lang.String)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entityGuid)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Construct an Atlan tag assignment for a specific entity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(java.lang.String,java.lang.String,com.atlan.model.structs.SourceTagAttachment)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entityGuid,
+ <a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&nbsp;sta)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Construct an Atlan tag assignment for a specific entity.</div>
 </div>
@@ -285,6 +298,21 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 </section>
 </li>
 <li>
+<section class="detail" id="of(java.lang.String,com.atlan.model.structs.SourceTagAttachment)">
+<h3>of</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
+ <a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&nbsp;sta)</span></div>
+<div class="block">Construct an Atlan tag assignment for an entity that is being created or updated.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlanTagName</code> - human-readable name of the Atlan tag</dd>
+<dd><code>sta</code> - (optional) source-specific details for the tag</dd>
+<dt>Returns:</dt>
+<dd>an Atlan tag assignment with default settings for propagation</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="of(java.lang.String,java.lang.String)">
 <h3>of</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
@@ -294,6 +322,23 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <dt>Parameters:</dt>
 <dd><code>atlanTagName</code> - human-readable name of the Atlan tag</dd>
 <dd><code>entityGuid</code> - unique identifier (GUID) of the entity to which the Atlan tag is to be assigned</dd>
+<dt>Returns:</dt>
+<dd>an Atlan tag assignment with default settings for propagation and a specific entity assignment</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="of(java.lang.String,java.lang.String,com.atlan.model.structs.SourceTagAttachment)">
+<h3>of</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTag.html" title="class in com.atlan.model.core">AtlanTag</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entityGuid,
+ <a href="../structs/SourceTagAttachment.html" title="class in com.atlan.model.structs">SourceTagAttachment</a>&nbsp;sta)</span></div>
+<div class="block">Construct an Atlan tag assignment for a specific entity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>atlanTagName</code> - human-readable name of the Atlan tag</dd>
+<dd><code>entityGuid</code> - unique identifier (GUID) of the entity to which the Atlan tag is to be assigned</dd>
+<dd><code>sta</code> - (optional) source-specific details for the tag</dd>
 <dt>Returns:</dt>
 <dd>an Atlan tag assignment with default settings for propagation and a specific entity assignment</dd>
 </dl>
