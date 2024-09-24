@@ -79,14 +79,15 @@ class CSVReader
          * @param logger through which to report the overall progress
          * @param outputFile (optional) name of the output file into which to write preprocessed row values
          * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values
+         * @return any resulting details captured during the preprocessing
          */
         fun preprocess(
-            csvPreprocessor: CSVPreprocessor,
+            csvPreprocessor: RowPreprocessor,
             logger: KLogger,
             outputFile: String? = null,
             outputHeaders: List<String>? = null,
-        ) {
-            if (outputFile != null) {
+        ): RowPreprocessor.Results {
+            return if (outputFile != null) {
                 logger.info { "Transforming input CSV file to $outputFile..." }
                 CSVWriter(outputFile).use { csv ->
                     csv.writeHeader(outputHeaders ?: header)
@@ -95,11 +96,13 @@ class CSVReader
                         csv.writeRecord(transformed)
                     }
                 }
+                csvPreprocessor.finalize(header, outputFile)
             } else {
                 logger.info { "Preprocessing input CSV file..." }
                 preproc.stream().skip(1).forEach { r: CsvRecord ->
                     csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                 }
+                csvPreprocessor.finalize(header)
             }
         }
 

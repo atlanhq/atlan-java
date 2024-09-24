@@ -4,7 +4,6 @@ package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
 import com.atlan.Atlan
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
@@ -18,11 +17,11 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.pkg.util.AssetRemover
-import de.siegmar.fastcsv.reader.CsvReader
 import mu.KotlinLogging
-import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -87,7 +86,7 @@ object Importer {
                 Utils.getOrDefault(config.assetsPrefix, ""),
                 assetsKey,
             )
-        val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
+        val preprocessedDetails = Preprocessor(assetsInput, fieldSeparator).preprocess<Results>()
 
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
@@ -253,77 +252,65 @@ object Importer {
         Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
     }
 
-    private fun preprocessCSV(
+    private class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
-    ): PreprocessedCsv {
-        // Setup
-        val quoteCharacter = '"'
-        val inputFile = Paths.get(originalFile)
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
+        var cubeName: String? = null
 
-        // Open the CSV reader and writer
-        val reader =
-            CsvReader.builder()
-                .fieldSeparator(fieldSeparator)
-                .quoteCharacter(quoteCharacter)
-                .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
-
-        // Start processing...
-        reader.ofCsvRecord(inputFile).use { tmp ->
-            var hasLinks = false
-            var hasTermAssignments = false
-            val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
-            var header: MutableList<String> = mutableListOf()
-            var typeIdx = 0
-            var cubeName: String? = null
-            tmp.stream().forEach { row ->
-                if (row.startingLineNumber == 1L) {
-                    header = row.fields.toMutableList()
-                    if (header.contains(Asset.LINKS.atlanFieldName)) {
-                        hasLinks = true
-                    }
-                    if (header.contains("assignedTerms")) {
-                        hasTermAssignments = true
-                    }
-                    typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
-                } else {
-                    val cubeNameOnRow = row.fields[header.indexOf(Cube.CUBE_NAME.atlanFieldName)] ?: ""
-                    if (cubeName.isNullOrBlank()) {
-                        cubeName = cubeNameOnRow
-                    }
-                    if (cubeName != cubeNameOnRow) {
-                        logger.error { "Cube name changed mid-file: $cubeName -> $cubeNameOnRow" }
-                        logger.error { "This package is designed to only process a single cube per input file, exiting." }
-                        exitProcess(101)
-                    }
-                    val values = row.fields.toMutableList()
-                    val typeName = values[typeIdx]
-                    val qnDetails = getQualifiedNameDetails(values, header, typeName)
-                    if (qnDetails.parentUniqueQN.isNotBlank()) {
-                        if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
-                            qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            val cubeNameOnRow = row.getOrNull(header.indexOf(Cube.CUBE_NAME.atlanFieldName)) ?: ""
+            if (cubeName.isNullOrBlank()) {
+                cubeName = cubeNameOnRow
+            }
+            if (cubeName != cubeNameOnRow) {
+                logger.error { "Cube name changed mid-file: $cubeName -> $cubeNameOnRow" }
+                logger.error { "This package is designed to only process a single cube per input file, exiting." }
+                exitProcess(101)
+            }
+            val values = row.toMutableList()
+            val typeName = values[typeIdx]
+            val qnDetails = getQualifiedNameDetails(values, header, typeName)
+            if (qnDetails.parentUniqueQN.isNotBlank()) {
+                if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
+                    qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
+                }
+                qualifiedNameToChildCount[qnDetails.parentUniqueQN]?.incrementAndGet()
+                if (typeName == CubeField.TYPE_NAME) {
+                    val hierarchyQN = getHierarchyQualifiedName(qnDetails.parentUniqueQN)
+                    if (hierarchyQN != qnDetails.parentUniqueQN) {
+                        // Only further increment the field count of the hierarchy for nested
+                        // fields (top-level fields are already counted by the logic above)
+                        if (!qualifiedNameToChildCount.containsKey(hierarchyQN)) {
+                            qualifiedNameToChildCount[hierarchyQN] = AtomicInteger(0)
                         }
-                        qualifiedNameToChildCount[qnDetails.parentUniqueQN]?.incrementAndGet()
-                        if (typeName == CubeField.TYPE_NAME) {
-                            val hierarchyQN = getHierarchyQualifiedName(qnDetails.parentUniqueQN)
-                            if (hierarchyQN != qnDetails.parentUniqueQN) {
-                                // Only further increment the field count of the hierarchy for nested
-                                // fields (top-level fields are already counted by the logic above)
-                                if (!qualifiedNameToChildCount.containsKey(hierarchyQN)) {
-                                    qualifiedNameToChildCount[hierarchyQN] = AtomicInteger(0)
-                                }
-                                qualifiedNameToChildCount[hierarchyQN]?.incrementAndGet()
-                            }
-                        }
+                        qualifiedNameToChildCount[hierarchyQN]?.incrementAndGet()
                     }
                 }
             }
-            return PreprocessedCsv(
+            return row
+        }
+
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): Results {
+            val results = super.finalize(header, outputFile)
+            return Results(
                 cubeName!!,
-                hasLinks,
-                hasTermAssignments,
-                originalFile,
+                results.hasLinks,
+                results.hasTermAssignments,
+                filename,
                 qualifiedNameToChildCount,
             )
         }
@@ -335,7 +322,7 @@ object Importer {
         fieldSeparator: Char,
     ): String {
         logger.info { "Found previous raw file, transforming it for comparison: $previousRaw" }
-        val preprocessedPrevious = preprocessCSV(previousRaw, fieldSeparator)
+        val preprocessedPrevious = Preprocessor(previousRaw, fieldSeparator).preprocess<Results>()
         val previousCubeName = preprocessedPrevious.cubeName
         return if (cubeName != previousCubeName) {
             // Ensure the cube names match, otherwise log a warning instead
@@ -346,13 +333,17 @@ object Importer {
         }
     }
 
-    data class PreprocessedCsv(
+    class Results(
         val cubeName: String,
-        val hasLinks: Boolean,
-        val hasTermAssignments: Boolean,
+        hasLinks: Boolean,
+        hasTermAssignments: Boolean,
         val preprocessedFile: String,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
-    )
+    ) : RowPreprocessor.Results(
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            outputFile = null,
+        )
 
     private val hierarchyQNPrefix: Pattern = Pattern.compile("([^/]*/[a-z0-9-]+/[^/]*(/[^/]*){2}).*")
 

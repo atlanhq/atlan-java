@@ -4,7 +4,6 @@ package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
 import com.atlan.Atlan
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
@@ -20,12 +19,12 @@ import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.rab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import de.siegmar.fastcsv.reader.CsvReader
-import de.siegmar.fastcsv.writer.CsvWriter
+import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KotlinLogging
 import java.nio.file.Paths
-import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.exitProcess
 
@@ -79,7 +78,17 @@ object Importer {
                 Utils.getOrDefault(config.assetsPrefix, ""),
                 assetsKey,
             )
-        val preprocessedDetails = preprocessCSV(assetsInput, fieldSeparator)
+        val targetHeaders = CSVXformer.getHeader(assetsInput, fieldSeparator).toMutableList()
+        // Inject two columns at the end that we need for column assets
+        targetHeaders.add(Column.ORDER.atlanFieldName)
+        targetHeaders.add(ColumnImporter.COLUMN_PARENT_QN)
+        val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
+        val preprocessedDetails =
+            Preprocessor(assetsInput, fieldSeparator)
+                .preprocess<Results>(
+                    outputFile = revisedFile.toString(),
+                    outputHeaders = targetHeaders,
+                )
 
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
@@ -108,7 +117,7 @@ object Importer {
                 true,
                 fieldSeparator,
             )
-        val connectionResults = connectionImporter.import()
+        connectionImporter.import()
 
         logger.info { " --- Importing databases... ---" }
         val databaseImporter =
@@ -196,107 +205,84 @@ object Importer {
         }
     }
 
-    private fun preprocessCSV(
+    private class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
-    ): PreprocessedCsv {
-        // Setup
-        val quoteCharacter = '"'
-        val inputFile = Paths.get(originalFile)
-        val revisedFile = Paths.get("$originalFile.CSA_RAB.csv")
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        val entityQualifiedNameToType = mutableMapOf<String, String>()
+        val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
+        val qualifiedNameToTableCount = mutableMapOf<String, AtomicInteger>()
+        val qualifiedNameToViewCount = mutableMapOf<String, AtomicInteger>()
 
-        // Open the CSV reader and writer
-        val reader =
-            CsvReader.builder()
-                .fieldSeparator(fieldSeparator)
-                .quoteCharacter(quoteCharacter)
-                .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
-        val writer =
-            CsvWriter.builder()
-                .fieldSeparator(fieldSeparator)
-                .quoteCharacter(quoteCharacter)
-                .build(revisedFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)
+        var lastParentQN = ""
+        var columnOrder = 1
 
-        // Start processing...
-        reader.ofCsvRecord(inputFile).use { tmp ->
-            var hasLinks = false
-            var hasTermAssignments = false
-            val entityQualifiedNameToType = mutableMapOf<String, String>()
-            val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
-            val qualifiedNameToTableCount = mutableMapOf<String, AtomicInteger>()
-            val qualifiedNameToViewCount = mutableMapOf<String, AtomicInteger>()
-            var header: MutableList<String> = mutableListOf()
-            var typeIdx = 0
-            var lastParentQN = ""
-            var columnOrder = 1
-            tmp.stream().forEach { row ->
-                if (row.startingLineNumber == 1L) {
-                    header = row.fields.toMutableList()
-                    // Inject two columns at the end that we need for column assets
-                    header.add(Column.ORDER.atlanFieldName)
-                    header.add(ColumnImporter.COLUMN_PARENT_QN)
-                    if (header.contains(Asset.LINKS.atlanFieldName)) {
-                        hasLinks = true
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            val values = row.toMutableList()
+            val typeName = values[typeIdx]
+            val qnDetails = getQualifiedNameDetails(values, header, typeName)
+            if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
+                if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
+                    qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
+                }
+                qualifiedNameToChildCount[qnDetails.parentUniqueQN]?.incrementAndGet()
+            }
+            when (typeName) {
+                Connection.TYPE_NAME, Database.TYPE_NAME, Schema.TYPE_NAME -> {
+                    values.add("")
+                    values.add("")
+                }
+                Table.TYPE_NAME -> {
+                    if (!qualifiedNameToTableCount.containsKey(qnDetails.parentUniqueQN)) {
+                        qualifiedNameToTableCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
                     }
-                    if (header.contains("assignedTerms")) {
-                        hasTermAssignments = true
+                    qualifiedNameToTableCount[qnDetails.parentUniqueQN]?.incrementAndGet()
+                    entityQualifiedNameToType[qnDetails.uniqueQN] = typeName
+                    values.add("")
+                    values.add("")
+                }
+                View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
+                    if (!qualifiedNameToViewCount.containsKey(qnDetails.parentUniqueQN)) {
+                        qualifiedNameToViewCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
                     }
-                    typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
-                    writer.writeRecord(header)
-                } else {
-                    val values = row.fields.toMutableList()
-                    val typeName = values[typeIdx]
-                    val qnDetails = getQualifiedNameDetails(values, header, typeName)
-                    if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
-                        if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
-                            qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
-                        }
-                        qualifiedNameToChildCount[qnDetails.parentUniqueQN]?.incrementAndGet()
+                    qualifiedNameToViewCount[qnDetails.parentUniqueQN]?.incrementAndGet()
+                    entityQualifiedNameToType[qnDetails.uniqueQN] = typeName
+                    values.add("")
+                    values.add("")
+                }
+                Column.TYPE_NAME -> {
+                    // If it is a column, calculate the order and parent qualifiedName and inject them
+                    if (qnDetails.parentUniqueQN == lastParentQN) {
+                        columnOrder += 1
+                    } else {
+                        lastParentQN = qnDetails.parentUniqueQN
+                        columnOrder = 1
                     }
-                    when (typeName) {
-                        Connection.TYPE_NAME, Database.TYPE_NAME, Schema.TYPE_NAME -> {
-                            values.add("")
-                            values.add("")
-                        }
-                        Table.TYPE_NAME -> {
-                            if (!qualifiedNameToTableCount.containsKey(qnDetails.parentUniqueQN)) {
-                                qualifiedNameToTableCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
-                            }
-                            qualifiedNameToTableCount[qnDetails.parentUniqueQN]?.incrementAndGet()
-                            entityQualifiedNameToType[qnDetails.uniqueQN] = typeName
-                            values.add("")
-                            values.add("")
-                        }
-                        View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
-                            if (!qualifiedNameToViewCount.containsKey(qnDetails.parentUniqueQN)) {
-                                qualifiedNameToViewCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
-                            }
-                            qualifiedNameToViewCount[qnDetails.parentUniqueQN]?.incrementAndGet()
-                            entityQualifiedNameToType[qnDetails.uniqueQN] = typeName
-                            values.add("")
-                            values.add("")
-                        }
-                        Column.TYPE_NAME -> {
-                            // If it is a column, calculate the order and parent qualifiedName and inject them
-                            if (qnDetails.parentUniqueQN == lastParentQN) {
-                                columnOrder += 1
-                            } else {
-                                lastParentQN = qnDetails.parentUniqueQN
-                                columnOrder = 1
-                            }
-                            values.add("$columnOrder")
-                            values.add(qnDetails.parentPartialQN)
-                        }
-                    }
-                    writer.writeRecord(values)
+                    values.add("$columnOrder")
+                    values.add(qnDetails.parentPartialQN)
                 }
             }
-            writer.close()
-            return PreprocessedCsv(
-                hasLinks,
-                hasTermAssignments,
-                revisedFile.toString(),
+            return values
+        }
+
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): Results {
+            val results = super.finalize(header, outputFile)
+            return Results(
+                results.hasLinks,
+                results.hasTermAssignments,
+                results.outputFile!!,
                 entityQualifiedNameToType,
                 qualifiedNameToChildCount,
                 qualifiedNameToTableCount,
@@ -305,13 +291,17 @@ object Importer {
         }
     }
 
-    data class PreprocessedCsv(
-        val hasLinks: Boolean,
-        val hasTermAssignments: Boolean,
+    class Results(
+        hasLinks: Boolean,
+        hasTermAssignments: Boolean,
         val preprocessedFile: String,
         val entityQualifiedNameToType: Map<String, String>,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
         val qualifiedNameToTableCount: Map<String, AtomicInteger>,
         val qualifiedNameToViewCount: Map<String, AtomicInteger>,
-    )
+    ) : RowPreprocessor.Results(
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            outputFile = preprocessedFile,
+        )
 }
