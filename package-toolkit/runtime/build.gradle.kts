@@ -21,6 +21,12 @@ dependencies {
         api(libs.guava) {
             because("version consistency across libraries")
         }
+        api(libs.protobuf.java) {
+            because("transient version has CWE-20 (CVE-2024-7254)")
+        }
+        api(libs.protobuf.java.util) {
+            because("transient version has CWE-20 (CVE-2024-7254)")
+        }
         testImplementation(libs.guava) {
             because("version consistency across libraries")
         }

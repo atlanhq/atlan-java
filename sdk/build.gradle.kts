@@ -41,6 +41,9 @@ dependencies {
         errorprone(libs.guava) {
             because("version consistency across libraries")
         }
+        errorprone(libs.protobuf.java) {
+            because("transient version has CWE-20 (CVE-2024-7254)")
+        }
     }
     api(libs.jackson.databind)
     api(libs.slf4j)
