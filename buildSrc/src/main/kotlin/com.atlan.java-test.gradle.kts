@@ -13,6 +13,15 @@ testing {
                     setSrcDirs(listOf("src/test/java"))
                 }
             }
+            targets {
+                all {
+                    testTask.configure {
+                        options {
+                            testLogging.showStandardStreams = true
+                        }
+                    }
+                }
+            }
         }
     }
 }

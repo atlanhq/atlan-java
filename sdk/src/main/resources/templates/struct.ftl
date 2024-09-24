@@ -6,6 +6,14 @@ import com.atlan.model.structs.AtlanStruct;
 <#if className == "BadgeCondition">
 import com.atlan.model.enums.BadgeComparisonOperator;
 import com.atlan.model.enums.BadgeConditionColor;
+<#elseif className == "SourceTagAttachment">
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
+import com.atlan.cache.SourceTagCache;
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.ITag;
 </#if>
 <#list attributes as attribute>
 <#if attribute.type.type == "ENUM">
@@ -155,6 +163,263 @@ public class ${className} extends AtlanStruct {
                 .badgeConditionOperator(operator)
                 .badgeConditionValue(Boolean.toString(value))
                 .badgeConditionColorhex(color)
+                .build();
+    }
+<#elseif className == "SourceTagAttachment">
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param name Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byName(
+        SourceTagCache.SourceTagName name,
+        List<SourceTagAttachmentValue> sourceTagValues,
+        Long sourceTagSyncTimestamp,
+        String sourceTagSyncError)
+        throws AtlanException {
+        return byName(Atlan.getDefaultClient(), name, sourceTagValues, true, sourceTagSyncTimestamp, sourceTagSyncError);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param name Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byName(
+            AtlanClient client,
+            SourceTagCache.SourceTagName name,
+            List<SourceTagAttachmentValue> sourceTagValues,
+            Long sourceTagSyncTimestamp,
+            String sourceTagSyncError)
+            throws AtlanException {
+        return byName(client, name, sourceTagValues, true, sourceTagSyncTimestamp, sourceTagSyncError);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * not synced to the source.
+     *
+     * @param name Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byName(
+        SourceTagCache.SourceTagName name, List<SourceTagAttachmentValue> sourceTagValues)
+        throws AtlanException {
+        return byName(Atlan.getDefaultClient(), name, sourceTagValues, false, null, null);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * not synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param name Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byName(
+            AtlanClient client, SourceTagCache.SourceTagName name, List<SourceTagAttachmentValue> sourceTagValues)
+            throws AtlanException {
+        return byName(client, name, sourceTagValues, false, null, null);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param name Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    private static SourceTagAttachment byName(
+            AtlanClient client,
+            SourceTagCache.SourceTagName name,
+            List<SourceTagAttachmentValue> sourceTagValues,
+            Boolean isSourceTagSynced,
+            Long sourceTagSyncTimestamp,
+            String sourceTagSyncError)
+            throws AtlanException {
+        ITag tag = (ITag) client.getSourceTagCache().getByName(name);
+        String qualifiedName = tag.getQualifiedName();
+        return of(
+                tag.getName(),
+                qualifiedName,
+                tag.getGuid(),
+                Connection.getConnectorTypeFromQualifiedName(qualifiedName).getValue(),
+                sourceTagValues,
+                isSourceTagSynced,
+                sourceTagSyncTimestamp,
+                sourceTagSyncError);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byQualifiedName(
+        String sourceTagQualifiedName,
+        List<SourceTagAttachmentValue> sourceTagValues,
+        Long sourceTagSyncTimestamp,
+        String sourceTagSyncError)
+        throws AtlanException {
+        return byQualifiedName(
+            Atlan.getDefaultClient(), sourceTagQualifiedName, sourceTagValues, true, sourceTagSyncTimestamp, sourceTagSyncError);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byQualifiedName(
+            AtlanClient client,
+            String sourceTagQualifiedName,
+            List<SourceTagAttachmentValue> sourceTagValues,
+            Long sourceTagSyncTimestamp,
+            String sourceTagSyncError)
+            throws AtlanException {
+        return byQualifiedName(
+                client, sourceTagQualifiedName, sourceTagValues, true, sourceTagSyncTimestamp, sourceTagSyncError);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * not synced to the source.
+     *
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byQualifiedName(
+        String sourceTagQualifiedName, List<SourceTagAttachmentValue> sourceTagValues) throws AtlanException {
+        return byQualifiedName(Atlan.getDefaultClient(), sourceTagQualifiedName, sourceTagValues, false, null, null);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * not synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    public static SourceTagAttachment byQualifiedName(
+            AtlanClient client, String sourceTagQualifiedName, List<SourceTagAttachmentValue> sourceTagValues) throws AtlanException {
+        return byQualifiedName(client, sourceTagQualifiedName, sourceTagValues, false, null, null);
+    }
+
+    /**
+     * Create a source-synced tag attachment with a particular value, when the attachment is
+     * synced to the source.
+     *
+     * @param client connectivity to an Atlan tenant
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     * @throws AtlanException on any error communicating via the underlying APIs
+     * @throws NotFoundException if the source-synced tag cannot be resolved
+     */
+    private static SourceTagAttachment byQualifiedName(
+            AtlanClient client,
+            String sourceTagQualifiedName,
+            List<SourceTagAttachmentValue> sourceTagValues,
+            Boolean isSourceTagSynced,
+            Long sourceTagSyncTimestamp,
+            String sourceTagSyncError)
+            throws AtlanException {
+        ITag tag = (ITag) client.getSourceTagCache().getByQualifiedName(sourceTagQualifiedName);
+        return of(
+                tag.getName(),
+                sourceTagQualifiedName,
+                tag.getGuid(),
+                Connection.getConnectorTypeFromQualifiedName(sourceTagQualifiedName).getValue(),
+                sourceTagValues,
+                isSourceTagSynced,
+                sourceTagSyncTimestamp,
+                sourceTagSyncError);
+    }
+
+    /**
+     * Quickly create a new SourceTagAttachment.
+     *
+     * @param sourceTagName Simple name of the source tag.
+     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
+     * @param sourceTagGuid Unique identifier (GUID) of the source tag, in Atlan.
+     * @param sourceTagConnectorName Connector that is the source of the tag.
+     * @param sourceTagValues Value of the tag attachment, from the source.
+     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
+     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
+     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @return a SourceTagAttachment with the provided information
+     */
+    public static SourceTagAttachment of(
+            String sourceTagName,
+            String sourceTagQualifiedName,
+            String sourceTagGuid,
+            String sourceTagConnectorName,
+            List<SourceTagAttachmentValue> sourceTagValues,
+            Boolean isSourceTagSynced,
+            Long sourceTagSyncTimestamp,
+            String sourceTagSyncError) {
+        return SourceTagAttachment.builder()
+                .sourceTagName(sourceTagName)
+                .sourceTagQualifiedName(sourceTagQualifiedName)
+                .sourceTagGuid(sourceTagGuid)
+                .sourceTagConnectorName(sourceTagConnectorName)
+                .sourceTagValues(sourceTagValues)
+                .isSourceTagSynced(isSourceTagSynced)
+                .sourceTagSyncTimestamp(sourceTagSyncTimestamp)
+                .sourceTagSyncError(sourceTagSyncError)
                 .build();
     }
 <#else>

@@ -469,6 +469,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-029",
             "Object with internal ID {0} does not exist.",
             "Verify the internal ID provided is a valid internal ID."),
+    ID_NOT_FOUND_BY_QUALIFIED_NAME(
+            404,
+            "ATLAN-JAVA-404-030",
+            "Object with qualifiedName {0} does not exist.",
+            "Verify the object qualifiedName provided is a valid object qualifiedName."),
+    SOURCE_TAG_NOT_FOUND_BY_ID(
+            404,
+            "ATLAN-JAVA-404-031",
+            "Source-synced tag with ID {0} does not exist.",
+            "Verify the source-synced tag ID provided is a valid source-synced tag ID. This should be the qualifiedName of the source-synced tag in Atlan."),
 
     CONFLICT_PASSTHROUGH(
             409,
