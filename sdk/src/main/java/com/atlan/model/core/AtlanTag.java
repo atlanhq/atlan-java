@@ -29,7 +29,13 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
     private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
     private static final Comparator<AtlanTag> atlanTagComparator = Comparator.comparing(
                     AtlanTag::getTypeName, stringComparator)
-            .thenComparing(AtlanTag::getEntityGuid, stringComparator);
+            .thenComparing(AtlanTag::getEntityGuid, stringComparator)
+            .thenComparing(
+                    st -> st.getSourceTagAttachments().stream()
+                            .map(SourceTagAttachment::getSourceTagGuid)
+                            .toList()
+                            .toString(),
+                    stringComparator);
 
     /**
      * Construct an Atlan tag assignment for an entity that is being created or updated.
@@ -38,13 +44,18 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * @return an Atlan tag assignment with default settings for propagation
      */
     public static AtlanTag of(String atlanTagName) {
-        return AtlanTag.builder()
-                .typeName(atlanTagName)
-                .propagate(true)
-                .removePropagationsOnEntityDelete(true)
-                .restrictPropagationThroughLineage(false)
-                .restrictPropagationThroughHierarchy(false)
-                .build();
+        return of(atlanTagName, (String) null);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for an entity that is being created or updated.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
+     * @param sta (optional) source-specific details for the tag
+     * @return an Atlan tag assignment with default settings for propagation
+     */
+    public static AtlanTag of(String atlanTagName, SourceTagAttachment sta) {
+        return of(atlanTagName, null, sta);
     }
 
     /**
@@ -55,15 +66,31 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
      */
     public static AtlanTag of(String atlanTagName, String entityGuid) {
-        return AtlanTag.builder()
+        return of(atlanTagName, entityGuid, null);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for a specific entity.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
+     * @param entityGuid unique identifier (GUID) of the entity to which the Atlan tag is to be assigned
+     * @param sta (optional) source-specific details for the tag
+     * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
+     */
+    public static AtlanTag of(String atlanTagName, String entityGuid, SourceTagAttachment sta) {
+        AtlanTagBuilder<?, ?> builder = AtlanTag.builder()
                 .typeName(atlanTagName)
-                .entityGuid(entityGuid)
-                .entityStatus(AtlanStatus.ACTIVE)
                 .propagate(true)
                 .removePropagationsOnEntityDelete(true)
                 .restrictPropagationThroughLineage(false)
-                .restrictPropagationThroughHierarchy(false)
-                .build();
+                .restrictPropagationThroughHierarchy(false);
+        if (entityGuid != null) {
+            builder.entityGuid(entityGuid).entityStatus(AtlanStatus.ACTIVE);
+        }
+        if (sta != null) {
+            builder.sourceTagAttachment(sta);
+        }
+        return builder.build();
     }
 
     public AtlanTag() {

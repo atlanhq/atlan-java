@@ -3,6 +3,7 @@
 package com.atlan.pkg.serde.cell
 
 import com.atlan.Atlan
+import com.atlan.cache.SourceTagCache.SourceTagName
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.ITag
@@ -173,13 +174,19 @@ object AtlanTagXformer {
 
     private fun encodeSourceTagIdentity(sourceTagQN: String): String {
         return try {
-            Atlan.getDefaultClient().sourceTagCache.getNameForId(sourceTagQN)
+            val tag = Atlan.getDefaultClient().sourceTagCache.getByQualifiedName(sourceTagQN) as ITag
+            return SourceTagName(Atlan.getDefaultClient(), tag).toString()
         } catch (e: NotFoundException) {
             ""
         }
     }
 
     private fun decodeSourceTag(sourceTagIdentity: String): ITag? {
-        return Atlan.getDefaultClient().sourceTagCache.getSourceTagByName(sourceTagIdentity)
+        val sourceTagId = SourceTagName(sourceTagIdentity)
+        return try {
+            Atlan.getDefaultClient().sourceTagCache.getByName(sourceTagId) as ITag
+        } catch (e: NotFoundException) {
+            null
+        }
     }
 }

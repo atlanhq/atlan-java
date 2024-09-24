@@ -5,12 +5,12 @@ package com.atlan.cache;
 import com.atlan.AtlanClient;
 import com.atlan.exception.*;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.ITag;
 import com.atlan.model.fields.AtlanField;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.atlan.util.StringUtils;
+import java.util.*;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,83 +20,119 @@ import lombok.extern.slf4j.Slf4j;
  * - name = simple name of the form {{connectorType}}/{{connectorName}}@@DB/SCHEMA/TAG_NAME, for example: snowflake/development@@DB/SCHEMA/TAG_NAME
  */
 @Slf4j
-public class SourceTagCache extends AbstractLazyCache {
+public class SourceTagCache extends AbstractAssetCache {
 
-    private static final String CONNECTION_DELIMITER = "@@";
-    private final Map<String, ITag> idToTag = new ConcurrentHashMap<>();
     private static final List<AtlanField> tagAttributes = List.of(Asset.NAME);
 
-    private final AtlanClient client;
-
     public SourceTagCache(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String sourceTagQN) throws AtlanException {
-        if (sourceTagQN != null) {
-            Optional<Asset> candidate = client.assets.select()
-                .where(Asset.SUPER_TYPE_NAMES.eq(ITag.TYPE_NAME))
-                .where(Asset.QUALIFIED_NAME.eq(sourceTagQN))
-                .includesOnResults(tagAttributes)
-                .stream()
-                .findFirst();
+    public void lookupByGuid(String guid) throws AtlanException {
+        if (guid != null && !guid.isEmpty()) {
+            Optional<Asset> candidate = client
+                    .assets
+                    .select()
+                    .where(Asset.SUPER_TYPE_NAMES.eq(ITag.TYPE_NAME))
+                    .where(Asset.GUID.eq(guid))
+                    .includesOnResults(tagAttributes)
+                    .stream()
+                    .findFirst();
             if (candidate.isPresent() && candidate.get() instanceof ITag tag) {
-                String connectionQN = StringUtils.getConnectionQualifiedName(sourceTagQN);
-                String connectionName = client.getConnectionCache().getNameForId(connectionQN);
-                String sourceTagPartial = sourceTagQN.substring(connectionQN.length() + 1);
-                cache(sourceTagQN, connectionName + CONNECTION_DELIMITER + sourceTagPartial);
-                idToTag.put(sourceTagQN, tag);
+                cache((Asset) tag);
             }
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String name) throws AtlanException {
-        if (name != null) {
-            String[] tokens = name.split(CONNECTION_DELIMITER);
-            if (tokens.length == 2) {
-                String connectionString = tokens[0];
-                String sourceTagPartialQN = tokens[1];
-                String connectionQN = client.getConnectionCache().getIdForName(connectionString);
-                String sourceTagQN = connectionQN + "/" + sourceTagPartialQN;
-                Optional<Asset> candidate = client.assets.select()
+    public void lookupByQualifiedName(String sourceTagQN) throws AtlanException {
+        if (sourceTagQN != null && !sourceTagQN.isEmpty()) {
+            Optional<Asset> candidate = client
+                    .assets
+                    .select()
                     .where(Asset.SUPER_TYPE_NAMES.eq(ITag.TYPE_NAME))
                     .where(Asset.QUALIFIED_NAME.eq(sourceTagQN))
                     .includesOnResults(tagAttributes)
                     .stream()
                     .findFirst();
-                if (candidate.isPresent() && candidate.get() instanceof ITag tag) {
-                    cache(sourceTagQN, name);
-                    idToTag.put(sourceTagQN, tag);
-                }
+            if (candidate.isPresent() && candidate.get() instanceof ITag tag) {
+                cache((Asset) tag);
             }
         }
     }
 
-    /**
-     * Retrieve a source tag by its qualifiedName.
-     *
-     * @param sourceTagQN unique name of the source tag
-     * @return the source tag's definition
-     * @throws AtlanException on any issue with the underlying API calls
-     */
-    public ITag getSourceTagById(String sourceTagQN) throws AtlanException {
-        getNameForId(sourceTagQN); // Make sure it's cached before trying to retrieve it
-        return idToTag.get(sourceTagQN);
+    /** {@inheritDoc} */
+    @Override
+    public void lookupByName(ObjectName name) throws AtlanException {
+        if (name instanceof SourceTagName stn) {
+            ObjectName connectionName = stn.getConnection();
+            String connectionQN =
+                    client.getConnectionCache().getByName(connectionName).getQualifiedName();
+            String sourceTagQN = connectionQN + "/" + stn.getPartialTagName();
+            Optional<Asset> candidate = client
+                    .assets
+                    .select()
+                    .where(Asset.SUPER_TYPE_NAMES.eq(ITag.TYPE_NAME))
+                    .where(Asset.QUALIFIED_NAME.eq(sourceTagQN))
+                    .includesOnResults(tagAttributes)
+                    .stream()
+                    .findFirst();
+            if (candidate.isPresent() && candidate.get() instanceof ITag tag) {
+                cache((Asset) tag);
+            }
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public ObjectName getName(Asset asset) {
+        if (asset instanceof ITag tag) {
+            try {
+                return new SourceTagName(client, tag);
+            } catch (AtlanException e) {
+                log.error("Unable to construct a source tag name for: {}", asset.getQualifiedName());
+                log.debug("Details:", e);
+            }
+        }
+        return null;
     }
 
     /**
-     * Retrieve a source tag by its simplified name.
-     *
-     * @param name simplified name of the source tag (excluding the connection's epoch)
-     * @return the source tag's definition
-     * @throws AtlanException on any issue with the underlying API calls
+     * Unique identity for a source tag, in the form: {{connectorType}}/{{connectorName}}@@DB/SCHEMA/TAG_NAME
+     * For example: snowflake/development@@DB/SCHEMA/TAG_NAME
      */
-    public ITag getSourceTagByName(String name) throws AtlanException {
-        String id = getIdForName(name); // Make sure it's cached before trying to retrieve it
-        return idToTag.get(id);
+    @Getter
+    public static final class SourceTagName implements ObjectName {
+        private static final String CONNECTION_DELIMITER = "@@";
+
+        ObjectName connection;
+        String partialTagName;
+
+        public SourceTagName(AtlanClient client, ITag tag) throws AtlanException {
+            String sourceTagQN = tag.getQualifiedName();
+            String connectionQN = StringUtils.getConnectionQualifiedName(sourceTagQN);
+            Connection conn = (Connection) client.getConnectionCache().getByQualifiedName(connectionQN);
+            this.connection = new ConnectionCache.ConnectionName(conn);
+            this.partialTagName = sourceTagQN.substring(connectionQN.length() + 1);
+        }
+
+        public SourceTagName(String identity) {
+            if (identity != null && !identity.isEmpty()) {
+                String[] tokens = identity.split(CONNECTION_DELIMITER);
+                if (tokens.length == 2) {
+                    this.connection = new ConnectionCache.ConnectionName(tokens[0]);
+                    this.partialTagName = tokens[1];
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public String toString() {
+            return connection.toString() + CONNECTION_DELIMITER + partialTagName;
+        }
     }
 }
