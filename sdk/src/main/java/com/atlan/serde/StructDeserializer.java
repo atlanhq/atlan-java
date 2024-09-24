@@ -59,11 +59,11 @@ public class StructDeserializer extends StdDeserializer<AtlanStruct> implements 
                 }
             } else {
                 // Otherwise, reset the parser back to the start of the sequence and deserialize it
-                try (JsonParser restart =
-                        JsonParserSequence.createFlattened(true, root.traverse(parser.getCodec()), parser)) {
-                    struct = deserializeNested(restart, context);
-                    struct.setRawJsonObject(root);
-                }
+                // NOTE: This should NOT be wrapped with a try-final, or it will auto-close ALL parsers it is
+                // sequencing!
+                JsonParser restart = JsonParserSequence.createFlattened(true, root.traverse(parser.getCodec()), parser);
+                struct = deserializeNested(restart, context);
+                struct.setRawJsonObject(root);
             }
         }
         return struct;

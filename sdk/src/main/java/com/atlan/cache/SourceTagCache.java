@@ -10,6 +10,7 @@ import com.atlan.model.assets.ITag;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.util.StringUtils;
 import java.util.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -105,6 +106,7 @@ public class SourceTagCache extends AbstractAssetCache {
      * For example: snowflake/development@@DB/SCHEMA/TAG_NAME
      */
     @Getter
+    @EqualsAndHashCode
     public static final class SourceTagName implements ObjectName {
         private static final String CONNECTION_DELIMITER = "@@";
 
@@ -133,20 +135,6 @@ public class SourceTagCache extends AbstractAssetCache {
         @Override
         public String toString() {
             return connection.toString() + CONNECTION_DELIMITER + partialTagName;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof SourceTagName that)) return false;
-            return Objects.equals(connection, that.connection) && Objects.equals(partialTagName, that.partialTagName);
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int hashCode() {
-            return Objects.hash(connection, partialTagName);
         }
     }
 }

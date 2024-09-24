@@ -9,6 +9,7 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.fields.AtlanField;
 import java.util.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,6 +90,7 @@ public class ConnectionCache extends AbstractAssetCache {
      * For example: snowflake/development
      */
     @Getter
+    @EqualsAndHashCode
     public static final class ConnectionName implements ObjectName {
         String name;
         AtlanConnectorType type;
@@ -112,20 +114,6 @@ public class ConnectionCache extends AbstractAssetCache {
         @Override
         public String toString() {
             return type.getValue() + "/" + name;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof ConnectionName that)) return false;
-            return Objects.equals(name, that.name) && type == that.type;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public int hashCode() {
-            return Objects.hash(name, type);
         }
     }
 }
