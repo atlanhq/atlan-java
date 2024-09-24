@@ -134,5 +134,19 @@ public class SourceTagCache extends AbstractAssetCache {
         public String toString() {
             return connection.toString() + CONNECTION_DELIMITER + partialTagName;
         }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof SourceTagName that)) return false;
+            return Objects.equals(connection, that.connection) && Objects.equals(partialTagName, that.partialTagName);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public int hashCode() {
+            return Objects.hash(connection, partialTagName);
+        }
     }
 }

@@ -9,8 +9,23 @@ package com.atlan.cache;
 public interface ObjectName {
     /**
      * String representation of the object's unique name.
-     * @return String
+     * @return object's unique name
      */
     @Override
     String toString();
+
+    /**
+     * Check whether two object names are equivalent (or not).
+     * @param o object name to compare against
+     * @return true if the two names are equivalent
+     */
+    @Override
+    boolean equals(Object o);
+
+    /**
+     * Calculate a unique hash code given the object name's unique characteristics.
+     * @return unique hash code for the object name
+     */
+    @Override
+    int hashCode();
 }

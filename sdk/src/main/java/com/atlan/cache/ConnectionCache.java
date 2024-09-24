@@ -63,7 +63,7 @@ public class ConnectionCache extends AbstractAssetCache {
     public void lookupByName(ObjectName name) throws AtlanException {
         if (name instanceof ConnectionName identity) {
             List<Connection> results =
-                    Connection.findByName(identity.getName(), identity.getType(), connectionAttributes);
+                    Connection.findByName(client, identity.getName(), identity.getType(), connectionAttributes);
             if (!results.isEmpty()) {
                 if (results.size() > 1) {
                     log.warn(
@@ -112,6 +112,20 @@ public class ConnectionCache extends AbstractAssetCache {
         @Override
         public String toString() {
             return type.getValue() + "/" + name;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof ConnectionName that)) return false;
+            return Objects.equals(name, that.name) && type == that.type;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, type);
         }
     }
 }

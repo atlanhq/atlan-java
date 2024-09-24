@@ -10,7 +10,9 @@ import com.atlan.model.assets.ITag;
 import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -45,20 +47,37 @@ public class SourceTagAttachmentDeserializer extends StdDeserializer<SourceTagAt
      */
     @Override
     public SourceTagAttachment deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        return deserialize(parser.getCodec().readTree(parser));
+        JsonNode root = parser.readValueAsTree();
+        SourceTagAttachment sta = null;
+        if (root != null) {
+            TreeNode attributes = root.get("attributes");
+            if (attributes != null && attributes.isObject()) {
+                // If there is an `attributes` key in the object, it's nested, so deserialize the nested content
+                try (JsonParser nested = attributes.traverse(parser.getCodec())) {
+                    sta = deserializeNested(nested);
+                    sta.setRawJsonObject(root);
+                }
+            } else {
+                // Otherwise, reset the parser back to the start of the sequence and deserialize it
+                try (JsonParser restart =
+                        JsonParserSequence.createFlattened(true, root.traverse(parser.getCodec()), parser)) {
+                    sta = deserializeNested(restart);
+                    sta.setRawJsonObject(root);
+                }
+            }
+        }
+        return sta;
     }
 
-    /**
-     * Actually do the work of deserializing a source tag attachment.
-     *
-     * @param root of the parsed JSON tree
-     * @return the deserialized source tag attachment
-     * @throws IOException on any issues parsing the JSON
-     */
-    SourceTagAttachment deserialize(JsonNode root) throws IOException {
+    private SourceTagAttachment deserializeNested(JsonParser nested) throws IOException {
+        nested.nextToken(); // Consume the opening of the nested object
+        JsonNode root = nested.getCodec().readTree(nested);
+
         JsonNode jsGuid = root.get("sourceTagGuid");
         JsonNode jsQN = root.get("sourceTagQualifiedName");
         JsonNode jsName = root.get("sourceTagName");
+
+        // TODO: all of the above are nested inside `attributes`...
 
         ITag source = null;
         AtlanException error = null;
@@ -102,17 +121,20 @@ public class SourceTagAttachmentDeserializer extends StdDeserializer<SourceTagAt
         // TODO: Unfortunately, attempts to use a AtlanTagBeanDeserializerModifier to avoid the direct
         //  deserialization below were not successful — something to investigate another time
         String sourceTagQualifiedName = source.getQualifiedName();
-        return SourceTagAttachment.builder()
+        SourceTagAttachment.SourceTagAttachmentBuilder<?, ?> builder = SourceTagAttachment.builder()
                 .sourceTagName(source.getName())
                 .sourceTagQualifiedName(sourceTagQualifiedName)
                 .sourceTagGuid(source.getGuid())
                 .sourceTagConnectorName(Connection.getConnectorTypeFromQualifiedName(sourceTagQualifiedName)
                         .getValue())
-                .sourceTagValues(
-                        JacksonUtils.deserializeObject(client, root, "sourceTagValues", new TypeReference<>() {}))
                 .isSourceTagSynced(JacksonUtils.deserializeBoolean(root, "isSourceTagSynced"))
                 .sourceTagSyncTimestamp(JacksonUtils.deserializeLong(root, "sourceTagSyncTimestamp"))
-                .sourceTagSyncError(JacksonUtils.deserializeString(root, "sourceTagSyncError"))
-                .build();
+                .sourceTagSyncError(JacksonUtils.deserializeString(root, "sourceTagSyncError"));
+        JsonNode stv = root.get("sourceTagValue");
+        if (stv != null && !stv.isNull()) {
+            builder.sourceTagValues(
+                    JacksonUtils.deserializeObject(client, root, "sourceTagValue", new TypeReference<>() {}));
+        }
+        return builder.build();
     }
 }

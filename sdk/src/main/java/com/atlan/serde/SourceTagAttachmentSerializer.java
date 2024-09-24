@@ -99,9 +99,7 @@ public class SourceTagAttachmentSerializer extends StdSerializer<SourceTagAttach
                     Connection.getConnectorTypeFromQualifiedName(source.getQualifiedName())
                             .getValue());
             if (!sta.getSourceTagValues().isEmpty()) {
-                gen.writeObjectFieldStart("sourceTagValues");
-                JacksonUtils.serializeObject(gen, "sourceTagValues", sta.getSourceTagValues());
-                gen.writeEndObject();
+                JacksonUtils.serializeObject(gen, "sourceTagValue", sta.getSourceTagValues());
             }
             JacksonUtils.serializeBoolean(gen, "isSourceTagSynced", sta.getIsSourceTagSynced());
             JacksonUtils.serializeLong(gen, "sourceTagSyncTimestamp", sta.getSourceTagSyncTimestamp());
