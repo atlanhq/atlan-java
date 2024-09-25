@@ -77,7 +77,7 @@ class DeltaProcessor(
                         assetRemover.deleteAssets()
                     }
                 } else {
-                    logger.info { "No previous file found for cube, treated it as an initial load." }
+                    logger.info { "No previous file found, treated it as an initial load." }
                 }
                 // Copy processed files to specified location in object storage for future comparison purposes
                 if (!skipObjectStore) {
