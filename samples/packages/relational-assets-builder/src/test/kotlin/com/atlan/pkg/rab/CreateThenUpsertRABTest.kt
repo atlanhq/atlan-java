@@ -179,6 +179,8 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 trackBatches = false,
+                deltaSemantic = "full",
+                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -458,6 +460,9 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
+                deltaSemantic = "full",
+                skipObjectStore = true,
+                previousFileDirect = Paths.get(testDirectory, testFile).toString(),
             ),
         )
         Importer.main(arrayOf(testDirectory))

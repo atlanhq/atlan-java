@@ -14,17 +14,12 @@ import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
-import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
-import com.atlan.pkg.util.AssetRemover
+import com.atlan.pkg.util.DeltaProcessor
 import mu.KotlinLogging
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 import kotlin.jvm.optionals.getOrNull
@@ -39,7 +34,6 @@ object Importer {
 
     const val QN_DELIMITER = "~"
     const val PREVIOUS_FILES_PREFIX = "csa-cube-assets-builder"
-    const val PREVIOUS_FILE_PROCESSED_EXT = ".processed"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -183,73 +177,21 @@ object Importer {
             )
         }
 
-        val runAssetRemoval = Utils.getOrDefault(config.deltaSemantic, "full") == "full"
-        if (runAssetRemoval) {
-            if (cubeQN == null) {
-                logger.warn { "Unable to determine cube's qualifiedName, will not delete any assets." }
-            } else {
-                val purgeAssets = Utils.getOrDefault(config.deltaRemovalType, "archive") == "purge"
-                val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
-                val skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false)
-                val cubeName = preprocessedDetails.cubeName
-                val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQN"
-                val objectStore = if (!skipObjectStore) Utils.getBackingStore() else null
-                val lastCubesFile =
-                    if (previousFileDirect.isNotBlank()) {
-                        transformPreviousRaw(previousFileDirect, cubeName, fieldSeparator)
-                    } else if (skipObjectStore) {
-                        ""
-                    } else {
-                        objectStore!!.copyLatestFrom(previousFileLocation, PREVIOUS_FILE_PROCESSED_EXT, outputDirectory)
-                    }
-                if (lastCubesFile.isNotBlank()) {
-                    // If there was a previous file, calculate the delta to see what we need
-                    // to delete
-                    val assetRemover =
-                        AssetRemover(
-                            ConnectionCache.getIdentityMap(),
-                            AssetImporter.Companion,
-                            logger,
-                            listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-                            cubeQN,
-                            purgeAssets,
-                        )
-                    assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, lastCubesFile)
-                    if (assetRemover.hasAnythingToDelete()) {
-                        assetRemover.deleteAssets()
-                    }
-                } else {
-                    logger.info { "No previous file found for cube, treated it as an initial load." }
-                }
-                // Copy processed files to specified location in object storage for future comparison purposes
-                if (!skipObjectStore) {
-                    uploadToBackingStore(objectStore!!, preprocessedDetails.preprocessedFile, cubeQN, PREVIOUS_FILE_PROCESSED_EXT)
-                }
-            }
-        }
+        val delta = DeltaProcessor(
+            semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+            qualifiedNamePrefix = cubeQN,
+            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+            previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+            resolver = AssetImporter,
+            preprocessedDetails = preprocessedDetails,
+            typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+            logger = logger,
+            previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+            outputDirectory = outputDirectory,
+            skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
+        )
+        delta.run()
         return cubeQN
-    }
-
-    /**
-     * Upload a file used to load the cube to Atlan backing store.
-     *
-     * @param objectStore syncer providing access to the Atlan's backing object store
-     * @param localFile the full path of the local file to upload
-     * @param cubeQualifiedName the qualified name of the cube to which the file belongs
-     * @param extension the extension to add to the file in object storage
-     */
-    fun uploadToBackingStore(
-        objectStore: ObjectStorageSyncer,
-        localFile: String,
-        cubeQualifiedName: String,
-        extension: String,
-    ) {
-        val previousFileLocation = "$PREVIOUS_FILES_PREFIX/$cubeQualifiedName"
-        val sortedTime =
-            DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
-                .withZone(ZoneId.of("UTC"))
-                .format(Instant.now())
-        Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
     }
 
     private class Preprocessor(
@@ -316,33 +258,17 @@ object Importer {
         }
     }
 
-    private fun transformPreviousRaw(
-        previousRaw: String,
-        cubeName: String,
-        fieldSeparator: Char,
-    ): String {
-        logger.info { "Found previous raw file, transforming it for comparison: $previousRaw" }
-        val preprocessedPrevious = Preprocessor(previousRaw, fieldSeparator).preprocess<Results>()
-        val previousCubeName = preprocessedPrevious.cubeName
-        return if (cubeName != previousCubeName) {
-            // Ensure the cube names match, otherwise log a warning instead
-            logger.warn { "Previous cube name ($previousCubeName) does not match current ($cubeName) -- will not delete any assets." }
-            ""
-        } else {
-            preprocessedPrevious.preprocessedFile
-        }
-    }
-
     class Results(
-        val cubeName: String,
+        assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
-        val preprocessedFile: String,
+        preprocessedFile: String,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
-    ) : RowPreprocessor.Results(
+    ) : DeltaProcessor.Results(
+            assetRootName = assetRootName,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
-            outputFile = null,
+            preprocessedFile = preprocessedFile,
         )
 
     private val hierarchyQNPrefix: Pattern = Pattern.compile("([^/]*/[a-z0-9-]+/[^/]*(/[^/]*){2}).*")
