@@ -382,13 +382,14 @@ class CreateThenUpsertRABTest : PackageTest() {
     private fun validateView(exists: Boolean = true) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
-            val request = View.select(true)
-                .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .where(View.STATUS.eq(AtlanStatus.DELETED))
-                .includesOnResults(tableAttrs)
-                .includeOnRelations(Asset.NAME)
-                .includeOnRelations(Readme.DESCRIPTION)
-                .toRequest()
+            val request =
+                View.select(true)
+                    .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                    .where(View.STATUS.eq(AtlanStatus.DELETED))
+                    .includesOnResults(tableAttrs)
+                    .includeOnRelations(Asset.NAME)
+                    .includeOnRelations(Readme.DESCRIPTION)
+                    .toRequest()
             val response = retrySearchUntil(request, 1)
             val found = response.assets
             assertEquals(1, found.size)
