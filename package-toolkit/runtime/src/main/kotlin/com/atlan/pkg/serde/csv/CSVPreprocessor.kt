@@ -15,22 +15,26 @@ import mu.KLogger
  * @param filename name of the file to import
  * @param logger through which to record progress and any errors
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param producesFile (optional) name of the output file into which to write preprocessed row values, if specified becomes the default {@code outputFile} for preprocess method
+ * @param usingHeaders (optional) header column names to output into the file containing preprocessed row values, if specified becomes the default {@code outputHeaders} for the preprocess method
  */
 abstract class CSVPreprocessor(
     val filename: String,
     val logger: KLogger,
     val fieldSeparator: Char = ',',
+    val producesFile: String? = null,
+    val usingHeaders: List<String>? = null,
 ) : RowPreprocessor {
     /**
      * Preprocess the CSV file.
      *
-     * @param outputFile (optional) name of the output file into which to write preprocessed row values
-     * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values
+     * @param outputFile (optional) name of the output file into which to write preprocessed row values, if specified overrides whatever was set as {@code producesFile} on the preprocessor itself
+     * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values, if specified overrides whatever was set as {@code usingHeaders} on the preprocessor itself
      * @return any resulting details captured during the preprocessing
      */
     inline fun <reified T : RowPreprocessor.Results> preprocess(
-        outputFile: String? = null,
-        outputHeaders: List<String>? = null,
+        outputFile: String? = producesFile,
+        outputHeaders: List<String>? = usingHeaders,
     ): T {
         return CSVReader(
             filename,

@@ -228,6 +228,7 @@ object Importer {
                     exitProcess(50)
                 }
 
+            val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
             val delta =
                 DeltaProcessor(
                     semantic = deltaSemantic,
@@ -238,7 +239,14 @@ object Importer {
                     preprocessedDetails = preprocessedDetails,
                     typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
                     logger = logger,
-                    previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator, true),
+                    previousFilePreprocessor =
+                        Preprocessor(
+                            previousFileDirect,
+                            fieldSeparator,
+                            true,
+                            outputFile = Paths.get(previousFileDirect, ".transformed.csv").toString(),
+                            outputHeaders = targetHeaders,
+                        ),
                     outputDirectory = outputDirectory,
                     skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
                 )
@@ -252,10 +260,14 @@ object Importer {
         originalFile: String,
         fieldSeparator: Char,
         val deltaProcessing: Boolean,
+        outputFile: String? = null,
+        outputHeaders: List<String>? = null,
     ) : CSVPreprocessor(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            producesFile = outputFile,
+            usingHeaders = outputHeaders,
         ) {
         val entityQualifiedNameToType = mutableMapOf<String, String>()
         val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
