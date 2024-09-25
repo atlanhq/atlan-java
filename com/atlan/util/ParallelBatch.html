@@ -223,20 +223,32 @@ loadScripts(document, 'script');</script>
 <div class="block">Number of assets that were created (no details, only a count).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumUpdated()" class="member-name-link">getNumUpdated</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumRestored()" class="member-name-link">getNumRestored</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of assets that were potentially restored from being archived, or otherwise touched
+ without actually being updated (no details, just a count).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNumUpdated()" class="member-name-link">getNumUpdated</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of assets that were updated (no details, only a count).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResolvedGuids()" class="member-name-link">getResolvedGuids</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResolvedGuids()" class="member-name-link">getResolvedGuids</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="AssetBatch.AssetIdentity.html" title="class in com.atlan.util">AssetBatch.AssetIdentity</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResolvedQualifiedNames()" class="member-name-link">getResolvedQualifiedNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="AssetBatch.AssetIdentity.html" title="class in com.atlan.util">AssetBatch.AssetIdentity</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResolvedQualifiedNames()" class="member-name-link">getResolvedQualifiedNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Map from case-insensitive qualifiedName to resolved (actual) qualifiedName,
  for all assets that were processed through the batch.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRestored()" class="member-name-link">getRestored</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Assets that were potentially restored from being archived, or otherwise touched without actually
+ being updated (minimal info only).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkipped()" class="member-name-link">getSkipped</a>()</code></div>
@@ -499,6 +511,18 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getNumRestored()">
+<h3>getNumRestored</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getNumRestored</span>()</div>
+<div class="block">Number of assets that were potentially restored from being archived, or otherwise touched
+ without actually being updated (no details, just a count).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a count of the number of potentially restored assets, across all parallel batches</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getCreated()">
 <h3>getCreated</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</span>&nbsp;<span class="element-name">getCreated</span>()</div>
@@ -517,6 +541,18 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>all updated assets, across all parallel batches</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRestored()">
+<h3>getRestored</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</span>&nbsp;<span class="element-name">getRestored</span>()</div>
+<div class="block">Assets that were potentially restored from being archived, or otherwise touched without actually
+ being updated (minimal info only).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>all potentially restored assets, across all parallel batches</dd>
 </dl>
 </section>
 </li>
