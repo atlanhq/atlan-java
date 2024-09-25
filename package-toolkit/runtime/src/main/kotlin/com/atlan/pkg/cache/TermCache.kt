@@ -14,6 +14,8 @@ import mu.KotlinLogging
 object TermCache : AssetCache() {
     private val logger = KotlinLogging.logger {}
 
+    private var preloaded = false
+
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
 
@@ -98,13 +100,16 @@ object TermCache : AssetCache() {
 
     /** {@inheritDoc} */
     override fun preload() {
-        logger.info { "Caching all terms, up-front..." }
-        GlossaryTerm.select()
-            .includesOnResults(includesOnResults)
-            .includesOnRelations(includesOnRelations)
-            .stream(true)
-            .forEach { term ->
-                addByGuid(term.guid, term)
-            }
+        if (!preloaded) {
+            logger.info { "Caching all terms, up-front..." }
+            GlossaryTerm.select()
+                .includesOnResults(includesOnResults)
+                .includesOnRelations(includesOnRelations)
+                .stream(true)
+                .forEach { term ->
+                    addByGuid(term.guid, term)
+                }
+            preloaded = true
+        }
     }
 }

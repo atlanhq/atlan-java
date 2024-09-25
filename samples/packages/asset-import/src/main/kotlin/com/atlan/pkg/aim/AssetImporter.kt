@@ -192,10 +192,15 @@ import com.atlan.model.assets.ThoughtspotWorksheet
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
+import mu.KLogger
 import mu.KotlinLogging
 
 /**
@@ -241,20 +246,7 @@ class AssetImporter(
         trackBatches = trackBatches,
         fieldSeparator = fieldSeparator,
     ) {
-    private val typesInFile = mutableSetOf<String>()
     private var typeToProcess = ""
-
-    /** {@inheritDoc} */
-    override fun preprocessRow(
-        row: List<String>,
-        header: List<String>,
-        typeIdx: Int,
-        qnIdx: Int,
-    ): List<String> {
-        // Keep a running collection of the types that are in the file
-        typesInFile.add(row[typeIdx])
-        return super.preprocessRow(row, header, typeIdx, qnIdx)
-    }
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
@@ -265,7 +257,14 @@ class AssetImporter(
             // Otherwise, we need to do multi-pass loading:
             //  - Import assets in tiered order, top-to-bottom
             //  - Stop when we have processed all the types in the file
-            val typeLoadingOrder = getLoadOrder(typesInFile)
+            val includes = preprocess()
+            if (includes.hasLinks) {
+                LinkCache.preload()
+            }
+            if (includes.hasTermAssignments) {
+                TermCache.preload()
+            }
+            val typeLoadingOrder = getLoadOrder(includes.typesInFile)
             logger.info { "Asset loading order: $typeLoadingOrder" }
             var combinedResults: ImportResults? = null
             typeLoadingOrder.forEach {
@@ -716,4 +715,56 @@ class AssetImporter(
             }
         }
     }
+
+    /** Pre-process the assets import file. */
+    private fun preprocess(): Results {
+        return Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
+    }
+
+    private class Preprocessor(
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        private val typesInFile = mutableSetOf<String>()
+
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            // Keep a running collection of the types that are in the file
+            typesInFile.add(row[typeIdx])
+            return row
+        }
+
+        /** {@inheritDoc} */
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): RowPreprocessor.Results {
+            val results = super.finalize(header, outputFile)
+            return Results(
+                hasLinks = results.hasLinks,
+                hasTermAssignments = results.hasTermAssignments,
+                typesInFile = typesInFile,
+            )
+        }
+    }
+
+    private class Results(
+        hasLinks: Boolean,
+        hasTermAssignments: Boolean,
+        val typesInFile: Set<String>,
+    ) : RowPreprocessor.Results(
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            outputFile = null,
+        )
 }

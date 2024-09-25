@@ -68,8 +68,6 @@ object Importer {
             exitProcess(1)
         }
 
-        LinkCache.preload()
-
         // Glossaries...
         val resultsGTC =
             if (glossariesFileProvided) {
@@ -92,6 +90,10 @@ object Importer {
                         glossariesFailOnErrors,
                         glossariesFieldSeparator,
                     )
+                val includes = glossaryImporter.preprocess()
+                if (includes.hasLinks) {
+                    LinkCache.preload()
+                }
                 val resultsGlossary = glossaryImporter.import()
                 logger.info { "=== Importing categories... ===" }
                 val categoryImporter =
@@ -145,11 +147,6 @@ object Importer {
                         trackBatches,
                         assetsFieldSeparator,
                     )
-                if (assetsUpdateSemantic != AssetCreationHandling.NONE) {
-                    // If we are creating any assets, we need to preprocess the file
-                    // to determine the dependency order to load it
-                    assetImporter.preprocess()
-                }
                 assetImporter.import()
             } else {
                 null
