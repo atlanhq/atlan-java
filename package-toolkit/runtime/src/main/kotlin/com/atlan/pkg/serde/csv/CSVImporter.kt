@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.csv
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.serde.RowDeserialization
@@ -148,6 +149,10 @@ abstract class CSVImporter(
             if (assets != null) {
                 val builder = assets.primary
                 val candidate = builder.build()
+                if (candidate.status == null) {
+                    // If no status is explicitly provided, set to active -- necessary to ensure we restore archived assets
+                    builder.status(AtlanStatus.ACTIVE)
+                }
                 val identity = AssetBatch.AssetIdentity(candidate.typeName, candidate.qualifiedName)
                 // Then apply any field clearances based on attributes configured in the job
                 for (field in attrsToOverwrite) {
