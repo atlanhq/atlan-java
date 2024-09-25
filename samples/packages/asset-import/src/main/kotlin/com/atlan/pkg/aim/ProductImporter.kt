@@ -8,11 +8,16 @@ import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.cache.DataProductCache
+import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_PRODUCT_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
+import mu.KLogger
 import mu.KotlinLogging
 
 /**
@@ -57,6 +62,13 @@ class ProductImporter(
         colsToSkip.add(DataDomain.PARENT_DOMAIN.atlanFieldName)
         colsToSkip.add(DataDomain.ASSET_ICON.atlanFieldName)
         colsToSkip.add(DataDomain.ASSET_THEME_HEX.atlanFieldName)
+        val includes = preprocess()
+        if (includes.hasLinks) {
+            LinkCache.preload()
+        }
+        if (includes.hasTermAssignments) {
+            TermCache.preload()
+        }
         return super.import(colsToSkip)
     }
 
@@ -112,6 +124,31 @@ class ProductImporter(
             "${productName}$DATA_PRODUCT_DELIMITER${DataDomainXformer.encode(dataDomain)}"
         } else {
             "$productName"
+        }
+    }
+
+    /** Pre-process the assets import file. */
+    private fun preprocess(): RowPreprocessor.Results {
+        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
+    }
+
+    private class Preprocessor(
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            return row // No-op
         }
     }
 }

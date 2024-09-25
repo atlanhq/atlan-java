@@ -7,11 +7,16 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.DataDomainCache
+import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
+import mu.KLogger
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
@@ -79,6 +84,14 @@ class DomainImporter(
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(DataDomain.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(DataProduct.DATA_DOMAIN.atlanFieldName)
+
+        val includes = preprocess()
+        if (includes.hasLinks) {
+            LinkCache.preload()
+        }
+        if (includes.hasTermAssignments) {
+            TermCache.preload()
+        }
 
         logger.info { "Loading domains in multiple passes, by level..." }
         var combinedResults: ImportResults? = null
@@ -174,6 +187,31 @@ class DomainImporter(
             "${parentPath}$DATA_DOMAIN_DELIMITER$domainName"
         } else {
             "$domainName"
+        }
+    }
+
+    /** Pre-process the assets import file. */
+    private fun preprocess(): RowPreprocessor.Results {
+        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
+    }
+
+    private class Preprocessor(
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            return row // No-op
         }
     }
 }

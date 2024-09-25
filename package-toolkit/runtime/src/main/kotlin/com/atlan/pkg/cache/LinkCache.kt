@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap
 object LinkCache {
     private val logger = KotlinLogging.logger {}
 
+    private var preloaded = false
     private val byAssetGuid: MutableMap<String, MutableSet<Link>> = ConcurrentHashMap()
 
     private val includesOnResults: List<AtlanField> = listOf(Link.NAME, Link.STATUS, Link.LINK, Link.ASSET)
@@ -35,14 +36,17 @@ object LinkCache {
      * (This should generally be more efficient than looking up links asset-by-asset.)
      */
     fun preload() {
-        logger.info { "Caching all ${Link.select().count()} links, up-front..." }
-        Link.select()
-            .includesOnResults(includesOnResults)
-            .includesOnRelations(includesOnRelations)
-            .stream(true)
-            .forEach { link ->
-                add(link as Link)
-            }
+        if (!preloaded) {
+            logger.info { "Caching all ${Link.select().count()} links, up-front..." }
+            Link.select()
+                .includesOnResults(includesOnResults)
+                .includesOnRelations(includesOnRelations)
+                .stream(true)
+                .forEach { link ->
+                    add(link as Link)
+                }
+            preloaded = true
+        }
     }
 
     /**

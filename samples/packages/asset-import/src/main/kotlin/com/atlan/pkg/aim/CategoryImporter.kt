@@ -30,12 +30,12 @@ import kotlin.math.max
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class CategoryImporter(
-    private val filename: String,
+    filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val updateOnly: Boolean,
     private val batchSize: Int,
     private val failOnErrors: Boolean,
-    private val fieldSeparator: Char,
+    fieldSeparator: Char,
 ) : GTCImporter(
         filename = filename,
         attrsToOverwrite = attrsToOverwrite,

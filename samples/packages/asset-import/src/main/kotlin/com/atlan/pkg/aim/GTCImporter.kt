@@ -8,6 +8,8 @@ import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 
 /**
@@ -29,7 +31,7 @@ import mu.KLogger
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class GTCImporter(
-    filename: String,
+    protected val filename: String,
     attrsToOverwrite: List<AtlanField>,
     updateOnly: Boolean,
     batchSize: Int,
@@ -37,7 +39,7 @@ abstract class GTCImporter(
     typeNameFilter: String,
     logger: KLogger,
     failOnErrors: Boolean,
-    fieldSeparator: Char,
+    protected val fieldSeparator: Char,
 ) : CSVImporter(
         filename,
         logger,
@@ -92,4 +94,29 @@ abstract class GTCImporter(
      * @return the cache identity for the row
      */
     abstract fun getCacheId(deserializer: RowDeserializer): String
+
+    /** Pre-process the GTC import file. */
+    fun preprocess(): RowPreprocessor.Results {
+        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
+    }
+
+    private class Preprocessor(
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+        ) {
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            return row // No-op
+        }
+    }
 }
