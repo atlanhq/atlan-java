@@ -515,7 +515,8 @@ public class AssetBatch {
                         // are added to the resolved GUIDs map
                         resolvedGuids.put(guid, guid);
                     }
-                    if (!createdGuids.contains(guid) && !updatedGuids.contains(guid)) {
+                    String mappedGuid = resolvedGuids.getOrDefault(guid, guid);
+                    if (!createdGuids.contains(mappedGuid) && !updatedGuids.contains(mappedGuid)) {
                         // Ensure any assets that do not show as either created or updated are still tracked
                         // as possibly restored
                         track(restored, one);
