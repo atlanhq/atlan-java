@@ -4,6 +4,8 @@ package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
 import com.atlan.Atlan
+import com.atlan.exception.AtlanException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
@@ -12,6 +14,7 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.cache.LinkCache
@@ -22,7 +25,7 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.pkg.util.DeltaProcessor
 import mu.KotlinLogging
 import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicInteger
@@ -35,6 +38,8 @@ import kotlin.system.exitProcess
 object Importer {
     private val logger = KotlinLogging.logger {}
 
+    const val PREVIOUS_FILES_PREFIX = "csa-relational-assets-builder"
+
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
@@ -42,10 +47,17 @@ object Importer {
         import(config, outputDirectory)
     }
 
+    /**
+     * Actually run the import.
+     *
+     * @param config for the package
+     * @param outputDirectory in which to do any data processing
+     * @return the qualifiedName of the connection that was delta-processed, or null if no delta-processing enabled
+     */
     fun import(
         config: RelationalAssetsBuilderCfg,
         outputDirectory: String = "tmp",
-    ) {
+    ): String? {
         val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
@@ -56,6 +68,7 @@ object Importer {
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
+        val deltaSemantic = Utils.getOrDefault(config.deltaSemantic, "incremental")
 
         val assetsFileProvided =
             (
@@ -84,7 +97,7 @@ object Importer {
         targetHeaders.add(ColumnImporter.COLUMN_PARENT_QN)
         val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
         val preprocessedDetails =
-            Preprocessor(assetsInput, fieldSeparator)
+            Preprocessor(assetsInput, fieldSeparator, deltaSemantic == "full")
                 .preprocess<Results>(
                     outputFile = revisedFile.toString(),
                     outputHeaders = targetHeaders,
@@ -203,21 +216,65 @@ object Importer {
                 added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
             )
         }
+
+        if (deltaSemantic == "full") {
+            val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
+            val connectionQN =
+                try {
+                    val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
+                    list[0].qualifiedName
+                } catch (e: AtlanException) {
+                    logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
+                    exitProcess(50)
+                }
+
+            val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
+            val delta =
+                DeltaProcessor(
+                    semantic = deltaSemantic,
+                    qualifiedNamePrefix = connectionQN,
+                    removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    resolver = AssetImporter,
+                    preprocessedDetails = preprocessedDetails,
+                    typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
+                    logger = logger,
+                    previousFilePreprocessor =
+                        Preprocessor(
+                            previousFileDirect,
+                            fieldSeparator,
+                            true,
+                            outputFile = "$previousFileDirect.transformed.csv",
+                            outputHeaders = targetHeaders,
+                        ),
+                    outputDirectory = outputDirectory,
+                    skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
+                )
+            delta.run()
+            return connectionQN
+        }
+        return null
     }
 
     private class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
+        val deltaProcessing: Boolean,
+        outputFile: String? = null,
+        outputHeaders: List<String>? = null,
     ) : CSVPreprocessor(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            producesFile = outputFile,
+            usingHeaders = outputHeaders,
         ) {
         val entityQualifiedNameToType = mutableMapOf<String, String>()
         val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
         val qualifiedNameToTableCount = mutableMapOf<String, AtomicInteger>()
         val qualifiedNameToViewCount = mutableMapOf<String, AtomicInteger>()
 
+        var connectionIdentity = ""
         var lastParentQN = ""
         var columnOrder = 1
 
@@ -227,6 +284,20 @@ object Importer {
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            if (deltaProcessing) {
+                val connectionNameOnRow = row.getOrNull(header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)) ?: ""
+                val connectionTypeOnRow = row.getOrNull(header.indexOf("connectorType")) ?: ""
+                val connectionIdentityOnRow = ConnectionIdentity(connectionTypeOnRow, connectionNameOnRow).toString()
+                if (connectionIdentity.isBlank()) {
+                    connectionIdentity = connectionIdentityOnRow
+                }
+                if (connectionIdentity != connectionIdentityOnRow) {
+                    logger.error { "Connection changed mid-file: $connectionIdentityOnRow -> $connectionIdentityOnRow" }
+                    logger.error { "This package is designed to only process a single connection per input file when doing delta processing, exiting." }
+                    exitProcess(101)
+                }
+            }
+
             val values = row.toMutableList()
             val typeName = values[typeIdx]
             val qnDetails = getQualifiedNameDetails(values, header, typeName)
@@ -280,6 +351,7 @@ object Importer {
         ): Results {
             val results = super.finalize(header, outputFile)
             return Results(
+                connectionIdentity,
                 results.hasLinks,
                 results.hasTermAssignments,
                 results.outputFile!!,
@@ -292,16 +364,36 @@ object Importer {
     }
 
     class Results(
+        assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
-        val preprocessedFile: String,
+        preprocessedFile: String,
         val entityQualifiedNameToType: Map<String, String>,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
         val qualifiedNameToTableCount: Map<String, AtomicInteger>,
         val qualifiedNameToViewCount: Map<String, AtomicInteger>,
-    ) : RowPreprocessor.Results(
+    ) : DeltaProcessor.Results(
+            assetRootName = assetRootName,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
-            outputFile = preprocessedFile,
+            preprocessedFile = preprocessedFile,
         )
+
+    data class ConnectionIdentity(
+        val type: String,
+        val name: String,
+    ) {
+        override fun toString(): String {
+            return "$type$DELIMITER$name"
+        }
+
+        companion object {
+            const val DELIMITER = "::"
+
+            fun fromString(identity: String): ConnectionIdentity {
+                val tokens = identity.split(DELIMITER)
+                return ConnectionIdentity(tokens[0], tokens[1])
+            }
+        }
+    }
 }
