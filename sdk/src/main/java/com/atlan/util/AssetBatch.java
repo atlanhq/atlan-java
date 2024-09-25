@@ -95,6 +95,13 @@ public class AssetBatch {
     @Getter
     private final AtomicLong numUpdated = new AtomicLong(0);
 
+    /**
+     * Number of assets that were potentially restored from being archived, or otherwise touched
+     * without actually being updated (no details, just a count).
+     */
+    @Getter
+    private final AtomicLong numRestored = new AtomicLong(0);
+
     /** Assets that were created (minimal info only). */
     @Getter
     private final List<Asset> created = Collections.synchronizedList(new ArrayList<>());
@@ -102,6 +109,13 @@ public class AssetBatch {
     /** Assets that were updated (minimal info only). */
     @Getter
     private final List<Asset> updated = Collections.synchronizedList(new ArrayList<>());
+
+    /**
+     * Assets that were potentially restored from being archived, or otherwise touched without actually
+     * being updated (minimal info only).
+     */
+    @Getter
+    private final List<Asset> restored = Collections.synchronizedList(new ArrayList<>());
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
@@ -401,7 +415,7 @@ public class AssetBatch {
                             addPartialAsset(asset, revised);
                         } else if (creationHandling == AssetCreationHandling.FULL) {
                             // Still create it (full), if not found and full asset creation is allowed
-                            revised = _batch;
+                            revised.addAll(_batch);
                         } else {
                             // Otherwise, if it still does not match any fallback and cannot be created, skip it
                             track(skipped, asset);
@@ -416,7 +430,7 @@ public class AssetBatch {
                 }
             } else {
                 // Otherwise create it (full)
-                revised = _batch;
+                revised = new ArrayList<>(_batch);
             }
             if (!revised.isEmpty()) {
                 try {
@@ -490,6 +504,8 @@ public class AssetBatch {
                 resolvedGuids.putAll(response.getGuidAssignments());
             }
             if (sent != null) {
+                Set<String> createdGuids = created.stream().map(Asset::getGuid).collect(Collectors.toSet());
+                Set<String> updatedGuids = updated.stream().map(Asset::getGuid).collect(Collectors.toSet());
                 for (Asset one : sent) {
                     String guid = one.getGuid();
                     if (guid != null
@@ -498,6 +514,12 @@ public class AssetBatch {
                         // Ensure any assets that were sent with GUIDs that were used as-is
                         // are added to the resolved GUIDs map
                         resolvedGuids.put(guid, guid);
+                    }
+                    if (!createdGuids.contains(guid) && !updatedGuids.contains(guid)) {
+                        // Ensure any assets that do not show as either created or updated are still tracked
+                        // as possibly restored
+                        track(restored, one);
+                        numRestored.getAndIncrement();
                     }
                     if (caseInsensitive) {
                         String typeName = one.getTypeName();

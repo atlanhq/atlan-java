@@ -186,15 +186,17 @@ class CSVReader
             primaryBatch.flush()
             val totalCreates = primaryBatch.numCreated
             val totalUpdates = primaryBatch.numUpdated
+            val totalRestore = primaryBatch.numRestored
             val totalSkipped = primaryBatch.skipped.size
             val totalFailures = AtomicLong(0)
             someFailure = someFailure || primaryBatch.failures.isNotEmpty()
             logFailures(primaryBatch, logger, totalFailures)
             logSkipped(primaryBatch, logger)
-            logger.info { "Total assets created: $totalCreates" }
-            logger.info { "Total assets updated: $totalUpdates" }
-            logger.info { "Total assets skipped: $totalSkipped" }
-            logger.info { "Total assets failed : $totalFailures" }
+            logger.info { "Total assets created : $totalCreates" }
+            logger.info { "Total assets updated : $totalUpdates" }
+            logger.info { "Total assets restored: $totalRestore" }
+            logger.info { "Total assets skipped : $totalSkipped" }
+            logger.info { "Total assets failed  : $totalFailures" }
 
             // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
             val totalRelated = AtomicLong(0)
@@ -283,18 +285,22 @@ class CSVReader
                     primaryBatch.resolvedQualifiedNames,
                     primaryBatch.created,
                     primaryBatch.updated,
+                    primaryBatch.restored,
                     primaryBatch.skipped,
                     primaryBatch.numCreated,
                     primaryBatch.numUpdated,
+                    primaryBatch.numRestored,
                 ),
                 ImportResults.Details(
                     relatedBatch.resolvedGuids,
                     primaryBatch.resolvedQualifiedNames,
                     relatedBatch.created,
                     relatedBatch.updated,
+                    relatedBatch.restored,
                     relatedBatch.skipped,
                     relatedBatch.numCreated,
                     relatedBatch.numUpdated,
+                    relatedBatch.numRestored,
                 ),
             )
         }
