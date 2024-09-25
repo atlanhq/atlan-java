@@ -244,7 +244,7 @@ object Importer {
                             previousFileDirect,
                             fieldSeparator,
                             true,
-                            outputFile = Paths.get(previousFileDirect, ".transformed.csv").toString(),
+                            outputFile = "$previousFileDirect.transformed.csv",
                             outputHeaders = targetHeaders,
                         ),
                     outputDirectory = outputDirectory,
