@@ -587,18 +587,6 @@ public class AssetBatch {
             }
         }
 
-        /**
-         * Translate this AssetIdentity into a minimal asset composed of only a type and a qualifiedName.
-         *
-         * @return the minimal asset
-         */
-        public Asset toMinimalAsset() {
-            return IndistinctAsset._internal()
-                    .typeName(typeName)
-                    .qualifiedName(qualifiedName)
-                    .build();
-        }
-
         @Override
         public String toString() {
             return typeName + "::" + qualifiedName;

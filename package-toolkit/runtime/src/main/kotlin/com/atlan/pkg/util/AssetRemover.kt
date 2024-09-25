@@ -6,8 +6,10 @@ import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.Utils
+import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch
+import com.atlan.util.AssetBatch.AssetIdentity
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KLogger
@@ -42,7 +44,8 @@ class AssetRemover(
     private val purge: Boolean = false,
 ) {
     private val client = Atlan.getDefaultClient()
-    val assetsToDelete = ConcurrentHashMap<AssetBatch.AssetIdentity, String>()
+    val assetsToDelete = ConcurrentHashMap<AssetIdentity, String>()
+    val guidsToDeleteToDetails = ConcurrentHashMap<String, Asset>()
 
     companion object {
         private const val QUERY_BATCH = 50
@@ -170,6 +173,7 @@ class AssetRemover(
             client.assets.select()
                 .pageSize(QUERY_BATCH)
                 .where(Asset.QUALIFIED_NAME.`in`(qualifiedNamesToDelete))
+                .includesOnResults(PersistentConnectionCache.REQUIRED_FIELDS)
         if (removeTypes.isNotEmpty()) {
             builder.where(Asset.TYPE_NAME.`in`(removeTypes))
         }
@@ -194,9 +198,9 @@ class AssetRemover(
      * @param asset to validate can be deleted, and if so, to track its GUID for deletion
      */
     private fun validateResult(asset: Asset) {
-        val candidate = AssetBatch.AssetIdentity(asset.typeName, asset.qualifiedName)
+        val candidate = AssetIdentity(asset.typeName, asset.qualifiedName)
         if (assetsToDelete.containsKey(candidate)) {
-            assetsToDelete[candidate] = asset.guid
+            guidsToDeleteToDetails[asset.guid] = asset
         }
     }
 
@@ -204,9 +208,9 @@ class AssetRemover(
      * Delete all assets we have identified for deletion, in batches of 20 at a time.
      */
     private fun deleteAssetsByGuid() {
-        if (assetsToDelete.isNotEmpty()) {
+        if (guidsToDeleteToDetails.isNotEmpty()) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = assetsToDelete.values.filter { it.isNotBlank() }.toList()
+            val guidList = guidsToDeleteToDetails.keys.filter { it.isNotBlank() }.toList()
             val totalToDelete = guidList.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
             val currentCount = AtomicLong(0)
@@ -230,7 +234,7 @@ class AssetRemover(
                     }
             }
             if (client.isInternal) {
-                Utils.updateConnectionCache(removed = assetsToDelete.keys.map { it.toMinimalAsset() })
+                Utils.updateConnectionCache(removed = guidsToDeleteToDetails.values.map { it })
             }
         }
     }
