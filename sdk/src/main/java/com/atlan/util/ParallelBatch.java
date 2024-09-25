@@ -62,6 +62,7 @@ public class ParallelBatch {
     private final Map<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
     private final List<Asset> created = new ArrayList<>();
     private final List<Asset> updated = new ArrayList<>();
+    private final List<Asset> restored = new ArrayList<>();
     private final List<AssetBatch.FailedBatch> failures = new ArrayList<>();
     private final List<Asset> skipped = new ArrayList<>();
     private final Map<String, String> resolvedGuids = new HashMap<>();
@@ -328,6 +329,20 @@ public class ParallelBatch {
     }
 
     /**
+     * Number of assets that were potentially restored from being archived, or otherwise touched
+     * without actually being updated (no details, just a count).
+     *
+     * @return a count of the number of potentially restored assets, across all parallel batches
+     */
+    public long getNumRestored() {
+        long count = 0;
+        for (AssetBatch batch : batchMap.values()) {
+            count += batch.getNumRestored().get();
+        }
+        return count;
+    }
+
+    /**
      * Assets that were created (minimal info only).
      *
      * @return all created assets, across all parallel batches
@@ -359,6 +374,24 @@ public class ParallelBatch {
             }
         }
         return updated;
+    }
+
+    /**
+     * Assets that were potentially restored from being archived, or otherwise touched without actually
+     * being updated (minimal info only).
+     *
+     * @return all potentially restored assets, across all parallel batches
+     */
+    public List<Asset> getRestored() {
+        if (!track) {
+            return null;
+        }
+        if (restored.isEmpty()) {
+            for (AssetBatch batch : batchMap.values()) {
+                restored.addAll(batch.getRestored());
+            }
+        }
+        return restored;
     }
 
     /**

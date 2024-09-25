@@ -41,18 +41,22 @@ data class ImportResults(
      * @param qualifiedNames mapping from case-insensitive to actual (resolved) qualifiedName, even if no change was made to an asset
      * @param created list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
      * @param updated list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
+     * @param restored list of (minimal) assets that were potentially-restored (note: when tracking is turned off in batch-processing, this will be null)
      * @param skipped list of (minimal) assets that were skipped
      * @param numCreated number of assets that were created (count only)
      * @param numUpdated number of assets that were updated (count only)
+     * @param numRestored number of assets that were potentially restored (count only)
      */
     data class Details(
         val guidAssignments: Map<String, String>,
         val qualifiedNames: Map<AssetIdentity, String>,
         val created: List<Asset>?,
         val updated: List<Asset>?,
+        val restored: List<Asset>?,
         val skipped: List<Asset>,
         val numCreated: Long,
         val numUpdated: Long,
+        val numRestored: Long,
     ) {
         /**
          * Combine this set of details with another.
@@ -69,9 +73,11 @@ data class ImportResults(
                 this.qualifiedNames.plus(other.qualifiedNames),
                 this.created?.plus(other.created ?: listOf()),
                 this.updated?.plus(other.updated ?: listOf()),
+                this.restored?.plus(other.restored ?: listOf()),
                 this.skipped.plus(other.skipped),
                 this.numCreated.plus(other.numCreated),
                 this.numUpdated.plus(other.numUpdated),
+                this.numRestored.plus(other.numRestored),
             )
         }
     }
@@ -96,6 +102,8 @@ data class ImportResults(
                             !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank()
                         }.forEach { asset -> list.add(asset) }
                     }
+                    // Also include any results that may be restored assets
+                    result.primary.restored?.let { list.addAll(it) }
                 }
             return list
         }
