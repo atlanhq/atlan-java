@@ -146,8 +146,8 @@ class DeltaProcessor(
         hasTermAssignments: Boolean,
         val preprocessedFile: String,
     ) : RowPreprocessor.Results(
-        hasLinks = hasLinks,
-        hasTermAssignments = hasTermAssignments,
-        outputFile = preprocessedFile,
-    )
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            outputFile = preprocessedFile,
+        )
 }

@@ -177,19 +177,20 @@ object Importer {
             )
         }
 
-        val delta = DeltaProcessor(
-            semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
-            qualifiedNamePrefix = cubeQN,
-            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-            previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-            resolver = AssetImporter,
-            preprocessedDetails = preprocessedDetails,
-            typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-            logger = logger,
-            previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
-            outputDirectory = outputDirectory,
-            skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
-        )
+        val delta =
+            DeltaProcessor(
+                semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+                qualifiedNamePrefix = cubeQN,
+                removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+                previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                resolver = AssetImporter,
+                preprocessedDetails = preprocessedDetails,
+                typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+                logger = logger,
+                previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+                outputDirectory = outputDirectory,
+                skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
+            )
         delta.run()
         return cubeQN
     }

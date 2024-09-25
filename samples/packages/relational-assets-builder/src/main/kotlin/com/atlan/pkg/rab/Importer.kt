@@ -219,27 +219,29 @@ object Importer {
 
         if (deltaSemantic == "full") {
             val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
-            val connectionQN = try {
-                val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
-                list[0].qualifiedName
-            } catch (e: AtlanException) {
-                logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
-                exitProcess(50)
-            }
+            val connectionQN =
+                try {
+                    val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
+                    list[0].qualifiedName
+                } catch (e: AtlanException) {
+                    logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
+                    exitProcess(50)
+                }
 
-            val delta = DeltaProcessor(
-                semantic = deltaSemantic,
-                qualifiedNamePrefix = connectionQN,
-                removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-                previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-                resolver = AssetImporter,
-                preprocessedDetails = preprocessedDetails,
-                typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
-                logger = logger,
-                previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator, true),
-                outputDirectory = outputDirectory,
-                skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
-            )
+            val delta =
+                DeltaProcessor(
+                    semantic = deltaSemantic,
+                    qualifiedNamePrefix = connectionQN,
+                    removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    resolver = AssetImporter,
+                    preprocessedDetails = preprocessedDetails,
+                    typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
+                    logger = logger,
+                    previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator, true),
+                    outputDirectory = outputDirectory,
+                    skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
+                )
             delta.run()
             return connectionQN
         }
@@ -359,11 +361,11 @@ object Importer {
         val qualifiedNameToTableCount: Map<String, AtomicInteger>,
         val qualifiedNameToViewCount: Map<String, AtomicInteger>,
     ) : DeltaProcessor.Results(
-        assetRootName = assetRootName,
-        hasLinks = hasLinks,
-        hasTermAssignments = hasTermAssignments,
-        preprocessedFile = preprocessedFile,
-    )
+            assetRootName = assetRootName,
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            preprocessedFile = preprocessedFile,
+        )
 
     data class ConnectionIdentity(
         val type: String,
@@ -372,8 +374,10 @@ object Importer {
         override fun toString(): String {
             return "$type$DELIMITER$name"
         }
+
         companion object {
             const val DELIMITER = "::"
+
             fun fromString(identity: String): ConnectionIdentity {
                 val tokens = identity.split(DELIMITER)
                 return ConnectionIdentity(tokens[0], tokens[1])
