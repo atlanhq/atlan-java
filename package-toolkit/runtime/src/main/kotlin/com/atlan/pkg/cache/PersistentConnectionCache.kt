@@ -121,7 +121,7 @@ class PersistentConnectionCache(
                                 .name(name)
                                 .order(order)
                                 .tenantId(tenantId)
-                                .build()
+                                .build(),
                         )
                     }
                 }

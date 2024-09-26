@@ -23,7 +23,6 @@ data class RelationalAssetsBuilderCfg(
     @JsonProperty("delta_semantic") val deltaSemantic: String? = null,
     @JsonProperty("delta_removal_type") val deltaRemovalType: String? = null,
     @JsonProperty("previous_file_direct") val previousFileDirect: String? = null,
-    @JsonProperty("skip_object_store") val skipObjectStore: Boolean? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("assets_attr_to_overwrite") val assetsAttrToOverwrite: List<String>? = null,

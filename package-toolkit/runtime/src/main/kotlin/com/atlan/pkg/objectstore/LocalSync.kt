@@ -18,7 +18,6 @@ class LocalSync(
     private val baseDirectory: String,
     private val logger: KLogger,
 ) : ObjectStorageSyncer {
-
     /** {@inheritDoc} */
     override fun copyFrom(
         prefix: String,

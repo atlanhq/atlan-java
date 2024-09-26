@@ -3,7 +3,6 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
@@ -170,12 +169,9 @@ object Importer {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
-        if (Atlan.getDefaultClient().isInternal && trackBatches) {
-            // Only attempt to manage a connection cache if we are running in-cluster
-            Utils.updateConnectionCache(
-                added = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults),
-            )
-        }
+        Utils.updateConnectionCache(
+            added = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults),
+        )
 
         val delta =
             DeltaProcessor(
@@ -189,7 +185,6 @@ object Importer {
                 logger = logger,
                 previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
                 outputDirectory = outputDirectory,
-                skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
             )
         delta.run()
         return cubeQN

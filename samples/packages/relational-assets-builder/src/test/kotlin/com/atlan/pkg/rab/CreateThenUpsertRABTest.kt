@@ -28,13 +28,9 @@ import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
-import java.sql.DriverManager
-import java.sql.SQLException
-import kotlin.io.path.pathString
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 
 /**
  * Test creation of relational assets followed by an upsert of the same relational assets.
