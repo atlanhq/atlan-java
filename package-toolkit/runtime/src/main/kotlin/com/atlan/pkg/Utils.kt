@@ -813,9 +813,11 @@ object Utils {
         val sync = getBackingStore(fallback)
         for ((connectionQN, assets) in map) {
             logger.info { "Updating connection cache for: $connectionQN" }
-            val paths = mutableListOf("tmp", "cache")
+            val paths = mutableListOf<String>()
+            paths.addAll(fallback.split(separator))
+            paths.add("cache")
             paths.addAll(connectionQN.split("/"))
-            val tmpFile = paths.joinToString(separator = "/")
+            val tmpFile = paths.joinToString(separator = separator)
             // Retrieve any pre-existing cache first, so we can update it
             try {
                 sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
