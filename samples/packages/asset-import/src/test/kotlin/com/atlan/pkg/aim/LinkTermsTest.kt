@@ -230,7 +230,7 @@ class LinkTermsTest : PackageTest() {
         validateConnectionCache()
     }
 
-    private fun validateConnectionCache(created: Boolean = true) {
+    private fun validateConnectionCache() {
         val c1 = Connection.findByName(connectionName, connectorType)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         Assert.assertTrue(dbFile.isFile)
@@ -240,16 +240,11 @@ class LinkTermsTest : PackageTest() {
         assertNotNull(assets)
         Assert.assertFalse(assets.isEmpty())
         assertEquals(3, assets.size)
-        if (created) {
-            assertEquals(setOf(Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
-            assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == Column.TYPE_NAME })
-        } else {
-            assertEquals(setOf(Table.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
-            assertEquals(2, assets.count { it.typeName == Table.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == Column.TYPE_NAME })
-        }
+        // Note: the revised update is table/view-agnostic, so will still be the same resulting entities
+        assertEquals(setOf(Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+        assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == Column.TYPE_NAME })
     }
 
     @Test(groups = ["aim.lt.runUpdate"], dependsOnGroups = ["aim.lt.create"])
@@ -313,7 +308,7 @@ class LinkTermsTest : PackageTest() {
 
     @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun connectionCacheUpdated() {
-        validateConnectionCache(false)
+        validateConnectionCache()
     }
 
     @Test(dependsOnGroups = ["aim.lt.*"])
