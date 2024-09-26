@@ -169,10 +169,7 @@ object Importer {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
-        Utils.updateConnectionCache(
-            added = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults),
-            fallback = outputDirectory,
-        )
+        val modifiedAssets = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults)
 
         val delta =
             DeltaProcessor(
@@ -187,7 +184,7 @@ object Importer {
                 previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
                 outputDirectory = outputDirectory,
             )
-        delta.run()
+        delta.run(modifiedAssets)
         return cubeQN
     }
 

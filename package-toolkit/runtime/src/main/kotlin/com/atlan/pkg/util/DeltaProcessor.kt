@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
+import com.atlan.model.assets.Asset
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
@@ -43,7 +44,16 @@ class DeltaProcessor(
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
 ) {
-    fun run() {
+    /**
+     * Run the delta detection.
+     * This includes: determining which assets should be deleted, deleting those assets, and updating
+     * the persistent connection cache by removing any deleted assets and creating / updating any assets
+     * that were created or modified.
+     *
+     * @param modifiedAssets list of assets that were modified by the processing up to the point of this delta detection
+     */
+    fun run(modifiedAssets: List<Asset>? = null) {
+        var deletedAssets: List<Asset>? = null
         if (semantic == "full") {
             if (qualifiedNamePrefix.isNullOrBlank()) {
                 logger.warn { "Unable to determine qualifiedName prefix, will not delete any assets." }
@@ -73,7 +83,8 @@ class DeltaProcessor(
                         )
                     assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, previousFile)
                     if (assetRemover.hasAnythingToDelete()) {
-                        assetRemover.deleteAssets()
+                        // Note: this will update the persistent connection cache for both adds and deletes
+                        deletedAssets = assetRemover.deleteAssets()
                     }
                 } else {
                     logger.info { "No previous file found, treated it as an initial load." }
@@ -82,6 +93,12 @@ class DeltaProcessor(
                 uploadToBackingStore(objectStore, preprocessedDetails.preprocessedFile, qualifiedNamePrefix, previousFileProcessedExtension)
             }
         }
+        // Update the connection cache with any changes (added and / or removed assets)
+        Utils.updateConnectionCache(
+            added = modifiedAssets,
+            removed = deletedAssets,
+            fallback = outputDirectory,
+        )
     }
 
     /**
