@@ -4,7 +4,6 @@ package com.atlan.pkg.lb
 
 import AssetImportCfg
 import LineageBuilderCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
@@ -93,12 +92,10 @@ object Loader {
                 )
             val assetResults = Importer.import(importConfig, outputDirectory)
 
-            if (Atlan.getDefaultClient().isInternal) {
-                // Only attempt to manage a connection cache if we are running in-cluster
-                Utils.updateConnectionCache(
-                    added = ImportResults.getAllModifiedAssets(assetResults),
-                )
-            }
+            Utils.updateConnectionCache(
+                added = ImportResults.getAllModifiedAssets(assetResults),
+                fallback = outputDirectory,
+            )
 
             val qualifiedNameMap = assetResults?.primary?.qualifiedNames ?: mapOf()
 
