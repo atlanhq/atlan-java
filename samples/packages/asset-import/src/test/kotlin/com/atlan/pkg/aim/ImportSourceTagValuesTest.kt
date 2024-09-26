@@ -7,7 +7,9 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.PersistentConnectionCache
 import mu.KotlinLogging
+import org.testng.Assert
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -122,6 +124,21 @@ class ImportSourceTagValuesTest : PackageTest() {
                 }
             }
         }
+    }
+
+    @Test
+    fun connectionCacheCreated() {
+        val c1 = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
+        assertTrue(dbFile.isFile)
+        assertTrue(dbFile.exists())
+        val cache = PersistentConnectionCache(dbFile.path)
+        val assets = cache.listAssets()
+        assertNotNull(assets)
+        Assert.assertFalse(assets.isEmpty())
+        assertEquals(1, assets.size)
+        assertEquals(setOf(Table.TYPE_NAME), assets.map { it.typeName }.toSet())
+        assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
     }
 
     @Test
