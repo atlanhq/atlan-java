@@ -171,6 +171,7 @@ object Importer {
 
         Utils.updateConnectionCache(
             added = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults),
+            fallback = outputDirectory,
         )
 
         val delta =

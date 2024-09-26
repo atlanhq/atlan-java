@@ -496,7 +496,7 @@ class CreateThenUpsertRABTest : PackageTest() {
 
     private fun validateConnectionCache(created: Boolean = true) {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val dbFile = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, "${c1.qualifiedName}.sqlite").toFile()
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         assertTrue(dbFile.isFile)
         assertTrue(dbFile.exists())
         val cache = PersistentConnectionCache(dbFile.path)
@@ -505,13 +505,13 @@ class CreateThenUpsertRABTest : PackageTest() {
         assertFalse(assets.isEmpty())
         if (created) {
             assertEquals(8, assets.size)
-            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
             assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
         } else {
             assertEquals(5, assets.size)
-            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
             assertEquals(2, assets.count { it.typeName == Column.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
         }
@@ -591,7 +591,9 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(dependsOnGroups = ["rab.ctu.*"])
     fun previousRunFilesCreated() {
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
-        val directory = Paths.get(Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
+        val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
+        assertNotNull(directory)
+        assertTrue(directory.isDirectory)
         val files = directory.walkTopDown().filter { it.isFile }.toList()
         assertEquals(2, files.size)
     }

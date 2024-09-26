@@ -5,13 +5,17 @@ package com.atlan.pkg.cab
 import CubeAssetsBuilderCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.Database
 import com.atlan.model.assets.Readme
 import com.atlan.model.assets.Schema
+import com.atlan.model.assets.Table
+import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -20,6 +24,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.PersistentConnectionCache
 import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
@@ -177,8 +182,6 @@ class CreateThenUpsertCABTest : PackageTest() {
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
-                trackBatches = false,
-                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -498,6 +501,37 @@ class CreateThenUpsertCABTest : PackageTest() {
         }
     }
 
+    @Test(groups = ["cab.ctu.create"])
+    fun connectionCacheCreated() {
+        validateConnectionCache()
+    }
+
+    private fun validateConnectionCache(created: Boolean = true) {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
+        assertTrue(dbFile.isFile)
+        assertTrue(dbFile.exists())
+        val cache = PersistentConnectionCache(dbFile.path)
+        val assets = cache.listAssets()
+        assertNotNull(assets)
+        assertFalse(assets.isEmpty())
+        if (created) {
+            assertEquals(9, assets.size)
+            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(5, assets.count { it.typeName == CubeField.TYPE_NAME })
+            assertEquals(2, assets.count { it.typeName == CubeHierarchy.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == CubeDimension.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == Cube.TYPE_NAME })
+        } else {
+            assertEquals(6, assets.size)
+            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(3, assets.count { it.typeName == CubeField.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == CubeHierarchy.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == CubeDimension.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == Cube.TYPE_NAME })
+        }
+    }
+
     @Test(groups = ["cab.ctu.runUpdate"], dependsOnGroups = ["cab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
@@ -509,7 +543,6 @@ class CreateThenUpsertCABTest : PackageTest() {
                 deltaSemantic = "full",
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
                 deltaRemovalType = "purge",
-                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -571,9 +604,24 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertTrue(response.assets.isNullOrEmpty())
     }
 
+    @Test(groups = ["cab.ctu.update"], dependsOnGroups = ["cab.ctu.runUpdate"])
+    fun connectionCacheUpdated() {
+        validateConnectionCache(false)
+    }
+
     @Test(dependsOnGroups = ["cab.ctu.*"])
     fun filesCreated() {
         validateFilesExist(files)
+    }
+
+    @Test(dependsOnGroups = ["cab.ctu.*"])
+    fun previousRunFilesCreated() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
+        assertNotNull(directory)
+        assertTrue(directory.isDirectory)
+        val files = directory.walkTopDown().filter { it.isFile }.toList()
+        assertEquals(2, files.size)
     }
 
     @Test(dependsOnGroups = ["cab.ctu.*"])
