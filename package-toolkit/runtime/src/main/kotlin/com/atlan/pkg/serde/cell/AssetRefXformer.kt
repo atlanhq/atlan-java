@@ -136,12 +136,13 @@ object AssetRefXformer {
                             }
                         }
                         if (!found && update == null) {
-                            // Otherwise create an entirely new link
-                            update = Link.creator(from, related.name, related.link).nullFields(related.nullFields).build()
+                            // Otherwise create an entirely new link (idempotently)
+                            update = Link.creator(from, related.name, related.link, true).nullFields(related.nullFields).build()
                         }
                         if (update != null) {
-                            // Only batch it if it won't be a noop
+                            // Only batch it if it won't be a noop, and update the cache with this new link
                             batch.add(update)
+                            LinkCache.add(update)
                         }
                         Utils.logProgress(count, totalCount, logger, batchSize)
                     }
