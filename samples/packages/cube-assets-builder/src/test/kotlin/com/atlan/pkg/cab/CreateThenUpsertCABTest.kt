@@ -5,17 +5,13 @@ package com.atlan.pkg.cab
 import CubeAssetsBuilderCfg
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
-import com.atlan.model.assets.Database
 import com.atlan.model.assets.Readme
 import com.atlan.model.assets.Schema
-import com.atlan.model.assets.Table
-import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -517,14 +513,14 @@ class CreateThenUpsertCABTest : PackageTest() {
         assertFalse(assets.isEmpty())
         if (created) {
             assertEquals(9, assets.size)
-            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME), assets.map { it.typeName }.toSet())
             assertEquals(5, assets.count { it.typeName == CubeField.TYPE_NAME })
             assertEquals(2, assets.count { it.typeName == CubeHierarchy.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == CubeDimension.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == Cube.TYPE_NAME })
         } else {
             assertEquals(6, assets.size)
-            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(setOf(Cube.TYPE_NAME, CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME), assets.map { it.typeName }.toSet())
             assertEquals(3, assets.count { it.typeName == CubeField.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == CubeHierarchy.TYPE_NAME })
             assertEquals(1, assets.count { it.typeName == CubeDimension.TYPE_NAME })
