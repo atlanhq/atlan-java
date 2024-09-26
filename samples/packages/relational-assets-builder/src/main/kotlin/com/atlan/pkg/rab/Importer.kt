@@ -211,6 +211,7 @@ object Importer {
 
         Utils.updateConnectionCache(
             added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
+            fallback = outputDirectory,
         )
 
         if (deltaSemantic == "full") {

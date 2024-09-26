@@ -8,6 +8,8 @@ import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
+import java.io.File.separator
+import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -38,7 +40,7 @@ class DeltaProcessor(
     val typesToRemove: Collection<String>,
     private val logger: KLogger,
     val previousFilePreprocessor: CSVPreprocessor? = null,
-    val outputDirectory: String = "tmp",
+    val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
 ) {
     fun run() {
@@ -67,6 +69,7 @@ class DeltaProcessor(
                             typesToRemove.toList(),
                             qualifiedNamePrefix,
                             purgeAssets,
+                            outputDirectory,
                         )
                     assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, previousFile)
                     if (assetRemover.hasAnythingToDelete()) {

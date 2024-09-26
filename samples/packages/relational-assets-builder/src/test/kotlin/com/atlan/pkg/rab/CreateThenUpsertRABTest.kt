@@ -180,7 +180,6 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
-                trackBatches = false,
                 deltaSemantic = "full",
             ),
         )
