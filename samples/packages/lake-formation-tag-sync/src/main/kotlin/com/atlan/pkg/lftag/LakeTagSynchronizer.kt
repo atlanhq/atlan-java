@@ -31,7 +31,8 @@ object LakeTagSynchronizer {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
         val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        val results = sync(config, outputDirectory, failOnErrors)
+        val removeSchema = Utils.getOrDefault(config.removeSchema, false)
+        val results = sync(config, outputDirectory, failOnErrors, removeSchema)
         if (!results && failOnErrors) {
             logger.error { "Some errors detected, failing the workflow." }
             exitProcess(1)
@@ -42,6 +43,7 @@ object LakeTagSynchronizer {
         config: LakeFormationTagSyncCfg,
         outputDirectory: String,
         failOnErrors: Boolean,
+        removeSchema: Boolean,
     ): Boolean {
         val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
@@ -85,7 +87,7 @@ object LakeTagSynchronizer {
         tagFileNames.forEach { tagFileName ->
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             val lfTagData = createMissingEnums(tagFileName, mapper, metadataMap)
-            csvProducer.transform(lfTagData, csvFileName)
+            csvProducer.transform(lfTagData, csvFileName, removeSchema)
             val importConfig =
                 AssetImportCfg(
                     assetsFile = csvFileName,

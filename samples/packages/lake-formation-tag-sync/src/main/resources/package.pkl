@@ -55,6 +55,11 @@ uiConfig {
           placeholderText = "path/to/file"
           width = 4
         }
+        ["remove_schema"] = new BooleanInput{
+          title = "Remove schema prefix"
+          helpText = "Remove the schema prefix if it is present on the table name."
+          width = 4
+        }
         ["config_type"] = new Radio {
           title = "Options"
           required = true
