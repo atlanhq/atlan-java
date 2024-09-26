@@ -542,6 +542,19 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"asset.create.contract"},
+            dependsOnGroups = {"asset.create.column.*"})
+    void generateContract() throws AtlanException {
+        String tableContract = Atlan.getDefaultClient().contracts.generateInitialSpec(table);
+        assertNotNull(tableContract);
+        assertTrue(tableContract.startsWith("---"));
+        assertTrue(tableContract.contains("columns:"));
+        assertTrue(tableContract.contains(" - name: " + COLUMN_NAME1));
+        assertTrue(tableContract.contains(" - name: " + COLUMN_NAME2));
+        assertTrue(tableContract.endsWith("...\n"));
+    }
+
+    @Test(
             groups = {"asset.read.column.5"},
             dependsOnGroups = {"asset.create.column.5"})
     void readColumn5() throws AtlanException {
