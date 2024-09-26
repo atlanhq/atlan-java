@@ -551,7 +551,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tableContract.contains("columns:"));
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME1));
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME2));
-        assertTrue(tableContract.endsWith("..."));
+        assertTrue(tableContract.endsWith("...\n"));
     }
 
     @Test(
