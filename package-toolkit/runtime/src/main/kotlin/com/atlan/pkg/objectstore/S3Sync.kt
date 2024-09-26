@@ -163,7 +163,7 @@ class S3Sync(
     ): Boolean {
         logger.info { "Syncing files from $localDirectory to s3://$bucketName/$prefix" }
 
-        val s3Client = S3Client.builder().region(Region.of(region)).build()
+        // val s3Client = S3Client.builder().region(Region.of(region)).build()
         val request =
             ListObjectsV2Request.builder()
                 .bucket(bucketName)

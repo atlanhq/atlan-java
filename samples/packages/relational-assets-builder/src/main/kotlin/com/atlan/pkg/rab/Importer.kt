@@ -210,12 +210,9 @@ object Importer {
             )
         val colResults = columnImporter.import()
 
-        if (Atlan.getDefaultClient().isInternal && trackBatches) {
-            // Only attempt to manage a connection cache if we are running in-cluster
-            Utils.updateConnectionCache(
-                added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
-            )
-        }
+        Utils.updateConnectionCache(
+            added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults)
+        )
 
         if (deltaSemantic == "full") {
             val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
@@ -248,7 +245,6 @@ object Importer {
                             outputHeaders = targetHeaders,
                         ),
                     outputDirectory = outputDirectory,
-                    skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
                 )
             delta.run()
             return connectionQN

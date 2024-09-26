@@ -14,6 +14,7 @@ import com.atlan.pkg.objectstore.ADLSCredential
 import com.atlan.pkg.objectstore.ADLSSync
 import com.atlan.pkg.objectstore.GCSCredential
 import com.atlan.pkg.objectstore.GCSSync
+import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
@@ -776,13 +777,21 @@ object Utils {
     /**
      * Return the backing store of the Atlan tenant.
      *
+     * @param directory (optional) fallback directory to use on local filesystem if no object store is detected
      * @return object storage syncer for Atlan's backing store
      */
-    fun getBackingStore(): ObjectStorageSyncer {
-        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "aws")) {
+    fun getBackingStore(directory: String = Paths.get(File.pathSeparator, "tmp").toString()): ObjectStorageSyncer {
+        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
             "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
             "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
             "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
+            "local" -> {
+                if (getEnvVar("AWS_S3_BUCKET_NAME").isNotBlank()) {
+                    S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
+                } else {
+                    LocalSync(directory, logger)
+                }
+            }
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
     }

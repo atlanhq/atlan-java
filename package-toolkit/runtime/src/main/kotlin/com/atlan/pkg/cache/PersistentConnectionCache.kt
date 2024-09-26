@@ -96,6 +96,40 @@ class PersistentConnectionCache(
         }
     }
 
+    /**
+     * List the assets held in the persistent cache.
+     *
+     * @return a list of all assets held in the persistent cache
+     */
+    fun listAssets(): List<Asset> {
+        val list = mutableListOf<Asset>()
+        DriverManager.getConnection(dbString).use { connection ->
+            connection.createStatement().use { statement ->
+                statement.executeQuery("SELECT * FROM entities").use { results ->
+                    while (results.next()) {
+                        val typeName = results.getString("type_name")
+                        val qualifiedName = results.getString("qual_name")
+                        val connectionQN = results.getString("con_qual_name")
+                        val name = results.getString("name")
+                        val order = results.getInt("order_seq")
+                        val tenantId = results.getString("tenant_id")
+                        list.add(
+                            Column._internal()
+                                .typeName(typeName)
+                                .qualifiedName(qualifiedName)
+                                .connectionQualifiedName(connectionQN)
+                                .name(name)
+                                .order(order)
+                                .tenantId(tenantId)
+                                .build()
+                        )
+                    }
+                }
+            }
+        }
+        return list
+    }
+
     companion object {
         /** Fields that need to be present on every asset to be added to connection cache. */
         val REQUIRED_FIELDS =
