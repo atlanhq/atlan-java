@@ -44,7 +44,6 @@ class DeltaProcessor(
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
 ) {
-
     /**
      * Run the delta detection.
      * This includes: determining which assets should be deleted, deleting those assets, and updating

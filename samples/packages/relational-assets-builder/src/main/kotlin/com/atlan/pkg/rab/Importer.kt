@@ -211,16 +211,19 @@ object Importer {
 
         val modifiedAssets = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults)
 
-        val connectionQN = if (deltaSemantic == "full") {
-            val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
-            try {
-                val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
-                list[0].qualifiedName
-            } catch (e: AtlanException) {
-                logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
-                exitProcess(50)
+        val connectionQN =
+            if (deltaSemantic == "full") {
+                val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
+                try {
+                    val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
+                    list[0].qualifiedName
+                } catch (e: AtlanException) {
+                    logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
+                    exitProcess(50)
+                }
+            } else {
+                null
             }
-        } else null
 
         val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
         val delta =

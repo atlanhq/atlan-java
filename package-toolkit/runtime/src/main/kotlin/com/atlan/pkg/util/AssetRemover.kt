@@ -5,7 +5,6 @@ package com.atlan.pkg.util
 import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
-import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch
