@@ -133,6 +133,7 @@ class LakeTagSynchronizerTest : PackageTest() {
                 "DIRECT",
                 "s3",
                 directoryPrefix,
+                true,
             ),
         )
         LakeTagSynchronizer.main(arrayOf(testDirectory))

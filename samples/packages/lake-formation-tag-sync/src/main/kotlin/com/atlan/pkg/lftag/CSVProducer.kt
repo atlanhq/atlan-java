@@ -29,6 +29,7 @@ class CSVProducer(
     fun transform(
         tagData: LFTagData,
         fileName: String,
+        removeSchema: Boolean = false,
     ) {
         CSVWriter(fileName).use { csv ->
             csv.writeHeader(headerNames)
@@ -36,6 +37,9 @@ class CSVProducer(
             tagData.tableList.forEach { tableInfo ->
                 val table = tableInfo.table
                 val (connectionKey, schemaName) = table.databaseName.split('_', limit = 2)
+                if (removeSchema) {
+                    table.name = table.name.replace("$schemaName.", "")
+                }
                 if (connectionKey in this.connectionMap) {
                     val schemaQualifiedName = "${connectionMap.getValue(connectionKey)}/$schemaName"
                     var row =
