@@ -91,10 +91,12 @@ class AssetRemover(
 
     /**
      * Actually run the removal of any assets identified for deletion.
+     *
+     * @return a list of the assets that were deleted
      */
-    fun deleteAssets() {
+    fun deleteAssets(): List<Asset> {
         translateToGuids()
-        deleteAssetsByGuid()
+        return deleteAssetsByGuid()
     }
 
     /**
@@ -209,8 +211,10 @@ class AssetRemover(
 
     /**
      * Delete all assets we have identified for deletion, in batches of 20 at a time.
+     *
+     * @return a list of the assets that were deleted
      */
-    private fun deleteAssetsByGuid() {
+    private fun deleteAssetsByGuid(): List<Asset> {
         if (guidsToDeleteToDetails.isNotEmpty()) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
             val guidList = guidsToDeleteToDetails.keys.filter { it.isNotBlank() }.toList()
@@ -236,10 +240,7 @@ class AssetRemover(
                         }
                     }
             }
-            Utils.updateConnectionCache(
-                removed = guidsToDeleteToDetails.values.map { it },
-                fallback = fallback,
-            )
         }
+        return guidsToDeleteToDetails.values.map { it }
     }
 }
