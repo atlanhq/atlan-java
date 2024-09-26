@@ -170,6 +170,9 @@ public class AtlanClient {
     /** Endpoint with operations to interact with OpenLineage. */
     public final OpenLineageEndpoint openLineage;
 
+    /** Endpoint with operations to interact with data contracts. */
+    public final ContractsEndpoint contracts;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -225,6 +228,7 @@ public class AtlanClient {
         tasks = new TaskEndpoint(this);
         sso = new SSOEndpoint(this);
         openLineage = new OpenLineageEndpoint(this);
+        contracts = new ContractsEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefs);
         customMetadataCache = new CustomMetadataCache(typeDefs);
         enumCache = new EnumCache(typeDefs);
