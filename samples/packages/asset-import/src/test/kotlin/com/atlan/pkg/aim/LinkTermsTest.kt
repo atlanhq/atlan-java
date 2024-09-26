@@ -17,11 +17,14 @@ import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.PersistentConnectionCache
 import mu.KotlinLogging
+import org.testng.Assert
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -222,6 +225,28 @@ class LinkTermsTest : PackageTest() {
         }
     }
 
+    @Test(groups = ["aim.lt.create"])
+    fun connectionCacheCreated() {
+        validateConnectionCache()
+    }
+
+    private fun validateConnectionCache() {
+        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
+        Assert.assertTrue(dbFile.isFile)
+        Assert.assertTrue(dbFile.exists())
+        val cache = PersistentConnectionCache(dbFile.path)
+        val assets = cache.listAssets()
+        assertNotNull(assets)
+        Assert.assertFalse(assets.isEmpty())
+        assertEquals(3, assets.size)
+        // Note: the revised update is table/view-agnostic, so will still be the same resulting entities
+        assertEquals(setOf(Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+        assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == Column.TYPE_NAME })
+    }
+
     @Test(groups = ["aim.lt.runUpdate"], dependsOnGroups = ["aim.lt.create"])
     fun upsertRevisions() {
         modifyFile()
@@ -279,6 +304,11 @@ class LinkTermsTest : PackageTest() {
         assertEquals(1, views[0].assignedTerms.size)
         assertEquals("Test Term", views[0].assignedTerms.first().name)
         assertEquals("Now with description", views[0].description)
+    }
+
+    @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
+    fun connectionCacheUpdated() {
+        validateConnectionCache()
     }
 
     @Test(dependsOnGroups = ["aim.lt.*"])

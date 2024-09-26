@@ -3,7 +3,6 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -210,12 +209,10 @@ object Importer {
             )
         val colResults = columnImporter.import()
 
-        if (Atlan.getDefaultClient().isInternal && trackBatches) {
-            // Only attempt to manage a connection cache if we are running in-cluster
-            Utils.updateConnectionCache(
-                added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
-            )
-        }
+        Utils.updateConnectionCache(
+            added = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults),
+            fallback = outputDirectory,
+        )
 
         if (deltaSemantic == "full") {
             val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
@@ -248,7 +245,6 @@ object Importer {
                             outputHeaders = targetHeaders,
                         ),
                     outputDirectory = outputDirectory,
-                    skipObjectStore = Utils.getOrDefault(config.skipObjectStore, false),
                 )
             delta.run()
             return connectionQN

@@ -23,6 +23,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.PersistentConnectionCache
 import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
@@ -179,9 +180,7 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
-                trackBatches = false,
                 deltaSemantic = "full",
-                skipObjectStore = true,
             ),
         )
         Importer.main(arrayOf(testDirectory))
@@ -490,6 +489,34 @@ class CreateThenUpsertRABTest : PackageTest() {
         }
     }
 
+    @Test(groups = ["rab.ctu.create"])
+    fun connectionCacheCreated() {
+        validateConnectionCache()
+    }
+
+    private fun validateConnectionCache(created: Boolean = true) {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
+        assertTrue(dbFile.isFile)
+        assertTrue(dbFile.exists())
+        val cache = PersistentConnectionCache(dbFile.path)
+        val assets = cache.listAssets()
+        assertNotNull(assets)
+        assertFalse(assets.isEmpty())
+        if (created) {
+            assertEquals(8, assets.size)
+            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
+        } else {
+            assertEquals(5, assets.size)
+            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+            assertEquals(2, assets.count { it.typeName == Column.TYPE_NAME })
+            assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+        }
+    }
+
     @Test(groups = ["rab.ctu.runUpdate"], dependsOnGroups = ["rab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
@@ -499,7 +526,6 @@ class CreateThenUpsertRABTest : PackageTest() {
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 deltaSemantic = "full",
-                skipObjectStore = true,
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
             ),
         )
@@ -552,9 +578,24 @@ class CreateThenUpsertRABTest : PackageTest() {
         validateColumnsForView(false)
     }
 
+    @Test(groups = ["rab.ctu.update"], dependsOnGroups = ["rab.ctu.runUpdate"])
+    fun connectionCacheUpdated() {
+        validateConnectionCache(false)
+    }
+
     @Test(dependsOnGroups = ["rab.ctu.*"])
     fun filesCreated() {
         validateFilesExist(files)
+    }
+
+    @Test(dependsOnGroups = ["rab.ctu.*"])
+    fun previousRunFilesCreated() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
+        assertNotNull(directory)
+        assertTrue(directory.isDirectory)
+        val files = directory.walkTopDown().filter { it.isFile }.toList()
+        assertEquals(2, files.size)
     }
 
     @Test(dependsOnGroups = ["rab.ctu.*"])

@@ -8,6 +8,8 @@ import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
+import java.io.File.separator
+import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -26,7 +28,6 @@ import java.time.format.DateTimeFormatter
  * @param logger for logging
  * @param previousFilePreprocessor responsible for pre-processing the previous CSV file (if provided directly)
  * @param outputDirectory local directory where files can be written and compared
- * @param skipObjectStore whether to skip any processing via the object store (true) or not (false)
  * @param previousFileProcessedExtension extension to use in the object store for files that have been processed
  */
 class DeltaProcessor(
@@ -39,8 +40,7 @@ class DeltaProcessor(
     val typesToRemove: Collection<String>,
     private val logger: KLogger,
     val previousFilePreprocessor: CSVPreprocessor? = null,
-    val outputDirectory: String = "tmp",
-    val skipObjectStore: Boolean = false,
+    val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
 ) {
     fun run() {
@@ -51,14 +51,12 @@ class DeltaProcessor(
                 val purgeAssets = removalType == "purge"
                 val assetRootName = preprocessedDetails.assetRootName
                 val previousFileLocation = "$previousFilesPrefix/$qualifiedNamePrefix"
-                val objectStore = if (!skipObjectStore) Utils.getBackingStore() else null
+                val objectStore = Utils.getBackingStore(outputDirectory)
                 val previousFile =
                     if (previousFilePreprocessor != null && previousFilePreprocessor.filename.isNotBlank()) {
                         transformPreviousRaw(assetRootName, previousFilePreprocessor)
-                    } else if (skipObjectStore) {
-                        ""
                     } else {
-                        objectStore!!.copyLatestFrom(previousFileLocation, previousFileProcessedExtension, outputDirectory)
+                        objectStore.copyLatestFrom(previousFileLocation, previousFileProcessedExtension, outputDirectory)
                     }
                 if (previousFile.isNotBlank()) {
                     // If there was a previous file, calculate the delta to see what we need
@@ -71,6 +69,7 @@ class DeltaProcessor(
                             typesToRemove.toList(),
                             qualifiedNamePrefix,
                             purgeAssets,
+                            outputDirectory,
                         )
                     assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, previousFile)
                     if (assetRemover.hasAnythingToDelete()) {
@@ -80,9 +79,7 @@ class DeltaProcessor(
                     logger.info { "No previous file found, treated it as an initial load." }
                 }
                 // Copy processed files to specified location in object storage for future comparison purposes
-                if (!skipObjectStore) {
-                    uploadToBackingStore(objectStore!!, preprocessedDetails.preprocessedFile, qualifiedNamePrefix, previousFileProcessedExtension)
-                }
+                uploadToBackingStore(objectStore, preprocessedDetails.preprocessedFile, qualifiedNamePrefix, previousFileProcessedExtension)
             }
         }
     }

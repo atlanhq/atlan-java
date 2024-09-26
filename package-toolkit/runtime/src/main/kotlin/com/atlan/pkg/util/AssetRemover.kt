@@ -13,6 +13,7 @@ import com.atlan.util.AssetBatch.AssetIdentity
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KLogger
+import java.io.File.separator
 import java.io.IOException
 import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
@@ -34,6 +35,7 @@ import kotlin.math.round
  * @param removeTypes names of asset types that should be considered for deleted (default: all)
  * @param removalPrefix qualifiedName prefix that must match an asset for it to be deleted (default: all)
  * @param purge if true, any asset that matches will be permanently deleted (otherwise, default: only archived)
+ * @param fallback directory to use as a fallback backing store (locally) in the absence of an object store
  */
 class AssetRemover(
     private val connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
@@ -42,6 +44,7 @@ class AssetRemover(
     private val removeTypes: List<String> = listOf(),
     private val removalPrefix: String = "",
     private val purge: Boolean = false,
+    private val fallback: String = Paths.get(separator, "tmp").toString(),
 ) {
     private val client = Atlan.getDefaultClient()
     val assetsToDelete = ConcurrentHashMap<AssetIdentity, String>()
@@ -233,9 +236,10 @@ class AssetRemover(
                         }
                     }
             }
-            if (client.isInternal) {
-                Utils.updateConnectionCache(removed = guidsToDeleteToDetails.values.map { it })
-            }
+            Utils.updateConnectionCache(
+                removed = guidsToDeleteToDetails.values.map { it },
+                fallback = fallback,
+            )
         }
     }
 }

@@ -14,6 +14,7 @@ import com.atlan.pkg.objectstore.ADLSCredential
 import com.atlan.pkg.objectstore.ADLSSync
 import com.atlan.pkg.objectstore.GCSCredential
 import com.atlan.pkg.objectstore.GCSSync
+import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
@@ -79,7 +80,7 @@ object Utils {
         }
         val classpath = System.getProperty("java.class.path")
         var count = 1
-        classpath.split(File.pathSeparator).forEach { p ->
+        classpath.split(separator).forEach { p ->
             val cp = if (p.endsWith("*")) Paths.get(p.substringBefore("*")) else Paths.get(p)
             if (cp.isDirectory()) {
                 logger.debug { "Classpath ($count) $cp (contains):" }
@@ -694,7 +695,7 @@ object Utils {
         remote: String,
     ): String {
         val filename = File(remote).name
-        val path = "$outputDirectory${File.separator}$filename"
+        val path = "$outputDirectory${separator}$filename"
         syncer.downloadFrom(remote, path)
         return path
     }
@@ -776,13 +777,21 @@ object Utils {
     /**
      * Return the backing store of the Atlan tenant.
      *
+     * @param directory (optional) fallback directory to use on local filesystem if no object store is detected
      * @return object storage syncer for Atlan's backing store
      */
-    fun getBackingStore(): ObjectStorageSyncer {
-        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "aws")) {
+    fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer {
+        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
             "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
             "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
             "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
+            "local" -> {
+                if (getEnvVar("AWS_S3_BUCKET_NAME").isNotBlank()) {
+                    S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
+                } else {
+                    LocalSync(directory, logger)
+                }
+            }
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
     }
@@ -792,19 +801,23 @@ object Utils {
      *
      * @param added assets that were added
      * @param removed assets that were deleted
+     * @param fallback directory to use for a fallback backing store for the cache
      */
     fun updateConnectionCache(
         added: Collection<Asset>? = null,
         removed: Collection<Asset>? = null,
+        fallback: String = Paths.get(separator, "tmp").toString(),
     ) {
         val map = CacheUpdates.build(added, removed)
         logger.info { "Updating connection caches for ${map.size} connections..." }
-        val sync = getBackingStore()
+        val sync = getBackingStore(fallback)
         for ((connectionQN, assets) in map) {
             logger.info { "Updating connection cache for: $connectionQN" }
-            val paths = mutableListOf("tmp", "cache")
+            val paths = mutableListOf<String>()
+            paths.addAll(fallback.split(separator))
+            paths.add("cache")
             paths.addAll(connectionQN.split("/"))
-            val tmpFile = paths.joinToString(separator = "/")
+            val tmpFile = paths.joinToString(separator = separator)
             // Retrieve any pre-existing cache first, so we can update it
             try {
                 sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)

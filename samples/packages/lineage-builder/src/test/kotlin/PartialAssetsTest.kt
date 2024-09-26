@@ -13,12 +13,15 @@ import com.atlan.model.enums.AtlanLineageDirection
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.lb.Loader
 import mu.KotlinLogging
+import org.testng.Assert
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
@@ -217,6 +220,27 @@ class PartialAssetsTest : PackageTest() {
         assertEquals("source_table", upstream[1].name)
     }
 
+    @Test(groups = ["lb.pa.create"])
+    fun connectionCacheCreated() {
+        validateConnectionCache()
+    }
+
+    private fun validateConnectionCache() {
+        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
+        Assert.assertTrue(dbFile.isFile)
+        Assert.assertTrue(dbFile.exists())
+        val cache = PersistentConnectionCache(dbFile.path)
+        val assets = cache.listAssets()
+        assertNotNull(assets)
+        Assert.assertFalse(assets.isEmpty())
+        assertEquals(3, assets.size)
+        assertEquals(setOf(Table.TYPE_NAME, View.TYPE_NAME, LineageProcess.TYPE_NAME), assets.map { it.typeName }.toSet())
+        assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == LineageProcess.TYPE_NAME })
+    }
+
     @Test(groups = ["lb.pa.runUpdate"], dependsOnGroups = ["lb.pa.create"])
     fun upsertRevisions() {
         // Convert partial view into full view
@@ -269,6 +293,11 @@ class PartialAssetsTest : PackageTest() {
         assertFalse(views[0].isPartial)
         assertEquals("target_view", views[0].name)
         assertEquals("And with a description now, too...", views[0].description)
+    }
+
+    @Test(groups = ["lb.pa.update"], dependsOnGroups = ["lb.pa.runUpdate"])
+    fun connectionCacheUpdated() {
+        validateConnectionCache()
     }
 
     @Test(dependsOnGroups = ["lb.pa.*"])
