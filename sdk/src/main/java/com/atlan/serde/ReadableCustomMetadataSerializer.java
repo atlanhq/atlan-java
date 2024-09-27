@@ -2,8 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.AtlanClient;
-import com.atlan.exception.AtlanException;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -11,12 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import java.io.IOException;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,11 +36,11 @@ public class ReadableCustomMetadataSerializer extends StdSerializer<Map<String, 
      */
     @Override
     public void serializeWithType(
-        Map<String, CustomMetadataAttributes> value,
-        JsonGenerator gen,
-        SerializerProvider serializers,
-        TypeSerializer typeSer)
-        throws IOException {
+            Map<String, CustomMetadataAttributes> value,
+            JsonGenerator gen,
+            SerializerProvider serializers,
+            TypeSerializer typeSer)
+            throws IOException {
         serialize(value, gen, serializers);
     }
 
@@ -54,7 +49,7 @@ public class ReadableCustomMetadataSerializer extends StdSerializer<Map<String, 
      */
     @Override
     public void serialize(Map<String, CustomMetadataAttributes> cmMap, JsonGenerator gen, SerializerProvider sp)
-        throws IOException, JsonProcessingException {
+            throws IOException, JsonProcessingException {
         gen.writeStartObject();
         if (cmMap != null) {
             for (Map.Entry<String, CustomMetadataAttributes> entry : cmMap.entrySet()) {

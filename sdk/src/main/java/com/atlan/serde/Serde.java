@@ -12,6 +12,8 @@ import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.search.AggregationResult;
 import com.atlan.model.structs.AtlanStruct;
@@ -20,10 +22,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.cfg.CoercionAction;
+import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
@@ -51,6 +57,9 @@ public class Serde {
 
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
+
+    /** Singular ObjectMapper through which to (de-)serialize raw POJOs and YAML. */
+    public static final ObjectMapper yamlMapper = createMapperYAML();
 
     private static final Map<String, JsonDeserializer<?>> deserializerCache = new ConcurrentHashMap<>();
     private static final Map<String, Class<?>> assetClasses;
@@ -196,6 +205,26 @@ public class Serde {
         // Set client-aware serialization
         ClientAwareSerializerProvider casp = new ClientAwareSerializerProvider(client);
         om.setSerializerProvider(casp);
+        return om;
+    }
+
+    /**
+     * Set up the serialization and deserialization of tenant-agnostic YAML.
+     * @return an ObjectMapper for tenant-agnostic YAML transformations
+     */
+    public static ObjectMapper createMapperYAML() {
+        // Set default options, using client-aware deserialization
+        ObjectMapper om = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID))
+                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // Set standard (non-tenant-specific) modules
+        for (Module m : SIMPLE_MODULES) {
+            om.registerModule(m);
+        }
+        om.coercionConfigFor(CertificateStatus.class)
+                .setCoercion(CoercionInputShape.EmptyString, CoercionAction.AsNull);
+        om.coercionConfigFor(AtlanAnnouncementType.class)
+                .setCoercion(CoercionInputShape.EmptyString, CoercionAction.AsNull);
         return om;
     }
 

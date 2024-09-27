@@ -46,6 +46,7 @@ dependencies {
         }
     }
     api(libs.jackson.databind)
+    api(libs.jackson.yaml)
     api(libs.slf4j)
     api(libs.elasticsearch.java)
     api(libs.freemarker)

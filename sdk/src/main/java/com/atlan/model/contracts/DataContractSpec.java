@@ -2,9 +2,6 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.model.contracts;
 
-import java.util.List;
-import java.util.Map;
-
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -16,11 +13,14 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.List;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Capture the detailed specification of a data contract for an asset.
@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "templateVersion")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "template_version")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = DCS_V_0_0_2.class, name = "0.0.2"),
 })
@@ -80,7 +80,6 @@ public abstract class DataContractSpec extends AtlanObject {
     @JsonSerialize(using = ReadableCustomMetadataSerializer.class)
     @JsonDeserialize(using = ReadableCustomMetadataDeserializer.class)
     Map<String, CustomMetadataAttributes> customMetadataSets;
-    // TODO: will require custom serde for the YAML ^^
 
     /** Details of each column in the dataset to be governed. */
     @Singular
@@ -91,6 +90,7 @@ public abstract class DataContractSpec extends AtlanObject {
     List<String> checks;
 
     @Getter
+    @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = false)
     public static final class Owners {
@@ -102,6 +102,7 @@ public abstract class DataContractSpec extends AtlanObject {
     }
 
     @Getter
+    @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = false)
     public static final class Certification {
@@ -113,6 +114,7 @@ public abstract class DataContractSpec extends AtlanObject {
     }
 
     @Getter
+    @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = false)
     public static final class Announcement {
@@ -127,6 +129,7 @@ public abstract class DataContractSpec extends AtlanObject {
     }
 
     @Getter
+    @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = false)
     public static final class DCTag {
@@ -146,6 +149,7 @@ public abstract class DataContractSpec extends AtlanObject {
     }
 
     @Getter
+    @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = false)
     public static final class DCColumn {

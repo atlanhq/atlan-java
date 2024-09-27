@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.AtlanClient;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,8 +20,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,7 +39,7 @@ public class ReadableCustomMetadataDeserializer extends StdDeserializer<Map<Stri
      */
     @Override
     public Object deserializeWithType(
-        JsonParser parser, DeserializationContext context, TypeDeserializer typeDeserializer) throws IOException {
+            JsonParser parser, DeserializationContext context, TypeDeserializer typeDeserializer) throws IOException {
         return deserialize(parser, context);
     }
 
@@ -50,7 +48,7 @@ public class ReadableCustomMetadataDeserializer extends StdDeserializer<Map<Stri
      */
     @Override
     public Map<String, CustomMetadataAttributes> deserialize(JsonParser parser, DeserializationContext context)
-        throws IOException {
+            throws IOException {
         return deserialize(parser.getCodec().readTree(parser));
     }
 
