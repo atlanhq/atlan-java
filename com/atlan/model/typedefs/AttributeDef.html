@@ -185,6 +185,16 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBasicType()" class="member-name-link">getBasicType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determine the basic type of this attribute (irrespective of whether it is multivalued or not).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getBasicType(java.lang.String)" class="member-name-link">getBasicType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Determine the basic type of the attribute (irrespective of whether it is multivalued or not).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/AtlanCustomAttributeCardinality.html" title="enum class in com.atlan.model.enums">AtlanCustomAttributeCardinality</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCardinality()" class="member-name-link">getCardinality</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -194,6 +204,16 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getConstraints()" class="member-name-link">getConstraints</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContainerType()" class="member-name-link">getContainerType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determine the container of this attribute, if any.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getContainerType(java.lang.String)" class="member-name-link">getContainerType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Determine the container of the attribute, if any.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultValue()" class="member-name-link">getDefaultValue</a>()</code></div>
@@ -639,6 +659,58 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>boolean</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBasicType()">
+<h3>getBasicType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBasicType</span>()</div>
+<div class="block">Determine the basic type of this attribute (irrespective of whether it is multivalued or not).
+ For example, the basic type of <code>array&lt;string&gt;</code> is just <code>string</code>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the basic type of this attribute</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContainerType()">
+<h3>getContainerType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getContainerType</span>()</div>
+<div class="block">Determine the container of this attribute, if any.
+ For example, the container of <code>array&lt;string&gt;</code> is a list or sorted set.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the container of this attribute, if any, or null if it is a single-valued attribute</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBasicType(java.lang.String)">
+<h3>getBasicType</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBasicType</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
+<div class="block">Determine the basic type of the attribute (irrespective of whether it is multivalued or not).
+ For example, the basic type of <code>array&lt;string&gt;</code> is just <code>string</code>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - typeName of the attribute</dd>
+<dt>Returns:</dt>
+<dd>the basic type of this attribute</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContainerType(java.lang.String)">
+<h3>getContainerType</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getContainerType</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</span></div>
+<div class="block">Determine the container of the attribute, if any.
+ For example, the container of <code>array&lt;string&gt;</code> is a list or sorted set.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>type</code> - typeName of the attribute</dd>
+<dt>Returns:</dt>
+<dd>the container of this attribute, if any, or null if it is a single-valued attribute</dd>
 </dl>
 </section>
 </li>
