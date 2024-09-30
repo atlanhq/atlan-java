@@ -772,7 +772,7 @@ public class CustomMetadataCache extends AbstractMassCache {
         return map;
     }
 
-    private static Object deserializePrimitive(JsonNode jsonValue) throws LogicException {
+    public static Object deserializePrimitive(JsonNode jsonValue) throws LogicException {
         if (jsonValue.isValueNode()) {
             if (jsonValue.isTextual()) {
                 return jsonValue.asText();
