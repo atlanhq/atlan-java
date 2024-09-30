@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  * Capture the detailed specification of a data contract for an asset.
  */
 @Getter
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "template_version")
 @JsonSubTypes({
@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 })
 @SuppressWarnings("cast")
 @Slf4j
-public abstract class DataContractSpec extends AtlanObject {
+public class DataContractSpec extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Controls the specification as one for a data contract. */
@@ -76,9 +76,11 @@ public abstract class DataContractSpec extends AtlanObject {
     Announcement announcement;
 
     /** Glossary terms to assign to the dataset. */
+    @Singular
     List<String> terms;
 
     /** Atlan tags for the dataset. */
+    @Singular
     List<DCTag> tags;
 
     /** Custom metadata for the dataset. */
@@ -112,9 +114,11 @@ public abstract class DataContractSpec extends AtlanObject {
     @EqualsAndHashCode(callSuper = false)
     public static final class Owners {
         /** Individual users who own the dataset. */
+        @Singular
         List<String> users;
 
         /** Groups that own the dataset. */
+        @Singular
         List<String> groups;
     }
 
