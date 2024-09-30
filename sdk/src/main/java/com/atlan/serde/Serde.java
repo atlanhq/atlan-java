@@ -12,8 +12,6 @@ import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.search.AggregationResult;
 import com.atlan.model.structs.AtlanStruct;
@@ -22,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.cfg.CoercionAction;
-import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -216,15 +212,12 @@ public class Serde {
         // Set default options, using client-aware deserialization
         ObjectMapper om = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID))
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
         // Set standard (non-tenant-specific) modules
         for (Module m : SIMPLE_MODULES) {
             om.registerModule(m);
         }
-        om.coercionConfigFor(CertificateStatus.class)
-                .setCoercion(CoercionInputShape.EmptyString, CoercionAction.AsNull);
-        om.coercionConfigFor(AtlanAnnouncementType.class)
-                .setCoercion(CoercionInputShape.EmptyString, CoercionAction.AsNull);
         return om;
     }
 

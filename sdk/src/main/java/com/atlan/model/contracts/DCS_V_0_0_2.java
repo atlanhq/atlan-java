@@ -5,7 +5,6 @@ package com.atlan.model.contracts;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -16,7 +15,6 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = true)
 @SuppressWarnings("cast")
 public class DCS_V_0_0_2 extends DataContractSpec {
     private static final long serialVersionUID = 2L;

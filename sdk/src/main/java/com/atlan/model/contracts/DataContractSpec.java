@@ -8,19 +8,25 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.serde.ReadableCustomMetadataDeserializer;
 import com.atlan.serde.ReadableCustomMetadataSerializer;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Capture the detailed specification of a data contract for an asset.
@@ -28,17 +34,18 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "template_version")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = DCS_V_0_0_2.class, name = "0.0.2"),
 })
 @SuppressWarnings("cast")
+@Slf4j
 public abstract class DataContractSpec extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Controls the specification as one for a data contract. */
-    final String kind = "DataContract";
+    @Builder.Default
+    String kind = "DataContract";
 
     /** State of the contract. */
     DataContractStatus status;
@@ -76,7 +83,7 @@ public abstract class DataContractSpec extends AtlanObject {
 
     /** Custom metadata for the dataset. */
     @Singular
-    @JsonProperty("customMetadata")
+    @JsonProperty("custom_metadata")
     @JsonSerialize(using = ReadableCustomMetadataSerializer.class)
     @JsonDeserialize(using = ReadableCustomMetadataDeserializer.class)
     Map<String, CustomMetadataAttributes> customMetadataSets;
@@ -88,6 +95,16 @@ public abstract class DataContractSpec extends AtlanObject {
     /** List of checks to run to verify data quality of the dataset. */
     @Singular
     List<String> checks;
+
+    /** Any extra properties provided in the specification (but unknown to this version of the template). */
+    @Singular
+    @JsonAnySetter
+    Map<String, Object> extraProperties;
+
+    @JsonAnyGetter
+    public Map<String, Object> getExtraProperties() {
+        return extraProperties;
+    }
 
     @Getter
     @Jacksonized
@@ -236,5 +253,33 @@ public abstract class DataContractSpec extends AtlanObject {
 
         /** When true, this column must have unique values. */
         Boolean unique;
+    }
+
+    /**
+     * Parse a DataContractSpec object from the provided string form of the specification.
+     * Note: all comments and empty fields will be lost during conversion to an object.
+     *
+     * @param spec YAML string form of the data contract specification
+     * @return object representing the data contract
+     * @throws IOException on any errors parsing the provided string as a data contract specification
+     */
+    public static DataContractSpec fromString(String spec) throws IOException {
+        return Serde.yamlMapper.readValue(spec, DataContractSpec.class);
+    }
+
+    /**
+     * Translate this DataContractSpec object into a YAML string representation.
+     * Note: will not contain any comments or empty fields.
+     *
+     * @return YAML string representation of the data contract specification
+     */
+    @Override
+    public String toString() {
+        try {
+            return Serde.yamlMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            log.error("Error translating DataContractSpec into string.", e);
+        }
+        return "";
     }
 }
