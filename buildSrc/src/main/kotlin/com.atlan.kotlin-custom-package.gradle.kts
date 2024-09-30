@@ -25,8 +25,8 @@ dependencies {
     //implementation("com.atlan:package-toolkit-runtime:+")
     //implementation("com.atlan:package-toolkit-config:+")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-    runtimeOnly("org.apache.logging.log4j:log4j-core:2.23.1")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.23.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-core:2.24.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.24.1")
     testImplementation(project(":package-toolkit:testing"))
     // In your own project, you would use this in place of the 1 dependency above:
     //testImplementation("com.atlan:package-toolkit-testing:+")
