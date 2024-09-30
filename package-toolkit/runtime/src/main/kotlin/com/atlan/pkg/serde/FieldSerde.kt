@@ -132,12 +132,16 @@ object FieldSerde {
         attrDef: AttributeDef,
         value: String?,
     ): Any? {
-        return if (attrDef.typeName.lowercase() == "date") {
-            TimestampXformer.decode(value, "unused")
-        } else if (value != null) {
-            CellXformer.decodeString(value)
-        } else {
-            null
+        if (value == null) {
+            return null
+        }
+        return when (attrDef.basicType.lowercase()) {
+            "boolean" -> CellXformer.decodeBoolean(value)
+            "int" -> CellXformer.decodeInt(value)
+            "date" -> TimestampXformer.decode(value, "unused")
+            "long" -> CellXformer.decodeLong(value)
+            "float" -> CellXformer.decodeDouble(value)
+            else -> CellXformer.decodeString(value)
         }
     }
 

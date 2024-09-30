@@ -3,6 +3,7 @@
 package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.EnumDef;
 import com.atlan.model.typedefs.StructDef;
@@ -55,22 +56,8 @@ public abstract class TypeGenerator {
 
     protected MappedType getMappedType(String type) {
         // First look for contained types...
-        String baseType = type;
-        String container = null;
-        if (type.contains("<")) {
-            if (type.startsWith("array<")) {
-                if (type.startsWith("array<map<")) {
-                    baseType = getEmbeddedType(type.substring("array<".length(), type.length() - 1));
-                    container = "List<Map<";
-                } else {
-                    baseType = getEmbeddedType(type);
-                    container = "SortedSet<";
-                }
-            } else if (type.startsWith("map<")) {
-                baseType = getEmbeddedType(type);
-                container = "Map<";
-            }
-        }
+        String baseType = AttributeDef.getBasicType(type);
+        String container = AttributeDef.getContainerType(type);
         MappedType.MappedTypeBuilder builder = MappedType.builder().originalBase(baseType);
         // First try to map a primitive type
         String primitiveName = PRIMITIVE_MAPPINGS.getOrDefault(baseType, null);
@@ -96,17 +83,6 @@ public abstract class TypeGenerator {
             builder.container(container);
         }
         return builder.build();
-    }
-
-    /**
-     * Determine the primitive type of the attribute when it's values are contained in an
-     * array or map.
-     *
-     * @param attrType data type of the attribute
-     * @return the primitive contained type of the attribute's values
-     */
-    private static String getEmbeddedType(String attrType) {
-        return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
     }
 
     public String getClassTemplateFile() {
