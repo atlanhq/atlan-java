@@ -358,6 +358,85 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
         return options != null && options.getIsArchived() != null && options.getIsArchived();
     }
 
+    /**
+     * Determine the basic type of this attribute (irrespective of whether it is multivalued or not).
+     * For example, the basic type of {@code array<string>} is just {@code string}.
+     *
+     * @return the basic type of this attribute
+     */
+    @JsonIgnore
+    public String getBasicType() {
+        return getBasicType(getTypeName());
+    }
+
+    /**
+     * Determine the container of this attribute, if any.
+     * For example, the container of {@code array<string>} is a list or sorted set.
+     *
+     * @return the container of this attribute, if any, or null if it is a single-valued attribute
+     */
+    @JsonIgnore
+    public String getContainerType() {
+        return getContainerType(getTypeName());
+    }
+
+    /**
+     * Determine the basic type of the attribute (irrespective of whether it is multivalued or not).
+     * For example, the basic type of {@code array<string>} is just {@code string}.
+     *
+     * @param type typeName of the attribute
+     * @return the basic type of this attribute
+     */
+    public static String getBasicType(String type) {
+        String baseType = type;
+        if (type.contains("<")) {
+            if (type.startsWith("array<")) {
+                if (type.startsWith("array<map<")) {
+                    baseType = getEmbeddedType(type.substring("array<".length(), type.length() - 1));
+                } else {
+                    baseType = getEmbeddedType(type);
+                }
+            } else if (type.startsWith("map<")) {
+                baseType = getEmbeddedType(type);
+            }
+        }
+        return baseType;
+    }
+
+    /**
+     * Determine the container of the attribute, if any.
+     * For example, the container of {@code array<string>} is a list or sorted set.
+     *
+     * @param type typeName of the attribute
+     * @return the container of this attribute, if any, or null if it is a single-valued attribute
+     */
+    public static String getContainerType(String type) {
+        String container = null;
+        if (type.contains("<")) {
+            if (type.startsWith("array<")) {
+                if (type.startsWith("array<map<")) {
+                    container = "List<Map<";
+                } else {
+                    container = "SortedSet<";
+                }
+            } else if (type.startsWith("map<")) {
+                container = "Map<";
+            }
+        }
+        return container;
+    }
+
+    /**
+     * Determine the primitive type of the attribute when it's values are contained in an
+     * array or map.
+     *
+     * @param attrType data type of the attribute
+     * @return the primitive contained type of the attribute's values
+     */
+    private static String getEmbeddedType(String attrType) {
+        return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
+    }
+
     /** {@inheritDoc} */
     @Override
     public int compareTo(AttributeDef o) {

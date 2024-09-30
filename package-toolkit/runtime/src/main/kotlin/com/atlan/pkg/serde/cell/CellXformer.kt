@@ -72,17 +72,17 @@ object CellXformer {
                 else -> decodeString(value)
             }
         } else if (Boolean::class.java.isAssignableFrom(type) || java.lang.Boolean::class.java.isAssignableFrom(type)) {
-            value.toBoolean()
+            decodeBoolean(value)
         } else if (Integer::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
-            value.toInt()
+            decodeInt(value)
         } else if (Long::class.java.isAssignableFrom(type) || java.lang.Long::class.java.isAssignableFrom(type)) {
             if (ReflectionCache.isDate(assetClass, fieldName)) {
                 TimestampXformer.decode(value, fieldName)
             } else {
-                value.toLong()
+                decodeLong(value)
             }
         } else if (Double::class.java.isAssignableFrom(type) || java.lang.Double::class.java.isAssignableFrom(type)) {
-            value.toDouble()
+            decodeDouble(value)
         } else if (Collection::class.java.isAssignableFrom(type)) {
             // Start by checking whether the list is simple or complex
             val values = parseDelimitedList(value)
@@ -149,5 +149,21 @@ object CellXformer {
         } else {
             value
         }
+    }
+
+    fun decodeBoolean(value: String): Boolean {
+        return value.toBoolean()
+    }
+
+    fun decodeInt(value: String): Int {
+        return value.toInt()
+    }
+
+    fun decodeLong(value: String): Long {
+        return value.toLong()
+    }
+
+    fun decodeDouble(value: String): Double {
+        return value.toDouble()
     }
 }
