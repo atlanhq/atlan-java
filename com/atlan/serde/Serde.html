@@ -99,6 +99,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#DELETED_AUDIT_OBJECT" class="member-name-link">DELETED_AUDIT_OBJECT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final com.fasterxml.jackson.databind.ObjectMapper</code></div>
+<div class="col-second even-row-color"><code><a href="#yamlMapper" class="member-name-link">yamlMapper</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Singular ObjectMapper through which to (de-)serialize raw POJOs and YAML.</div>
+</div>
 </div>
 </section>
 </li>
@@ -131,15 +136,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Set up the tenant-specific serialization and deserialization.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAssetClassForType(java.lang.String)" class="member-name-link">getAssetClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static com.fasterxml.jackson.databind.ObjectMapper</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createMapperYAML()" class="member-name-link">createMapperYAML</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Set up the serialization and deserialization of tenant-agnostic YAML.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getBuilderClassForType(java.lang.String)" class="member-name-link">getBuilderClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAssetClassForType(java.lang.String)" class="member-name-link">getAssetClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRelationshipAttributesClassForType(java.lang.String)" class="member-name-link">getRelationshipAttributesClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getBuilderClassForType(java.lang.String)" class="member-name-link">getBuilderClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRelationshipAttributesClassForType(java.lang.String)" class="member-name-link">getRelationshipAttributesClassForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -176,6 +186,13 @@ loadScripts(document, 'script');</script>
 <h3>allInclusiveMapper</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.fasterxml.jackson.databind.ObjectMapper</span>&nbsp;<span class="element-name">allInclusiveMapper</span></div>
 <div class="block">Singular ObjectMapper through which to (de-)serialize raw POJOs, including all details, untranslated.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="yamlMapper">
+<h3>yamlMapper</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">com.fasterxml.jackson.databind.ObjectMapper</span>&nbsp;<span class="element-name">yamlMapper</span></div>
+<div class="block">Singular ObjectMapper through which to (de-)serialize raw POJOs and YAML.</div>
 </section>
 </li>
 </ul>
@@ -243,6 +260,17 @@ loadScripts(document, 'script');</script>
 <dd><code>client</code> - providing connectivity to a specific Atlan tenant</dd>
 <dt>Returns:</dt>
 <dd>an ObjectMapper for the tenant-specific transformations</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createMapperYAML()">
+<h3>createMapperYAML</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">com.fasterxml.jackson.databind.ObjectMapper</span>&nbsp;<span class="element-name">createMapperYAML</span>()</div>
+<div class="block">Set up the serialization and deserialization of tenant-agnostic YAML.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an ObjectMapper for tenant-agnostic YAML transformations</dd>
 </dl>
 </section>
 </li>

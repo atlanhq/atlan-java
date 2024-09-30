@@ -7,6 +7,7 @@ com.atlan.generators
 com.atlan.generators.lombok
 com.atlan.model.admin
 com.atlan.model.assets
+com.atlan.model.contracts
 com.atlan.model.core
 com.atlan.model.enums
 com.atlan.model.events

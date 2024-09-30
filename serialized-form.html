@@ -31414,6 +31414,136 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <section class="serialized-package-container">
+<h2 title="Package">Package&nbsp;<a href="com/atlan/model/contracts/package-summary.html">com.atlan.model.contracts</a></h2>
+<ul class="block-list">
+<li>
+<section class="serialized-class-details" id="com.atlan.model.contracts.DataContractSpec">
+<h3>Class&nbsp;<a href="com/atlan/model/contracts/DataContractSpec.html" title="class in com.atlan.model.contracts">com.atlan.model.contracts.DataContractSpec</a></h3>
+<div class="type-signature">class DataContractSpec extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>announcement</h5>
+<pre><a href="com/atlan/model/contracts/DataContractSpec.Announcement.html" title="class in com.atlan.model.contracts">DataContractSpec.Announcement</a> announcement</pre>
+<div class="block">Announcement to apply to the dataset.</div>
+</li>
+<li class="block-list">
+<h5>certification</h5>
+<pre><a href="com/atlan/model/contracts/DataContractSpec.Certification.html" title="class in com.atlan.model.contracts">DataContractSpec.Certification</a> certification</pre>
+<div class="block">Certification to apply to the dataset.</div>
+</li>
+<li class="block-list">
+<h5>checks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; checks</pre>
+<div class="block">List of checks to run to verify data quality of the dataset.</div>
+</li>
+<li class="block-list">
+<h5>columns</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/contracts/DataContractSpec.DCColumn.html" title="class in com.atlan.model.contracts">DataContractSpec.DCColumn</a>&gt; columns</pre>
+<div class="block">Details of each column in the dataset to be governed.</div>
+</li>
+<li class="block-list">
+<h5>customMetadataSets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="com/atlan/model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt; customMetadataSets</pre>
+<div class="block">Custom metadata for the dataset.</div>
+</li>
+<li class="block-list">
+<h5>dataset</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dataset</pre>
+<div class="block">Name of the asset as it exists inside Atlan.</div>
+</li>
+<li class="block-list">
+<h5>datasource</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> datasource</pre>
+<div class="block">Name that must match a data source defined in your config file.</div>
+</li>
+<li class="block-list">
+<h5>description</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> description</pre>
+<div class="block">Description of this dataset.</div>
+</li>
+<li class="block-list">
+<h5>extraProperties</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt; extraProperties</pre>
+<div class="block">Any extra properties provided in the specification (but unknown to this version of the template).</div>
+</li>
+<li class="block-list">
+<h5>kind</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> kind</pre>
+<div class="block">Controls the specification as one for a data contract.</div>
+</li>
+<li class="block-list">
+<h5>owners</h5>
+<pre><a href="com/atlan/model/contracts/DataContractSpec.Owners.html" title="class in com.atlan.model.contracts">DataContractSpec.Owners</a> owners</pre>
+<div class="block">Owners of the dataset, which can include users (by username) and / or groups (by internal Atlan alias).</div>
+</li>
+<li class="block-list">
+<h5>status</h5>
+<pre><a href="com/atlan/model/contracts/DataContractStatus.html" title="enum class in com.atlan.model.contracts">DataContractStatus</a> status</pre>
+<div class="block">State of the contract.</div>
+</li>
+<li class="block-list">
+<h5>tags</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/contracts/DataContractSpec.DCTag.html" title="class in com.atlan.model.contracts">DataContractSpec.DCTag</a>&gt; tags</pre>
+<div class="block">Atlan tags for the dataset.</div>
+</li>
+<li class="block-list">
+<h5>templateVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> templateVersion</pre>
+<div class="block">Version of the template for the data contract.</div>
+</li>
+<li class="block-list">
+<h5>terms</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; terms</pre>
+<div class="block">Glossary terms to assign to the dataset.</div>
+</li>
+<li class="block-list">
+<h5>type</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> type</pre>
+<div class="block">Type of the dataset in Atlan.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.contracts.DCS_V_0_0_2">
+<h3>Class&nbsp;<a href="com/atlan/model/contracts/DCS_V_0_0_2.html" title="class in com.atlan.model.contracts">com.atlan.model.contracts.DCS_V_0_0_2</a></h3>
+<div class="type-signature">class DCS_V_0_0_2 extends <a href="com/atlan/model/contracts/DataContractSpec.html" title="class in com.atlan.model.contracts">DataContractSpec</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>templateVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> templateVersion</pre>
+<div class="block">Fixed typeName for Tables.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-package-container">
 <h2 title="Package">Package&nbsp;<a href="com/atlan/model/core/package-summary.html">com.atlan.model.core</a></h2>
 <ul class="block-list">
 <li>
@@ -37967,6 +38097,26 @@ loadScripts(document, 'script');</script>
 <section class="serialized-class-details" id="com.atlan.serde.ElasticSortOptionsDeserializer">
 <h3>Class&nbsp;<a href="com/atlan/serde/ElasticSortOptionsDeserializer.html" title="class in com.atlan.serde">com.atlan.serde.ElasticSortOptionsDeserializer</a></h3>
 <div class="type-signature">class ElasticSortOptionsDeserializer extends com.fasterxml.jackson.databind.deser.std.StdDeserializer&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt; implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.serde.ReadableCustomMetadataDeserializer">
+<h3>Class&nbsp;<a href="com/atlan/serde/ReadableCustomMetadataDeserializer.html" title="class in com.atlan.serde">com.atlan.serde.ReadableCustomMetadataDeserializer</a></h3>
+<div class="type-signature">class ReadableCustomMetadataDeserializer extends com.fasterxml.jackson.databind.deser.std.StdDeserializer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="com/atlan/model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&gt; implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.serde.ReadableCustomMetadataSerializer">
+<h3>Class&nbsp;<a href="com/atlan/serde/ReadableCustomMetadataSerializer.html" title="class in com.atlan.serde">com.atlan.serde.ReadableCustomMetadataSerializer</a></h3>
+<div class="type-signature">class ReadableCustomMetadataSerializer extends com.fasterxml.jackson.databind.ser.std.StdSerializer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="com/atlan/model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&gt; implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
 <dl class="name-value">
 <dt>serialVersionUID:</dt>
 <dd>2L</dd>
