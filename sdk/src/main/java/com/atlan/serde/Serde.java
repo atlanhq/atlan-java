@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
@@ -51,6 +53,9 @@ public class Serde {
 
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
+
+    /** Singular ObjectMapper through which to (de-)serialize raw POJOs and YAML. */
+    public static final ObjectMapper yamlMapper = createMapperYAML();
 
     private static final Map<String, JsonDeserializer<?>> deserializerCache = new ConcurrentHashMap<>();
     private static final Map<String, Class<?>> assetClasses;
@@ -196,6 +201,23 @@ public class Serde {
         // Set client-aware serialization
         ClientAwareSerializerProvider casp = new ClientAwareSerializerProvider(client);
         om.setSerializerProvider(casp);
+        return om;
+    }
+
+    /**
+     * Set up the serialization and deserialization of tenant-agnostic YAML.
+     * @return an ObjectMapper for tenant-agnostic YAML transformations
+     */
+    public static ObjectMapper createMapperYAML() {
+        // Set default options, using client-aware deserialization
+        ObjectMapper om = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID))
+                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
+        // Set standard (non-tenant-specific) modules
+        for (Module m : SIMPLE_MODULES) {
+            om.registerModule(m);
+        }
         return om;
     }
 
