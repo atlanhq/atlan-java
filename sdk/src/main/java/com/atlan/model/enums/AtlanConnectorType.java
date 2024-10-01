@@ -121,6 +121,9 @@ public enum AtlanConnectorType implements AtlanEnum {
     MODEL("model", AtlanConnectionCategory.DATABASE),
     APPLICATION("application", AtlanConnectionCategory.SAAS),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
+    IICS("iics", AtlanConnectionCategory.ELT),
+    ABINITIO("abinitio", AtlanConnectionCategory.ELT),
+    SAP_S4_HANA("sap-s4-hana", AtlanConnectionCategory.WAREHOUSE),
     ;
 
     @JsonValue
