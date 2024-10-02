@@ -2,9 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.discovery;
 
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 /**
  * Represents any field in Atlan that can be used for discovery by string comparisons.

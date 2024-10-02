@@ -3,7 +3,11 @@
 package com.atlan.model.discovery;
 
 import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.AtlanGroup;
+import com.atlan.model.admin.AtlanUser;
 import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.serde.Removable;
 import com.atlan.serde.Serde;
@@ -13,7 +17,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -53,6 +56,9 @@ public class LinkableQuery {
      */
     private AssetHierarchy hierarchy;
 
+    /** Owners by which to limit assets. */
+    private Owners owners;
+
     /**
      * Criteria based on properties that exist across all asset types, that must be present on every asset.
      */
@@ -67,6 +73,9 @@ public class LinkableQuery {
      */
     @Singular
     private List<TagFilter> tags;
+
+    /** Terms by which to limit assets. */
+    private Terms terms;
 
     /** List of types by which to limit the assets. */
     @Singular
@@ -107,7 +116,7 @@ public class LinkableQuery {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode
-    public static final class AssetHierarchy {
+    static final class AssetHierarchy {
         /** Name of the connector type to limit assets by. */
         String connectorName;
 
@@ -123,6 +132,101 @@ public class LinkableQuery {
 
         /** Qualified name prefix that matches the provided {@code attributeName} by which to limit assets. */
         String attributeValue;
+    }
+
+    @Getter
+    @SuperBuilder
+    @EqualsAndHashCode
+    static final class Owners {
+        /** List of UUIDs of owners to limit assets by. */
+        @Singular
+        List<String> ownerIds;
+
+        /** Listing of details for the owners that are specified, keyed by the username. */
+        @Singular
+        Map<String, OwnerDetails> selectedOwners;
+
+        /** List of usernames of owners to limit assets by. */
+        @Singular
+        List<String> ownerUsers;
+
+        /** Listing of details for the owners that are specified, keyed by the group alias. */
+        @Singular
+        Map<String, AtlanGroup> selectedGroups;
+
+        /** List of group aliases of owners to limit assets by. */
+        @Singular
+        List<String> ownerGroups;
+
+        /** If true, include assets with no owners, otherwise only include assets with selected owners. */
+        Boolean empty;
+    }
+
+    @Getter
+    @SuperBuilder
+    @EqualsAndHashCode
+    static final class Terms {
+        /** Whether to include assets with no terms assigned (true) or not (false). */
+        Boolean empty;
+
+        /** Comparison operator to use for matching the terms specified. */
+        String operator; // TODO: just "isNull" when matching assets with no term assigned, and nothing else in the object
+
+        /** Details of the terms to use for matching. */
+        @Singular
+        List<TermDetails> terms;
+    }
+
+    @Getter
+    @SuperBuilder
+    @EqualsAndHashCode
+    static final class OwnerDetails {
+        /** First name of the user. */
+        String firstName;
+
+        /** UUID of the user. */
+        String id;
+
+        /** Username of the user. */
+        String username;
+
+        /** Surname of the user. */
+        String lastName;
+
+        /** Whether the user is active (true) or deactivated (false). */
+        Boolean enabled;
+
+        /** Email address of the user. */
+        String email;
+
+        public static OwnerDetails from(AtlanUser user) {
+            if (user == null) return null;
+            return builder()
+                .firstName(user.getFirstName())
+                .id(user.getId())
+                .username(user.getUsername())
+                .lastName(user.getLastName())
+                .enabled(user.getEnabled())
+                .email(user.getEmail())
+                .build();
+        }
+    }
+
+    @Getter
+    @SuperBuilder
+    @EqualsAndHashCode
+    static final class TermDetails {
+        /** UUID of the term. */
+        String guid;
+
+        /** Unique name of the term. */
+        String qualifiedName;
+
+        /** Type of the term. */
+        final String typeName = GlossaryTerm.TYPE_NAME;
+
+        /** Attributes of the term. */
+        Map<String, String> attributes;
     }
 
     @Getter
@@ -195,6 +299,26 @@ public class LinkableQuery {
         }
 
         /**
+         * Limit assets to a specified subset of those in a connection.
+         * @param qualifiedNamePrefix full qualifiedName prefix that all assets in the subset should start with
+         * @param denormalizedAttributeName name of the denormalized attribute where the prefix can be found on all assets (for example, {@code schemaQualifiedName})
+         * @return the query builder, limited to a subset of assets in a connection
+         */
+        public B forPrefix(String qualifiedNamePrefix, String denormalizedAttributeName) {
+            String connectionQN = StringUtils.getConnectionQualifiedName(qualifiedNamePrefix);
+            if (connectionQN != null) {
+                return hierarchy(AssetHierarchy.builder()
+                    .connectionQualifiedName(connectionQN)
+                    .connectorName(Connection.getConnectorTypeFromQualifiedName(connectionQN).getValue())
+                    .attributeName(denormalizedAttributeName)
+                    .attributeValue(qualifiedNamePrefix)
+                    .build());
+            } else {
+                return hierarchy(AssetHierarchy.builder().build());
+            }
+        }
+
+        /**
          * Limit assets to those with a particular Atlan tag assigned.
          * @param tagName human-readable name of the Atlan tag
          * @return the query builder, limited to assets with the Atlan tag assigned
@@ -211,6 +335,106 @@ public class LinkableQuery {
          */
         public B withTagValue(String tagName, String value) {
             return tag(TagFilter.of(client, tagName, value));
+        }
+
+        /**
+         * Limit assets to those without any owners defined (individuals or groups).
+         * @return the query builder, limited to assets without any owners assigned
+         */
+        public B withoutOwners() {
+            return owners(Owners.builder()
+                .empty(true)
+                .build());
+        }
+
+        /**
+         * Limit assets to those with any of the specified owners.
+         * @param usernames (optional) list of usernames to match as owners
+         * @param groups (optional) list of internal group names to match as owners
+         * @return the query builder, limited to assets with any of the specified owners assigned
+         * @throws AtlanException if there are problems confirming any of the provided owners
+         */
+        public B withOwners(List<String> usernames, List<String> groups) throws AtlanException {
+            if ((usernames == null || usernames.isEmpty()) && (groups == null || groups.isEmpty())) {
+                return withoutOwners();
+            }
+            Owners.OwnersBuilder<?, ?> builder = Owners.builder();
+            if (usernames != null) {
+                for (String username : usernames) {
+                    AtlanUser user = client.getUserCache().getByName(username, true);
+                    builder.ownerUser(username)
+                        .ownerId(user.getId())
+                        .selectedOwner(username, OwnerDetails.from(user));
+                }
+            }
+            if (groups != null) {
+                for (String alias : groups) {
+                    AtlanGroup group = client.getGroupCache().getByName(alias, true);
+                    builder.ownerGroup(alias)
+                        .selectedGroup(alias, group);
+                }
+            }
+            return owners(builder.build());
+        }
+
+        /**
+         * Limit assets to those with any of the specified terms assigned.
+         * @param terms minimal details about the terms, which must include at least GUID, qualifiedName, and name
+         * @return the query builder, limited to assets with any of the specified terms assigned
+         */
+        public B withAnyOf(List<GlossaryTerm> terms) {
+            return withTerms("equals", terms);
+        }
+
+        /**
+         * Limit assets to those with all the specified terms assigned.
+         * @param terms minimal details about the terms, which must include at least GUID, qualifiedName, and name
+         * @return the query builder, limited to assets with all the specified terms assigned
+         */
+        public B withAll(List<GlossaryTerm> terms) {
+            return withTerms("AND", terms);
+        }
+
+        /**
+         * Limit assets to those with none of the specified terms assigned.
+         * @param terms minimal details about the terms, which must include at least GUID, qualifiedName, and name
+         * @return the query builder, limited to assets with none of the specified terms assigned
+         */
+        public B withNoneOf(List<GlossaryTerm> terms) {
+            return withTerms("NAND", terms);
+        }
+
+        /**
+         * Limit assets to those with no terms assigned.
+         * @return the query builder, limited to assets without any terms assigned
+         */
+        public B withoutTerms() {
+            return terms(Terms.builder()
+                .operator("isNull")
+                .build());
+        }
+
+        /**
+         * Limit assets to those with any terms assigned.
+         * @return the query builder, limited to assets with any terms assigned
+         */
+        public B withAnyTerm() {
+            return terms(Terms.builder()
+                .operator("isNotNull")
+                .build());
+        }
+
+        private B withTerms(String operator, List<GlossaryTerm> terms) {
+            Terms.TermsBuilder<?, ?> builder = Terms.builder()
+                .operator(operator);
+            for (GlossaryTerm term : terms) {
+                builder.term(TermDetails.builder()
+                    .guid(term.getGuid())
+                    .qualifiedName(term.getQualifiedName())
+                    .attributes(Map.of("name", term.getName()))
+                    .build());
+            }
+            return terms(builder.build());
         }
 
         /**

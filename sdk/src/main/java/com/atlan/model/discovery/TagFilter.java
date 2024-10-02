@@ -2,11 +2,10 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.discovery;
 
-import java.util.List;
-
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.ITag;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -54,10 +53,7 @@ public class TagFilter {
     public static TagFilter of(AtlanClient client, String tagName) {
         try {
             String clsId = client.getAtlanTagCache().getIdForName(tagName);
-            return TagFilter._internal()
-                .displayName(tagName)
-                .name(clsId)
-                .build();
+            return TagFilter._internal().displayName(tagName).name(clsId).build();
         } catch (AtlanException e) {
             log.error("Unable to translate tag -- skipping: {}", tagName, e);
         }
@@ -78,17 +74,15 @@ public class TagFilter {
         TagFilter starter = of(client, tagName);
         if (starter != null && value != null && !value.isEmpty()) {
             try {
-                List<ITag> sourceTags =
-                    client.getSourceTagCache().getByMappedAtlanTag(starter.getName());
-                List<String> qualifiedNames = sourceTags.stream()
-                    .map(ITag::getQualifiedName)
-                    .toList();
+                List<ITag> sourceTags = client.getSourceTagCache().getByMappedAtlanTag(starter.getName());
+                List<String> qualifiedNames =
+                        sourceTags.stream().map(ITag::getQualifiedName).toList();
                 return starter.toBuilder()
-                    .tagValue(TagValue.builder()
-                        .tagQFNames(qualifiedNames)
-                        .consolidatedValue(value)
-                        .build())
-                    .build();
+                        .tagValue(TagValue.builder()
+                                .tagQFNames(qualifiedNames)
+                                .consolidatedValue(value)
+                                .build())
+                        .build();
             } catch (AtlanException e) {
                 log.error("Unable to find any source tags mapped to tag -- skipping: {}", tagName, e);
             }

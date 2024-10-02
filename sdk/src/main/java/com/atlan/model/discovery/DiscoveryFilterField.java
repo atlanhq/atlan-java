@@ -2,10 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.discovery;
 
-import com.atlan.model.enums.AtlanComparisonOperator;
-import lombok.Getter;
-
 import java.util.List;
+import lombok.Getter;
 
 /**
  * Class used to provide a proxy to building up a linkable query filter with the appropriate
@@ -65,10 +63,10 @@ public class DiscoveryFilterField {
      */
     protected DiscoveryFilter build(String op, Object value) {
         return DiscoveryFilter._internal()
-            .filterKey(filerKey)
-            .operand(fields.size() > 1 ? fields : fields.get(0))
-            .operator(op)
-            .value(value)
-            .build();
+                .filterKey(filerKey)
+                .operand(fields.size() > 1 ? fields : fields.get(0))
+                .operator(op)
+                .value(value)
+                .build();
     }
 }
