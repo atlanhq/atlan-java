@@ -9,6 +9,8 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedSet;
@@ -43,13 +45,14 @@ public class AtlanGroup extends AtlanObject {
     /** TBC */
     String path;
 
-    /** Personas the group is associated with. */
-    @JsonIgnore // TODO
-    SortedSet<String> personas;
+    /** Personas the group is associated with (limited details). */
+    SortedSet<Persona> personas;
 
-    /** Purposes the group is associated with. */
-    @JsonIgnore // TODO
-    SortedSet<String> purposes;
+    /** Purposes the group is associated with (limited details). */
+    SortedSet<Purpose> purposes;
+
+    /** TBC */
+    SortedSet<String> roles;
 
     /** Number of users in the group. */
     Long userCount;
@@ -290,5 +293,64 @@ public class AtlanGroup extends AtlanObject {
 
         /** Slack channels for this group. */
         List<String> channels;
+    }
+
+    @Getter
+    @Jacksonized
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    public static final class Persona extends AtlanObject implements Comparable<Persona> {
+        private static final long serialVersionUID = 2L;
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<AtlanGroup.Persona> personaComparator =
+            Comparator.comparing(AtlanGroup.Persona::getId, stringComparator);
+
+        /** UUID of the persona. */
+        String id;
+
+        /** Name of the persona. */
+        String name;
+
+        /** Business name of the persona. */
+        String displayName;
+
+        /** Unique internal name of the persona. */
+        String qualifiedName;
+
+        /** {@inheritDoc} */
+        @Override
+        public int compareTo(AtlanGroup.Persona o) {
+            return personaComparator.compare(this, o);
+        }
+    }
+
+    @Getter
+    @Jacksonized
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    public static final class Purpose extends AtlanObject implements Comparable<Purpose> {
+        private static final long serialVersionUID = 2L;
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<AtlanGroup.Purpose> purposeComparator =
+            Comparator.comparing(AtlanGroup.Purpose::getGuid, stringComparator);
+
+        /** UUID of the purpose. */
+        String guid;
+
+        /** Name of the purpose. */
+        String name;
+
+        /** Unique internal name of the purpose. */
+        String qualifiedName;
+
+        /** {@inheritDoc} */
+        @Override
+        public int compareTo(AtlanGroup.Purpose o) {
+            return purposeComparator.compare(this, o);
+        }
     }
 }

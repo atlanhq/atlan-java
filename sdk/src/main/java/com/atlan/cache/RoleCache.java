@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * Lazily-loaded cache for translating Atlan-internal roles into their various IDs.
  */
 @Slf4j
-public class RoleCache extends AbstractMassCache {
+public class RoleCache extends AbstractMassCache<AtlanRole> {
 
     private final RolesEndpoint rolesEndpoint;
 
@@ -24,10 +24,29 @@ public class RoleCache extends AbstractMassCache {
     /** {@inheritDoc} */
     @Override
     public synchronized void refreshCache() throws AtlanException {
+        super.refreshCache();
         log.debug("Refreshing cache of roles...");
         // Note: we will only retrieve and cache the workspace-level roles, which all
         // start with '$'
         RoleResponse response = rolesEndpoint.list("{\"name\":{\"$ilike\":\"$%\"}}");
+        cacheResponse(response);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupById(String id) throws AtlanException {
+        RoleResponse response = rolesEndpoint.list("{\"id\":\"" + id + "\"}");
+        cacheResponse(response);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupByName(String name) throws AtlanException {
+        RoleResponse response = rolesEndpoint.list("{\"name\":\"" + name + "\"}");
+        cacheResponse(response);
+    }
+
+    private void cacheResponse(RoleResponse response) {
         List<AtlanRole> roles;
         if (response != null) {
             roles = response.getRecords();
@@ -35,9 +54,7 @@ public class RoleCache extends AbstractMassCache {
             roles = Collections.emptyList();
         }
         for (AtlanRole role : roles) {
-            String roleId = role.getId();
-            String roleName = role.getName();
-            cache(roleId, roleName);
+            cache(role.getId(), role.getName(), role);
         }
     }
 }

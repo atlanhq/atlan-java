@@ -137,6 +137,7 @@ public class LinkableQuery {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode
+    @SuppressWarnings("cast")
     static final class Owners {
         /** List of UUIDs of owners to limit assets by. */
         @Singular
@@ -215,6 +216,7 @@ public class LinkableQuery {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode
+    @SuppressWarnings("cast")
     static final class TermDetails {
         /** UUID of the term. */
         String guid;

@@ -21,9 +21,8 @@ import lombok.extern.slf4j.Slf4j;
  * custom metadata (including attributes).
  */
 @Slf4j
-public class CustomMetadataCache extends AbstractMassCache {
+public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
-    private Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
     private Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
 
     private Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
@@ -40,6 +39,7 @@ public class CustomMetadataCache extends AbstractMassCache {
     @Override
     public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
+        super.refreshCache();
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
         if (response == null
@@ -48,15 +48,13 @@ public class CustomMetadataCache extends AbstractMassCache {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        cacheById = new ConcurrentHashMap<>();
         attrCacheById = new ConcurrentHashMap<>();
         mapAttrIdToName = new ConcurrentHashMap<>();
         mapAttrNameToId = new ConcurrentHashMap<>();
         archivedAttrIds = new ConcurrentHashMap<>();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
-            cacheById.put(typeId, bmDef);
-            cache(typeId, bmDef.getDisplayName());
+            cache(typeId, bmDef.getDisplayName(), bmDef);
             mapAttrIdToName.put(typeId, new ConcurrentHashMap<>());
             mapAttrNameToId.put(typeId, new ConcurrentHashMap<>());
             for (AttributeDef attributeDef : bmDef.getAttributeDefs()) {
@@ -78,6 +76,18 @@ public class CustomMetadataCache extends AbstractMassCache {
                 }
             }
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupByName(String name) {
+        // Nothing to do here, can only be looked up by internal ID
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupById(String id) {
+        // Since we can only look up in one direction, we should only allow bulk refresh
     }
 
     /**
@@ -118,11 +128,11 @@ public class CustomMetadataCache extends AbstractMassCache {
      */
     public Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
             throws AtlanException {
-        if (cacheById.isEmpty() || forceRefresh) {
+        if (mapIdToObject.isEmpty() || forceRefresh) {
             refreshCache();
         }
         Map<String, List<AttributeDef>> map = new HashMap<>();
-        for (Map.Entry<String, CustomMetadataDef> entry : cacheById.entrySet()) {
+        for (Map.Entry<String, CustomMetadataDef> entry : mapIdToObject.entrySet()) {
             String typeId = entry.getKey();
             String typeName = getNameForId(typeId);
             CustomMetadataDef typeDef = entry.getValue();
@@ -296,7 +306,7 @@ public class CustomMetadataCache extends AbstractMassCache {
      */
     public CustomMetadataDef getCustomMetadataDef(String setName, boolean allowRefresh) throws AtlanException {
         String setId = getIdForName(setName, allowRefresh);
-        return cacheById.get(setId);
+        return mapIdToObject.get(setId);
     }
 
     /**

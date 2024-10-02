@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * Atlan tags.
  */
 @Slf4j
-public class AtlanTagCache extends AbstractMassCache {
+public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     private Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
     private Set<String> deletedIds = ConcurrentHashMap.newKeySet();
@@ -32,6 +32,7 @@ public class AtlanTagCache extends AbstractMassCache {
     /** {@inheritDoc} */
     @Override
     public synchronized void refreshCache() throws AtlanException {
+        super.refreshCache();
         log.debug("Refreshing cache of Atlan tags...");
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.ATLAN_TAG, AtlanTypeCategory.STRUCT));
@@ -46,7 +47,7 @@ public class AtlanTagCache extends AbstractMassCache {
         deletedNames = ConcurrentHashMap.newKeySet();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
-            cache(typeId, clsDef.getDisplayName());
+            cache(typeId, clsDef.getDisplayName(), clsDef);
             List<AttributeDef> attrs = clsDef.getAttributeDefs();
             String sourceTagsId = "";
             if (attrs != null && !attrs.isEmpty()) {
@@ -58,6 +59,18 @@ public class AtlanTagCache extends AbstractMassCache {
             }
             mapIdToSourceTagsAttrId.put(typeId, sourceTagsId);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupByName(String name) {
+        // Nothing to do here, can only be looked up by internal ID
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void lookupById(String id) {
+        // Since we can only look up in one direction, we should only allow bulk refresh
     }
 
     /** {@inheritDoc} */
