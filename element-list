@@ -9,6 +9,7 @@ com.atlan.model.admin
 com.atlan.model.assets
 com.atlan.model.contracts
 com.atlan.model.core
+com.atlan.model.discovery
 com.atlan.model.enums
 com.atlan.model.events
 com.atlan.model.fields
