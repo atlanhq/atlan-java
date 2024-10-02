@@ -171,7 +171,7 @@ public class LinkableQuery {
         Boolean empty;
 
         /** Comparison operator to use for matching the terms specified. */
-        String operator; // TODO: just "isNull" when matching assets with no term assigned, and nothing else in the object
+        String operator;
 
         /** Details of the terms to use for matching. */
         @Singular
@@ -203,13 +203,13 @@ public class LinkableQuery {
         public static OwnerDetails from(AtlanUser user) {
             if (user == null) return null;
             return builder()
-                .firstName(user.getFirstName())
-                .id(user.getId())
-                .username(user.getUsername())
-                .lastName(user.getLastName())
-                .enabled(user.getEnabled())
-                .email(user.getEmail())
-                .build();
+                    .firstName(user.getFirstName())
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .lastName(user.getLastName())
+                    .enabled(user.getEnabled())
+                    .email(user.getEmail())
+                    .build();
         }
     }
 
@@ -310,11 +310,12 @@ public class LinkableQuery {
             String connectionQN = StringUtils.getConnectionQualifiedName(qualifiedNamePrefix);
             if (connectionQN != null) {
                 return hierarchy(AssetHierarchy.builder()
-                    .connectionQualifiedName(connectionQN)
-                    .connectorName(Connection.getConnectorTypeFromQualifiedName(connectionQN).getValue())
-                    .attributeName(denormalizedAttributeName)
-                    .attributeValue(qualifiedNamePrefix)
-                    .build());
+                        .connectionQualifiedName(connectionQN)
+                        .connectorName(Connection.getConnectorTypeFromQualifiedName(connectionQN)
+                                .getValue())
+                        .attributeName(denormalizedAttributeName)
+                        .attributeValue(qualifiedNamePrefix)
+                        .build());
             } else {
                 return hierarchy(AssetHierarchy.builder().build());
             }
@@ -344,9 +345,7 @@ public class LinkableQuery {
          * @return the query builder, limited to assets without any owners assigned
          */
         public B withoutOwners() {
-            return owners(Owners.builder()
-                .empty(true)
-                .build());
+            return owners(Owners.builder().empty(true).build());
         }
 
         /**
@@ -364,16 +363,13 @@ public class LinkableQuery {
             if (usernames != null) {
                 for (String username : usernames) {
                     AtlanUser user = client.getUserCache().getByName(username, true);
-                    builder.ownerUser(username)
-                        .ownerId(user.getId())
-                        .selectedOwner(username, OwnerDetails.from(user));
+                    builder.ownerUser(username).ownerId(user.getId()).selectedOwner(username, OwnerDetails.from(user));
                 }
             }
             if (groups != null) {
                 for (String alias : groups) {
                     AtlanGroup group = client.getGroupCache().getByName(alias, true);
-                    builder.ownerGroup(alias)
-                        .selectedGroup(alias, group);
+                    builder.ownerGroup(alias).selectedGroup(alias, group);
                 }
             }
             return owners(builder.build());
@@ -411,9 +407,7 @@ public class LinkableQuery {
          * @return the query builder, limited to assets without any terms assigned
          */
         public B withoutTerms() {
-            return terms(Terms.builder()
-                .operator("isNull")
-                .build());
+            return terms(Terms.builder().operator("isNull").build());
         }
 
         /**
@@ -421,20 +415,17 @@ public class LinkableQuery {
          * @return the query builder, limited to assets with any terms assigned
          */
         public B withAnyTerm() {
-            return terms(Terms.builder()
-                .operator("isNotNull")
-                .build());
+            return terms(Terms.builder().operator("isNotNull").build());
         }
 
         private B withTerms(String operator, List<GlossaryTerm> terms) {
-            Terms.TermsBuilder<?, ?> builder = Terms.builder()
-                .operator(operator);
+            Terms.TermsBuilder<?, ?> builder = Terms.builder().operator(operator);
             for (GlossaryTerm term : terms) {
                 builder.term(TermDetails.builder()
-                    .guid(term.getGuid())
-                    .qualifiedName(term.getQualifiedName())
-                    .attributes(Map.of("name", term.getName()))
-                    .build());
+                        .guid(term.getGuid())
+                        .qualifiedName(term.getQualifiedName())
+                        .attributes(Map.of("name", term.getName()))
+                        .build());
             }
             return terms(builder.build());
         }

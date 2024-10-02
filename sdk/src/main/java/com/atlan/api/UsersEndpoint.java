@@ -370,8 +370,8 @@ public class UsersEndpoint extends HeraclesEndpoint {
     public AtlanUser getByGuid(String guid, RequestOptions options) throws AtlanException {
         UserResponse response = list("{\"id\":\"" + guid + "\"}", options);
         if (response != null
-            && response.getRecords() != null
-            && !response.getRecords().isEmpty()) {
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;

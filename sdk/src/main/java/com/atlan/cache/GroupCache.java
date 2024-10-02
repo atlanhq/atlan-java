@@ -8,11 +8,9 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanGroup;
+import com.atlan.model.admin.GroupResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.atlan.model.admin.AtlanUser;
-import com.atlan.model.admin.GroupResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -153,7 +151,9 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     }
 
     private void cacheResponse(GroupResponse response) {
-        if (response != null && response.getRecords() != null && !response.getRecords().isEmpty()) {
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             List<AtlanGroup> groups = response.getRecords();
             for (AtlanGroup group : groups) {
                 String groupId = group.getId();

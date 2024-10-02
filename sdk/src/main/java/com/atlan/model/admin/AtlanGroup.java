@@ -9,7 +9,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -305,7 +304,7 @@ public class AtlanGroup extends AtlanObject {
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<AtlanGroup.Persona> personaComparator =
-            Comparator.comparing(AtlanGroup.Persona::getId, stringComparator);
+                Comparator.comparing(AtlanGroup.Persona::getId, stringComparator);
 
         /** UUID of the persona. */
         String id;
@@ -336,7 +335,7 @@ public class AtlanGroup extends AtlanObject {
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<AtlanGroup.Purpose> purposeComparator =
-            Comparator.comparing(AtlanGroup.Purpose::getGuid, stringComparator);
+                Comparator.comparing(AtlanGroup.Purpose::getGuid, stringComparator);
 
         /** UUID of the purpose. */
         String guid;
