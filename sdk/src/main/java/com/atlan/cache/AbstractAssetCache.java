@@ -65,8 +65,9 @@ public abstract class AbstractAssetCache {
      * Add an entry to the cache.
      *
      * @param asset to be cached
+     * @return the guid of the asset that was cached, or null if none was provided
      */
-    protected void cache(Asset asset) {
+    protected String cache(Asset asset) {
         if (asset != null) {
             ObjectName name = getName(asset);
             if (name != null) {
@@ -75,8 +76,10 @@ public abstract class AbstractAssetCache {
                 guid2Asset.put(guid, asset);
                 qualifiedName2Guid.put(asset.getQualifiedName(), guid);
                 name2Guid.put(name, guid);
+                return guid;
             }
         }
+        return null;
     }
 
     /**

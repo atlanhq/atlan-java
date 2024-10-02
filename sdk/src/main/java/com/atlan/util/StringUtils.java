@@ -299,4 +299,22 @@ public final class StringUtils {
                 .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
                 .replaceAll("([a-z])([A-Z])", "$1_$2");
     }
+
+    /**
+     * Convert the provided string to Title Case.
+     * @param text to convert
+     * @return the original text, in Title Case
+     */
+    public static String getTitleCase(String text) {
+        StringBuilder titleCase = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+            // Insert a space before uppercase letters except for the first character
+            if (i > 0 && Character.isUpperCase(currentChar)) {
+                titleCase.append(" ");
+            }
+            titleCase.append(i == 0 ? Character.toUpperCase(currentChar) : currentChar);
+        }
+        return titleCase.toString();
+    }
 }

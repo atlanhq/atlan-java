@@ -349,6 +349,36 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves the user with a unique ID (GUID) that exactly matches the provided string.
+     *
+     * @param guid unique identifier by which to retrieve the user
+     * @return the user whose GUID matches the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser getByGuid(String guid) throws AtlanException {
+        return getByGuid(guid, null);
+    }
+
+    /**
+     * Retrieves the user with a unique ID (GUID) that exactly matches the provided string.
+     *
+     * @param guid unique identifier by which to retrieve the user
+     * @param options to override default client settings
+     * @return the user whose GUID matches the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser getByGuid(String guid, RequestOptions options) throws AtlanException {
+        UserResponse response = list("{\"id\":\"" + guid + "\"}", options);
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Create a new user.
      *
      * @param user the details of the new user

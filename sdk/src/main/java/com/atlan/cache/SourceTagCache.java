@@ -10,6 +10,7 @@ import com.atlan.model.assets.ITag;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.util.StringUtils;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,10 +24,33 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SourceTagCache extends AbstractAssetCache {
 
-    private static final List<AtlanField> tagAttributes = List.of(Asset.NAME);
+    private static final List<AtlanField> tagAttributes = List.of(Asset.NAME, ITag.MAPPED_ATLAN_TAG_NAME);
+
+    private final Map<String, Set<String>> atlanTagIdToGuids = new ConcurrentHashMap<>();
 
     public SourceTagCache(AtlanClient client) {
         super(client);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    protected String cache(Asset asset) {
+        String guid = super.cache(asset);
+        if (guid != null && asset instanceof ITag tag) {
+            String tagName = tag.getMappedAtlanTagName();
+            if (tagName != null) {
+                try {
+                    String tagId = client.getAtlanTagCache().getIdForName(tagName);
+                    if (!atlanTagIdToGuids.containsKey(tagId)) {
+                        atlanTagIdToGuids.put(tagId, new HashSet<>());
+                    }
+                    atlanTagIdToGuids.get(tagId).add(guid);
+                } catch (AtlanException e) {
+                    log.error("Unable to translate tag name to ID: {}", tagName, e);
+                }
+            }
+        }
+        return guid;
     }
 
     /** {@inheritDoc} */
@@ -84,6 +108,78 @@ public class SourceTagCache extends AbstractAssetCache {
             if (candidate.isPresent() && candidate.get() instanceof ITag tag) {
                 cache((Asset) tag);
             }
+        }
+    }
+
+    /**
+     * Logic to refresh the cache for a single object from Atlan.
+     *
+     * @param internalAtlanTagId internal hashed-string ID for the mapped Atlan tag
+     * @throws AtlanException on any underlying API issues
+     */
+    public void lookupByMappedAtlanTag(String internalAtlanTagId) throws AtlanException {
+        if (internalAtlanTagId != null && !internalAtlanTagId.isEmpty()) {
+            List<Asset> candidates = client
+                    .assets
+                    .select()
+                    .where(Asset.SUPER_TYPE_NAMES.eq(ITag.TYPE_NAME))
+                    .where(ITag.MAPPED_ATLAN_TAG_NAME.eq(internalAtlanTagId))
+                    .includesOnResults(tagAttributes)
+                    .stream()
+                    .toList();
+            if (!candidates.isEmpty()) {
+                for (Asset candidate : candidates) {
+                    cache(candidate);
+                }
+            }
+        }
+    }
+
+    /**
+     * Retrieve tags from the cache by their mapped Atlan tag, looking it up and
+     * adding it to the cache if it is not found there.
+     *
+     * @param internalAtlanTagId internal hashed-string ID for the mapped Atlan tag
+     * @return all mapped tags (if found)
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no internal hashed-string Atlan ID was provided
+     */
+    public List<ITag> getByMappedAtlanTag(String internalAtlanTagId) throws AtlanException {
+        return getByMappedAtlanTag(internalAtlanTagId, true);
+    }
+
+    /**
+     * Retrieve tags from the cache by their mapped Atlan tag.
+     *
+     * @param internalAtlanTagId internal hashed-string ID for the mapped Atlan tag
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return all mapped tags (if found)
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no internal hashed-string Atlan ID was provided
+     */
+    public List<ITag> getByMappedAtlanTag(String internalAtlanTagId, boolean allowRefresh) throws AtlanException {
+        if (internalAtlanTagId != null && !internalAtlanTagId.isEmpty()) {
+            Set<String> found = atlanTagIdToGuids.get(internalAtlanTagId);
+            if (found == null && allowRefresh) {
+                // If not found, refresh the cache and look again (could be stale)
+                lookupByMappedAtlanTag(internalAtlanTagId);
+                found = atlanTagIdToGuids.get(internalAtlanTagId);
+            }
+            if (found == null) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, "tag", internalAtlanTagId);
+            }
+            List<ITag> list = new ArrayList<>();
+            for (String guid : found) {
+                ITag tag = (ITag) getByGuid(guid, false);
+                if (tag != null) {
+                    list.add(tag);
+                }
+            }
+            return list;
+        } else {
+            throw new InvalidRequestException(ErrorCode.MISSING_ID);
         }
     }
 

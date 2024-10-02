@@ -403,9 +403,7 @@ public class AtlanUser extends AtlanObject {
         /** Human-readable name of the persona. */
         String displayName;
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         @Override
         public int compareTo(Persona o) {
             return personaComparator.compare(this, o);
