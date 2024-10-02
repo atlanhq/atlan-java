@@ -1,11 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-package com.atlan.model.search;
+package com.atlan.model.discovery;
 
 import com.atlan.AtlanClient;
-import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Connection;
-import com.atlan.model.assets.ITag;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.serde.Removable;
 import com.atlan.serde.Serde;
@@ -15,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -149,45 +148,12 @@ public class LinkableQuery {
             if (query.properties != null) {
                 Map<String, Object> propertyMap = new LinkedHashMap<>();
                 for (DiscoveryFilter filter : query.properties) {
-                    propertyMap.put(filter.operand, List.of(filter));
+                    propertyMap.put(filter.filterKey, List.of(filter));
                 }
                 filters.put("properties", propertyMap);
             }
             if (query.tags != null) {
-                List<TagFilter> tags = new ArrayList<>();
-                for (TagFilter filter : query.tags) {
-                    if (filter.displayName != null && !filter.displayName.isBlank()) {
-                        try {
-                            String clsId = query.client.getAtlanTagCache().getIdForName(filter.displayName);
-                            TagFilter.TagFilterBuilder<?, ?> builder =
-                                    filter.toBuilder().name(clsId);
-                            if (filter.tagValues != null && !filter.tagValues.isEmpty()) {
-                                List<ITag> sourceTags =
-                                        query.client.getSourceTagCache().getByMappedAtlanTag(clsId);
-                                List<String> qualifiedNames = sourceTags.stream()
-                                        .map(ITag::getQualifiedName)
-                                        .toList();
-                                builder.clearTagValues();
-                                for (TagFilter.TagValue value : filter.tagValues) {
-                                    if (value.tagQFNames == null || value.tagQFNames.isEmpty()) {
-                                        TagFilter.TagValue withQNs = value.toBuilder()
-                                                .tagQFNames(qualifiedNames)
-                                                .build();
-                                        builder.tagValue(withQNs);
-                                    } else {
-                                        // If there is already a specific qualifiedName, retain it
-                                        builder.tagValue(value);
-                                    }
-                                }
-                            }
-                            TagFilter resolved = builder.build();
-                            tags.add(resolved);
-                        } catch (AtlanException e) {
-                            log.error("Unable to translate tag -- skipping: {}", filter.displayName, e);
-                        }
-                    }
-                }
-                filters.put("__traitNames", Map.of("classifications", tags));
+                filters.put("__traitNames", Map.of("classifications", query.tags));
             }
             if (query.typeNames != null) {
                 List<TypeName> types = new ArrayList<>();
@@ -226,6 +192,25 @@ public class LinkableQuery {
                     .attributeName("")
                     .attributeValue("")
                     .build());
+        }
+
+        /**
+         * Limit assets to those with a particular Atlan tag assigned.
+         * @param tagName human-readable name of the Atlan tag
+         * @return the query builder, limited to assets with the Atlan tag assigned
+         */
+        public B withTag(String tagName) {
+            return tag(TagFilter.of(client, tagName));
+        }
+
+        /**
+         * Limit assets to those with a particular source tag assigned, with a particular value.
+         * @param tagName human-readable name of the Atlan tag mapped to a source tag
+         * @param value of the source tag
+         * @return the query builder, limited to assets with the Atlan tag assigned with a particular value
+         */
+        public B withTagValue(String tagName, String value) {
+            return tag(TagFilter.of(client, tagName, value));
         }
 
         /**

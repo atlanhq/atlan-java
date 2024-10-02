@@ -37,12 +37,17 @@ public class SourceTagCache extends AbstractAssetCache {
     protected String cache(Asset asset) {
         String guid = super.cache(asset);
         if (guid != null && asset instanceof ITag tag) {
-            String tagId = tag.getMappedAtlanTagName();
-            if (tagId != null) {
-                if (!atlanTagIdToGuids.containsKey(tagId)) {
-                    atlanTagIdToGuids.put(tagId, new HashSet<>());
+            String tagName = tag.getMappedAtlanTagName();
+            if (tagName != null) {
+                try {
+                    String tagId = client.getAtlanTagCache().getIdForName(tagName);
+                    if (!atlanTagIdToGuids.containsKey(tagId)) {
+                        atlanTagIdToGuids.put(tagId, new HashSet<>());
+                    }
+                    atlanTagIdToGuids.get(tagId).add(guid);
+                } catch (AtlanException e) {
+                    log.error("Unable to translate tag name to ID: {}", tagName, e);
                 }
-                atlanTagIdToGuids.get(tagId).add(guid);
             }
         }
         return guid;
@@ -163,7 +168,7 @@ public class SourceTagCache extends AbstractAssetCache {
                 found = atlanTagIdToGuids.get(internalAtlanTagId);
             }
             if (found == null) {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, internalAtlanTagId);
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, "tag", internalAtlanTagId);
             }
             List<ITag> list = new ArrayList<>();
             for (String guid : found) {
