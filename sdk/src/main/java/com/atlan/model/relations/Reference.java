@@ -209,6 +209,10 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
      */
     UniqueAttributes uniqueAttributes;
 
+    /** Arbitrary textual labels for the asset. */
+    @Singular
+    List<String> labels;
+
     /**
      * Attribute(s) that handle custom information direct from source systems. Not to be
      * confused with custom metadata attributes, which are user-defined and user-managed, and

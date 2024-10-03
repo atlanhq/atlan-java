@@ -452,6 +452,9 @@ public interface ISchema {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
     /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
     String getLinkedSchemaQualifiedName();
 
@@ -472,6 +475,9 @@ public interface ISchema {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();

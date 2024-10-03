@@ -93,6 +93,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Long columnDuplicateValuesCountLong;
 
+    /** List of top-level upstream nested columns. */
+    @Attribute
+    @Singular("putColumnHierarchy")
+    List<Map<String, String>> columnHierarchy;
+
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
     Histogram columnHistogram;
@@ -304,6 +309,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;
+
+    /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
+    @Attribute
+    String nestedColumnOrder;
 
     /** Nested columns that exist within this column. */
     @Attribute

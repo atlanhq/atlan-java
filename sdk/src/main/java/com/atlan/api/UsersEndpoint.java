@@ -305,7 +305,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      */
     public AtlanUser getByUsername(String user, RequestOptions options) throws AtlanException {
         UserResponse response = list("{\"username\":\"" + user + "\"}", options);
-        if (response != null && response.getRecords() != null) {
+        if (response != null
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;

@@ -34,6 +34,9 @@ public interface ILineageProcess {
     public static final String TYPE_NAME = "Process";
 
     /** TBC */
+    TextField ADDITIONAL_ETL_CONTEXT = new TextField("additionalEtlContext", "additionalEtlContext");
+
+    /** TBC */
     RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
 
     /** TBC */
@@ -62,6 +65,9 @@ public interface ILineageProcess {
 
     /** TBC */
     TextField SQL = new TextField("sql", "sql");
+
+    /** TBC */
+    String getAdditionalEtlContext();
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -409,6 +415,9 @@ public interface ILineageProcess {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    String getLexicographicalSortOrder();
+
+    /** TBC */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -425,6 +434,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** TBC */
     SortedSet<IDataProduct> getOutputPortDataProducts();

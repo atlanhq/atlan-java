@@ -472,6 +472,9 @@ public interface IAtlanQuery {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    String getLexicographicalSortOrder();
+
+    /** TBC */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -488,6 +491,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();

@@ -45,6 +45,10 @@ public class DbtColumnProcess extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
+    @Attribute
+    String additionalEtlContext;
+
     /** Tasks that exist within this process. */
     @Attribute
     @Singular

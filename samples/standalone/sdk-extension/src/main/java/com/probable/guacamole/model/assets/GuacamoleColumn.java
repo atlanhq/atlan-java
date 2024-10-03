@@ -119,6 +119,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Long columnDuplicateValuesCountLong;
 
+    /** List of top-level upstream nested columns. */
+    @Attribute
+    @Singular("putColumnHierarchy")
+    List<Map<String, String>> columnHierarchy;
+
     /** TBC */
     @Attribute
     Histogram columnHistogram;
@@ -341,6 +346,10 @@ public class GuacamoleColumn extends Asset
     /** TBC */
     @Attribute
     Integer nestedColumnCount;
+
+    /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
+    @Attribute
+    String nestedColumnOrder;
 
     /** Nested columns that exist within this column. */
     @Attribute

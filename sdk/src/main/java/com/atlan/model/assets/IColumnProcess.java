@@ -34,6 +34,9 @@ public interface IColumnProcess {
     /** Process in which this task exists. */
     RelationField PROCESS = new RelationField("process");
 
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
+    String getAdditionalEtlContext();
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -379,6 +382,9 @@ public interface IColumnProcess {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
@@ -396,6 +402,9 @@ public interface IColumnProcess {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

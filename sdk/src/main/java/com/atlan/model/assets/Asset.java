@@ -551,6 +551,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String lastSyncWorkflowName;
 
+    /** Custom order for sorting purpose, managed by client */
+    @Attribute
+    String lexicographicalSortOrder;
+
     /** Links that are attached to this asset. */
     @Attribute
     @Singular
@@ -574,6 +578,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     @Attribute
     String name;
+
+    /** Array of policy ids non-compliant to this asset */
+    @Attribute
+    @Singular
+    SortedSet<String> nonCompliantAssetPolicyGUIDs;
 
     /** Data products for which this asset is an output port. */
     @Attribute
@@ -827,10 +836,24 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /**
      * Depth of this asset within lineage.
-     * Note: this will only available in assets retrieved via lineage, and will vary even for
+     * Note: this will only be available in assets retrieved via lineage, and will vary even for
      * the same asset depending on the starting point of the lineage requested.
      */
-    final Integer depth;
+    final Long depth;
+
+    /**
+     * Reference details about the asset(s) that are immediately upstream of this asset within lineage.
+     * Note: this will only be available in assets retrieved via lineage when {@code immediateNeighbors} is true,
+     * and could vary even for the same asset depending on the starting point and depth of the lineage requested.
+     */
+    final List<LineageRef> immediateUpstream;
+
+    /**
+     * Reference details about the asset(s) that are immediately downstream of this asset within lineage.
+     * Note: this will only be available in assets retrieved via lineage when {@code immediateNeighbors} is true,
+     * and could vary even for the same asset depending on the starting point and depth of the lineage requested.
+     */
+    final List<LineageRef> immediateDownstream;
 
     /**
      * The names of the Atlan tags that exist on the asset. This is not always returned, even by

@@ -175,7 +175,9 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
             }
         } else {
             AtlanUser user = usersEndpoint.getByUsername(username);
-            cache(user.getId(), username, user);
+            if (user != null) {
+                cache(user.getId(), username, user);
+            }
         }
     }
 
@@ -184,7 +186,9 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
     public void lookupById(String id) throws AtlanException {
         try {
             AtlanUser user = usersEndpoint.getByGuid(id);
-            cache(id, user.getUsername(), user);
+            if (user != null) {
+                cache(id, user.getUsername(), user);
+            }
         } catch (NotFoundException e) {
             // Otherwise, check if it is an API token
             ApiToken token = apiTokensEndpoint.getByGuid(id);

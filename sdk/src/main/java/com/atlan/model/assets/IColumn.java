@@ -70,6 +70,9 @@ public interface IColumn {
     NumericField COLUMN_DUPLICATE_VALUES_COUNT_LONG =
             new NumericField("columnDuplicateValuesCountLong", "columnDuplicateValuesCountLong");
 
+    /** List of top-level upstream nested columns. */
+    KeywordField COLUMN_HIERARCHY = new KeywordField("columnHierarchy", "columnHierarchy");
+
     /** List of values in a histogram that represents the contents of this column. */
     KeywordField COLUMN_HISTOGRAM = new KeywordField("columnHistogram", "columnHistogram");
 
@@ -192,6 +195,9 @@ public interface IColumn {
 
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     NumericField NESTED_COLUMN_COUNT = new NumericField("nestedColumnCount", "nestedColumnCount");
+
+    /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
+    KeywordField NESTED_COLUMN_ORDER = new KeywordField("nestedColumnOrder", "nestedColumnOrder");
 
     /** Nested columns that exist within this column. */
     RelationField NESTED_COLUMNS = new RelationField("nestedColumns");
@@ -549,6 +555,9 @@ public interface IColumn {
     /** Number of rows that contain duplicate values. */
     Long getColumnDuplicateValuesCountLong();
 
+    /** List of top-level upstream nested columns. */
+    List<Map<String, String>> getColumnHierarchy();
+
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
 
@@ -747,6 +756,9 @@ public interface IColumn {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
@@ -774,8 +786,14 @@ public interface IColumn {
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     Integer getNestedColumnCount();
 
+    /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
+    String getNestedColumnOrder();
+
     /** Nested columns that exist within this column. */
     SortedSet<IColumn> getNestedColumns();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();

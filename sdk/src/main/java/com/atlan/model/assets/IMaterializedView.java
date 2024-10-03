@@ -463,6 +463,9 @@ public interface IMaterializedView {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    String getLexicographicalSortOrder();
+
+    /** TBC */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -476,6 +479,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** TBC */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();

@@ -50,6 +50,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    String additionalEtlContext;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 

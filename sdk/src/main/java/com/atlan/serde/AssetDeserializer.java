@@ -127,7 +127,8 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 .createTime(JacksonUtils.deserializeLong(root, "createTime"))
                 .updateTime(JacksonUtils.deserializeLong(root, "updateTime"))
                 .deleteHandler(JacksonUtils.deserializeString(root, "deleteHandler"))
-                .isIncomplete(JacksonUtils.deserializeBoolean(root, "isIncomplete"));
+                .isIncomplete(JacksonUtils.deserializeBoolean(root, "isIncomplete"))
+                .depth(JacksonUtils.deserializeLong(root, "depth"));
         Set<AtlanTag> atlanTags =
                 JacksonUtils.deserializeObject(client, root, "classifications", new TypeReference<>() {});
         if (atlanTags != null) {
@@ -146,6 +147,16 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 JacksonUtils.deserializeObject(client, root, "pendingTasks", new TypeReference<>() {});
         if (pendingTasks != null) {
             builder.pendingTasks(pendingTasks);
+        }
+        List<LineageRef> immediateUpstream =
+                JacksonUtils.deserializeObject(client, root, "immediateUpstream", new TypeReference<>() {});
+        if (immediateUpstream != null) {
+            builder.immediateUpstream(immediateUpstream);
+        }
+        List<LineageRef> immediateDownstream =
+                JacksonUtils.deserializeObject(client, root, "immediateDownstream", new TypeReference<>() {});
+        if (immediateDownstream != null) {
+            builder.immediateDownstream(immediateDownstream);
         }
         TreeMap<String, String> customAttributes =
                 JacksonUtils.deserializeObject(client, root, "customAttributes", new TypeReference<>() {});

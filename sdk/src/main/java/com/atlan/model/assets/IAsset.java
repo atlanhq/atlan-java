@@ -413,6 +413,9 @@ public interface IAsset {
     /** Name of the crawler that last synchronized this asset. */
     KeywordField LAST_SYNC_WORKFLOW_NAME = new KeywordField("lastSyncWorkflowName", "lastSyncWorkflowName");
 
+    /** Custom order for sorting purpose, managed by client */
+    KeywordField LEXICOGRAPHICAL_SORT_ORDER = new KeywordField("lexicographicalSortOrder", "lexicographicalSortOrder");
+
     /** Links that are attached to this asset. */
     SearchableRelationship LINKS = new SearchableRelationship("links", "asset_links");
 
@@ -427,6 +430,10 @@ public interface IAsset {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     KeywordTextStemmedField NAME = new KeywordTextStemmedField("name", "name.keyword", "name", "name.stemmed");
+
+    /** Array of policy ids non-compliant to this asset */
+    KeywordField NON_COMPLIANT_ASSET_POLICY_GUI_DS =
+            new KeywordField("nonCompliantAssetPolicyGUIDs", "nonCompliantAssetPolicyGUIDs");
 
     /** Data products for which this asset is an output port. */
     RelationField OUTPUT_PORT_DATA_PRODUCTS = new RelationField("outputPortDataProducts");
@@ -893,6 +900,9 @@ public interface IAsset {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
@@ -907,6 +917,9 @@ public interface IAsset {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

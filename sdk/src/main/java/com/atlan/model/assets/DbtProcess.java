@@ -44,6 +44,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
+    @Attribute
+    String additionalEtlContext;
+
     /** Tasks that exist within this process. */
     @Attribute
     @Singular
