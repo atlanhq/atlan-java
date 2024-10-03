@@ -51,7 +51,21 @@
      * Note: this will only available in assets retrieved via lineage, and will vary even for
      * the same asset depending on the starting point of the lineage requested.
      */
-    final Integer depth;
+    final Long depth;
+
+    /**
+     * Reference details about the asset(s) that are immediately upstream of this asset within lineage.
+     * Note: this will only be available in assets retrieved via lineage when {@code immediateNeighbors} is true,
+     * and could vary even for the same asset depending on the starting point and depth of the lineage requested.
+     */
+    final List<LineageRef> immediateUpstream;
+
+    /**
+     * Reference details about the asset(s) that are immediately downstream of this asset within lineage.
+     * Note: this will only be available in assets retrieved via lineage when {@code immediateNeighbors} is true,
+     * and could vary even for the same asset depending on the starting point and depth of the lineage requested.
+     */
+    final List<LineageRef> immediateDownstream;
 
     /**
      * The names of the Atlan tags that exist on the asset. This is not always returned, even by

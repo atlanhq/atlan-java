@@ -94,6 +94,10 @@ public class LineageListRequest extends AtlanObject {
     @Singular
     List<String> attributes;
 
+    /** List of attributes to be returned for each asset. */
+    @Singular
+    List<String> relationAttributes;
+
     /** Starting point for pagination. */
     @Builder.Default
     Integer from = 0;
@@ -110,6 +114,11 @@ public class LineageListRequest extends AtlanObject {
     @Builder.Default
     @JsonProperty("excludeClassifications")
     Boolean excludeAtlanTags = true;
+
+    /** Whether to include immediate neighbors of the starting asset in the response. */
+    @Builder.Default
+    @JsonProperty("immediateNeighbours")
+    Boolean immediateNeighbors = false;
 
     /**
      * Fetch the lineage defined by this object.

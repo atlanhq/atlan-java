@@ -101,6 +101,14 @@ public class FluentLineage {
     @Singular("_includeOnResults")
     List<String> _includesOnResults;
 
+    /** Attributes to retrieve for each asset related to the assets in the results. */
+    @Singular("includeOnRelations")
+    List<AtlanField> includesOnRelations;
+
+    /** Attributes to retrieve for each asset related to the assets in the results (for internal use, unchecked!). */
+    @Singular("_includeOnRelations")
+    List<String> _includesOnRelations;
+
     /**
      * Translate the Atlan fluent lineage request into an Atlan lineage list request builder.
      *
@@ -159,6 +167,14 @@ public class FluentLineage {
             request.attributes(includesOnResults.stream()
                     .map(AtlanField::getAtlanFieldName)
                     .collect(Collectors.toList()));
+        }
+        if (_includesOnRelations != null) {
+            request.relationAttributes(_includesOnRelations);
+        }
+        if (includesOnRelations != null) {
+            request.relationAttributes(includesOnRelations.stream()
+                .map(AtlanField::getAtlanFieldName)
+                .collect(Collectors.toList()));
         }
         return request;
     }
