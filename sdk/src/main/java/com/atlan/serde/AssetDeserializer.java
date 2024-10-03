@@ -148,11 +148,13 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (pendingTasks != null) {
             builder.pendingTasks(pendingTasks);
         }
-        List<LineageRef> immediateUpstream = JacksonUtils.deserializeObject(client, root, "immediateUpstream", new TypeReference<>() {});
+        List<LineageRef> immediateUpstream =
+                JacksonUtils.deserializeObject(client, root, "immediateUpstream", new TypeReference<>() {});
         if (immediateUpstream != null) {
             builder.immediateUpstream(immediateUpstream);
         }
-        List<LineageRef> immediateDownstream = JacksonUtils.deserializeObject(client, root, "immediateDownstream", new TypeReference<>() {});
+        List<LineageRef> immediateDownstream =
+                JacksonUtils.deserializeObject(client, root, "immediateDownstream", new TypeReference<>() {});
         if (immediateDownstream != null) {
             builder.immediateDownstream(immediateDownstream);
         }

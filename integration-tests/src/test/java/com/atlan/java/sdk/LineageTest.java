@@ -183,13 +183,17 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(response.getEntityCount(), 4);
         Asset one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getDepth(), 1);
         one = response.getAssets().get(1);
         assertTrue(one instanceof MaterializedView);
         assertEquals(one.getGuid(), mview.getGuid());
+        assertEquals(one.getDepth(), 1);
         one = response.getAssets().get(2);
         assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getDepth(), 2);
         one = response.getAssets().get(3);
         assertTrue(one instanceof View);
+        assertEquals(one.getDepth(), 2);
         assertEquals(one.getGuid(), view.getGuid());
         response = FluentLineage.builder(Atlan.getDefaultClient(), table)
                 .direction(AtlanLineageDirection.UPSTREAM)
@@ -198,6 +202,81 @@ public class LineageTest extends AtlanLiveTest {
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertTrue(response.getAssets().isEmpty());
+        assertFalse(response.getHasMore());
+    }
+
+    @Test(
+        groups = {"lineage.read.lineage"},
+        dependsOnGroups = {"lineage.create.lineage.*"})
+    void fetchLineageListStartDetailed() throws AtlanException {
+        LineageListResponse response = FluentLineage.builder(Atlan.getDefaultClient(), table)
+            .toRequestBuilder()
+            .immediateNeighbors(true)
+            .build()
+            .fetch();
+        assertNotNull(response);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 5);
+        assertEquals(response.getEntityCount(), 4);
+        Asset one = response.getAssets().get(0);
+        assertTrue(one instanceof Table);
+        assertEquals(one.getGuid(), table.getGuid());
+        assertEquals(one.getDepth(), 0);
+        assertNull(one.getImmediateUpstream());
+        assertNotNull(one.getImmediateDownstream());
+        assertEquals(one.getImmediateDownstream().size(), 1);
+        assertEquals(one.getImmediateDownstream().get(0).getGuid(), mview.getGuid());
+        one = response.getAssets().get(1);
+        assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getGuid(), start.getGuid());
+        assertEquals(one.getDepth(), 1);
+        assertNotNull(one.getImmediateUpstream());
+        assertTrue(one.getImmediateUpstream().isEmpty());
+        assertNotNull(one.getImmediateDownstream());
+        assertEquals(one.getImmediateDownstream().size(), 1);
+        assertEquals(one.getImmediateDownstream().get(0).getGuid(), end.getGuid());
+        one = response.getAssets().get(2);
+        assertTrue(one instanceof MaterializedView);
+        assertEquals(one.getGuid(), mview.getGuid());
+        assertEquals(one.getDepth(), 1);
+        assertNotNull(one.getImmediateUpstream());
+        assertEquals(one.getImmediateUpstream().size(), 1);
+        assertEquals(one.getImmediateUpstream().get(0).getGuid(), table.getGuid());
+        assertNotNull(one.getImmediateDownstream());
+        assertEquals(one.getImmediateDownstream().size(), 1);
+        assertEquals(one.getImmediateDownstream().get(0).getGuid(), view.getGuid());
+        one = response.getAssets().get(3);
+        assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getGuid(), end.getGuid());
+        assertEquals(one.getDepth(), 2);
+        assertNotNull(one.getImmediateUpstream());
+        assertEquals(one.getImmediateUpstream().size(), 1);
+        assertEquals(one.getImmediateUpstream().get(0).getGuid(), start.getGuid());
+        assertNotNull(one.getImmediateDownstream());
+        assertTrue(one.getImmediateDownstream().isEmpty());
+        one = response.getAssets().get(4);
+        assertTrue(one instanceof View);
+        assertEquals(one.getDepth(), 2);
+        assertEquals(one.getGuid(), view.getGuid());
+        assertNotNull(one.getImmediateUpstream());
+        assertEquals(one.getImmediateUpstream().size(), 1);
+        assertEquals(one.getImmediateUpstream().get(0).getGuid(), mview.getGuid());
+        assertNull(one.getImmediateDownstream());
+        response = FluentLineage.builder(Atlan.getDefaultClient(), table)
+            .direction(AtlanLineageDirection.UPSTREAM)
+            .toRequestBuilder()
+            .immediateNeighbors(true)
+            .build()
+            .fetch();
+        assertNotNull(response);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 1);
+        one = response.getAssets().get(0);
+        assertTrue(one instanceof Table);
+        assertEquals(one.getGuid(), table.getGuid());
+        assertEquals(one.getDepth(), 0);
+        assertNull(one.getImmediateUpstream());
+        assertNull(one.getImmediateDownstream());
         assertFalse(response.getHasMore());
     }
 
@@ -221,14 +300,18 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(results.size(), 4);
         Asset one = results.get(0);
         assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getDepth(), 1);
         one = results.get(1);
         assertTrue(one instanceof MaterializedView);
         assertEquals(one.getGuid(), mview.getGuid());
+        assertEquals(one.getDepth(), 1);
         one = results.get(2);
         assertTrue(one instanceof LineageProcess);
         one = results.get(3);
+        assertEquals(one.getDepth(), 2);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
+        assertEquals(one.getDepth(), 2);
     }
 
     @Test(
@@ -257,9 +340,11 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(response.getEntityCount(), 2);
         one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getDepth(), 1);
         one = response.getAssets().get(1);
         assertTrue(one instanceof Table);
         assertEquals(one.getGuid(), table.getGuid());
+        assertEquals(one.getDepth(), 1);
     }
 
     @Test(
@@ -286,13 +371,17 @@ public class LineageTest extends AtlanLiveTest {
         Asset one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
         one = response.getAssets().get(1);
+        assertEquals(one.getDepth(), 1);
         assertTrue(one instanceof MaterializedView);
         assertEquals(one.getGuid(), mview.getGuid());
+        assertEquals(one.getDepth(), 1);
         one = response.getAssets().get(2);
         assertTrue(one instanceof LineageProcess);
+        assertEquals(one.getDepth(), 2);
         one = response.getAssets().get(3);
         assertTrue(one instanceof Table);
         assertEquals(one.getGuid(), table.getGuid());
+        assertEquals(one.getDepth(), 2);
     }
 
     @Test(

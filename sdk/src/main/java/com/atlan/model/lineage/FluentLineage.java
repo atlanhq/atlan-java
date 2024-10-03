@@ -173,8 +173,8 @@ public class FluentLineage {
         }
         if (includesOnRelations != null) {
             request.relationAttributes(includesOnRelations.stream()
-                .map(AtlanField::getAtlanFieldName)
-                .collect(Collectors.toList()));
+                    .map(AtlanField::getAtlanFieldName)
+                    .collect(Collectors.toList()));
         }
         return request;
     }
