@@ -206,14 +206,14 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"lineage.read.lineage"},
-        dependsOnGroups = {"lineage.create.lineage.*"})
+            groups = {"lineage.read.lineage"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListStartDetailed() throws AtlanException {
         LineageListResponse response = FluentLineage.builder(Atlan.getDefaultClient(), table)
-            .toRequestBuilder()
-            .immediateNeighbors(true)
-            .build()
-            .fetch();
+                .toRequestBuilder()
+                .immediateNeighbors(true)
+                .build()
+                .fetch();
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 5);
@@ -263,11 +263,11 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(one.getImmediateUpstream().get(0).getGuid(), mview.getGuid());
         assertNull(one.getImmediateDownstream());
         response = FluentLineage.builder(Atlan.getDefaultClient(), table)
-            .direction(AtlanLineageDirection.UPSTREAM)
-            .toRequestBuilder()
-            .immediateNeighbors(true)
-            .build()
-            .fetch();
+                .direction(AtlanLineageDirection.UPSTREAM)
+                .toRequestBuilder()
+                .immediateNeighbors(true)
+                .build()
+                .fetch();
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 1);
