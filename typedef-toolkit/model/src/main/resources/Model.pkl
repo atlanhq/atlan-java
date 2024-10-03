@@ -694,7 +694,7 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
   ["models/\(m.shared.supertypeDefinition.name).json"] = getSupertypeJson(m)
   when (m.customTypes != null) {
     for (typeName, asset in m.customTypes) {
-      ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+      ["models/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name, m.customTypes)
     }
   }
   ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/common/index.ts"] = new FileOutput {
@@ -741,7 +741,7 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
       renderer = new Renderers.UseBody { model = m }
     }
     for (typeName, asset in m.customTypes) {
-      ["frontend/\(m.shared.supertypeDefinition.name)/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name)
+      ["frontend/\(m.shared.supertypeDefinition.name)/src/api/schemas/metastore/atlas/entityDefs/\(m.shared.supertypeDefinition.name)/\(typeName).json"] = getCustomTypeJson(typeName, asset, m.shared.supertypeDefinition.name, m.customTypes)
       ["frontend/\(m.shared.supertypeDefinition.name)/src/constant/source/\(m.shared.supertypeDefinition.name.decapitalize())/attributes/\(typeName.decapitalize()).ts"] = new FileOutput {
         renderer = new Renderers.Attributes {
           model = m
@@ -769,14 +769,15 @@ const function getSupertypeJson(m): FileOutput = new FileOutput {
 /// - `typeName` the name of the custom type definition to generate JSON for
 /// - `asset` the custom type definition to generate JSON for
 /// - `supertypeName` the name of the super types for the custom type definition
-const function getCustomTypeJson(typeName: String, asset: CustomAssetType, supertypeName: String): FileOutput = new FileOutput {
+/// - `typeMap` full map of custom asset types
+const function getCustomTypeJson(typeName: String, asset: CustomAssetType, supertypeName: String, typeMap: Mapping<String, CustomAssetType>?): FileOutput = new FileOutput {
   value = new TypeDefFile {
     entityDefs {
       customTypeToEntityDef(asset, typeName, supertypeName)
     }
     enumDefs = listifyEnums(asset.enums)
     structDefs = listifyStructs(asset.structs)
-    relationshipDefs = listifyRelationships(asset.relationships)
+    relationshipDefs = listifyRelationships(asset.relationships, typeMap)
   }
   renderer = new JsonRenderer {}
 }
@@ -808,10 +809,19 @@ const function listifyStructs(structs: Mapping<String, StructDef>?): List<Struct
     acc.add(resolveStruct(typeName, value))
   )
 
-const function listifyRelationships(relations: Mapping<String, RelationshipDef>?): List<RelationshipDef>? =
-  relations?.fold(List(), (acc: List<RelationshipDef>, _, value) ->
-    acc.add(value)
-  )
+const function listifyRelationships(relations: Mapping<String, RelationshipDef>?, typeMap: Mapping<String, CustomAssetType>?): List<RelationshipDef>? =
+  new Listing {
+    for (_, relation: RelationshipDef in relations ?? List()) {
+      let (end1Attrs = typeMap?.getOrNull(relation.endDef1.type)?.attributes?.keys ?? Set())
+        if (end1Attrs.contains(relation.endDef1.name))
+          throw("Relationship \(relation.name)'s endDef1 attribute '\(relation.endDef1.name)' conflicts with an existing attribute name on type \(relation.endDef1.type).")
+        else
+          let (end2Attrs = typeMap?.getOrNull(relation.endDef2.type)?.attributes?.keys ?? Set())
+            if (end2Attrs.contains(relation.endDef2.name))
+              throw("Relationship \(relation.name)'s endDef2 attribute '\(relation.endDef2.name)' conflicts with an existing attribute name on type \(relation.endDef2.type).")
+            else relation
+    }
+  }.toList()
 
 const function resolveEnum(enumName: String, enum: EnumDef): EnumDef = (enum) {
   name = enumName
@@ -847,5 +857,5 @@ fixed customEnumDefs: List<EnumDef>? = customTypes?.fold(List(), (acc: List<Enum
 
 /// (Generated) List of [RelationshipDef]s for the custom model.
 fixed customRelationshipDefs: List<RelationshipDef>? = customTypes?.fold(List(), (acc: List<RelationshipDef>, _, details) ->
-  acc + (listifyRelationships(details.relationships) ?? List())
+  acc + (listifyRelationships(details.relationships, customTypes) ?? List())
 )
