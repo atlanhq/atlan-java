@@ -151,9 +151,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     }
 
     private void cacheResponse(GroupResponse response) {
-        if (response != null
-                && response.getRecords() != null
-                && !response.getRecords().isEmpty()) {
+        if (response != null && response.getRecords() != null) {
             List<AtlanGroup> groups = response.getRecords();
             for (AtlanGroup group : groups) {
                 String groupId = group.getId();
