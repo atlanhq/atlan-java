@@ -551,6 +551,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String lastSyncWorkflowName;
 
+    /** Custom order for sorting purpose, managed by client */
+    @Attribute
+    String lexicographicalSortOrder;
+
     /** Links that are attached to this asset. */
     @Attribute
     @Singular
@@ -574,6 +578,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     @Attribute
     String name;
+
+    /** Array of policy ids non-compliant to this asset */
+    @Attribute
+    @Singular
+    SortedSet<String> nonCompliantAssetPolicyGUIDs;
 
     /** Data products for which this asset is an output port. */
     @Attribute

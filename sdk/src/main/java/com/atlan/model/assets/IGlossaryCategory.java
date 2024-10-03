@@ -402,6 +402,9 @@ public interface IGlossaryCategory {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    String getLexicographicalSortOrder();
+
+    /** TBC */
     SortedSet<ILink> getLinks();
 
     /** TBC */
@@ -418,6 +421,9 @@ public interface IGlossaryCategory {
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** TBC */
     SortedSet<IDataProduct> getOutputPortDataProducts();

@@ -406,6 +406,9 @@ public interface IMongoDBDatabase {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
@@ -429,6 +432,9 @@ public interface IMongoDBDatabase {
 
     /** Represents attributes for describing the key schema for the table and indexes. */
     String getNoSQLSchemaDefinition();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Tasks from which this asset is output. */
     SortedSet<IAirflowTask> getOutputFromAirflowTasks();

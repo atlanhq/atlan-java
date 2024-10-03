@@ -81,7 +81,8 @@ public class GeneratorConfig {
             Map.entry("matillionVersions", "addMatillionVersion"),
             Map.entry("cogniteTimeseries", "addCogniteTimeseries"),
             Map.entry("exceptionsForBusinessPolicy", "exceptionForBusinessPolicy"),
-            Map.entry("supersetChartFormData", "putSupersetChartFormData"));
+            Map.entry("supersetChartFormData", "putSupersetChartFormData"),
+            Map.entry("columnHierarchy", "putColumnHierarchy"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("connectorName", "connectorType"),

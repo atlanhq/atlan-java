@@ -48,7 +48,7 @@
 
     /**
      * Depth of this asset within lineage.
-     * Note: this will only available in assets retrieved via lineage, and will vary even for
+     * Note: this will only be available in assets retrieved via lineage, and will vary even for
      * the same asset depending on the starting point of the lineage requested.
      */
     final Long depth;
