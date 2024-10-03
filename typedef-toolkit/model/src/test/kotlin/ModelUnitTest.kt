@@ -7,7 +7,6 @@ import org.pkl.config.kotlin.forKotlin
 import org.pkl.config.kotlin.to
 import org.pkl.core.ModuleSource
 import org.pkl.core.PklException
-import org.testng.Assert.assertThrows
 import org.testng.Assert.expectThrows
 import org.testng.annotations.Test
 import kotlin.test.assertEquals
@@ -114,16 +113,17 @@ class ModelUnitTest {
 
     @Test
     fun conflictingAttributes() {
-        val exception = expectThrows(PklException::class.java) {
-            evaluateModel("ConflictingAttributes")
-        }
+        val exception =
+            expectThrows(PklException::class.java) {
+                evaluateModel("ConflictingAttributes")
+            }
         assertNotNull(exception.message)
         assertTrue(exception.message!!.startsWith("–– Pkl Error ––"))
         val lines = exception.message!!.split("\n")
         val errorMsg = lines[1]
         assertEquals(
             "Relationship conflicting_attributes_parent_table_conflicting_attributes_child_tables's endDef1 attribute 'conflictingAttributesChildTables' conflicts with an existing attribute name on type ConflictingAttributesTable.",
-            errorMsg
+            errorMsg,
         )
     }
 
