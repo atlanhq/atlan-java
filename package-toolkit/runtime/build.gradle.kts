@@ -11,38 +11,6 @@ plugins {
 }
 
 dependencies {
-    constraints {
-        api(libs.commons.compress) {
-            because("version 1.25.0 pulled from poi-ooxml has CWE-835 (CVE-2024-25710) and CWE-770 (CVE-2024-26308)")
-        }
-        api(libs.parsson) {
-            because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
-        }
-        api(libs.guava) {
-            because("version consistency across libraries")
-        }
-        api(libs.protobuf.java) {
-            because("transient version has CWE-20 (CVE-2024-7254)")
-        }
-        api(libs.protobuf.java.util) {
-            because("transient version has CWE-20 (CVE-2024-7254)")
-        }
-        testImplementation(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testRuntimeOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testCompileOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        annotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testAnnotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-    }
     api(libs.pkl.config)
     api(libs.jackson.kotlin)
     api(libs.fastcsv)
