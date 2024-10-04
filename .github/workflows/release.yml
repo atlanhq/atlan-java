@@ -23,11 +23,14 @@ jobs:
         id: get_version
         run: |
           echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_OUTPUT
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - name: Build artifacts
         run: ./gradlew assemble shadowJar buildZip
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - uses: actions/upload-artifact@v4
         with:
           name: sdk
@@ -146,6 +149,7 @@ jobs:
           SONATYPE_TOKEN: ${{ secrets.SONATYPE_TOKEN }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
   publish-base-image:
     needs: merge-build
     runs-on: ubuntu-latest
