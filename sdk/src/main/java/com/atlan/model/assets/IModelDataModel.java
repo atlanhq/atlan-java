@@ -432,6 +432,9 @@ public interface IModelDataModel {
     /** Type of the model asset (conceptual, logical, physical). */
     String getModelType();
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    String getModelVersionAgnosticQualifiedName();
+
     /** Number of versions of the data model. */
     Long getModelVersionCount();
 

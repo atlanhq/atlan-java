@@ -50,6 +50,9 @@ public interface ITask {
     /** Time (epoch) at which the task expires . */
     NumericField TASK_EXPIRES_AT = new NumericField("taskExpiresAt", "taskExpiresAt");
 
+    /** contains external integration config for the task */
+    TextField TASK_INTEGRATION_CONFIG = new TextField("taskIntegrationConfig", "taskIntegrationConfig");
+
     /** flag to make task read/unread */
     BooleanField TASK_IS_READ = new BooleanField("taskIsRead", "taskIsRead");
 
@@ -544,6 +547,9 @@ public interface ITask {
 
     /** Time (epoch) at which the task expires . */
     Long getTaskExpiresAt();
+
+    /** contains external integration config for the task */
+    String getTaskIntegrationConfig();
 
     /** flag to make task read/unread */
     Boolean getTaskIsRead();

@@ -132,6 +132,10 @@ public class ModelEntityAssociation extends Asset
     @Attribute
     String modelType;
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    @Attribute
+    String modelVersionAgnosticQualifiedName;
+
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     @Attribute
     String modelVersionName;

@@ -110,6 +110,10 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     @Attribute
     String modelType;
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    @Attribute
+    String modelVersionAgnosticQualifiedName;
+
     /** Individual entities that make up this version of the data model. */
     @Attribute
     @Singular

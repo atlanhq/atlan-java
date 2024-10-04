@@ -493,6 +493,9 @@ public interface IModelAttribute {
     /** Type of the model asset (conceptual, logical, physical). */
     String getModelType();
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    String getModelVersionAgnosticQualifiedName();
+
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getModelVersionName();
 

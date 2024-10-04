@@ -431,6 +431,9 @@ public interface IModelVersion {
     /** Type of the model asset (conceptual, logical, physical). */
     String getModelType();
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    String getModelVersionAgnosticQualifiedName();
+
     /** Individual entities that make up this version of the data model. */
     SortedSet<IModelEntity> getModelVersionEntities();
 

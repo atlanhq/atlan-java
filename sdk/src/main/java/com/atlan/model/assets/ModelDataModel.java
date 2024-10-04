@@ -110,6 +110,10 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     @Attribute
     String modelType;
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    @Attribute
+    String modelVersionAgnosticQualifiedName;
+
     /** Number of versions of the data model. */
     @Attribute
     Long modelVersionCount;
