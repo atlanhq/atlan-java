@@ -5,6 +5,9 @@ name: "PR"
 on:
   - pull_request
 
+permissions:
+  contents: read
+
 jobs:
   pr-build:
     runs-on: ubuntu-latest
@@ -58,20 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Dependency check
+      - name: Dependency review
         uses: actions/dependency-review-action@v4
         with:
           fail-on-severity: moderate
-      - name: Dependency check
-        uses: dependency-check/Dependency-Check_Action@1.1.0
-        with:
-          project: 'atlan-java'
-          path: '.'
-          format: 'HTML'
-          args: >
-            --failOnCVSS 7
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Dependency check
-          path: ${{github.workspace}}/reports
