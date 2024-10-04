@@ -2,6 +2,7 @@
 plugins {
     id("com.atlan.java")
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("org.owasp.dependencycheck") version "10.0.4"
 }
 
 group = providers.gradleProperty("GROUP").get()
@@ -13,5 +14,26 @@ nexusPublishing {
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
+    }
+}
+
+dependencyCheck {
+    nvd {
+        apiKey = providers.environmentVariable("NVD_API_KEY").get()
+    }
+    failBuildOnCVSS = 7.0F
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
+        force(
+            libs.parsson,
+            libs.json.path,
+            libs.guava,
+            libs.protobuf.java,
+            libs.protobuf.java.util,
+            libs.commons.compress,
+        )
     }
 }

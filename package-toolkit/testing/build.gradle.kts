@@ -10,29 +10,6 @@ plugins {
 }
 
 dependencies {
-    constraints {
-        api(libs.json.path) {
-            because("version 2.8.0 pulled from wiremock has CWE (CVE-2023-51074)")
-        }
-        api(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testImplementation(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testRuntimeOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testCompileOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        annotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testAnnotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-    }
     implementation(project(":package-toolkit:runtime"))
     api(libs.system.stubs)
     api(libs.bundles.java.test)

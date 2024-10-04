@@ -13,38 +13,6 @@ plugins {
 }
 
 dependencies {
-    constraints {
-        api(libs.parsson) {
-            because("version 1.0.0 pulled from elasticsearch-java has CWE-20 (CVE-2023-4043)")
-        }
-        testImplementation(libs.json.path) {
-            because("version 2.8.0 pulled from wiremock has CWE (CVE-2023-51074)")
-        }
-        api(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testImplementation(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testRuntimeOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testCompileOnly(libs.guava) {
-            because("version consistency across libraries")
-        }
-        annotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-        testAnnotationProcessor(libs.guava) {
-            because("version consistency across libraries")
-        }
-        errorprone(libs.guava) {
-            because("version consistency across libraries")
-        }
-        errorprone(libs.protobuf.java) {
-            because("transient version has CWE-20 (CVE-2024-7254)")
-        }
-    }
     api(libs.jackson.databind)
     api(libs.jackson.yaml)
     api(libs.slf4j)
