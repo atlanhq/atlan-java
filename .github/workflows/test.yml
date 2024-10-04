@@ -22,6 +22,7 @@ jobs:
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
@@ -41,6 +42,7 @@ jobs:
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
