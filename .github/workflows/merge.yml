@@ -22,6 +22,8 @@ jobs:
         id: get_version
         run: |
           echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_OUTPUT
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - name: Check formatting
         run: ./gradlew spotlessCheck
         env:
