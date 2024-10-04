@@ -57,18 +57,8 @@ jobs:
   pr-security:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Dependency check
-        uses: dependency-check/Dependency-Check_Action@1.1.0
+        uses: actions/dependency-review-action@v4
         with:
-          project: 'atlan-java'
-          path: '.'
-          format: 'HTML'
-          args: >
-            --failOnCVSS 7
-        env:
-          JAVA_HOME: /opt/jdk
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Dependency check
-          path: ${{github.workspace}}/reports
+          fail-on-severity: moderate
