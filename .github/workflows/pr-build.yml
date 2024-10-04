@@ -6,18 +6,6 @@ on:
   - pull_request
 
 jobs:
-  pr-format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-      - name: Check formatting
-        run: ./gradlew spotlessCheck
   pr-build:
     runs-on: ubuntu-latest
     steps:
@@ -33,20 +21,39 @@ jobs:
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pr-format:
+    needs: pr-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check formatting
+        run: ./gradlew spotlessCheck
   pr-test:
+    needs: pr-build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
       - name: Unit tests
         run: ./gradlew test
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  pr-security:
+    needs: pr-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependency check
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+        with:
+          project: 'atlan-java'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 7
+        env:
+          JAVA_HOME: /opt/jdk
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dependency check
+          path: ${{github.workspace}}/reports
