@@ -287,10 +287,10 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
             TypeDefResponse response = _create(builder, options);
             if (response != null) {
                 if (!response.getAtlanTagDefs().isEmpty()) {
-                    client.getAtlanTagCache().refreshCache();
+                    client.getAtlanTagCache().refresh();
                 }
                 if (!response.getCustomMetadataDefs().isEmpty()) {
-                    client.getCustomMetadataCache().refreshCache();
+                    client.getCustomMetadataCache().refresh();
                 }
                 if (!response.getEnumDefs().isEmpty()) {
                     client.getEnumCache().refreshCache();
@@ -403,10 +403,10 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
             TypeDefResponse response = _update(builder, options);
             if (response != null) {
                 if (!response.getAtlanTagDefs().isEmpty()) {
-                    client.getAtlanTagCache().refreshCache();
+                    client.getAtlanTagCache().refresh();
                 }
                 if (!response.getCustomMetadataDefs().isEmpty()) {
-                    client.getCustomMetadataCache().refreshCache();
+                    client.getCustomMetadataCache().refresh();
                 }
                 if (!response.getEnumDefs().isEmpty()) {
                     client.getEnumCache().refreshCache();
@@ -455,13 +455,13 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
         switch (typeDef.getCategory()) {
             case ATLAN_TAG:
-                client.getAtlanTagCache().refreshCache();
+                client.getAtlanTagCache().refresh();
                 break;
             case ENUM:
                 client.getEnumCache().refreshCache();
                 break;
             case CUSTOM_METADATA:
-                client.getCustomMetadataCache().refreshCache();
+                client.getCustomMetadataCache().refresh();
                 break;
             default:
                 // Do nothing, no other typedefs are cached
