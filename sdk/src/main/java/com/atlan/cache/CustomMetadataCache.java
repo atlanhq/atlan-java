@@ -40,10 +40,10 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response =
-            typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
+                typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
         if (response == null
-            || response.getStructDefs() == null
-            || response.getStructDefs().isEmpty()) {
+                || response.getStructDefs() == null
+                || response.getStructDefs().isEmpty()) {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
@@ -65,12 +65,12 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                     archivedAttrIds.add(attrId);
                 } else {
                     String existingId =
-                        mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
+                            mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
                     if (existingId != null) {
                         throw new LogicException(
-                            ErrorCode.DUPLICATE_CUSTOM_ATTRIBUTES,
-                            attributeDef.getDisplayName(),
-                            bmDef.getDisplayName());
+                                ErrorCode.DUPLICATE_CUSTOM_ATTRIBUTES,
+                                attributeDef.getDisplayName(),
+                                bmDef.getDisplayName());
                     }
                 }
             }
@@ -166,9 +166,9 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         if (isEmpty() || forceRefresh) {
             refresh();
         }
+        Map<String, List<AttributeDef>> map = new HashMap<>();
         Set<Map.Entry<String, CustomMetadataDef>> entrySet = entrySet();
         lock.readLock().lock();
-        Map<String, List<AttributeDef>> map = new HashMap<>();
         try {
             for (Map.Entry<String, CustomMetadataDef> entry : entrySet) {
                 String typeId = entry.getKey();

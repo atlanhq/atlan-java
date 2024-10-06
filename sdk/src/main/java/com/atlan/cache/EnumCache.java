@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,8 +40,8 @@ public class EnumCache {
             log.debug("Refreshing cache of enumerations...");
             TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
             if (response == null
-                || response.getEnumDefs() == null
-                || response.getEnumDefs().isEmpty()) {
+                    || response.getEnumDefs() == null
+                    || response.getEnumDefs().isEmpty()) {
                 throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
             }
             List<EnumDef> enumerations = response.getEnumDefs();
