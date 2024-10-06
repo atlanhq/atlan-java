@@ -9,6 +9,8 @@ import com.atlan.model.typedefs.EnumDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,7 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EnumCache {
 
-    private Map<String, EnumDef> cacheById = new ConcurrentHashMap<>();
+    private volatile Map<String, EnumDef> cacheById = new ConcurrentHashMap<>();
+
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -30,19 +34,39 @@ public class EnumCache {
      *
      * @throws AtlanException on any API communication problem
      */
-    public synchronized void refreshCache() throws AtlanException {
-        log.debug("Refreshing cache of enumerations...");
-        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
-        if (response == null
-                || response.getEnumDefs() == null
-                || response.getEnumDefs().isEmpty()) {
-            throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
+    public void refreshCache() throws AtlanException {
+        lock.writeLock().lock();
+        try {
+            log.debug("Refreshing cache of enumerations...");
+            TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
+            if (response == null
+                    || response.getEnumDefs() == null
+                    || response.getEnumDefs().isEmpty()) {
+                throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
+            }
+            List<EnumDef> enumerations = response.getEnumDefs();
+            cacheById = new ConcurrentHashMap<>();
+            for (EnumDef enumDef : enumerations) {
+                String typeId = enumDef.getName();
+                cacheById.put(typeId, enumDef);
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
-        List<EnumDef> enumerations = response.getEnumDefs();
-        cacheById = new ConcurrentHashMap<>();
-        for (EnumDef enumDef : enumerations) {
-            String typeId = enumDef.getName();
-            cacheById.put(typeId, enumDef);
+    }
+
+    /**
+     * Thread-safe cache retrieval of the enumeration typedef, by its name.
+     *
+     * @param name of the EnumDef
+     * @return the enumeration typedef itself (if cached), or null
+     */
+    protected EnumDef getObjectByName(String name) {
+        lock.readLock().lock();
+        try {
+            return cacheById.get(name);
+        } finally {
+            lock.readLock().unlock();
         }
     }
 
@@ -71,12 +95,12 @@ public class EnumCache {
      */
     public EnumDef getByName(String name, boolean allowRefresh) throws AtlanException {
         if (name != null && !name.isEmpty()) {
-            EnumDef enumDef = cacheById.get(name);
+            EnumDef enumDef = getObjectByName(name);
             if (enumDef == null) {
                 // If not found, refresh the cache and look again (could be stale)
                 if (allowRefresh) {
                     refreshCache();
-                    enumDef = cacheById.get(name);
+                    enumDef = getObjectByName(name);
                 }
                 if (enumDef == null) {
                     // If still not found, throw an exception indicating that outcome

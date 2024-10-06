@@ -23,11 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
-    private Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
+    private volatile Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
 
-    private Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
-    private Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
-    private Map<String, String> archivedAttrIds = new ConcurrentHashMap<>();
+    private volatile Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
+    private volatile Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
+    private volatile Set<String> archivedAttrIds = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -37,9 +37,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void refreshCache() throws AtlanException {
+    protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
-        super.refreshCache();
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
         if (response == null
@@ -48,10 +47,10 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        attrCacheById = new ConcurrentHashMap<>();
-        mapAttrIdToName = new ConcurrentHashMap<>();
-        mapAttrNameToId = new ConcurrentHashMap<>();
-        archivedAttrIds = new ConcurrentHashMap<>();
+        attrCacheById.clear();
+        mapAttrIdToName.clear();
+        mapAttrNameToId.clear();
+        archivedAttrIds.clear();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
             cache(typeId, bmDef.getDisplayName(), bmDef);
@@ -63,7 +62,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 mapAttrIdToName.get(typeId).put(attrId, attrName);
                 attrCacheById.put(attrId, attributeDef);
                 if (attributeDef.isArchived()) {
-                    archivedAttrIds.put(attrId, attrName);
+                    archivedAttrIds.add(attrId);
                 } else {
                     String existingId =
                             mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
@@ -80,14 +79,50 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String name) {
+    protected void lookupByName(String name) {
         // Nothing to do here, can only be looked up by internal ID
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String id) {
+    protected void lookupById(String id) {
         // Since we can only look up in one direction, we should only allow bulk refresh
+    }
+
+    private AttributeDef getAttrById(String id) {
+        lock.readLock().lock();
+        try {
+            return attrCacheById.get(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private Map<String, String> getAttrNameFromId(String id) {
+        lock.readLock().lock();
+        try {
+            return mapAttrIdToName.get(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private Map<String, String> getAttrIdFromName(String name) {
+        lock.readLock().lock();
+        try {
+            return mapAttrNameToId.get(name);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private boolean isArchivedAttr(String id) {
+        lock.readLock().lock();
+        try {
+            return archivedAttrIds.contains(id);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -128,27 +163,33 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
             throws AtlanException {
-        if (mapIdToObject.isEmpty() || forceRefresh) {
-            refreshCache();
+        if (isEmpty() || forceRefresh) {
+            refresh();
         }
         Map<String, List<AttributeDef>> map = new HashMap<>();
-        for (Map.Entry<String, CustomMetadataDef> entry : mapIdToObject.entrySet()) {
-            String typeId = entry.getKey();
-            String typeName = getNameForId(typeId);
-            CustomMetadataDef typeDef = entry.getValue();
-            List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
-            List<AttributeDef> toInclude;
-            if (includeDeleted) {
-                toInclude = attributeDefs;
-            } else {
-                toInclude = new ArrayList<>();
-                for (AttributeDef attributeDef : attributeDefs) {
-                    if (!attributeDef.isArchived()) {
-                        toInclude.add(attributeDef);
+        Set<Map.Entry<String, CustomMetadataDef>> entrySet = entrySet();
+        lock.readLock().lock();
+        try {
+            for (Map.Entry<String, CustomMetadataDef> entry : entrySet) {
+                String typeId = entry.getKey();
+                String typeName = getNameForId(typeId);
+                CustomMetadataDef typeDef = entry.getValue();
+                List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
+                List<AttributeDef> toInclude;
+                if (includeDeleted) {
+                    toInclude = attributeDefs;
+                } else {
+                    toInclude = new ArrayList<>();
+                    for (AttributeDef attributeDef : attributeDefs) {
+                        if (!attributeDef.isArchived()) {
+                            toInclude.add(attributeDef);
+                        }
                     }
                 }
+                map.put(typeName, toInclude);
             }
-            map.put(typeName, toInclude);
+        } finally {
+            lock.readLock().unlock();
         }
         return Collections.unmodifiableMap(map);
     }
@@ -218,7 +259,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         String attrId = _getAttributeForSearchResults(setId, attributeName);
         if (attrId == null && allowRefresh) {
             // If we've not found any names, refresh the cache and look again (could be stale)
-            refreshCache();
+            refresh();
             attrId = _getAttributeForSearchResults(setId, attributeName);
         }
         return attrId;
@@ -254,14 +295,14 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         Set<String> dotNames = _getAttributesForSearchResults(setId);
         if (dotNames == null && allowRefresh) {
             // If we've not found any names, refresh the cache and look again (could be stale)
-            refreshCache();
+            refresh();
             dotNames = _getAttributesForSearchResults(setId);
         }
         return dotNames == null ? Collections.emptySet() : Collections.unmodifiableSet(dotNames);
     }
 
     private Set<String> _getAttributesForSearchResults(String setId) {
-        Map<String, String> subMap = mapAttrNameToId.get(setId);
+        Map<String, String> subMap = getAttrIdFromName(setId);
         if (subMap != null) {
             Collection<String> attrIds = subMap.values();
             Set<String> dotNames = new HashSet<>();
@@ -274,7 +315,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     }
 
     private String _getAttributeForSearchResults(String setId, String attrName) {
-        Map<String, String> subMap = mapAttrNameToId.get(setId);
+        Map<String, String> subMap = getAttrIdFromName(setId);
         if (subMap != null && subMap.containsKey(attrName)) {
             return setId + "." + subMap.get(attrName);
         }
@@ -306,7 +347,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public CustomMetadataDef getCustomMetadataDef(String setName, boolean allowRefresh) throws AtlanException {
         String setId = getIdForName(setName, allowRefresh);
-        return mapIdToObject.get(setId);
+        return getObjectById(setId);
     }
 
     /**
@@ -332,10 +373,11 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         if (attributeId == null || attributeId.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
         }
-        if (attrCacheById.isEmpty() && allowRefresh) {
-            refreshCache();
+        AttributeDef found = getAttrById(attributeId);
+        if (found == null && allowRefresh) {
+            refresh();
         }
-        return attrCacheById.get(attributeId);
+        return getAttrById(attributeId);
     }
 
     /**
@@ -352,7 +394,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private String getAttrIdForNameFromSetId(String setId, String attributeName, boolean allowRefresh)
             throws AtlanException {
         if (setId != null && !setId.isEmpty()) {
-            Map<String, String> subMap = mapAttrNameToId.get(setId);
+            Map<String, String> subMap = getAttrIdFromName(setId);
             if (attributeName != null && !attributeName.isEmpty()) {
                 String attrId = null;
                 if (subMap != null) {
@@ -361,8 +403,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 if (attrId == null) {
                     // If not found, refresh the cache and look again (could be stale)
                     if (allowRefresh) {
-                        refreshCache();
-                        subMap = mapAttrNameToId.get(setId);
+                        refresh();
+                        subMap = getAttrIdFromName(setId);
                     }
                     if (subMap == null) {
                         throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
@@ -397,7 +439,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private String getAttrNameForIdFromSetId(String setId, String attributeId, boolean allowRefresh)
             throws AtlanException {
         if (setId != null && !setId.isEmpty()) {
-            Map<String, String> subMap = mapAttrIdToName.get(setId);
+            Map<String, String> subMap = getAttrNameFromId(setId);
             if (attributeId != null && !attributeId.isEmpty()) {
                 String attrName = null;
                 if (subMap != null) {
@@ -406,8 +448,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 if (attrName == null) {
                     // If not found, refresh the cache and look again (could be stale)
                     if (allowRefresh) {
-                        refreshCache();
-                        subMap = mapAttrIdToName.get(setId);
+                        refresh();
+                        subMap = getAttrNameFromId(setId);
                     }
                     if (subMap == null) {
                         throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
@@ -450,7 +492,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     public Map<String, Object> getEmptyAttributes(String customMetadataName, boolean allowRefresh)
             throws AtlanException {
         String cmId = getIdForName(customMetadataName, allowRefresh);
-        Map<String, String> attributes = mapAttrNameToId.get(cmId);
+        Map<String, String> attributes = getAttrIdFromName(cmId);
         Map<String, Object> empty = new LinkedHashMap<>();
         for (String attrName : attributes.keySet()) {
             empty.put(attrName, Removable.NULL);
@@ -673,7 +715,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                     // removed retain an empty set for that attribute, but this is equivalent to the
                     // custom metadata not existing from a UI and delete-ability perspective (so we will
                     // treat as non-existent in the deserialization as well)
-                    if (archivedAttrIds.containsKey(attrId)) {
+                    if (isArchivedAttr(attrId)) {
                         builder.archivedAttribute(cmAttrName, values);
                     } else {
                         builder.attribute(cmAttrName, values);
@@ -681,7 +723,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 }
             } else if (jsonValue.isValueNode()) {
                 Object primitive = deserializePrimitive(jsonValue);
-                if (archivedAttrIds.containsKey(attrId)) {
+                if (isArchivedAttr(attrId)) {
                     builder.archivedAttribute(cmAttrName, primitive);
                 } else {
                     builder.attribute(cmAttrName, primitive);
@@ -746,7 +788,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                             // removed retain an empty set for that attribute, but this is equivalent to the
                             // custom metadata not existing from a UI and delete-ability perspective (so we will
                             // treat as non-existent in the deserialization as well)
-                            if (archivedAttrIds.containsKey(attrId)) {
+                            if (isArchivedAttr(attrId)) {
                                 builderMap.get(cmName).archivedAttribute(cmAttrName, values);
                             } else {
                                 builderMap.get(cmName).attribute(cmAttrName, values);
@@ -754,7 +796,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                         }
                     } else if (jsonValue.isValueNode()) {
                         Object primitive = deserializePrimitive(jsonValue);
-                        if (archivedAttrIds.containsKey(attrId)) {
+                        if (isArchivedAttr(attrId)) {
                             builderMap.get(cmName).archivedAttribute(cmAttrName, primitive);
                         } else {
                             builderMap.get(cmName).attribute(cmAttrName, primitive);

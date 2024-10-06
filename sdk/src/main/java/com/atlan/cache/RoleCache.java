@@ -23,8 +23,7 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void refreshCache() throws AtlanException {
-        super.refreshCache();
+    protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of roles...");
         // Note: we will only retrieve and cache the workspace-level roles, which all
         // start with '$'
@@ -34,14 +33,14 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String id) throws AtlanException {
+    protected void lookupById(String id) throws AtlanException {
         RoleResponse response = rolesEndpoint.list("{\"id\":\"" + id + "\"}");
         cacheResponse(response);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String name) throws AtlanException {
+    protected void lookupByName(String name) throws AtlanException {
         RoleResponse response = rolesEndpoint.list("{\"name\":\"" + name + "\"}");
         cacheResponse(response);
     }

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserCache extends AbstractMassCache<AtlanUser> {
 
-    private Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
+    private volatile Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
 
     private final UsersEndpoint usersEndpoint;
     private final ApiTokensEndpoint apiTokensEndpoint;
@@ -33,11 +33,10 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void refreshCache() throws AtlanException {
-        super.refreshCache();
+    protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
         List<AtlanUser> users = usersEndpoint.list();
-        mapEmailToId = new ConcurrentHashMap<>();
+        mapEmailToId.clear();
         for (AtlanUser user : users) {
             String userId = user.getId();
             String userName = user.getUsername();
@@ -57,6 +56,15 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
             if (email != null) {
                 mapEmailToId.put(email, id);
             }
+        }
+    }
+
+    private String getIdFromEmail(String email) {
+        lock.readLock().lock();
+        try {
+            return mapEmailToId.get(email);
+        } finally {
+            lock.readLock().unlock();
         }
     }
 
@@ -116,15 +124,11 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
      */
     public String getIdForEmail(String email, boolean allowRefresh) throws AtlanException {
         if (email != null && !email.isEmpty()) {
-            String userId = mapEmailToId.get(email);
+            String userId = getIdFromEmail(email);
             if (userId == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                if (bulkRefresh.get()) {
-                    refreshCache();
-                } else {
-                    lookupByEmail(email);
-                }
-                userId = mapEmailToId.get(email);
+                cacheByEmail(email);
+                userId = getIdFromEmail(email);
             }
             if (userId == null) {
                 throw new NotFoundException(ErrorCode.USER_NOT_FOUND_BY_EMAIL, email);
@@ -165,7 +169,7 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String username) throws AtlanException {
+    protected void lookupByName(String username) throws AtlanException {
         if (username.startsWith(ApiToken.API_USERNAME_PREFIX)) {
             ApiToken token = apiTokensEndpoint.getById(username);
             if (token == null) {
@@ -183,7 +187,7 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String id) throws AtlanException {
+    protected void lookupById(String id) throws AtlanException {
         try {
             AtlanUser user = usersEndpoint.getByGuid(id);
             if (user != null) {
@@ -199,12 +203,31 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
     }
 
     /**
+     * Wraps a single object lookup for the cache with necessary concurrency controls.
+     *
+     * @param email unique email address for the user
+     * @throws AtlanException on any error communicating with Atlan
+     */
+    public void cacheByEmail(String email) throws AtlanException {
+        if (bulkRefresh.get()) {
+            refresh();
+        } else {
+            lock.writeLock().lock();
+            try {
+                lookupByEmail(email);
+            } finally {
+                lock.writeLock().unlock();
+            }
+        }
+    }
+
+    /**
      * Logic to look up a single object for the cache.
      *
      * @param email unique email address for the user
      * @throws AtlanException on any error communicating with Atlan
      */
-    public void lookupByEmail(String email) throws AtlanException {
+    protected void lookupByEmail(String email) throws AtlanException {
         List<AtlanUser> users = usersEndpoint.getByEmail(email);
         if (users != null && !users.isEmpty()) {
             for (AtlanUser user : users) {
