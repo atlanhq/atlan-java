@@ -269,10 +269,18 @@ public abstract class HttpClient {
                 return false;
             } else if (response.code() == 403) {
                 // Retry on permission failure (since these are granted asynchronously)
-                log.debug(" ... no permission for the operation (yet), will retry: {}", response.body(), exception);
+                if (exception != null) {
+                    log.debug(" ... no permission for the operation (yet), will retry: {}", response.body(), exception);
+                } else {
+                    log.debug(" ... no permission for the operation (yet), will retry: {}", response.body());
+                }
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.
-                log.debug(" ... internal server error, will retry: {}", response.body(), exception);
+                if (exception != null) {
+                    log.debug(" ... internal server error, will retry: {}", response.body(), exception);
+                } else {
+                    log.debug(" ... internal server error, will retry: {}", response.body());
+                }
             }
             return (response.code() == 403 || response.code() >= 500);
         }
