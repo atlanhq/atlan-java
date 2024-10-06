@@ -101,14 +101,8 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Whether to refresh the cache by retrieving all objects up-front (true) or lazily, on-demand (false).</div>
 </div>
-<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#mapIdToName" class="member-name-link">mapIdToName</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a>&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#mapIdToObject" class="member-name-link">mapIdToObject</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#mapNameToId" class="member-name-link">mapNameToId</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/ReadWriteLock.html" title="class or interface in java.util.concurrent.locks" class="external-link">ReadWriteLock</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#lock" class="member-name-link">lock</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -142,45 +136,65 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add an entry to the cache</div>
+<div class="block">Add an entry to the cache.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/atomic/AtomicBoolean.html" title="class or interface in java.util.concurrent.atomic" class="external-link">AtomicBoolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBulkRefresh()" class="member-name-link">getBulkRefresh</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cacheById(java.lang.String)" class="member-name-link">cacheById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Wraps a single object lookup for the cache with necessary concurrency controls.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cacheByName(java.lang.String)" class="member-name-link">cacheByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Wraps a single object lookup for the cache with necessary concurrency controls.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#entrySet()" class="member-name-link">entrySet</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieve an iterable set of entries for the object-storing portion of the cache.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/atomic/AtomicBoolean.html" title="class or interface in java.util.concurrent.atomic" class="external-link">AtomicBoolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBulkRefresh()" class="member-name-link">getBulkRefresh</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to refresh the cache by retrieving all objects up-front (true) or lazily, on-demand (false).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getById(java.lang.String)" class="member-name-link">getById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieve the actual object by Atlan-internal ID string.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getById(java.lang.String,boolean)" class="member-name-link">getById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- boolean&nbsp;allowRefresh)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getById(java.lang.String)" class="member-name-link">getById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve the actual object by Atlan-internal ID string.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByName(java.lang.String)" class="member-name-link">getByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getById(java.lang.String,boolean)" class="member-name-link">getById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ boolean&nbsp;allowRefresh)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieve the actual object by human-readable name.</div>
+<div class="block">Retrieve the actual object by Atlan-internal ID string.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByName(java.lang.String,boolean)" class="member-name-link">getByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- boolean&nbsp;allowRefresh)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByName(java.lang.String)" class="member-name-link">getByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve the actual object by human-readable name.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdForName(java.lang.String)" class="member-name-link">getIdForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByName(java.lang.String,boolean)" class="member-name-link">getByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;allowRefresh)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Translate the provided human-readable name to its Atlan-internal ID string.</div>
+<div class="block">Retrieve the actual object by human-readable name.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdForName(java.lang.String,boolean)" class="member-name-link">getIdForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- boolean&nbsp;allowRefresh)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdForName(java.lang.String)" class="member-name-link">getIdForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the provided human-readable name to its Atlan-internal ID string.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdForName(java.lang.String,boolean)" class="member-name-link">getIdForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;allowRefresh)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Translate the provided human-readable name to its Atlan-internal ID string.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdFromName(java.lang.String)" class="member-name-link">getIdFromName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Thread-safe cache retrieval of the ID of an object by its name.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameForId(java.lang.String)" class="member-name-link">getNameForId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
@@ -193,30 +207,50 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the provided Atlan-internal ID string to the human-readable name for the object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isIdKnown(java.lang.String)" class="member-name-link">isIdKnown</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameFromId(java.lang.String)" class="member-name-link">getNameFromId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Checks whether the provided Atlan-internal ID string is known.</div>
+<div class="block">Thread-safe cache retrieval of the name of an object by its ID.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getObjectById(java.lang.String)" class="member-name-link">getObjectById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Thread-safe cache retrieval of the object itself, by its ID.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether the object-storing portion of the cache is empty (true) or not (false).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNameKnown(java.lang.String)" class="member-name-link">isNameKnown</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isIdKnown(java.lang.String)" class="member-name-link">isIdKnown</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks whether the provided Atlan-internal ID string is known.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNameKnown(java.lang.String)" class="member-name-link">isNameKnown</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks whether the provided human-readable name is known.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lookupById(java.lang.String)" class="member-name-link">lookupById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Logic to look up a single object for the cache.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lookupByName(java.lang.String)" class="member-name-link">lookupByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lookupById(java.lang.String)" class="member-name-link">lookupById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Logic to look up a single object for the cache.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refreshCache()" class="member-name-link">refreshCache</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Logic to refresh the cache of objects from Atlan.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lookupByName(java.lang.String)" class="member-name-link">lookupByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Logic to look up a single object for the cache.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refresh()" class="member-name-link">refresh</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Wraps the cache refresh with necessary concurrency controls.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#refreshCache()" class="member-name-link">refreshCache</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Logic to refresh a specific cache en-masse (must be implemented).</div>
 </div>
 </div>
 </div>
@@ -236,21 +270,9 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="mapIdToName">
-<h3>mapIdToName</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">mapIdToName</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="mapNameToId">
-<h3>mapNameToId</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">mapNameToId</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="mapIdToObject">
-<h3>mapIdToObject</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a> extends <a href="../model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>&gt;</span>&nbsp;<span class="element-name">mapIdToObject</span></div>
+<section class="detail" id="lock">
+<h3>lock</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/ReadWriteLock.html" title="class or interface in java.util.concurrent.locks" class="external-link">ReadWriteLock</a></span>&nbsp;<span class="element-name">lock</span></div>
 </section>
 </li>
 <li>
@@ -283,11 +305,53 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="refresh()">
+<h3>refresh</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refresh</span>()
+             throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Wraps the cache refresh with necessary concurrency controls.
+ Always call this method to actually update a cache, not the directly-implemented, cache-specific
+ <code>refreshCache</code>.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan to refresh the cache of objects</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="cacheById(java.lang.String)">
+<h3>cacheById</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cacheById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span>
+               throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Wraps a single object lookup for the cache with necessary concurrency controls.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>id</code> - unique internal identifier for the object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="cacheByName(java.lang.String)">
+<h3>cacheByName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cacheByName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
+                 throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Wraps a single object lookup for the cache with necessary concurrency controls.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - unique name for the object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="refreshCache()">
 <h3>refreshCache</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshCache</span>()
-                  throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Logic to refresh the cache of objects from Atlan.</div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshCache</span>()
+                              throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Logic to refresh a specific cache en-masse (must be implemented).</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan to refresh the cache of objects</dd>
@@ -297,8 +361,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="lookupById(java.lang.String)">
 <h3>lookupById</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span>
-                         throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span>
+                            throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
 <div class="block">Logic to look up a single object for the cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -311,8 +375,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="lookupByName(java.lang.String)">
 <h3>lookupByName</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupByName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
-                           throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupByName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
+                              throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
 <div class="block">Logic to look up a single object for the cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -328,12 +392,36 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cache</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a>&nbsp;object)</span></div>
-<div class="block">Add an entry to the cache</div>
+<div class="block">Add an entry to the cache.
+ This should only be called by the lookup methods, which themselves should never directly
+ be invoked.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - Atlan-internal ID</dd>
 <dd><code>name</code> - human-readable name</dd>
 <dd><code>object</code> - the object to cache (if any)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isEmpty()">
+<h3>isEmpty</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmpty</span>()</div>
+<div class="block">Whether the object-storing portion of the cache is empty (true) or not (false).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if no objects are cached, otherwise false</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="entrySet()">
+<h3>entrySet</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a>&gt;&gt;</span>&nbsp;<span class="element-name">entrySet</span>()</div>
+<div class="block">Retrieve an iterable set of entries for the object-storing portion of the cache.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an iterable set of entries of objects that are cached</dd>
 </dl>
 </section>
 </li>
@@ -362,6 +450,45 @@ loadScripts(document, 'script');</script>
 <dd><code>id</code> - Atlan-internal ID string of the object</dd>
 <dt>Returns:</dt>
 <dd>true if the object is known, false otherwise</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getIdFromName(java.lang.String)">
+<h3>getIdFromName</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getIdFromName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Thread-safe cache retrieval of the ID of an object by its name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the object</dd>
+<dt>Returns:</dt>
+<dd>the ID of the object (if cached), or null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getNameFromId(java.lang.String)">
+<h3>getNameFromId</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getNameFromId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="block">Thread-safe cache retrieval of the name of an object by its ID.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>id</code> - of the object</dd>
+<dt>Returns:</dt>
+<dd>the name of the object (if cached), or null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getObjectById(java.lang.String)">
+<h3>getObjectById</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="AbstractMassCache.html" title="type parameter in AbstractMassCache">T</a></span>&nbsp;<span class="element-name">getObjectById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="block">Thread-safe cache retrieval of the object itself, by its ID.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>id</code> - of the object</dd>
+<dt>Returns:</dt>
+<dd>the object itself (if cached), or null</dd>
 </dl>
 </section>
 </li>

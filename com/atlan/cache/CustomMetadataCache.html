@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.cache.AbstractMassCache">Fields inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></h3>
-<code><a href="AbstractMassCache.html#bulkRefresh">bulkRefresh</a>, <a href="AbstractMassCache.html#mapIdToName">mapIdToName</a>, <a href="AbstractMassCache.html#mapIdToObject">mapIdToObject</a>, <a href="AbstractMassCache.html#mapNameToId">mapNameToId</a></code></div>
+<code><a href="AbstractMassCache.html#bulkRefresh">bulkRefresh</a>, <a href="AbstractMassCache.html#lock">lock</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -289,27 +289,27 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lookupById(java.lang.String)" class="member-name-link">lookupById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Logic to look up a single object for the cache.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lookupByName(java.lang.String)" class="member-name-link">lookupByName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Logic to look up a single object for the cache.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#refreshCache()" class="member-name-link">refreshCache</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Logic to refresh the cache of objects from Atlan.</div>
+<div class="block">Logic to refresh a specific cache en-masse (must be implemented).</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.atlan.cache.AbstractMassCache">Methods inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></h3>
-<code><a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#getBulkRefresh()">getBulkRefresh</a>, <a href="AbstractMassCache.html#getById(java.lang.String)">getById</a>, <a href="AbstractMassCache.html#getById(java.lang.String,boolean)">getById</a>, <a href="AbstractMassCache.html#getByName(java.lang.String)">getByName</a>, <a href="AbstractMassCache.html#getByName(java.lang.String,boolean)">getByName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a>, <a href="AbstractMassCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractMassCache.html#isNameKnown(java.lang.String)">isNameKnown</a></code></div>
+<code><a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#cacheById(java.lang.String)">cacheById</a>, <a href="AbstractMassCache.html#cacheByName(java.lang.String)">cacheByName</a>, <a href="AbstractMassCache.html#entrySet()">entrySet</a>, <a href="AbstractMassCache.html#getBulkRefresh()">getBulkRefresh</a>, <a href="AbstractMassCache.html#getById(java.lang.String)">getById</a>, <a href="AbstractMassCache.html#getById(java.lang.String,boolean)">getById</a>, <a href="AbstractMassCache.html#getByName(java.lang.String)">getByName</a>, <a href="AbstractMassCache.html#getByName(java.lang.String,boolean)">getByName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a>, <a href="AbstractMassCache.html#getIdFromName(java.lang.String)">getIdFromName</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a>, <a href="AbstractMassCache.html#getNameFromId(java.lang.String)">getNameFromId</a>, <a href="AbstractMassCache.html#getObjectById(java.lang.String)">getObjectById</a>, <a href="AbstractMassCache.html#isEmpty()">isEmpty</a>, <a href="AbstractMassCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractMassCache.html#isNameKnown(java.lang.String)">isNameKnown</a>, <a href="AbstractMassCache.html#refresh()">refresh</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -341,11 +341,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="refreshCache()">
 <h3>refreshCache</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshCache</span>()
-                  throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Logic to refresh the cache of objects from Atlan.</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshCache</span>()
+                     throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Logic to refresh a specific cache en-masse (must be implemented).</div>
 <dl class="notes">
-<dt>Overrides:</dt>
+<dt>Specified by:</dt>
 <dd><code><a href="AbstractMassCache.html#refreshCache()">refreshCache</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan to refresh the cache of objects</dd>
@@ -355,7 +355,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="lookupByName(java.lang.String)">
 <h3>lookupByName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupByName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupByName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Logic to look up a single object for the cache.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -368,7 +368,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="lookupById(java.lang.String)">
 <h3>lookupById</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lookupById</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
 <div class="block">Logic to look up a single object for the cache.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
