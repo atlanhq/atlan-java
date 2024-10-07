@@ -167,24 +167,6 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
-            case DMAttribute.TYPE_NAME:
-                ref = DMAttribute.refByQualifiedName(qualifiedName);
-                break;
-            case DMAttributeAssociation.TYPE_NAME:
-                ref = DMAttributeAssociation.refByQualifiedName(qualifiedName);
-                break;
-            case DMDataModel.TYPE_NAME:
-                ref = DMDataModel.refByQualifiedName(qualifiedName);
-                break;
-            case DMEntity.TYPE_NAME:
-                ref = DMEntity.refByQualifiedName(qualifiedName);
-                break;
-            case DMEntityAssociation.TYPE_NAME:
-                ref = DMEntityAssociation.refByQualifiedName(qualifiedName);
-                break;
-            case DMVersion.TYPE_NAME:
-                ref = DMVersion.refByQualifiedName(qualifiedName);
-                break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
