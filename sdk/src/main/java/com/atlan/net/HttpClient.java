@@ -235,10 +235,16 @@ public abstract class HttpClient {
             int numRetries, AtlanException exception, AtlanRequest request, T response) {
         // Do not retry if we are out of retries.
         if (numRetries >= request.options().getMaxNetworkRetries()) {
-            log.error(
+            if (exception != null) {
+                log.error(
                     " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
                     request.options().getMaxNetworkRetries(),
                     exception);
+            } else {
+                log.error(
+                    " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
+                    request.options().getMaxNetworkRetries());
+            }
             return false;
         }
 
