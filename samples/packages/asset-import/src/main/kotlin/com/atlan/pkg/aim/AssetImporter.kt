@@ -107,6 +107,9 @@ import com.atlan.model.assets.ModeCollection
 import com.atlan.model.assets.ModeQuery
 import com.atlan.model.assets.ModeReport
 import com.atlan.model.assets.ModeWorkspace
+import com.atlan.model.assets.ModelDataModel
+import com.atlan.model.assets.ModelEntity
+import com.atlan.model.assets.ModelVersion
 import com.atlan.model.assets.MongoDBCollection
 import com.atlan.model.assets.MongoDBDatabase
 import com.atlan.model.assets.Persona
@@ -652,14 +655,14 @@ class AssetImporter(
                     ),
                 ),
                 TypeGrouping(
-                    "DM",
+                    "Model",
                     listOf(
-                        DMDataModel.TYPE_NAME,
-                        DMVersion.TYPE_NAME,
-                        DMEntity.TYPE_NAME,
-                        DMAttribute.TYPE_NAME,
-                        DMEntityAssociation.TYPE_NAME,
-                        DMAttributeAssociation.TYPE_NAME,
+                        ModelDataModel.TYPE_NAME,
+                        ModelVersion.TYPE_NAME,
+                        ModelEntity.TYPE_NAME,
+                        ModelAttribute.TYPE_NAME,
+                        ModelEntityAssociation.TYPE_NAME,
+                        ModelAttributeAssociation.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
