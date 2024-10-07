@@ -237,13 +237,13 @@ public abstract class HttpClient {
         if (numRetries >= request.options().getMaxNetworkRetries()) {
             if (exception != null) {
                 log.error(
-                    " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
-                    request.options().getMaxNetworkRetries(),
-                    exception);
+                        " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
+                        request.options().getMaxNetworkRetries(),
+                        exception);
             } else {
                 log.error(
-                    " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
-                    request.options().getMaxNetworkRetries());
+                        " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
+                        request.options().getMaxNetworkRetries());
             }
             return false;
         }
