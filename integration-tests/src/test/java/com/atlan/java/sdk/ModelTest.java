@@ -10,6 +10,7 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
@@ -23,6 +24,7 @@ import com.atlan.model.assets.ModelVersion;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.search.AggregationBucketResult;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import java.time.Instant;
@@ -118,6 +120,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.create.attributes"},
             dependsOnGroups = {"model.create.entity"})
     void createAttributes() throws AtlanException {
+        // TODO: it should also be possible to create attributes without an entity in the same payload
         entity2 =
                 ModelEntity.creator(ENT2_NAME, model).modelBusinessDate(future).build();
         ModelAttribute first = ModelAttribute.creator(ATTR1_NAME, entity2)
@@ -416,6 +419,51 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     // TODO: search assets by business date
+    @Test(
+        groups = {"model.search.assets"},
+        dependsOnGroups = {"model.update.model.again"})
+    void searchByPast() throws AtlanException {
+        List<Asset> assets = findByTime(past);
+        assertNotNull(assets);
+    }
+
+    @Test(
+        groups = {"model.search.assets"},
+        dependsOnGroups = {"model.update.model.again"})
+    void searchByPreset() throws AtlanException {
+        List<Asset> assets = findByTime(present);
+        assertNotNull(assets);
+    }
+
+    @Test(
+        groups = {"model.search.assets"},
+        dependsOnGroups = {"model.update.model.again"})
+    void searchByFuture() throws AtlanException {
+        List<Asset> assets = findByTime(future);
+        assertNotNull(assets);
+    }
+
+    // TODO: move into one of the core Model classes itself
+    private List<Asset> findByTime(long timestamp) throws AtlanException {
+        Query subQuery =
+            FluentSearch._internal()
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(timestamp))
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
+                .minSomes(1)
+                .build()
+                .toQuery();
+        return Atlan.getDefaultClient().assets.select()
+            .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
+            .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
+            .includeOnResults(ModelAttribute.DESCRIPTION)
+            .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
+            .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
+            .where(Asset.CONNECTION_QUALIFIED_NAME.eq(connection.getQualifiedName()))
+            .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(timestamp))
+            .where(subQuery)
+            .stream()
+            .toList();
+    }
 
     @Test(
             groups = {"model.purge.connection"},
