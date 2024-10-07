@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -361,6 +362,23 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     }
 
     /**
+     * Builds the minimal object necessary to create a ModelDataModel.
+     *
+     * @param name of the ModelDataModel
+     * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
+     * @return the minimal request necessary to create the ModelDataModel, as a builder
+     */
+    public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return ModelDataModel._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to update a ModelDataModel.
      *
      * @param qualifiedName of the ModelDataModel
@@ -372,6 +390,17 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
+    }
+
+    /**
+     * Generate a unique ModelDataModel name.
+     *
+     * @param name of the ModelDataModel
+     * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
+     * @return a unique name for the ModelDataModel
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

@@ -124,6 +124,20 @@ import com.atlan.model.assets.Connection;
      * @param name of the ModelEntity
      * @return the minimal request necessary to update the ModelEntity, as a builder
      */
+    public static ModelEntityBuilder<?, ?> updater(String qualifiedName, String name) {
+        return ModelEntity._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a ModelEntity.
+     *
+     * @param qualifiedName of the ModelEntity
+     * @param name of the ModelEntity
+     * @return the minimal request necessary to update the ModelEntity, as a builder
+     */
     public static ModelEntityBuilder<?, ?> updaterForVersion(String qualifiedName, String name) {
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))

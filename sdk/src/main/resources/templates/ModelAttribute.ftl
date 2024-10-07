@@ -14,13 +14,13 @@ import com.atlan.model.assets.Connection;
         validateRelationship(ModelEntity.TYPE_NAME, Map.of(
             "connectionQualifiedName", entity.getConnectionQualifiedName(),
             "name", entity.getName(),
-            "qualifiedName", entity.modelVersionAgnosticQualifiedName()
+            "qualifiedName", entity.getModelVersionAgnosticQualifiedName()
         ));
         return creator(
             name,
             entity.getConnectionQualifiedName(),
             entity.getName(),
-            entity.modelVersionAgnosticQualifiedName()
+            entity.getModelVersionAgnosticQualifiedName()
         );
     }
 
@@ -58,6 +58,20 @@ import com.atlan.model.assets.Connection;
     }
 
     // TODO: determine how version-agnostic updates should work (what to use as qualifiedName of entity?)
+
+    /**
+     * Builds the minimal object necessary to update a ModelAttribute.
+     *
+     * @param qualifiedName of the ModelAttribute
+     * @param name of the ModelAttribute
+     * @return the minimal request necessary to update the ModelAttribute, as a builder
+     */
+    public static ModelAttributeBuilder<?, ?> updater(String qualifiedName, String name) {
+        return ModelAttribute._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
 
     /**
      * Builds the minimal object necessary to update a ModelAttribute.
