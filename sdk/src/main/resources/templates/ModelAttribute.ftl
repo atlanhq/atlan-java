@@ -48,10 +48,16 @@ import com.atlan.model.assets.Connection;
      * @return the minimal request necessary to create the ModelAttribute, as a builder
      */
     public static ModelAttributeBuilder<?, ?> creator(String name, String connectionQualifiedName, String entityName, String entityQualifiedName) {
+        String modelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(entityQualifiedName);
+        String modelName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelQualifiedName));
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelAttribute._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
+            .modelName(modelName)
+            .modelQualifiedName(modelQualifiedName)
+            .modelEntityName(entityName)
+            .modelEntityQualifiedName(entityQualifiedName)
             .modelVersionAgnosticQualifiedName(generateQualifiedName(name, entityQualifiedName))
             .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);

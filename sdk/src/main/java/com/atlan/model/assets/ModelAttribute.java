@@ -448,10 +448,16 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      */
     public static ModelAttributeBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String entityName, String entityQualifiedName) {
+        String modelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(entityQualifiedName);
+        String modelName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelQualifiedName));
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelAttribute._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
+                .modelName(modelName)
+                .modelQualifiedName(modelQualifiedName)
+                .modelEntityName(entityName)
+                .modelEntityQualifiedName(entityQualifiedName)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, entityQualifiedName))
                 .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);

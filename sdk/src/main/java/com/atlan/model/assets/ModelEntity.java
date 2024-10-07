@@ -432,6 +432,8 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
+                .modelName(modelName)
+                .modelQualifiedName(modelQualifiedName)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
                 .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);

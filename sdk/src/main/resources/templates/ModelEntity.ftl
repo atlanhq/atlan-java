@@ -52,6 +52,8 @@ import com.atlan.model.assets.Connection;
         return ModelEntity._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
+            .modelName(modelName)
+            .modelQualifiedName(modelQualifiedName)
             .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
             .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);
