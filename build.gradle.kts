@@ -33,7 +33,9 @@ configurations.all {
             libs.guava,
             libs.protobuf.java,
             libs.protobuf.java.util,
+            libs.akka.actor,
             libs.commons.compress,
+            libs.commons.io,
         )
     }
 }
