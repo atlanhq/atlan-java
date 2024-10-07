@@ -27,7 +27,7 @@ pkl = "0.26.3"
 adls = "12.21.0"
 azure = "1.14.0"
 guava = "33.3.1-jre"
-openlineage = "1.22.0"
+openlineage = "1.23.0"
 protobuf = "4.28.2"
 akka = "2.8.7"
 
