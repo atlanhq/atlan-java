@@ -23,7 +23,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-
 import java.time.Instant;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -60,12 +59,12 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.create.model"},
-        dependsOnGroups = {"model.create.connection"})
+            groups = {"model.create.model"},
+            dependsOnGroups = {"model.create.connection"})
     void createModel() throws AtlanException {
         ModelDataModel toCreate = ModelDataModel.creator(MODEL_NAME, connection.getQualifiedName())
-            .modelBusinessDate(past)
-            .build();
+                .modelBusinessDate(past)
+                .build();
         AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof ModelDataModel);
@@ -78,12 +77,12 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.create.entity"},
-        dependsOnGroups = {"model.create.model"})
+            groups = {"model.create.entity"},
+            dependsOnGroups = {"model.create.model"})
     void createEntity() throws AtlanException {
         ModelEntity toCreate = ModelEntity.creator(ENTITY_NAME, model)
-            .modelBusinessDate(present)
-            .build();
+                .modelBusinessDate(present)
+                .build();
         AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -112,15 +111,15 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.create.attributes"},
-        dependsOnGroups = {"model.create.entity"})
+            groups = {"model.create.attributes"},
+            dependsOnGroups = {"model.create.entity"})
     void createAttributes() throws AtlanException {
         ModelAttribute first = ModelAttribute.creator(ATTR1_NAME, entity)
-            .modelBusinessDate(future)
-            .build();
+                .modelBusinessDate(future)
+                .build();
         ModelAttribute second = ModelAttribute.creator(ATTR2_NAME, entity)
-            .modelBusinessDate(future)
-            .build();
+                .modelBusinessDate(future)
+                .build();
         AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(first, second), false);
         assertNotNull(response);
         // TODO: These numbers are probably not correct, given version creation, etc
@@ -157,8 +156,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.model"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.model"},
+            dependsOnGroups = {"model.create.*"})
     void readModel() throws AtlanException {
         ModelDataModel read = ModelDataModel.get(model.getQualifiedName());
         assertNotNull(read);
@@ -171,8 +170,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.version"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.version"},
+            dependsOnGroups = {"model.create.*"})
     void readVersion1() throws AtlanException {
         ModelVersion read = ModelVersion.get(version1.getQualifiedName());
         assertNotNull(read);
@@ -188,8 +187,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.version"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.version"},
+            dependsOnGroups = {"model.create.*"})
     void readVersion2() throws AtlanException {
         ModelVersion read = ModelVersion.get(version2.getQualifiedName());
         assertNotNull(read);
@@ -205,8 +204,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.entity"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.entity"},
+            dependsOnGroups = {"model.create.*"})
     void readEntity() throws AtlanException {
         ModelEntity read = ModelEntity.get(entity.getQualifiedName());
         assertNotNull(read);
@@ -220,8 +219,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.attribute"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.attribute"},
+            dependsOnGroups = {"model.create.*"})
     void readAttribute1() throws AtlanException {
         ModelAttribute read = ModelAttribute.get(attr1.getQualifiedName());
         assertNotNull(read);
@@ -236,8 +235,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.attribute"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.read.attribute"},
+            dependsOnGroups = {"model.create.*"})
     void readAttribute2() throws AtlanException {
         ModelAttribute read = ModelAttribute.get(attr2.getQualifiedName());
         assertNotNull(read);
@@ -252,15 +251,16 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.update.model"},
-        dependsOnGroups = {"model.create.*"})
+            groups = {"model.update.model"},
+            dependsOnGroups = {"model.create.*"})
     void updateModel() throws AtlanException {
-        ModelDataModel updated = ModelDataModel.updateCertificate(model.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        ModelDataModel updated =
+                ModelDataModel.updateCertificate(model.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = ModelDataModel.updateAnnouncement(
-            model.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                model.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -268,8 +268,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.read.updatedModel"},
-        dependsOnGroups = {"model.update.model"})
+            groups = {"model.read.updatedModel"},
+            dependsOnGroups = {"model.update.model"})
     void readUpdatedModel() throws AtlanException {
         ModelDataModel read = ModelDataModel.get(model.getQualifiedName());
         assertNotNull(read);
@@ -286,8 +286,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.update.model.again"},
-        dependsOnGroups = {"model.read.updatedModel"})
+            groups = {"model.update.model.again"},
+            dependsOnGroups = {"model.read.updatedModel"})
     void updateModelAgain() throws AtlanException {
         ModelDataModel updated = ModelDataModel.removeCertificate(model.getQualifiedName(), MODEL_NAME);
         assertNotNull(updated);
@@ -304,19 +304,19 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.search.assets"},
-        dependsOnGroups = {"model.update.model.again"})
+            groups = {"model.search.assets"},
+            dependsOnGroups = {"model.update.model.again"})
     void searchAssets() throws AtlanException, InterruptedException {
         IndexSearchRequest index = Atlan.getDefaultClient()
-            .assets
-            .select()
-            .where(Asset.SUPER_TYPE_NAMES.eq("Model"))
-            .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
-            .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
-            .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
-            .toRequest();
+                .assets
+                .select()
+                .where(Asset.SUPER_TYPE_NAMES.eq("Model"))
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
+                .toRequest();
 
         IndexSearchResponse response = retrySearchUntil(index, 6L);
 
@@ -324,10 +324,10 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(response.getAggregations().size(), 1);
         assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
         assertEquals(
-            ((AggregationBucketResult) response.getAggregations().get("type"))
-                .getBuckets()
-                .size(),
-            4);
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                4);
 
         assertEquals(response.getApproximateCount().longValue(), 6L);
         List<Asset> entities = response.getAssets();
@@ -386,9 +386,9 @@ public class ModelTest extends AtlanLiveTest {
     // TODO: search assets by business date
 
     @Test(
-        groups = {"model.purge.connection"},
-        dependsOnGroups = {"model.create.*", "model.read.*", "model.search.*", "model.update.*"},
-        alwaysRun = true)
+            groups = {"model.purge.connection"},
+            dependsOnGroups = {"model.create.*", "model.read.*", "model.search.*", "model.update.*"},
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
