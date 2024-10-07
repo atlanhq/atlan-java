@@ -44,12 +44,6 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
-import com.atlan.model.assets.DMAttribute
-import com.atlan.model.assets.DMAttributeAssociation
-import com.atlan.model.assets.DMDataModel
-import com.atlan.model.assets.DMEntity
-import com.atlan.model.assets.DMEntityAssociation
-import com.atlan.model.assets.DMVersion
 import com.atlan.model.assets.DataStudioAsset
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.DatabricksUnityCatalogTag
@@ -107,8 +101,11 @@ import com.atlan.model.assets.ModeCollection
 import com.atlan.model.assets.ModeQuery
 import com.atlan.model.assets.ModeReport
 import com.atlan.model.assets.ModeWorkspace
+import com.atlan.model.assets.ModelAttribute
+import com.atlan.model.assets.ModelAttributeAssociation
 import com.atlan.model.assets.ModelDataModel
 import com.atlan.model.assets.ModelEntity
+import com.atlan.model.assets.ModelEntityAssociation
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.assets.MongoDBCollection
 import com.atlan.model.assets.MongoDBDatabase
