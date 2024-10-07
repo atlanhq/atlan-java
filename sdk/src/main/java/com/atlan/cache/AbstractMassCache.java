@@ -10,6 +10,8 @@ import com.atlan.model.core.AtlanObject;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,24 +22,79 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractMassCache<T extends AtlanObject> {
 
-    protected final Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    protected final Map<String, String> mapNameToId = new ConcurrentHashMap<>();
-    protected final Map<String, T> mapIdToObject = new ConcurrentHashMap<>();
+    private volatile Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private volatile Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private volatile Map<String, T> mapIdToObject = new ConcurrentHashMap<>();
+
+    protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     /** Whether to refresh the cache by retrieving all objects up-front (true) or lazily, on-demand (false). */
     @Getter
     protected AtomicBoolean bulkRefresh = new AtomicBoolean(true);
 
     /**
-     * Logic to refresh the cache of objects from Atlan.
+     * Wraps the cache refresh with necessary concurrency controls.
+     * Always call this method to actually update a cache, not the directly-implemented, cache-specific
+     * {@code refreshCache}.
      *
      * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
      */
-    public synchronized void refreshCache() throws AtlanException {
-        mapIdToName.clear();
-        mapNameToId.clear();
-        mapIdToObject.clear();
+    public void refresh() throws AtlanException {
+        lock.writeLock().lock();
+        try {
+            mapIdToName.clear();
+            mapNameToId.clear();
+            mapIdToObject.clear();
+            refreshCache();
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
+
+    /**
+     * Wraps a single object lookup for the cache with necessary concurrency controls.
+     *
+     * @param id unique internal identifier for the object
+     * @throws AtlanException on any error communicating with Atlan
+     */
+    public void cacheById(String id) throws AtlanException {
+        if (bulkRefresh.get()) {
+            refresh();
+        } else {
+            lock.writeLock().lock();
+            try {
+                lookupById(id);
+            } finally {
+                lock.writeLock().unlock();
+            }
+        }
+    }
+
+    /**
+     * Wraps a single object lookup for the cache with necessary concurrency controls.
+     *
+     * @param name unique name for the object
+     * @throws AtlanException on any error communicating with Atlan
+     */
+    public void cacheByName(String name) throws AtlanException {
+        if (bulkRefresh.get()) {
+            refresh();
+        } else {
+            lock.writeLock().lock();
+            try {
+                lookupByName(name);
+            } finally {
+                lock.writeLock().unlock();
+            }
+        }
+    }
+
+    /**
+     * Logic to refresh a specific cache en-masse (must be implemented).
+     *
+     * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
+     */
+    protected abstract void refreshCache() throws AtlanException;
 
     /**
      * Logic to look up a single object for the cache.
@@ -45,7 +102,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @param id unique internal identifier for the object
      * @throws AtlanException on any error communicating with Atlan
      */
-    public abstract void lookupById(String id) throws AtlanException;
+    protected abstract void lookupById(String id) throws AtlanException;
 
     /**
      * Logic to look up a single object for the cache.
@@ -53,10 +110,12 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @param name unique name for the object
      * @throws AtlanException on any error communicating with Atlan
      */
-    public abstract void lookupByName(String name) throws AtlanException;
+    protected abstract void lookupByName(String name) throws AtlanException;
 
     /**
-     * Add an entry to the cache
+     * Add an entry to the cache.
+     * This should only be called by the lookup methods, which themselves should never directly
+     * be invoked.
      *
      * @param id Atlan-internal ID
      * @param name human-readable name
@@ -71,6 +130,34 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
     }
 
     /**
+     * Whether the object-storing portion of the cache is empty (true) or not (false).
+     *
+     * @return true if no objects are cached, otherwise false
+     */
+    protected boolean isEmpty() {
+        lock.readLock().lock();
+        try {
+            return mapIdToObject.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Retrieve an iterable set of entries for the object-storing portion of the cache.
+     *
+     * @return an iterable set of entries of objects that are cached
+     */
+    protected Set<Map.Entry<String, T>> entrySet() {
+        lock.readLock().lock();
+        try {
+            return mapIdToObject.entrySet();
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
      * Checks whether the provided human-readable name is known.
      * (Note: will not refresh the cache itself to determine this.)
      *
@@ -78,7 +165,12 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return true if the object is known, false otherwise
      */
     public boolean isNameKnown(String name) {
-        return mapNameToId.containsKey(name);
+        lock.readLock().lock();
+        try {
+            return mapNameToId.containsKey(name);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -89,7 +181,57 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return true if the object is known, false otherwise
      */
     public boolean isIdKnown(String id) {
-        return mapIdToName.containsKey(id);
+        lock.readLock().lock();
+        try {
+            return mapIdToName.containsKey(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Thread-safe cache retrieval of the ID of an object by its name.
+     *
+     * @param name of the object
+     * @return the ID of the object (if cached), or null
+     */
+    protected String getIdFromName(String name) {
+        lock.readLock().lock();
+        try {
+            return mapNameToId.get(name);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Thread-safe cache retrieval of the name of an object by its ID.
+     *
+     * @param id of the object
+     * @return the name of the object (if cached), or null
+     */
+    protected String getNameFromId(String id) {
+        lock.readLock().lock();
+        try {
+            return mapIdToName.get(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Thread-safe cache retrieval of the object itself, by its ID.
+     *
+     * @param id of the object
+     * @return the object itself (if cached), or null
+     */
+    protected T getObjectById(String id) {
+        lock.readLock().lock();
+        try {
+            return mapIdToObject.get(id);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -117,15 +259,11 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      */
     public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
         if (name != null && !name.isEmpty()) {
-            String id = mapNameToId.get(name);
+            String id = getIdFromName(name);
             if (id == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                if (bulkRefresh.get()) {
-                    refreshCache();
-                } else {
-                    lookupByName(name);
-                }
-                id = mapNameToId.get(name);
+                cacheByName(name);
+                id = getIdFromName(name);
             }
             if (id == null) {
                 throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_NAME, name);
@@ -161,15 +299,11 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      */
     public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
-            String name = mapIdToName.get(id);
+            String name = getNameFromId(id);
             if (name == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                if (bulkRefresh.get()) {
-                    refreshCache();
-                } else {
-                    lookupById(id);
-                }
-                name = mapIdToName.get(id);
+                cacheById(id);
+                name = getNameFromId(id);
             }
             if (name == null) {
                 throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, id);
@@ -205,15 +339,11 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      */
     public T getById(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
-            T result = mapIdToObject.get(id);
+            T result = getObjectById(id);
             if (result == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                if (bulkRefresh.get()) {
-                    refreshCache();
-                } else {
-                    lookupById(id);
-                }
-                result = mapIdToObject.get(id);
+                cacheById(id);
+                result = getObjectById(id);
             }
             if (result == null) {
                 throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, id);

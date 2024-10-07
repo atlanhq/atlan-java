@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
-    private Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
+    private volatile Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 
     private final GroupsEndpoint groupsEndpoint;
 
@@ -29,11 +29,10 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void refreshCache() throws AtlanException {
-        super.refreshCache();
+    protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = groupsEndpoint.list();
-        mapAliasToId = new ConcurrentHashMap<>();
+        mapAliasToId.clear();
         for (AtlanGroup group : groups) {
             String groupId = group.getId();
             String groupName = group.getName();
@@ -50,6 +49,15 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
             if (alias != null) {
                 mapAliasToId.put(alias, id);
             }
+        }
+    }
+
+    private String getIdFromAlias(String alias) {
+        lock.readLock().lock();
+        try {
+            return mapAliasToId.get(alias);
+        } finally {
+            lock.readLock().unlock();
         }
     }
 
@@ -78,15 +86,11 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
      */
     public String getIdForAlias(String alias, boolean allowRefresh) throws AtlanException {
         if (alias != null && !alias.isEmpty()) {
-            String groupId = mapAliasToId.get(alias);
+            String groupId = getIdFromAlias(alias);
             if (groupId == null && allowRefresh) {
                 // If not found, refresh the cache and look again (could be stale)
-                if (bulkRefresh.get()) {
-                    refreshCache();
-                } else {
-                    lookupByAlias(alias);
-                }
-                groupId = mapAliasToId.get(alias);
+                cacheByAlias(alias);
+                groupId = getIdFromAlias(alias);
             }
             if (groupId == null) {
                 throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ALIAS, alias);
@@ -127,16 +131,35 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String name) throws AtlanException {
+    protected void lookupByName(String name) throws AtlanException {
         GroupResponse response = groupsEndpoint.list("{\"name\":\"" + name + "\"}");
         cacheResponse(response);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String id) throws AtlanException {
+    protected void lookupById(String id) throws AtlanException {
         GroupResponse response = groupsEndpoint.list("{\"id\":\"" + id + "\"}");
         cacheResponse(response);
+    }
+
+    /**
+     * Wraps a single object lookup for the cache with necessary concurrency controls.
+     *
+     * @param alias name of the group as it appears in the UI
+     * @throws AtlanException on any error communicating with Atlan
+     */
+    public void cacheByAlias(String alias) throws AtlanException {
+        if (bulkRefresh.get()) {
+            refresh();
+        } else {
+            lock.writeLock().lock();
+            try {
+                lookupByAlias(alias);
+            } finally {
+                lock.writeLock().unlock();
+            }
+        }
     }
 
     /**
@@ -145,7 +168,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
      * @param alias name of the group as it appears in the UI
      * @throws AtlanException on any error communicating with Atlan
      */
-    public void lookupByAlias(String alias) throws AtlanException {
+    protected void lookupByAlias(String alias) throws AtlanException {
         GroupResponse response = groupsEndpoint.list("{\"alias\":\"" + alias + "\"}");
         cacheResponse(response);
     }

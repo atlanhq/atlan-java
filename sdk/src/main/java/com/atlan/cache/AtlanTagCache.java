@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
-    private Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
-    private Set<String> deletedIds = ConcurrentHashMap.newKeySet();
-    private Set<String> deletedNames = ConcurrentHashMap.newKeySet();
+    private volatile Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
+    private volatile Set<String> deletedIds = ConcurrentHashMap.newKeySet();
+    private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -31,8 +31,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public synchronized void refreshCache() throws AtlanException {
-        super.refreshCache();
+    protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of Atlan tags...");
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.ATLAN_TAG, AtlanTypeCategory.STRUCT));
@@ -42,9 +41,9 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
-        mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
-        deletedIds = ConcurrentHashMap.newKeySet();
-        deletedNames = ConcurrentHashMap.newKeySet();
+        mapIdToSourceTagsAttrId.clear();
+        deletedIds.clear();
+        deletedNames.clear();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
             cache(typeId, clsDef.getDisplayName(), clsDef);
@@ -63,27 +62,72 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public void lookupByName(String name) {
+    protected void lookupByName(String name) {
         // Nothing to do here, can only be looked up by internal ID
     }
 
     /** {@inheritDoc} */
     @Override
-    public void lookupById(String id) {
+    protected void lookupById(String id) {
         // Since we can only look up in one direction, we should only allow bulk refresh
+    }
+
+    private String getSourceTagsAttrIdFromId(String id) {
+        lock.readLock().lock();
+        try {
+            return mapIdToSourceTagsAttrId.get(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private boolean isDeletedName(String name) {
+        lock.readLock().lock();
+        try {
+            return deletedNames.contains(name);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private void addDeletedName(String name) {
+        lock.writeLock().lock();
+        try {
+            deletedNames.add(name);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    private boolean isDeletedId(String id) {
+        lock.readLock().lock();
+        try {
+            return deletedIds.contains(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private void addDeletedId(String id) {
+        lock.writeLock().lock();
+        try {
+            deletedIds.add(id);
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
-        if (name != null && deletedNames.contains(name)) {
+        if (name != null && isDeletedName(name)) {
             return null;
         }
         try {
             return super.getIdForName(name, allowRefresh);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
-            deletedNames.add(name);
+            addDeletedName(name);
             throw e;
         }
     }
@@ -91,14 +135,14 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
     /** {@inheritDoc} */
     @Override
     public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
-        if (id != null && deletedIds.contains(id)) {
+        if (id != null && isDeletedId(id)) {
             return null;
         }
         try {
             return super.getNameForId(id, allowRefresh);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
-            deletedIds.add(id);
+            addDeletedId(id);
             throw e;
         }
     }
@@ -130,16 +174,16 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
      */
     public String getSourceTagsAttrId(String id, boolean allowRefresh) throws AtlanException {
         if (id != null && !id.isEmpty()) {
-            String attrId = mapIdToSourceTagsAttrId.get(id);
-            if (attrId == null && !deletedIds.contains(id)) {
+            String attrId = getSourceTagsAttrIdFromId(id);
+            if (attrId == null && !isDeletedId(id)) {
                 // If not found, refresh the cache and look again (could be stale)
                 if (allowRefresh) {
-                    refreshCache();
-                    attrId = mapIdToSourceTagsAttrId.get(id);
+                    refresh();
+                    attrId = getSourceTagsAttrIdFromId(id);
                 }
                 if (attrId == null) {
                     // If it's still not found after the refresh, mark it as deleted
-                    deletedIds.add(id);
+                    addDeletedId(id);
                     throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_ID, id);
                 }
             }
