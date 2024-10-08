@@ -104,7 +104,7 @@ class AssetExporter(
             ctx.limitToAssets.forEach { assetType ->
                 val clazz = Serde.getAssetClassForType(assetType)
                 val fields = ReflectionCache.getFieldNames(clazz)
-                uniqueFieldNames.addAll(fields)
+                uniqueFieldNames.addAll(fields.map { ReflectionCache.getSerializedName(clazz, it) })
             }
             // Create an interim searchable AtlanField for the field, for all other methods to be reusable
             uniqueFieldNames
@@ -188,7 +188,7 @@ class AssetExporter(
                 Asset.QUALIFIED_NAME.atlanFieldName,
                 Asset.TYPE_NAME.atlanFieldName,
                 Asset.GUID.atlanFieldName,
-                "atlanTagNames",
+                "classificationNames",
                 "meaningNames",
             )
     }
