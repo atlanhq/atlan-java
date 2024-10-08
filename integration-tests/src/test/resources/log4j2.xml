@@ -20,10 +20,12 @@
         </Routing>
     </Appenders>
     <Loggers>
-        <Root level="DEBUG">
-            <AppenderRef ref="ConsoleAppender" level="INFO"/>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="Routing"/>
         </Root>
-        <Logger name="com.atlan" level="DEBUG"/>
+        <Logger name="com.atlan" level="DEBUG" additivity="false">
+            <AppenderRef ref="Routing"/>
+        </Logger>
     </Loggers>
 </Configuration>
