@@ -99,6 +99,12 @@ uiConfig {
           helpText = "Comma-separated starting values for qualifiedName that will determine which assets to export."
           hide = true
         }
+        ["all_attributes"] = new BooleanInput {
+          title = "Include ALL available attributes"
+          required = false
+          hide = true
+          helpText = "If true, ALL attributes for the matching assets will be extracted"
+        }
       }
     }
     ["Delivery"] {
