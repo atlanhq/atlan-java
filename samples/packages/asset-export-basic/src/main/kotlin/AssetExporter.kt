@@ -183,13 +183,14 @@ class AssetExporter(
         }
 
         // Attributes to still exclude when exporting ALL attributes
-        val excludeAttributes = setOf(
-            Asset.QUALIFIED_NAME.atlanFieldName,
-            Asset.TYPE_NAME.atlanFieldName,
-            Asset.GUID.atlanFieldName,
-            "atlanTagNames",
-            "meaningNames",
-        )
+        val excludeAttributes =
+            setOf(
+                Asset.QUALIFIED_NAME.atlanFieldName,
+                Asset.TYPE_NAME.atlanFieldName,
+                Asset.GUID.atlanFieldName,
+                "atlanTagNames",
+                "meaningNames",
+            )
     }
 
     /**
