@@ -420,24 +420,24 @@ public class ModelTest extends AtlanLiveTest {
 
     // TODO: search assets by business date
     @Test(
-        groups = {"model.search.assets"},
-        dependsOnGroups = {"model.update.model.again"})
+            groups = {"model.search.assets"},
+            dependsOnGroups = {"model.update.model.again"})
     void searchByPast() throws AtlanException {
         List<Asset> assets = findByTime(past);
         assertNotNull(assets);
     }
 
     @Test(
-        groups = {"model.search.assets"},
-        dependsOnGroups = {"model.update.model.again"})
+            groups = {"model.search.assets"},
+            dependsOnGroups = {"model.update.model.again"})
     void searchByPreset() throws AtlanException {
         List<Asset> assets = findByTime(present);
         assertNotNull(assets);
     }
 
     @Test(
-        groups = {"model.search.assets"},
-        dependsOnGroups = {"model.update.model.again"})
+            groups = {"model.search.assets"},
+            dependsOnGroups = {"model.update.model.again"})
     void searchByFuture() throws AtlanException {
         List<Asset> assets = findByTime(future);
         assertNotNull(assets);
@@ -445,24 +445,25 @@ public class ModelTest extends AtlanLiveTest {
 
     // TODO: move into one of the core Model classes itself
     private List<Asset> findByTime(long timestamp) throws AtlanException {
-        Query subQuery =
-            FluentSearch._internal()
+        Query subQuery = FluentSearch._internal()
                 .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(timestamp))
                 .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
                 .minSomes(1)
                 .build()
                 .toQuery();
-        return Atlan.getDefaultClient().assets.select()
-            .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
-            .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
-            .includeOnResults(ModelAttribute.DESCRIPTION)
-            .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
-            .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
-            .where(Asset.CONNECTION_QUALIFIED_NAME.eq(connection.getQualifiedName()))
-            .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(timestamp))
-            .where(subQuery)
-            .stream()
-            .toList();
+        return Atlan.getDefaultClient()
+                .assets
+                .select()
+                .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
+                .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
+                .includeOnResults(ModelAttribute.DESCRIPTION)
+                .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
+                .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
+                .where(Asset.CONNECTION_QUALIFIED_NAME.eq(connection.getQualifiedName()))
+                .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(timestamp))
+                .where(subQuery)
+                .stream()
+                .toList();
     }
 
     @Test(
