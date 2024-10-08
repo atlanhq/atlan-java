@@ -104,11 +104,15 @@ class AssetExporter(
             ctx.limitToAssets.forEach { assetType ->
                 val clazz = Serde.getAssetClassForType(assetType)
                 val fields = ReflectionCache.getFieldNames(clazz)
-                uniqueFieldNames.addAll(fields.map { ReflectionCache.getSerializedName(clazz, it) })
+                val toInclude =
+                    fields
+                        .filter { includeProperties.contains(it) || ReflectionCache.isAttribute(clazz, it) }
+                        .map { ReflectionCache.getSerializedName(clazz, it) }
+                uniqueFieldNames.addAll(toInclude)
             }
             // Create an interim searchable AtlanField for the field, for all other methods to be reusable
             uniqueFieldNames
-                .filter { !excludeAttributes.contains(it) }
+                .filter { it != Asset.QUALIFIED_NAME.atlanFieldName }
                 .map { SearchableField(it, it) }
         } else if (ctx.limitToAttributes.isNotEmpty()) {
             ctx.limitToAttributes.map { SearchableField(it, it) }.toList()
@@ -182,14 +186,15 @@ class AssetExporter(
             )
         }
 
-        // Attributes to still exclude when exporting ALL attributes
-        val excludeAttributes =
+        // Top-level properties (non-attributes) to include when exporting ALL attributes
+        val includeProperties =
             setOf(
-                Asset.QUALIFIED_NAME.atlanFieldName,
-                Asset.TYPE_NAME.atlanFieldName,
-                Asset.GUID.atlanFieldName,
-                "classificationNames",
-                "meaningNames",
+                "atlanTags",
+                "status",
+                "createdBy",
+                "updatedBy",
+                "createTime",
+                "updateTime",
             )
     }
 
