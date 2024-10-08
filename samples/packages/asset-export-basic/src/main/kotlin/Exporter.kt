@@ -30,6 +30,7 @@ object Exporter {
         val includeDescription = Utils.getOrDefault(config.includeDescription, true)
         val includeArchived = Utils.getOrDefault(config.includeArchived, false)
         val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
+        val allAttributes = Utils.getOrDefault(config.allAttributes, false)
 
         val cmFields = getAllCustomMetadataFields()
 
@@ -42,6 +43,7 @@ object Exporter {
                 includeDescription,
                 includeArchived,
                 cmFields,
+                allAttributes,
             )
 
         val exportedFiles = mutableListOf<File>()
@@ -118,5 +120,6 @@ object Exporter {
         val includeDescription: Boolean,
         val includeArchived: Boolean,
         val cmFields: List<CustomMetadataField>,
+        val allAttributes: Boolean,
     )
 }

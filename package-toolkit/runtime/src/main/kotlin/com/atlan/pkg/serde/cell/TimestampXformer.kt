@@ -16,7 +16,7 @@ object TimestampXformer {
      * @return a human-readable date and time
      */
     fun encode(ts: Long?): String {
-        return if (ts == null) {
+        return if (ts == null || ts == 0L) {
             ""
         } else {
             FORMATTER.format(Instant.ofEpochMilli(ts))
