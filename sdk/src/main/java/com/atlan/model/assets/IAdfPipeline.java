@@ -9,9 +9,11 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -19,27 +21,67 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * Base class for ADF Pipelines. It is a logical grouping of activities that together perform a specific data processing task.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IAdfPipeline {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "AdfPipeline";
 
-    /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    /** ADF Pipeline that is associated with these ADF Activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** Additional Context of the ETL pipeline/notebook which creates the process. */
-    String getAdditionalEtlContext();
+    /** ADF pipelines that is associated with this ADF Dataflos. */
+    RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
-    /** ADF Activity that is associated with this lineage process. */
-    IAdfActivity getAdfActivity();
+    /** ADF pipelines that is associated with this ADF Datasets. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
+
+    /** ADF pipelines that is associated with this ADF Linkedservices. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
+
+    /** Defines the count of activities in the pipline. */
+    NumericField ADF_PIPELINE_ACTIVITY_COUNT = new NumericField("adfPipelineActivityCount", "adfPipelineActivityCount");
+
+    /** The list of annotation assigned to a pipeline. */
+    TextField ADF_PIPELINE_ANNOTATIONS = new TextField("adfPipelineAnnotations", "adfPipelineAnnotations");
+
+    /** List of objects of pipeline runs for a particular pipeline. */
+    KeywordField ADF_PIPELINE_RUNS = new KeywordField("adfPipelineRuns", "adfPipelineRuns");
+
+    /** ADF Pipeline that is associated with these ADF Activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF pipelines that is associated with this ADF Dataflos. */
+    SortedSet<IAdfDataflow> getAdfDataflows();
+
+    /** ADF pipelines that is associated with this ADF Datasets. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF pipelines that is associated with this ADF Linkedservices. */
+    SortedSet<IAdfLinkedservice> getAdfLinkedservices();
+
+    /** Defines the count of activities in the pipline. */
+    Integer getAdfPipelineActivityCount();
+
+    /** The list of annotation assigned to a pipeline. */
+    SortedSet<String> getAdfPipelineAnnotations();
+
+    /** List of objects of pipeline runs for a particular pipeline. */
+    List<Map<String, String>> getAdfPipelineRuns();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -49,9 +91,6 @@ public interface IDbtProcess {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Tasks that exist within this process. */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -299,9 +338,6 @@ public interface IDbtProcess {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    String getAst();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -313,12 +349,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Code that ran within the process. */
-    String getCode();
-
-    /** Processes that detail column-level lineage for this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -335,68 +365,8 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** List of latest DBT job runs across all environments */
-    List<DbtJobRun> getDbtJobRuns();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -428,9 +398,6 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ISparkJob> getInputToSparkJobs();
 
-    /** Assets that are inputs to this task. */
-    SortedSet<ICatalog> getInputs();
-
     /** TBC */
     Boolean getIsAIGenerated();
 
@@ -461,9 +428,6 @@ public interface IDbtProcess {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Matillion component that contains the logic for this lineage process. */
-    IMatillionComponent getMatillionComponent();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -491,9 +455,6 @@ public interface IDbtProcess {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
-    /** Assets that are outputs from this task. */
-    SortedSet<ICatalog> getOutputs();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -502,9 +463,6 @@ public interface IDbtProcess {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
-
-    /** PowerBI Dataflow that is associated with this lineage process. */
-    IPowerBIDataflow getPowerBIDataflow();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
@@ -586,12 +544,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
-
-    /** SQL query that ran to produce the outputs. */
-    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

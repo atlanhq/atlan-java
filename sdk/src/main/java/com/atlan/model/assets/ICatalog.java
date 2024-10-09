@@ -74,6 +74,21 @@ public interface ICatalog {
             case APISpec.TYPE_NAME:
                 ref = APISpec.refByQualifiedName(qualifiedName);
                 break;
+            case AdfActivity.TYPE_NAME:
+                ref = AdfActivity.refByQualifiedName(qualifiedName);
+                break;
+            case AdfDataflow.TYPE_NAME:
+                ref = AdfDataflow.refByQualifiedName(qualifiedName);
+                break;
+            case AdfDataset.TYPE_NAME:
+                ref = AdfDataset.refByQualifiedName(qualifiedName);
+                break;
+            case AdfLinkedservice.TYPE_NAME:
+                ref = AdfLinkedservice.refByQualifiedName(qualifiedName);
+                break;
+            case AdfPipeline.TYPE_NAME:
+                ref = AdfPipeline.refByQualifiedName(qualifiedName);
+                break;
             case AirflowDag.TYPE_NAME:
                 ref = AirflowDag.refByQualifiedName(qualifiedName);
                 break;

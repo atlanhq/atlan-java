@@ -37,6 +37,9 @@ public interface ILineageProcess {
     TextField ADDITIONAL_ETL_CONTEXT = new TextField("additionalEtlContext", "additionalEtlContext");
 
     /** TBC */
+    RelationField ADF_ACTIVITY = new RelationField("adfActivity");
+
+    /** TBC */
     RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
 
     /** TBC */
@@ -68,6 +71,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getAdditionalEtlContext();
+
+    /** TBC */
+    IAdfActivity getAdfActivity();
 
     /** TBC */
     SortedSet<String> getAdminGroups();

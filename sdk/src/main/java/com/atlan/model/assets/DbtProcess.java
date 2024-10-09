@@ -48,6 +48,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String additionalEtlContext;
 
+    /** ADF Activity that is associated with this lineage process. */
+    @Attribute
+    IAdfActivity adfActivity;
+
     /** Tasks that exist within this process. */
     @Attribute
     @Singular

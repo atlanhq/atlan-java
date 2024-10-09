@@ -33,6 +33,9 @@ public interface IBIProcess {
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
 
+    /** ADF Activity that is associated with this lineage process. */
+    IAdfActivity getAdfActivity();
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

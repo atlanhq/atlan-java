@@ -32,20 +32,20 @@ public class UserDefRelationship extends RelationshipAttributes {
     String typeName = TYPE_NAME;
 
     /** Name for the relationship when referring from endDef2 asset to endDef1 asset */
-    String fromType;
+    String fromTypeLabel;
 
     /** Name for the relationship when referring from endDef1 asset to endDef2 asset */
-    String toType;
+    String toTypeLabel;
 
     /** {@inheritDoc} */
     @Override
     public Map<String, Object> getAll() {
         Map<String, Object> map = new HashMap<>();
-        if (fromType != null) {
-            map.put("fromType", fromType);
+        if (fromTypeLabel != null) {
+            map.put("fromTypeLabel", fromTypeLabel);
         }
-        if (toType != null) {
-            map.put("toType", toType);
+        if (toTypeLabel != null) {
+            map.put("toTypeLabel", toTypeLabel);
         }
         return map;
     }

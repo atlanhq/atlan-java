@@ -8,10 +8,12 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -23,23 +25,142 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * Base class for ADF Linkedservices. It is a connection to a data source or compute resource used by Azure Data Factory.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IAdfLinkedservice {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "AdfLinkedservice";
 
-    /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    /** ADF Linkedservice that is associated with these ADF activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** Additional Context of the ETL pipeline/notebook which creates the process. */
-    String getAdditionalEtlContext();
+    /** ADF Linkedservices that are associated with this ADF Dataflows. */
+    RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
-    /** ADF Activity that is associated with this lineage process. */
-    IAdfActivity getAdfActivity();
+    /** ADF Linkedservice that is associated with these ADF datasets. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
+
+    /** Defines the name of the account used in the cosmos linked service. */
+    TextField ADF_LINKEDSERVICE_ACCOUNT_NAME =
+            new TextField("adfLinkedserviceAccountName", "adfLinkedserviceAccountName");
+
+    /** The list of annotation assigned to a linked service. */
+    TextField ADF_LINKEDSERVICE_ANNOTATIONS =
+            new TextField("adfLinkedserviceAnnotations", "adfLinkedserviceAnnotations");
+
+    /** Defines the type of cloud being used in the ADLS linked service. */
+    TextField ADF_LINKEDSERVICE_AZURE_CLOUD_TYPE =
+            new TextField("adfLinkedserviceAzureCloudType", "adfLinkedserviceAzureCloudType");
+
+    /** Defines the cluster id in the Azure databricks delta lake linked service. */
+    TextField ADF_LINKEDSERVICE_CLUSTER_ID = new TextField("adfLinkedserviceClusterId", "adfLinkedserviceClusterId");
+
+    /** Defines the type of credential, authentication being used in the ADLS, snowflake, azure sql linked service. */
+    TextField ADF_LINKEDSERVICE_CREDENTIAL_TYPE =
+            new TextField("adfLinkedserviceCredentialType", "adfLinkedserviceCredentialType");
+
+    /** Defines the name of the database used in the cosmos, snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_DATABASE_NAME =
+            new TextField("adfLinkedserviceDatabaseName", "adfLinkedserviceDatabaseName");
+
+    /** Defines the url, domain, account_identifier, server in the ADLS, Azure databricks delta lake, snowflake, azure sql linked service. */
+    TextField ADF_LINKEDSERVICE_DOMAIN_ENDPOINT =
+            new TextField("adfLinkedserviceDomainEndpoint", "adfLinkedserviceDomainEndpoint");
+
+    /** Defines the resource id in the Azure databricks delta lake linked service. */
+    TextField ADF_LINKEDSERVICE_RESOURCE_ID = new TextField("adfLinkedserviceResourceId", "adfLinkedserviceResourceId");
+
+    /** Defines the name of the role in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_ROLE_NAME = new TextField("adfLinkedserviceRoleName", "adfLinkedserviceRoleName");
+
+    /** Defines the tenant of cloud being used in the ADLS linked service. */
+    TextField ADF_LINKEDSERVICE_TENANT = new TextField("adfLinkedserviceTenant", "adfLinkedserviceTenant");
+
+    /** Defines the type of the linked service. */
+    KeywordField ADF_LINKEDSERVICE_TYPE = new KeywordField("adfLinkedserviceType", "adfLinkedserviceType");
+
+    /** Defines the name of the db user in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_USER_NAME = new TextField("adfLinkedserviceUserName", "adfLinkedserviceUserName");
+
+    /** Defines the version of the linked service in the cosmos linked service. */
+    TextField ADF_LINKEDSERVICE_VERSION = new TextField("adfLinkedserviceVersion", "adfLinkedserviceVersion");
+
+    /** Indicates whether the service version is above 3.2 or not in the cosmos linked service. */
+    BooleanField ADF_LINKEDSERVICE_VERSION_ABOVE =
+            new BooleanField("adfLinkedserviceVersionAbove", "adfLinkedserviceVersionAbove");
+
+    /** Defines the name of the warehouse in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_WAREHOUSE_NAME =
+            new TextField("adfLinkedserviceWarehouseName", "adfLinkedserviceWarehouseName");
+
+    /** ADF Linkedservices that are associated with this ADF pipelines. */
+    RelationField ADF_PIPELINES = new RelationField("adfPipelines");
+
+    /** ADF Linkedservice that is associated with these ADF activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF Linkedservices that are associated with this ADF Dataflows. */
+    SortedSet<IAdfDataflow> getAdfDataflows();
+
+    /** ADF Linkedservice that is associated with these ADF datasets. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** Defines the name of the account used in the cosmos linked service. */
+    String getAdfLinkedserviceAccountName();
+
+    /** The list of annotation assigned to a linked service. */
+    SortedSet<String> getAdfLinkedserviceAnnotations();
+
+    /** Defines the type of cloud being used in the ADLS linked service. */
+    String getAdfLinkedserviceAzureCloudType();
+
+    /** Defines the cluster id in the Azure databricks delta lake linked service. */
+    String getAdfLinkedserviceClusterId();
+
+    /** Defines the type of credential, authentication being used in the ADLS, snowflake, azure sql linked service. */
+    String getAdfLinkedserviceCredentialType();
+
+    /** Defines the name of the database used in the cosmos, snowflake linked service. */
+    String getAdfLinkedserviceDatabaseName();
+
+    /** Defines the url, domain, account_identifier, server in the ADLS, Azure databricks delta lake, snowflake, azure sql linked service. */
+    String getAdfLinkedserviceDomainEndpoint();
+
+    /** Defines the resource id in the Azure databricks delta lake linked service. */
+    String getAdfLinkedserviceResourceId();
+
+    /** Defines the name of the role in the snowflake linked service. */
+    String getAdfLinkedserviceRoleName();
+
+    /** Defines the tenant of cloud being used in the ADLS linked service. */
+    String getAdfLinkedserviceTenant();
+
+    /** Defines the type of the linked service. */
+    String getAdfLinkedserviceType();
+
+    /** Defines the name of the db user in the snowflake linked service. */
+    String getAdfLinkedserviceUserName();
+
+    /** Defines the version of the linked service in the cosmos linked service. */
+    String getAdfLinkedserviceVersion();
+
+    /** Indicates whether the service version is above 3.2 or not in the cosmos linked service. */
+    Boolean getAdfLinkedserviceVersionAbove();
+
+    /** Defines the name of the warehouse in the snowflake linked service. */
+    String getAdfLinkedserviceWarehouseName();
+
+    /** ADF Linkedservices that are associated with this ADF pipelines. */
+    SortedSet<IAdfPipeline> getAdfPipelines();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -49,9 +170,6 @@ public interface IDbtProcess {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Tasks that exist within this process. */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -299,9 +417,6 @@ public interface IDbtProcess {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    String getAst();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -313,12 +428,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Code that ran within the process. */
-    String getCode();
-
-    /** Processes that detail column-level lineage for this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -335,68 +444,8 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** List of latest DBT job runs across all environments */
-    List<DbtJobRun> getDbtJobRuns();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -428,9 +477,6 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ISparkJob> getInputToSparkJobs();
 
-    /** Assets that are inputs to this task. */
-    SortedSet<ICatalog> getInputs();
-
     /** TBC */
     Boolean getIsAIGenerated();
 
@@ -461,9 +507,6 @@ public interface IDbtProcess {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Matillion component that contains the logic for this lineage process. */
-    IMatillionComponent getMatillionComponent();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -491,9 +534,6 @@ public interface IDbtProcess {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
-    /** Assets that are outputs from this task. */
-    SortedSet<ICatalog> getOutputs();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -502,9 +542,6 @@ public interface IDbtProcess {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
-
-    /** PowerBI Dataflow that is associated with this lineage process. */
-    IPowerBIDataflow getPowerBIDataflow();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
@@ -586,12 +623,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
-
-    /** SQL query that ran to produce the outputs. */
-    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

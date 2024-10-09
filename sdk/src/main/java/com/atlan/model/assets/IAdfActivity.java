@@ -2,16 +2,21 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AdfActivityState;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -19,27 +24,170 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * Base class for ADF Activities. It is a processing or transformation step that performs a specific task within a pipeline to manipulate or move data
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IAdfActivity {
 
-    public static final String TYPE_NAME = "DbtProcess";
+    public static final String TYPE_NAME = "AdfActivity";
 
-    /** TBC */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    NumericField ADF_ACTIVITY_BATCH_COUNT = new NumericField("adfActivityBatchCount", "adfActivityBatchCount");
 
-    /** Additional Context of the ETL pipeline/notebook which creates the process. */
-    String getAdditionalEtlContext();
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    BooleanField ADF_ACTIVITY_FIRST_ROW_ONLY = new BooleanField("adfActivityFirstRowOnly", "adfActivityFirstRowOnly");
 
-    /** ADF Activity that is associated with this lineage process. */
-    IAdfActivity getAdfActivity();
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    BooleanField ADF_ACTIVITY_IS_SEQUENTIAL = new BooleanField("adfActivityIsSequential", "adfActivityIsSequential");
+
+    /** Defines the main class of the databricks spark activity. */
+    TextField ADF_ACTIVITY_MAIN_CLASS_NAME = new TextField("adfActivityMainClassName", "adfActivityMainClassName");
+
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    TextField ADF_ACTIVITY_NOTEBOOK_PATH = new TextField("adfActivityNotebookPath", "adfActivityNotebookPath");
+
+    /** The retry interval in seconds for the ADF activity. */
+    NumericField ADF_ACTIVITY_POLICT_RETRY_INTERVAL =
+            new NumericField("adfActivityPolictRetryInterval", "adfActivityPolictRetryInterval");
+
+    /** The timout defined for the ADF activity. */
+    TextField ADF_ACTIVITY_POLICY_TIMEOUT = new TextField("adfActivityPolicyTimeout", "adfActivityPolicyTimeout");
+
+    /** The list of ADF activities on which this ADF activity depends on. */
+    TextField ADF_ACTIVITY_PRECEDING_DEPENDENCIES =
+            new TextField("adfActivityPrecedingDependency", "adfActivityPrecedingDependency");
+
+    /** Defines the python file path for databricks python activity. */
+    TextField ADF_ACTIVITY_PYTHON_FILE_PATH = new TextField("adfActivityPythonFilePath", "adfActivityPythonFilePath");
+
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    TextField ADF_ACTIVITY_REFERENCE_DATAFLOW =
+            new TextField("adfActivityReferenceDataflow", "adfActivityReferenceDataflow");
+
+    /** List of objects of activity runs for a particular activity. */
+    KeywordField ADF_ACTIVITY_RUNS = new KeywordField("adfActivityRuns", "adfActivityRuns");
+
+    /** Defines the type of the sink of the ADF activtity. */
+    TextField ADF_ACTIVITY_SINK_TYPE = new TextField("adfActivitySinkType", "adfActivitySinkType");
+
+    /** The list of names of sinks for the ADF activity. */
+    TextField ADF_ACTIVITY_SINKS = new TextField("adfActivitySinks", "adfActivitySinks");
+
+    /** Defines the type of the source of the ADF activtity. */
+    TextField ADF_ACTIVITY_SOURCE_TYPE = new TextField("adfActivitySourceType", "adfActivitySourceType");
+
+    /** The list of names of sources for the ADF activity. */
+    TextField ADF_ACTIVITY_SOURCES = new TextField("adfActivitySources", "adfActivitySources");
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    KeywordField ADF_ACTIVITY_STATE = new KeywordField("adfActivityState", "adfActivityState");
+
+    /** The list of activities to be run inside a ForEach activity. */
+    TextField ADF_ACTIVITY_SUB_ACTIVITIES = new TextField("adfActivitySubActivities", "adfActivitySubActivities");
+
+    /** The type of the ADF activity. */
+    KeywordField ADF_ACTIVITY_TYPE = new KeywordField("adfActivityType", "adfActivityType");
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    RelationField ADF_DATAFLOW = new RelationField("adfDataflow");
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    RelationField ADF_PIPELINE = new RelationField("adfPipeline");
+
+    /** Unique name of the pipeline in which this activity exists. */
+    KeywordTextField ADF_PIPELINE_QUALIFIED_NAME = new KeywordTextField(
+            "adfPipelineQualifiedName", "adfPipelineQualifiedName", "adfPipelineQualifiedName.text");
+
+    /** Lineage process that associates this ADF Activity. */
+    RelationField PROCESSES = new RelationField("processes");
+
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    Integer getAdfActivityBatchCount();
+
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    Boolean getAdfActivityFirstRowOnly();
+
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    Boolean getAdfActivityIsSequential();
+
+    /** Defines the main class of the databricks spark activity. */
+    String getAdfActivityMainClassName();
+
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    String getAdfActivityNotebookPath();
+
+    /** The retry interval in seconds for the ADF activity. */
+    Integer getAdfActivityPolictRetryInterval();
+
+    /** The timout defined for the ADF activity. */
+    String getAdfActivityPolicyTimeout();
+
+    /** The list of ADF activities on which this ADF activity depends on. */
+    SortedSet<String> getAdfActivityPrecedingDependencies();
+
+    /** Defines the python file path for databricks python activity. */
+    String getAdfActivityPythonFilePath();
+
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    String getAdfActivityReferenceDataflow();
+
+    /** List of objects of activity runs for a particular activity. */
+    List<Map<String, String>> getAdfActivityRuns();
+
+    /** Defines the type of the sink of the ADF activtity. */
+    String getAdfActivitySinkType();
+
+    /** The list of names of sinks for the ADF activity. */
+    SortedSet<String> getAdfActivitySinks();
+
+    /** Defines the type of the source of the ADF activtity. */
+    String getAdfActivitySourceType();
+
+    /** The list of names of sources for the ADF activity. */
+    SortedSet<String> getAdfActivitySources();
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    AdfActivityState getAdfActivityState();
+
+    /** The list of activities to be run inside a ForEach activity. */
+    SortedSet<String> getAdfActivitySubActivities();
+
+    /** The type of the ADF activity. */
+    String getAdfActivityType();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    IAdfDataflow getAdfDataflow();
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    SortedSet<IAdfLinkedservice> getAdfLinkedservices();
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    IAdfPipeline getAdfPipeline();
+
+    /** Unique name of the pipeline in which this activity exists. */
+    String getAdfPipelineQualifiedName();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -49,9 +197,6 @@ public interface IDbtProcess {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Tasks that exist within this process. */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -299,9 +444,6 @@ public interface IDbtProcess {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    String getAst();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -313,12 +455,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Code that ran within the process. */
-    String getCode();
-
-    /** Processes that detail column-level lineage for this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -335,68 +471,8 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
-    String getDbtAccountName();
-
-    /** TBC */
-    String getDbtAlias();
-
-    /** TBC */
-    String getDbtConnectionContext();
-
-    /** TBC */
-    String getDbtEnvironmentDbtVersion();
-
-    /** TBC */
-    String getDbtEnvironmentName();
-
-    /** TBC */
-    Long getDbtJobLastRun();
-
-    /** TBC */
-    String getDbtJobName();
-
-    /** TBC */
-    Long getDbtJobNextRun();
-
-    /** TBC */
-    String getDbtJobNextRunHumanized();
-
-    /** List of latest DBT job runs across all environments */
-    List<DbtJobRun> getDbtJobRuns();
-
-    /** TBC */
-    String getDbtJobSchedule();
-
-    /** TBC */
-    String getDbtJobScheduleCronHumanized();
-
-    /** TBC */
-    String getDbtJobStatus();
-
-    /** TBC */
-    String getDbtMeta();
-
-    /** TBC */
-    String getDbtPackageName();
-
-    /** TBC */
-    String getDbtProcessJobStatus();
-
-    /** TBC */
-    String getDbtProjectName();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** TBC */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** TBC */
-    SortedSet<String> getDbtTags();
-
-    /** TBC */
-    String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -428,9 +504,6 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<ISparkJob> getInputToSparkJobs();
 
-    /** Assets that are inputs to this task. */
-    SortedSet<ICatalog> getInputs();
-
     /** TBC */
     Boolean getIsAIGenerated();
 
@@ -461,9 +534,6 @@ public interface IDbtProcess {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Matillion component that contains the logic for this lineage process. */
-    IMatillionComponent getMatillionComponent();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -491,9 +561,6 @@ public interface IDbtProcess {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
-    /** Assets that are outputs from this task. */
-    SortedSet<ICatalog> getOutputs();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -503,8 +570,8 @@ public interface IDbtProcess {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
-    IPowerBIDataflow getPowerBIDataflow();
+    /** Lineage process that associates this ADF Activity. */
+    SortedSet<ILineageProcess> getProcesses();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
@@ -586,12 +653,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
-
-    /** SQL query that ran to produce the outputs. */
-    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DbtProcessTest {
+public class AdfActivityTest {
 
-    private static final DbtProcess full = DbtProcess._internal()
+    private static final AdfActivity full = AdfActivity._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,68 +59,8 @@ public class DbtProcessTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dbtAccountName("String0")
-            .dbtAlias("String0")
-            .dbtConnectionContext("String0")
-            .dbtEnvironmentDbtVersion("String0")
-            .dbtEnvironmentName("String0")
-            .dbtJobLastRun(123456789L)
-            .dbtJobName("String0")
-            .dbtJobNextRun(123456789L)
-            .dbtJobNextRunHumanized("String0")
-            .dbtJobRun(DbtJobRun.builder()
-                    .dbtJobId("String0")
-                    .dbtJobName("String0")
-                    .dbtEnvironmentId("String0")
-                    .dbtEnvironmentName("String0")
-                    .dbtJobRunId("String0")
-                    .dbtJobRunCompletedAt(123456789L)
-                    .dbtJobRunStatus("String0")
-                    .dbtTestRunStatus("String0")
-                    .dbtModelRunStatus("String0")
-                    .dbtCompiledSQL("String0")
-                    .dbtCompiledCode("String0")
-                    .build())
-            .dbtJobRun(DbtJobRun.builder()
-                    .dbtJobId("String1")
-                    .dbtJobName("String1")
-                    .dbtEnvironmentId("String1")
-                    .dbtEnvironmentName("String1")
-                    .dbtJobRunId("String1")
-                    .dbtJobRunCompletedAt(987654321L)
-                    .dbtJobRunStatus("String1")
-                    .dbtTestRunStatus("String1")
-                    .dbtModelRunStatus("String1")
-                    .dbtCompiledSQL("String1")
-                    .dbtCompiledCode("String1")
-                    .build())
-            .dbtJobSchedule("String0")
-            .dbtJobScheduleCronHumanized("String0")
-            .dbtJobStatus("String0")
-            .dbtMeta("String0")
-            .dbtPackageName("String0")
-            .dbtProjectName("String0")
-            .dbtSemanticLayerProxyUrl("String0")
-            .dbtTag("String0")
-            .dbtTag("String1")
-            .dbtUniqueId("String0")
-            .additionalEtlContext("String0")
-            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
+            .adfAssetFolderPath("String0")
+            .adfFactoryName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -481,21 +421,52 @@ public class DbtProcessTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dbtProcessJobStatus("String0")
+            .adfActivityBatchCount(123)
+            .adfActivityFirstRowOnly(true)
+            .adfActivityIsSequential(true)
+            .adfActivityMainClassName("String0")
+            .adfActivityNotebookPath("String0")
+            .adfActivityPolictRetryInterval(123)
+            .adfActivityPolicyTimeout("String0")
+            .adfActivityPrecedingDependency("String0")
+            .adfActivityPrecedingDependency("String1")
+            .adfActivityPythonFilePath("String0")
+            .adfActivityReferenceDataflow("String0")
+            .adfActivityRun(Map.of("key1", "value1"))
+            .adfActivityRun(Map.of("key2", "value2"))
+            .adfActivitySinkType("String0")
+            .adfActivitySink("String0")
+            .adfActivitySink("String1")
+            .adfActivitySourceType("String0")
+            .adfActivitySource("String0")
+            .adfActivitySource("String1")
+            .adfActivityState(AdfActivityState.ACTIVE)
+            .adfActivitySubActivity("String0")
+            .adfActivitySubActivity("String1")
+            .adfActivityType("String0")
+            .adfDataflow(AdfDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataset(AdfDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataset(AdfDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfLinkedservice(AdfLinkedservice.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfLinkedservice(AdfLinkedservice.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfPipeline(AdfPipeline.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfPipelineQualifiedName("String0")
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .process(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DbtProcess frodo;
+    private static AdfActivity frodo;
     private static String serialized;
 
-    @Test(groups = {"DbtProcess.builderEquivalency"})
+    @Test(groups = {"AdfActivity.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DbtProcess.serialize"},
-            dependsOnGroups = {"DbtProcess.builderEquivalency"})
+            groups = {"AdfActivity.serialize"},
+            dependsOnGroups = {"AdfActivity.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -504,17 +475,17 @@ public class DbtProcessTest {
     }
 
     @Test(
-            groups = {"DbtProcess.deserialize"},
-            dependsOnGroups = {"DbtProcess.serialize"})
+            groups = {"AdfActivity.deserialize"},
+            dependsOnGroups = {"AdfActivity.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DbtProcess.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AdfActivity.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DbtProcess.equivalency"},
-            dependsOnGroups = {"DbtProcess.serialize", "DbtProcess.deserialize"})
+            groups = {"AdfActivity.equivalency"},
+            dependsOnGroups = {"AdfActivity.serialize", "AdfActivity.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -523,8 +494,8 @@ public class DbtProcessTest {
     }
 
     @Test(
-            groups = {"DbtProcess.equivalency"},
-            dependsOnGroups = {"DbtProcess.serialize", "DbtProcess.deserialize"})
+            groups = {"AdfActivity.equivalency"},
+            dependsOnGroups = {"AdfActivity.serialize", "AdfActivity.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

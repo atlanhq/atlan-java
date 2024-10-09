@@ -49,6 +49,10 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String additionalEtlContext;
 
+    /** ADF Activity that is associated with this lineage process. */
+    @Attribute
+    IAdfActivity adfActivity;
+
     /** Tasks that exist within this process. */
     @Attribute
     @Singular

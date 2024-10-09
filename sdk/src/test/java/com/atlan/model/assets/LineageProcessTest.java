@@ -408,6 +408,7 @@ public class LineageProcessTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .additionalEtlContext("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .ast("String0")
