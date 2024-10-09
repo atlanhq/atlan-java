@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.AtlanClient
+import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Badge
 import com.atlan.model.assets.Connection
@@ -54,7 +55,7 @@ object TestsCleanup {
 
     private fun purgeGlossaries(prefix: String) {
         val glossaries =
-            Glossary.select()
+            Glossary.select(true)
                 .where(Glossary.NAME.startsWith(prefix))
                 .includeOnResults(Glossary.NAME)
                 .stream()
@@ -64,7 +65,7 @@ object TestsCleanup {
             val qn = glossary.qualifiedName
             val name = glossary.name
             val terms =
-                GlossaryTerm.select()
+                GlossaryTerm.select(true)
                     .where(GlossaryTerm.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -72,7 +73,7 @@ object TestsCleanup {
             logger.info { "Purging ${terms.size} terms from glossary: $name" }
             purgeByGuids(terms)
             val categories =
-                GlossaryCategory.select()
+                GlossaryCategory.select(true)
                     .where(GlossaryCategory.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -88,7 +89,7 @@ object TestsCleanup {
 
     private fun purgeProducts(prefix: String) {
         val list =
-            DataProduct.select()
+            DataProduct.select(true)
                 .where(DataProduct.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -99,7 +100,7 @@ object TestsCleanup {
 
     private fun purgeDomains(prefix: String) {
         val list =
-            DataDomain.select()
+            DataDomain.select(true)
                 .where(DataDomain.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -110,7 +111,7 @@ object TestsCleanup {
 
     private fun purgeAssets(prefix: String) {
         val list =
-            Connection.select()
+            Connection.select(true)
                 .where(Connection.NAME.startsWith(prefix))
                 .stream()
                 .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
@@ -119,7 +120,7 @@ object TestsCleanup {
             val qn = connection.qualifiedName
             val name = connection.name
             val assets =
-                client.assets.select()
+                client.assets.select(true)
                     .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -133,7 +134,7 @@ object TestsCleanup {
 
     private fun purgePurposes(prefix: String) {
         val list =
-            Purpose.select()
+            Purpose.select(true)
                 .where(Purpose.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -144,7 +145,7 @@ object TestsCleanup {
 
     private fun purgePersonas(prefix: String) {
         val list =
-            Persona.select()
+            Persona.select(true)
                 .where(Persona.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -175,7 +176,7 @@ object TestsCleanup {
         list.forEach { cm ->
             val badgeQNPrefix = "badges/global/${cm.internalName}."
             val badges =
-                Badge.select()
+                Badge.select(true)
                     .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
                     .stream()
                     .map { it.guid }
@@ -183,7 +184,11 @@ object TestsCleanup {
             logger.info { "Purging ${badges.size} badges for custom metadata: ${cm.name}" }
             purgeByGuids(badges)
             logger.info { "Purging custom metadata: ${cm.name}" }
-            getPrivilegedClient().typeDefs.purge(cm.internalName)
+            try {
+                getPrivilegedClient().typeDefs.purge(cm.internalName)
+            } catch (e: AtlanException) {
+                logger.error(e) { " ... failed to purge: ${cm.name}" }
+            }
         }
     }
 
@@ -199,7 +204,11 @@ object TestsCleanup {
                 .toList()
         list.forEach { cm ->
             logger.info { "Purging Atlan tag: ${cm.name}" }
-            getPrivilegedClient().typeDefs.purge(cm.internalName)
+            try {
+                getPrivilegedClient().typeDefs.purge(cm.internalName)
+            } catch (e: AtlanException) {
+                logger.error(e) { " ... failed to purge ${cm.name}" }
+            }
         }
     }
 

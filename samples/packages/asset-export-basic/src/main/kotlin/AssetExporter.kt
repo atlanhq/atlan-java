@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
+import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AtlanQuery
 import com.atlan.model.assets.AuthPolicy
@@ -17,9 +18,8 @@ import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.RowGenerator
+import com.atlan.serde.Serde
 import mu.KotlinLogging
-import java.util.stream.Collectors
-import java.util.stream.Stream
 
 /**
  * Export assets from Atlan, in one of two modes (defined by EXPORT_SCOPE environment variable):
@@ -41,22 +41,16 @@ class AssetExporter(
     private val logger = KotlinLogging.logger {}
 
     fun export() {
+        val fieldsToExtract = getFieldsToExtract()
         val assets =
             getAssetsToExtract()
                 .pageSize(batchSize)
                 .includesOnRelations(getRelatedAttributesToExtract())
-                .includesOnResults(getFieldsToExtract())
+                .includesOnResults(fieldsToExtract)
+        val headerNames = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
+        headerNames.addAll(fieldsToExtract.map { RowSerde.getHeaderForField(it) })
 
         CSVWriter(filename).use { csv ->
-            val headerNames =
-                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
-                    .map(AtlanField::getAtlanFieldName)
-                    .collect(Collectors.toList())
-            headerNames.addAll(
-                getFieldsToExtract().stream()
-                    .map { f -> RowSerde.getHeaderForField(f) }
-                    .collect(Collectors.toList()),
-            )
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
             csv.streamAssets(assets.stream(true), this, assets.count(), batchSize, logger)
@@ -104,9 +98,24 @@ class AssetExporter(
         return builder
     }
 
-    private fun getFieldsToExtract(): MutableList<AtlanField> {
-        return if (ctx.limitToAttributes.isNotEmpty()) {
-            ctx.limitToAttributes.map { SearchableField(it, it) }.toMutableList()
+    private fun getFieldsToExtract(): List<AtlanField> {
+        return if (ctx.allAttributes) {
+            val uniqueFieldNames = mutableSetOf<String>()
+            ctx.limitToAssets.forEach { assetType ->
+                val clazz = Serde.getAssetClassForType(assetType)
+                val fields = ReflectionCache.getFieldNames(clazz)
+                val toInclude =
+                    fields
+                        .filter { includeProperties.contains(it) || ReflectionCache.isAttribute(clazz, it) }
+                        .map { ReflectionCache.getSerializedName(clazz, it) }
+                uniqueFieldNames.addAll(toInclude)
+            }
+            // Create an interim searchable AtlanField for the field, for all other methods to be reusable
+            uniqueFieldNames
+                .filter { it != Asset.QUALIFIED_NAME.atlanFieldName }
+                .map { SearchableField(it, it) }
+        } else if (ctx.limitToAttributes.isNotEmpty()) {
+            ctx.limitToAttributes.map { SearchableField(it, it) }.toList()
         } else {
             getAttributesToExtract(ctx.includeDescription, ctx.cmFields)
         }
@@ -116,7 +125,7 @@ class AssetExporter(
         fun getAttributesToExtract(
             includeDesc: Boolean,
             cmFields: List<CustomMetadataField>,
-        ): MutableList<AtlanField> {
+        ): List<AtlanField> {
             val attributeList: MutableList<AtlanField> =
                 if (includeDesc) {
                     mutableListOf(
@@ -162,13 +171,13 @@ class AssetExporter(
             return attributeList
         }
 
-        fun getRelatedAttributesToExtract(): MutableList<AtlanField> {
+        fun getRelatedAttributesToExtract(): List<AtlanField> {
             // Needed for:
             // - asset referencing
             // - Link embedding
             // - README embedding
             // - assigned term containment
-            return mutableListOf(
+            return listOf(
                 Asset.QUALIFIED_NAME,
                 Asset.NAME,
                 Asset.DESCRIPTION,
@@ -176,6 +185,17 @@ class AssetExporter(
                 GlossaryTerm.ANCHOR,
             )
         }
+
+        // Top-level properties (non-attributes) to include when exporting ALL attributes
+        val includeProperties =
+            setOf(
+                "atlanTags",
+                "status",
+                "createdBy",
+                "updatedBy",
+                "createTime",
+                "updateTime",
+            )
     }
 
     /**

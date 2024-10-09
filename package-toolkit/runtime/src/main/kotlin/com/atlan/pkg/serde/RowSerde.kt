@@ -29,7 +29,21 @@ object RowSerde {
             field.setName + CM_HEADING_DELIMITER + field.attributeName
         } else {
             // Use renamed fields for deserialization, if available
-            ReflectionCache.getDeserializedName(assetClass, field.atlanFieldName)
+            getHeaderForField(field.atlanFieldName, assetClass)
         }
+    }
+
+    /**
+     * Retrieve the name to use for the header for a particular field, assuming a particular type of asset.
+     *
+     * @param field for which to determine the header name
+     * @param assetClass (optional) asset class in which to assume the field is defined (defaults to general Asset)
+     * @return the name of the header to use for that field
+     */
+    fun getHeaderForField(
+        fieldName: String,
+        assetClass: Class<*> = Asset::class.java,
+    ): String {
+        return ReflectionCache.getDeserializedName(assetClass, fieldName)
     }
 }
