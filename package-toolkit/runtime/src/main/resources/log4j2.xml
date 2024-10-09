@@ -20,12 +20,12 @@
         </Routing>
     </Appenders>
     <Loggers>
-        <Root level="INFO">
-            <AppenderRef ref="ConsoleAppender"/>
+        <Root level="DEBUG">
+            <AppenderRef ref="ConsoleAppender" level="INFO"/>
             <AppenderRef ref="Routing"/>
         </Root>
-        <Logger name="com.atlan" level="DEBUG" additivity="false">
-            <AppenderRef ref="Routing"/>
-        </Logger>
+        <Logger name="com.atlan" level="DEBUG"/>
+        <Logger name="software.amazon" level="INFO"/>
+        <Logger name="org.apache" level="INFO"/>
     </Loggers>
 </Configuration>
