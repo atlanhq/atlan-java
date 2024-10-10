@@ -19,7 +19,7 @@ nexusPublishing {
 
 dependencyCheck {
     nvd {
-        apiKey = providers.environmentVariable("NVD_API_KEY").get()
+        apiKey = System.getenv("NVD_API_KEY") ?: ""
     }
     failBuildOnCVSS = 7.0F
 }

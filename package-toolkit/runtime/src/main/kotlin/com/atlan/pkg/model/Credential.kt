@@ -3,6 +3,7 @@
 package com.atlan.pkg.model
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 
 /**
  * Captures the details of credentials once they have been retrieved from the vault.
@@ -29,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect
  * @param updatedAt time in milliseconds (epoch) at which a user last updated the credential
  * @param version unique name for the version of the credential
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class Credential(
     val authType: String,
