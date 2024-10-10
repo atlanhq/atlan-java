@@ -52,6 +52,7 @@ data class Credential(
     val tenantId: String,
     val createdBy: String,
     val createdAt: Long,
+    val updatedBy: String,
     val updatedAt: Long,
     val version: String,
 )
