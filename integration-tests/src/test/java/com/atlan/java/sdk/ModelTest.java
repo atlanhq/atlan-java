@@ -24,6 +24,7 @@ import com.atlan.model.assets.ModelEntity;
 import com.atlan.model.assets.ModelVersion;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.graph.ModelGraph;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -539,15 +540,22 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.search.assets"})
     void searchByPast() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
-        validatePast(IModel.findByTime(Atlan.getDefaultClient(), past, connection.getQualifiedName()));
-        validatePast(IModel.findByTime(Atlan.getDefaultClient(), present - 1, connection.getQualifiedName()));
+        validatePast(past);
+        validatePast(present - 1);
     }
 
-    private void validatePast(List<Asset> assets) {
+    private void validatePast(long time) throws AtlanException {
         // Should contain only the model that was created at this time
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
         assertNotNull(assets);
         assertEquals(assets.size(), 1);
         assertEquals(assets.get(0).getGuid(), model.getGuid());
+        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        assertNotNull(g);
+        assertNotNull(g.getModel());
+        assertEquals(g.getModel().getGuid(), model.getGuid());
+        assertNull(g.getVersion());
+        assertNull(g.getEntities());
     }
 
     @Test(
@@ -555,12 +563,13 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.search.assets"})
     void searchByPresent() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
-        validatePresent(IModel.findByTime(Atlan.getDefaultClient(), present, connection.getQualifiedName()));
-        validatePresent(IModel.findByTime(Atlan.getDefaultClient(), future - 1, connection.getQualifiedName()));
+        validatePresent(present);
+        validatePresent(future - 1);
     }
 
-    private void validatePresent(List<Asset> assets) {
+    private void validatePresent(long time) throws AtlanException {
         // Should contain only the model (created previously) + entity that was created at this time
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
         assertNotNull(assets);
         // TODO: the modelBusinessDate on the version1 is greater than `present` so is excluded the first time, but it
         // should be included
@@ -581,6 +590,17 @@ public class ModelTest extends AtlanLiveTest {
             // misaligned)
             assertTrue(guids.contains(version2.getGuid()));
         }
+        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        assertNotNull(g);
+        assertNotNull(g.getModel());
+        assertEquals(g.getModel().getGuid(), model.getGuid());
+        if (guids.size() == 3) {
+            assertNotNull(g.getVersion());
+            assertEquals(g.getVersion().getGuid(), version2.getGuid());
+        }
+        assertNotNull(g.getEntities());
+        assertEquals(g.getEntities().size(), 1);
+        assertNull(g.getEntities().get(0).getAttributes());
     }
 
     @Test(
@@ -588,15 +608,16 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.search.assets"})
     void searchByFuture() throws AtlanException {
         // Should be the same at this exact moment through to beyond (no subsequent versions to close this one)
-        validateFuture(IModel.findByTime(Atlan.getDefaultClient(), future, connection.getQualifiedName()));
-        validateFuture(IModel.findByTime(Atlan.getDefaultClient(), future + 10000, connection.getQualifiedName()));
+        validateFuture(future);
+        validateFuture(future + 10000);
     }
 
-    private void validateFuture(List<Asset> assets) {
+    private void validateFuture(long time) throws AtlanException {
         // Should contain all of:
         // - the model (created previously)
         // - the entity (created previously)
         // - another entity + 2 attributes that were created at this time
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
         assertNotNull(assets);
         assertEquals(assets.size(), 6);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
@@ -613,6 +634,26 @@ public class ModelTest extends AtlanLiveTest {
         assertTrue(guids.contains(entity2.getGuid()));
         assertTrue(guids.contains(attr1.getGuid()));
         assertTrue(guids.contains(attr2.getGuid()));
+        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        assertNotNull(g);
+        assertNotNull(g.getModel());
+        assertEquals(g.getModel().getGuid(), model.getGuid());
+        assertNotNull(g.getVersion());
+        assertEquals(g.getVersion().getGuid(), version2.getGuid());
+        assertNotNull(g.getEntities());
+        assertEquals(g.getEntities().size(), 2);
+        g.getEntities().forEach(it -> {
+            if (it.getDetails().getGuid().equals(entity1.getGuid())) {
+                assertNull(it.getAttributes());
+            } else {
+                assertNotNull(it.getAttributes());
+                assertEquals(it.getAttributes().size(), 2);
+                Set<String> attrs = it.getAttributes().stream().map(ModelAttribute::getGuid).collect(Collectors.toSet());
+                assertEquals(attrs.size(), 2);
+                assertTrue(attrs.contains(attr1.getGuid()));
+                assertTrue(attrs.contains(attr2.getGuid()));
+            }
+        });
     }
 
     @Test(
