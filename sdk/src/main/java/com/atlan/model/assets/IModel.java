@@ -70,6 +70,10 @@ public interface IModel {
     /** Type of the model asset (conceptual, logical, physical). */
     KeywordField MODEL_TYPE = new KeywordField("modelType", "modelType");
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    KeywordField MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME =
+            new KeywordField("modelVersionAgnosticQualifiedName", "modelVersionAgnosticQualifiedName");
+
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     KeywordTextField MODEL_VERSION_NAME =
             new KeywordTextField("modelVersionName", "modelVersionName.keyword", "modelVersionName");
@@ -464,6 +468,9 @@ public interface IModel {
 
     /** Type of the model asset (conceptual, logical, physical). */
     String getModelType();
+
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    String getModelVersionAgnosticQualifiedName();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getModelVersionName();
