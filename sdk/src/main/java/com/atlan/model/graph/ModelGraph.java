@@ -10,15 +10,14 @@ import com.atlan.model.assets.ModelAttribute;
 import com.atlan.model.assets.ModelDataModel;
 import com.atlan.model.assets.ModelEntity;
 import com.atlan.model.assets.ModelVersion;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Structure through which various model assets can all be traversed.
@@ -29,8 +28,10 @@ import java.util.Map;
 public class ModelGraph {
     private ModelDataModel model;
     private ModelVersion version;
+
     @Singular
     private List<ModelEntityGraph> entities;
+
     private long asOfTime;
 
     /**
@@ -43,7 +44,7 @@ public class ModelGraph {
      * @throws AtlanException on any issues communicating with the underlying APIs
      */
     public static ModelGraph from(AtlanClient client, long time, String prefix) throws AtlanException {
-        List<Asset> assets = IModel.findByTime(client, time, prefix);
+        List<Asset> assets = IModel.findByTime(client, time, prefix, null);
         ModelGraphBuilder builder = builder();
         Map<String, ModelEntityGraph.ModelEntityGraphBuilder> eg = new HashMap<>();
         assets.forEach(it -> {
@@ -64,8 +65,9 @@ public class ModelGraph {
             }
         });
         ;
-        return builder
-            .entities(eg.values().stream().map(ModelEntityGraph.ModelEntityGraphBuilder::build).toList())
-            .build();
+        return builder.entities(eg.values().stream()
+                        .map(ModelEntityGraph.ModelEntityGraphBuilder::build)
+                        .toList())
+                .build();
     }
 }

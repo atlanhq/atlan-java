@@ -11,6 +11,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
@@ -117,25 +119,14 @@ public interface IModel {
      * @param client connectivity to the Atlan tenant
      * @param businessDate time at which the model assets were active
      * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @param extraAttributes (optional) additional attributes to retrieve for each model asset
      * @return all model assets active at the requested time
      * @throws AtlanException on any issues with underlying API interactions
      */
-    public static List<Asset> findByTime(AtlanClient client, Date businessDate, String prefix) throws AtlanException {
-        return findByTime(client, businessDate.toInstant(), prefix);
-    }
-
-    /**
-     * Find all model assets active at a particular business date.
-     *
-     * @param client connectivity to the Atlan tenant
-     * @param businessDate time at which the model assets were active
-     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
-     * @return all model assets active at the requested time
-     * @throws AtlanException on any issues with underlying API interactions
-     */
-    public static List<Asset> findByTime(AtlanClient client, Instant businessDate, String prefix)
+    public static List<Asset> findByTime(
+            AtlanClient client, Date businessDate, String prefix, List<AtlanField> extraAttributes)
             throws AtlanException {
-        return findByTime(client, businessDate.toEpochMilli(), prefix);
+        return findByTime(client, businessDate.toInstant(), prefix, extraAttributes);
     }
 
     /**
@@ -144,24 +135,46 @@ public interface IModel {
      * @param client connectivity to the Atlan tenant
      * @param businessDate time at which the model assets were active
      * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @param extraAttributes (optional) additional attributes to retrieve for each model asset
      * @return all model assets active at the requested time
      * @throws AtlanException on any issues with underlying API interactions
      */
-    public static List<Asset> findByTime(AtlanClient client, long businessDate, String prefix) throws AtlanException {
+    public static List<Asset> findByTime(
+            AtlanClient client, Instant businessDate, String prefix, List<AtlanField> extraAttributes)
+            throws AtlanException {
+        return findByTime(client, businessDate.toEpochMilli(), prefix, extraAttributes);
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @param extraAttributes (optional) additional attributes to retrieve for each model asset
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(
+            AtlanClient client, long businessDate, String prefix, List<AtlanField> extraAttributes)
+            throws AtlanException {
         Query subQuery = FluentSearch._internal()
-                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(businessDate))
-                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
+                .whereSome(MODEL_EXPIRED_AT_BUSINESS_DATE.gt(businessDate))
+                .whereSome(MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
                 .minSomes(1)
                 .build()
                 .toQuery();
         return client
                 .assets
                 .select()
-                .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
-                .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
-                .includeOnResults(ModelAttribute.DESCRIPTION)
-                .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
-                .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
+                .includesOnResults(extraAttributes != null ? extraAttributes : Collections.emptyList())
+                .includeOnResults(MODEL_BUSINESS_DATE)
+                .includeOnResults(MODEL_EXPIRED_AT_BUSINESS_DATE)
+                .includeOnResults(Asset.DESCRIPTION)
+                .includeOnResults(MODEL_NAMESPACE)
+                .includeOnResults(MODEL_ENTITY_QUALIFIED_NAME)
+                .includeOnResults(MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME)
+                .includeRelationshipAttributes(true)
                 .where(Asset.QUALIFIED_NAME.startsWith(prefix))
                 .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(businessDate))
                 .where(subQuery)

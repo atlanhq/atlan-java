@@ -530,7 +530,7 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.search.assets"})
     void searchPreHistory() throws AtlanException {
         // Should contain nothing -- we knew nothing prior to past
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), past - 1, connection.getQualifiedName());
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), past - 1, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertTrue(assets.isEmpty());
     }
@@ -546,7 +546,7 @@ public class ModelTest extends AtlanLiveTest {
 
     private void validatePast(long time) throws AtlanException {
         // Should contain only the model that was created at this time
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertEquals(assets.size(), 1);
         assertEquals(assets.get(0).getGuid(), model.getGuid());
@@ -555,7 +555,7 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(g.getModel());
         assertEquals(g.getModel().getGuid(), model.getGuid());
         assertNull(g.getVersion());
-        assertNull(g.getEntities());
+        assertTrue(g.getEntities().isEmpty());
     }
 
     @Test(
@@ -569,7 +569,7 @@ public class ModelTest extends AtlanLiveTest {
 
     private void validatePresent(long time) throws AtlanException {
         // Should contain only the model (created previously) + entity that was created at this time
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         // TODO: the modelBusinessDate on the version1 is greater than `present` so is excluded the first time, but it
         // should be included
@@ -600,7 +600,7 @@ public class ModelTest extends AtlanLiveTest {
         }
         assertNotNull(g.getEntities());
         assertEquals(g.getEntities().size(), 1);
-        assertNull(g.getEntities().get(0).getAttributes());
+        assertTrue(g.getEntities().get(0).getAttributes().isEmpty());
     }
 
     @Test(
@@ -617,7 +617,7 @@ public class ModelTest extends AtlanLiveTest {
         // - the model (created previously)
         // - the entity (created previously)
         // - another entity + 2 attributes that were created at this time
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertEquals(assets.size(), 6);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
@@ -644,11 +644,12 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(g.getEntities().size(), 2);
         g.getEntities().forEach(it -> {
             if (it.getDetails().getGuid().equals(entity1.getGuid())) {
-                assertNull(it.getAttributes());
+                assertTrue(it.getAttributes().isEmpty());
             } else {
-                assertNotNull(it.getAttributes());
+                assertFalse(it.getAttributes().isEmpty());
                 assertEquals(it.getAttributes().size(), 2);
-                Set<String> attrs = it.getAttributes().stream().map(ModelAttribute::getGuid).collect(Collectors.toSet());
+                Set<String> attrs =
+                        it.getAttributes().stream().map(ModelAttribute::getGuid).collect(Collectors.toSet());
                 assertEquals(attrs.size(), 2);
                 assertTrue(attrs.contains(attr1.getGuid()));
                 assertTrue(attrs.contains(attr2.getGuid()));
