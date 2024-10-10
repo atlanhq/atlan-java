@@ -535,8 +535,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.search.assets.byTime"},
-        dependsOnGroups = {"model.search.assets"})
+            groups = {"model.search.assets.byTime"},
+            dependsOnGroups = {"model.search.assets"})
     void searchByPast() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
         validatePast(IModel.findByTime(Atlan.getDefaultClient(), past, connection.getQualifiedName()));
@@ -551,8 +551,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.search.assets.byTime"},
-        dependsOnGroups = {"model.search.assets"})
+            groups = {"model.search.assets.byTime"},
+            dependsOnGroups = {"model.search.assets"})
     void searchByPresent() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
         validatePresent(IModel.findByTime(Atlan.getDefaultClient(), present, connection.getQualifiedName()));
@@ -565,7 +565,10 @@ public class ModelTest extends AtlanLiveTest {
         // TODO: the modelBusinessDate on the version1 is greater than `present` so is excluded, but it be included
         if (assets.size() == 3) {
             log.info("Found unexpected version...");
-            ModelVersion version = (ModelVersion) assets.stream().filter(it -> it instanceof ModelVersion).findFirst().get();
+            ModelVersion version = (ModelVersion) assets.stream()
+                    .filter(it -> it instanceof ModelVersion)
+                    .findFirst()
+                    .get();
             log.info(" ... business date on version = {}", version.getModelBusinessDate());
             log.info(" ... business date requested  = {}", present);
             log.info(" ... version >= requested     = {}", version.getModelBusinessDate() >= present);
@@ -584,8 +587,8 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"model.search.assets.byTime"},
-        dependsOnGroups = {"model.search.assets"})
+            groups = {"model.search.assets.byTime"},
+            dependsOnGroups = {"model.search.assets"})
     void searchByFuture() throws AtlanException {
         // Should be the same at this exact moment through to beyond (no subsequent versions to close this one)
         validateFuture(IModel.findByTime(Atlan.getDefaultClient(), future, connection.getQualifiedName()));
