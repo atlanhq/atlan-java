@@ -2,6 +2,9 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package ${packageRoot}.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -28,6 +31,7 @@ import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.FluentSearch;
 <#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 <#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
@@ -56,6 +60,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;

@@ -10,11 +10,11 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.IModel;
 import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IModelVersion;
 import com.atlan.model.assets.IReferenceable;
@@ -25,7 +25,6 @@ import com.atlan.model.assets.ModelVersion;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.search.AggregationBucketResult;
-import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import java.time.Instant;
@@ -526,22 +525,22 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+            groups = {"model.search.assets.byTime"},
+            dependsOnGroups = {"model.search.assets"})
     void searchPreHistory() throws AtlanException {
         // Should contain nothing -- we knew nothing prior to past
-        List<Asset> assets = findByTime(past - 1);
+        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), past - 1, connection.getQualifiedName());
         assertNotNull(assets);
         assertTrue(assets.isEmpty());
     }
 
     @Test(
-            groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+        groups = {"model.search.assets.byTime"},
+        dependsOnGroups = {"model.search.assets"})
     void searchByPast() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
-        validatePast(findByTime(past));
-        validatePast(findByTime(present - 1));
+        validatePast(IModel.findByTime(Atlan.getDefaultClient(), past, connection.getQualifiedName()));
+        validatePast(IModel.findByTime(Atlan.getDefaultClient(), present - 1, connection.getQualifiedName()));
     }
 
     private void validatePast(List<Asset> assets) {
@@ -552,35 +551,45 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+        groups = {"model.search.assets.byTime"},
+        dependsOnGroups = {"model.search.assets"})
     void searchByPresent() throws AtlanException {
         // Should be the same at this exact moment through until just up to the next version
-        validatePresent(findByTime(present));
-        validatePresent(findByTime(future - 1));
+        validatePresent(IModel.findByTime(Atlan.getDefaultClient(), present, connection.getQualifiedName()));
+        validatePresent(IModel.findByTime(Atlan.getDefaultClient(), future - 1, connection.getQualifiedName()));
     }
 
     private void validatePresent(List<Asset> assets) {
         // Should contain only the model (created previously) + entity that was created at this time
         assertNotNull(assets);
+        // TODO: the modelBusinessDate on the version1 is greater than `present` so is excluded, but it be included
+        if (assets.size() == 3) {
+            log.info("Found unexpected version...");
+            ModelVersion version = (ModelVersion) assets.stream().filter(it -> it instanceof ModelVersion).findFirst().get();
+            log.info(" ... business date on version = {}", version.getModelBusinessDate());
+            log.info(" ... business date requested  = {}", present);
+            log.info(" ... version >= requested     = {}", version.getModelBusinessDate() >= present);
+        }
         assertEquals(assets.size(), 2);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 2);
         assertTrue(types.contains(ModelDataModel.TYPE_NAME));
         assertTrue(types.contains(ModelEntity.TYPE_NAME));
+        // TODO: assertTrue(types.contains(ModelVersion.TYPE_NAME));
         Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 2);
         assertTrue(guids.contains(model.getGuid()));
         assertTrue(guids.contains(entity1.getGuid()));
+        // TODO: assertTrue(guids.contains(version1.getGuid()));
     }
 
     @Test(
-            groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+        groups = {"model.search.assets.byTime"},
+        dependsOnGroups = {"model.search.assets"})
     void searchByFuture() throws AtlanException {
         // Should be the same at this exact moment through to beyond (no subsequent versions to close this one)
-        validateFuture(findByTime(future));
-        validateFuture(findByTime(future + 10000));
+        validateFuture(IModel.findByTime(Atlan.getDefaultClient(), future, connection.getQualifiedName()));
+        validateFuture(IModel.findByTime(Atlan.getDefaultClient(), future + 10000, connection.getQualifiedName()));
     }
 
     private void validateFuture(List<Asset> assets) {
@@ -589,42 +598,21 @@ public class ModelTest extends AtlanLiveTest {
         // - the entity (created previously)
         // - another entity + 2 attributes that were created at this time
         assertNotNull(assets);
-        assertEquals(assets.size(), 5);
+        assertEquals(assets.size(), 6);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
-        assertEquals(types.size(), 3);
+        assertEquals(types.size(), 4);
         assertTrue(types.contains(ModelDataModel.TYPE_NAME));
         assertTrue(types.contains(ModelEntity.TYPE_NAME));
         assertTrue(types.contains(ModelAttribute.TYPE_NAME));
+        assertTrue(types.contains(ModelVersion.TYPE_NAME));
         Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
-        assertEquals(guids.size(), 5);
+        assertEquals(guids.size(), 6);
         assertTrue(guids.contains(model.getGuid()));
+        assertTrue(guids.contains(version2.getGuid()));
         assertTrue(guids.contains(entity1.getGuid()));
         assertTrue(guids.contains(entity2.getGuid()));
         assertTrue(guids.contains(attr1.getGuid()));
         assertTrue(guids.contains(attr2.getGuid()));
-    }
-
-    // TODO: move into one of the core Model classes itself
-    private List<Asset> findByTime(long timestamp) throws AtlanException {
-        Query subQuery = FluentSearch._internal()
-                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(timestamp))
-                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
-                .minSomes(1)
-                .build()
-                .toQuery();
-        return Atlan.getDefaultClient()
-                .assets
-                .select()
-                .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
-                .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
-                .includeOnResults(ModelAttribute.DESCRIPTION)
-                .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
-                .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
-                .where(Asset.CONNECTION_QUALIFIED_NAME.eq(connection.getQualifiedName()))
-                .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(timestamp))
-                .where(subQuery)
-                .stream()
-                .toList();
     }
 
     @Test(

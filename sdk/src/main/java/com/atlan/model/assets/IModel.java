@@ -2,6 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -13,6 +16,7 @@ import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -20,6 +24,8 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
@@ -103,6 +109,64 @@ public interface IModel {
     @JsonIgnore
     public static String getNameFromSlug(String slug) {
         return slug.replaceAll("±", "/");
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, Date businessDate, String prefix) throws AtlanException {
+        return findByTime(client, businessDate.toInstant(), prefix);
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, Instant businessDate, String prefix)
+            throws AtlanException {
+        return findByTime(client, businessDate.toEpochMilli(), prefix);
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, long businessDate, String prefix) throws AtlanException {
+        Query subQuery = FluentSearch._internal()
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(businessDate))
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
+                .minSomes(1)
+                .build()
+                .toQuery();
+        return client
+                .assets
+                .select()
+                .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
+                .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
+                .includeOnResults(ModelAttribute.DESCRIPTION)
+                .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
+                .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
+                .where(Asset.QUALIFIED_NAME.startsWith(prefix))
+                .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(businessDate))
+                .where(subQuery)
+                .stream()
+                .toList();
     }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
