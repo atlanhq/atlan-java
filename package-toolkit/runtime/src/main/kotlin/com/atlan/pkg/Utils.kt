@@ -18,6 +18,7 @@ import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import jakarta.activation.FileDataSource
@@ -47,7 +48,7 @@ import kotlin.system.exitProcess
  */
 object Utils {
     val logger = KotlinLogging.logger {}
-    val MAPPER = jacksonObjectMapper()
+    val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
 
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
