@@ -16,6 +16,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IModelEntity;
+import com.atlan.model.assets.IModelVersion;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ModelAttribute;
 import com.atlan.model.assets.ModelDataModel;
@@ -112,6 +113,8 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(version1.getGuid());
         assertNotNull(version1.getQualifiedName());
         assertNotNull(version1.getName());
+        assertEquals(version1.getModelExpiredAtBusinessDate(), 0);
+        assertEquals(version1.getModelExpiredAtSystemDate(), 0);
         // TODO: assertEquals(version1.getModelName(), model.getName());
         // TODO: assertEquals(version1.getModelQualifiedName(), model.getQualifiedName());
     }
@@ -136,7 +139,8 @@ public class ModelTest extends AtlanLiveTest {
         assertTrue(parent instanceof ModelVersion);
         ModelVersion old = (ModelVersion) parent;
         assertEquals(old.getGuid(), version1.getGuid());
-        // TODO: validate what has actually changed on version1
+        assertTrue(old.getModelExpiredAtBusinessDate() > 0);
+        assertTrue(old.getModelExpiredAtSystemDate() > 0);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getCreatedAssets().size(), 4);
         List<Asset> sorted = response.getCreatedAssets().stream()
@@ -172,6 +176,8 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(version2.getQualifiedName());
         assertNotNull(version2.getName());
         assertNotEquals(version1.getGuid(), version2.getGuid());
+        assertEquals(version2.getModelExpiredAtBusinessDate(), 0);
+        assertEquals(version2.getModelExpiredAtSystemDate(), 0);
         // TODO: assertEquals(version2.getModelName(), model.getName());
         // TODO: assertEquals(version2.getModelQualifiedName(), model.getQualifiedName());
     }
@@ -188,6 +194,10 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(read.getConnectionQualifiedName(), model.getConnectionQualifiedName());
         assertNotNull(read.getModelVersions());
         assertEquals(read.getModelVersions().size(), 2);
+        Set<String> versions =
+                read.getModelVersions().stream().map(IModelVersion::getGuid).collect(Collectors.toSet());
+        assertTrue(versions.contains(version1.getGuid()));
+        assertTrue(versions.contains(version2.getGuid()));
     }
 
     @Test(
@@ -205,6 +215,9 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(read.getModelVersionEntities());
         assertEquals(read.getModelVersionEntities().size(), 1);
         assertEquals(read.getModelVersionEntities().first().getGuid(), entity1.getGuid());
+        // Version 1 should now have an expiration date, since version 2 now exists
+        assertTrue(read.getModelExpiredAtBusinessDate() > 0);
+        assertTrue(read.getModelExpiredAtSystemDate() > 0);
     }
 
     @Test(
@@ -227,6 +240,9 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(guids.size(), 2);
         assertTrue(guids.contains(entity1.getGuid()));
         assertTrue(guids.contains(entity2.getGuid()));
+        // Version 2 should still have no expiration date, since no further versions exist
+        assertEquals(read.getModelExpiredAtBusinessDate(), 0);
+        assertEquals(read.getModelExpiredAtSystemDate(), 0);
     }
 
     @Test(
@@ -242,6 +258,10 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(read.getModelVersions());
         // Note: same entity should be present in both versions
         assertEquals(read.getModelVersions().size(), 2);
+        Set<String> versions =
+                read.getModelVersions().stream().map(IModelVersion::getGuid).collect(Collectors.toSet());
+        assertTrue(versions.contains(version1.getGuid()));
+        assertTrue(versions.contains(version2.getGuid()));
     }
 
     @Test(
@@ -276,17 +296,34 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(read.getModelAttributeEntities().first().getGuid(), entity2.getGuid());
     }
 
+    // Update the model -- no new version expected
+
     @Test(
             groups = {"model.update.model"},
-            dependsOnGroups = {"model.create.*"})
+            dependsOnGroups = {"model.read.*"})
     void updateModel() throws AtlanException {
-        ModelDataModel updated =
-                ModelDataModel.updateCertificate(model.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        ModelDataModel toUpdate = model.trimToRequired()
+                .certificateStatus(CERTIFICATE_STATUS)
+                .certificateStatusMessage(CERTIFICATE_MESSAGE)
+                .build();
+        AssetMutationResponse response = toUpdate.save();
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        ModelDataModel updated = response.getResult(toUpdate);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
-        updated = ModelDataModel.updateAnnouncement(
-                model.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+        toUpdate = model.trimToRequired()
+                .announcementType(ANNOUNCEMENT_TYPE)
+                .announcementTitle(ANNOUNCEMENT_TITLE)
+                .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                .build();
+        response = toUpdate.save();
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        updated = response.getResult(toUpdate);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -294,7 +331,7 @@ public class ModelTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"model.read.updatedModel"},
+            groups = {"model.reread.model"},
             dependsOnGroups = {"model.update.model"})
     void readUpdatedModel() throws AtlanException {
         ModelDataModel read = ModelDataModel.get(model.getQualifiedName());
@@ -313,7 +350,7 @@ public class ModelTest extends AtlanLiveTest {
 
     @Test(
             groups = {"model.update.model.again"},
-            dependsOnGroups = {"model.read.updatedModel"})
+            dependsOnGroups = {"model.reread.model"})
     void updateModelAgain() throws AtlanException {
         ModelDataModel updated = ModelDataModel.removeCertificate(model.getQualifiedName(), MODEL_NAME);
         assertNotNull(updated);
@@ -329,9 +366,79 @@ public class ModelTest extends AtlanLiveTest {
         assertNull(updated.getAnnouncementMessage());
     }
 
+    // Update the entity -- new version expected!
+
+    @Test(
+            groups = {"model.update.entity"},
+            dependsOnGroups = {"model.update.model.again"})
+    void updateEntity() throws AtlanException {
+        ModelEntity toUpdate = entity1.trimToRequired()
+                .certificateStatus(CERTIFICATE_STATUS)
+                .certificateStatusMessage(CERTIFICATE_MESSAGE)
+                .build();
+        AssetMutationResponse response = toUpdate.save();
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty()); // TODO: should be a version?
+        assertTrue(response.getDeletedAssets().isEmpty());
+        ModelEntity updated = response.getResult(toUpdate);
+        assertNotNull(updated);
+        assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        toUpdate = entity1.trimToRequired()
+                .announcementType(ANNOUNCEMENT_TYPE)
+                .announcementTitle(ANNOUNCEMENT_TITLE)
+                .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                .build();
+        response = toUpdate.save();
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty()); // TODO: should be a version?
+        assertTrue(response.getDeletedAssets().isEmpty());
+        updated = response.getResult(toUpdate);
+        assertNotNull(updated);
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+    }
+
+    @Test(
+            groups = {"model.reread.entity"},
+            dependsOnGroups = {"model.update.entity"})
+    void readUpdatedEntity() throws AtlanException {
+        ModelEntity read = ModelEntity.get(entity1.getQualifiedName());
+        assertNotNull(read);
+        assertEquals(read.getGuid(), entity1.getGuid());
+        assertEquals(read.getQualifiedName(), entity1.getQualifiedName());
+        assertEquals(read.getName(), entity1.getName());
+        assertEquals(read.getConnectorType(), entity1.getConnectorType());
+        assertEquals(read.getConnectionQualifiedName(), entity1.getConnectionQualifiedName());
+        assertEquals(read.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(read.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(read.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(read.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(read.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+    }
+
+    @Test(
+            groups = {"model.update.entity.again"},
+            dependsOnGroups = {"model.reread.entity"})
+    void updateEntityAgain() throws AtlanException {
+        ModelEntity updated = ModelEntity.removeCertificate(entity1.getQualifiedName(), ENT1_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getCertificateStatus());
+        assertNull(updated.getCertificateStatusMessage());
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        updated = ModelEntity.removeAnnouncement(entity1.getQualifiedName(), ENT1_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getAnnouncementType());
+        assertNull(updated.getAnnouncementTitle());
+        assertNull(updated.getAnnouncementMessage());
+    }
+
     @Test(
             groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+            dependsOnGroups = {"model.update.model.again", "model.update.entity.again"})
     void searchAssets() throws AtlanException, InterruptedException {
         IndexSearchRequest index = Atlan.getDefaultClient()
                 .assets
@@ -418,29 +525,83 @@ public class ModelTest extends AtlanLiveTest {
         // TODO: assertEquals(v2.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
-    // TODO: search assets by business date
     @Test(
             groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+            dependsOnGroups = {"model.update.model.again", "model.update.entity.again"})
+    void searchPreHistory() throws AtlanException {
+        // Should contain nothing -- we knew nothing prior to past
+        List<Asset> assets = findByTime(past - 1);
+        assertNotNull(assets);
+        assertTrue(assets.isEmpty());
+    }
+
+    @Test(
+            groups = {"model.search.assets"},
+            dependsOnGroups = {"model.update.model.again", "model.update.entity.again"})
     void searchByPast() throws AtlanException {
-        List<Asset> assets = findByTime(past);
+        // Should be the same at this exact moment through until just up to the next version
+        validatePast(findByTime(past));
+        validatePast(findByTime(present - 1));
+    }
+
+    private void validatePast(List<Asset> assets) {
+        // Should contain only the model that was created at this time
         assertNotNull(assets);
+        assertEquals(assets.size(), 1);
+        assertEquals(assets.get(0).getGuid(), model.getGuid());
     }
 
     @Test(
             groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
-    void searchByPreset() throws AtlanException {
-        List<Asset> assets = findByTime(present);
+            dependsOnGroups = {"model.update.model.again", "model.update.entity.again"})
+    void searchByPresent() throws AtlanException {
+        // Should be the same at this exact moment through until just up to the next version
+        validatePresent(findByTime(present));
+        validatePresent(findByTime(future - 1));
+    }
+
+    private void validatePresent(List<Asset> assets) {
+        // Should contain only the model (created previously) + entity that was created at this time
         assertNotNull(assets);
+        assertEquals(assets.size(), 2);
+        Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
+        assertEquals(types.size(), 2);
+        assertTrue(types.contains(ModelDataModel.TYPE_NAME));
+        assertTrue(types.contains(ModelEntity.TYPE_NAME));
+        Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertEquals(guids.size(), 2);
+        assertTrue(guids.contains(model.getGuid()));
+        assertTrue(guids.contains(entity1.getGuid()));
     }
 
     @Test(
             groups = {"model.search.assets"},
-            dependsOnGroups = {"model.update.model.again"})
+            dependsOnGroups = {"model.update.model.again", "model.update.entity.again"})
     void searchByFuture() throws AtlanException {
-        List<Asset> assets = findByTime(future);
+        // Should be the same at this exact moment through to beyond (no subsequent versions to close this one)
+        validateFuture(findByTime(future));
+        validateFuture(findByTime(future + 10000));
+    }
+
+    private void validateFuture(List<Asset> assets) {
+        // Should contain all of:
+        // - the model (created previously)
+        // - the entity (created previously)
+        // - another entity + 2 attributes that were created at this time
         assertNotNull(assets);
+        assertEquals(assets.size(), 5);
+        Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
+        assertEquals(types.size(), 3);
+        assertTrue(types.contains(ModelDataModel.TYPE_NAME));
+        assertTrue(types.contains(ModelEntity.TYPE_NAME));
+        assertTrue(types.contains(ModelAttribute.TYPE_NAME));
+        Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertEquals(guids.size(), 5);
+        assertTrue(guids.contains(model.getGuid()));
+        assertTrue(guids.contains(entity1.getGuid()));
+        assertTrue(guids.contains(entity2.getGuid()));
+        assertTrue(guids.contains(attr1.getGuid()));
+        assertTrue(guids.contains(attr2.getGuid()));
     }
 
     // TODO: move into one of the core Model classes itself
@@ -468,7 +629,7 @@ public class ModelTest extends AtlanLiveTest {
 
     @Test(
             groups = {"model.purge.connection"},
-            dependsOnGroups = {"model.create.*", "model.read.*", "model.search.*", "model.update.*"},
+            dependsOnGroups = {"model.create.*", "model.read.*", "model.reread.*", "model.search.*", "model.update.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

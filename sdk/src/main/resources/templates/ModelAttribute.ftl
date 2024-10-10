@@ -63,19 +63,17 @@ import com.atlan.model.assets.Connection;
             .connectionQualifiedName(connectionQualifiedName);
     }
 
-    // TODO: determine how version-agnostic updates should work (what to use as qualifiedName of entity?)
-
     /**
      * Builds the minimal object necessary to update a ModelAttribute.
      *
-     * @param qualifiedName of the ModelAttribute
+     * @param versionAgnosticQualifiedName of the ModelAttribute
      * @param name of the ModelAttribute
      * @return the minimal request necessary to update the ModelAttribute, as a builder
      */
-    public static ModelAttributeBuilder<?, ?> updater(String qualifiedName, String name) {
+    public static ModelAttributeBuilder<?, ?> updater(String versionAgnosticQualifiedName, String name) {
         return ModelAttribute._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
+                .modelVersionAgnosticQualifiedName(versionAgnosticQualifiedName)
                 .name(name);
     }
 
@@ -114,9 +112,9 @@ import com.atlan.model.assets.Connection;
     @Override
     public ModelAttributeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
+            "modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName(),
             "name", this.getName()
         ));
-        return updater(this.getQualifiedName(), this.getName());
+        return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 </#macro>
