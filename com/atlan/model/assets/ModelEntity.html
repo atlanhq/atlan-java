@@ -150,7 +150,7 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 <code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IModel">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IModel.html" title="interface in com.atlan.model.assets">IModel</a></h3>
-<code><a href="IModel.html#MODEL_BUSINESS_DATE">MODEL_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_DOMAIN">MODEL_DOMAIN</a>, <a href="IModel.html#MODEL_ENTITY_NAME">MODEL_ENTITY_NAME</a>, <a href="IModel.html#MODEL_ENTITY_QUALIFIED_NAME">MODEL_ENTITY_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_EXPIRED_AT_BUSINESS_DATE">MODEL_EXPIRED_AT_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_EXPIRED_AT_SYSTEM_DATE">MODEL_EXPIRED_AT_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_NAME">MODEL_NAME</a>, <a href="IModel.html#MODEL_NAMESPACE">MODEL_NAMESPACE</a>, <a href="IModel.html#MODEL_QUALIFIED_NAME">MODEL_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_SYSTEM_DATE">MODEL_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_TYPE">MODEL_TYPE</a>, <a href="IModel.html#MODEL_VERSION_NAME">MODEL_VERSION_NAME</a>, <a href="IModel.html#MODEL_VERSION_QUALIFIED_NAME">MODEL_VERSION_QUALIFIED_NAME</a></code></div>
+<code><a href="IModel.html#MODEL_BUSINESS_DATE">MODEL_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_DOMAIN">MODEL_DOMAIN</a>, <a href="IModel.html#MODEL_ENTITY_NAME">MODEL_ENTITY_NAME</a>, <a href="IModel.html#MODEL_ENTITY_QUALIFIED_NAME">MODEL_ENTITY_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_EXPIRED_AT_BUSINESS_DATE">MODEL_EXPIRED_AT_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_EXPIRED_AT_SYSTEM_DATE">MODEL_EXPIRED_AT_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_NAME">MODEL_NAME</a>, <a href="IModel.html#MODEL_NAMESPACE">MODEL_NAMESPACE</a>, <a href="IModel.html#MODEL_QUALIFIED_NAME">MODEL_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_SYSTEM_DATE">MODEL_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_TYPE">MODEL_TYPE</a>, <a href="IModel.html#MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME">MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_VERSION_NAME">MODEL_VERSION_NAME</a>, <a href="IModel.html#MODEL_VERSION_QUALIFIED_NAME">MODEL_VERSION_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IModelEntity">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a></h3>
 <code><a href="IModelEntity.html#MODEL_ENTITY_ATTRIBUTE_COUNT">MODEL_ENTITY_ATTRIBUTE_COUNT</a>, <a href="IModelEntity.html#MODEL_ENTITY_ATTRIBUTES">MODEL_ENTITY_ATTRIBUTES</a>, <a href="IModelEntity.html#MODEL_ENTITY_MAPPED_FROM_ENTITIES">MODEL_ENTITY_MAPPED_FROM_ENTITIES</a>, <a href="IModelEntity.html#MODEL_ENTITY_MAPPED_TO_ENTITIES">MODEL_ENTITY_MAPPED_TO_ENTITIES</a>, <a href="IModelEntity.html#MODEL_ENTITY_RELATED_FROM_ENTITIES">MODEL_ENTITY_RELATED_FROM_ENTITIES</a>, <a href="IModelEntity.html#MODEL_ENTITY_RELATED_TO_ENTITIES">MODEL_ENTITY_RELATED_TO_ENTITIES</a>, <a href="IModelEntity.html#MODEL_ENTITY_SUBJECT_AREA">MODEL_ENTITY_SUBJECT_AREA</a>, <a href="IModelEntity.html#MODEL_VERSIONS">MODEL_VERSIONS</a></code></div>
@@ -236,131 +236,182 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canEqual(java.lang.Object)" class="member-name-link">canEqual</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;other)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creator(java.lang.String,com.atlan.model.assets.ModelDataModel)" class="member-name-link">creator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="ModelDataModel.html" title="class in com.atlan.model.assets">ModelDataModel</a>&nbsp;model)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creator(java.lang.String,java.lang.String)" class="member-name-link">creator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelQualifiedName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">creator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;connectionQualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelQualifiedName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creatorForVersion(java.lang.String,com.atlan.model.assets.ModelVersion)" class="member-name-link">creatorForVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="ModelVersion.html" title="class in com.atlan.model.assets">ModelVersion</a>&nbsp;version)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creatorForVersion(java.lang.String,java.lang.String)" class="member-name-link">creatorForVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionQualifiedName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#creatorForVersion(java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">creatorForVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;connectionQualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionQualifiedName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.html" title="class in com.atlan.model.assets">ModelEntity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">get</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#generateQualifiedName(java.lang.String,java.lang.String)" class="member-name-link">generateQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parentQualifiedName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Retrieves a ModelEntity by one of its identifiers, complete with all of its relationships.</div>
+<div class="block">Generate a unique ModelEntity name.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.html" title="class in com.atlan.model.assets">ModelEntity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(com.atlan.AtlanClient,java.lang.String,boolean)" class="member-name-link">get</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- boolean&nbsp;includeRelationships)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">get</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Retrieves a ModelEntity by one of its identifiers, optionally complete with all of its relationships.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.html" title="class in com.atlan.model.assets">ModelEntity</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Retrieves a ModelEntity by one of its identifiers, complete with all of its relationships.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToAirflowTasks()" class="member-name-link">getInputToAirflowTasks</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.html" title="class in com.atlan.model.assets">ModelEntity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(com.atlan.AtlanClient,java.lang.String,boolean)" class="member-name-link">get</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+ boolean&nbsp;includeRelationships)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Retrieves a ModelEntity by one of its identifiers, optionally complete with all of its relationships.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.html" title="class in com.atlan.model.assets">ModelEntity</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Retrieves a ModelEntity by one of its identifiers, complete with all of its relationships.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToAirflowTasks()" class="member-name-link">getInputToAirflowTasks</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Tasks to which this asset provides input.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToProcesses()" class="member-name-link">getInputToProcesses</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToProcesses()" class="member-name-link">getInputToProcesses</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Processes to which this asset provides input.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToSparkJobs()" class="member-name-link">getInputToSparkJobs</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInputToSparkJobs()" class="member-name-link">getInputToSparkJobs</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelBusinessDate()" class="member-name-link">getModelBusinessDate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelBusinessDate()" class="member-name-link">getModelBusinessDate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Business date for the asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelDomain()" class="member-name-link">getModelDomain</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelDomain()" class="member-name-link">getModelDomain</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Model domain in which this asset exists.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityAttributeCount()" class="member-name-link">getModelEntityAttributeCount</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityAttributeCount()" class="member-name-link">getModelEntityAttributeCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of attributes in the entity.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityAttributes()" class="member-name-link">getModelEntityAttributes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityAttributes()" class="member-name-link">getModelEntityAttributes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Individual attributes that make up the entity.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityMappedFromEntities()" class="member-name-link">getModelEntityMappedFromEntities</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityMappedFromEntities()" class="member-name-link">getModelEntityMappedFromEntities</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Entities from which this entity is mapped.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityMappedToEntities()" class="member-name-link">getModelEntityMappedToEntities</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityMappedToEntities()" class="member-name-link">getModelEntityMappedToEntities</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Entities to which this entity is mapped.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityName()" class="member-name-link">getModelEntityName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityName()" class="member-name-link">getModelEntityName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Simple name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityQualifiedName()" class="member-name-link">getModelEntityQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityQualifiedName()" class="member-name-link">getModelEntityQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the entity in which this asset exists, or empty if it is itself a data model entity.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntityAssociation.html" title="interface in com.atlan.model.assets">IModelEntityAssociation</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityRelatedFromEntities()" class="member-name-link">getModelEntityRelatedFromEntities</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntityAssociation.html" title="interface in com.atlan.model.assets">IModelEntityAssociation</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityRelatedFromEntities()" class="member-name-link">getModelEntityRelatedFromEntities</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Association from which this entity is related.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntityAssociation.html" title="interface in com.atlan.model.assets">IModelEntityAssociation</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityRelatedToEntities()" class="member-name-link">getModelEntityRelatedToEntities</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IModelEntityAssociation.html" title="interface in com.atlan.model.assets">IModelEntityAssociation</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntityRelatedToEntities()" class="member-name-link">getModelEntityRelatedToEntities</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Association to which this entity is related.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntitySubjectArea()" class="member-name-link">getModelEntitySubjectArea</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelEntitySubjectArea()" class="member-name-link">getModelEntitySubjectArea</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Subject area of the entity.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelExpiredAtBusinessDate()" class="member-name-link">getModelExpiredAtBusinessDate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelExpiredAtBusinessDate()" class="member-name-link">getModelExpiredAtBusinessDate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Business expiration date for the asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelExpiredAtSystemDate()" class="member-name-link">getModelExpiredAtSystemDate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelExpiredAtSystemDate()" class="member-name-link">getModelExpiredAtSystemDate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">System expiration date for the asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelName()" class="member-name-link">getModelName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelName()" class="member-name-link">getModelName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Simple name of the model in which this asset exists, or empty if it is itself a data model.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelNamespace()" class="member-name-link">getModelNamespace</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelNamespace()" class="member-name-link">getModelNamespace</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Model namespace in which this asset exists.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelQualifiedName()" class="member-name-link">getModelQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelQualifiedName()" class="member-name-link">getModelQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the model in which this asset exists, or empty if it is itself a data model.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelSystemDate()" class="member-name-link">getModelSystemDate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelSystemDate()" class="member-name-link">getModelSystemDate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">System date for the asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelType()" class="member-name-link">getModelType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelType()" class="member-name-link">getModelType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Type of the model asset (conceptual, logical, physical).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelVersionAgnosticQualifiedName()" class="member-name-link">getModelVersionAgnosticQualifiedName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelVersionName()" class="member-name-link">getModelVersionName</a>()</code></div>
@@ -611,9 +662,15 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 <div class="block">Update the certificate on a ModelEntity.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionAgnosticQualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the minimal object necessary to update a ModelEntity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updaterForVersion(java.lang.String,java.lang.String)" class="member-name-link">updaterForVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to update a ModelEntity.</div>
 </div>
 </div>
@@ -928,9 +985,128 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 </section>
 </li>
 <li>
+<section class="detail" id="creator(java.lang.String,com.atlan.model.assets.ModelDataModel)">
+<h3>creator</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="ModelDataModel.html" title="class in com.atlan.model.assets">ModelDataModel</a>&nbsp;model)</span>
+                                                   throws <span class="exceptions"><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>model</code> - (version-agnostic) in which the entity should be created, which must have at least a qualifiedName</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the model provided is without a qualifiedName</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="creator(java.lang.String,java.lang.String)">
+<h3>creator</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelQualifiedName)</span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>modelQualifiedName</code> - unique (version-agnostic) name of the model in which this ModelEntity exists</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="creator(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<h3>creator</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;connectionQualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelQualifiedName)</span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection in which to create this ModelEntity</dd>
+<dd><code>modelName</code> - simple name (version-agnostic) of the model in which to create this ModelEntity</dd>
+<dd><code>modelQualifiedName</code> - unique name (version-agnostic) of the model in which to create this ModelEntity</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="creatorForVersion(java.lang.String,com.atlan.model.assets.ModelVersion)">
+<h3>creatorForVersion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creatorForVersion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="ModelVersion.html" title="class in com.atlan.model.assets">ModelVersion</a>&nbsp;version)</span>
+                                                             throws <span class="exceptions"><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>version</code> - in which the entity should be created, which must have at least a qualifiedName</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the version provided is without a qualifiedName</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="creatorForVersion(java.lang.String,java.lang.String)">
+<h3>creatorForVersion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creatorForVersion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionQualifiedName)</span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>versionQualifiedName</code> - unique name of the version in which this ModelEntity exists</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="creatorForVersion(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<h3>creatorForVersion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">creatorForVersion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;connectionQualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionQualifiedName)</span></div>
+<div class="block">Builds the minimal object necessary to create a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the connection in which to create this ModelEntity</dd>
+<dd><code>versionName</code> - simple name of the version in which to create this ModelEntity</dd>
+<dd><code>versionQualifiedName</code> - unique name of the version in which to create this ModelEntity</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to create the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="updater(java.lang.String,java.lang.String)">
 <h3>updater</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">updater</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">updater</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;versionAgnosticQualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Builds the minimal object necessary to update a ModelEntity.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>versionAgnosticQualifiedName</code> - of the ModelEntity</dd>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dt>Returns:</dt>
+<dd>the minimal request necessary to update the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updaterForVersion(java.lang.String,java.lang.String)">
+<h3>updaterForVersion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="class in com.atlan.model.assets">ModelEntity.ModelEntityBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">updaterForVersion</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Builds the minimal object necessary to update a ModelEntity.</div>
 <dl class="notes">
@@ -939,6 +1115,21 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 <dd><code>name</code> - of the ModelEntity</dd>
 <dt>Returns:</dt>
 <dd>the minimal request necessary to update the ModelEntity, as a builder</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="generateQualifiedName(java.lang.String,java.lang.String)">
+<h3>generateQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">generateQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;parentQualifiedName)</span></div>
+<div class="block">Generate a unique ModelEntity name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - of the ModelEntity</dd>
+<dd><code>parentQualifiedName</code> - unique name of the model or version in which this ModelEntity exists</dd>
+<dt>Returns:</dt>
+<dd>a unique name for the ModelEntity</dd>
 </dl>
 </section>
 </li>
@@ -1771,6 +1962,19 @@ implements <a href="IModelEntity.html" title="interface in com.atlan.model.asset
 <dd><code><a href="IModel.html#getModelType()">getModelType</a></code>&nbsp;in interface&nbsp;<code><a href="IModel.html" title="interface in com.atlan.model.assets">IModel</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="IModelEntity.html#getModelType()">getModelType</a></code>&nbsp;in interface&nbsp;<code><a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getModelVersionAgnosticQualifiedName()">
+<h3>getModelVersionAgnosticQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getModelVersionAgnosticQualifiedName</span>()</div>
+<div class="block">Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version).</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IModel.html#getModelVersionAgnosticQualifiedName()">getModelVersionAgnosticQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IModel.html" title="interface in com.atlan.model.assets">IModel</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IModelEntity.html#getModelVersionAgnosticQualifiedName()">getModelVersionAgnosticQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a></code></dd>
 </dl>
 </section>
 </li>
