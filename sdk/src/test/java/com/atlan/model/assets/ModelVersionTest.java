@@ -70,6 +70,7 @@ public class ModelVersionTest {
             .modelQualifiedName("String0")
             .modelSystemDate(123456789L)
             .modelType("String0")
+            .modelVersionAgnosticQualifiedName("String0")
             .modelVersionName("String0")
             .modelVersionQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

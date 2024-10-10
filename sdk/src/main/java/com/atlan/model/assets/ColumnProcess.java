@@ -48,6 +48,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String additionalEtlContext;
 
+    /** ADF Activity that is associated with this lineage process. */
+    @Attribute
+    IAdfActivity adfActivity;
+
     /** Tasks that exist within this process. */
     @Attribute
     @Singular

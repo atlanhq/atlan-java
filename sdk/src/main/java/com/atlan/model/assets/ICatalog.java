@@ -74,6 +74,21 @@ public interface ICatalog {
             case APISpec.TYPE_NAME:
                 ref = APISpec.refByQualifiedName(qualifiedName);
                 break;
+            case AdfActivity.TYPE_NAME:
+                ref = AdfActivity.refByQualifiedName(qualifiedName);
+                break;
+            case AdfDataflow.TYPE_NAME:
+                ref = AdfDataflow.refByQualifiedName(qualifiedName);
+                break;
+            case AdfDataset.TYPE_NAME:
+                ref = AdfDataset.refByQualifiedName(qualifiedName);
+                break;
+            case AdfLinkedservice.TYPE_NAME:
+                ref = AdfLinkedservice.refByQualifiedName(qualifiedName);
+                break;
+            case AdfPipeline.TYPE_NAME:
+                ref = AdfPipeline.refByQualifiedName(qualifiedName);
+                break;
             case AirflowDag.TYPE_NAME:
                 ref = AirflowDag.refByQualifiedName(qualifiedName);
                 break;
@@ -166,24 +181,6 @@ public interface ICatalog {
                 break;
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
-                break;
-            case DMAttribute.TYPE_NAME:
-                ref = DMAttribute.refByQualifiedName(qualifiedName);
-                break;
-            case DMAttributeAssociation.TYPE_NAME:
-                ref = DMAttributeAssociation.refByQualifiedName(qualifiedName);
-                break;
-            case DMDataModel.TYPE_NAME:
-                ref = DMDataModel.refByQualifiedName(qualifiedName);
-                break;
-            case DMEntity.TYPE_NAME:
-                ref = DMEntity.refByQualifiedName(qualifiedName);
-                break;
-            case DMEntityAssociation.TYPE_NAME:
-                ref = DMEntityAssociation.refByQualifiedName(qualifiedName);
-                break;
-            case DMVersion.TYPE_NAME:
-                ref = DMVersion.refByQualifiedName(qualifiedName);
                 break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);

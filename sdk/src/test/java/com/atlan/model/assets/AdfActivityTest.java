@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DMEntityAssociationTest {
+public class AdfActivityTest {
 
-    private static final DMEntityAssociation full = DMEntityAssociation._internal()
+    private static final AdfActivity full = AdfActivity._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,18 +59,8 @@ public class DMEntityAssociationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dmBusinessDate(123456789L)
-            .dmDataModelDomain("String0")
-            .dmDataModelName("String0")
-            .dmDataModelNamespace("String0")
-            .dmDataModelQualifiedName("String0")
-            .dmEntityName("String0")
-            .dmEntityQualifiedName("String0")
-            .dmExpiredAtBusinessDate(123456789L)
-            .dmExpiredAtSystemDate(123456789L)
-            .dmSystemDate(123456789L)
-            .dmVersionName("String0")
-            .dmVersionQualifiedName("String0")
+            .adfAssetFolderPath("String0")
+            .adfFactoryName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -431,26 +421,52 @@ public class DMEntityAssociationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dmCardinality(DMCardinalityType.ONE_TO_ONE)
-            .dmEntityFrom(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dmEntityFromQualifiedName("String0")
-            .dmEntityTo(DMEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dmEntityToQualifiedName("String0")
-            .dmLabel("String0")
+            .adfActivityBatchCount(123)
+            .adfActivityFirstRowOnly(true)
+            .adfActivityIsSequential(true)
+            .adfActivityMainClassName("String0")
+            .adfActivityNotebookPath("String0")
+            .adfActivityPolictRetryInterval(123)
+            .adfActivityPolicyTimeout("String0")
+            .adfActivityPrecedingDependency("String0")
+            .adfActivityPrecedingDependency("String1")
+            .adfActivityPythonFilePath("String0")
+            .adfActivityReferenceDataflow("String0")
+            .adfActivityRun(Map.of("key1", "value1"))
+            .adfActivityRun(Map.of("key2", "value2"))
+            .adfActivitySinkType("String0")
+            .adfActivitySink("String0")
+            .adfActivitySink("String1")
+            .adfActivitySourceType("String0")
+            .adfActivitySource("String0")
+            .adfActivitySource("String1")
+            .adfActivityState(AdfActivityState.ACTIVE)
+            .adfActivitySubActivity("String0")
+            .adfActivitySubActivity("String1")
+            .adfActivityType("String0")
+            .adfDataflow(AdfDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataset(AdfDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataset(AdfDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfLinkedservice(AdfLinkedservice.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfLinkedservice(AdfLinkedservice.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfPipeline(AdfPipeline.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfPipelineQualifiedName("String0")
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .process(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DMEntityAssociation frodo;
+    private static AdfActivity frodo;
     private static String serialized;
 
-    @Test(groups = {"DMEntityAssociation.builderEquivalency"})
+    @Test(groups = {"AdfActivity.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DMEntityAssociation.serialize"},
-            dependsOnGroups = {"DMEntityAssociation.builderEquivalency"})
+            groups = {"AdfActivity.serialize"},
+            dependsOnGroups = {"AdfActivity.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -459,17 +475,17 @@ public class DMEntityAssociationTest {
     }
 
     @Test(
-            groups = {"DMEntityAssociation.deserialize"},
-            dependsOnGroups = {"DMEntityAssociation.serialize"})
+            groups = {"AdfActivity.deserialize"},
+            dependsOnGroups = {"AdfActivity.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DMEntityAssociation.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AdfActivity.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DMEntityAssociation.equivalency"},
-            dependsOnGroups = {"DMEntityAssociation.serialize", "DMEntityAssociation.deserialize"})
+            groups = {"AdfActivity.equivalency"},
+            dependsOnGroups = {"AdfActivity.serialize", "AdfActivity.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -478,8 +494,8 @@ public class DMEntityAssociationTest {
     }
 
     @Test(
-            groups = {"DMEntityAssociation.equivalency"},
-            dependsOnGroups = {"DMEntityAssociation.serialize", "DMEntityAssociation.deserialize"})
+            groups = {"AdfActivity.equivalency"},
+            dependsOnGroups = {"AdfActivity.serialize", "AdfActivity.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

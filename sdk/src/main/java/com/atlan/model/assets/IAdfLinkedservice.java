@@ -8,9 +8,10 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,26 +25,142 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a data model in Atlan.
+ * Base class for ADF Linkedservices. It is a connection to a data source or compute resource used by Azure Data Factory.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDMDataModel {
+public interface IAdfLinkedservice {
 
-    public static final String TYPE_NAME = "DMDataModel";
+    public static final String TYPE_NAME = "AdfLinkedservice";
 
-    /** Type of the data model. */
-    KeywordField DM_DATA_MODEL_TYPE = new KeywordField("dmDataModelType", "dmDataModelType");
+    /** ADF Linkedservice that is associated with these ADF activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** Tool used to create this data model. */
-    KeywordField DM_TOOL = new KeywordField("dmTool", "dmTool");
+    /** ADF Linkedservices that are associated with this ADF Dataflows. */
+    RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
-    /** Number of versions of the data model. */
-    NumericField DM_VERSION_COUNT = new NumericField("dmVersionCount", "dmVersionCount");
+    /** ADF Linkedservice that is associated with these ADF datasets. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
 
-    /** Individual versions of the data model. */
-    RelationField DM_VERSIONS = new RelationField("dmVersions");
+    /** Defines the name of the account used in the cosmos linked service. */
+    TextField ADF_LINKEDSERVICE_ACCOUNT_NAME =
+            new TextField("adfLinkedserviceAccountName", "adfLinkedserviceAccountName");
+
+    /** The list of annotation assigned to a linked service. */
+    TextField ADF_LINKEDSERVICE_ANNOTATIONS =
+            new TextField("adfLinkedserviceAnnotations", "adfLinkedserviceAnnotations");
+
+    /** Defines the type of cloud being used in the ADLS linked service. */
+    TextField ADF_LINKEDSERVICE_AZURE_CLOUD_TYPE =
+            new TextField("adfLinkedserviceAzureCloudType", "adfLinkedserviceAzureCloudType");
+
+    /** Defines the cluster id in the Azure databricks delta lake linked service. */
+    TextField ADF_LINKEDSERVICE_CLUSTER_ID = new TextField("adfLinkedserviceClusterId", "adfLinkedserviceClusterId");
+
+    /** Defines the type of credential, authentication being used in the ADLS, snowflake, azure sql linked service. */
+    TextField ADF_LINKEDSERVICE_CREDENTIAL_TYPE =
+            new TextField("adfLinkedserviceCredentialType", "adfLinkedserviceCredentialType");
+
+    /** Defines the name of the database used in the cosmos, snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_DATABASE_NAME =
+            new TextField("adfLinkedserviceDatabaseName", "adfLinkedserviceDatabaseName");
+
+    /** Defines the url, domain, account_identifier, server in the ADLS, Azure databricks delta lake, snowflake, azure sql linked service. */
+    TextField ADF_LINKEDSERVICE_DOMAIN_ENDPOINT =
+            new TextField("adfLinkedserviceDomainEndpoint", "adfLinkedserviceDomainEndpoint");
+
+    /** Defines the resource id in the Azure databricks delta lake linked service. */
+    TextField ADF_LINKEDSERVICE_RESOURCE_ID = new TextField("adfLinkedserviceResourceId", "adfLinkedserviceResourceId");
+
+    /** Defines the name of the role in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_ROLE_NAME = new TextField("adfLinkedserviceRoleName", "adfLinkedserviceRoleName");
+
+    /** Defines the tenant of cloud being used in the ADLS linked service. */
+    TextField ADF_LINKEDSERVICE_TENANT = new TextField("adfLinkedserviceTenant", "adfLinkedserviceTenant");
+
+    /** Defines the type of the linked service. */
+    KeywordField ADF_LINKEDSERVICE_TYPE = new KeywordField("adfLinkedserviceType", "adfLinkedserviceType");
+
+    /** Defines the name of the db user in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_USER_NAME = new TextField("adfLinkedserviceUserName", "adfLinkedserviceUserName");
+
+    /** Defines the version of the linked service in the cosmos linked service. */
+    TextField ADF_LINKEDSERVICE_VERSION = new TextField("adfLinkedserviceVersion", "adfLinkedserviceVersion");
+
+    /** Indicates whether the service version is above 3.2 or not in the cosmos linked service. */
+    BooleanField ADF_LINKEDSERVICE_VERSION_ABOVE =
+            new BooleanField("adfLinkedserviceVersionAbove", "adfLinkedserviceVersionAbove");
+
+    /** Defines the name of the warehouse in the snowflake linked service. */
+    TextField ADF_LINKEDSERVICE_WAREHOUSE_NAME =
+            new TextField("adfLinkedserviceWarehouseName", "adfLinkedserviceWarehouseName");
+
+    /** ADF Linkedservices that are associated with this ADF pipelines. */
+    RelationField ADF_PIPELINES = new RelationField("adfPipelines");
+
+    /** ADF Linkedservice that is associated with these ADF activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF Linkedservices that are associated with this ADF Dataflows. */
+    SortedSet<IAdfDataflow> getAdfDataflows();
+
+    /** ADF Linkedservice that is associated with these ADF datasets. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** Defines the name of the account used in the cosmos linked service. */
+    String getAdfLinkedserviceAccountName();
+
+    /** The list of annotation assigned to a linked service. */
+    SortedSet<String> getAdfLinkedserviceAnnotations();
+
+    /** Defines the type of cloud being used in the ADLS linked service. */
+    String getAdfLinkedserviceAzureCloudType();
+
+    /** Defines the cluster id in the Azure databricks delta lake linked service. */
+    String getAdfLinkedserviceClusterId();
+
+    /** Defines the type of credential, authentication being used in the ADLS, snowflake, azure sql linked service. */
+    String getAdfLinkedserviceCredentialType();
+
+    /** Defines the name of the database used in the cosmos, snowflake linked service. */
+    String getAdfLinkedserviceDatabaseName();
+
+    /** Defines the url, domain, account_identifier, server in the ADLS, Azure databricks delta lake, snowflake, azure sql linked service. */
+    String getAdfLinkedserviceDomainEndpoint();
+
+    /** Defines the resource id in the Azure databricks delta lake linked service. */
+    String getAdfLinkedserviceResourceId();
+
+    /** Defines the name of the role in the snowflake linked service. */
+    String getAdfLinkedserviceRoleName();
+
+    /** Defines the tenant of cloud being used in the ADLS linked service. */
+    String getAdfLinkedserviceTenant();
+
+    /** Defines the type of the linked service. */
+    String getAdfLinkedserviceType();
+
+    /** Defines the name of the db user in the snowflake linked service. */
+    String getAdfLinkedserviceUserName();
+
+    /** Defines the version of the linked service in the cosmos linked service. */
+    String getAdfLinkedserviceVersion();
+
+    /** Indicates whether the service version is above 3.2 or not in the cosmos linked service. */
+    Boolean getAdfLinkedserviceVersionAbove();
+
+    /** Defines the name of the warehouse in the snowflake linked service. */
+    String getAdfLinkedserviceWarehouseName();
+
+    /** ADF Linkedservices that are associated with this ADF pipelines. */
+    SortedSet<IAdfPipeline> getAdfPipelines();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -335,54 +452,6 @@ public interface IDMDataModel {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Type of the data model. */
-    String getDmDataModelType();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Tool used to create this data model. */
-    String getDmTool();
-
-    /** Number of versions of the data model. */
-    Long getDmVersionCount();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
-
-    /** Individual versions of the data model. */
-    SortedSet<IDMVersion> getDmVersions();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

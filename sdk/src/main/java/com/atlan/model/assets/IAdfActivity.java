@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AdfActivityState;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -10,8 +11,10 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,54 +24,170 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an attribute within a data model entity in Atlan.
+ * Base class for ADF Activities. It is a processing or transformation step that performs a specific task within a pipeline to manipulate or move data
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDMAttribute {
+public interface IAdfActivity {
 
-    public static final String TYPE_NAME = "DMAttribute";
+    public static final String TYPE_NAME = "AdfActivity";
 
-    /** Type of the attribute. */
-    KeywordField DM_DATA_TYPE = new KeywordField("dmDataType", "dmDataType");
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    NumericField ADF_ACTIVITY_BATCH_COUNT = new NumericField("adfActivityBatchCount", "adfActivityBatchCount");
 
-    /** Entity (or versions of an entity) in which this attribute exists. */
-    RelationField DM_ENTITIES = new RelationField("dmEntities");
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    BooleanField ADF_ACTIVITY_FIRST_ROW_ONLY = new BooleanField("adfActivityFirstRowOnly", "adfActivityFirstRowOnly");
 
-    /** When true, the values in this attribute are derived data. */
-    BooleanField DM_IS_DERIVED = new BooleanField("dmIsDerived", "dmIsDerived");
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    BooleanField ADF_ACTIVITY_IS_SEQUENTIAL = new BooleanField("adfActivityIsSequential", "adfActivityIsSequential");
 
-    /** When true, this attribute is a foreign key to another entity. */
-    BooleanField DM_IS_FOREIGN = new BooleanField("dmIsForeign", "dmIsForeign");
+    /** Defines the main class of the databricks spark activity. */
+    TextField ADF_ACTIVITY_MAIN_CLASS_NAME = new TextField("adfActivityMainClassName", "adfActivityMainClassName");
 
-    /** When true, the values in this attribute can be null. */
-    BooleanField DM_IS_NULLABLE = new BooleanField("dmIsNullable", "dmIsNullable");
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    TextField ADF_ACTIVITY_NOTEBOOK_PATH = new TextField("adfActivityNotebookPath", "adfActivityNotebookPath");
 
-    /** When true, this attribute forms the primary key for the entity. */
-    BooleanField DM_IS_PRIMARY = new BooleanField("dmIsPrimary", "dmIsPrimary");
+    /** The retry interval in seconds for the ADF activity. */
+    NumericField ADF_ACTIVITY_POLICT_RETRY_INTERVAL =
+            new NumericField("adfActivityPolictRetryInterval", "adfActivityPolictRetryInterval");
 
-    /** Attributes from which this attribute is mapped. */
-    RelationField DM_MAPPED_FROM_ATTRIBUTES = new RelationField("dmMappedFromAttributes");
+    /** The timout defined for the ADF activity. */
+    TextField ADF_ACTIVITY_POLICY_TIMEOUT = new TextField("adfActivityPolicyTimeout", "adfActivityPolicyTimeout");
 
-    /** Attributes to which this attribute is mapped. */
-    RelationField DM_MAPPED_TO_ATTRIBUTES = new RelationField("dmMappedToAttributes");
+    /** The list of ADF activities on which this ADF activity depends on. */
+    TextField ADF_ACTIVITY_PRECEDING_DEPENDENCIES =
+            new TextField("adfActivityPrecedingDependency", "adfActivityPrecedingDependency");
 
-    /** Precision of the attribute. */
-    NumericField DM_PRECISION = new NumericField("dmPrecision", "dmPrecision");
+    /** Defines the python file path for databricks python activity. */
+    TextField ADF_ACTIVITY_PYTHON_FILE_PATH = new TextField("adfActivityPythonFilePath", "adfActivityPythonFilePath");
 
-    /** Association from this attribute is related. */
-    RelationField DM_RELATED_FROM_ATTRIBUTES = new RelationField("dmRelatedFromAttributes");
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    TextField ADF_ACTIVITY_REFERENCE_DATAFLOW =
+            new TextField("adfActivityReferenceDataflow", "adfActivityReferenceDataflow");
 
-    /** Association to which this attribute is related. */
-    RelationField DM_RELATED_TO_ATTRIBUTES = new RelationField("dmRelatedToAttributes");
+    /** List of objects of activity runs for a particular activity. */
+    KeywordField ADF_ACTIVITY_RUNS = new KeywordField("adfActivityRuns", "adfActivityRuns");
 
-    /** Scale of the attribute. */
-    NumericField DM_SCALE = new NumericField("dmScale", "dmScale");
+    /** Defines the type of the sink of the ADF activtity. */
+    TextField ADF_ACTIVITY_SINK_TYPE = new TextField("adfActivitySinkType", "adfActivitySinkType");
+
+    /** The list of names of sinks for the ADF activity. */
+    TextField ADF_ACTIVITY_SINKS = new TextField("adfActivitySinks", "adfActivitySinks");
+
+    /** Defines the type of the source of the ADF activtity. */
+    TextField ADF_ACTIVITY_SOURCE_TYPE = new TextField("adfActivitySourceType", "adfActivitySourceType");
+
+    /** The list of names of sources for the ADF activity. */
+    TextField ADF_ACTIVITY_SOURCES = new TextField("adfActivitySources", "adfActivitySources");
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    KeywordField ADF_ACTIVITY_STATE = new KeywordField("adfActivityState", "adfActivityState");
+
+    /** The list of activities to be run inside a ForEach activity. */
+    TextField ADF_ACTIVITY_SUB_ACTIVITIES = new TextField("adfActivitySubActivities", "adfActivitySubActivities");
+
+    /** The type of the ADF activity. */
+    KeywordField ADF_ACTIVITY_TYPE = new KeywordField("adfActivityType", "adfActivityType");
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    RelationField ADF_DATAFLOW = new RelationField("adfDataflow");
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    RelationField ADF_PIPELINE = new RelationField("adfPipeline");
+
+    /** Unique name of the pipeline in which this activity exists. */
+    KeywordTextField ADF_PIPELINE_QUALIFIED_NAME = new KeywordTextField(
+            "adfPipelineQualifiedName", "adfPipelineQualifiedName", "adfPipelineQualifiedName.text");
+
+    /** Lineage process that associates this ADF Activity. */
+    RelationField PROCESSES = new RelationField("processes");
+
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    Integer getAdfActivityBatchCount();
+
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    Boolean getAdfActivityFirstRowOnly();
+
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    Boolean getAdfActivityIsSequential();
+
+    /** Defines the main class of the databricks spark activity. */
+    String getAdfActivityMainClassName();
+
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    String getAdfActivityNotebookPath();
+
+    /** The retry interval in seconds for the ADF activity. */
+    Integer getAdfActivityPolictRetryInterval();
+
+    /** The timout defined for the ADF activity. */
+    String getAdfActivityPolicyTimeout();
+
+    /** The list of ADF activities on which this ADF activity depends on. */
+    SortedSet<String> getAdfActivityPrecedingDependencies();
+
+    /** Defines the python file path for databricks python activity. */
+    String getAdfActivityPythonFilePath();
+
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    String getAdfActivityReferenceDataflow();
+
+    /** List of objects of activity runs for a particular activity. */
+    List<Map<String, String>> getAdfActivityRuns();
+
+    /** Defines the type of the sink of the ADF activtity. */
+    String getAdfActivitySinkType();
+
+    /** The list of names of sinks for the ADF activity. */
+    SortedSet<String> getAdfActivitySinks();
+
+    /** Defines the type of the source of the ADF activtity. */
+    String getAdfActivitySourceType();
+
+    /** The list of names of sources for the ADF activity. */
+    SortedSet<String> getAdfActivitySources();
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    AdfActivityState getAdfActivityState();
+
+    /** The list of activities to be run inside a ForEach activity. */
+    SortedSet<String> getAdfActivitySubActivities();
+
+    /** The type of the ADF activity. */
+    String getAdfActivityType();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    IAdfDataflow getAdfDataflow();
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    SortedSet<IAdfLinkedservice> getAdfLinkedservices();
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    IAdfPipeline getAdfPipeline();
+
+    /** Unique name of the pipeline in which this activity exists. */
+    String getAdfPipelineQualifiedName();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -361,78 +480,6 @@ public interface IDMAttribute {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Type of the attribute. */
-    String getDmDataType();
-
-    /** Entity (or versions of an entity) in which this attribute exists. */
-    SortedSet<IDMEntity> getDmEntities();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** When true, the values in this attribute are derived data. */
-    Boolean getDmIsDerived();
-
-    /** When true, this attribute is a foreign key to another entity. */
-    Boolean getDmIsForeign();
-
-    /** When true, the values in this attribute can be null. */
-    Boolean getDmIsNullable();
-
-    /** When true, this attribute forms the primary key for the entity. */
-    Boolean getDmIsPrimary();
-
-    /** Attributes from which this attribute is mapped. */
-    SortedSet<IDMAttribute> getDmMappedFromAttributes();
-
-    /** Attributes to which this attribute is mapped. */
-    SortedSet<IDMAttribute> getDmMappedToAttributes();
-
-    /** Precision of the attribute. */
-    Long getDmPrecision();
-
-    /** Association from this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDmRelatedFromAttributes();
-
-    /** Association to which this attribute is related. */
-    SortedSet<IDMAttributeAssociation> getDmRelatedToAttributes();
-
-    /** Scale of the attribute. */
-    Long getDmScale();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
-
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
@@ -522,6 +569,9 @@ public interface IDMAttribute {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** Lineage process that associates this ADF Activity. */
+    SortedSet<ILineageProcess> getProcesses();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();

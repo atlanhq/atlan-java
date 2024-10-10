@@ -7,10 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.DMCardinalityType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,34 +24,110 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a data attribute association in Atlan.
+ * Base class for ADF Datasets. It is a named view of data that references or points to the data you want to use in activities.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDMAttributeAssociation {
+public interface IAdfDataset {
 
-    public static final String TYPE_NAME = "DMAttributeAssociation";
+    public static final String TYPE_NAME = "AdfDataset";
 
-    /** Attribute from which this association is related. */
-    RelationField DM_ATTRIBUTE_FROM = new RelationField("dmAttributeFrom");
+    /** ADF Dataset that is associated with these ADF activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** Unique name of the association from this attribute is related. */
-    KeywordField DM_ATTRIBUTE_FROM_QUALIFIED_NAME =
-            new KeywordField("dmAttributeFromQualifiedName", "dmAttributeFromQualifiedName");
+    /** ADF Datasets that are associated with this ADF Dataflows. */
+    RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
-    /** Attribute to which this association is related. */
-    RelationField DM_ATTRIBUTE_TO = new RelationField("dmAttributeTo");
+    /** The list of annotation assigned to a dataset. */
+    TextField ADF_DATASET_ANNOTATIONS = new TextField("adfDatasetAnnotations", "adfDatasetAnnotations");
 
-    /** Unique name of the association to which this attribute is related. */
-    KeywordField DM_ATTRIBUTE_TO_QUALIFIED_NAME =
-            new KeywordField("dmAttributeToQualifiedName", "dmAttributeToQualifiedName");
+    /** Defines the name collection in the cosmos dataset. */
+    TextField ADF_DATASET_COLLECTION_NAME = new TextField("adfDatasetCollectionName", "adfDatasetCollectionName");
 
-    /** Cardinality of the data attribute association. */
-    KeywordField DM_CARDINALITY = new KeywordField("dmCardinality", "dmCardinality");
+    /** Defines the container or bucket name in the storage file system dataset. */
+    TextField ADF_DATASET_CONTAINER_NAME = new TextField("adfDatasetContainerName", "adfDatasetContainerName");
 
-    /** Label of the data attribute association. */
-    KeywordField DM_LABEL = new KeywordField("dmLabel", "dmLabel");
+    /** Defines the name of the database used in the azure delta lake type of dataset. */
+    TextField ADF_DATASET_DATABASE_NAME = new TextField("adfDatasetDatabaseName", "adfDatasetDatabaseName");
+
+    /** Defines the folder path of the file in the storage file system dataset. */
+    TextField ADF_DATASET_FILE_FOLDER_PATH = new TextField("adfDatasetFileFolderPath", "adfDatasetFileFolderPath");
+
+    /** Defines the name of the file in the storage file system dataset. */
+    TextField ADF_DATASET_FILE_NAME = new TextField("adfDatasetFileName", "adfDatasetFileName");
+
+    /** Defines the name of the linked service used to create this dataset. */
+    KeywordField ADF_DATASET_LINKED_SERVICE = new KeywordField("adfDatasetLinkedService", "adfDatasetLinkedService");
+
+    /** Defines the name of the schema used in the snowflake, mssql, azure sql database type of dataset. */
+    TextField ADF_DATASET_SCHEMA_NAME = new TextField("adfDatasetSchemaName", "adfDatasetSchemaName");
+
+    /** Defines the storage type of storage file system dataset. */
+    TextField ADF_DATASET_STORAGE_TYPE = new TextField("adfDatasetStorageType", "adfDatasetStorageType");
+
+    /** Defines the name of the table used in the snowflake, mssql, azure sql database type of dataset. */
+    TextField ADF_DATASET_TABLE_NAME = new TextField("adfDatasetTableName", "adfDatasetTableName");
+
+    /** Defines the type of the dataset. */
+    KeywordField ADF_DATASET_TYPE = new KeywordField("adfDatasetType", "adfDatasetType");
+
+    /** ADF datasets that are associated with this ADF Linkedservice. */
+    RelationField ADF_LINKEDSERVICE = new RelationField("adfLinkedservice");
+
+    /** ADF Datasets that are associated with this ADF pipelines. */
+    RelationField ADF_PIPELINES = new RelationField("adfPipelines");
+
+    /** ADF Dataset that is associated with these ADF activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF Datasets that are associated with this ADF Dataflows. */
+    SortedSet<IAdfDataflow> getAdfDataflows();
+
+    /** The list of annotation assigned to a dataset. */
+    SortedSet<String> getAdfDatasetAnnotations();
+
+    /** Defines the name collection in the cosmos dataset. */
+    String getAdfDatasetCollectionName();
+
+    /** Defines the container or bucket name in the storage file system dataset. */
+    String getAdfDatasetContainerName();
+
+    /** Defines the name of the database used in the azure delta lake type of dataset. */
+    String getAdfDatasetDatabaseName();
+
+    /** Defines the folder path of the file in the storage file system dataset. */
+    String getAdfDatasetFileFolderPath();
+
+    /** Defines the name of the file in the storage file system dataset. */
+    String getAdfDatasetFileName();
+
+    /** Defines the name of the linked service used to create this dataset. */
+    String getAdfDatasetLinkedService();
+
+    /** Defines the name of the schema used in the snowflake, mssql, azure sql database type of dataset. */
+    String getAdfDatasetSchemaName();
+
+    /** Defines the storage type of storage file system dataset. */
+    String getAdfDatasetStorageType();
+
+    /** Defines the name of the table used in the snowflake, mssql, azure sql database type of dataset. */
+    String getAdfDatasetTableName();
+
+    /** Defines the type of the dataset. */
+    String getAdfDatasetType();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF datasets that are associated with this ADF Linkedservice. */
+    IAdfLinkedservice getAdfLinkedservice();
+
+    /** ADF Datasets that are associated with this ADF pipelines. */
+    SortedSet<IAdfPipeline> getAdfPipelines();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -343,60 +419,6 @@ public interface IDMAttributeAssociation {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Attribute from which this association is related. */
-    IDMAttribute getDmAttributeFrom();
-
-    /** Unique name of the association from this attribute is related. */
-    String getDmAttributeFromQualifiedName();
-
-    /** Attribute to which this association is related. */
-    IDMAttribute getDmAttributeTo();
-
-    /** Unique name of the association to which this attribute is related. */
-    String getDmAttributeToQualifiedName();
-
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** Cardinality of the data attribute association. */
-    DMCardinalityType getDmCardinality();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** Label of the data attribute association. */
-    String getDmLabel();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

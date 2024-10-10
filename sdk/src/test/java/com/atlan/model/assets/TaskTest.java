@@ -423,6 +423,7 @@ public class TaskTest {
             .taskExecutionAction("String0")
             .taskExecutionComment("String0")
             .taskExpiresAt(123456789L)
+            .taskIntegrationConfig("String0")
             .taskIsRead(true)
             .taskProposals("String0")
             .taskRecipient("String0")

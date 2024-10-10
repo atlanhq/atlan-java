@@ -8,9 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,54 +23,62 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Assets used to model data and information.
+ * Base class for ADF Dataflows. It is a visually designed data transformation logic.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDM {
+public interface IAdfDataflow {
 
-    public static final String TYPE_NAME = "DM";
+    public static final String TYPE_NAME = "AdfDataflow";
 
-    /** Business date for the asset. */
-    NumericField DM_BUSINESS_DATE = new NumericField("dmBusinessDate", "dmBusinessDate");
+    /** ADF Dataflow that is associated with these ADF activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** A domain of the data model in which this asset exists. */
-    KeywordTextField DM_DATA_MODEL_DOMAIN =
-            new KeywordTextField("dmDataModelDomain", "dmDataModelDomain.keyword", "dmDataModelDomain");
+    /** The gererated script for the dataflow. */
+    TextField ADF_DATAFLOW_SCRIPT = new TextField("adfDataflowScript", "adfDataflowScript");
 
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    KeywordTextField DM_DATA_MODEL_NAME =
-            new KeywordTextField("dmDataModelName", "dmDataModelName.keyword", "dmDataModelName");
+    /** The list of names of sinks for this dataflow. */
+    TextField ADF_DATAFLOW_SINKS = new TextField("adfDataflowSinks", "adfDataflowSinks");
 
-    /** A namespace of the data model in which this asset exists. */
-    KeywordTextField DM_DATA_MODEL_NAMESPACE =
-            new KeywordTextField("dmDataModelNamespace", "dmDataModelNamespace.keyword", "dmDataModelNamespace");
+    /** The list of names of sources for this dataflow. */
+    TextField ADF_DATAFLOW_SOURCES = new TextField("adfDataflowSources", "adfDataflowSources");
 
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    KeywordField DM_DATA_MODEL_QUALIFIED_NAME =
-            new KeywordField("dmDataModelQualifiedName", "dmDataModelQualifiedName");
+    /** ADF Dataflows that is associated with this ADF Datasets. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
 
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    KeywordTextField DM_ENTITY_NAME = new KeywordTextField("dmEntityName", "dmEntityName.keyword", "dmEntityName");
+    /** ADF Dataflows that is associated with this ADF Linkedservices. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
 
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    KeywordField DM_ENTITY_QUALIFIED_NAME = new KeywordField("dmEntityQualifiedName", "dmEntityQualifiedName");
+    /** ADF Dataflows that are associated with this ADF pipelines. */
+    RelationField ADF_PIPELINES = new RelationField("adfPipelines");
 
-    /** Business expiration date for the asset. */
-    NumericField DM_EXPIRED_AT_BUSINESS_DATE = new NumericField("dmExpiredAtBusinessDate", "dmExpiredAtBusinessDate");
+    /** ADF Dataflow that is associated with these ADF activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
 
-    /** System expiration date for the asset. */
-    NumericField DM_EXPIRED_AT_SYSTEM_DATE = new NumericField("dmExpiredAtSystemDate", "dmExpiredAtSystemDate");
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
 
-    /** System date for the asset. */
-    NumericField DM_SYSTEM_DATE = new NumericField("dmSystemDate", "dmSystemDate");
+    /** The gererated script for the dataflow. */
+    String getAdfDataflowScript();
 
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    KeywordTextField DM_VERSION_NAME = new KeywordTextField("dmVersionName", "dmVersionName.keyword", "dmVersionName");
+    /** The list of names of sinks for this dataflow. */
+    SortedSet<String> getAdfDataflowSinks();
 
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    KeywordField DM_VERSION_QUALIFIED_NAME = new KeywordField("dmVersionQualifiedName", "dmVersionQualifiedName");
+    /** The list of names of sources for this dataflow. */
+    SortedSet<String> getAdfDataflowSources();
+
+    /** ADF Dataflows that is associated with this ADF Datasets. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF Dataflows that is associated with this ADF Linkedservices. */
+    SortedSet<IAdfLinkedservice> getAdfLinkedservices();
+
+    /** ADF Dataflows that are associated with this ADF pipelines. */
+    SortedSet<IAdfPipeline> getAdfPipelines();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -363,42 +370,6 @@ public interface IDM {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

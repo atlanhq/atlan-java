@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,45 +21,67 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an entity within a version of a data model in Atlan.
+ * Base class for ADF Pipelines. It is a logical grouping of activities that together perform a specific data processing task.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDMEntity {
+public interface IAdfPipeline {
 
-    public static final String TYPE_NAME = "DMEntity";
+    public static final String TYPE_NAME = "AdfPipeline";
 
-    /** Number of attributes in the entity. */
-    NumericField DM_ATTRIBUTE_COUNT = new NumericField("dmAttributeCount", "dmAttributeCount");
+    /** ADF Pipeline that is associated with these ADF Activities. */
+    RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** Individual attributes that make up the entity. */
-    RelationField DM_ATTRIBUTES = new RelationField("dmAttributes");
+    /** ADF pipelines that is associated with this ADF Dataflos. */
+    RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
-    /** Type of the data entity. */
-    KeywordField DM_ENTITY_TYPE = new KeywordField("dmEntityType", "dmEntityType");
+    /** ADF pipelines that is associated with this ADF Datasets. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
 
-    /** Entities from which this entity is mapped. */
-    RelationField DM_MAPPED_FROM_ENTITIES = new RelationField("dmMappedFromEntities");
+    /** ADF pipelines that is associated with this ADF Linkedservices. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
 
-    /** Entities to which this entity is mapped. */
-    RelationField DM_MAPPED_TO_ENTITIES = new RelationField("dmMappedToEntities");
+    /** Defines the count of activities in the pipline. */
+    NumericField ADF_PIPELINE_ACTIVITY_COUNT = new NumericField("adfPipelineActivityCount", "adfPipelineActivityCount");
 
-    /** Association from this entity is related. */
-    RelationField DM_RELATED_FROM_ENTITIES = new RelationField("dmRelatedFromEntities");
+    /** The list of annotation assigned to a pipeline. */
+    TextField ADF_PIPELINE_ANNOTATIONS = new TextField("adfPipelineAnnotations", "adfPipelineAnnotations");
 
-    /** Association to which this entity is related. */
-    RelationField DM_RELATED_TO_ENTITIES = new RelationField("dmRelatedToEntities");
+    /** List of objects of pipeline runs for a particular pipeline. */
+    KeywordField ADF_PIPELINE_RUNS = new KeywordField("adfPipelineRuns", "adfPipelineRuns");
 
-    /** Subject area of the entity. */
-    KeywordField DM_SUBJECT_AREA = new KeywordField("dmSubjectArea", "dmSubjectArea");
+    /** ADF Pipeline that is associated with these ADF Activities. */
+    SortedSet<IAdfActivity> getAdfActivities();
 
-    /** Data model version(s) in which this entity exists. */
-    RelationField DM_VERSIONS = new RelationField("dmVersions");
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF pipelines that is associated with this ADF Dataflos. */
+    SortedSet<IAdfDataflow> getAdfDataflows();
+
+    /** ADF pipelines that is associated with this ADF Datasets. */
+    SortedSet<IAdfDataset> getAdfDatasets();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF pipelines that is associated with this ADF Linkedservices. */
+    SortedSet<IAdfLinkedservice> getAdfLinkedservices();
+
+    /** Defines the count of activities in the pipline. */
+    Integer getAdfPipelineActivityCount();
+
+    /** The list of annotation assigned to a pipeline. */
+    SortedSet<String> getAdfPipelineAnnotations();
+
+    /** List of objects of pipeline runs for a particular pipeline. */
+    List<Map<String, String>> getAdfPipelineRuns();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -350,69 +373,6 @@ public interface IDMEntity {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Number of attributes in the entity. */
-    Long getDmAttributeCount();
-
-    /** Individual attributes that make up the entity. */
-    SortedSet<IDMAttribute> getDmAttributes();
-
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Type of the data entity. */
-    String getDmEntityType();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** Entities from which this entity is mapped. */
-    SortedSet<IDMEntity> getDmMappedFromEntities();
-
-    /** Entities to which this entity is mapped. */
-    SortedSet<IDMEntity> getDmMappedToEntities();
-
-    /** Association from this entity is related. */
-    SortedSet<IDMEntityAssociation> getDmRelatedFromEntities();
-
-    /** Association to which this entity is related. */
-    SortedSet<IDMEntityAssociation> getDmRelatedToEntities();
-
-    /** Subject area of the entity. */
-    String getDmSubjectArea();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
-
-    /** Data model version(s) in which this entity exists. */
-    SortedSet<IDMVersion> getDmVersions();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

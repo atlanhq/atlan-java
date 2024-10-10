@@ -2,6 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.AtlanClient;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -13,12 +16,16 @@ import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
@@ -70,6 +77,10 @@ public interface IModel {
     /** Type of the model asset (conceptual, logical, physical). */
     KeywordField MODEL_TYPE = new KeywordField("modelType", "modelType");
 
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    KeywordField MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME =
+            new KeywordField("modelVersionAgnosticQualifiedName", "modelVersionAgnosticQualifiedName");
+
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     KeywordTextField MODEL_VERSION_NAME =
             new KeywordTextField("modelVersionName", "modelVersionName.keyword", "modelVersionName");
@@ -77,6 +88,86 @@ public interface IModel {
     /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
     KeywordField MODEL_VERSION_QUALIFIED_NAME =
             new KeywordField("modelVersionQualifiedName", "modelVersionQualifiedName");
+
+    /**
+     * Generate a unique name that does not include any path delimiters.
+     *
+     * @param name of the object for which to generate a unique name
+     * @return a unique name for the object
+     */
+    @JsonIgnore
+    public static String getSlugForName(String name) {
+        return name.replaceAll("/", "±");
+    }
+
+    /**
+     * Reverse a unique name without path delimiters back to the original name.
+     *
+     * @param slug unique name of the object for which to reverse back to its name
+     * @return original name of the object
+     */
+    @JsonIgnore
+    public static String getNameFromSlug(String slug) {
+        return slug.replaceAll("±", "/");
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, Date businessDate, String prefix) throws AtlanException {
+        return findByTime(client, businessDate.toInstant(), prefix);
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, Instant businessDate, String prefix)
+            throws AtlanException {
+        return findByTime(client, businessDate.toEpochMilli(), prefix);
+    }
+
+    /**
+     * Find all model assets active at a particular business date.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param businessDate time at which the model assets were active
+     * @param prefix (optional) qualifiedName prefix to limit the model assets to fetch
+     * @return all model assets active at the requested time
+     * @throws AtlanException on any issues with underlying API interactions
+     */
+    public static List<Asset> findByTime(AtlanClient client, long businessDate, String prefix) throws AtlanException {
+        Query subQuery = FluentSearch._internal()
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.gt(businessDate))
+                .whereSome(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE.eq(0))
+                .minSomes(1)
+                .build()
+                .toQuery();
+        return client
+                .assets
+                .select()
+                .includeOnResults(ModelAttribute.MODEL_BUSINESS_DATE)
+                .includeOnResults(ModelDataModel.MODEL_EXPIRED_AT_BUSINESS_DATE)
+                .includeOnResults(ModelAttribute.DESCRIPTION)
+                .includeOnResults(ModelAttribute.MODEL_NAMESPACE)
+                .includeOnResults(ModelAttribute.MODEL_ENTITY_QUALIFIED_NAME)
+                .where(Asset.QUALIFIED_NAME.startsWith(prefix))
+                .where(ModelDataModel.MODEL_BUSINESS_DATE.lte(businessDate))
+                .where(subQuery)
+                .stream()
+                .toList();
+    }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -464,6 +555,9 @@ public interface IModel {
 
     /** Type of the model asset (conceptual, logical, physical). */
     String getModelType();
+
+    /** Unique name of the parent in which this asset exists, irrespective of the version (always implies the latest version). */
+    String getModelVersionAgnosticQualifiedName();
 
     /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
     String getModelVersionName();

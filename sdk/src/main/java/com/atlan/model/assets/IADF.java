@@ -8,8 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -23,23 +22,26 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a version of a data model in Atlan.
+ * Base class for ADF assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDMVersion {
+public interface IADF {
 
-    public static final String TYPE_NAME = "DMVersion";
+    public static final String TYPE_NAME = "ADF";
 
-    /** Data model for which this version exists. */
-    RelationField DM_DATA_MODEL = new RelationField("dmDataModel");
+    /** Defines the folder path in which this ADF asset exists. */
+    TextField ADF_ASSET_FOLDER_PATH = new TextField("adfAssetFolderPath", "adfAssetFolderPath");
 
-    /** Individual entities that make up this version of the data model. */
-    RelationField DM_ENTITIES = new RelationField("dmEntities");
+    /** Defines the name of the factory in which this asset exists. */
+    TextField ADF_FACTORY_NAME = new TextField("adfFactoryName", "adfFactoryName");
 
-    /** Number of entities in the version. */
-    NumericField DM_ENTITY_COUNT = new NumericField("dmEntityCount", "dmEntityCount");
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -331,51 +333,6 @@ public interface IDMVersion {
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
-
-    /** Business date for the asset. */
-    Long getDmBusinessDate();
-
-    /** Data model for which this version exists. */
-    IDMDataModel getDmDataModel();
-
-    /** A domain of the data model in which this asset exists. */
-    String getDmDataModelDomain();
-
-    /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelName();
-
-    /** A namespace of the data model in which this asset exists. */
-    String getDmDataModelNamespace();
-
-    /** Unique name of the model in which this asset exists, or empty if it is itself a data model. */
-    String getDmDataModelQualifiedName();
-
-    /** Individual entities that make up this version of the data model. */
-    SortedSet<IDMEntity> getDmEntities();
-
-    /** Number of entities in the version. */
-    Long getDmEntityCount();
-
-    /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityName();
-
-    /** Unique name of the entity in which this asset exists, or empty if it is itself a data model entity. */
-    String getDmEntityQualifiedName();
-
-    /** Business expiration date for the asset. */
-    Long getDmExpiredAtBusinessDate();
-
-    /** System expiration date for the asset. */
-    Long getDmExpiredAtSystemDate();
-
-    /** System date for the asset. */
-    Long getDmSystemDate();
-
-    /** Simple name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionName();
-
-    /** Unique name of the version in which this asset exists, or empty if it is itself a data model version. */
-    String getDmVersionQualifiedName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();

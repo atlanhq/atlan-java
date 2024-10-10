@@ -224,6 +224,7 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     /** {@inheritDoc} */
     @Override
     public int compareTo(Reference o) {
+        if (o == null) return -1;
         return referenceComparator.compare(this, o);
     }
 }

@@ -65,6 +65,10 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
     @Date
     Long taskExpiresAt;
 
+    /** contains external integration config for the task */
+    @Attribute
+    String taskIntegrationConfig;
+
     /** flag to make task read/unread */
     @Attribute
     Boolean taskIsRead;

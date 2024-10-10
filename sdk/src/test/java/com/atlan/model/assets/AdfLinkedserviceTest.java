@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DMDataModelTest {
+public class AdfLinkedserviceTest {
 
-    private static final DMDataModel full = DMDataModel._internal()
+    private static final AdfLinkedservice full = AdfLinkedservice._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,18 +59,8 @@ public class DMDataModelTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dmBusinessDate(123456789L)
-            .dmDataModelDomain("String0")
-            .dmDataModelName("String0")
-            .dmDataModelNamespace("String0")
-            .dmDataModelQualifiedName("String0")
-            .dmEntityName("String0")
-            .dmEntityQualifiedName("String0")
-            .dmExpiredAtBusinessDate(123456789L)
-            .dmExpiredAtSystemDate(123456789L)
-            .dmSystemDate(123456789L)
-            .dmVersionName("String0")
-            .dmVersionQualifiedName("String0")
+            .adfAssetFolderPath("String0")
+            .adfFactoryName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -431,25 +421,44 @@ public class DMDataModelTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dmDataModelType("String0")
-            .dmTool("String0")
-            .dmVersionCount(123456789L)
-            .dmVersion(DMVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dmVersion(DMVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfActivity(AdfActivity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfDataflow(AdfDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataflow(AdfDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfDataset(AdfDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataset(AdfDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfLinkedserviceAccountName("String0")
+            .adfLinkedserviceAnnotation("String0")
+            .adfLinkedserviceAnnotation("String1")
+            .adfLinkedserviceAzureCloudType("String0")
+            .adfLinkedserviceClusterId("String0")
+            .adfLinkedserviceCredentialType("String0")
+            .adfLinkedserviceDatabaseName("String0")
+            .adfLinkedserviceDomainEndpoint("String0")
+            .adfLinkedserviceResourceId("String0")
+            .adfLinkedserviceRoleName("String0")
+            .adfLinkedserviceTenant("String0")
+            .adfLinkedserviceType("String0")
+            .adfLinkedserviceUserName("String0")
+            .adfLinkedserviceVersion("String0")
+            .adfLinkedserviceVersionAbove(true)
+            .adfLinkedserviceWarehouseName("String0")
+            .adfPipeline(AdfPipeline.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfPipeline(AdfPipeline.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DMDataModel frodo;
+    private static AdfLinkedservice frodo;
     private static String serialized;
 
-    @Test(groups = {"DMDataModel.builderEquivalency"})
+    @Test(groups = {"AdfLinkedservice.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DMDataModel.serialize"},
-            dependsOnGroups = {"DMDataModel.builderEquivalency"})
+            groups = {"AdfLinkedservice.serialize"},
+            dependsOnGroups = {"AdfLinkedservice.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -458,17 +467,17 @@ public class DMDataModelTest {
     }
 
     @Test(
-            groups = {"DMDataModel.deserialize"},
-            dependsOnGroups = {"DMDataModel.serialize"})
+            groups = {"AdfLinkedservice.deserialize"},
+            dependsOnGroups = {"AdfLinkedservice.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DMDataModel.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AdfLinkedservice.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DMDataModel.equivalency"},
-            dependsOnGroups = {"DMDataModel.serialize", "DMDataModel.deserialize"})
+            groups = {"AdfLinkedservice.equivalency"},
+            dependsOnGroups = {"AdfLinkedservice.serialize", "AdfLinkedservice.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -477,8 +486,8 @@ public class DMDataModelTest {
     }
 
     @Test(
-            groups = {"DMDataModel.equivalency"},
-            dependsOnGroups = {"DMDataModel.serialize", "DMDataModel.deserialize"})
+            groups = {"AdfLinkedservice.equivalency"},
+            dependsOnGroups = {"AdfLinkedservice.serialize", "AdfLinkedservice.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DMAttributeAssociationTest {
+public class AdfDatasetTest {
 
-    private static final DMAttributeAssociation full = DMAttributeAssociation._internal()
+    private static final AdfDataset full = AdfDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,18 +59,8 @@ public class DMAttributeAssociationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .dmBusinessDate(123456789L)
-            .dmDataModelDomain("String0")
-            .dmDataModelName("String0")
-            .dmDataModelNamespace("String0")
-            .dmDataModelQualifiedName("String0")
-            .dmEntityName("String0")
-            .dmEntityQualifiedName("String0")
-            .dmExpiredAtBusinessDate(123456789L)
-            .dmExpiredAtSystemDate(123456789L)
-            .dmSystemDate(123456789L)
-            .dmVersionName("String0")
-            .dmVersionQualifiedName("String0")
+            .adfAssetFolderPath("String0")
+            .adfFactoryName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -431,26 +421,39 @@ public class DMAttributeAssociationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dmAttributeFrom(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dmAttributeFromQualifiedName("String0")
-            .dmAttributeTo(DMAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dmAttributeToQualifiedName("String0")
-            .dmCardinality(DMCardinalityType.ONE_TO_ONE)
-            .dmLabel("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfActivity(AdfActivity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfDataflow(AdfDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfDataflow(AdfDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .adfDatasetAnnotation("String0")
+            .adfDatasetAnnotation("String1")
+            .adfDatasetCollectionName("String0")
+            .adfDatasetContainerName("String0")
+            .adfDatasetDatabaseName("String0")
+            .adfDatasetFileFolderPath("String0")
+            .adfDatasetFileName("String0")
+            .adfDatasetLinkedService("String0")
+            .adfDatasetSchemaName("String0")
+            .adfDatasetStorageType("String0")
+            .adfDatasetTableName("String0")
+            .adfDatasetType("String0")
+            .adfLinkedservice(AdfLinkedservice.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfPipeline(AdfPipeline.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .adfPipeline(AdfPipeline.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DMAttributeAssociation frodo;
+    private static AdfDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"DMAttributeAssociation.builderEquivalency"})
+    @Test(groups = {"AdfDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DMAttributeAssociation.serialize"},
-            dependsOnGroups = {"DMAttributeAssociation.builderEquivalency"})
+            groups = {"AdfDataset.serialize"},
+            dependsOnGroups = {"AdfDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -459,17 +462,17 @@ public class DMAttributeAssociationTest {
     }
 
     @Test(
-            groups = {"DMAttributeAssociation.deserialize"},
-            dependsOnGroups = {"DMAttributeAssociation.serialize"})
+            groups = {"AdfDataset.deserialize"},
+            dependsOnGroups = {"AdfDataset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, DMAttributeAssociation.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AdfDataset.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DMAttributeAssociation.equivalency"},
-            dependsOnGroups = {"DMAttributeAssociation.serialize", "DMAttributeAssociation.deserialize"})
+            groups = {"AdfDataset.equivalency"},
+            dependsOnGroups = {"AdfDataset.serialize", "AdfDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -478,8 +481,8 @@ public class DMAttributeAssociationTest {
     }
 
     @Test(
-            groups = {"DMAttributeAssociation.equivalency"},
-            dependsOnGroups = {"DMAttributeAssociation.serialize", "DMAttributeAssociation.deserialize"})
+            groups = {"AdfDataset.equivalency"},
+            dependsOnGroups = {"AdfDataset.serialize", "AdfDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
