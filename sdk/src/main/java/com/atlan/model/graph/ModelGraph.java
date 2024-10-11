@@ -9,7 +9,9 @@ import com.atlan.model.assets.IModel;
 import com.atlan.model.assets.ModelAttribute;
 import com.atlan.model.assets.ModelDataModel;
 import com.atlan.model.assets.ModelEntity;
+import com.atlan.model.assets.ModelEntityAssociation;
 import com.atlan.model.assets.ModelVersion;
+import com.atlan.model.fields.AtlanField;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,19 @@ public class ModelGraph {
 
     private long asOfTime;
 
+    private static final List<AtlanField> INCLUDES = List.of(
+            ModelEntity.MODEL_ENTITY_MAPPED_TO_ENTITIES,
+            ModelEntity.MODEL_ENTITY_MAPPED_FROM_ENTITIES,
+            ModelAttribute.MODEL_ATTRIBUTE_DATA_TYPE,
+            ModelAttribute.MODEL_ATTRIBUTE_IS_NULLABLE,
+            ModelAttribute.MODEL_ATTRIBUTE_IS_PRIMARY,
+            ModelAttribute.MODEL_ATTRIBUTE_IS_FOREIGN,
+            ModelAttribute.MODEL_ATTRIBUTE_IS_DERIVED,
+            ModelEntityAssociation.MODEL_ENTITY_ASSOCIATION_CARDINALITY,
+            ModelEntityAssociation.MODEL_ENTITY_ASSOCIATION_LABEL,
+            ModelEntityAssociation.MODEL_ENTITY_ASSOCIATION_TO_QUALIFIED_NAME,
+            ModelEntityAssociation.MODEL_ENTITY_ASSOCIATION_FROM_QUALIFIED_NAME);
+
     /**
      * Construct a model graph from the provided parameters.
      *
@@ -44,27 +59,47 @@ public class ModelGraph {
      * @throws AtlanException on any issues communicating with the underlying APIs
      */
     public static ModelGraph from(AtlanClient client, long time, String prefix) throws AtlanException {
-        List<Asset> assets = IModel.findByTime(client, time, prefix, null);
+        List<Asset> assets = IModel.findByTime(client, time, prefix, INCLUDES);
         ModelGraphBuilder builder = builder();
         Map<String, ModelEntityGraph.ModelEntityGraphBuilder> eg = new HashMap<>();
         assets.forEach(it -> {
-            if (it instanceof ModelDataModel m) {
-                builder.model(m);
-            } else if (it instanceof ModelVersion v) {
-                builder.version(v);
-            } else if (it instanceof ModelEntity e) {
-                if (!eg.containsKey(e.getModelVersionAgnosticQualifiedName())) {
-                    eg.put(e.getModelVersionAgnosticQualifiedName(), ModelEntityGraph.builder());
+            if (it instanceof ModelDataModel dm) {
+                builder.model(dm);
+            } else if (it instanceof ModelVersion mv) {
+                builder.version(mv);
+            } else if (it instanceof ModelEntity me) {
+                if (!eg.containsKey(me.getModelVersionAgnosticQualifiedName())) {
+                    eg.put(me.getModelVersionAgnosticQualifiedName(), ModelEntityGraph.builder());
                 }
-                eg.get(e.getModelVersionAgnosticQualifiedName()).details(e);
-            } else if (it instanceof ModelAttribute a) {
-                if (!eg.containsKey(a.getModelEntityQualifiedName())) {
-                    eg.put(a.getModelEntityQualifiedName(), ModelEntityGraph.builder());
+                eg.get(me.getModelVersionAgnosticQualifiedName()).details(me);
+            } else if (it instanceof ModelAttribute ma) {
+                if (!eg.containsKey(ma.getModelEntityQualifiedName())) {
+                    eg.put(ma.getModelEntityQualifiedName(), ModelEntityGraph.builder());
                 }
-                eg.get(a.getModelEntityQualifiedName()).attribute(a);
+                eg.get(ma.getModelEntityQualifiedName()).attribute(ma);
+            } else if (it instanceof ModelEntityAssociation mea) {
+                String from = mea.getModelEntityAssociationFromQualifiedName();
+                String to = mea.getModelEntityAssociationToQualifiedName();
+                if (!eg.containsKey(from)) {
+                    eg.put(from, ModelEntityGraph.builder());
+                }
+                if (!eg.containsKey(to)) {
+                    eg.put(to, ModelEntityGraph.builder());
+                }
+                eg.get(from)
+                        .associatedTo(ModelEntityGraph.AssociatedEntity.builder()
+                                .entity(ModelEntity.refByQualifiedName(to))
+                                .cardinality(mea.getModelEntityAssociationCardinality())
+                                .label(mea.getModelEntityAssociationLabel())
+                                .build());
+                eg.get(to)
+                        .associatedFrom(ModelEntityGraph.AssociatedEntity.builder()
+                                .entity(ModelEntity.refByQualifiedName(from))
+                                .cardinality(mea.getModelEntityAssociationCardinality())
+                                .label(mea.getModelEntityAssociationLabel())
+                                .build());
             }
         });
-        ;
         return builder.entities(eg.values().stream()
                         .map(ModelEntityGraph.ModelEntityGraphBuilder::build)
                         .toList())

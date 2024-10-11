@@ -2,9 +2,12 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.model.graph;
 
+import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.ModelAttribute;
 import com.atlan.model.assets.ModelEntity;
+import com.atlan.model.enums.ModelCardinalityType;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -22,4 +25,27 @@ public class ModelEntityGraph {
 
     @Singular
     private List<ModelAttribute> attributes;
+
+    @Singular
+    private List<AssociatedEntity> associatedTos;
+
+    @Singular
+    private List<AssociatedEntity> associatedFroms;
+
+    public SortedSet<IModelEntity> getMappedTo() {
+        return details.getModelEntityMappedToEntities();
+    }
+
+    public SortedSet<IModelEntity> getMappedFrom() {
+        return details.getModelEntityMappedFromEntities();
+    }
+
+    @Getter
+    @Builder(access = AccessLevel.PACKAGE)
+    @EqualsAndHashCode
+    public static final class AssociatedEntity {
+        private String label;
+        private ModelEntity entity;
+        private ModelCardinalityType cardinality;
+    }
 }
