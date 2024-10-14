@@ -46,6 +46,13 @@ public class SearchLogRequest extends AtlanObject {
             .build()
             .toQuery();
 
+    public static final Query SEARCHED = FluentSearch._internal()
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_MAIN_LIST))
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_SEARCHBAR))
+            .minSomes(1)
+            .build()
+            .toQuery();
+
     /**
      * Build a search using the provided query and default options.
      *
@@ -85,17 +92,134 @@ public class SearchLogRequest extends AtlanObject {
      * @return a request builder pre-configured with these criteria
      */
     public static SearchLogRequestBuilder<?, ?> views(List<String> excludeUsers) {
+        return views(-1, -1, excludeUsers);
+    }
+
+    /**
+     * Start building a search log request for the views of assets.
+     *
+     * @param from timestamp after which to look for any asset view activity (inclusive)
+     * @param to timestamp up through which to look for any asset view activity (inclusive)
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> views(long from, long to) {
+        return views(from, to, null);
+    }
+
+    /**
+     * Start building a search log request for the views of assets.
+     *
+     * @param from timestamp after which to look for any asset view activity (inclusive)
+     * @param to timestamp up through which to look for any asset view activity (inclusive)
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> views(long from, long to, List<String> excludeUsers) {
         List<String> exclusion = new ArrayList<>(EXCLUDE_USERS);
         if (excludeUsers != null) {
             exclusion.addAll(excludeUsers);
         }
-        Query viewedByGuid = FluentSearch._internal()
+        FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch._internal()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(VIEWED)
                 .whereNot(SearchLogEntry.USER.in(exclusion))
-                .build()
-                .toQuery();
-        return SearchLogRequest.builder(viewedByGuid);
+                .whereNot(SearchLogEntry.USER.startsWith("service-account-"));
+        if (from > 0 && to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.between(from, to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.between(from, to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (from > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.gte(from))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.gte(from))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.lte(to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.lte(to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        }
+        return SearchLogRequest.builder(builder.build().toQuery());
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches() {
+        return searches(null);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(List<String> excludeUsers) {
+        return searches(-1, -1, excludeUsers);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param from timestamp after which to look for any search activity (inclusive)
+     * @param to timestamp up through which to look for any search activity (inclusive)
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(long from, long to) {
+        return searches(from, to, null);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param from timestamp after which to look for any search activity (inclusive)
+     * @param to timestamp up through which to look for any search activity (inclusive)
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(long from, long to, List<String> excludeUsers) {
+        List<String> exclusion = new ArrayList<>(EXCLUDE_USERS);
+        if (excludeUsers != null) {
+            exclusion.addAll(excludeUsers);
+        }
+        FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch._internal()
+                .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_SEARCHED))
+                .where(SEARCHED)
+                .whereNot(SearchLogEntry.USER.in(exclusion))
+                .whereNot(SearchLogEntry.USER.startsWith("service-account-"));
+        if (from > 0 && to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.between(from, to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.between(from, to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (from > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.gte(from))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.gte(from))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.lte(to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.lte(to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        }
+        return SearchLogRequest.builder(builder.build().toQuery());
     }
 
     /**
@@ -413,6 +537,16 @@ public class SearchLogRequest extends AtlanObject {
         }
 
         /**
+         * Add multiple sort options to sort the resulting search log entries.
+         *
+         * @param options by which to sort the resulting entries, in order from first sort to final sort
+         * @return this search log request builder, with the updated sorting option(s)
+         */
+        public B sorts(List<SortOptions> options) {
+            return this.dsl(dsl.toBuilder().sort(options).build());
+        }
+
+        /**
          * Add an aggregation on the search log entries.
          *
          * @param key arbitrary identifier for the aggregation results
@@ -421,6 +555,25 @@ public class SearchLogRequest extends AtlanObject {
          */
         public B aggregation(String key, Aggregation aggregation) {
             return this.dsl(dsl.toBuilder().aggregation(key, aggregation).build());
+        }
+
+        /**
+         * Add multiple aggregations on the search log entries.
+         *
+         * @param aggregations the aggregations to add on top of the results
+         * @return this search log request builder, with the additional aggregation(s)
+         */
+        public B aggregations(Map<String, Aggregation> aggregations) {
+            return this.dsl(dsl.toBuilder().aggregations(aggregations).build());
+        }
+
+        /**
+         * Remove all aggregations of the search log entries.
+         *
+         * @return this search log request builder, without any aggregations
+         */
+        public B clearAggregations() {
+            return this.dsl(dsl.toBuilder().clearAggregations().build());
         }
 
         /**

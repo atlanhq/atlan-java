@@ -143,5 +143,8 @@ public class IndexSearchRequest extends AtlanObject {
         /** Tags to associate with the search request. */
         @Singular
         List<String> utmTags;
+
+        /** Input in the searchbar when the search was run. */
+        String searchInput;
     }
 }

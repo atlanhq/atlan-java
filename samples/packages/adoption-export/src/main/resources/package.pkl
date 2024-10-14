@@ -56,6 +56,33 @@ uiConfig {
           placeholderValue = 100
           width = 4
         }
+        ["views_details"] = new Radio {
+          title = "Include details"
+          possibleValues {
+            ["YES"] = "Yes"
+            ["NO"] = "No"
+          }
+          default = "NO"
+          helpText = "Include detailed results for every single user view of an asset?"
+          required = true
+        }
+        ["views_from"] = new DateInput {
+          title = "From date"
+          helpText = "Only extract views after the specified date (leave empty for all views)."
+          required = false
+          past = -90 // start as far back as 90 days ago
+          future = -1 // maximum from would be yesterday
+          defaultDay = -90
+          width = 4
+        }
+        ["views_to"] = new DateInput {
+          title = "To date"
+          helpText = "Only extract views before the specified date (leave empty for all views)."
+          required = false
+          past = -89 // maximum to would be 89 days ago
+          defaultDay = 0 // start with today
+          width = 4
+        }
       }
     }
     ["Changes"] {
@@ -122,7 +149,28 @@ uiConfig {
           placeholderValue = 100
           width = 4
         }
-
+        ["changes_details"] = new Radio {
+          title = "Include details"
+          possibleValues {
+            ["YES"] = "Yes"
+            ["NO"] = "No"
+          }
+          default = "NO"
+          helpText = "Include detailed results for every single asset change?"
+          required = true
+        }
+        ["changes_automations"] = new Radio {
+          title = "Include automations"
+          possibleValues {
+            ["ALL"] = "All"
+            ["WFL"] = "Workflows"
+            ["SDK"] = "SDKs"
+            ["NONE"] = "None"
+          }
+          default = "NONE"
+          helpText = "Include detailed results for assets changed through the selected automation mechanisms."
+          required = false
+        }
       }
     }
     ["Searches"] {
@@ -138,11 +186,21 @@ uiConfig {
           }
           default = "NO"
         }
-        ["maximum_searches"] = new NumericInput {
-          title = "Maximum"
-          helpText = "Maximum number of searches to include for the most-run searches."
+        ["searches_from"] = new DateInput {
+          title = "From date"
+          helpText = "Only extract searches after the specified date (leave empty for all changes)."
           required = false
-          placeholderValue = 50
+          past = -90 // start as far back as 90 days ago
+          future = -1 // maximum from would be yesterday
+          defaultDay = -90
+          width = 4
+        }
+        ["searches_to"] = new DateInput {
+          title = "To date"
+          helpText = "Only extract searches before the specified date (leave empty for all changes)."
+          required = false
+          past = -89 // maximum to would be 89 days ago
+          defaultDay = 0 // start with today
           width = 4
         }
       }
@@ -198,6 +256,13 @@ uiConfig {
       required { "views_max" }
     }
     new UIRule {
+      whenInputs { ["views_details"] = "YES" }
+      required {
+        "views_from"
+        "views_to"
+      }
+    }
+    new UIRule {
       whenInputs { ["include_changes"] = "YES" }
       required {
         "changes_by_user"
@@ -205,11 +270,19 @@ uiConfig {
         "changes_from"
         "changes_to"
         "changes_max"
+        "changes_details"
       }
     }
     new UIRule {
+      whenInputs { ["changes_details"] = "YES" }
+      required { "changes_automations" }
+    }
+    new UIRule {
       whenInputs { ["include_searches"] = "YES" }
-      required { "maximum_searches" }
+      required {
+        "searches_from"
+        "searches_to"
+      }
     }
     new UIRule {
       whenInputs { ["delivery_type"] = "EMAIL" }

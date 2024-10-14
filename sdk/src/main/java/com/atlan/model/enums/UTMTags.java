@@ -37,6 +37,8 @@ public enum UTMTags implements AtlanEnum {
     ACTION_ASSET_VIEWED("action_asset_viewed"),
 
     /* Others indicate any special mechanisms used for the action. */
+    /** Search was run using the UI searchbar. */
+    UI_SEARCHBAR("ui_searchbar"),
     /** Search was run using the UI popup searchbar. */
     UI_POPUP_SEARCHBAR("ui_popup_searchbar"),
     /** Search was through a UI filter (discovery). */
