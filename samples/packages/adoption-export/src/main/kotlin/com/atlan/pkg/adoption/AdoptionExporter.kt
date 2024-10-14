@@ -8,6 +8,8 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges
 import com.atlan.pkg.adoption.exports.AssetViews
+import com.atlan.pkg.adoption.exports.DetailedUserChanges
+import com.atlan.pkg.adoption.exports.DetailedUserViews
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KotlinLogging
 import java.io.File
@@ -33,7 +35,13 @@ object AdoptionExporter {
         ExcelWriter(exportFile).use { xlsx ->
             if (includeViews != "NONE") {
                 val maxAssets = Utils.getOrDefault(config.viewsMax, 100).toInt()
+                val includeDetails = Utils.getOrDefault(config.viewsDetails, "NO") == "YES"
+                val start = Utils.getOrDefault(config.viewsFrom, -1).toLong()
+                val end = Utils.getOrDefault(config.viewsTo, -1).toLong()
                 AssetViews(xlsx, logger, includeViews, maxAssets).export()
+                if (includeDetails) {
+                    DetailedUserViews(xlsx, logger, start, end).export()
+                }
             }
             if (includeChanges) {
                 val byUsers = Utils.getOrDefault(config.changesByUser, listOf())
@@ -41,7 +49,11 @@ object AdoptionExporter {
                 val start = Utils.getOrDefault(config.changesFrom, -1).toLong()
                 val end = Utils.getOrDefault(config.changesTo, -1).toLong()
                 val maxAssets = Utils.getOrDefault(config.changesMax, 100).toInt()
+                val includeDetails = Utils.getOrDefault(config.changesDetails, "NO") == "YES"
                 AssetChanges(xlsx, logger, byUsers, byAction, start, end, maxAssets).export()
+                if (includeDetails) {
+                    DetailedUserChanges(xlsx, logger, start, end).export()
+                }
             }
             if (includeSearches) {
                 val maxSearches = Utils.getOrDefault(config.maximumSearches, 50)
