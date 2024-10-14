@@ -129,8 +129,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="#EXCLUDE_USERS" class="member-name-link">EXCLUDE_USERS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color"><code><a href="#VIEWED" class="member-name-link">VIEWED</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SEARCHED" class="member-name-link">SEARCHED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second even-row-color"><code><a href="#VIEWED" class="member-name-link">VIEWED</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.core.AtlanObject">Fields inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
@@ -268,6 +271,29 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Run the search.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#searches()" class="member-name-link">searches</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for searches run against assets.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#searches(long,long)" class="member-name-link">searches</a><wbr>(long&nbsp;from,
+ long&nbsp;to)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for searches run against assets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#searches(long,long,java.util.List)" class="member-name-link">searches</a><wbr>(long&nbsp;from,
+ long&nbsp;to,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for searches run against assets.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#searches(java.util.List)" class="member-name-link">searches</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for searches run against assets.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;<a href="SearchLogEntry.html" title="class in com.atlan.model.search">SearchLogEntry</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stream()" class="member-name-link">stream</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -297,6 +323,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#views()" class="member-name-link">views</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for the views of assets.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#views(long,long)" class="member-name-link">views</a><wbr>(long&nbsp;from,
+ long&nbsp;to)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start building a search log request for the views of assets.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#views(long,long,java.util.List)" class="member-name-link">views</a><wbr>(long&nbsp;from,
+ long&nbsp;to,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Start building a search log request for the views of assets.</div>
 </div>
@@ -346,6 +385,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="VIEWED">
 <h3>VIEWED</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">VIEWED</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="SEARCHED">
+<h3>SEARCHED</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">SEARCHED</span></div>
 </section>
 </li>
 </ul>
@@ -414,6 +459,94 @@ loadScripts(document, 'script');</script>
 <div class="block">Start building a search log request for the views of assets.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>excludeUsers</code> - list of usernames to exclude from the results</dd>
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="views(long,long)">
+<h3>views</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">views</span><wbr><span class="parameters">(long&nbsp;from,
+ long&nbsp;to)</span></div>
+<div class="block">Start building a search log request for the views of assets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>from</code> - timestamp after which to look for any asset view activity (inclusive)</dd>
+<dd><code>to</code> - timestamp up through which to look for any asset view activity (inclusive)</dd>
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="views(long,long,java.util.List)">
+<h3>views</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">views</span><wbr><span class="parameters">(long&nbsp;from,
+ long&nbsp;to,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</span></div>
+<div class="block">Start building a search log request for the views of assets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>from</code> - timestamp after which to look for any asset view activity (inclusive)</dd>
+<dd><code>to</code> - timestamp up through which to look for any asset view activity (inclusive)</dd>
+<dd><code>excludeUsers</code> - list of usernames to exclude from the results</dd>
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="searches()">
+<h3>searches</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">searches</span>()</div>
+<div class="block">Start building a search log request for searches run against assets.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="searches(java.util.List)">
+<h3>searches</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">searches</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</span></div>
+<div class="block">Start building a search log request for searches run against assets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>excludeUsers</code> - list of usernames to exclude from the results</dd>
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="searches(long,long)">
+<h3>searches</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">searches</span><wbr><span class="parameters">(long&nbsp;from,
+ long&nbsp;to)</span></div>
+<div class="block">Start building a search log request for searches run against assets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>from</code> - timestamp after which to look for any search activity (inclusive)</dd>
+<dd><code>to</code> - timestamp up through which to look for any search activity (inclusive)</dd>
+<dt>Returns:</dt>
+<dd>a request builder pre-configured with these criteria</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="searches(long,long,java.util.List)">
+<h3>searches</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="class in com.atlan.model.search">SearchLogRequest.SearchLogRequestBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">searches</span><wbr><span class="parameters">(long&nbsp;from,
+ long&nbsp;to,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;excludeUsers)</span></div>
+<div class="block">Start building a search log request for searches run against assets.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>from</code> - timestamp after which to look for any search activity (inclusive)</dd>
+<dd><code>to</code> - timestamp up through which to look for any search activity (inclusive)</dd>
 <dd><code>excludeUsers</code> - list of usernames to exclude from the results</dd>
 <dt>Returns:</dt>
 <dd>a request builder pre-configured with these criteria</dd>

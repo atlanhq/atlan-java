@@ -120,9 +120,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add an aggregation on the search log entries.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">C</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#aggregations(java.util.Map)" class="member-name-link">aggregations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Add multiple aggregations on the search log entries.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">C</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearAggregations()" class="member-name-link">clearAggregations</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Remove all aggregations of the search log entries.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#count()" class="member-name-link">count</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -147,19 +157,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add a sort option to sort the resulting search log entries.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;<a href="SearchLogEntry.html" title="class in com.atlan.model.search">SearchLogEntry</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stream()" class="member-name-link">stream</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sorts(java.util.List)" class="member-name-link">sorts</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;options)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Run the search to retrieve entries that match the supplied criteria.</div>
+<div class="block">Add multiple sort options to sort the resulting search log entries.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;<a href="SearchLogEntry.html" title="class in com.atlan.model.search">SearchLogEntry</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stream(boolean)" class="member-name-link">stream</a><wbr>(boolean&nbsp;parallel)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stream()" class="member-name-link">stream</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Run the search to retrieve entries that match the supplied criteria.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a>&lt;<a href="SearchLogEntry.html" title="class in com.atlan.model.search">SearchLogEntry</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stream(boolean)" class="member-name-link">stream</a><wbr>(boolean&nbsp;parallel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Run the search to retrieve entries that match the supplied criteria.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -221,6 +236,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="sorts(java.util.List)">
+<h3>sorts</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></span>&nbsp;<span class="element-name">sorts</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;options)</span></div>
+<div class="block">Add multiple sort options to sort the resulting search log entries.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>options</code> - by which to sort the resulting entries, in order from first sort to final sort</dd>
+<dt>Returns:</dt>
+<dd>this search log request builder, with the updated sorting option(s)</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="aggregation(java.lang.String,co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">
 <h3>aggregation</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></span>&nbsp;<span class="element-name">aggregation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
@@ -232,6 +260,30 @@ loadScripts(document, 'script');</script>
 <dd><code>aggregation</code> - the aggregation to add on top of the results</dd>
 <dt>Returns:</dt>
 <dd>this search log request builder, with the additional aggregation(s)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="aggregations(java.util.Map)">
+<h3>aggregations</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></span>&nbsp;<span class="element-name">aggregations</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</span></div>
+<div class="block">Add multiple aggregations on the search log entries.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>aggregations</code> - the aggregations to add on top of the results</dd>
+<dt>Returns:</dt>
+<dd>this search log request builder, with the additional aggregation(s)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="clearAggregations()">
+<h3>clearAggregations</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SearchLogRequest.SearchLogRequestBuilder.html" title="type parameter in SearchLogRequest.SearchLogRequestBuilder">B</a></span>&nbsp;<span class="element-name">clearAggregations</span>()</div>
+<div class="block">Remove all aggregations of the search log entries.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>this search log request builder, without any aggregations</dd>
 </dl>
 </section>
 </li>
