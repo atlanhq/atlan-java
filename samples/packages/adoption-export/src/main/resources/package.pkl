@@ -159,6 +159,18 @@ uiConfig {
           helpText = "Include detailed results for every single asset change?"
           required = true
         }
+        ["changes_automations"] = new Radio {
+          title = "Include automations"
+          possibleValues {
+            ["ALL"] = "All"
+            ["WFL"] = "Workflows"
+            ["SDK"] = "SDKs"
+            ["NONE"] = "None"
+          }
+          default = "NONE"
+          helpText = "Include detailed results for assets changed through the selected automation mechanisms."
+          required = false
+        }
       }
     }
     ["Searches"] {

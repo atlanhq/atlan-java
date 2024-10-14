@@ -30,6 +30,7 @@ data class AdoptionExportCfg(
     @JsonProperty("changes_to") val changesTo: Long? = null,
     @JsonProperty("changes_max") val changesMax: Number? = null,
     @JsonProperty("changes_details") val changesDetails: String? = null,
+    @JsonProperty("changes_automations") val changesAutomations: String? = null,
     @JsonProperty("include_searches") val includeSearches: String? = null,
     @JsonProperty("maximum_searches") val maximumSearches: Number? = null,
     @JsonProperty("delivery_type") val deliveryType: String? = null,

@@ -31,6 +31,7 @@ class ExportDetailsTest : PackageTest() {
                 includeChanges = "YES",
                 changesMax = 100,
                 changesDetails = "YES",
+                changesAutomations = "SDK",
             ),
         )
         AdoptionExporter.main(arrayOf(testDirectory))

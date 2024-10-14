@@ -52,7 +52,8 @@ object AdoptionExporter {
                 val includeDetails = Utils.getOrDefault(config.changesDetails, "NO") == "YES"
                 AssetChanges(xlsx, logger, byUsers, byAction, start, end, maxAssets).export()
                 if (includeDetails) {
-                    DetailedUserChanges(xlsx, logger, start, end).export()
+                    val includeAutomations = Utils.getOrDefault(config.changesAutomations, "NONE")
+                    DetailedUserChanges(xlsx, logger, start, end, includeAutomations).export()
                 }
             }
             if (includeSearches) {

@@ -21,7 +21,8 @@ class DetailedUserViews(
                 "Time" to "Time at which the view / search occurred",
                 "Username" to "User who viewed / searched",
                 "Total" to "Total number of assets included",
-                "GUIDs" to "Globally unique identifiers for each asset that was included",
+                "Type" to "Type(s) of asset that were viewed",
+                "Qualified name" to "Unique name(s) of the asset(s)",
             ),
         )
         SearchLogRequest.views(start, end)
@@ -33,7 +34,8 @@ class DetailedUserViews(
                         it.createdAt ?: it.timestamp ?: "",
                         it.userName ?: "",
                         it.resultsCount ?: "0",
-                        it.resultGuidsAllowed ?: "",
+                        it.resultTypeNamesAllowed ?: "",
+                        it.resultQualifiedNamesAllowed ?: "",
                     ),
                 )
             }
