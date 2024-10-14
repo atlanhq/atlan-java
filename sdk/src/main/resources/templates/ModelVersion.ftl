@@ -1,6 +1,3 @@
-<#macro imports>
-import com.atlan.model.assets.Connection;
-</#macro>
 <#macro all>
     /**
      * Builds the minimal object necessary to create a ModelVersion.

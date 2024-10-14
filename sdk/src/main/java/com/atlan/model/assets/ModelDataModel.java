@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataModelType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
@@ -366,14 +367,17 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      *
      * @param name of the ModelDataModel
      * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
+     * @param modelType type of model in which this entity exists
      * @return the minimal request necessary to create the ModelDataModel, as a builder
      */
-    public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+    public static ModelDataModelBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, DataModelType modelType) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelDataModel._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .modelType(modelType.getValue())
                 .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }

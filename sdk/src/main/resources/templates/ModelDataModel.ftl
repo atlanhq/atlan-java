@@ -1,5 +1,5 @@
 <#macro imports>
-import com.atlan.model.assets.Connection;
+import com.atlan.model.enums.DataModelType;
 </#macro>
 <#macro all>
     /**
@@ -7,14 +7,16 @@ import com.atlan.model.assets.Connection;
      *
      * @param name of the ModelDataModel
      * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
+     * @param modelType type of model in which this entity exists
      * @return the minimal request necessary to create the ModelDataModel, as a builder
      */
-    public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+    public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName, DataModelType modelType) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelDataModel._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .modelType(modelType.getValue())
                 .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }

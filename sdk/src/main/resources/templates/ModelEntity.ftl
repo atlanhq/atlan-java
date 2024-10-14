@@ -1,6 +1,3 @@
-<#macro imports>
-import com.atlan.model.assets.Connection;
-</#macro>
 <#macro all>
     /**
      * Builds the minimal object necessary to create a ModelEntity.
@@ -11,17 +8,14 @@ import com.atlan.model.assets.Connection;
      * @throws InvalidRequestException if the model provided is without a qualifiedName
      */
     public static ModelEntityBuilder<?, ?> creator(String name, ModelDataModel model) throws InvalidRequestException {
-        validateRelationship(ModelDataModel.TYPE_NAME, Map.of(
-            "connectionQualifiedName", model.getConnectionQualifiedName(),
-            "name", model.getName(),
-            "qualifiedName", model.getQualifiedName()
-        ));
-        return creator(
-            name,
-            model.getConnectionQualifiedName(),
-            model.getName(),
-            model.getQualifiedName()
-        );
+        validateRelationship(
+                ModelDataModel.TYPE_NAME,
+                Map.of(
+                        "connectionQualifiedName", model.getConnectionQualifiedName(),
+                        "name", model.getName(),
+                        "qualifiedName", model.getQualifiedName(),
+                        "modelType", model.getModelType()));
+        return creator(name, model.getConnectionQualifiedName(), model.getName(), model.getQualifiedName(), model.getModelType());
     }
 
     /**
@@ -29,13 +23,14 @@ import com.atlan.model.assets.Connection;
      *
      * @param name of the ModelEntity
      * @param modelQualifiedName unique (version-agnostic) name of the model in which this ModelEntity exists
+     * @param modelType type of model in which this entity exists
      * @return the minimal request necessary to create the ModelEntity, as a builder
      */
-    public static ModelEntityBuilder<?, ?> creator(String name, String modelQualifiedName) {
+    public static ModelEntityBuilder<?, ?> creator(String name, String modelQualifiedName, String modelType) {
         String modelSlug = StringUtils.getNameFromQualifiedName(modelQualifiedName);
         String modelName = IModel.getNameFromSlug(modelSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(modelQualifiedName);
-        return creator(name, connectionQualifiedName, modelName, modelQualifiedName);
+        return creator(name, connectionQualifiedName, modelName, modelQualifiedName, modelType);
     }
 
     /**
@@ -45,18 +40,21 @@ import com.atlan.model.assets.Connection;
      * @param connectionQualifiedName unique name of the connection in which to create this ModelEntity
      * @param modelName simple name (version-agnostic) of the model in which to create this ModelEntity
      * @param modelQualifiedName unique name (version-agnostic) of the model in which to create this ModelEntity
+     * @param modelType type of model in which this entity exists
      * @return the minimal request necessary to create the ModelEntity, as a builder
      */
-    public static ModelEntityBuilder<?, ?> creator(String name, String connectionQualifiedName, String modelName, String modelQualifiedName) {
+    public static ModelEntityBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String modelName, String modelQualifiedName, String modelType) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .name(name)
-            .modelName(modelName)
-            .modelQualifiedName(modelQualifiedName)
-            .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
-            .connectorType(connectorType)
-            .connectionQualifiedName(connectionQualifiedName);
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .modelName(modelName)
+                .modelQualifiedName(modelQualifiedName)
+                .modelType(modelType)
+                .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
