@@ -47,6 +47,9 @@ public class SearchLogEntry extends AtlanObject {
     /** Tag(s) that were sent in the search request. */
     public static final KeywordField UTM_TAGS = new KeywordField(UNMAPPED, "utmTags");
 
+    /** Text a user entered for their search. */
+    public static final KeywordField SEARCH_INPUT = new KeywordField(UNMAPPED, "searchInput");
+
     /** Whether the search had any results (true) or not (false). */
     public static final BooleanField HAS_RESULT = new BooleanField(UNMAPPED, "hasResult");
 
@@ -103,6 +106,9 @@ public class SearchLogEntry extends AtlanObject {
 
     /** List of the UTM tags that were sent in the search request. */
     List<String> utmTags;
+
+    /** Text a user entered for their search. */
+    String searchInput;
 
     /** Whether the search had any results (true) or not (false). */
     Boolean hasResult;

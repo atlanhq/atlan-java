@@ -46,6 +46,13 @@ public class SearchLogRequest extends AtlanObject {
             .build()
             .toQuery();
 
+    public static final Query SEARCHED = FluentSearch._internal()
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_MAIN_LIST))
+            .whereSome(SearchLogEntry.UTM_TAGS.eq(UTMTags.UI_SEARCHBAR))
+            .minSomes(1)
+            .build()
+            .toQuery();
+
     /**
      * Build a search using the provided query and default options.
      *
@@ -115,6 +122,79 @@ public class SearchLogRequest extends AtlanObject {
         FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch._internal()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(VIEWED)
+                .whereNot(SearchLogEntry.USER.in(exclusion))
+                .whereNot(SearchLogEntry.USER.startsWith("service-account-"));
+        if (from > 0 && to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.between(from, to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.between(from, to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (from > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.gte(from))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.gte(from))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        } else if (to > 0) {
+            builder.where(FluentSearch._internal()
+                    .whereSome(SearchLogEntry.LOGGED_AT.lte(to))
+                    .whereSome(SearchLogEntry.SEARCHED_AT.lte(to))
+                    .minSomes(1)
+                    .build()
+                    .toQuery());
+        }
+        return SearchLogRequest.builder(builder.build().toQuery());
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches() {
+        return searches(null);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(List<String> excludeUsers) {
+        return searches(-1, -1, excludeUsers);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param from timestamp after which to look for any search activity (inclusive)
+     * @param to timestamp up through which to look for any search activity (inclusive)
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(long from, long to) {
+        return searches(from, to, null);
+    }
+
+    /**
+     * Start building a search log request for searches run against assets.
+     *
+     * @param from timestamp after which to look for any search activity (inclusive)
+     * @param to timestamp up through which to look for any search activity (inclusive)
+     * @param excludeUsers list of usernames to exclude from the results
+     * @return a request builder pre-configured with these criteria
+     */
+    public static SearchLogRequestBuilder<?, ?> searches(long from, long to, List<String> excludeUsers) {
+        List<String> exclusion = new ArrayList<>(EXCLUDE_USERS);
+        if (excludeUsers != null) {
+            exclusion.addAll(excludeUsers);
+        }
+        FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch._internal()
+                .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_SEARCHED))
+                .where(SEARCHED)
                 .whereNot(SearchLogEntry.USER.in(exclusion))
                 .whereNot(SearchLogEntry.USER.startsWith("service-account-"));
         if (from > 0 && to > 0) {

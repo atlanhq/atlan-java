@@ -186,11 +186,21 @@ uiConfig {
           }
           default = "NO"
         }
-        ["maximum_searches"] = new NumericInput {
-          title = "Maximum"
-          helpText = "Maximum number of searches to include for the most-run searches."
+        ["searches_from"] = new DateInput {
+          title = "From date"
+          helpText = "Only extract searches after the specified date (leave empty for all changes)."
           required = false
-          placeholderValue = 50
+          past = -90 // start as far back as 90 days ago
+          future = -1 // maximum from would be yesterday
+          defaultDay = -90
+          width = 4
+        }
+        ["searches_to"] = new DateInput {
+          title = "To date"
+          helpText = "Only extract searches before the specified date (leave empty for all changes)."
+          required = false
+          past = -89 // maximum to would be 89 days ago
+          defaultDay = 0 // start with today
           width = 4
         }
       }
@@ -264,7 +274,10 @@ uiConfig {
     }
     new UIRule {
       whenInputs { ["include_searches"] = "YES" }
-      required { "maximum_searches" }
+      required {
+        "searches_from"
+        "searches_to"
+      }
     }
     new UIRule {
       whenInputs { ["delivery_type"] = "EMAIL" }

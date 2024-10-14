@@ -8,6 +8,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges
 import com.atlan.pkg.adoption.exports.AssetViews
+import com.atlan.pkg.adoption.exports.DetailedSearches
 import com.atlan.pkg.adoption.exports.DetailedUserChanges
 import com.atlan.pkg.adoption.exports.DetailedUserViews
 import com.atlan.pkg.serde.xls.ExcelWriter
@@ -57,9 +58,9 @@ object AdoptionExporter {
                 }
             }
             if (includeSearches) {
-                val maxSearches = Utils.getOrDefault(config.maximumSearches, 50)
-                logger.error { "Search export is not yet implemented -- coming soon." }
-                // TODO: implement exports of searches
+                val start = Utils.getOrDefault(config.searchesFrom, -1).toLong()
+                val end = Utils.getOrDefault(config.searchesTo, -1).toLong()
+                DetailedSearches(xlsx, logger, start, end).export()
             }
         }
 

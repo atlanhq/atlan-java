@@ -32,6 +32,7 @@ class ExportDetailsTest : PackageTest() {
                 changesMax = 100,
                 changesDetails = "YES",
                 changesAutomations = "SDK",
+                includeSearches = "YES",
             ),
         )
         AdoptionExporter.main(arrayOf(testDirectory))
@@ -50,6 +51,7 @@ class ExportDetailsTest : PackageTest() {
             assertTrue(xlsx.hasSheet("Changes"))
             assertTrue(xlsx.hasSheet("User views"))
             assertTrue(xlsx.hasSheet("User changes"))
+            assertTrue(xlsx.hasSheet("User searches"))
         }
     }
 
