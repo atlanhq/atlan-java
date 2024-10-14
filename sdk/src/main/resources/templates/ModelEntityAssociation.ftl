@@ -47,21 +47,26 @@ import com.atlan.model.assets.Connection;
      * @param toQualifiedName unique (version-agnostic) name of the entity to which the association exists
      * @return the minimal request necessary to create the ModelEntityAssociation, as a builder
      */
-    public static ModelEntityAssociationBuilder<?, ?> creator(String name, String connectionQualifiedName, String fromQualifiedName, String toQualifiedName) {
+    public static ModelEntityAssociationBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String fromQualifiedName, String toQualifiedName) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String qualifiedName = generateQualifiedName(name, fromQualifiedName, toQualifiedName);
+        String modelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(fromQualifiedName);
+        String modelName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelQualifiedName));
         return ModelEntityAssociation._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .name(name)
-            .qualifiedName(qualifiedName)
-            .modelVersionAgnosticQualifiedName(qualifiedName)
-            .connectorType(connectorType)
-            .connectionQualifiedName(connectionQualifiedName)
-            .modelEntityAssociationFrom(ModelEntity.refByQualifiedName(fromQualifiedName))
-            .modelEntityAssociationFromQualifiedName(fromQualifiedName)
-            .modelEntityAssociationTo(ModelEntity.refByQualifiedName(toQualifiedName))
-            .modelEntityAssociationToQualifiedName(toQualifiedName)
-            .modelEntityAssociationLabel(name);
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(qualifiedName)
+                .modelVersionAgnosticQualifiedName(qualifiedName)
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName)
+                .modelName(modelName)
+                .modelQualifiedName(modelQualifiedName)
+                .modelEntityAssociationFrom(ModelEntity.refByQualifiedName(fromQualifiedName))
+                .modelEntityAssociationFromQualifiedName(fromQualifiedName)
+                .modelEntityAssociationTo(ModelEntity.refByQualifiedName(toQualifiedName))
+                .modelEntityAssociationToQualifiedName(toQualifiedName)
+                .modelEntityAssociationLabel(name);
     }
 
     /**

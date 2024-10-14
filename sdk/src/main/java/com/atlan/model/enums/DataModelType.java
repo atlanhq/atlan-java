@@ -3,14 +3,12 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import javax.annotation.processing.Generated;
 import lombok.Getter;
 
-@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum DataModelType implements AtlanEnum {
-    CONCEPTUAL_DATA_MODEL("Conceptual Data Model"),
-    LOGICAL_DATA_MODEL("Logical Data Model"),
-    PHYSICAL_DATA_MODEL("Physical Data Model"),
+    CONCEPTUAL("CONCEPTUAL"),
+    LOGICAL("LOGICAL"),
+    PHYSICAL("PHYSICAL"),
     ;
 
     @JsonValue

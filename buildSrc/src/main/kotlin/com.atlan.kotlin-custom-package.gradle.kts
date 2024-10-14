@@ -30,7 +30,7 @@ dependencies {
     testImplementation(project(":package-toolkit:testing"))
     // In your own project, you would use this in place of the 1 dependency above:
     //testImplementation("com.atlan:package-toolkit-testing:+")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.21")
 }
 
 pkl {
