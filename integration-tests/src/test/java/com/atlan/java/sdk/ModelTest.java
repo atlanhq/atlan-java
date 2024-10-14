@@ -19,11 +19,15 @@ import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IModelVersion;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ModelAttribute;
+import com.atlan.model.assets.ModelAttributeAssociation;
 import com.atlan.model.assets.ModelDataModel;
 import com.atlan.model.assets.ModelEntity;
+import com.atlan.model.assets.ModelEntityAssociation;
 import com.atlan.model.assets.ModelVersion;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.DataModelType;
+import com.atlan.model.enums.ModelCardinalityType;
 import com.atlan.model.graph.ModelGraph;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
@@ -49,6 +53,8 @@ public class ModelTest extends AtlanLiveTest {
     private static final String ENT2_NAME = PREFIX + "-ent2";
     private static final String ATTR1_NAME = PREFIX + "-attr1";
     private static final String ATTR2_NAME = PREFIX + "-attr2";
+    private static final String EA1_NAME = PREFIX + "-ea1";
+    private static final String AA1_NAME = PREFIX + "-aa1";
 
     private static Connection connection = null;
     private static ModelDataModel model = null;
@@ -58,6 +64,8 @@ public class ModelTest extends AtlanLiveTest {
     private static ModelEntity entity2 = null;
     private static ModelAttribute attr1 = null;
     private static ModelAttribute attr2 = null;
+    private static ModelEntityAssociation ea1 = null;
+    private static ModelAttributeAssociation aa1 = null;
 
     private static final long present = Instant.now().toEpochMilli();
     private static final long past = present - (1000 * 3600);
@@ -72,7 +80,8 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.create.model"},
             dependsOnGroups = {"model.create.connection"})
     void createModel() throws AtlanException {
-        ModelDataModel toCreate = ModelDataModel.creator(MODEL_NAME, connection.getQualifiedName())
+        ModelDataModel toCreate = ModelDataModel.creator(
+                        MODEL_NAME, connection.getQualifiedName(), DataModelType.LOGICAL)
                 .modelBusinessDate(past)
                 .build();
         AssetMutationResponse response = toCreate.save();
@@ -124,15 +133,29 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.create.entity"})
     void createAttributes() throws AtlanException {
         // TODO: it should also be possible to create attributes without an entity in the same payload
-        entity2 =
-                ModelEntity.creator(ENT2_NAME, model).modelBusinessDate(future).build();
+        entity2 = ModelEntity.creator(ENT2_NAME, model)
+                .modelBusinessDate(future)
+                .modelEntityAttributeCount(2L)
+                .build();
         ModelAttribute first = ModelAttribute.creator(ATTR1_NAME, entity2)
                 .modelBusinessDate(future)
+                .modelAttributeDataType("STRING")
+                .modelAttributeIsPrimary(true)
                 .build();
         ModelAttribute second = ModelAttribute.creator(ATTR2_NAME, entity2)
                 .modelBusinessDate(future)
+                .modelAttributeDataType("STRING")
                 .build();
-        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(entity2, first, second), false);
+        ModelEntityAssociation ea = ModelEntityAssociation.creator(EA1_NAME, entity1, entity2)
+                .modelBusinessDate(future)
+                .modelEntityAssociationCardinality(ModelCardinalityType.ONE_TO_MANY)
+                .build();
+        ModelAttributeAssociation aa = ModelAttributeAssociation.creator(AA1_NAME, first, second)
+                .modelBusinessDate(future)
+                .modelAttributeAssociationCardinality(ModelCardinalityType.ONE_TO_MANY)
+                .build();
+        AssetMutationResponse response =
+                Atlan.getDefaultClient().assets.save(List.of(entity2, first, second, ea, aa), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -142,7 +165,7 @@ public class ModelTest extends AtlanLiveTest {
         assertTrue(old.getModelExpiredAtBusinessDate() > 0);
         assertTrue(old.getModelExpiredAtSystemDate() > 0);
         assertTrue(response.getDeletedAssets().isEmpty());
-        assertEquals(response.getCreatedAssets().size(), 4);
+        assertEquals(response.getCreatedAssets().size(), 6);
         List<Asset> sorted = response.getCreatedAssets().stream()
                 .sorted(Comparator.comparing(Asset::getTypeName).thenComparing(Asset::getName))
                 .toList();
@@ -163,13 +186,29 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(attr2.getModelName(), MODEL_NAME);
         assertEquals(attr2.getModelEntityName(), ENT2_NAME);
         one = sorted.get(2);
+        assertTrue(one instanceof ModelAttributeAssociation);
+        aa1 = (ModelAttributeAssociation) one;
+        assertNotNull(aa1);
+        assertNotNull(aa1.getGuid());
+        assertNotNull(aa1.getQualifiedName());
+        assertEquals(aa1.getName(), AA1_NAME);
+        assertEquals(aa1.getModelName(), MODEL_NAME);
+        one = sorted.get(3);
         assertTrue(one instanceof ModelEntity);
         entity2 = (ModelEntity) one;
         assertNotNull(entity2.getGuid());
         assertNotNull(entity2.getQualifiedName());
         assertEquals(entity2.getName(), ENT2_NAME);
         assertEquals(entity2.getModelName(), MODEL_NAME);
-        one = sorted.get(3);
+        one = sorted.get(4);
+        assertTrue(one instanceof ModelEntityAssociation);
+        ea1 = (ModelEntityAssociation) one;
+        assertNotNull(ea1.getGuid());
+        assertNotNull(ea1.getQualifiedName());
+        assertEquals(ea1.getName(), EA1_NAME);
+        assertEquals(ea1.getModelEntityAssociationFromQualifiedName(), entity1.getModelVersionAgnosticQualifiedName());
+        assertEquals(ea1.getModelEntityAssociationToQualifiedName(), entity2.getModelVersionAgnosticQualifiedName());
+        one = sorted.get(5);
         assertTrue(one instanceof ModelVersion);
         version2 = (ModelVersion) one;
         assertNotNull(version2.getGuid());
@@ -262,6 +301,26 @@ public class ModelTest extends AtlanLiveTest {
                 read.getModelVersions().stream().map(IModelVersion::getGuid).collect(Collectors.toSet());
         assertTrue(versions.contains(version1.getGuid()));
         assertTrue(versions.contains(version2.getGuid()));
+        // Note: there should be a "related to" entity, but really only for version 2 (?)
+        // TODO: assertFalse(read.getModelEntityRelatedToEntities().isEmpty());
+        assertTrue(read.getModelEntityRelatedFromEntities().isEmpty());
+    }
+
+    @Test(
+            groups = {"model.read.entityassociation"},
+            dependsOnGroups = {"model.create.*"})
+    void readEntityAssociation() throws AtlanException {
+        ModelEntityAssociation read = ModelEntityAssociation.get(ea1.getQualifiedName());
+        assertNotNull(read);
+        assertEquals(read.getGuid(), ea1.getGuid());
+        assertEquals(read.getQualifiedName(), ea1.getQualifiedName());
+        assertEquals(read.getName(), ea1.getName());
+        assertEquals(read.getModelQualifiedName(), ea1.getModelQualifiedName());
+        // Note: these should not be empty
+        // TODO: assertNotNull(read.getModelEntityAssociationFrom());
+        // TODO: assertEquals(read.getModelEntityAssociationFrom().getGuid(), entity1.getGuid());
+        // TODO: assertNotNull(read.getModelEntityAssociationTo());
+        // TODO: assertEquals(read.getModelEntityAssociationTo().getGuid(), entity2.getGuid());
     }
 
     @Test(
@@ -278,6 +337,11 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(read.getModelAttributeEntities());
         assertEquals(read.getModelAttributeEntities().size(), 1);
         assertEquals(read.getModelAttributeEntities().first().getGuid(), entity2.getGuid());
+        // Note: there should be a "related to" entity
+        assertFalse(read.getModelAttributeRelatedToAttributes().isEmpty());
+        assertEquals(read.getModelAttributeRelatedToAttributes().size(), 1);
+        assertEquals(read.getModelAttributeRelatedToAttributes().first().getGuid(), aa1.getGuid());
+        assertTrue(read.getModelAttributeRelatedFromAttributes().isEmpty());
     }
 
     @Test(
@@ -294,6 +358,28 @@ public class ModelTest extends AtlanLiveTest {
         assertNotNull(read.getModelAttributeEntities());
         assertEquals(read.getModelAttributeEntities().size(), 1);
         assertEquals(read.getModelAttributeEntities().first().getGuid(), entity2.getGuid());
+        // Note: there should be a "related from" entity
+        assertTrue(read.getModelAttributeRelatedToAttributes().isEmpty());
+        assertFalse(read.getModelAttributeRelatedFromAttributes().isEmpty());
+        assertEquals(read.getModelAttributeRelatedFromAttributes().size(), 1);
+        assertEquals(read.getModelAttributeRelatedFromAttributes().first().getGuid(), aa1.getGuid());
+    }
+
+    @Test(
+            groups = {"model.read.attributeassociation"},
+            dependsOnGroups = {"model.create.*"})
+    void readAttributeAssociation() throws AtlanException {
+        ModelAttributeAssociation read = ModelAttributeAssociation.get(aa1.getQualifiedName());
+        assertNotNull(read);
+        assertEquals(read.getGuid(), aa1.getGuid());
+        assertEquals(read.getQualifiedName(), aa1.getQualifiedName());
+        assertEquals(read.getName(), aa1.getName());
+        assertEquals(read.getModelQualifiedName(), aa1.getModelQualifiedName());
+        // Note: these should not be empty
+        assertNotNull(read.getModelAttributeAssociationFrom());
+        assertEquals(read.getModelAttributeAssociationFrom().getGuid(), attr1.getGuid());
+        assertNotNull(read.getModelAttributeAssociationTo());
+        assertEquals(read.getModelAttributeAssociationTo().getGuid(), attr2.getGuid());
     }
 
     // Update the model -- no new version expected
@@ -452,7 +538,7 @@ public class ModelTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 7L);
+        IndexSearchResponse response = retrySearchUntil(index, 9L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -461,12 +547,12 @@ public class ModelTest extends AtlanLiveTest {
                 ((AggregationBucketResult) response.getAggregations().get("type"))
                         .getBuckets()
                         .size(),
-                4);
+                6);
 
-        assertEquals(response.getApproximateCount().longValue(), 7L);
+        assertEquals(response.getApproximateCount().longValue(), 9L);
         List<Asset> entities = response.getAssets();
         assertNotNull(entities);
-        assertEquals(entities.size(), 7);
+        assertEquals(entities.size(), 9);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof ModelDataModel);
@@ -493,6 +579,14 @@ public class ModelTest extends AtlanLiveTest {
         // TODO: assertEquals(v1.getConnectionQualifiedName(), connection.getQualifiedName());
 
         one = entities.get(3);
+        assertTrue(one instanceof ModelAttributeAssociation);
+        assertFalse(one.isComplete());
+        ModelAttributeAssociation atas1 = (ModelAttributeAssociation) one;
+        assertEquals(atas1.getQualifiedName(), aa1.getQualifiedName());
+        assertEquals(atas1.getName(), aa1.getName());
+        assertEquals(atas1.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(4);
         assertTrue(one instanceof ModelAttribute);
         assertFalse(one.isComplete());
         ModelAttribute a1 = (ModelAttribute) one;
@@ -500,7 +594,7 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(a1.getName(), attr1.getName());
         assertEquals(a1.getConnectionQualifiedName(), connection.getQualifiedName());
 
-        one = entities.get(4);
+        one = entities.get(5);
         assertTrue(one instanceof ModelAttribute);
         assertFalse(one.isComplete());
         ModelAttribute a2 = (ModelAttribute) one;
@@ -508,15 +602,23 @@ public class ModelTest extends AtlanLiveTest {
         assertEquals(a2.getName(), attr2.getName());
         assertEquals(a2.getConnectionQualifiedName(), connection.getQualifiedName());
 
-        one = entities.get(5);
+        one = entities.get(6);
+        assertTrue(one instanceof ModelEntityAssociation);
+        assertFalse(one.isComplete());
+        ModelEntityAssociation entas1 = (ModelEntityAssociation) one;
+        assertEquals(entas1.getQualifiedName(), ea1.getQualifiedName());
+        assertEquals(entas1.getName(), ea1.getName());
+        assertEquals(entas1.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(7);
         assertTrue(one instanceof ModelEntity);
         assertFalse(one.isComplete());
         ModelEntity e2 = (ModelEntity) one;
-        assertEquals(e2.getQualifiedName(), ModelTest.entity2.getQualifiedName());
-        assertEquals(e2.getName(), ModelTest.entity2.getName());
+        assertEquals(e2.getQualifiedName(), entity2.getQualifiedName());
+        assertEquals(e2.getName(), entity2.getName());
         assertEquals(e2.getConnectionQualifiedName(), connection.getQualifiedName());
 
-        one = entities.get(6);
+        one = entities.get(8);
         assertTrue(one instanceof ModelVersion);
         assertFalse(one.isComplete());
         ModelVersion v2 = (ModelVersion) one;
@@ -617,23 +719,29 @@ public class ModelTest extends AtlanLiveTest {
         // - the model (created previously)
         // - the entity (created previously)
         // - another entity + 2 attributes that were created at this time
+        // - an entity association
+        // - an attribute association
         List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
         assertNotNull(assets);
-        assertEquals(assets.size(), 6);
+        assertEquals(assets.size(), 8);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
-        assertEquals(types.size(), 4);
+        assertEquals(types.size(), 6);
         assertTrue(types.contains(ModelDataModel.TYPE_NAME));
         assertTrue(types.contains(ModelEntity.TYPE_NAME));
         assertTrue(types.contains(ModelAttribute.TYPE_NAME));
         assertTrue(types.contains(ModelVersion.TYPE_NAME));
+        assertTrue(types.contains(ModelEntityAssociation.TYPE_NAME));
+        assertTrue(types.contains(ModelAttributeAssociation.TYPE_NAME));
         Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
-        assertEquals(guids.size(), 6);
+        assertEquals(guids.size(), 8);
         assertTrue(guids.contains(model.getGuid()));
         assertTrue(guids.contains(version2.getGuid()));
         assertTrue(guids.contains(entity1.getGuid()));
         assertTrue(guids.contains(entity2.getGuid()));
         assertTrue(guids.contains(attr1.getGuid()));
         assertTrue(guids.contains(attr2.getGuid()));
+        assertTrue(guids.contains(ea1.getGuid()));
+        assertTrue(guids.contains(aa1.getGuid()));
         ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
         assertNotNull(g);
         assertNotNull(g.getModel());
