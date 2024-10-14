@@ -6,6 +6,7 @@ import com.atlan.Atlan
 import com.atlan.model.enums.AuditActionType
 import com.atlan.model.search.AuditSearch
 import com.atlan.model.search.AuditSearchRequest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges.Companion.EXCLUDE_TYPES
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
@@ -13,6 +14,8 @@ import mu.KLogger
 class DetailedUserChanges(
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
+    private val users: List<String>,
+    private val actions: List<String>,
     private val start: Long,
     private val end: Long,
     private val includeAutomations: String,
@@ -30,11 +33,18 @@ class DetailedUserChanges(
                 "Qualified name" to "Unique name of the asset",
                 "Agent" to "Mechanism through which the asset was changed",
                 "Details" to "Further details about the mechanism through which the asset was changed",
+                "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
         val builder =
             AuditSearch.builder(Atlan.getDefaultClient())
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
+        if (users.isNotEmpty()) {
+            builder.where(AuditSearchRequest.USER.`in`(users))
+        }
+        if (actions.isNotEmpty()) {
+            builder.where(AuditSearchRequest.ACTION.`in`(actions))
+        }
         when (includeAutomations) {
             "NONE" -> builder.whereNot(AuditSearchRequest.AGENT.`in`(listOf("sdk", "workflow")))
             "WFL" -> builder.whereNot(AuditSearchRequest.AGENT.eq("sdk"))
@@ -67,6 +77,7 @@ class DetailedUserChanges(
                         it.entityQualifiedName ?: "",
                         agent,
                         it.headers?.get("x-atlan-agent-id") ?: "",
+                        Utils.getAssetLink(it.entityId),
                     ),
                 )
             }

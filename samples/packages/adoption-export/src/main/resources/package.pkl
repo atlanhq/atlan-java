@@ -270,7 +270,12 @@ uiConfig {
         "changes_from"
         "changes_to"
         "changes_max"
+        "changes_details"
       }
+    }
+    new UIRule {
+      whenInputs { ["changes_details"] = "YES" }
+      required { "changes_automations" }
     }
     new UIRule {
       whenInputs { ["include_searches"] = "YES" }

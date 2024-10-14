@@ -3,6 +3,7 @@
 package com.atlan.pkg.adoption.exports
 
 import com.atlan.model.search.SearchLogRequest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
@@ -23,11 +24,13 @@ class DetailedUserViews(
                 "Total" to "Total number of assets included",
                 "Type" to "Type(s) of asset that were viewed",
                 "Qualified name" to "Unique name(s) of the asset(s)",
+                "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
         SearchLogRequest.views(start, end)
             .stream()
             .forEach {
+                val guid = it.resultGuidsAllowed?.get(0) ?: ""
                 xlsx.appendRow(
                     sheet,
                     listOf(
@@ -36,6 +39,7 @@ class DetailedUserViews(
                         it.resultsCount ?: "0",
                         it.resultTypeNamesAllowed ?: "",
                         it.resultQualifiedNamesAllowed ?: "",
+                        if (guid.isNotBlank()) Utils.getAssetLink(guid) else "",
                     ),
                 )
             }
