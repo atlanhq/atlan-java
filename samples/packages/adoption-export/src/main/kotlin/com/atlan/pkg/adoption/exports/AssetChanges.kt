@@ -22,11 +22,13 @@ class AssetChanges(
     private val end: Long,
     private val maxAssets: Int,
 ) {
-    private val excludeTypes =
-        listOf(
-            AuthService.TYPE_NAME,
-            AuthPolicy.TYPE_NAME,
-        )
+    companion object {
+        val EXCLUDE_TYPES =
+            listOf(
+                AuthService.TYPE_NAME,
+                AuthPolicy.TYPE_NAME,
+            )
+    }
 
     fun export() {
         logger.info { "Exporting changed assets..." }
@@ -44,7 +46,7 @@ class AssetChanges(
         val client = Atlan.getDefaultClient()
         val builder =
             AuditSearch.builder(client)
-                .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(excludeTypes))
+                .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
                 .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(maxAssets))
         if (users.isNotEmpty()) {
             builder.where(AuditSearchRequest.USER.`in`(users))

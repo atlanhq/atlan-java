@@ -5,6 +5,7 @@ package com.atlan.pkg.adoption.exports
 import com.atlan.Atlan
 import com.atlan.model.search.AuditSearch
 import com.atlan.model.search.AuditSearchRequest
+import com.atlan.pkg.adoption.exports.AssetChanges.Companion.EXCLUDE_TYPES
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
@@ -29,6 +30,7 @@ class DetailedUserChanges(
         )
         val builder =
             AuditSearch.builder(Atlan.getDefaultClient())
+                .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
                 .whereNot(AuditSearchRequest.AGENT.eq("workflow")) // Exclude crawled changes
         if (start > 0) {
             builder.where(AuditSearchRequest.CREATED.gte(start))

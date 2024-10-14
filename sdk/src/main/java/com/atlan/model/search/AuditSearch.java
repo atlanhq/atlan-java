@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.Builder;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
@@ -46,7 +47,8 @@ public class AuditSearch extends CompoundQuery {
     Map<String, Aggregation> aggregations;
 
     /** Number of results to retrieve per underlying API request. */
-    Integer pageSize;
+    @Builder.Default
+    Integer pageSize = IndexSearchDSL.DEFAULT_PAGE_SIZE;
 
     /** Attributes to retrieve for the entity detail in each audit log entry. */
     @Singular("includeOnResults")

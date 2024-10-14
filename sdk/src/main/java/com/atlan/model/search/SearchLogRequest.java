@@ -115,7 +115,8 @@ public class SearchLogRequest extends AtlanObject {
         FluentSearch.FluentSearchBuilder<?, ?> builder = FluentSearch._internal()
                 .where(SearchLogEntry.UTM_TAGS.eq(UTMTags.ACTION_ASSET_VIEWED))
                 .where(VIEWED)
-                .whereNot(SearchLogEntry.USER.in(exclusion));
+                .whereNot(SearchLogEntry.USER.in(exclusion))
+                .whereNot(SearchLogEntry.USER.startsWith("service-account-"));
         if (from > 0 && to > 0) {
             builder.where(FluentSearch._internal()
                     .whereSome(SearchLogEntry.LOGGED_AT.between(from, to))
