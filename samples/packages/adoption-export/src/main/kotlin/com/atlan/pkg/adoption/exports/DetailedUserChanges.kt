@@ -21,7 +21,7 @@ class DetailedUserChanges(
     private val includeAutomations: String,
 ) {
     fun export() {
-        logger.info { "Exporting details of all user-made changes between [$start, $end]..." }
+        logger.info { "Exporting details of all user-made changes between [${start * 1000}, ${end * 1000}]..." }
         val sheet = xlsx.createSheet("User changes")
         xlsx.addHeader(
             sheet,
@@ -52,10 +52,10 @@ class DetailedUserChanges(
             else -> logger.info { " ... including ALL automations -- this could be a large amount of data (and take a LONG time)." }
         }
         if (start > 0) {
-            builder.where(AuditSearchRequest.CREATED.gte(start))
+            builder.where(AuditSearchRequest.CREATED.gte(start * 1000))
         }
         if (end > 0) {
-            builder.where(AuditSearchRequest.CREATED.lt(end))
+            builder.where(AuditSearchRequest.CREATED.lt(end * 1000))
         }
         builder.stream()
             .forEach {

@@ -55,10 +55,10 @@ class AssetChanges(
             builder.where(AuditSearchRequest.ACTION.`in`(actions))
         }
         if (start > 0) {
-            builder.where(AuditSearchRequest.CREATED.gte(start))
+            builder.where(AuditSearchRequest.CREATED.gte(start * 1000))
         }
         if (end > 0) {
-            builder.where(AuditSearchRequest.CREATED.lt(end))
+            builder.where(AuditSearchRequest.CREATED.lt(end * 1000))
         }
         // First a request to get the aggregate details
         val request = builder.pageSize(1).toRequest()
