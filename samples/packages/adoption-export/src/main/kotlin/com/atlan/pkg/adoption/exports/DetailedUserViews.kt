@@ -13,7 +13,7 @@ class DetailedUserViews(
     private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all asset views between $start - $end..." }
+        logger.info { "Exporting details of all asset views between [$start, $end]..." }
         val sheet = xlsx.createSheet("User views")
         xlsx.addHeader(
             sheet,

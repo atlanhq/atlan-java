@@ -25,7 +25,7 @@ class ExportDetailsTest : PackageTest() {
     override fun setup() {
         setup(
             AdoptionExportCfg(
-                includeViews = "YES",
+                includeViews = "BY_VIEWS",
                 viewsMax = 100,
                 viewsDetails = "YES",
                 includeChanges = "YES",

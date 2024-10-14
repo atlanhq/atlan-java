@@ -16,7 +16,7 @@ class DetailedUserChanges(
     private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all user-made changes between $start - $end..." }
+        logger.info { "Exporting details of all user-made changes between [$start, $end]..." }
         val sheet = xlsx.createSheet("User changes")
         xlsx.addHeader(
             sheet,
@@ -26,6 +26,8 @@ class DetailedUserChanges(
                 "Action" to "Type of change the user made",
                 "Asset type" to "Type of asset that was changed",
                 "GUID" to "Globally unique identifier of the asset that was changed",
+                "Agent" to "Mechanism through which the asset was changed",
+                "Details" to "Further details about the mechanism through which the asset was changed",
             ),
         )
         val builder =
@@ -48,6 +50,8 @@ class DetailedUserChanges(
                         it.action?.value ?: "",
                         it.typeName ?: "",
                         it.entityId ?: "",
+                        it.headers["x-atlan-agent"] ?: "UI",
+                        it.headers["x-atlan-agent-id"] ?: "",
                     ),
                 )
             }
