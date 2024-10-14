@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
  * @param tenantId TBC
  * @param createdBy user who created the credential
  * @param createdAt time in milliseconds (epoch) at which the user created the credential
+ * @param updatedBy user who last updated the credential
  * @param updatedAt time in milliseconds (epoch) at which a user last updated the credential
  * @param version unique name for the version of the credential
  */
@@ -52,7 +53,7 @@ data class Credential(
     val tenantId: String,
     val createdBy: String,
     val createdAt: Long,
-    val updatedBy: String,
-    val updatedAt: Long,
+    val updatedBy: String?,
+    val updatedAt: Long?,
     val version: String,
 )
