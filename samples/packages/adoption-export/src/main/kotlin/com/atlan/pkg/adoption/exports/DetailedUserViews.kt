@@ -14,7 +14,7 @@ class DetailedUserViews(
     private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all asset views between [$start, $end]..." }
+        logger.info { "Exporting details of all asset views between [${start * 1000}, ${end * 1000}]..." }
         val sheet = xlsx.createSheet("User views")
         xlsx.addHeader(
             sheet,
@@ -27,7 +27,7 @@ class DetailedUserViews(
                 "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
-        SearchLogRequest.views(start, end)
+        SearchLogRequest.views(start * 1000, end * 1000)
             .stream()
             .forEach {
                 val guid = it.resultGuidsAllowed?.get(0) ?: ""

@@ -13,7 +13,7 @@ class DetailedSearches(
     private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all UI-based searches between [$start, $end]..." }
+        logger.info { "Exporting details of all UI-based searches between [${start * 1000}, ${end * 1000}]..." }
         val sheet = xlsx.createSheet("User searches")
         xlsx.addHeader(
             sheet,
@@ -26,7 +26,7 @@ class DetailedSearches(
                 "Qualified names" to "Unique name(s) of the first 20 assets that were found",
             ),
         )
-        SearchLogRequest.searches(start, end)
+        SearchLogRequest.searches(start * 1000, end * 1000)
             .stream()
             .forEach {
                 xlsx.appendRow(
