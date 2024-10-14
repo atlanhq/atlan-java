@@ -418,13 +418,15 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
                         "qualifiedName", entity.getModelVersionAgnosticQualifiedName(),
                         "type", entity.getModelType()));
         return creator(
-                name,
-                entity.getConnectionQualifiedName(),
-                entity.getName(),
-                entity.getModelVersionAgnosticQualifiedName(),
-                entity.getModelType())
-            .clearModelAttributeEntities()
-            .modelAttributeEntity(entity.trimToReference().toBuilder().semantic(SaveSemantic.APPEND).build());
+                        name,
+                        entity.getConnectionQualifiedName(),
+                        entity.getName(),
+                        entity.getModelVersionAgnosticQualifiedName(),
+                        entity.getModelType())
+                .clearModelAttributeEntities()
+                .modelAttributeEntity(entity.trimToReference().toBuilder()
+                        .semantic(SaveSemantic.APPEND)
+                        .build());
     }
 
     /**
@@ -453,7 +455,11 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @return the minimal request necessary to create the ModelAttribute, as a builder
      */
     public static ModelAttributeBuilder<?, ?> creator(
-            String name, String connectionQualifiedName, String entityName, String entityQualifiedName, String modelType) {
+            String name,
+            String connectionQualifiedName,
+            String entityName,
+            String entityQualifiedName,
+            String modelType) {
         String modelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(entityQualifiedName);
         String modelName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelQualifiedName));
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);

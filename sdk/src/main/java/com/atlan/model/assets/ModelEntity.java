@@ -401,7 +401,12 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                         "name", model.getName(),
                         "qualifiedName", model.getQualifiedName(),
                         "modelType", model.getModelType()));
-        return creator(name, model.getConnectionQualifiedName(), model.getName(), model.getQualifiedName(), model.getModelType());
+        return creator(
+                name,
+                model.getConnectionQualifiedName(),
+                model.getName(),
+                model.getQualifiedName(),
+                model.getModelType());
     }
 
     /**
@@ -430,7 +435,11 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @return the minimal request necessary to create the ModelEntity, as a builder
      */
     public static ModelEntityBuilder<?, ?> creator(
-            String name, String connectionQualifiedName, String modelName, String modelQualifiedName, String modelType) {
+            String name,
+            String connectionQualifiedName,
+            String modelName,
+            String modelQualifiedName,
+            String modelType) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))

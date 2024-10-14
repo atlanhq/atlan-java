@@ -1,5 +1,5 @@
 <#macro imports>
-import com.atlan.model.enums.DataModelType;;
+import com.atlan.model.enums.DataModelType;
 </#macro>
 <#macro all>
     /**

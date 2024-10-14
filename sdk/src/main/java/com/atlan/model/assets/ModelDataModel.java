@@ -370,7 +370,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @param modelType type of model in which this entity exists
      * @return the minimal request necessary to create the ModelDataModel, as a builder
      */
-    public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName, DataModelType modelType) {
+    public static ModelDataModelBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, DataModelType modelType) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelDataModel._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
