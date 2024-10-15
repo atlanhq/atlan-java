@@ -27,15 +27,14 @@
      * @throws InvalidRequestException if the table provided is without a qualifiedName
      */
     public static ColumnBuilder<?, ?> creator(String name, Table table, int order) throws InvalidRequestException {
-        validateRelationship(Table.TYPE_NAME, Map.of(
-            "connectionQualifiedName", table.getConnectionQualifiedName(),
-            "databaseName", table.getDatabaseName(),
-            "databaseQualifiedName", table.getDatabaseQualifiedName(),
-            "schemaName", table.getSchemaName(),
-            "schemaQualifiedName", table.getSchemaQualifiedName(),
-            "name", table.getName(),
-            "qualifiedName", table.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", table.getConnectionQualifiedName());
+        map.put("databaseName", table.getDatabaseName());
+        map.put("databaseQualifiedName", table.getDatabaseQualifiedName());
+        map.put("schemaName", table.getSchemaName());
+        map.put("name", table.getName());
+        map.put("qualifiedName", table.getQualifiedName());
+        validateRelationship(Table.TYPE_NAME, map);
         return creator(
             name,
             table.getConnectionQualifiedName(),
@@ -64,17 +63,17 @@
      */
     public static ColumnBuilder<?, ?> creator(String name, TablePartition partition, int order)
             throws InvalidRequestException {
-        validateRelationship(TablePartition.TYPE_NAME, Map.of(
-            "connectionQualifiedName", partition.getConnectionQualifiedName(),
-            "databaseName", partition.getDatabaseName(),
-            "databaseQualifiedName", partition.getDatabaseQualifiedName(),
-            "schemaName", partition.getSchemaName(),
-            "schemaQualifiedName", partition.getSchemaQualifiedName(),
-            "name", partition.getName(),
-            "qualifiedName", partition.getQualifiedName(),
-            "tableName", partition.getTableName(),
-            "tableQualifiedName", partition.getTableQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", partition.getConnectionQualifiedName());
+        map.put("databaseName", partition.getDatabaseName());
+        map.put("databaseQualifiedName", partition.getDatabaseQualifiedName());
+        map.put("schemaName", partition.getSchemaName());
+        map.put("schemaQualifiedName", partition.getSchemaQualifiedName());
+        map.put("name", partition.getName());
+        map.put("qualifiedName", partition.getQualifiedName());
+        map.put("tableName", partition.getTableName());
+        map.put("tableQualifiedName", partition.getTableQualifiedName());
+        validateRelationship(TablePartition.TYPE_NAME, map);
         return creator(
             name,
             partition.getConnectionQualifiedName(),
@@ -102,15 +101,15 @@
      * @throws InvalidRequestException if the view provided is without a qualifiedName
      */
     public static ColumnBuilder<?, ?> creator(String name, View view, int order) throws InvalidRequestException {
-        validateRelationship(View.TYPE_NAME, Map.of(
-            "connectionQualifiedName", view.getConnectionQualifiedName(),
-            "databaseName", view.getDatabaseName(),
-            "databaseQualifiedName", view.getDatabaseQualifiedName(),
-            "schemaName", view.getSchemaName(),
-            "schemaQualifiedName", view.getSchemaQualifiedName(),
-            "name", view.getName(),
-            "qualifiedName", view.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", view.getConnectionQualifiedName());
+        map.put("databaseName", view.getDatabaseName());
+        map.put("databaseQualifiedName", view.getDatabaseQualifiedName());
+        map.put("schemaName", view.getSchemaName());
+        map.put("schemaQualifiedName", view.getSchemaQualifiedName());
+        map.put("name", view.getName());
+        map.put("qualifiedName", view.getQualifiedName());
+        validateRelationship(View.TYPE_NAME, map);
         return creator(
             name,
             view.getConnectionQualifiedName(),
@@ -139,15 +138,15 @@
      */
     public static ColumnBuilder<?, ?> creator(String name, MaterializedView view, int order)
             throws InvalidRequestException {
-        validateRelationship(MaterializedView.TYPE_NAME, Map.of(
-            "connectionQualifiedName", view.getConnectionQualifiedName(),
-            "databaseName", view.getDatabaseName(),
-            "databaseQualifiedName", view.getDatabaseQualifiedName(),
-            "schemaName", view.getSchemaName(),
-            "schemaQualifiedName", view.getSchemaQualifiedName(),
-            "name", view.getName(),
-            "qualifiedName", view.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", view.getConnectionQualifiedName());
+        map.put("databaseName", view.getDatabaseName());
+        map.put("databaseQualifiedName", view.getDatabaseQualifiedName());
+        map.put("schemaName", view.getSchemaName());
+        map.put("schemaQualifiedName", view.getSchemaQualifiedName());
+        map.put("name", view.getName());
+        map.put("qualifiedName", view.getQualifiedName());
+        validateRelationship(MaterializedView.TYPE_NAME, map);
         return creator(
             name,
             view.getConnectionQualifiedName(),
@@ -307,10 +306,10 @@
      */
     @Override
     public ColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

@@ -8,13 +8,12 @@
      * @throws InvalidRequestException if the entity provided is without a qualifiedName
      */
     public static ModelAttributeBuilder<?, ?> creator(String name, ModelEntity entity) throws InvalidRequestException {
-        validateRelationship(
-                ModelEntity.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", entity.getConnectionQualifiedName(),
-                        "name", entity.getName(),
-                        "qualifiedName", entity.getModelVersionAgnosticQualifiedName(),
-                        "type", entity.getModelType()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", entity.getConnectionQualifiedName());
+        map.put("name", entity.getName());
+        map.put("qualifiedName", entity.getModelVersionAgnosticQualifiedName());
+        map.put("type", entity.getModelType());
+        validateRelationship(ModelEntity.TYPE_NAME, map);
         return creator(
                 name,
                 entity.getConnectionQualifiedName(),
@@ -117,10 +116,10 @@
      */
     @Override
     public ModelAttributeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 </#macro>

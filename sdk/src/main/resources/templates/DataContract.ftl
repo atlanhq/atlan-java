@@ -8,11 +8,10 @@
      * @throws InvalidRequestException if the asset provided is without some required information
      */
     public static DataContractBuilder<?, ?> creator(String contract, Asset asset) throws InvalidRequestException {
-        validateRelationship(
-                asset.getTypeName(),
-                Map.of(
-                        "name", asset.getName(),
-                        "qualifiedName", asset.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", asset.getQualifiedName());
+        map.put("name", asset.getName());
+        validateRelationship(asset.getTypeName(), map);
         return creator(contract, asset.getName(), asset.getQualifiedName());
     }
 
@@ -77,10 +76,10 @@
      */
     @Override
     public DataContractBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

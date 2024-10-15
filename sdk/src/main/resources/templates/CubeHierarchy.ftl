@@ -12,13 +12,13 @@ import com.atlan.model.assets.Connection;
      */
     public static CubeHierarchyBuilder<?, ?> creator(String name, CubeDimension dimension)
             throws InvalidRequestException {
-        validateRelationship(CubeDimension.TYPE_NAME, Map.of(
-            "connectionQualifiedName", dimension.getConnectionQualifiedName(),
-            "cubeName", dimension.getCubeName(),
-            "cubeQualifiedName", dimension.getCubeQualifiedName(),
-            "name", dimension.getName(),
-            "qualifiedName", dimension.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", dimension.getConnectionQualifiedName());
+        map.put("cubeName", dimension.getCubeName());
+        map.put("cubeQualifiedName", dimension.getCubeQualifiedName());
+        map.put("name", dimension.getName());
+        map.put("qualifiedName", dimension.getQualifiedName());
+        validateRelationship(CubeDimension.TYPE_NAME, map);
         return creator(
             name,
             dimension.getConnectionQualifiedName(),
@@ -114,10 +114,10 @@ import com.atlan.model.assets.Connection;
      */
     @Override
     public CubeHierarchyBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

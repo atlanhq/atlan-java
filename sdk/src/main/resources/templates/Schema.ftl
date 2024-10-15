@@ -9,11 +9,11 @@
      * @throws InvalidRequestException if the database provided is without a qualifiedName
      */
     public static SchemaBuilder<?, ?> creator(String name, Database database) throws InvalidRequestException {
-        validateRelationship(Database.TYPE_NAME, Map.of(
-            "connectionQualifiedName", database.getConnectionQualifiedName(),
-            "name", database.getName(),
-            "qualifiedName", database.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", database.getQualifiedName());
+        map.put("name", database.getName());
+        map.put("connectionQualifiedName", database.getConnectionQualifiedName());
+        validateRelationship(Database.TYPE_NAME, map);
         return creator(
             name,
             database.getConnectionQualifiedName(),
@@ -91,10 +91,10 @@
      */
     @Override
     public SchemaBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>
