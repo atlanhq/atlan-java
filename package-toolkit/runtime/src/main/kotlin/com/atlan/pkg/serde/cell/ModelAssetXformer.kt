@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
+import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.IModel
 import com.atlan.model.assets.ModelAttribute
@@ -11,13 +12,17 @@ import com.atlan.model.assets.ModelEntity
 import com.atlan.model.assets.ModelEntityAssociation
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.relations.Reference
-import com.atlan.model.relations.UniqueAttributes
+import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer.TYPE_QN_DELIMITER
+import com.atlan.pkg.serde.cell.AssetRefXformer.getRefByQN
+import mu.KotlinLogging
 
 /**
  * Static object to transform model asset references.
  */
 object ModelAssetXformer {
+    val logger = KotlinLogging.logger {}
+
     private val MODEL_ASSET_MULTI_VERSIONED_FIELDS =
         setOf(
             ModelDataModel.MODEL_VERSIONS.atlanFieldName,
@@ -77,13 +82,8 @@ object ModelAssetXformer {
         return when (fieldName) {
             in MODEL_ASSET_MULTI_VERSIONED_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
-                    ModelDataModel._internal() // start with a model so we have versionAgnosticQN
-                        .typeName(typeName) // override the type
-                        .uniqueAttributes(
-                            UniqueAttributes.builder().qualifiedName(qualifiedName).build(),
-                        )
-                        .semantic(Reference.SaveSemantic.APPEND) // append, for multi-version holding
-                        .modelVersionAgnosticQualifiedName(qualifiedName)
+                    getModelRefByQN(typeName, qualifiedName)
+                        .semantic(Reference.SaveSemantic.APPEND)
                         .build()
                 } else {
                     throw NoSuchElementException("Model asset $assetRef not found (via $fieldName).")
@@ -91,13 +91,8 @@ object ModelAssetXformer {
             }
             in MODEL_ASSET_REF_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
-                    ModelDataModel._internal() // start with a model so we have versionAgnosticQN
-                        .typeName(typeName) // override the type
-                        .uniqueAttributes(
-                            UniqueAttributes.builder().qualifiedName(qualifiedName).build(),
-                        )
+                    getModelRefByQN(typeName, qualifiedName)
                         .semantic(Reference.SaveSemantic.REPLACE)
-                        .modelVersionAgnosticQualifiedName(qualifiedName)
                         .build()
                 } else {
                     throw NoSuchElementException("Model asset $assetRef not found (via $fieldName).")
@@ -105,5 +100,24 @@ object ModelAssetXformer {
             }
             else -> AssetRefXformer.decode(assetRef, fieldName)
         }
+    }
+
+    /**
+     * Create a reference by qualifiedName for the given asset.
+     *
+     * @param typeName of the asset
+     * @param qualifiedName of the asset
+     * @return the asset reference represented by the parameters
+     */
+    fun getModelRefByQN(
+        typeName: String,
+        qualifiedName: String,
+    ): Asset.AssetBuilder<*, *> {
+        val modelRef = getRefByQN(typeName, qualifiedName).toBuilder()
+        val versionAgnostic = ReflectionCache.getSetter(modelRef.javaClass, "modelVersionAgnosticQualifiedName")
+        if (versionAgnostic != null) {
+            FieldSerde.getValueFromCell(qualifiedName, versionAgnostic, logger)
+        }
+        return modelRef as Asset.AssetBuilder<*, *>
     }
 }
