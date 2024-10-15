@@ -17,6 +17,7 @@ import com.atlan.model.structs.DbtJobRun;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -414,11 +415,10 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      */
     @Override
     public DbtSourceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

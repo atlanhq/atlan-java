@@ -19,6 +19,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -355,11 +356,10 @@ public class ADLSContainer extends Asset
      * @throws InvalidRequestException if the container provided is without a qualifiedName
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, ADLSAccount account) throws InvalidRequestException {
-        validateRelationship(
-                ADLSAccount.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", account.getConnectionQualifiedName(),
-                        "qualifiedName", account.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", account.getConnectionQualifiedName());
+        map.put("qualifiedName", account.getQualifiedName());
+        validateRelationship(ADLSAccount.TYPE_NAME, map);
         return creator(name, account.getConnectionQualifiedName(), account.getQualifiedName())
                 .adlsAccount(account.trimToReference());
     }
@@ -430,11 +430,10 @@ public class ADLSContainer extends Asset
      */
     @Override
     public ADLSContainerBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -35,6 +35,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -926,11 +927,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
     public AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                getTypeName(),
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(getTypeName(), map);
         return IndistinctAsset.updater(this.getQualifiedName(), this.getName());
     }
 

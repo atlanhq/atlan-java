@@ -18,6 +18,7 @@ import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -432,11 +433,10 @@ public class GCSBucket extends Asset
      */
     @Override
     public GCSBucketBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

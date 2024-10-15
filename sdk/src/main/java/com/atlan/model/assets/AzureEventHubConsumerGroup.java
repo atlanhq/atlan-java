@@ -18,6 +18,7 @@ import com.atlan.model.structs.KafkaTopicConsumption;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -344,12 +345,11 @@ public class AzureEventHubConsumerGroup extends Asset
         List<String> hubQualifiedNames = new ArrayList<>();
         List<AzureEventHub> minimalHubs = new ArrayList<>();
         for (AzureEventHub hub : hubs) {
-            validateRelationship(
-                    AzureEventHub.TYPE_NAME,
-                    Map.of(
-                            "connectionQualifiedName", hub.getConnectionQualifiedName(),
-                            "name", hub.getName(),
-                            "qualifiedName", hub.getQualifiedName()));
+            Map<String, String> map = new HashMap<>();
+            map.put("connectionQualifiedName", hub.getConnectionQualifiedName());
+            map.put("qualifiedName", hub.getQualifiedName());
+            map.put("name", hub.getName());
+            validateRelationship(AzureEventHub.TYPE_NAME, map);
             hubNames.add(hub.getName());
             hubQualifiedNames.add(hub.getQualifiedName());
             minimalHubs.add(hub.trimToReference());
@@ -437,11 +437,10 @@ public class AzureEventHubConsumerGroup extends Asset
      */
     @Override
     public AzureEventHubConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 
