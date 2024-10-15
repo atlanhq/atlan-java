@@ -35,18 +35,10 @@ uiConfig {
     ["Source"] {
       description = "Inputs"
       inputs {
-        ["import_type"] = new Radio {
-          title = "Import lake tags from"
-          helpText = "Select how you want to provide the file(s) containing the tags to be synched."
-          possibleValues {
-            ["CLOUD"] = "Object storage"
-          }
-          default = "CLOUD"
-        }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
           required = true
-          credType = "csa-connectors-objectstore"
+          credType = "csa-connectors-s3"
           helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
         }
         ["assets_prefix"] = new TextInput {

@@ -11,7 +11,6 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class LakeFormationTagSyncCfg(
-    @JsonProperty("import_type") val importType: String? = null,
     @JsonProperty("cloud_source") val cloudSource: String? = null,
     @JsonProperty("assets_prefix") val assetsPrefix: String? = null,
     @JsonProperty("remove_schema") val removeSchema: Boolean? = null,
