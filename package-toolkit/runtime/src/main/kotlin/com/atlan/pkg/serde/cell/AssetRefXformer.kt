@@ -80,14 +80,27 @@ object AssetRefXformer {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(assetRef, fieldName)
             in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(assetRef, fieldName)
             else -> {
-                val tokens = assetRef.split(TYPE_QN_DELIMITER)
-                val typeName = tokens[0]
-                val assetClass = Serde.getAssetClassForType(typeName)
-                val method = assetClass.getMethod("refByQualifiedName", String::class.java)
-                val qualifiedName = tokens.subList(1, tokens.size).joinToString(TYPE_QN_DELIMITER)
-                method.invoke(null, qualifiedName) as Asset
+                val typeName = assetRef.substringBefore(TYPE_QN_DELIMITER)
+                val qualifiedName = assetRef.substringAfter(TYPE_QN_DELIMITER)
+                return getRefByQN(typeName, qualifiedName)
             }
         }
+    }
+
+    /**
+     * Create a reference by qualifiedName for the given asset.
+     *
+     * @param typeName of the asset
+     * @param qualifiedName of the asset
+     * @return the asset reference represented by the parameters
+     */
+    fun getRefByQN(
+        typeName: String,
+        qualifiedName: String,
+    ): Asset {
+        val assetClass = Serde.getAssetClassForType(typeName)
+        val method = assetClass.getMethod("refByQualifiedName", String::class.java)
+        return method.invoke(null, qualifiedName) as Asset
     }
 
     /**
