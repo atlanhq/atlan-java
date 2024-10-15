@@ -8,11 +8,11 @@
      * @throws InvalidRequestException if the model provided is without a qualifiedName
      */
     public static ModelVersionBuilder<?, ?> creator(String name, ModelDataModel model) throws InvalidRequestException {
-        validateRelationship(ModelDataModel.TYPE_NAME, Map.of(
-            "connectionQualifiedName", model.getConnectionQualifiedName(),
-            "name", model.getName(),
-            "qualifiedName", model.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", model.getConnectionQualifiedName());
+        map.put("name", model.getName());
+        map.put("qualifiedName", model.getQualifiedName());
+        validateRelationship(ModelDataModel.TYPE_NAME, map);
         return creator(
             name,
             model.getConnectionQualifiedName(),
@@ -91,10 +91,10 @@
      */
     @Override
     public ModelVersionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

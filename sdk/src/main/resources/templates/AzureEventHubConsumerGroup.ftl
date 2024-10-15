@@ -16,11 +16,11 @@
         List<String> hubQualifiedNames = new ArrayList<>();
         List<AzureEventHub> minimalHubs = new ArrayList<>();
         for (AzureEventHub hub : hubs) {
-            validateRelationship(AzureEventHub.TYPE_NAME, Map.of(
-                "connectionQualifiedName", hub.getConnectionQualifiedName(),
-                "name", hub.getName(),
-                "qualifiedName", hub.getQualifiedName()
-            ));
+            Map<String, String> map = new HashMap<>();
+            map.put("connectionQualifiedName", hub.getConnectionQualifiedName());
+            map.put("qualifiedName", hub.getQualifiedName());
+            map.put("name", hub.getName());
+            validateRelationship(AzureEventHub.TYPE_NAME, map);
             hubNames.add(hub.getName());
             hubQualifiedNames.add(hub.getQualifiedName());
             minimalHubs.add(hub.trimToReference());
@@ -105,10 +105,10 @@
      */
     @Override
     public AzureEventHubConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

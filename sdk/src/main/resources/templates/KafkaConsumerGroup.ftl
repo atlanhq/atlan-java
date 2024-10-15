@@ -16,11 +16,11 @@
         List<String> topicQualifiedNames = new ArrayList<>();
         List<KafkaTopic> minimalTopics = new ArrayList<>();
         for (KafkaTopic topic : topics) {
-            validateRelationship(KafkaTopic.TYPE_NAME, Map.of(
-                "connectionQualifiedName", topic.getConnectionQualifiedName(),
-                "name", topic.getName(),
-                "qualifiedName", topic.getQualifiedName()
-            ));
+            Map<String, String> map = new HashMap<>();
+            map.put("qualifiedName", topic.getQualifiedName());
+            map.put("name", topic.getName());
+            map.put("connectionQualifiedName", topic.getConnectionQualifiedName());
+            validateRelationship(KafkaTopic.TYPE_NAME, map);
             topicNames.add(topic.getName());
             topicQualifiedNames.add(topic.getQualifiedName());
             minimalTopics.add(topic.trimToReference());
@@ -105,10 +105,10 @@
      */
     @Override
     public KafkaConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

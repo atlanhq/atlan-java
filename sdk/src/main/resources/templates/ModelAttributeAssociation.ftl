@@ -9,11 +9,11 @@
      * @throws InvalidRequestException if the from or to are provided without a modelVersionAgnosticQualifiedName
      */
     public static ModelAttributeAssociationBuilder<?, ?> creator(String name, ModelAttribute from, ModelAttribute to) throws InvalidRequestException {
-        validateRelationship(ModelAttribute.TYPE_NAME, Map.of(
-            "from_connectionQualifiedName", from.getConnectionQualifiedName(),
-            "from_qualifiedName", from.getModelVersionAgnosticQualifiedName(),
-            "to_qualifiedName", to.getModelVersionAgnosticQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("from_connectionQualifiedName", from.getConnectionQualifiedName());
+        map.put("from_qualifiedName", from.getModelVersionAgnosticQualifiedName());
+        map.put("to_qualifiedName", to.getModelVersionAgnosticQualifiedName());
+        validateRelationship(ModelAttribute.TYPE_NAME, map);
         return creator(
             name,
             from.getConnectionQualifiedName(),
@@ -119,9 +119,10 @@
      */
     @Override
     public ModelAttributeAssociationBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName(),
-            "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 </#macro>

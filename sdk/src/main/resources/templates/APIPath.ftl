@@ -9,9 +9,9 @@
      * @throws InvalidRequestException if the apiSpec provided is without a qualifiedName
      */
     public static APIPathBuilder<?, ?> creator(String name, APISpec apiSpec) throws InvalidRequestException {
-        validateRelationship(APISpec.TYPE_NAME, Map.of(
-            "qualifiedName", apiSpec.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", apiSpec.getQualifiedName());
+        validateRelationship(APISpec.TYPE_NAME, map);
         return creator(name, apiSpec.getQualifiedName()).apiSpec(apiSpec.trimToReference());
     }
 
@@ -58,10 +58,10 @@
      */
     @Override
     public APIPathBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

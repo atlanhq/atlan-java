@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -335,14 +336,13 @@ public class CubeHierarchy extends Asset
      */
     public static CubeHierarchyBuilder<?, ?> creator(String name, CubeDimension dimension)
             throws InvalidRequestException {
-        validateRelationship(
-                CubeDimension.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", dimension.getConnectionQualifiedName(),
-                        "cubeName", dimension.getCubeName(),
-                        "cubeQualifiedName", dimension.getCubeQualifiedName(),
-                        "name", dimension.getName(),
-                        "qualifiedName", dimension.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", dimension.getConnectionQualifiedName());
+        map.put("cubeName", dimension.getCubeName());
+        map.put("cubeQualifiedName", dimension.getCubeQualifiedName());
+        map.put("name", dimension.getName());
+        map.put("qualifiedName", dimension.getQualifiedName());
+        validateRelationship(CubeDimension.TYPE_NAME, map);
         return creator(
                         name,
                         dimension.getConnectionQualifiedName(),
@@ -438,11 +438,10 @@ public class CubeHierarchy extends Asset
      */
     @Override
     public CubeHierarchyBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

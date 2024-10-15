@@ -35,10 +35,10 @@
      */
     public static SalesforceDashboardBuilder<?, ?> creator(
             String name, SalesforceOrganization organization, String salesforceId) throws InvalidRequestException {
-        validateRelationship(SalesforceOrganization.TYPE_NAME, Map.of(
-            "connectionQualifiedName", organization.getConnectionQualifiedName(),
-            "qualifiedName", organization.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", organization.getQualifiedName());
+        map.put("connectionQualifiedName", organization.getConnectionQualifiedName());
+        validateRelationship(SalesforceOrganization.TYPE_NAME, map);
         return creator(
             name,
             organization.getConnectionQualifiedName(),
@@ -117,10 +117,10 @@
      */
     @Override
     public SalesforceDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

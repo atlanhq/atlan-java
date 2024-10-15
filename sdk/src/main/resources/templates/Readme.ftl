@@ -9,10 +9,10 @@
      * @throws InvalidRequestException if any of the required details are missing from the provided asset
      */
     public static ReadmeBuilder<?, ?> creator(Asset asset, String content) throws InvalidRequestException {
-        validateRelationship(asset.getTypeName(), Map.of(
-            "guid", asset.getGuid(),
-            "name", asset.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("guid", asset.getQualifiedName());
+        map.put("name", asset.getName());
+        validateRelationship(asset.getTypeName(), map);
         return creator(asset.trimToReference(), asset.getName(), content);
     }
 
@@ -56,10 +56,10 @@
      */
     @Override
     public ReadmeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

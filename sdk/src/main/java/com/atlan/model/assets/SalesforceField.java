@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -381,12 +382,11 @@ public class SalesforceField extends Asset
      */
     public static SalesforceFieldBuilder<?, ?> creator(String name, SalesforceObject object)
             throws InvalidRequestException {
-        validateRelationship(
-                SalesforceObject.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", object.getConnectionQualifiedName(),
-                        "organizationQualifiedName", object.getOrganizationQualifiedName(),
-                        "qualifiedName", object.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", object.getQualifiedName());
+        map.put("connectionQualifiedName", object.getConnectionQualifiedName());
+        map.put("organizationQualifiedName", object.getOrganizationQualifiedName());
+        validateRelationship(SalesforceObject.TYPE_NAME, map);
         return creator(
                         name,
                         object.getConnectionQualifiedName(),
@@ -464,11 +464,10 @@ public class SalesforceField extends Asset
      */
     @Override
     public SalesforceFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -10,10 +10,10 @@
      */
     public static PresetDashboardBuilder<?, ?> creator(String name, PresetWorkspace workspace)
             throws InvalidRequestException {
-        validateRelationship(PresetWorkspace.TYPE_NAME, Map.of(
-            "connectionQualifiedName", workspace.getConnectionQualifiedName(),
-            "qualifiedName", workspace.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", workspace.getConnectionQualifiedName());
+        map.put("qualifiedName", workspace.getQualifiedName());
+        validateRelationship(PresetWorkspace.TYPE_NAME, map);
         return creator(
             name,
             workspace.getConnectionQualifiedName(),
@@ -76,10 +76,10 @@
      */
     @Override
     public PresetDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

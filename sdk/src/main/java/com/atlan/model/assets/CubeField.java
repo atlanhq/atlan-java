@@ -17,6 +17,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -359,16 +360,15 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @throws InvalidRequestException if the hierarchy provided is without a qualifiedName
      */
     public static CubeFieldBuilder<?, ?> creator(String name, CubeHierarchy hierarchy) throws InvalidRequestException {
-        validateRelationship(
-                CubeHierarchy.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", hierarchy.getConnectionQualifiedName(),
-                        "cubeName", hierarchy.getCubeName(),
-                        "cubeQualifiedName", hierarchy.getCubeQualifiedName(),
-                        "cubeDimensionName", hierarchy.getCubeDimensionName(),
-                        "cubeDimensionQualifiedName", hierarchy.getCubeDimensionQualifiedName(),
-                        "name", hierarchy.getName(),
-                        "qualifiedName", hierarchy.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", hierarchy.getConnectionQualifiedName());
+        map.put("cubeName", hierarchy.getCubeName());
+        map.put("cubeQualifiedName", hierarchy.getCubeQualifiedName());
+        map.put("cubeDimensionName", hierarchy.getCubeDimensionName());
+        map.put("cubeDimensionQualifiedName", hierarchy.getCubeDimensionQualifiedName());
+        map.put("name", hierarchy.getName());
+        map.put("qualifiedName", hierarchy.getQualifiedName());
+        validateRelationship(CubeHierarchy.TYPE_NAME, map);
         return creator(
                         name,
                         hierarchy.getConnectionQualifiedName(),
@@ -392,18 +392,17 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @throws InvalidRequestException if the parent field provided is without a qualifiedName
      */
     public static CubeFieldBuilder<?, ?> creator(String name, CubeField parentField) throws InvalidRequestException {
-        validateRelationship(
-                CubeField.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", parentField.getConnectionQualifiedName(),
-                        "cubeName", parentField.getCubeName(),
-                        "cubeQualifiedName", parentField.getCubeQualifiedName(),
-                        "cubeDimensionName", parentField.getCubeDimensionName(),
-                        "cubeDimensionQualifiedName", parentField.getCubeDimensionQualifiedName(),
-                        "cubeHierarchyName", parentField.getCubeHierarchyName(),
-                        "cubeHierarchyQualifiedName", parentField.getCubeHierarchyQualifiedName(),
-                        "name", parentField.getName(),
-                        "qualifiedName", parentField.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", parentField.getConnectionQualifiedName());
+        map.put("cubeName", parentField.getCubeName());
+        map.put("cubeQualifiedName", parentField.getCubeQualifiedName());
+        map.put("cubeDimensionName", parentField.getCubeDimensionName());
+        map.put("cubeDimensionQualifiedName", parentField.getCubeDimensionQualifiedName());
+        map.put("cubeHierarchyName", parentField.getCubeHierarchyName());
+        map.put("cubeHierarchyQualifiedName", parentField.getCubeHierarchyQualifiedName());
+        map.put("name", parentField.getName());
+        map.put("qualifiedName", parentField.getQualifiedName());
+        validateRelationship(CubeField.TYPE_NAME, map);
         return creator(
                         name,
                         parentField.getConnectionQualifiedName(),
@@ -552,11 +551,10 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      */
     @Override
     public CubeFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

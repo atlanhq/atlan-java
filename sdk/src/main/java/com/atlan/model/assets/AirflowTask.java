@@ -17,6 +17,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -399,7 +400,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @throws InvalidRequestException if the AirflowDag provided is without a qualifiedName
      */
     public static AirflowTaskBuilder<?, ?> creator(String name, AirflowDag airflowDag) throws InvalidRequestException {
-        validateRelationship(AirflowDag.TYPE_NAME, Map.of("qualifiedName", airflowDag.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", airflowDag.getQualifiedName());
+        validateRelationship(AirflowDag.TYPE_NAME, map);
         return creator(name, airflowDag.getQualifiedName()).airflowDag(airflowDag.trimToReference());
     }
 
@@ -449,11 +452,10 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      */
     @Override
     public AirflowTaskBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

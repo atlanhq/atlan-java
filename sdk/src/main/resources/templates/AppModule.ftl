@@ -20,11 +20,10 @@
      * @throws InvalidRequestException if the module provided is without a qualifiedName
      */
     public static AppModuleBuilder<?, ?> creator(String name, AppModule parent) throws InvalidRequestException {
-        validateRelationship(
-            AppModule.TYPE_NAME,
-            Map.of(
-                "connectionQualifiedName", parent.getConnectionQualifiedName(),
-                "qualifiedName", parent.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", parent.getConnectionQualifiedName());
+        map.put("qualifiedName", parent.getQualifiedName());
+        validateRelationship(AppModule.TYPE_NAME, map);
         return creator(
             name,
             parent.getConnectionQualifiedName(),
@@ -88,10 +87,10 @@
      */
     @Override
     public AppModuleBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

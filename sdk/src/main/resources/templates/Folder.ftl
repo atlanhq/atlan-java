@@ -9,11 +9,10 @@
      * @throws InvalidRequestException if the parentFolder provided is without a qualifiedName
      */
     public static FolderBuilder<?, ?> creator(String name, Folder parentFolder) throws InvalidRequestException {
-        validateRelationship(
-            AtlanCollection.TYPE_NAME,
-            Map.of(
-                "qualifiedName", parentFolder.getQualifiedName(),
-                "collectionQualifiedName", parentFolder.getCollectionQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", parentFolder.getQualifiedName());
+        map.put("collectionQualifiedName", parentFolder.getCollectionQualifiedName());
+        validateRelationship(AtlanCollection.TYPE_NAME, map);
         return creator(
             name,
             parentFolder.getCollectionQualifiedName(),
@@ -31,9 +30,9 @@
      * @throws InvalidRequestException if the collection provided is without a qualifiedName
      */
     public static FolderBuilder<?, ?> creator(String name, AtlanCollection collection) throws InvalidRequestException {
-        validateRelationship(
-            AtlanCollection.TYPE_NAME,
-            Map.of("qualifiedName", collection.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", collection.getQualifiedName());
+        validateRequired(AtlanCollection.TYPE_NAME, map);
         return creator(
             name,
             collection.getQualifiedName(),
@@ -99,10 +98,10 @@
      */
     @Override
     public FolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

@@ -12,10 +12,10 @@
      */
     public static S3ObjectBuilder<?, ?> creatorWithPrefix(String name, S3Bucket bucket, String prefix)
             throws InvalidRequestException {
-        validateRelationship(S3Bucket.TYPE_NAME, Map.of(
-            "qualifiedName", bucket.getQualifiedName(),
-            "name", bucket.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", bucket.getQualifiedName());
+        map.put("name", bucket.getName());
+        validateRelationship(S3Bucket.TYPE_NAME, map);
         return creatorWithPrefix(
             name,
             bucket.getQualifiedName(),
@@ -37,10 +37,10 @@
      */
     public static S3ObjectBuilder<?, ?> creator(String name, S3Bucket bucket, String awsArn)
             throws InvalidRequestException {
-        validateRelationship(S3Bucket.TYPE_NAME, Map.of(
-            "qualifiedName", bucket.getQualifiedName(),
-            "name", bucket.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", bucket.getQualifiedName());
+        map.put("name", bucket.getName());
+        validateRelationship(S3Bucket.TYPE_NAME, map);
         return creator(
             name,
             bucket.getQualifiedName(),
@@ -123,10 +123,10 @@
      */
     @Override
     public S3ObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>
