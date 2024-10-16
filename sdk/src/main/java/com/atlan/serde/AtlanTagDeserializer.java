@@ -76,6 +76,10 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
         } catch (AtlanException e) {
             throw new IOException("Unable to find Atlan tag with ID-string: " + clsId, e);
         }
+        if (clsName == null) {
+            clsName = Serde.DELETED_AUDIT_OBJECT;
+            sourceAttachmentsAttrId = "";
+        }
 
         // Tags that are source-synced can have an embedded attributes containing details of the
         // source tag attachment(s)
