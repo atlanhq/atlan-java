@@ -216,6 +216,12 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Date
     Long lastProfiledAt;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Represents attributes for describing the key schema for the table and indexes. */
     @Attribute
     String noSQLSchemaDefinition;

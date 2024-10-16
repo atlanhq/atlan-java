@@ -307,6 +307,12 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IMetric> metricTimestamps;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;

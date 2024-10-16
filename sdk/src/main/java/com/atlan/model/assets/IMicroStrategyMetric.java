@@ -517,6 +517,9 @@ public interface IMicroStrategyMetric {
     /** Reports in which this metric is used. */
     SortedSet<IMicroStrategyReport> getMicroStrategyReports();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 

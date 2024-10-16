@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,11 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     @Singular
     SortedSet<IModelAttribute> modelEntityAttributes;
 
+    /** Assets that implement this entity. */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> modelEntityImplementedByAssets;
+
     /** Entities from which this entity is mapped. */
     @Attribute
     @Singular
@@ -119,6 +125,12 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     @Attribute
     @Date
     Long modelExpiredAtSystemDate;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     @Attribute

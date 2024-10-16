@@ -16,6 +16,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.KafkaTopicConsumption;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +87,12 @@ public class KafkaConsumerGroup extends Asset
     @Attribute
     @Singular
     SortedSet<IKafkaTopic> kafkaTopics;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
     @Attribute

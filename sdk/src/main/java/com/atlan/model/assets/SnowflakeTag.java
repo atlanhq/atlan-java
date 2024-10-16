@@ -107,6 +107,12 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular

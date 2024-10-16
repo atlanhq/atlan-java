@@ -484,6 +484,9 @@ public interface ICosmosMongoDBCollection {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Average size of an object in the collection. */
     Long getMongoDBCollectionAverageObjectSize();
 

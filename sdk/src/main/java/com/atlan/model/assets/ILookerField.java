@@ -478,6 +478,9 @@ public interface ILookerField {
     /** Model in which this field exists. */
     ILookerModel getModel();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of the model in which this field exists. */
     String getModelName();
 

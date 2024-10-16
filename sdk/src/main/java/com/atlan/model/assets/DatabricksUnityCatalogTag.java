@@ -108,6 +108,12 @@ public class DatabricksUnityCatalogTag extends Asset
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular

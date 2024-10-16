@@ -40,6 +40,9 @@ public interface ICatalog {
     /** TBC */
     RelationField INPUT_TO_SPARK_JOBS = new RelationField("inputToSparkJobs");
 
+    /** Entities implemented by this asset. */
+    RelationField MODEL_IMPLEMENTED_ENTITIES = new RelationField("modelEntityImplemented");
+
     /** Tasks from which this asset is output. */
     RelationField OUTPUT_FROM_AIRFLOW_TASKS = new RelationField("outputFromAirflowTasks");
 
@@ -1004,6 +1007,9 @@ public interface ICatalog {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();

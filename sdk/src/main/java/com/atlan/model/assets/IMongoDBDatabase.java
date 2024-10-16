@@ -421,6 +421,9 @@ public interface IMongoDBDatabase {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Collections that exist within this database. */
     SortedSet<IMongoDBCollection> getMongoDBCollections();
 
