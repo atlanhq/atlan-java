@@ -404,7 +404,7 @@ object Utils {
                         .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
                         .build()
                 val response = toCreate.save().block()
-                response.getResult(toCreate).qualifiedName
+                response?.getResult(toCreate)?.qualifiedName ?: toCreate.qualifiedName
             } catch (e: AtlanException) {
                 logger.error("Unable to create connection: {}", connection, e)
                 exitProcess(3)
