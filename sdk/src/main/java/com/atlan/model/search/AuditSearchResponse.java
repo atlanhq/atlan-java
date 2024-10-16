@@ -169,7 +169,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
 
     private boolean isPagingTimestampQuery(Query candidate) {
         return candidate.isRange()
-                && candidate.range().untyped().field().equals(AuditSearchRequest.CREATED.getAtlanFieldName())
+                && candidate.range().untyped().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())
                 && candidate.range().untyped().gte() != null
                 && candidate.range().untyped().gte().to(Long.class) > 0
                 && candidate.range().untyped().lt() == null
@@ -274,7 +274,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
         return sort != null
                 && !sort.isEmpty()
                 && sort.get(0).isField()
-                && sort.get(0).field().field().equals(AuditSearchRequest.CREATED.getAtlanFieldName())
+                && sort.get(0).field().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())
                 && sort.get(0).field().order() == SortOrder.Asc;
     }
 
@@ -290,7 +290,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
         }
         if (sort != null && !sort.isEmpty() && sort.get(0).isField()) {
             String fieldName = sort.get(0).field().field();
-            return !fieldName.equals(AuditSearchRequest.CREATED.getAtlanFieldName()) || sort.size() != 1;
+            return !fieldName.equals(AuditSearchRequest.ENTITY_ID.getKeywordFieldName()) || sort.size() != 1;
         }
         return true;
     }
@@ -311,7 +311,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
             rewritten.add(AuditSearchRequest.CREATED.order(SortOrder.Asc));
             for (SortOptions candidate : sort) {
                 if (!candidate.isField()
-                        || !candidate.field().field().equals(AuditSearchRequest.CREATED.getAtlanFieldName())) {
+                        || !candidate.field().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())) {
                     rewritten.add(candidate);
                 }
             }

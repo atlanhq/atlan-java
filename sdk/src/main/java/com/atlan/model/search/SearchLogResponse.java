@@ -271,7 +271,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
         }
         if (sort != null && !sort.isEmpty() && sort.get(0).isField()) {
             String fieldName = sort.get(0).field().field();
-            return !fieldName.equals(SearchLogEntry.LOGGED_AT.getNumericFieldName()) || sort.size() != 1;
+            return !fieldName.equals(SearchLogEntry.ENTITY_ID.getAtlanFieldName()) || sort.size() != 1;
         }
         return true;
     }
