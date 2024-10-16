@@ -82,6 +82,9 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                         } catch (AtlanException e) {
                             throw new IOException("Unable to translate Atlan tag with the ID: " + typeName, e);
                         }
+                        if (humanReadableAtlanTag == null) {
+                            humanReadableAtlanTag = AtlanClient.DELETED_AUDIT_OBJECT;
+                        }
                         AtlanTagPayload.AtlanTagPayloadBuilder payloadBuilder =
                                 AtlanTagPayload.builder().typeName(humanReadableAtlanTag);
                         if (propagate != null) {

@@ -100,13 +100,19 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                 } catch (AtlanException e) {
                                     throw new IOException("Unable to serialize mappedAtlanTagName.", e);
                                 }
+                                if (mappedName == null) {
+                                    mappedName = Serde.DELETED_AUDIT_OBJECT;
+                                }
                                 attrValue = mappedName;
                             } else if (fieldName.equals("purposeAtlanTags") && attrValue instanceof Collection) {
                                 List<String> mappedNames = new ArrayList<>();
                                 for (Object one : (Collection<?>) attrValue) {
                                     try {
-                                        mappedNames.add(
-                                                client.getAtlanTagCache().getIdForName(one.toString()));
+                                        String name = client.getAtlanTagCache().getIdForName(one.toString());
+                                        if (name == null) {
+                                            name = Serde.DELETED_AUDIT_OBJECT;
+                                        }
+                                        mappedNames.add(name);
                                     } catch (NotFoundException e) {
                                         mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
                                     } catch (AtlanException e) {
