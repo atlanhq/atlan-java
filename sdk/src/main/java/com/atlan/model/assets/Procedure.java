@@ -105,6 +105,12 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Date
     Long lastProfiledAt;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular

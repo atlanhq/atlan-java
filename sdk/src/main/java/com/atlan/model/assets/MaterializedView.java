@@ -130,6 +130,12 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
     /** TBC */

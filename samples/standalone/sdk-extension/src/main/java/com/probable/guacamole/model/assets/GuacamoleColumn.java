@@ -26,6 +26,7 @@ import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
 import com.atlan.model.assets.IMaterializedView;
 import com.atlan.model.assets.IMetric;
+import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISnowflakeDynamicTable;
@@ -328,6 +329,12 @@ public class GuacamoleColumn extends Asset
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Materialized view in which this column exists. */
     @Attribute

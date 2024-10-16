@@ -417,6 +417,9 @@ public interface ILookerExplore {
     /** Model in which this explore exists. */
     ILookerModel getModel();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of the parent model of this Explore. */
     String getModelName();
 

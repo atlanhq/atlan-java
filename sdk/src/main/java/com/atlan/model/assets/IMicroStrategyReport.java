@@ -441,6 +441,9 @@ public interface IMicroStrategyReport {
     /** Type of report, for example: Grid or Chart. */
     String getMicroStrategyReportType();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 

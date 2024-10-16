@@ -420,6 +420,9 @@ public interface ISchemaRegistrySubject {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
