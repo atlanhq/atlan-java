@@ -4,12 +4,16 @@ package com.atlan.pkg.objectstore
 
 import mu.KLogger
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
+import software.amazon.awssdk.auth.credentials.AwsCredentials
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
+import software.amazon.awssdk.services.sts.StsClient
+import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 import java.io.File
 import java.io.IOException
 
@@ -28,9 +32,23 @@ class S3Sync(
     private val logger: KLogger,
     private val accessKey: String = "",
     private val secretKey: String = "",
+    roleArn: String = "",
 ) : ObjectStorageSyncer {
-    private val credential =
-        if (accessKey.isNotBlank()) {
+    private val credential: AwsCredentials? =
+        if (roleArn.isNotBlank()) {
+            val stsClient =
+                StsClient.builder()
+                    .region(Region.of(region))
+                    .build()
+            val roleRequest =
+                AssumeRoleRequest.builder()
+                    .roleArn(roleArn)
+                    .roleSessionName("AuthRoleSession")
+                    .build()
+            val roleResponse = stsClient.assumeRole(roleRequest)
+            val myCreds = roleResponse.credentials()
+            AwsSessionCredentials.create(myCreds.accessKeyId(), myCreds.secretAccessKey(), myCreds.sessionToken())
+        } else if (accessKey.isNotBlank()) {
             AwsBasicCredentials.create(accessKey, secretKey)
         } else {
             null

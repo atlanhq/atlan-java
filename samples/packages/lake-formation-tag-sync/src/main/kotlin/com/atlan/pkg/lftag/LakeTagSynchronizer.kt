@@ -45,7 +45,6 @@ object LakeTagSynchronizer {
         failOnErrors: Boolean,
         removeSchema: Boolean,
     ): Boolean {
-        val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         var combinedResults: ImportResults? = null
@@ -56,7 +55,7 @@ object LakeTagSynchronizer {
             Utils.getInputFiles(
                 "$outputDirectory/$assetPrefix",
                 outputDirectory,
-                skipObjectStore,
+                false,
                 assetPrefix,
             )
         val tagFileNames = mutableListOf<String>()

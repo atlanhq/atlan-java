@@ -16,6 +16,7 @@ dependencies {
     api(libs.fastcsv)
     api(libs.bundles.poi)
     api(libs.awssdk.s3)
+    api(libs.awssdk.sts)
     api(platform(libs.gcs.bom))
     api(libs.gcs)
     api(libs.azure.identity)

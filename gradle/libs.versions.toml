@@ -46,6 +46,7 @@ wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
 numaflow-java = { module = "io.numaproj.numaflow:numaflow-java", version.ref = "numaflow" }
 awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
+awssdk-sts = { module = "software.amazon.awssdk:sts", version.ref = "awssdk" }
 gcs-bom = { module = "com.google.cloud:libraries-bom", version.ref = "gcs" }
 gcs = { module = "com.google.cloud:google-cloud-storage" }
 gcs-control = { module = "com.google.cloud:google-cloud-storage-control" }
