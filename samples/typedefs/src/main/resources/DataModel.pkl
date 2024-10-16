@@ -241,16 +241,18 @@ customTypes {
         }
       }
       ["data_model_entity_implemented_assets"] {
-        description = "Implementation of an entity by one or more assets."
-        parent {
-          type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmEntity)ImplementedByAssets"
-          description = "Assets that implement this entity."
-        }
-        children {
-          type = "Catalog"
-          attribute = "\(a)\(dmEntity)Implemented"
-          description = "Entity that is implemented by this asset."
+        description = "Relationship between model entities and their implementing assets."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmEntity)ImplementedByAssets"
+            description = "Assets that implement this entity."
+          }
+          new {
+            type = "Catalog"
+            attribute = "\(a)\(dmEntity)Implemented"
+            description = "Entities implemented by this asset."
+          }    
         }
       }
     }
