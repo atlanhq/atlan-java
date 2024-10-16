@@ -42,6 +42,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "CLOUD"
+          hide = true
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
