@@ -17,6 +17,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -459,12 +460,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @throws InvalidRequestException if the database provided is without a qualifiedName
      */
     public static SchemaBuilder<?, ?> creator(String name, Database database) throws InvalidRequestException {
-        validateRelationship(
-                Database.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", database.getConnectionQualifiedName(),
-                        "name", database.getName(),
-                        "qualifiedName", database.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", database.getQualifiedName());
+        map.put("name", database.getName());
+        map.put("connectionQualifiedName", database.getConnectionQualifiedName());
+        validateRelationship(Database.TYPE_NAME, map);
         return creator(name, database.getConnectionQualifiedName(), database.getName(), database.getQualifiedName())
                 .database(database.trimToReference());
     }
@@ -539,11 +539,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      */
     @Override
     public SchemaBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

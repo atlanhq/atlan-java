@@ -17,6 +17,7 @@ import com.atlan.model.structs.KafkaTopicConsumption;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -334,12 +335,11 @@ public class KafkaConsumerGroup extends Asset
         List<String> topicQualifiedNames = new ArrayList<>();
         List<KafkaTopic> minimalTopics = new ArrayList<>();
         for (KafkaTopic topic : topics) {
-            validateRelationship(
-                    KafkaTopic.TYPE_NAME,
-                    Map.of(
-                            "connectionQualifiedName", topic.getConnectionQualifiedName(),
-                            "name", topic.getName(),
-                            "qualifiedName", topic.getQualifiedName()));
+            Map<String, String> map = new HashMap<>();
+            map.put("qualifiedName", topic.getQualifiedName());
+            map.put("name", topic.getName());
+            map.put("connectionQualifiedName", topic.getConnectionQualifiedName());
+            validateRelationship(KafkaTopic.TYPE_NAME, map);
             topicNames.add(topic.getName());
             topicQualifiedNames.add(topic.getQualifiedName());
             minimalTopics.add(topic.trimToReference());
@@ -427,11 +427,10 @@ public class KafkaConsumerGroup extends Asset
      */
     @Override
     public KafkaConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

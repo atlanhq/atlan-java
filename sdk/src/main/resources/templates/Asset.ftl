@@ -136,11 +136,10 @@
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
     public AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-            getTypeName(),
-            Map.of(
-                "qualifiedName", this.getQualifiedName(),
-                "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(getTypeName(), map);
         return IndistinctAsset.updater(this.getQualifiedName(), this.getName());
     }
 

@@ -17,6 +17,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -452,14 +453,13 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @throws InvalidRequestException if the schema provided is without a qualifiedName
      */
     public static MaterializedViewBuilder<?, ?> creator(String name, Schema schema) throws InvalidRequestException {
-        validateRelationship(
-                Schema.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", schema.getConnectionQualifiedName(),
-                        "databaseName", schema.getDatabaseName(),
-                        "databaseQualifiedName", schema.getDatabaseQualifiedName(),
-                        "name", schema.getName(),
-                        "qualifiedName", schema.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", schema.getConnectionQualifiedName());
+        map.put("databaseName", schema.getDatabaseName());
+        map.put("databaseQualifiedName", schema.getDatabaseQualifiedName());
+        map.put("name", schema.getName());
+        map.put("qualifiedName", schema.getQualifiedName());
+        validateRelationship(Schema.TYPE_NAME, map);
         return creator(
                         name,
                         schema.getConnectionQualifiedName(),
@@ -552,11 +552,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      */
     @Override
     public MaterializedViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

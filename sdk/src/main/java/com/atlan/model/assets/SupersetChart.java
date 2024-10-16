@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -320,11 +321,10 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      */
     public static SupersetChartBuilder<?, ?> creator(String name, SupersetDashboard dashboard)
             throws InvalidRequestException {
-        validateRelationship(
-                SupersetDashboard.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", dashboard.getConnectionQualifiedName(),
-                        "qualifiedName", dashboard.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", dashboard.getQualifiedName());
+        map.put("connectionQualifiedName", dashboard.getConnectionQualifiedName());
+        validateRelationship(SupersetDashboard.TYPE_NAME, map);
         return creator(name, dashboard.getConnectionQualifiedName(), dashboard.getQualifiedName())
                 .supersetDashboard(dashboard.trimToReference());
     }
@@ -385,11 +385,10 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      */
     @Override
     public SupersetChartBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

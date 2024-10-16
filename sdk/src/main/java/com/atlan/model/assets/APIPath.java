@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -353,7 +354,9 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws InvalidRequestException if the apiSpec provided is without a qualifiedName
      */
     public static APIPathBuilder<?, ?> creator(String name, APISpec apiSpec) throws InvalidRequestException {
-        validateRelationship(APISpec.TYPE_NAME, Map.of("qualifiedName", apiSpec.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", apiSpec.getQualifiedName());
+        validateRelationship(APISpec.TYPE_NAME, map);
         return creator(name, apiSpec.getQualifiedName()).apiSpec(apiSpec.trimToReference());
     }
 
@@ -400,11 +403,10 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     @Override
     public APIPathBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

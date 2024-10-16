@@ -17,6 +17,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -388,12 +389,11 @@ public class ModelAttributeAssociation extends Asset
      */
     public static ModelAttributeAssociationBuilder<?, ?> creator(String name, ModelAttribute from, ModelAttribute to)
             throws InvalidRequestException {
-        validateRelationship(
-                ModelAttribute.TYPE_NAME,
-                Map.of(
-                        "from_connectionQualifiedName", from.getConnectionQualifiedName(),
-                        "from_qualifiedName", from.getModelVersionAgnosticQualifiedName(),
-                        "to_qualifiedName", to.getModelVersionAgnosticQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("from_connectionQualifiedName", from.getConnectionQualifiedName());
+        map.put("from_qualifiedName", from.getModelVersionAgnosticQualifiedName());
+        map.put("to_qualifiedName", to.getModelVersionAgnosticQualifiedName());
+        validateRelationship(ModelAttribute.TYPE_NAME, map);
         return creator(
                         name,
                         from.getConnectionQualifiedName(),
@@ -501,11 +501,10 @@ public class ModelAttributeAssociation extends Asset
      */
     @Override
     public ModelAttributeAssociationBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 

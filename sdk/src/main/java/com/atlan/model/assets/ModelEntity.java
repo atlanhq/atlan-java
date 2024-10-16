@@ -16,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -394,13 +395,12 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @throws InvalidRequestException if the model provided is without a qualifiedName
      */
     public static ModelEntityBuilder<?, ?> creator(String name, ModelDataModel model) throws InvalidRequestException {
-        validateRelationship(
-                ModelDataModel.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", model.getConnectionQualifiedName(),
-                        "name", model.getName(),
-                        "qualifiedName", model.getQualifiedName(),
-                        "modelType", model.getModelType()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", model.getConnectionQualifiedName());
+        map.put("name", model.getName());
+        map.put("qualifiedName", model.getQualifiedName());
+        map.put("modelType", model.getModelType());
+        validateRelationship(ModelDataModel.TYPE_NAME, map);
         return creator(
                 name,
                 model.getConnectionQualifiedName(),
@@ -462,12 +462,11 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      */
     public static ModelEntityBuilder<?, ?> creatorForVersion(String name, ModelVersion version)
             throws InvalidRequestException {
-        validateRelationship(
-                ModelVersion.TYPE_NAME,
-                Map.of(
-                        "connectionQualifiedName", version.getConnectionQualifiedName(),
-                        "name", version.getName(),
-                        "qualifiedName", version.getQualifiedName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", version.getConnectionQualifiedName());
+        map.put("name", version.getName());
+        map.put("qualifiedName", version.getQualifiedName());
+        validateRelationship(ModelVersion.TYPE_NAME, map);
         return creatorForVersion(
                         name, version.getConnectionQualifiedName(), version.getName(), version.getQualifiedName())
                 .modelVersion(version.trimToReference());
@@ -558,11 +557,10 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      */
     @Override
     public ModelEntityBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("modelVersionAgnosticQualifiedName", this.getModelVersionAgnosticQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 

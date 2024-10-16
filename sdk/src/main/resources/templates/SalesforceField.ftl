@@ -9,11 +9,11 @@
      */
     public static SalesforceFieldBuilder<?, ?> creator(String name, SalesforceObject object)
             throws InvalidRequestException {
-        validateRelationship(SalesforceObject.TYPE_NAME, Map.of(
-            "connectionQualifiedName", object.getConnectionQualifiedName(),
-            "organizationQualifiedName", object.getOrganizationQualifiedName(),
-            "qualifiedName", object.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", object.getQualifiedName());
+        map.put("connectionQualifiedName", object.getConnectionQualifiedName());
+        map.put("organizationQualifiedName", object.getOrganizationQualifiedName());
+        validateRelationship(SalesforceObject.TYPE_NAME, map);
         return creator(
             name,
             object.getConnectionQualifiedName(),
@@ -90,10 +90,10 @@
      */
     @Override
     public SalesforceFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

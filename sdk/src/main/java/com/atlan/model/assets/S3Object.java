@@ -17,6 +17,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AwsTag;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -388,11 +389,10 @@ public class S3Object extends Asset
      */
     public static S3ObjectBuilder<?, ?> creatorWithPrefix(String name, S3Bucket bucket, String prefix)
             throws InvalidRequestException {
-        validateRelationship(
-                S3Bucket.TYPE_NAME,
-                Map.of(
-                        "qualifiedName", bucket.getQualifiedName(),
-                        "name", bucket.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", bucket.getQualifiedName());
+        map.put("name", bucket.getName());
+        validateRelationship(S3Bucket.TYPE_NAME, map);
         return creatorWithPrefix(name, bucket.getQualifiedName(), bucket.getName(), prefix)
                 .bucket(bucket.trimToReference());
     }
@@ -410,11 +410,10 @@ public class S3Object extends Asset
      */
     public static S3ObjectBuilder<?, ?> creator(String name, S3Bucket bucket, String awsArn)
             throws InvalidRequestException {
-        validateRelationship(
-                S3Bucket.TYPE_NAME,
-                Map.of(
-                        "qualifiedName", bucket.getQualifiedName(),
-                        "name", bucket.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", bucket.getQualifiedName());
+        map.put("name", bucket.getName());
+        validateRelationship(S3Bucket.TYPE_NAME, map);
         return creator(name, bucket.getQualifiedName(), bucket.getName(), awsArn)
                 .bucket(bucket.trimToReference());
     }
@@ -493,11 +492,10 @@ public class S3Object extends Asset
      */
     @Override
     public S3ObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

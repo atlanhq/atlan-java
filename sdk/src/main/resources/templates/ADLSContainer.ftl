@@ -9,10 +9,10 @@
      * @throws InvalidRequestException if the container provided is without a qualifiedName
      */
     public static ADLSContainerBuilder<?, ?> creator(String name, ADLSAccount account) throws InvalidRequestException {
-        validateRelationship(ADLSAccount.TYPE_NAME, Map.of(
-            "connectionQualifiedName", account.getConnectionQualifiedName(),
-            "qualifiedName", account.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("connectionQualifiedName", account.getConnectionQualifiedName());
+        map.put("qualifiedName", account.getQualifiedName());
+        validateRelationship(ADLSAccount.TYPE_NAME, map);
         return creator(
             name,
             account.getConnectionQualifiedName(),
@@ -85,10 +85,10 @@
      */
     @Override
     public ADLSContainerBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>

@@ -240,6 +240,21 @@ customTypes {
           }
         }
       }
+      ["data_model_entity_implemented_assets"] {
+        description = "Relationship between model entities and their implementing assets."
+        peers {
+          new {
+            type = "\(t)\(dmEntity)"
+            attribute = "\(a)\(dmEntity)ImplementedByAssets"
+            description = "Assets that implement this entity."
+          }
+          new {
+            type = "Catalog"
+            attribute = "\(a)\(dmEntity)Implemented"
+            description = "Entities implemented by this asset."
+          }    
+        }
+      }
     }
   }
 

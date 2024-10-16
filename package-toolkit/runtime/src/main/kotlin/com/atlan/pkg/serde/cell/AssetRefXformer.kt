@@ -9,6 +9,7 @@ import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.model.assets.IModel
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
 import com.atlan.pkg.Utils
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicLong
  * Static object to transform asset references.
  */
 object AssetRefXformer {
-    private const val TYPE_QN_DELIMITER = "@"
+    const val TYPE_QN_DELIMITER = "@"
 
     /**
      * Encodes (serializes) an asset reference into a string form.
@@ -46,6 +47,7 @@ object AssetRefXformer {
             is GlossaryCategory -> GlossaryCategoryXformer.encode(asset)
             is GlossaryTerm -> GlossaryTermXformer.encode(asset)
             is DataDomain -> DataDomainXformer.encode(asset)
+            is IModel -> ModelAssetXformer.encode(asset)
             else -> {
                 var qualifiedName = asset.qualifiedName
                 if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
@@ -76,15 +78,29 @@ object AssetRefXformer {
             GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(assetRef, fieldName)
             "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(assetRef, fieldName)
+            in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(assetRef, fieldName)
             else -> {
-                val tokens = assetRef.split(TYPE_QN_DELIMITER)
-                val typeName = tokens[0]
-                val assetClass = Serde.getAssetClassForType(typeName)
-                val method = assetClass.getMethod("refByQualifiedName", String::class.java)
-                val qualifiedName = tokens.subList(1, tokens.size).joinToString(TYPE_QN_DELIMITER)
-                method.invoke(null, qualifiedName) as Asset
+                val typeName = assetRef.substringBefore(TYPE_QN_DELIMITER)
+                val qualifiedName = assetRef.substringAfter(TYPE_QN_DELIMITER)
+                return getRefByQN(typeName, qualifiedName)
             }
         }
+    }
+
+    /**
+     * Create a reference by qualifiedName for the given asset.
+     *
+     * @param typeName of the asset
+     * @param qualifiedName of the asset
+     * @return the asset reference represented by the parameters
+     */
+    fun getRefByQN(
+        typeName: String,
+        qualifiedName: String,
+    ): Asset {
+        val assetClass = Serde.getAssetClassForType(typeName)
+        val method = assetClass.getMethod("refByQualifiedName", String::class.java)
+        return method.invoke(null, qualifiedName) as Asset
     }
 
     /**

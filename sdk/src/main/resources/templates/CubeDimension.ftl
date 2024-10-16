@@ -11,11 +11,11 @@ import com.atlan.model.assets.Connection;
      * @throws InvalidRequestException if the cube provided is without a qualifiedName
      */
     public static CubeDimensionBuilder<?, ?> creator(String name, Cube cube) throws InvalidRequestException {
-        validateRelationship(Cube.TYPE_NAME, Map.of(
-            "connectionQualifiedName", cube.getConnectionQualifiedName(),
-            "name", cube.getName(),
-            "qualifiedName", cube.getQualifiedName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", cube.getQualifiedName());
+        map.put("name", cube.getName());
+        map.put("connectionQualifiedName", cube.getConnectionQualifiedName());
+        validateRelationship(Cube.TYPE_NAME, map);
         return creator(
             name,
             cube.getConnectionQualifiedName(),
@@ -94,10 +94,10 @@ import com.atlan.model.assets.Connection;
      */
     @Override
     public CubeDimensionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(TYPE_NAME, Map.of(
-            "qualifiedName", this.getQualifiedName(),
-            "name", this.getName()
-        ));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 </#macro>
