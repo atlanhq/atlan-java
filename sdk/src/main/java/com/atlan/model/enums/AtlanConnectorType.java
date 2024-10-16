@@ -124,6 +124,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     IICS("iics", AtlanConnectionCategory.ELT),
     ABINITIO("abinitio", AtlanConnectionCategory.ELT),
     SAP_S4_HANA("sap-s4-hana", AtlanConnectionCategory.WAREHOUSE),
+    INRIVER("inriver", AtlanConnectionCategory.DATABASE),
     ;
 
     @JsonValue
