@@ -436,6 +436,9 @@ public interface IMicroStrategyFact {
     /** Unique names of the reports related to this asset. */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 

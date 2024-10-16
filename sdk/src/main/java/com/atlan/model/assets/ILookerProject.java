@@ -415,6 +415,9 @@ public interface ILookerProject {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Models that exist within this project. */
     SortedSet<ILookerModel> getModels();
 

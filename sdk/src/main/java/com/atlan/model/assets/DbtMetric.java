@@ -17,6 +17,7 @@ import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.DbtMetricFilter;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +187,12 @@ public class DbtMetric extends Asset
     /** Type of the metric. */
     @Attribute
     String metricType;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
     @Attribute

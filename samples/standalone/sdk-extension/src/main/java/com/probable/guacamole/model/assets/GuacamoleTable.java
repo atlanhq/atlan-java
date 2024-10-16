@@ -21,6 +21,7 @@ import com.atlan.model.assets.IDbtSource;
 import com.atlan.model.assets.IDbtTest;
 import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
+import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISchema;
@@ -212,6 +213,12 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** TBC */
     @Attribute

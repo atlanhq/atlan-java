@@ -154,6 +154,12 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Tasks from which this asset is output. */
     @Attribute
     @Singular

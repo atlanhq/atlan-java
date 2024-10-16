@@ -416,6 +416,9 @@ public interface IModelVersion {
     /** System expiration date for the asset. */
     Long getModelExpiredAtSystemDate();
 
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getModelName();
 

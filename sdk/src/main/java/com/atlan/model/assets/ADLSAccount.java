@@ -24,6 +24,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +135,12 @@ public class ADLSAccount extends Asset
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
     @Attribute
