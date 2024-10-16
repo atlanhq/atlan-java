@@ -129,10 +129,10 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
                         .count();
                 retries++;
                 if (openTaskCount > 0) {
-                    log.debug("Waiting for {} tasks to complete on the deleted entities", openTaskCount);
+                    log.debug("Waiting for {} tasks to complete on the entities", openTaskCount);
                     Thread.sleep(HttpClient.waitTime(retries).toMillis());
                 } else {
-                    log.debug("Task queue clear for deleted entities.");
+                    log.debug("Task queue clear for entities.");
                 }
             } while (openTaskCount > 0 && retries < maxRetries);
         } catch (AtlanException e) {
