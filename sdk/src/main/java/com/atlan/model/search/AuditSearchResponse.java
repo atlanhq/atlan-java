@@ -2,6 +2,10 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.net.ApiResource;
@@ -25,12 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuditSearchResponse extends ApiResource implements Iterable<EntityAudit> {
     private static final long serialVersionUID = 2L;
+    private static final long MASS_EXTRACT_THRESHOLD = 10000L;
 
-    private static final int CHARACTERISTICS = Spliterator.NONNULL
-            | Spliterator.IMMUTABLE
-            | Spliterator.ORDERED
-            | Spliterator.SIZED
-            | Spliterator.SUBSIZED;
+    private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
     /** Connectivity to the Atlan tenant where the search was run. */
     @Setter
@@ -100,10 +101,114 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
         }
     }
 
+    /**
+     * Retrieve the next page of results from this response, using bulk-oriented paging.
+     *
+     * @return next page of results from this response
+     * @throws AtlanException on any API interaction problem
+     */
+    @JsonIgnore
+    protected AuditSearchResponse getNextBulkPage() throws AtlanException {
+        if (getEntityAudits() == null) {
+            // If there are no results, return this no-asset page (we're at the end of paging).
+            return this;
+        }
+        IndexSearchDSL dsl = getRequest().getDsl();
+
+        // Check for a timestamp condition to determine if this query is being streamed
+        Query query = dsl.getQuery();
+        List<Query> rewrittenFilters = new ArrayList<>();
+        boolean streamed = presortedByTimestamp(dsl.getSort());
+        if (query.isBool()) {
+            BoolQuery original = query.bool();
+            List<Query> filters = original.filter();
+            for (Query candidate : filters) {
+                if (!isPagingTimestampQuery(candidate)) {
+                    rewrittenFilters.add(candidate);
+                }
+            }
+        }
+        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        long firstRecord = -2L;
+        long lastRecord;
+        if (getEntityAudits().size() > 1) {
+            firstRecord = getEntityAudits().get(0).getCreated();
+            lastRecord = getEntityAudits().get(getEntityAudits().size() - 1).getCreated();
+        } else {
+            lastRecord = -2L;
+        }
+        if (streamed && firstRecord != lastRecord) {
+            // If we're streaming and the first and last record have different timestamps,
+            // page based on a new timestamp (to keep offsets low)
+            rewrittenFilters.add(getPagingTimestampQuery(lastRecord));
+            BoolQuery original = query.bool();
+            BoolQuery rewritten = BoolQuery.of(b -> b.filter(rewrittenFilters)
+                    .must(original.must())
+                    .mustNot(original.mustNot())
+                    .minimumShouldMatch(original.minimumShouldMatch())
+                    .should(original.should())
+                    .boost(original.boost()));
+            dsl = dsl.toBuilder().from(0).size(page).query(rewritten._toQuery()).build();
+        } else {
+            // If the first and last record in the page have the same timestamp,
+            // or we're not streaming, use "normal" offset-based paging
+            int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
+            dsl = dsl.toBuilder()
+                    .from(from + getEntityAudits().size())
+                    .size(page)
+                    .build();
+        }
+
+        AuditSearchRequest.AuditSearchRequestBuilder<?, ?> next =
+                AuditSearchRequest.builder().dsl(dsl);
+        if (getRequest().getAttributes() != null) {
+            next = next.attributes(getRequest().getAttributes());
+        }
+        return next.build().search(client);
+    }
+
+    private boolean isPagingTimestampQuery(Query candidate) {
+        return candidate.isRange()
+                && candidate.range().untyped().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())
+                && candidate.range().untyped().gte() != null
+                && candidate.range().untyped().gte().to(Long.class) > 0
+                && candidate.range().untyped().lt() == null
+                && candidate.range().untyped().lte() == null;
+    }
+
+    private Query getPagingTimestampQuery(long lastTimestamp) {
+        return AuditSearchRequest.CREATED.gte(lastTimestamp);
+    }
+
+    private AuditSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
+        IndexSearchDSL dsl = getRequest().getDsl();
+        List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
+        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
+        AuditSearchRequest.AuditSearchRequestBuilder<?, ?> first =
+                AuditSearchRequest.builder().dsl(dsl);
+        if (getRequest().getAttributes() != null) {
+            first = first.attributes(getRequest().getAttributes());
+        }
+        return first.build().search(client);
+    }
+
     /** {@inheritDoc} */
     @Override
     public Iterator<EntityAudit> iterator() {
         return new AuditSearchResponse.AuditSearchResponseIterator(this);
+    }
+
+    /**
+     * Returns an iterator over the elements of the index search, lazily paged,
+     * but in such a way that they can be iterated through in bulk (10,000's of results or more).
+     * Note: this will reorder the results and will NOT retain the sort ordering you have specified (if any).
+     * (Uses offset-limited sequential paging, to avoid large offsets that effectively need to re-retrieve many
+     * large numbers of previous pages' results.)
+     * @return iterator through the audit entries in the search results
+     */
+    public Iterator<EntityAudit> biterator() {
+        return new AuditSearchResponse.AuditSearchResponseBulkIterator(this);
     }
 
     /** {@inheritDoc} */
@@ -122,7 +227,14 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<EntityAudit> stream() {
-        return StreamSupport.stream(Spliterators.spliterator(iterator(), totalCount, CHARACTERISTICS), false);
+        if (totalCount > MASS_EXTRACT_THRESHOLD) {
+            log.debug(
+                    "Results size exceeds threshold ({}), rewriting stream as a bulk stream (ignoring original sorting).",
+                    MASS_EXTRACT_THRESHOLD);
+            return bulkStream();
+        } else {
+            return StreamSupport.stream(Spliterators.spliterator(iterator(), totalCount, CHARACTERISTICS), false);
+        }
     }
 
     /**
@@ -130,7 +242,81 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<EntityAudit> parallelStream() {
-        return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
+        if (totalCount > MASS_EXTRACT_THRESHOLD) {
+            log.debug(
+                    "Results size exceeds threshold ({}), ignoring request for parallelized streaming and falling back to bulk streaming.",
+                    MASS_EXTRACT_THRESHOLD);
+            return bulkStream();
+        } else {
+            return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
+        }
+    }
+
+    /**
+     * Stream a large number of results (lazily) for processing without needing to manually manage paging.
+     * Note: this will reorder the results in order to iterate through a large number (more than 10,000) results,
+     * so any sort ordering you have specified may be ignored.
+     *
+     * @return a lazily-loaded stream of results from the search
+     */
+    public Stream<EntityAudit> bulkStream() {
+        return StreamSupport.stream(Spliterators.spliterator(biterator(), totalCount, CHARACTERISTICS), false);
+    }
+
+    /**
+     * Indicates whether the sort options prioritize creation-time in ascending order as the first
+     * sorting key (true) or anything else (false).
+     *
+     * @param sort list of sorting options
+     * @return true if the sorting options have creation time, ascending as the first option
+     */
+    public static boolean presortedByTimestamp(List<SortOptions> sort) {
+        return sort != null
+                && !sort.isEmpty()
+                && sort.get(0).isField()
+                && sort.get(0).field().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())
+                && sort.get(0).field().order() == SortOrder.Asc;
+    }
+
+    /**
+     * Indicates whether the sort options contain any user-requested sorting (true) or not (false).
+     *
+     * @param sort list of sorting options
+     * @return true if the sorting options have any user-requested sorting
+     */
+    public static boolean hasUserRequestedSort(List<SortOptions> sort) {
+        if (presortedByTimestamp(sort)) {
+            return false;
+        }
+        if (sort != null && !sort.isEmpty() && sort.get(0).isField()) {
+            String fieldName = sort.get(0).field().field();
+            return !fieldName.equals(AuditSearchRequest.ENTITY_ID.getKeywordFieldName()) || sort.size() != 1;
+        }
+        return true;
+    }
+
+    /**
+     * Rewrites the sorting options to ensure that sorting by creation time, ascending, is the top
+     * priority. Adds this condition if it does not already exist, or moves it up to the top sorting
+     * priority if it does already exist in the list.
+     *
+     * @param sort list of sorting options
+     * @return rewritten sorting options, making sorting by creation time in ascending order the top priority
+     */
+    public static List<SortOptions> sortByTimestampFirst(List<SortOptions> sort) {
+        if (sort == null || sort.isEmpty()) {
+            return List.of(AuditSearchRequest.CREATED.order(SortOrder.Asc));
+        } else {
+            List<SortOptions> rewritten = new ArrayList<>();
+            rewritten.add(AuditSearchRequest.CREATED.order(SortOrder.Asc));
+            for (SortOptions candidate : sort) {
+                if (!candidate.isField()
+                        || !candidate.field().field().equals(AuditSearchRequest.CREATED.getNumericFieldName())) {
+                    rewritten.add(candidate);
+                }
+            }
+            return rewritten;
+        }
     }
 
     /**
@@ -305,6 +491,80 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
         @Override
         public EntityAudit next() {
             return response.getEntityAudits().get(i++);
+        }
+    }
+
+    /**
+     * Allow results to be iterated through without managing paging retrievals, and
+     * without overwhelming system resources, even when iterating through 10,000's or more
+     * results.
+     */
+    private static class AuditSearchResponseBulkIterator implements Iterator<EntityAudit> {
+
+        private AuditSearchResponse response;
+        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
+        private final Set<String> processedGuids;
+        private int i;
+
+        public AuditSearchResponseBulkIterator(AuditSearchResponse response) {
+            try {
+                IndexSearchDSL dsl = response.getRequest().getDsl();
+                if (presortedByTimestamp(dsl.getSort())) {
+                    // If the results are already sorted in ascending order by timestamp, proceed
+                    this.response = response;
+                } else if (hasUserRequestedSort(dsl.getSort())) {
+                    // Alternatively, if they are sorted by any user-requested sort, we need to throw an error
+                    throw new IllegalArgumentException(
+                            "Bulk searches can only be sorted by timestamp in ascending order - you must remove your own requested sorting to run a bulk search.");
+                } else {
+                    // Otherwise, re-fetch the first page sorted first by timestamp
+                    this.response = response.getFirstPageTimestampOrdered();
+                }
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to rewrite original query in preparation for iteration.", e);
+            }
+            this.processedGuids = new HashSet<>();
+            this.i = 0;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean hasNext() {
+            if (response.getEntityAudits() == null) {
+                // If there are no results in this page, then there are no more results
+                // so exit straightaway
+                return false;
+            }
+            if (response.getEntityAudits().size() > i) {
+                EntityAudit candidate = response.getEntityAudits().get(i);
+                if (candidate != null && !processedGuids.contains(candidate.getEventKey())) {
+                    return true;
+                } else {
+                    for (int j = i; j < response.getEntityAudits().size(); j++) {
+                        candidate = response.getEntityAudits().get(j);
+                        if (candidate != null && !processedGuids.contains(candidate.getEventKey())) {
+                            i = j;
+                            return true;
+                        }
+                    }
+                }
+            }
+            try {
+                response = response.getNextBulkPage();
+                i = 0;
+                return response.getEntityAudits() != null
+                        && response.getEntityAudits().size() > i;
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to iterate through all pages of search results.", e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public EntityAudit next() {
+            EntityAudit candidate = response.getEntityAudits().get(i++);
+            processedGuids.add(candidate.getEventKey());
+            return candidate;
         }
     }
 }

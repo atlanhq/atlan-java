@@ -69,6 +69,9 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             } catch (AtlanException e) {
                 throw new IOException("Unable to translate Atlan tag with name: " + clsName, e);
             }
+            if (clsId == null) {
+                clsId = AtlanClient.DELETED_AUDIT_OBJECT;
+            }
             translatedPayload = cls.toBuilder().typeName(clsId).build();
         } else if (request instanceof CustomMetadataRequest) {
             CustomMetadataPayload cm = ((CustomMetadataRequest) request).getPayload();

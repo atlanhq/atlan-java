@@ -2,6 +2,10 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.net.ApiResource;
@@ -27,12 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchLogResponse extends ApiResource implements Iterable<SearchLogEntry> {
     private static final long serialVersionUID = 2L;
+    private static final long MASS_EXTRACT_THRESHOLD = 10000L;
 
-    private static final int CHARACTERISTICS = Spliterator.NONNULL
-            | Spliterator.IMMUTABLE
-            | Spliterator.ORDERED
-            | Spliterator.SIZED
-            | Spliterator.SUBSIZED;
+    private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
     /** Connectivity to the Atlan tenant where the search was run. */
     @Setter
@@ -92,10 +93,100 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
         }
     }
 
+    /**
+     * Retrieve the next page of results from this response, using bulk-oriented paging.
+     *
+     * @return next page of results from this response
+     * @throws AtlanException on any API interaction problem
+     */
+    @JsonIgnore
+    protected SearchLogResponse getNextBulkPage() throws AtlanException {
+        if (getLogEntries() == null) {
+            // If there are no results, return this no-results page (we're at the end of paging).
+            return this;
+        }
+        IndexSearchDSL dsl = getSearchParameters().getDsl();
+
+        // Check for a timestamp condition to determine if this query is being streamed
+        Query query = dsl.getQuery();
+        List<Query> rewrittenFilters = new ArrayList<>();
+        boolean streamed = presortedByTimestamp(dsl.getSort());
+        if (query.isBool()) {
+            BoolQuery original = query.bool();
+            List<Query> filters = original.filter();
+            for (Query candidate : filters) {
+                if (!isPagingTimestampQuery(candidate)) {
+                    rewrittenFilters.add(candidate);
+                }
+            }
+        }
+        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        long firstRecord = -2L;
+        long lastRecord;
+        if (getLogEntries().size() > 1) {
+            firstRecord = getLogEntries().get(0).getCreatedAt();
+            lastRecord = getLogEntries().get(getLogEntries().size() - 1).getCreatedAt();
+        } else {
+            lastRecord = -2L;
+        }
+        if (streamed && firstRecord != lastRecord) {
+            // If we're streaming and the first and last record have different timestamps,
+            // page based on a new timestamp (to keep offsets low)
+            rewrittenFilters.add(getPagingTimestampQuery(lastRecord));
+            BoolQuery original = query.bool();
+            BoolQuery rewritten = BoolQuery.of(b -> b.filter(rewrittenFilters)
+                    .must(original.must())
+                    .mustNot(original.mustNot())
+                    .minimumShouldMatch(original.minimumShouldMatch())
+                    .should(original.should())
+                    .boost(original.boost()));
+            dsl = dsl.toBuilder().from(0).size(page).query(rewritten._toQuery()).build();
+        } else {
+            // If the first and last record in the page have the same timestamp,
+            // or we're not streaming, use "normal" offset-based paging
+            int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
+            dsl = dsl.toBuilder().from(from + getLogEntries().size()).size(page).build();
+        }
+        return SearchLogRequest.builder(dsl).build().search(client);
+    }
+
+    private boolean isPagingTimestampQuery(Query candidate) {
+        return candidate.isRange()
+                && candidate.range().untyped().field().equals(SearchLogEntry.LOGGED_AT.getNumericFieldName())
+                && candidate.range().untyped().gte() != null
+                && candidate.range().untyped().gte().to(Long.class) > 0
+                && candidate.range().untyped().lt() == null
+                && candidate.range().untyped().lte() == null;
+    }
+
+    private Query getPagingTimestampQuery(long lastTimestamp) {
+        return SearchLogEntry.LOGGED_AT.gte(lastTimestamp);
+    }
+
+    private SearchLogResponse getFirstPageTimestampOrdered() throws AtlanException {
+        IndexSearchDSL dsl = getSearchParameters().getDsl();
+        List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
+        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
+        return SearchLogRequest.builder(dsl).build().search(client);
+    }
+
     /** {@inheritDoc} */
     @Override
     public Iterator<SearchLogEntry> iterator() {
         return new SearchLogResponseIterator(this);
+    }
+
+    /**
+     * Returns an iterator over the elements of the index search, lazily paged,
+     * but in such a way that they can be iterated through in bulk (10,000's of results or more).
+     * Note: this will reorder the results and will NOT retain the sort ordering you have specified (if any).
+     * (Uses offset-limited sequential paging, to avoid large offsets that effectively need to re-retrieve many
+     * large numbers of previous pages' results.)
+     * @return iterator through the search log entries in the search results
+     */
+    public Iterator<SearchLogEntry> biterator() {
+        return new SearchLogResponse.SearchLogResponseBulkIterator(this);
     }
 
     /** {@inheritDoc} */
@@ -117,7 +208,14 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<SearchLogEntry> stream() {
-        return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
+        if (approximateCount > MASS_EXTRACT_THRESHOLD) {
+            log.debug(
+                    "Results size exceeds threshold ({}), rewriting stream as a bulk stream (ignoring original sorting).",
+                    MASS_EXTRACT_THRESHOLD);
+            return bulkStream();
+        } else {
+            return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
+        }
     }
 
     /**
@@ -125,7 +223,81 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<SearchLogEntry> parallelStream() {
-        return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
+        if (approximateCount > MASS_EXTRACT_THRESHOLD) {
+            log.debug(
+                    "Results size exceeds threshold ({}), ignoring request for parallelized streaming and falling back to bulk streaming.",
+                    MASS_EXTRACT_THRESHOLD);
+            return bulkStream();
+        } else {
+            return StreamSupport.stream(this::spliterator, CHARACTERISTICS, true);
+        }
+    }
+
+    /**
+     * Stream a large number of results (lazily) for processing without needing to manually manage paging.
+     * Note: this will reorder the results in order to iterate through a large number (more than 10,000) results,
+     * so any sort ordering you have specified may be ignored.
+     *
+     * @return a lazily-loaded stream of results from the search
+     */
+    public Stream<SearchLogEntry> bulkStream() {
+        return StreamSupport.stream(Spliterators.spliterator(biterator(), approximateCount, CHARACTERISTICS), false);
+    }
+
+    /**
+     * Indicates whether the sort options prioritize creation-time in ascending order as the first
+     * sorting key (true) or anything else (false).
+     *
+     * @param sort list of sorting options
+     * @return true if the sorting options have creation time, ascending as the first option
+     */
+    public static boolean presortedByTimestamp(List<SortOptions> sort) {
+        return sort != null
+                && !sort.isEmpty()
+                && sort.get(0).isField()
+                && sort.get(0).field().field().equals(SearchLogEntry.LOGGED_AT.getNumericFieldName())
+                && sort.get(0).field().order() == SortOrder.Asc;
+    }
+
+    /**
+     * Indicates whether the sort options contain any user-requested sorting (true) or not (false).
+     *
+     * @param sort list of sorting options
+     * @return true if the sorting options have any user-requested sorting
+     */
+    public static boolean hasUserRequestedSort(List<SortOptions> sort) {
+        if (presortedByTimestamp(sort)) {
+            return false;
+        }
+        if (sort != null && !sort.isEmpty() && sort.get(0).isField()) {
+            String fieldName = sort.get(0).field().field();
+            return !fieldName.equals(SearchLogEntry.ENTITY_ID.getAtlanFieldName()) || sort.size() != 1;
+        }
+        return true;
+    }
+
+    /**
+     * Rewrites the sorting options to ensure that sorting by creation time, ascending, is the top
+     * priority. Adds this condition if it does not already exist, or moves it up to the top sorting
+     * priority if it does already exist in the list.
+     *
+     * @param sort list of sorting options
+     * @return rewritten sorting options, making sorting by creation time in ascending order the top priority
+     */
+    public static List<SortOptions> sortByTimestampFirst(List<SortOptions> sort) {
+        if (sort == null || sort.isEmpty()) {
+            return List.of(SearchLogEntry.LOGGED_AT.order(SortOrder.Asc));
+        } else {
+            List<SortOptions> rewritten = new ArrayList<>();
+            rewritten.add(SearchLogEntry.LOGGED_AT.order(SortOrder.Asc));
+            for (SortOptions candidate : sort) {
+                if (!candidate.isField()
+                        || !candidate.field().field().equals(SearchLogEntry.LOGGED_AT.getNumericFieldName())) {
+                    rewritten.add(candidate);
+                }
+            }
+            return rewritten;
+        }
     }
 
     /**
@@ -300,6 +472,80 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
         @Override
         public SearchLogEntry next() {
             return response.getLogEntries().get(i++);
+        }
+    }
+
+    /**
+     * Allow results to be iterated through without managing paging retrievals, and
+     * without overwhelming system resources, even when iterating through 10,000's or more
+     * results.
+     */
+    private static class SearchLogResponseBulkIterator implements Iterator<SearchLogEntry> {
+
+        private SearchLogResponse response;
+        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
+        private final Set<Integer> processedHashes;
+        private int i;
+
+        public SearchLogResponseBulkIterator(SearchLogResponse response) {
+            try {
+                IndexSearchDSL dsl = response.getSearchParameters().getDsl();
+                if (presortedByTimestamp(dsl.getSort())) {
+                    // If the results are already sorted in ascending order by timestamp, proceed
+                    this.response = response;
+                } else if (hasUserRequestedSort(dsl.getSort())) {
+                    // Alternatively, if they are sorted by any user-requested sort, we need to throw an error
+                    throw new IllegalArgumentException(
+                            "Bulk searches can only be sorted by timestamp in ascending order - you must remove your own requested sorting to run a bulk search.");
+                } else {
+                    // Otherwise, re-fetch the first page sorted first by timestamp
+                    this.response = response.getFirstPageTimestampOrdered();
+                }
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to rewrite original query in preparation for iteration.", e);
+            }
+            this.processedHashes = new HashSet<>();
+            this.i = 0;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean hasNext() {
+            if (response.getLogEntries() == null) {
+                // If there are no results in this page, then there are no more results
+                // so exit straightaway
+                return false;
+            }
+            if (response.getLogEntries().size() > i) {
+                SearchLogEntry candidate = response.getLogEntries().get(i);
+                if (candidate != null && !processedHashes.contains(candidate.hashCode())) {
+                    return true;
+                } else {
+                    for (int j = i; j < response.getLogEntries().size(); j++) {
+                        candidate = response.getLogEntries().get(j);
+                        if (candidate != null && !processedHashes.contains(candidate.hashCode())) {
+                            i = j;
+                            return true;
+                        }
+                    }
+                }
+            }
+            try {
+                response = response.getNextBulkPage();
+                i = 0;
+                return response.getLogEntries() != null
+                        && response.getLogEntries().size() > i;
+            } catch (AtlanException e) {
+                throw new RuntimeException("Unable to iterate through all pages of search results.", e);
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public SearchLogEntry next() {
+            SearchLogEntry candidate = response.getLogEntries().get(i++);
+            processedHashes.add(candidate.hashCode());
+            return candidate;
         }
     }
 }
