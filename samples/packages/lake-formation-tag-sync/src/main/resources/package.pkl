@@ -35,17 +35,19 @@ uiConfig {
     ["Source"] {
       description = "Inputs"
       inputs {
+        ["import_type"] = new Radio {
+          title = "Import lake tags from"
+          helpText = "Select how you want to provide the file(s) containing the tags to be synched."
+          possibleValues {
+            ["CLOUD"] = "Object storage"
+          }
+          default = "CLOUD"
+        }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
           required = true
           credType = "csa-connectors-s3"
           helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
-        }
-        ["assets_prefix"] = new TextInput {
-          title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store from which to retrieve the files containing json data."
-          placeholderText = "path/to/file"
-          width = 4
         }
         ["remove_schema"] = new BooleanInput{
           title = "Drop schema name when found as a table prefix"

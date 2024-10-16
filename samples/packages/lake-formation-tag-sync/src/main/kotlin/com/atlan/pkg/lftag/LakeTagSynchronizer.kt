@@ -25,6 +25,7 @@ object LakeTagSynchronizer {
     const val CONNECTION_MAP_JSON = "connection_map.json"
     const val METADATA_MAP_JSON = "metadata_map.json"
     const val TAG_FILE_NAME_PREFIX = "lftag_association"
+    const val OUTPUT_SUBDIR = "s3"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -45,7 +46,7 @@ object LakeTagSynchronizer {
         failOnErrors: Boolean,
         removeSchema: Boolean,
     ): Boolean {
-        val assetPrefix = Utils.getOrDefault(config.assetsPrefix, "")
+        val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
         var combinedResults: ImportResults? = null
 
@@ -53,10 +54,10 @@ object LakeTagSynchronizer {
 
         val files =
             Utils.getInputFiles(
-                "$outputDirectory/$assetPrefix",
+                "$outputDirectory/$OUTPUT_SUBDIR",
                 outputDirectory,
-                false,
-                assetPrefix,
+                skipObjectStore,
+                "",
             )
         val tagFileNames = mutableListOf<String>()
         val connectionMap = mutableMapOf<String, String>()
