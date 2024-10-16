@@ -629,10 +629,16 @@ object Utils {
                 val contents = credFile.readText()
                 val cred = MAPPER.readValue<Credential>(contents)
                 when (cred.authType) {
-                    "s3", "iam", "role" -> {
+                    "s3" -> {
                         val s3 = S3Credential(cred)
                         val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
                         getInputFiles(sync, outputDirectory, prefix)
+                    }
+
+                    "iam", "role" -> {
+                        val s3 = S3Credential(cred)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        getInputFiles(sync, outputDirectory, s3.prefix)
                     }
 
                     "gcs" -> {
