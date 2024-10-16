@@ -209,6 +209,7 @@ abstract class PackageTest {
             Atlan.setApiToken(System.getenv("ATLAN_API_KEY"))
         }
 
+        @JvmStatic
         protected val client: AtlanClient = Atlan.getDefaultClient()
         private val ALPHABET =
             charArrayOf(
