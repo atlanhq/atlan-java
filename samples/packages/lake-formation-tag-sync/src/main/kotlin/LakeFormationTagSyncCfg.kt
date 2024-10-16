@@ -13,7 +13,6 @@ import javax.annotation.processing.Generated
 data class LakeFormationTagSyncCfg(
     @JsonProperty("import_type") val importType: String? = null,
     @JsonProperty("cloud_source") val cloudSource: String? = null,
-    @JsonProperty("assets_prefix") val assetsPrefix: String? = null,
     @JsonProperty("remove_schema") val removeSchema: Boolean? = null,
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
