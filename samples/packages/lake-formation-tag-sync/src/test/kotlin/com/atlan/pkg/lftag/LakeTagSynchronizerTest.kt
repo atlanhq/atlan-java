@@ -50,7 +50,7 @@ class LakeTagSynchronizerTest : PackageTest() {
     private val attr1 = "Security Classification"
     private val attr2 = "Privacy Sensitivity"
     private val attr3 = "Data Load Method"
-    private val directoryPrefix = "stuff"
+    private val directoryPrefix = LakeTagSynchronizer.OUTPUT_SUBDIR
 
     private fun createConnections() {
         Connection.creator(c1, connectorType)
@@ -132,7 +132,6 @@ class LakeTagSynchronizerTest : PackageTest() {
             LakeFormationTagSyncCfg(
                 "DIRECT",
                 "s3",
-                directoryPrefix,
                 true,
             ),
         )

@@ -144,6 +144,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      */
     @Override
     public int compareTo(AtlanTag o) {
+        if (o == null) return -1;
         return atlanTagComparator.compare(this, o);
     }
 }

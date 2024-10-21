@@ -40,6 +40,9 @@ public interface IModelEntity {
     /** Individual attributes that make up the entity. */
     RelationField MODEL_ENTITY_ATTRIBUTES = new RelationField("modelEntityAttributes");
 
+    /** Assets that implement this entity. */
+    RelationField MODEL_ENTITY_IMPLEMENTED_BY_ASSETS = new RelationField("modelEntityImplementedByAssets");
+
     /** Entities from which this entity is mapped. */
     RelationField MODEL_ENTITY_MAPPED_FROM_ENTITIES = new RelationField("modelEntityMappedFromEntities");
 
@@ -424,6 +427,9 @@ public interface IModelEntity {
     /** Individual attributes that make up the entity. */
     SortedSet<IModelAttribute> getModelEntityAttributes();
 
+    /** Assets that implement this entity. */
+    SortedSet<ICatalog> getModelEntityImplementedByAssets();
+
     /** Entities from which this entity is mapped. */
     SortedSet<IModelEntity> getModelEntityMappedFromEntities();
 
@@ -450,6 +456,9 @@ public interface IModelEntity {
 
     /** System expiration date for the asset. */
     Long getModelExpiredAtSystemDate();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */
     String getModelName();

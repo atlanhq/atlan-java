@@ -315,6 +315,9 @@ public class Serde {
                 } catch (AtlanException e) {
                     throw new IOException("Unable to deserialize purposeAtlanTags.", e);
                 }
+                if (value == null) {
+                    value = Serde.DELETED_AUDIT_OBJECT;
+                }
                 return value;
             }
             return JacksonUtils.deserializePrimitive(element, method, innerClass);
@@ -351,6 +354,9 @@ public class Serde {
                     value = Serde.DELETED_AUDIT_OBJECT;
                 } catch (AtlanException e) {
                     throw new IOException("Unable to deserialize mappedAtlanTagName.", e);
+                }
+                if (value == null) {
+                    value = Serde.DELETED_AUDIT_OBJECT;
                 }
             }
             return value;

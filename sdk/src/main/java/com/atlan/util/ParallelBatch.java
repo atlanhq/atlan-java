@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import lombok.Builder;
 
 /**
@@ -19,6 +21,8 @@ import lombok.Builder;
  */
 @Builder
 public class ParallelBatch {
+
+    protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     /** Connectivity to an Atlan tenant. */
     private AtlanClient client;
@@ -268,23 +272,28 @@ public class ParallelBatch {
      * @throws AtlanException on any problems adding the asset to or processing the batch
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
-        long id = Thread.currentThread().getId();
-        if (!batchMap.containsKey(id)) {
-            batchMap.put(
-                    id,
-                    new AssetBatch(
-                            client,
-                            maxSize,
-                            replaceAtlanTags,
-                            customMetadataHandling,
-                            captureFailures,
-                            updateOnly,
-                            track,
-                            !caseSensitive,
-                            creationHandling,
-                            tableViewAgnostic));
+        lock.writeLock().lock();
+        try {
+            long id = Thread.currentThread().getId();
+            if (!batchMap.containsKey(id)) {
+                batchMap.put(
+                        id,
+                        new AssetBatch(
+                                client,
+                                maxSize,
+                                replaceAtlanTags,
+                                customMetadataHandling,
+                                captureFailures,
+                                updateOnly,
+                                track,
+                                !caseSensitive,
+                                creationHandling,
+                                tableViewAgnostic));
+            }
+            return batchMap.get(id).add(single);
+        } finally {
+            lock.writeLock().unlock();
         }
-        return batchMap.get(id).add(single);
     }
 
     /**
@@ -293,13 +302,18 @@ public class ParallelBatch {
      * @throws IllegalStateException on any problems flushing (submitting) any of the parallel batches
      */
     public void flush() throws AtlanException {
-        batchMap.values().parallelStream().forEach(batch -> {
-            try {
-                batch.flush();
-            } catch (AtlanException e) {
-                throw new IllegalStateException(e);
-            }
-        });
+        lock.writeLock().lock();
+        try {
+            batchMap.values().parallelStream().forEach(batch -> {
+                try {
+                    batch.flush();
+                } catch (AtlanException e) {
+                    throw new IllegalStateException(e);
+                }
+            });
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     /**
@@ -308,11 +322,16 @@ public class ParallelBatch {
      * @return a count of the number of created assets, across all parallel batches
      */
     public long getNumCreated() {
-        long count = 0;
-        for (AssetBatch batch : batchMap.values()) {
-            count += batch.getNumCreated().get();
+        lock.readLock().lock();
+        try {
+            long count = 0;
+            for (AssetBatch batch : batchMap.values()) {
+                count += batch.getNumCreated().get();
+            }
+            return count;
+        } finally {
+            lock.readLock().unlock();
         }
-        return count;
     }
 
     /**
@@ -321,11 +340,16 @@ public class ParallelBatch {
      * @return a count of the number of updated assets, across all parallel batches
      */
     public long getNumUpdated() {
-        long count = 0;
-        for (AssetBatch batch : batchMap.values()) {
-            count += batch.getNumUpdated().get();
+        lock.readLock().lock();
+        try {
+            long count = 0;
+            for (AssetBatch batch : batchMap.values()) {
+                count += batch.getNumUpdated().get();
+            }
+            return count;
+        } finally {
+            lock.readLock().unlock();
         }
-        return count;
     }
 
     /**
@@ -335,11 +359,16 @@ public class ParallelBatch {
      * @return a count of the number of potentially restored assets, across all parallel batches
      */
     public long getNumRestored() {
-        long count = 0;
-        for (AssetBatch batch : batchMap.values()) {
-            count += batch.getNumRestored().get();
+        lock.readLock().lock();
+        try {
+            long count = 0;
+            for (AssetBatch batch : batchMap.values()) {
+                count += batch.getNumRestored().get();
+            }
+            return count;
+        } finally {
+            lock.readLock().unlock();
         }
-        return count;
     }
 
     /**
@@ -351,12 +380,29 @@ public class ParallelBatch {
         if (!track) {
             return null;
         }
-        if (created.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                created.addAll(batch.getCreated());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = created.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    created.addAll(batch.getCreated());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return created;
+        lock.readLock().lock();
+        try {
+            return created;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -368,12 +414,29 @@ public class ParallelBatch {
         if (!track) {
             return null;
         }
-        if (updated.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                updated.addAll(batch.getUpdated());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = updated.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    updated.addAll(batch.getUpdated());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return updated;
+        lock.readLock().lock();
+        try {
+            return updated;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -386,12 +449,29 @@ public class ParallelBatch {
         if (!track) {
             return null;
         }
-        if (restored.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                restored.addAll(batch.getRestored());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = restored.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    restored.addAll(batch.getRestored());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return restored;
+        lock.readLock().lock();
+        try {
+            return restored;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -400,12 +480,29 @@ public class ParallelBatch {
      * @return all batches that failed, across all parallel batches
      */
     public List<AssetBatch.FailedBatch> getFailures() {
-        if (failures.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                failures.addAll(batch.getFailures());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = failures.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    failures.addAll(batch.getFailures());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return failures;
+        lock.readLock().lock();
+        try {
+            return failures;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -414,12 +511,29 @@ public class ParallelBatch {
      * @return all assets that were skipped, across all parallel batches
      */
     public List<Asset> getSkipped() {
-        if (skipped.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                skipped.addAll(batch.getSkipped());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = skipped.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    skipped.addAll(batch.getSkipped());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return skipped;
+        lock.readLock().lock();
+        try {
+            return skipped;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -428,12 +542,29 @@ public class ParallelBatch {
      * @return all resolved GUIDs, across all parallel batches
      */
     public Map<String, String> getResolvedGuids() {
-        if (resolvedGuids.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                resolvedGuids.putAll(batch.getResolvedGuids());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = resolvedGuids.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    resolvedGuids.putAll(batch.getResolvedGuids());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return resolvedGuids;
+        lock.readLock().lock();
+        try {
+            return resolvedGuids;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -444,11 +575,28 @@ public class ParallelBatch {
      * @return all resolved qualifiedNames, across all parallel batches
      */
     public Map<AssetBatch.AssetIdentity, String> getResolvedQualifiedNames() {
-        if (resolvedQualifiedNames.isEmpty()) {
-            for (AssetBatch batch : batchMap.values()) {
-                resolvedQualifiedNames.putAll(batch.getResolvedQualifiedNames());
+        boolean empty;
+        lock.readLock().lock();
+        try {
+            empty = resolvedQualifiedNames.isEmpty();
+        } finally {
+            lock.readLock().unlock();
+        }
+        if (empty) {
+            lock.writeLock().lock();
+            try {
+                for (AssetBatch batch : batchMap.values()) {
+                    resolvedQualifiedNames.putAll(batch.getResolvedQualifiedNames());
+                }
+            } finally {
+                lock.writeLock().unlock();
             }
         }
-        return resolvedQualifiedNames;
+        lock.readLock().lock();
+        try {
+            return resolvedQualifiedNames;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 }

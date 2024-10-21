@@ -16,6 +16,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.DbtJobRun;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,6 +187,12 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
     @Attribute

@@ -15,6 +15,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,6 +127,12 @@ public class MicroStrategyVisualization extends Asset
     /** Type of visualization. */
     @Attribute
     String microStrategyVisualizationType;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
     @Attribute

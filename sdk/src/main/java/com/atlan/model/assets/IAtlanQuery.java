@@ -490,6 +490,9 @@ public interface IAtlanQuery {
     SortedSet<IMetric> getMetrics();
 
     /** TBC */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
+    /** TBC */
     String getName();
 
     /** TBC */

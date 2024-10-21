@@ -108,7 +108,8 @@ public class GeneratorConfig {
             Map.entry("sourceTagValue", "sourceTagValues"),
             Map.entry("userDefRelationshipFrom", "userDefRelationshipFroms"),
             Map.entry("userDefRelationshipTo", "userDefRelationshipTos"),
-            Map.entry("adfActivityPrecedingDependency", "adfActivityPrecedingDependencies"));
+            Map.entry("adfActivityPrecedingDependency", "adfActivityPrecedingDependencies"),
+            Map.entry("modelEntityImplemented", "modelImplementedEntities"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),

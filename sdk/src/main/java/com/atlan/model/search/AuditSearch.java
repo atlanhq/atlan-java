@@ -126,6 +126,22 @@ public class AuditSearch extends CompoundQuery {
     }
 
     /**
+     * Run the fluent search to retrieve assets that match the supplied criteria, using a
+     * stream specifically meant for streaming large numbers of results (10,000 or more).
+     * Note: this will apply its own sorting algorithm, so any sort order you have specified
+     * may be ignored.
+     *
+     * @return a stream of assets that match the specified criteria, lazily-fetched
+     * @throws AtlanException on any issues interacting with the Atlan APIs
+     */
+    public Stream<EntityAudit> bulkStream() throws AtlanException {
+        if (!AuditSearchResponse.presortedByTimestamp(sorts)) {
+            sorts = AuditSearchResponse.sortByTimestampFirst(sorts);
+        }
+        return toRequest().search(client).bulkStream();
+    }
+
+    /**
      * Translate the Atlan audit search into an Atlan search DSL builder.
      *
      * @return an Atlan search DSL builder that encapsulates the audit search

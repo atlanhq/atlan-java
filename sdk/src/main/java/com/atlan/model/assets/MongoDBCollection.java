@@ -178,6 +178,12 @@ public class MongoDBCollection extends Asset
     @Date
     Long lastProfiledAt;
 
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("modelEntityImplemented")
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Average size of an object in the collection. */
     @Attribute
     Long mongoDBCollectionAverageObjectSize;

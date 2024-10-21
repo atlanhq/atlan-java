@@ -375,6 +375,9 @@ public class Suggestions {
                         } catch (NotFoundException e) {
                             name = Serde.DELETED_AUDIT_OBJECT;
                         }
+                        if (name == null) {
+                            name = Serde.DELETED_AUDIT_OBJECT;
+                        }
                         results.add(new SuggestionResponse.SuggestedItem(count, name));
                     }
                 }

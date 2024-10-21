@@ -635,6 +635,13 @@ object Utils {
                         getInputFiles(sync, outputDirectory, prefix)
                     }
 
+                    // Note: these are specific to the csa-connectors-s3 connector credential config
+                    "iam", "role" -> {
+                        val s3 = S3Credential(cred)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        getInputFiles(sync, outputDirectory, s3.prefix)
+                    }
+
                     "gcs" -> {
                         val gcs = GCSCredential(cred)
                         val sync = GCSSync(gcs.projectId, gcs.bucket, logger, gcs.serviceAccountJson)
