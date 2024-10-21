@@ -365,6 +365,11 @@ customTypes {
         description = "Type of the attribute."
         type = "string"
       }
+      ["\(a)\(dmAttribute)HasRelationships"] {
+        label = "Derived"
+        description = "When true, this attribute has relationships with other attributes."
+        type = "boolean"
+      }
     }
     relationships {
       ["\(a)\(dmEntity)"] {
