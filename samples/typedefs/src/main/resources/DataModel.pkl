@@ -250,7 +250,7 @@ customTypes {
           }
           new {
             type = "Catalog"
-            attribute = "\(a)\(dmEntity)Implemented"
+            attribute = "\(a)ImplementedEntities"
             description = "Entities implemented by this asset."
           }    
         }
