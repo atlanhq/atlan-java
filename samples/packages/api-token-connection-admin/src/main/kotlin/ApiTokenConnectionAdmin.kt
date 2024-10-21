@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.core.AssetMutationResponse
@@ -82,10 +83,19 @@ object ApiTokenConnectionAdmin {
     ) {
         logger.info { "Adding API token $apiToken as connection admin for: ${connection.qualifiedName}" }
         val existingAdmins = connection.adminUsers
+        val stillValidAdmins = mutableListOf<String>()
+        existingAdmins.forEach {
+            try {
+                Atlan.getDefaultClient().userCache.getIdForName(it)
+                stillValidAdmins.add(it)
+            } catch (e: NotFoundException) {
+                logger.warn { "Removing existing connection admin as they no longer exist: $it" }
+            }
+        }
         try {
             val response =
                 connection.trimToRequired()
-                    .adminUsers(existingAdmins)
+                    .adminUsers(stillValidAdmins)
                     .adminUser(apiToken)
                     .build()
                     .save()
