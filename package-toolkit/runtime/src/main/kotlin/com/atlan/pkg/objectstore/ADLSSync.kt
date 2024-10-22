@@ -11,7 +11,6 @@ import com.azure.storage.file.datalake.DataLakeServiceClient
 import com.azure.storage.file.datalake.DataLakeServiceClientBuilder
 import com.azure.storage.file.datalake.models.ListPathsOptions
 import mu.KLogger
-import org.pkl.core.module.ModuleKeyFactories.file
 import java.io.File
 import java.io.IOException
 
@@ -123,7 +122,7 @@ class ADLSSync(
         extension: String,
         localDirectory: String,
     ): String {
-        logger.info { "Copying latest $extension file from gcs://$containerName/$prefix to $localDirectory" }
+        logger.info { "Copying latest $extension file from adls://$containerName/$prefix to $localDirectory" }
 
         val filesToDownload = mutableListOf<String>()
 
