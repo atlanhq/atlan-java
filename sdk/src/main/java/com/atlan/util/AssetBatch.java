@@ -360,7 +360,7 @@ public class AssetBatch {
      * @return the mutation response from the queued batch of assets that were flushed
      * @throws AtlanException on any problems flushing (submitting) the batch
      */
-    public AssetMutationResponse flush() throws AtlanException {
+    public synchronized AssetMutationResponse flush() throws AtlanException {
         AsyncCreationResponse response = null;
         List<Asset> revised = null;
         if (!_batch.isEmpty()) {
@@ -504,8 +504,14 @@ public class AssetBatch {
                 resolvedGuids.putAll(response.getGuidAssignments());
             }
             if (sent != null) {
-                Set<String> createdGuids = created.stream().map(Asset::getGuid).collect(Collectors.toSet());
-                Set<String> updatedGuids = updated.stream().map(Asset::getGuid).collect(Collectors.toSet());
+                Set<String> createdGuids;
+                Set<String> updatedGuids;
+                synchronized (created) {
+                    createdGuids = created.stream().map(Asset::getGuid).collect(Collectors.toSet());
+                }
+                synchronized (updated) {
+                    updatedGuids = updated.stream().map(Asset::getGuid).collect(Collectors.toSet());
+                }
                 for (Asset one : sent) {
                     String guid = one.getGuid();
                     if (guid != null

@@ -8,7 +8,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AssetCreationHandling;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,14 +63,14 @@ public class ParallelBatch {
     @Builder.Default
     private boolean tableViewAgnostic = false;
 
-    private final Map<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
-    private final List<Asset> created = new ArrayList<>();
-    private final List<Asset> updated = new ArrayList<>();
-    private final List<Asset> restored = new ArrayList<>();
-    private final List<AssetBatch.FailedBatch> failures = new ArrayList<>();
-    private final List<Asset> skipped = new ArrayList<>();
-    private final Map<String, String> resolvedGuids = new HashMap<>();
-    private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new HashMap<>();
+    private final ConcurrentHashMap<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
+    private final List<Asset> created = Collections.synchronizedList(new ArrayList<>());
+    private final List<Asset> updated = Collections.synchronizedList(new ArrayList<>());
+    private final List<Asset> restored = Collections.synchronizedList(new ArrayList<>());
+    private final List<AssetBatch.FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
+    private final List<Asset> skipped = Collections.synchronizedList(new ArrayList<>());
+    private final Map<String, String> resolvedGuids = new ConcurrentHashMap<>();
+    private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new ConcurrentHashMap<>();
 
     /**
      * Create a new batch of assets to be bulk-saved, in parallel (across threads).
@@ -272,28 +272,22 @@ public class ParallelBatch {
      * @throws AtlanException on any problems adding the asset to or processing the batch
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
-        lock.writeLock().lock();
-        try {
-            long id = Thread.currentThread().getId();
-            if (!batchMap.containsKey(id)) {
-                batchMap.put(
-                        id,
-                        new AssetBatch(
-                                client,
-                                maxSize,
-                                replaceAtlanTags,
-                                customMetadataHandling,
-                                captureFailures,
-                                updateOnly,
-                                track,
-                                !caseSensitive,
-                                creationHandling,
-                                tableViewAgnostic));
-            }
-            return batchMap.get(id).add(single);
-        } finally {
-            lock.writeLock().unlock();
-        }
+        long id = Thread.currentThread().getId();
+        // Note: these are thread-specific operations, so not explicitly locked or synchronized
+        AssetBatch batch = batchMap.computeIfAbsent(
+                id,
+                k -> new AssetBatch(
+                        client,
+                        maxSize,
+                        replaceAtlanTags,
+                        customMetadataHandling,
+                        captureFailures,
+                        updateOnly,
+                        track,
+                        !caseSensitive,
+                        creationHandling,
+                        tableViewAgnostic));
+        return batch.add(single);
     }
 
     /**
