@@ -24,13 +24,12 @@ dependencies {
     //implementation("com.atlan:atlan-java:+")
     //implementation("com.atlan:package-toolkit-runtime:+")
     //implementation("com.atlan:package-toolkit-config:+")
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-    runtimeOnly("org.apache.logging.log4j:log4j-core:2.24.1")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.24.1")
+    implementation(versionCatalogs.named("libs").findLibrary("kotlin-logging").orElseThrow(::AssertionError))
+    runtimeOnly(versionCatalogs.named("libs").findBundle("log4j").orElseThrow(::AssertionError))
     testImplementation(project(":package-toolkit:testing"))
     // In your own project, you would use this in place of the 1 dependency above:
     //testImplementation("com.atlan:package-toolkit-testing:+")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.21")
+    testImplementation(versionCatalogs.named("libs").findLibrary("kotlin-test").orElseThrow(::AssertionError))
 }
 
 pkl {
@@ -77,6 +76,23 @@ tasks {
     processTestResources {
         dependsOn("genCustomPkg")
     }
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
+        force(
+            versionCatalogs.named("libs").findLibrary("parsson").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("json-path").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("guava").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("protobuf-java").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("protobuf-java-util").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("akka-actor").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("commons-compress").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
+        )
+    }
+    exclude(group = "org.threeten", module = "threetenbp")
 }
 
 kotlin {

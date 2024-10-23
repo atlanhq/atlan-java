@@ -30,6 +30,8 @@ guava = "33.3.1-jre"
 openlineage = "1.22.0"
 protobuf = "4.28.2"
 akka = "2.8.7"
+kotlin = "2.0.21"
+kotlin-mu = "3.0.5"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -72,6 +74,8 @@ openlineage = { module = "io.openlineage:openlineage-java", version.ref = "openl
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
 protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf" }
 akka-actor = { module = "com.typesafe.akka:akka-actor_3", version.ref = "akka" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-mu" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
