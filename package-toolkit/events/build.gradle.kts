@@ -9,17 +9,6 @@ plugins {
     signing
 }
 
-configurations.all {
-    resolutionStrategy {
-        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
-        force(
-            libs.protobuf.java,
-            libs.protobuf.java.util,
-            libs.akka.actor,
-        )
-    }
-}
-
 dependencies {
     implementation(project(":package-toolkit:runtime"))
     api(libs.numaflow.java)

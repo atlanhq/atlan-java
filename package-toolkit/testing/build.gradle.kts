@@ -9,15 +9,6 @@ plugins {
     signing
 }
 
-configurations.all {
-    resolutionStrategy {
-        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
-        force(
-            libs.commons.io,
-        )
-    }
-}
-
 dependencies {
     implementation(project(":package-toolkit:runtime"))
     api(libs.system.stubs)
