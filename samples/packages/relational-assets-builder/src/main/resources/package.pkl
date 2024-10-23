@@ -91,7 +91,7 @@ uiConfig {
             ["full"] = "Full replacement"
             ["delta"] = "Incremental"
           }
-          default = "full"
+          default = "delta"
           helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
         }
         ["delta_removal_type"] = new Radio {
