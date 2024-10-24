@@ -20,6 +20,8 @@ local systemDate = "SystemDate"
 local businessDate = "BusinessDate"
 local expiredAtSystemDate = "ExpiredAtSystemDate"
 local expiredAtBusinessDate = "ExpiredAtBusinessDate"
+local generalization = "Generalization"
+local specialization = "Specialization"
 
 local modelIcon = new Icon {
   name = "GenericDB"
@@ -206,13 +208,15 @@ customTypes {
         description = "Subject area of the entity."
         type = "string"
       }
-      ["\(a)\(dmEntity)GeneralizationName"] {
+      ["\(a)\(dmEntity)\(generalization)\(attrName)"] {
         description = "Name of the general entity."
         type = "string"
+        indexAs = "both"
       }
-      ["\(a)\(dmEntity)GeneralizationQualifiedName"] {
+      ["\(a)\(dmEntity)\(generalization)\(qualifiedName)"] {
         description = "Unique identifier for the general entity."
         type = "string"
+        indexAs = "keyword"
       }
     }
     relationships {
@@ -267,12 +271,12 @@ customTypes {
         description = "Represents the generalization-specialization relationship between a general entity (parent) and specialized entities (children)."
         parent {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmEntity)GeneralizationEntity"
+          attribute = "\(a)\(dmEntity)\(generalization)Entity"
           description = "General entity, representing shared characteristics of specialized entities."
         }
         children {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmEntity)SpecializationEntities"
+          attribute = "\(a)\(dmEntity)\(specialization)Entities"
           description = "Specialized entities derived from the general entity."
         }
       }
