@@ -8,7 +8,6 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.pkg.lftag.model.LFTagData
 import com.atlan.pkg.serde.csv.CSVWriter
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 
 class CSVProducer(
@@ -16,7 +15,6 @@ class CSVProducer(
     metadataMap: Map<String, String>,
 ) {
     private val logger = KotlinLogging.logger {}
-    private val mapper = jacksonObjectMapper()
     private val missingConnectionKeys = mutableSetOf<String>()
     private val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
     private val headerNames =
@@ -57,18 +55,22 @@ class CSVProducer(
                             Asset.TYPE_NAME.atlanFieldName to Table.TYPE_NAME,
                             Asset.NAME.atlanFieldName to table.name,
                         )
-                    tagToMetadataMapper.getTagValues(tableInfo.lfTagsOnTable, row)
-                    csv.writeRecord(row)
-                    tableInfo.lfTagsOnColumn.forEach { column ->
-                        val columnQualifiedName = "$qualifiedName/${column.name}"
-                        row =
-                            mutableMapOf(
-                                Asset.QUALIFIED_NAME.atlanFieldName to columnQualifiedName,
-                                Asset.TYPE_NAME.atlanFieldName to Column.TYPE_NAME,
-                                Asset.NAME.atlanFieldName to column.name,
-                            )
-                        tagToMetadataMapper.getTagValues(column.lfTags, row)
+                    if (tableInfo.lfTagsOnTable != null) {
+                        tagToMetadataMapper.getTagValues(tableInfo.lfTagsOnTable!!, row)
                         csv.writeRecord(row)
+                    }
+                    if (tableInfo.lfTagsOnColumn != null) {
+                        tableInfo.lfTagsOnColumn?.forEach { column ->
+                            val columnQualifiedName = "$qualifiedName/${column.name}"
+                            row =
+                                mutableMapOf(
+                                    Asset.QUALIFIED_NAME.atlanFieldName to columnQualifiedName,
+                                    Asset.TYPE_NAME.atlanFieldName to Column.TYPE_NAME,
+                                    Asset.NAME.atlanFieldName to column.name,
+                                )
+                            tagToMetadataMapper.getTagValues(column.lfTags, row)
+                            csv.writeRecord(row)
+                        }
                     }
                 } else {
                     missingConnectionKeys.add(connectionKey)

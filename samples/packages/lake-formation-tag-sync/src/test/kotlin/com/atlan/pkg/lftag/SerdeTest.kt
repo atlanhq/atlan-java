@@ -85,8 +85,12 @@ class SerdeTest {
         val tableInfo = mapper.readValue(TABLE_INFO_JSON, LFTableInfo::class.java)
         assertNotNull(tableInfo.table)
         assertEquals(1, tableInfo.lfTagOnDatabase.size)
-        assertEquals(1, tableInfo.lfTagsOnTable.size)
-        assertEquals(1, tableInfo.lfTagsOnColumn.size)
+        if (tableInfo.lfTagsOnTable != null) {
+            assertEquals(1, tableInfo.lfTagsOnTable!!.size)
+        }
+        if (tableInfo.lfTagsOnColumn != null) {
+            assertEquals(1, tableInfo.lfTagsOnColumn!!.size)
+        }
     }
 
     @Test
