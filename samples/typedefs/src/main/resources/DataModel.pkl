@@ -206,6 +206,14 @@ customTypes {
         description = "Subject area of the entity."
         type = "string"
       }
+      ["\(a)\(dmEntity)GeneralizationName"] {
+        description = "Name of the general entity."
+        type = "string"
+      }
+      ["\(a)\(dmEntity)GeneralizationQualifiedName"] {
+        description = "Unique identifier for the general entity."
+        type = "string"
+      }
     }
     relationships {
       ["\(a)\(dmVersion)"] {
@@ -253,6 +261,19 @@ customTypes {
             attribute = "\(a)ImplementedEntities"
             description = "Entities implemented by this asset."
           }    
+        }
+      }
+    ["data_model_entity_generalization_specialization"] {
+        description = "Represents the generalization-specialization relationship between a general entity (parent) and specialized entities (children)."
+        parent {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)\(dmEntity)GeneralizationEntity"
+          description = "General entity, representing shared characteristics of specialized entities."
+        }
+        children {
+          type = "\(t)\(dmEntity)"
+          attribute = "\(a)\(dmEntity)SpecializationEntities"
+          description = "Specialized entities derived from the general entity."
         }
       }
     }
