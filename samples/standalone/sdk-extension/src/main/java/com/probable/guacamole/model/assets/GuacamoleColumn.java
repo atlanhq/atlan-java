@@ -17,6 +17,7 @@ import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICalculationView;
 import com.atlan.model.assets.ICatalog;
 import com.atlan.model.assets.IColumn;
+import com.atlan.model.assets.ICosmosMongoDBCollection;
 import com.atlan.model.assets.IDbtMetric;
 import com.atlan.model.assets.IDbtModel;
 import com.atlan.model.assets.IDbtModelColumn;
@@ -204,6 +205,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnVariance;
 
+    /** Cosmos collection in which this column exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
     /** TBC */
     @Attribute
     @Singular
@@ -362,6 +367,14 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<IColumn> nestedColumns;
+
+    /** Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionName;
+
+    /** Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionQualifiedName;
 
     /** TBC */
     @Attribute
