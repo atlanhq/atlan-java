@@ -144,7 +144,7 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <code><a href="../core/AtlanObject.html#rawJsonObject">rawJsonObject</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IAPI">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></h3>
-<code><a href="IAPI.html#API_EXTERNAL_DOCS">API_EXTERNAL_DOCS</a>, <a href="IAPI.html#API_IS_AUTH_OPTIONAL">API_IS_AUTH_OPTIONAL</a>, <a href="IAPI.html#API_SPEC_NAME">API_SPEC_NAME</a>, <a href="IAPI.html#API_SPEC_QUALIFIED_NAME">API_SPEC_QUALIFIED_NAME</a>, <a href="IAPI.html#API_SPEC_TYPE">API_SPEC_TYPE</a>, <a href="IAPI.html#API_SPEC_VERSION">API_SPEC_VERSION</a></code></div>
+<code><a href="IAPI.html#API_EXTERNAL_DOCS">API_EXTERNAL_DOCS</a>, <a href="IAPI.html#API_IS_AUTH_OPTIONAL">API_IS_AUTH_OPTIONAL</a>, <a href="IAPI.html#API_IS_OBJECT_REFERENCE">API_IS_OBJECT_REFERENCE</a>, <a href="IAPI.html#API_OBJECT_QUALIFIED_NAME">API_OBJECT_QUALIFIED_NAME</a>, <a href="IAPI.html#API_SPEC_NAME">API_SPEC_NAME</a>, <a href="IAPI.html#API_SPEC_QUALIFIED_NAME">API_SPEC_QUALIFIED_NAME</a>, <a href="IAPI.html#API_SPEC_TYPE">API_SPEC_TYPE</a>, <a href="IAPI.html#API_SPEC_VERSION">API_SPEC_VERSION</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IAPIPath">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></h3>
 <code><a href="IAPIPath.html#API_PATH_AVAILABLE_OPERATIONS">API_PATH_AVAILABLE_OPERATIONS</a>, <a href="IAPIPath.html#API_PATH_AVAILABLE_RESPONSE_CODES">API_PATH_AVAILABLE_RESPONSE_CODES</a>, <a href="IAPIPath.html#API_PATH_IS_INGRESS_EXPOSED">API_PATH_IS_INGRESS_EXPOSED</a>, <a href="IAPIPath.html#API_PATH_IS_TEMPLATED">API_PATH_IS_TEMPLATED</a>, <a href="IAPIPath.html#API_PATH_RAW_URI">API_PATH_RAW_URI</a>, <a href="IAPIPath.html#API_PATH_SUMMARY">API_PATH_SUMMARY</a>, <a href="IAPIPath.html#API_SPEC">API_SPEC</a></code></div>
@@ -278,6 +278,16 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getApiIsAuthOptional()" class="member-name-link">getApiIsAuthOptional</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether authentication is optional (true) or required (false).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getApiIsObjectReference()" class="member-name-link">getApiIsObjectReference</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If this asset refers to an APIObject</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getApiObjectQualifiedName()" class="member-name-link">getApiObjectQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Qualified name of the APIObject that is referred to by this asset.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getApiPathAvailableOperations()" class="member-name-link">getApiPathAvailableOperations</a>()</code></div>
@@ -1543,6 +1553,32 @@ implements <a href="IAPIPath.html" title="interface in com.atlan.model.assets">I
 <dd><code><a href="IAPI.html#getApiIsAuthOptional()">getApiIsAuthOptional</a></code>&nbsp;in interface&nbsp;<code><a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="IAPIPath.html#getApiIsAuthOptional()">getApiIsAuthOptional</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getApiIsObjectReference()">
+<h3>getApiIsObjectReference</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getApiIsObjectReference</span>()</div>
+<div class="block">If this asset refers to an APIObject</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IAPI.html#getApiIsObjectReference()">getApiIsObjectReference</a></code>&nbsp;in interface&nbsp;<code><a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IAPIPath.html#getApiIsObjectReference()">getApiIsObjectReference</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getApiObjectQualifiedName()">
+<h3>getApiObjectQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getApiObjectQualifiedName</span>()</div>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IAPI.html#getApiObjectQualifiedName()">getApiObjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IAPI.html" title="interface in com.atlan.model.assets">IAPI</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IAPIPath.html#getApiObjectQualifiedName()">getApiObjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IAPIPath.html" title="interface in com.atlan.model.assets">IAPIPath</a></code></dd>
 </dl>
 </section>
 </li>

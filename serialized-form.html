@@ -5196,6 +5196,239 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.APIField">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/APIField.html" title="class in com.atlan.model.assets">com.atlan.model.assets.APIField</a></h3>
+<div class="type-signature">class APIField extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>apiExternalDocs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; apiExternalDocs</pre>
+<div class="block">External documentation of the API.</div>
+</li>
+<li class="block-list">
+<h5>apiFieldType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiFieldType</pre>
+<div class="block">Type of APIField. E.g. STRING, NUMBER etc. It is free text.</div>
+</li>
+<li class="block-list">
+<h5>apiFieldTypeSecondary</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiFieldTypeSecondary</pre>
+<div class="block">Secondary Type of APIField. E.g. LIST/STRING, then LIST would be the secondary type.</div>
+</li>
+<li class="block-list">
+<h5>apiIsAuthOptional</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsAuthOptional</pre>
+<div class="block">Whether authentication is optional (true) or required (false).</div>
+</li>
+<li class="block-list">
+<h5>apiIsObjectReference</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsObjectReference</pre>
+<div class="block">If this asset refers to an APIObject</div>
+</li>
+<li class="block-list">
+<h5>apiObject</h5>
+<pre><a href="com/atlan/model/assets/IAPIObject.html" title="interface in com.atlan.model.assets">IAPIObject</a> apiObject</pre>
+<div class="block">APIObject asset containing this APIField.</div>
+</li>
+<li class="block-list">
+<h5>apiObjectQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiObjectQualifiedName</pre>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
+</li>
+<li class="block-list">
+<h5>apiQuery</h5>
+<pre><a href="com/atlan/model/assets/IAPIQuery.html" title="interface in com.atlan.model.assets">IAPIQuery</a> apiQuery</pre>
+<div class="block">APIQuery asset containing this APIField.</div>
+</li>
+<li class="block-list">
+<h5>apiQueryParamType</h5>
+<pre><a href="com/atlan/model/enums/APIQueryParamTypeEnum.html" title="enum class in com.atlan.model.enums">APIQueryParamTypeEnum</a> apiQueryParamType</pre>
+<div class="block">If parent relationship type is APIQuery, then this attribute denotes if this is input or output parameter.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecName</pre>
+<div class="block">Simple name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecQualifiedName</pre>
+<div class="block">Unique name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecType</pre>
+<div class="block">Type of API, for example: OpenAPI, GraphQL, etc.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecVersion</pre>
+<div class="block">Version of the API specification.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for APIFields.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.APIObject">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/APIObject.html" title="class in com.atlan.model.assets">com.atlan.model.assets.APIObject</a></h3>
+<div class="type-signature">class APIObject extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>apiExternalDocs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; apiExternalDocs</pre>
+<div class="block">External documentation of the API.</div>
+</li>
+<li class="block-list">
+<h5>apiFieldCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> apiFieldCount</pre>
+<div class="block">Count of the APIField of this object.</div>
+</li>
+<li class="block-list">
+<h5>apiFields</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAPIField.html" title="interface in com.atlan.model.assets">IAPIField</a>&gt; apiFields</pre>
+<div class="block">APIField assets contained within this APIObject.</div>
+</li>
+<li class="block-list">
+<h5>apiIsAuthOptional</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsAuthOptional</pre>
+<div class="block">Whether authentication is optional (true) or required (false).</div>
+</li>
+<li class="block-list">
+<h5>apiIsObjectReference</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsObjectReference</pre>
+<div class="block">If this asset refers to an APIObject</div>
+</li>
+<li class="block-list">
+<h5>apiObjectQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiObjectQualifiedName</pre>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecName</pre>
+<div class="block">Simple name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecQualifiedName</pre>
+<div class="block">Unique name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecType</pre>
+<div class="block">Type of API, for example: OpenAPI, GraphQL, etc.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecVersion</pre>
+<div class="block">Version of the API specification.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for APIObjects.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.APIPath">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/APIPath.html" title="class in com.atlan.model.assets">com.atlan.model.assets.APIPath</a></h3>
 <div class="type-signature">class APIPath extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -5217,6 +5450,16 @@ loadScripts(document, 'script');</script>
 <h5>apiIsAuthOptional</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsAuthOptional</pre>
 <div class="block">Whether authentication is optional (true) or required (false).</div>
+</li>
+<li class="block-list">
+<h5>apiIsObjectReference</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsObjectReference</pre>
+<div class="block">If this asset refers to an APIObject</div>
+</li>
+<li class="block-list">
+<h5>apiObjectQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiObjectQualifiedName</pre>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
 </li>
 <li class="block-list">
 <h5>apiPathAvailableOperations</h5>
@@ -5320,6 +5563,125 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.APIQuery">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/APIQuery.html" title="class in com.atlan.model.assets">com.atlan.model.assets.APIQuery</a></h3>
+<div class="type-signature">class APIQuery extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>apiExternalDocs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; apiExternalDocs</pre>
+<div class="block">External documentation of the API.</div>
+</li>
+<li class="block-list">
+<h5>apiFields</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAPIField.html" title="interface in com.atlan.model.assets">IAPIField</a>&gt; apiFields</pre>
+<div class="block">APIField assets contained within this APIQuery.</div>
+</li>
+<li class="block-list">
+<h5>apiInputFieldCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> apiInputFieldCount</pre>
+<div class="block">Count of the APIField of this query that are input to it.</div>
+</li>
+<li class="block-list">
+<h5>apiIsAuthOptional</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsAuthOptional</pre>
+<div class="block">Whether authentication is optional (true) or required (false).</div>
+</li>
+<li class="block-list">
+<h5>apiIsObjectReference</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsObjectReference</pre>
+<div class="block">If this asset refers to an APIObject</div>
+</li>
+<li class="block-list">
+<h5>apiObjectQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiObjectQualifiedName</pre>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
+</li>
+<li class="block-list">
+<h5>apiQueryOutputType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiQueryOutputType</pre>
+<div class="block">Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text.</div>
+</li>
+<li class="block-list">
+<h5>apiQueryOutputTypeSecondary</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiQueryOutputTypeSecondary</pre>
+<div class="block">Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecName</pre>
+<div class="block">Simple name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecQualifiedName</pre>
+<div class="block">Unique name of the API spec, if this asset is contained in an API spec.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecType</pre>
+<div class="block">Type of API, for example: OpenAPI, GraphQL, etc.</div>
+</li>
+<li class="block-list">
+<h5>apiSpecVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiSpecVersion</pre>
+<div class="block">Version of the API specification.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for APIQuerys.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.APISpec">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/APISpec.html" title="class in com.atlan.model.assets">com.atlan.model.assets.APISpec</a></h3>
 <div class="type-signature">class APISpec extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -5341,6 +5703,16 @@ loadScripts(document, 'script');</script>
 <h5>apiIsAuthOptional</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsAuthOptional</pre>
 <div class="block">Whether authentication is optional (true) or required (false).</div>
+</li>
+<li class="block-list">
+<h5>apiIsObjectReference</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> apiIsObjectReference</pre>
+<div class="block">If this asset refers to an APIObject</div>
+</li>
+<li class="block-list">
+<h5>apiObjectQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> apiObjectQualifiedName</pre>
+<div class="block">Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true.</div>
 </li>
 <li class="block-list">
 <h5>apiPaths</h5>
@@ -6860,6 +7232,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Consumer groups subscribed to this topic.</div>
 </li>
 <li class="block-list">
+<h5>kafkaTopicCleanupPolicies</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> kafkaTopicCleanupPolicies</pre>
+<div class="block">Comma seperated Cleanup policy for this topic.</div>
+</li>
+<li class="block-list">
 <h5>kafkaTopicCleanupPolicy</h5>
 <pre><a href="com/atlan/model/enums/KafkaTopicCleanupPolicy.html" title="enum class in com.atlan.model.enums">KafkaTopicCleanupPolicy</a> kafkaTopicCleanupPolicy</pre>
 <div class="block">Cleanup policy for this topic.</div>
@@ -7245,6 +7622,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Processes that detail column-level lineage for this process.</div>
 </li>
 <li class="block-list">
+<h5>fivetranConnector</h5>
+<pre><a href="com/atlan/model/assets/IFivetranConnector.html" title="interface in com.atlan.model.assets">IFivetranConnector</a> fivetranConnector</pre>
+<div class="block">fivetranConnector in which this process exists.</div>
+</li>
+<li class="block-list">
 <h5>inputs</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt; inputs</pre>
 <div class="block">Assets that are inputs to this process.</div>
@@ -7538,6 +7920,11 @@ loadScripts(document, 'script');</script>
 <h5>calculationViewName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewName</pre>
 <div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>calculationViewPackageId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewPackageId</pre>
+<div class="block">The full package id path to which a calculation view belongs/resides in the repository.</div>
 </li>
 <li class="block-list">
 <h5>calculationViewQualifiedName</h5>
@@ -9195,6 +9582,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Calculated variance of the values in a numeric column.</div>
 </li>
 <li class="block-list">
+<h5>cosmosMongoDBCollection</h5>
+<pre><a href="com/atlan/model/assets/ICosmosMongoDBCollection.html" title="interface in com.atlan.model.assets">ICosmosMongoDBCollection</a> cosmosMongoDBCollection</pre>
+<div class="block">Cosmos collection in which this column exists.</div>
+</li>
+<li class="block-list">
 <h5>databaseName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseName</pre>
 <div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
@@ -9358,6 +9750,16 @@ loadScripts(document, 'script');</script>
 <h5>nestedColumns</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt; nestedColumns</pre>
 <div class="block">Nested columns that exist within this column.</div>
+</li>
+<li class="block-list">
+<h5>nosqlCollectionName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> nosqlCollectionName</pre>
+<div class="block">Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection.</div>
+</li>
+<li class="block-list">
+<h5>nosqlCollectionQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> nosqlCollectionQualifiedName</pre>
+<div class="block">Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection.</div>
 </li>
 <li class="block-list">
 <h5>numericScale</h5>
@@ -9572,6 +9974,11 @@ loadScripts(document, 'script');</script>
 <h5>columnProcesses</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt; columnProcesses</pre>
 <div class="block">Processes that detail column-level lineage for this process.</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnector</h5>
+<pre><a href="com/atlan/model/assets/IFivetranConnector.html" title="interface in com.atlan.model.assets">IFivetranConnector</a> fivetranConnector</pre>
+<div class="block">fivetranConnector in which this process exists.</div>
 </li>
 <li class="block-list">
 <h5>inputs</h5>
@@ -11944,6 +12351,11 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>fivetranConnector</h5>
+<pre><a href="com/atlan/model/assets/IFivetranConnector.html" title="interface in com.atlan.model.assets">IFivetranConnector</a> fivetranConnector</pre>
+<div class="block">fivetranConnector in which this process exists.</div>
+</li>
+<li class="block-list">
 <h5>inputs</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&gt; inputs</pre>
 <div class="block">Assets that are inputs to this task.</div>
@@ -12803,6 +13215,11 @@ loadScripts(document, 'script');</script>
 <h5>dbtUniqueId</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dbtUniqueId</pre>
 <div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnector</h5>
+<pre><a href="com/atlan/model/assets/IFivetranConnector.html" title="interface in com.atlan.model.assets">IFivetranConnector</a> fivetranConnector</pre>
+<div class="block">fivetranConnector in which this process exists.</div>
 </li>
 <li class="block-list">
 <h5>inputs</h5>
@@ -14980,6 +15397,275 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.FivetranConnector">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/FivetranConnector.html" title="class in com.atlan.model.assets">com.atlan.model.assets.FivetranConnector</a></h3>
+<div class="type-signature">class FivetranConnector extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>fivetranConnectorCreditsUsed</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorCreditsUsed</pre>
+<div class="block">Total credits used by this destination</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorDestinationName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorDestinationName</pre>
+<div class="block">Destination name added by the user on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorDestinationType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorDestinationType</pre>
+<div class="block">Type of destination on Fivetran. Eg: redshift, bigquery etc.</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorDestinationURL</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorDestinationURL</pre>
+<div class="block">URL to open the destination details on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncExtractTimeSeconds</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncExtractTimeSeconds</pre>
+<div class="block">Extract time in seconds in the latest sync on fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncExtractVolumeMegabytes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncExtractVolumeMegabytes</pre>
+<div class="block">Extracted data volume in metabytes in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncFinishedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorLastSyncFinishedAt</pre>
+<div class="block">Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorLastSyncId</pre>
+<div class="block">ID of the latest sync</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncLoadTimeSeconds</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncLoadTimeSeconds</pre>
+<div class="block">Load time in seconds in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncLoadVolumeMegabytes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncLoadVolumeMegabytes</pre>
+<div class="block">Loaded data volume in metabytes in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncProcessTimeSeconds</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncProcessTimeSeconds</pre>
+<div class="block">Process time in seconds in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncProcessVolumeMegabytes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncProcessVolumeMegabytes</pre>
+<div class="block">Process volume in metabytes in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncReason</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorLastSyncReason</pre>
+<div class="block">Failure reason for the latest sync on Fivetran. If status is FAILURE, this is the description of the reason why the sync failed. If status is FAILURE_WITH_TASK, this is the description of the Error. If status is RESCHEDULED, this is the description of the reason why the sync is rescheduled.</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncRescheduledAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorLastSyncRescheduledAt</pre>
+<div class="block">Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncStartedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorLastSyncStartedAt</pre>
+<div class="block">Timestamp (epoch) when the latest sync started on Fivetran, in milliseconds</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncTablesSynced</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorLastSyncTablesSynced</pre>
+<div class="block">Number of tables synced in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncTaskType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorLastSyncTaskType</pre>
+<div class="block">Failure task type for the latest sync on Fivetran. If status is FAILURE_WITH_TASK or RESCHEDULED, this field displays the type of the Error that caused the failure or rescheduling, respectively, e.g., reconnect, update_service_account, etc.</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorLastSyncTotalTimeSeconds</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorLastSyncTotalTimeSeconds</pre>
+<div class="block">Total sync time in seconds in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsChangePercentageFree</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsChangePercentageFree</pre>
+<div class="block">Increase in the percentage of free MAR compared to the previous month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsChangePercentagePaid</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsChangePercentagePaid</pre>
+<div class="block">Increase in the percentage of paid MAR compared to the previous month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsChangePercentageTotal</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsChangePercentageTotal</pre>
+<div class="block">Increase in the percentage of total MAR compared to the previous month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsFree</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorMonthlyActiveRowsFree</pre>
+<div class="block">Free Monthly Active Rows used by the connector in the past month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount</pre>
+<div class="block">Percentage of the account's total free MAR used by this connector</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsPaid</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorMonthlyActiveRowsPaid</pre>
+<div class="block">Paid Monthly Active Rows used by the connector in the past month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount</pre>
+<div class="block">Percentage of the account's total paid MAR used by this connector</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsTotal</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorMonthlyActiveRowsTotal</pre>
+<div class="block">Total Monthly Active Rows used by the connector in the past month</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount</pre>
+<div class="block">Percentage of the account's total MAR used by this connector</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorName</pre>
+<div class="block">Connector name added by the user on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorSyncFrequency</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorSyncFrequency</pre>
+<div class="block">Sync frequency for the connector in number of hours. Eg: Every 6 hours</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorSyncPaused</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> fivetranConnectorSyncPaused</pre>
+<div class="block">Boolean to indicate whether the sync for this connector is paused or not</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorSyncSetupOn</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorSyncSetupOn</pre>
+<div class="block">Timestamp (epoch) on which the connector was setup on Fivetran, in milliseconds</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorSyncSetupUserEmail</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorSyncSetupUserEmail</pre>
+<div class="block">Email ID of the user who setpu the connector on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorSyncSetupUserFullName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorSyncSetupUserFullName</pre>
+<div class="block">Full name of the user who setup the connector on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorTopTablesByMAR</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorTopTablesByMAR</pre>
+<div class="block">Total five tables sorted by MAR synced by this connector</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorTotalTablesSynced</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranConnectorTotalTablesSynced</pre>
+<div class="block">Total number of tables synced by this connector</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorType</pre>
+<div class="block">Type of connector on Fivetran. Eg: snowflake, google_analytics, notion etc.</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorURL</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranConnectorURL</pre>
+<div class="block">URL to open the connector details on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnectorUsageCost</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> fivetranConnectorUsageCost</pre>
+<div class="block">Total usage cost by this destination</div>
+</li>
+<li class="block-list">
+<h5>fivetranLastSyncRecordsUpdated</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> fivetranLastSyncRecordsUpdated</pre>
+<div class="block">Number of records updated in the latest sync on Fivetran</div>
+</li>
+<li class="block-list">
+<h5>fivetranLastSyncStatus</h5>
+<pre><a href="com/atlan/model/enums/FivetranConnectorStatus.html" title="enum class in com.atlan.model.enums">FivetranConnectorStatus</a> fivetranLastSyncStatus</pre>
+<div class="block">Status of the latest sync on Fivetran.</div>
+</li>
+<li class="block-list">
+<h5>fivetranWorkflowName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> fivetranWorkflowName</pre>
+<div class="block">Name of the atlan fivetran workflow that updated this asset</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>processes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; processes</pre>
+<div class="block">Processes related to this Fivetran connector</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for FivetranConnectors.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.Folder">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/Folder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Folder</a></h3>
 <div class="type-signature">class Folder extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -15085,6 +15771,11 @@ loadScripts(document, 'script');</script>
 <h5>functionDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> functionDefinition</pre>
 <div class="block">Code or set of statements that determine the output of the function.</div>
+</li>
+<li class="block-list">
+<h5>functionIsDMF</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> functionIsDMF</pre>
+<div class="block">Whether the function is a data metric function.</div>
 </li>
 <li class="block-list">
 <h5>functionIsExternal</h5>
@@ -16083,6 +16774,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Consumer groups subscribed to this topic.</div>
 </li>
 <li class="block-list">
+<h5>kafkaTopicCleanupPolicies</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> kafkaTopicCleanupPolicies</pre>
+<div class="block">Comma seperated Cleanup policy for this topic.</div>
+</li>
+<li class="block-list">
 <h5>kafkaTopicCleanupPolicy</h5>
 <pre><a href="com/atlan/model/enums/KafkaTopicCleanupPolicy.html" title="enum class in com.atlan.model.enums">KafkaTopicCleanupPolicy</a> kafkaTopicCleanupPolicy</pre>
 <div class="block">Cleanup policy for this topic.</div>
@@ -16199,6 +16895,11 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>columnProcesses</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumnProcess.html" title="interface in com.atlan.model.assets">IColumnProcess</a>&gt; columnProcesses</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>fivetranConnector</h5>
+<pre><a href="com/atlan/model/assets/IFivetranConnector.html" title="interface in com.atlan.model.assets">IFivetranConnector</a> fivetranConnector</pre>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
