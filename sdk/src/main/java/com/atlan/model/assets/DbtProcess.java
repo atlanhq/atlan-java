@@ -156,6 +156,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String dbtUniqueId;
 
+    /** fivetranConnector in which this process exists. */
+    @Attribute
+    IFivetranConnector fivetranConnector;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

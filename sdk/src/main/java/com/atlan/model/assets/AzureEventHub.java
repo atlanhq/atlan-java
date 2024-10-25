@@ -73,6 +73,10 @@ public class AzureEventHub extends Asset
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
+    /** Comma seperated Cleanup policy for this topic. */
+    @Attribute
+    String kafkaTopicCleanupPolicies;
+
     /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;

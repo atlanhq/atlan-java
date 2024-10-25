@@ -39,6 +39,10 @@ public interface IKafkaTopic {
     /** Consumer groups subscribed to this topic. */
     RelationField KAFKA_CONSUMER_GROUPS = new RelationField("kafkaConsumerGroups");
 
+    /** Comma seperated Cleanup policy for this topic. */
+    KeywordField KAFKA_TOPIC_CLEANUP_POLICIES =
+            new KeywordField("kafkaTopicCleanupPolicies", "kafkaTopicCleanupPolicies");
+
     /** Cleanup policy for this topic. */
     KeywordField KAFKA_TOPIC_CLEANUP_POLICY = new KeywordField("kafkaTopicCleanupPolicy", "kafkaTopicCleanupPolicy");
 
@@ -399,6 +403,9 @@ public interface IKafkaTopic {
 
     /** Consumer groups subscribed to this topic. */
     SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups();
+
+    /** Comma seperated Cleanup policy for this topic. */
+    String getKafkaTopicCleanupPolicies();
 
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();

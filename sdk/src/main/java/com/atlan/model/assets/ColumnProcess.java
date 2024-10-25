@@ -71,6 +71,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** fivetranConnector in which this process exists. */
+    @Attribute
+    IFivetranConnector fivetranConnector;
+
     /** Assets that are inputs to this process. */
     @Attribute
     @Singular

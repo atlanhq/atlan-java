@@ -42,6 +42,9 @@ public interface ICalculationView {
     KeywordField CALCULATION_VIEW_ACTIVATED_BY =
             new KeywordField("calculationViewActivatedBy", "calculationViewActivatedBy");
 
+    /** The full package id path to which a calculation view belongs/resides in the repository. */
+    KeywordField CALCULATION_VIEW_PACKAGE_ID = new KeywordField("calculationViewPackageId", "calculationViewPackageId");
+
     /** The version ID of this calculation view. */
     NumericField CALCULATION_VIEW_VERSION_ID = new NumericField("calculationViewVersionId", "calculationViewVersionId");
 
@@ -317,6 +320,9 @@ public interface ICalculationView {
 
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewName();
+
+    /** The full package id path to which a calculation view belongs/resides in the repository. */
+    String getCalculationViewPackageId();
 
     /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewQualifiedName();

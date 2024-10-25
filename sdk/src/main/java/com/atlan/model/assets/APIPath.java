@@ -56,6 +56,14 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Attribute
     Boolean apiIsAuthOptional;
 
+    /** If this asset refers to an APIObject */
+    @Attribute
+    Boolean apiIsObjectReference;
+
+    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
+    @Attribute
+    String apiObjectQualifiedName;
+
     /** List of the operations available on the endpoint. */
     @Attribute
     @Singular

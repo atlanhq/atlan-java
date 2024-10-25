@@ -56,6 +56,14 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     Boolean apiIsAuthOptional;
 
+    /** If this asset refers to an APIObject */
+    @Attribute
+    Boolean apiIsObjectReference;
+
+    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
+    @Attribute
+    String apiObjectQualifiedName;
+
     /** Paths that exist within this API specification. */
     @Attribute
     @Singular

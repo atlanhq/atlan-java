@@ -77,6 +77,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    IFivetranConnector fivetranConnector;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
 

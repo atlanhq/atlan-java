@@ -71,8 +71,17 @@ public interface ICatalog {
             case ADLSObject.TYPE_NAME:
                 ref = ADLSObject.refByQualifiedName(qualifiedName);
                 break;
+            case APIField.TYPE_NAME:
+                ref = APIField.refByQualifiedName(qualifiedName);
+                break;
+            case APIObject.TYPE_NAME:
+                ref = APIObject.refByQualifiedName(qualifiedName);
+                break;
             case APIPath.TYPE_NAME:
                 ref = APIPath.refByQualifiedName(qualifiedName);
+                break;
+            case APIQuery.TYPE_NAME:
+                ref = APIQuery.refByQualifiedName(qualifiedName);
                 break;
             case APISpec.TYPE_NAME:
                 ref = APISpec.refByQualifiedName(qualifiedName);
@@ -250,6 +259,9 @@ public interface ICatalog {
                 break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
+                break;
+            case FivetranConnector.TYPE_NAME:
+                ref = FivetranConnector.refByQualifiedName(qualifiedName);
                 break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);

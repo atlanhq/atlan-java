@@ -369,6 +369,9 @@ public interface IAzureEventHub {
     /** Consumer groups subscribed to this topic. */
     SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups();
 
+    /** Comma seperated Cleanup policy for this topic. */
+    String getKafkaTopicCleanupPolicies();
+
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 

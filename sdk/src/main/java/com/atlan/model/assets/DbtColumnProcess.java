@@ -157,6 +157,10 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String dbtUniqueId;
 
+    /** fivetranConnector in which this process exists. */
+    @Attribute
+    IFivetranConnector fivetranConnector;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

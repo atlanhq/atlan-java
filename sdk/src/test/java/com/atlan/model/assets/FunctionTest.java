@@ -451,6 +451,7 @@ public class FunctionTest {
             .functionArgument("String0")
             .functionArgument("String1")
             .functionDefinition("String0")
+            .functionIsDMF(true)
             .functionIsExternal(true)
             .functionIsMemoizable(true)
             .functionIsSecure(true)

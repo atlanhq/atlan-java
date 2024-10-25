@@ -7,10 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.FivetranConnectorStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,53 +20,28 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an API specification in Atlan.
+ * Base class for Fivetran assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAPISpec {
+public interface IFivetran {
 
-    public static final String TYPE_NAME = "APISpec";
+    public static final String TYPE_NAME = "Fivetran";
 
-    /** Paths that exist within this API specification. */
-    RelationField API_PATHS = new RelationField("apiPaths");
+    /** Number of records updated in the latest sync on Fivetran */
+    NumericField FIVETRAN_LAST_SYNC_RECORDS_UPDATED =
+            new NumericField("fivetranLastSyncRecordsUpdated", "fivetranLastSyncRecordsUpdated");
 
-    /** Email address for a contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_EMAIL =
-            new KeywordTextField("apiSpecContactEmail", "apiSpecContactEmail", "apiSpecContactEmail.text");
+    /** Status of the latest sync on Fivetran. */
+    KeywordField FIVETRAN_LAST_SYNC_STATUS = new KeywordField("fivetranLastSyncStatus", "fivetranLastSyncStatus");
 
-    /** Name of the contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_NAME =
-            new KeywordTextField("apiSpecContactName", "apiSpecContactName.keyword", "apiSpecContactName");
-
-    /** URL pointing to the contact information. */
-    KeywordTextField API_SPEC_CONTACT_URL =
-            new KeywordTextField("apiSpecContactURL", "apiSpecContactURL", "apiSpecContactURL.text");
-
-    /** Version of the contract for the API specification. */
-    KeywordField API_SPEC_CONTRACT_VERSION = new KeywordField("apiSpecContractVersion", "apiSpecContractVersion");
-
-    /** Name of the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_NAME =
-            new KeywordTextField("apiSpecLicenseName", "apiSpecLicenseName.keyword", "apiSpecLicenseName");
-
-    /** URL to the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_URL =
-            new KeywordTextField("apiSpecLicenseURL", "apiSpecLicenseURL", "apiSpecLicenseURL.text");
-
-    /** Service alias for the API specification. */
-    KeywordTextField API_SPEC_SERVICE_ALIAS =
-            new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
-
-    /** URL to the terms of service for the API specification. */
-    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
-            "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
+    /** Name of the atlan fivetran workflow that updated this asset */
+    KeywordField FIVETRAN_WORKFLOW_NAME = new KeywordField("fivetranWorkflowName", "fivetranWorkflowName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -94,57 +69,6 @@ public interface IAPISpec {
 
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
-
-    /** External documentation of the API. */
-    Map<String, String> getApiExternalDocs();
-
-    /** Whether authentication is optional (true) or required (false). */
-    Boolean getApiIsAuthOptional();
-
-    /** If this asset refers to an APIObject */
-    Boolean getApiIsObjectReference();
-
-    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
-    String getApiObjectQualifiedName();
-
-    /** Paths that exist within this API specification. */
-    SortedSet<IAPIPath> getApiPaths();
-
-    /** Email address for a contact responsible for the API specification. */
-    String getApiSpecContactEmail();
-
-    /** Name of the contact responsible for the API specification. */
-    String getApiSpecContactName();
-
-    /** URL pointing to the contact information. */
-    String getApiSpecContactURL();
-
-    /** Version of the contract for the API specification. */
-    String getApiSpecContractVersion();
-
-    /** Name of the license under which the API specification is available. */
-    String getApiSpecLicenseName();
-
-    /** URL to the license under which the API specification is available. */
-    String getApiSpecLicenseURL();
-
-    /** Simple name of the API spec, if this asset is contained in an API spec. */
-    String getApiSpecName();
-
-    /** Unique name of the API spec, if this asset is contained in an API spec. */
-    String getApiSpecQualifiedName();
-
-    /** Service alias for the API specification. */
-    String getApiSpecServiceAlias();
-
-    /** URL to the terms of service for the API specification. */
-    String getApiSpecTermsOfServiceURL();
-
-    /** Type of API, for example: OpenAPI, GraphQL, etc. */
-    String getApiSpecType();
-
-    /** Version of the API specification. */
-    String getApiSpecVersion();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -415,6 +339,15 @@ public interface IAPISpec {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** Number of records updated in the latest sync on Fivetran */
+    Long getFivetranLastSyncRecordsUpdated();
+
+    /** Status of the latest sync on Fivetran. */
+    FivetranConnectorStatus getFivetranLastSyncStatus();
+
+    /** Name of the atlan fivetran workflow that updated this asset */
+    String getFivetranWorkflowName();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

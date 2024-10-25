@@ -41,6 +41,9 @@ public interface IFunction {
     /** Code or set of statements that determine the output of the function. */
     TextField FUNCTION_DEFINITION = new TextField("functionDefinition", "functionDefinition");
 
+    /** Whether the function is a data metric function. */
+    BooleanField FUNCTION_IS_DMF = new BooleanField("functionIsDMF", "functionIsDMF");
+
     /** Whether the function is stored or executed externally (true) or internally (false). */
     BooleanField FUNCTION_IS_EXTERNAL = new BooleanField("functionIsExternal", "functionIsExternal");
 
@@ -385,6 +388,9 @@ public interface IFunction {
 
     /** Code or set of statements that determine the output of the function. */
     String getFunctionDefinition();
+
+    /** Whether the function is a data metric function. */
+    Boolean getFunctionIsDMF();
 
     /** Whether the function is stored or executed externally (true) or internally (false). */
     Boolean getFunctionIsExternal();

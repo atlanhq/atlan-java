@@ -7,25 +7,24 @@ import javax.annotation.processing.Generated;
 import lombok.Getter;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
-public enum WorkflowRunType implements AtlanEnum {
-    DATA_ACCESS("DATA_ACCESS"),
-    POLICY("POLICY"),
-    CHANGE_MANAGEMENT("CHANGE_MANAGEMENT"),
-    PUBLICATION_MANAGEMENT("PUBLICATION_MANAGEMENT"),
-    IMPACT_ANALYSIS("IMPACT_ANALYSIS"),
-    REVOKE_DATA_ACCESS("REVOKE_DATA_ACCESS"),
+public enum FivetranConnectorStatus implements AtlanEnum {
+    SUCCESSFUL("SUCCESSFUL"),
+    FAILURE("FAILURE"),
+    FAILURE_WITH_TASK("FAILURE_WITH_TASK"),
+    RESCHEDULED("RESCHEDULED"),
+    NO_STATUS("NO_STATUS"),
     ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    WorkflowRunType(String value) {
+    FivetranConnectorStatus(String value) {
         this.value = value;
     }
 
-    public static WorkflowRunType fromValue(String value) {
-        for (WorkflowRunType b : WorkflowRunType.values()) {
+    public static FivetranConnectorStatus fromValue(String value) {
+        for (FivetranConnectorStatus b : FivetranConnectorStatus.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

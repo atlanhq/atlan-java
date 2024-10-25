@@ -59,6 +59,10 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Attribute
     String calculationViewName;
 
+    /** The full package id path to which a calculation view belongs/resides in the repository. */
+    @Attribute
+    String calculationViewPackageId;
+
     /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewQualifiedName;

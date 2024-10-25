@@ -411,6 +411,9 @@ public interface IDbtColumnProcess {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** fivetranConnector in which this process exists. */
+    IFivetranConnector getFivetranConnector();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 
