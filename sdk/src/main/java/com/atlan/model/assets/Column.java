@@ -178,6 +178,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double columnVariance;
 
+    /** Cosmos collection in which this column exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
     /** TBC */
     @Attribute
     @Singular
@@ -325,6 +329,14 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<IColumn> nestedColumns;
+
+    /** Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionName;
+
+    /** Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionQualifiedName;
 
     /** Number of digits allowed to the right of the decimal point. */
     @Attribute

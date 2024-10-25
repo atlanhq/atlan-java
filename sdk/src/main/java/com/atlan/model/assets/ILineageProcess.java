@@ -52,6 +52,9 @@ public interface ILineageProcess {
     RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
 
     /** TBC */
+    RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
+
+    /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
     /** TBC */
@@ -383,6 +386,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<IFile> getFiles();
+
+    /** TBC */
+    IFivetranConnector getFivetranConnector();
 
     /** TBC */
     Boolean getHasContract();

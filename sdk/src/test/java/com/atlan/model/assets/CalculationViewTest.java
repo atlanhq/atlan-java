@@ -450,6 +450,7 @@ public class CalculationViewTest {
             .viewerUser("String1")
             .calculationViewActivatedAt(123456789L)
             .calculationViewActivatedBy("String0")
+            .calculationViewPackageId("String0")
             .calculationViewVersionId(123456789L)
             .columnCount(123456789L)
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

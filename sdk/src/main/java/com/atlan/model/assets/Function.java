@@ -86,6 +86,10 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionDefinition;
 
+    /** Whether the function is a data metric function. */
+    @Attribute
+    Boolean functionIsDMF;
+
     /** Whether the function is stored or executed externally (true) or internally (false). */
     @Attribute
     Boolean functionIsExternal;

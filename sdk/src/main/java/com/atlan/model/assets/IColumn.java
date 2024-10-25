@@ -136,6 +136,9 @@ public interface IColumn {
     /** Calculated variance of the values in a numeric column. */
     NumericField COLUMN_VARIANCE = new NumericField("columnVariance", "columnVariance");
 
+    /** Cosmos collection in which this column exists. */
+    RelationField COSMOS_MONGO_DB_COLLECTION = new RelationField("cosmosMongoDBCollection");
+
     /** TBC */
     RelationField DATA_QUALITY_METRIC_DIMENSIONS = new RelationField("dataQualityMetricDimensions");
 
@@ -201,6 +204,14 @@ public interface IColumn {
 
     /** Nested columns that exist within this column. */
     RelationField NESTED_COLUMNS = new RelationField("nestedColumns");
+
+    /** Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    KeywordTextField NOSQL_COLLECTION_NAME =
+            new KeywordTextField("nosqlCollectionName", "nosqlCollectionName.keyword", "nosqlCollectionName");
+
+    /** Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    KeywordField NOSQL_COLLECTION_QUALIFIED_NAME =
+            new KeywordField("nosqlCollectionQualifiedName", "nosqlCollectionQualifiedName");
 
     /** Number of digits allowed to the right of the decimal point. */
     NumericField NUMERIC_SCALE = new NumericField("numericScale", "numericScale");
@@ -624,6 +635,9 @@ public interface IColumn {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
+    /** Cosmos collection in which this column exists. */
+    ICosmosMongoDBCollection getCosmosMongoDBCollection();
+
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -797,6 +811,12 @@ public interface IColumn {
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    String getNosqlCollectionName();
+
+    /** Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    String getNosqlCollectionQualifiedName();
 
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();

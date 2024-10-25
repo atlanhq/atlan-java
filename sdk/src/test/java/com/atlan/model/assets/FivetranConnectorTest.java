@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class APISpecTest {
+public class FivetranConnectorTest {
 
-    private static final APISpec full = APISpec._internal()
+    private static final FivetranConnector full = FivetranConnector._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,15 +59,9 @@ public class APISpecTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .apiExternalDoc("key1", "value1")
-            .apiExternalDoc("key2", "value2")
-            .apiIsAuthOptional(true)
-            .apiIsObjectReference(true)
-            .apiObjectQualifiedName("String0")
-            .apiSpecName("String0")
-            .apiSpecQualifiedName("String0")
-            .apiSpecType("String0")
-            .apiSpecVersion("String0")
+            .fivetranLastSyncRecordsUpdated(123456789L)
+            .fivetranLastSyncStatus(FivetranConnectorStatus.SUCCESSFUL)
+            .fivetranWorkflowName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -430,30 +424,60 @@ public class APISpecTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .apiPath(APIPath.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .apiPath(APIPath.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .apiSpecContactEmail("String0")
-            .apiSpecContactName("String0")
-            .apiSpecContactURL("String0")
-            .apiSpecContractVersion("String0")
-            .apiSpecLicenseName("String0")
-            .apiSpecLicenseURL("String0")
-            .apiSpecServiceAlias("String0")
-            .apiSpecTermsOfServiceURL("String0")
+            .fivetranConnectorCreditsUsed(123.456)
+            .fivetranConnectorDestinationName("String0")
+            .fivetranConnectorDestinationType("String0")
+            .fivetranConnectorDestinationURL("String0")
+            .fivetranConnectorLastSyncExtractTimeSeconds(123.456)
+            .fivetranConnectorLastSyncExtractVolumeMegabytes(123.456)
+            .fivetranConnectorLastSyncFinishedAt(123456789L)
+            .fivetranConnectorLastSyncId("String0")
+            .fivetranConnectorLastSyncLoadTimeSeconds(123.456)
+            .fivetranConnectorLastSyncLoadVolumeMegabytes(123.456)
+            .fivetranConnectorLastSyncProcessTimeSeconds(123.456)
+            .fivetranConnectorLastSyncProcessVolumeMegabytes(123.456)
+            .fivetranConnectorLastSyncReason("String0")
+            .fivetranConnectorLastSyncRescheduledAt(123456789L)
+            .fivetranConnectorLastSyncStartedAt(123456789L)
+            .fivetranConnectorLastSyncTablesSynced(123456789L)
+            .fivetranConnectorLastSyncTaskType("String0")
+            .fivetranConnectorLastSyncTotalTimeSeconds(123.456)
+            .fivetranConnectorMonthlyActiveRowsChangePercentageFree(123.456)
+            .fivetranConnectorMonthlyActiveRowsChangePercentagePaid(123.456)
+            .fivetranConnectorMonthlyActiveRowsChangePercentageTotal(123.456)
+            .fivetranConnectorMonthlyActiveRowsFree(123456789L)
+            .fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount(123.456)
+            .fivetranConnectorMonthlyActiveRowsPaid(123456789L)
+            .fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount(123.456)
+            .fivetranConnectorMonthlyActiveRowsTotal(123456789L)
+            .fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount(123.456)
+            .fivetranConnectorName("String0")
+            .fivetranConnectorSyncFrequency("String0")
+            .fivetranConnectorSyncPaused(true)
+            .fivetranConnectorSyncSetupOn(123456789L)
+            .fivetranConnectorSyncSetupUserEmail("String0")
+            .fivetranConnectorSyncSetupUserFullName("String0")
+            .fivetranConnectorTopTablesByMAR("String0")
+            .fivetranConnectorTotalTablesSynced(123456789L)
+            .fivetranConnectorType("String0")
+            .fivetranConnectorURL("String0")
+            .fivetranConnectorUsageCost(123.456)
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .process(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static APISpec frodo;
+    private static FivetranConnector frodo;
     private static String serialized;
 
-    @Test(groups = {"APISpec.builderEquivalency"})
+    @Test(groups = {"FivetranConnector.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"APISpec.serialize"},
-            dependsOnGroups = {"APISpec.builderEquivalency"})
+            groups = {"FivetranConnector.serialize"},
+            dependsOnGroups = {"FivetranConnector.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -462,17 +486,17 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"APISpec.deserialize"},
-            dependsOnGroups = {"APISpec.serialize"})
+            groups = {"FivetranConnector.deserialize"},
+            dependsOnGroups = {"FivetranConnector.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, APISpec.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, FivetranConnector.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"APISpec.equivalency"},
-            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
+            groups = {"FivetranConnector.equivalency"},
+            dependsOnGroups = {"FivetranConnector.serialize", "FivetranConnector.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -481,8 +505,8 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"APISpec.equivalency"},
-            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
+            groups = {"FivetranConnector.equivalency"},
+            dependsOnGroups = {"FivetranConnector.serialize", "FivetranConnector.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -7,10 +7,14 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.FivetranConnectorStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -20,53 +24,178 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an API specification in Atlan.
+ * Instance of a Fivetran connector asset in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAPISpec {
+public interface IFivetranConnector {
 
-    public static final String TYPE_NAME = "APISpec";
+    public static final String TYPE_NAME = "FivetranConnector";
 
-    /** Paths that exist within this API specification. */
-    RelationField API_PATHS = new RelationField("apiPaths");
+    /** Total credits used by this destination */
+    NumericField FIVETRAN_CONNECTOR_CREDITS_USED =
+            new NumericField("fivetranConnectorCreditsUsed", "fivetranConnectorCreditsUsed");
 
-    /** Email address for a contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_EMAIL =
-            new KeywordTextField("apiSpecContactEmail", "apiSpecContactEmail", "apiSpecContactEmail.text");
+    /** Destination name added by the user on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_DESTINATION_NAME =
+            new KeywordField("fivetranConnectorDestinationName", "fivetranConnectorDestinationName");
 
-    /** Name of the contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_NAME =
-            new KeywordTextField("apiSpecContactName", "apiSpecContactName.keyword", "apiSpecContactName");
+    /** Type of destination on Fivetran. Eg: redshift, bigquery etc. */
+    KeywordField FIVETRAN_CONNECTOR_DESTINATION_TYPE =
+            new KeywordField("fivetranConnectorDestinationType", "fivetranConnectorDestinationType");
 
-    /** URL pointing to the contact information. */
-    KeywordTextField API_SPEC_CONTACT_URL =
-            new KeywordTextField("apiSpecContactURL", "apiSpecContactURL", "apiSpecContactURL.text");
+    /** URL to open the destination details on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_DESTINATION_URL =
+            new KeywordField("fivetranConnectorDestinationURL", "fivetranConnectorDestinationURL");
 
-    /** Version of the contract for the API specification. */
-    KeywordField API_SPEC_CONTRACT_VERSION = new KeywordField("apiSpecContractVersion", "apiSpecContractVersion");
+    /** Extract time in seconds in the latest sync on fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_TIME_SECONDS = new NumericField(
+            "fivetranConnectorLastSyncExtractTimeSeconds", "fivetranConnectorLastSyncExtractTimeSeconds");
 
-    /** Name of the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_NAME =
-            new KeywordTextField("apiSpecLicenseName", "apiSpecLicenseName.keyword", "apiSpecLicenseName");
+    /** Extracted data volume in metabytes in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncExtractVolumeMegabytes", "fivetranConnectorLastSyncExtractVolumeMegabytes");
 
-    /** URL to the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_URL =
-            new KeywordTextField("apiSpecLicenseURL", "apiSpecLicenseURL", "apiSpecLicenseURL.text");
+    /** Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_FINISHED_AT =
+            new NumericField("fivetranConnectorLastSyncFinishedAt", "fivetranConnectorLastSyncFinishedAt");
 
-    /** Service alias for the API specification. */
-    KeywordTextField API_SPEC_SERVICE_ALIAS =
-            new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
+    /** ID of the latest sync */
+    KeywordField FIVETRAN_CONNECTOR_LAST_SYNC_ID =
+            new KeywordField("fivetranConnectorLastSyncId", "fivetranConnectorLastSyncId");
 
-    /** URL to the terms of service for the API specification. */
-    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
-            "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
+    /** Load time in seconds in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_LOAD_TIME_SECONDS =
+            new NumericField("fivetranConnectorLastSyncLoadTimeSeconds", "fivetranConnectorLastSyncLoadTimeSeconds");
+
+    /** Loaded data volume in metabytes in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_LOAD_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncLoadVolumeMegabytes", "fivetranConnectorLastSyncLoadVolumeMegabytes");
+
+    /** Process time in seconds in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_TIME_SECONDS = new NumericField(
+            "fivetranConnectorLastSyncProcessTimeSeconds", "fivetranConnectorLastSyncProcessTimeSeconds");
+
+    /** Process volume in metabytes in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncProcessVolumeMegabytes", "fivetranConnectorLastSyncProcessVolumeMegabytes");
+
+    /** Failure reason for the latest sync on Fivetran. If status is FAILURE, this is the description of the reason why the sync failed. If status is FAILURE_WITH_TASK, this is the description of the Error. If status is RESCHEDULED, this is the description of the reason why the sync is rescheduled. */
+    KeywordTextField FIVETRAN_CONNECTOR_LAST_SYNC_REASON = new KeywordTextField(
+            "fivetranConnectorLastSyncReason",
+            "fivetranConnectorLastSyncReason.keyword",
+            "fivetranConnectorLastSyncReason");
+
+    /** Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_RESCHEDULED_AT =
+            new NumericField("fivetranConnectorLastSyncRescheduledAt", "fivetranConnectorLastSyncRescheduledAt");
+
+    /** Timestamp (epoch) when the latest sync started on Fivetran, in milliseconds */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_STARTED_AT =
+            new NumericField("fivetranConnectorLastSyncStartedAt", "fivetranConnectorLastSyncStartedAt");
+
+    /** Number of tables synced in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_TABLES_SYNCED =
+            new NumericField("fivetranConnectorLastSyncTablesSynced", "fivetranConnectorLastSyncTablesSynced");
+
+    /** Failure task type for the latest sync on Fivetran. If status is FAILURE_WITH_TASK or RESCHEDULED, this field displays the type of the Error that caused the failure or rescheduling, respectively, e.g., reconnect, update_service_account, etc. */
+    KeywordField FIVETRAN_CONNECTOR_LAST_SYNC_TASK_TYPE =
+            new KeywordField("fivetranConnectorLastSyncTaskType", "fivetranConnectorLastSyncTaskType");
+
+    /** Total sync time in seconds in the latest sync on Fivetran */
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_TOTAL_TIME_SECONDS =
+            new NumericField("fivetranConnectorLastSyncTotalTimeSeconds", "fivetranConnectorLastSyncTotalTimeSeconds");
+
+    /** Increase in the percentage of free MAR compared to the previous month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_FREE = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentageFree",
+            "fivetranConnectorMonthlyActiveRowsChangePercentageFree");
+
+    /** Increase in the percentage of paid MAR compared to the previous month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_PAID = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentagePaid",
+            "fivetranConnectorMonthlyActiveRowsChangePercentagePaid");
+
+    /** Increase in the percentage of total MAR compared to the previous month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_TOTAL = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentageTotal",
+            "fivetranConnectorMonthlyActiveRowsChangePercentageTotal");
+
+    /** Free Monthly Active Rows used by the connector in the past month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_FREE =
+            new NumericField("fivetranConnectorMonthlyActiveRowsFree", "fivetranConnectorMonthlyActiveRowsFree");
+
+    /** Percentage of the account's total free MAR used by this connector */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_FREE_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount");
+
+    /** Paid Monthly Active Rows used by the connector in the past month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_PAID =
+            new NumericField("fivetranConnectorMonthlyActiveRowsPaid", "fivetranConnectorMonthlyActiveRowsPaid");
+
+    /** Percentage of the account's total paid MAR used by this connector */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_PAID_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount");
+
+    /** Total Monthly Active Rows used by the connector in the past month */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_TOTAL =
+            new NumericField("fivetranConnectorMonthlyActiveRowsTotal", "fivetranConnectorMonthlyActiveRowsTotal");
+
+    /** Percentage of the account's total MAR used by this connector */
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_TOTAL_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount");
+
+    /** Connector name added by the user on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_NAME = new KeywordField("fivetranConnectorName", "fivetranConnectorName");
+
+    /** Sync frequency for the connector in number of hours. Eg: Every 6 hours */
+    KeywordField FIVETRAN_CONNECTOR_SYNC_FREQUENCY =
+            new KeywordField("fivetranConnectorSyncFrequency", "fivetranConnectorSyncFrequency");
+
+    /** Boolean to indicate whether the sync for this connector is paused or not */
+    BooleanField FIVETRAN_CONNECTOR_SYNC_PAUSED =
+            new BooleanField("fivetranConnectorSyncPaused", "fivetranConnectorSyncPaused");
+
+    /** Timestamp (epoch) on which the connector was setup on Fivetran, in milliseconds */
+    NumericField FIVETRAN_CONNECTOR_SYNC_SETUP_ON =
+            new NumericField("fivetranConnectorSyncSetupOn", "fivetranConnectorSyncSetupOn");
+
+    /** Email ID of the user who setpu the connector on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_SYNC_SETUP_USER_EMAIL =
+            new KeywordField("fivetranConnectorSyncSetupUserEmail", "fivetranConnectorSyncSetupUserEmail");
+
+    /** Full name of the user who setup the connector on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_SYNC_SETUP_USER_FULL_NAME =
+            new KeywordField("fivetranConnectorSyncSetupUserFullName", "fivetranConnectorSyncSetupUserFullName");
+
+    /** Total five tables sorted by MAR synced by this connector */
+    TextField FIVETRAN_CONNECTOR_TOP_TABLES_BY_MAR =
+            new TextField("fivetranConnectorTopTablesByMAR", "fivetranConnectorTopTablesByMAR");
+
+    /** Total number of tables synced by this connector */
+    NumericField FIVETRAN_CONNECTOR_TOTAL_TABLES_SYNCED =
+            new NumericField("fivetranConnectorTotalTablesSynced", "fivetranConnectorTotalTablesSynced");
+
+    /** Type of connector on Fivetran. Eg: snowflake, google_analytics, notion etc. */
+    KeywordField FIVETRAN_CONNECTOR_TYPE = new KeywordField("fivetranConnectorType", "fivetranConnectorType");
+
+    /** URL to open the connector details on Fivetran */
+    KeywordField FIVETRAN_CONNECTOR_URL = new KeywordField("fivetranConnectorURL", "fivetranConnectorURL");
+
+    /** Total usage cost by this destination */
+    NumericField FIVETRAN_CONNECTOR_USAGE_COST =
+            new NumericField("fivetranConnectorUsageCost", "fivetranConnectorUsageCost");
+
+    /** Processes related to this Fivetran connector */
+    RelationField PROCESSES = new RelationField("processes");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -94,57 +223,6 @@ public interface IAPISpec {
 
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
-
-    /** External documentation of the API. */
-    Map<String, String> getApiExternalDocs();
-
-    /** Whether authentication is optional (true) or required (false). */
-    Boolean getApiIsAuthOptional();
-
-    /** If this asset refers to an APIObject */
-    Boolean getApiIsObjectReference();
-
-    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
-    String getApiObjectQualifiedName();
-
-    /** Paths that exist within this API specification. */
-    SortedSet<IAPIPath> getApiPaths();
-
-    /** Email address for a contact responsible for the API specification. */
-    String getApiSpecContactEmail();
-
-    /** Name of the contact responsible for the API specification. */
-    String getApiSpecContactName();
-
-    /** URL pointing to the contact information. */
-    String getApiSpecContactURL();
-
-    /** Version of the contract for the API specification. */
-    String getApiSpecContractVersion();
-
-    /** Name of the license under which the API specification is available. */
-    String getApiSpecLicenseName();
-
-    /** URL to the license under which the API specification is available. */
-    String getApiSpecLicenseURL();
-
-    /** Simple name of the API spec, if this asset is contained in an API spec. */
-    String getApiSpecName();
-
-    /** Unique name of the API spec, if this asset is contained in an API spec. */
-    String getApiSpecQualifiedName();
-
-    /** Service alias for the API specification. */
-    String getApiSpecServiceAlias();
-
-    /** URL to the terms of service for the API specification. */
-    String getApiSpecTermsOfServiceURL();
-
-    /** Type of API, for example: OpenAPI, GraphQL, etc. */
-    String getApiSpecType();
-
-    /** Version of the API specification. */
-    String getApiSpecVersion();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -416,6 +494,129 @@ public interface IAPISpec {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Total credits used by this destination */
+    Double getFivetranConnectorCreditsUsed();
+
+    /** Destination name added by the user on Fivetran */
+    String getFivetranConnectorDestinationName();
+
+    /** Type of destination on Fivetran. Eg: redshift, bigquery etc. */
+    String getFivetranConnectorDestinationType();
+
+    /** URL to open the destination details on Fivetran */
+    String getFivetranConnectorDestinationURL();
+
+    /** Extract time in seconds in the latest sync on fivetran */
+    Double getFivetranConnectorLastSyncExtractTimeSeconds();
+
+    /** Extracted data volume in metabytes in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncExtractVolumeMegabytes();
+
+    /** Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds */
+    Long getFivetranConnectorLastSyncFinishedAt();
+
+    /** ID of the latest sync */
+    String getFivetranConnectorLastSyncId();
+
+    /** Load time in seconds in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncLoadTimeSeconds();
+
+    /** Loaded data volume in metabytes in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncLoadVolumeMegabytes();
+
+    /** Process time in seconds in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncProcessTimeSeconds();
+
+    /** Process volume in metabytes in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncProcessVolumeMegabytes();
+
+    /** Failure reason for the latest sync on Fivetran. If status is FAILURE, this is the description of the reason why the sync failed. If status is FAILURE_WITH_TASK, this is the description of the Error. If status is RESCHEDULED, this is the description of the reason why the sync is rescheduled. */
+    String getFivetranConnectorLastSyncReason();
+
+    /** Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran */
+    Long getFivetranConnectorLastSyncRescheduledAt();
+
+    /** Timestamp (epoch) when the latest sync started on Fivetran, in milliseconds */
+    Long getFivetranConnectorLastSyncStartedAt();
+
+    /** Number of tables synced in the latest sync on Fivetran */
+    Long getFivetranConnectorLastSyncTablesSynced();
+
+    /** Failure task type for the latest sync on Fivetran. If status is FAILURE_WITH_TASK or RESCHEDULED, this field displays the type of the Error that caused the failure or rescheduling, respectively, e.g., reconnect, update_service_account, etc. */
+    String getFivetranConnectorLastSyncTaskType();
+
+    /** Total sync time in seconds in the latest sync on Fivetran */
+    Double getFivetranConnectorLastSyncTotalTimeSeconds();
+
+    /** Increase in the percentage of free MAR compared to the previous month */
+    Double getFivetranConnectorMonthlyActiveRowsChangePercentageFree();
+
+    /** Increase in the percentage of paid MAR compared to the previous month */
+    Double getFivetranConnectorMonthlyActiveRowsChangePercentagePaid();
+
+    /** Increase in the percentage of total MAR compared to the previous month */
+    Double getFivetranConnectorMonthlyActiveRowsChangePercentageTotal();
+
+    /** Free Monthly Active Rows used by the connector in the past month */
+    Long getFivetranConnectorMonthlyActiveRowsFree();
+
+    /** Percentage of the account's total free MAR used by this connector */
+    Double getFivetranConnectorMonthlyActiveRowsFreePercentageOfAccount();
+
+    /** Paid Monthly Active Rows used by the connector in the past month */
+    Long getFivetranConnectorMonthlyActiveRowsPaid();
+
+    /** Percentage of the account's total paid MAR used by this connector */
+    Double getFivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount();
+
+    /** Total Monthly Active Rows used by the connector in the past month */
+    Long getFivetranConnectorMonthlyActiveRowsTotal();
+
+    /** Percentage of the account's total MAR used by this connector */
+    Double getFivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount();
+
+    /** Connector name added by the user on Fivetran */
+    String getFivetranConnectorName();
+
+    /** Sync frequency for the connector in number of hours. Eg: Every 6 hours */
+    String getFivetranConnectorSyncFrequency();
+
+    /** Boolean to indicate whether the sync for this connector is paused or not */
+    Boolean getFivetranConnectorSyncPaused();
+
+    /** Timestamp (epoch) on which the connector was setup on Fivetran, in milliseconds */
+    Long getFivetranConnectorSyncSetupOn();
+
+    /** Email ID of the user who setpu the connector on Fivetran */
+    String getFivetranConnectorSyncSetupUserEmail();
+
+    /** Full name of the user who setup the connector on Fivetran */
+    String getFivetranConnectorSyncSetupUserFullName();
+
+    /** Total five tables sorted by MAR synced by this connector */
+    String getFivetranConnectorTopTablesByMAR();
+
+    /** Total number of tables synced by this connector */
+    Long getFivetranConnectorTotalTablesSynced();
+
+    /** Type of connector on Fivetran. Eg: snowflake, google_analytics, notion etc. */
+    String getFivetranConnectorType();
+
+    /** URL to open the connector details on Fivetran */
+    String getFivetranConnectorURL();
+
+    /** Total usage cost by this destination */
+    Double getFivetranConnectorUsageCost();
+
+    /** Number of records updated in the latest sync on Fivetran */
+    Long getFivetranLastSyncRecordsUpdated();
+
+    /** Status of the latest sync on Fivetran. */
+    FivetranConnectorStatus getFivetranLastSyncStatus();
+
+    /** Name of the atlan fivetran workflow that updated this asset */
+    String getFivetranWorkflowName();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 
@@ -502,6 +703,9 @@ public interface IAPISpec {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** Processes related to this Fivetran connector */
+    SortedSet<ILineageProcess> getProcesses();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();

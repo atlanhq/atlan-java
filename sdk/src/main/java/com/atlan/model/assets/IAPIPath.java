@@ -92,6 +92,12 @@ public interface IAPIPath {
     /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
 
+    /** If this asset refers to an APIObject */
+    Boolean getApiIsObjectReference();
+
+    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
+    String getApiObjectQualifiedName();
+
     /** List of the operations available on the endpoint. */
     SortedSet<String> getApiPathAvailableOperations();
 

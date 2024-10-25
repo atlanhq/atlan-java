@@ -67,6 +67,10 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
+    /** Comma seperated Cleanup policy for this topic. */
+    @Attribute
+    String kafkaTopicCleanupPolicies;
+
     /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;

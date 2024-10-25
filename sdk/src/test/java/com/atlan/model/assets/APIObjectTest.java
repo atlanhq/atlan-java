@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class APISpecTest {
+public class APIObjectTest {
 
-    private static final APISpec full = APISpec._internal()
+    private static final APIObject full = APIObject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -430,30 +430,23 @@ public class APISpecTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .apiPath(APIPath.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .apiPath(APIPath.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .apiSpecContactEmail("String0")
-            .apiSpecContactName("String0")
-            .apiSpecContactURL("String0")
-            .apiSpecContractVersion("String0")
-            .apiSpecLicenseName("String0")
-            .apiSpecLicenseURL("String0")
-            .apiSpecServiceAlias("String0")
-            .apiSpecTermsOfServiceURL("String0")
+            .apiFieldCount(123456789L)
+            .apiField(APIField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .apiField(APIField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static APISpec frodo;
+    private static APIObject frodo;
     private static String serialized;
 
-    @Test(groups = {"APISpec.builderEquivalency"})
+    @Test(groups = {"APIObject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"APISpec.serialize"},
-            dependsOnGroups = {"APISpec.builderEquivalency"})
+            groups = {"APIObject.serialize"},
+            dependsOnGroups = {"APIObject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -462,17 +455,17 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"APISpec.deserialize"},
-            dependsOnGroups = {"APISpec.serialize"})
+            groups = {"APIObject.deserialize"},
+            dependsOnGroups = {"APIObject.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, APISpec.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, APIObject.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"APISpec.equivalency"},
-            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
+            groups = {"APIObject.equivalency"},
+            dependsOnGroups = {"APIObject.serialize", "APIObject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -481,8 +474,8 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"APISpec.equivalency"},
-            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
+            groups = {"APIObject.equivalency"},
+            dependsOnGroups = {"APIObject.serialize", "APIObject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

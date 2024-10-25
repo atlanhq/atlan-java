@@ -62,6 +62,8 @@ public class APIPathTest {
             .apiExternalDoc("key1", "value1")
             .apiExternalDoc("key2", "value2")
             .apiIsAuthOptional(true)
+            .apiIsObjectReference(true)
+            .apiObjectQualifiedName("String0")
             .apiSpecName("String0")
             .apiSpecQualifiedName("String0")
             .apiSpecType("String0")

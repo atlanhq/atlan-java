@@ -40,6 +40,12 @@ public interface IAPI {
     /** Whether authentication is optional (true) or required (false). */
     BooleanField API_IS_AUTH_OPTIONAL = new BooleanField("apiIsAuthOptional", "apiIsAuthOptional");
 
+    /** If this asset refers to an APIObject */
+    BooleanField API_IS_OBJECT_REFERENCE = new BooleanField("apiIsObjectReference", "apiIsObjectReference");
+
+    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
+    KeywordField API_OBJECT_QUALIFIED_NAME = new KeywordField("apiObjectQualifiedName", "apiObjectQualifiedName");
+
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     KeywordTextField API_SPEC_NAME = new KeywordTextField("apiSpecName", "apiSpecName.keyword", "apiSpecName");
 
@@ -85,6 +91,12 @@ public interface IAPI {
 
     /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
+
+    /** If this asset refers to an APIObject */
+    Boolean getApiIsObjectReference();
+
+    /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
+    String getApiObjectQualifiedName();
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecName();

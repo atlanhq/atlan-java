@@ -7,25 +7,21 @@ import javax.annotation.processing.Generated;
 import lombok.Getter;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
-public enum WorkflowRunType implements AtlanEnum {
-    DATA_ACCESS("DATA_ACCESS"),
-    POLICY("POLICY"),
-    CHANGE_MANAGEMENT("CHANGE_MANAGEMENT"),
-    PUBLICATION_MANAGEMENT("PUBLICATION_MANAGEMENT"),
-    IMPACT_ANALYSIS("IMPACT_ANALYSIS"),
-    REVOKE_DATA_ACCESS("REVOKE_DATA_ACCESS"),
+public enum APIQueryParamTypeEnum implements AtlanEnum {
+    INPUT("Input"),
+    OUTPUT("Output"),
     ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    WorkflowRunType(String value) {
+    APIQueryParamTypeEnum(String value) {
         this.value = value;
     }
 
-    public static WorkflowRunType fromValue(String value) {
-        for (WorkflowRunType b : WorkflowRunType.values()) {
+    public static APIQueryParamTypeEnum fromValue(String value) {
+        for (APIQueryParamTypeEnum b : APIQueryParamTypeEnum.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

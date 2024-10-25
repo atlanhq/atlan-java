@@ -9,7 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -25,48 +25,27 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an API specification in Atlan.
+ * Instances of APIQuery in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAPISpec {
+public interface IAPIQuery {
 
-    public static final String TYPE_NAME = "APISpec";
+    public static final String TYPE_NAME = "APIQuery";
 
-    /** Paths that exist within this API specification. */
-    RelationField API_PATHS = new RelationField("apiPaths");
+    /** APIField assets contained within this APIQuery. */
+    RelationField API_FIELDS = new RelationField("apiFields");
 
-    /** Email address for a contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_EMAIL =
-            new KeywordTextField("apiSpecContactEmail", "apiSpecContactEmail", "apiSpecContactEmail.text");
+    /** Count of the APIField of this query that are input to it. */
+    NumericField API_INPUT_FIELD_COUNT = new NumericField("apiInputFieldCount", "apiInputFieldCount");
 
-    /** Name of the contact responsible for the API specification. */
-    KeywordTextField API_SPEC_CONTACT_NAME =
-            new KeywordTextField("apiSpecContactName", "apiSpecContactName.keyword", "apiSpecContactName");
+    /** Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text. */
+    KeywordField API_QUERY_OUTPUT_TYPE = new KeywordField("apiQueryOutputType", "apiQueryOutputType");
 
-    /** URL pointing to the contact information. */
-    KeywordTextField API_SPEC_CONTACT_URL =
-            new KeywordTextField("apiSpecContactURL", "apiSpecContactURL", "apiSpecContactURL.text");
-
-    /** Version of the contract for the API specification. */
-    KeywordField API_SPEC_CONTRACT_VERSION = new KeywordField("apiSpecContractVersion", "apiSpecContractVersion");
-
-    /** Name of the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_NAME =
-            new KeywordTextField("apiSpecLicenseName", "apiSpecLicenseName.keyword", "apiSpecLicenseName");
-
-    /** URL to the license under which the API specification is available. */
-    KeywordTextField API_SPEC_LICENSE_URL =
-            new KeywordTextField("apiSpecLicenseURL", "apiSpecLicenseURL", "apiSpecLicenseURL.text");
-
-    /** Service alias for the API specification. */
-    KeywordTextField API_SPEC_SERVICE_ALIAS =
-            new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
-
-    /** URL to the terms of service for the API specification. */
-    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
-            "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
+    /** Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type. */
+    KeywordField API_QUERY_OUTPUT_TYPE_SECONDARY =
+            new KeywordField("apiQueryOutputTypeSecondary", "apiQueryOutputTypeSecondary");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -98,6 +77,12 @@ public interface IAPISpec {
     /** External documentation of the API. */
     Map<String, String> getApiExternalDocs();
 
+    /** APIField assets contained within this APIQuery. */
+    SortedSet<IAPIField> getApiFields();
+
+    /** Count of the APIField of this query that are input to it. */
+    Long getApiInputFieldCount();
+
     /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
 
@@ -107,38 +92,17 @@ public interface IAPISpec {
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     String getApiObjectQualifiedName();
 
-    /** Paths that exist within this API specification. */
-    SortedSet<IAPIPath> getApiPaths();
+    /** Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text. */
+    String getApiQueryOutputType();
 
-    /** Email address for a contact responsible for the API specification. */
-    String getApiSpecContactEmail();
-
-    /** Name of the contact responsible for the API specification. */
-    String getApiSpecContactName();
-
-    /** URL pointing to the contact information. */
-    String getApiSpecContactURL();
-
-    /** Version of the contract for the API specification. */
-    String getApiSpecContractVersion();
-
-    /** Name of the license under which the API specification is available. */
-    String getApiSpecLicenseName();
-
-    /** URL to the license under which the API specification is available. */
-    String getApiSpecLicenseURL();
+    /** Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type. */
+    String getApiQueryOutputTypeSecondary();
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecName();
 
     /** Unique name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecQualifiedName();
-
-    /** Service alias for the API specification. */
-    String getApiSpecServiceAlias();
-
-    /** URL to the terms of service for the API specification. */
-    String getApiSpecTermsOfServiceURL();
 
     /** Type of API, for example: OpenAPI, GraphQL, etc. */
     String getApiSpecType();
