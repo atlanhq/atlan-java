@@ -194,6 +194,15 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
+            case CustomDataset.TYPE_NAME:
+                ref = CustomDataset.refByQualifiedName(qualifiedName);
+                break;
+            case CustomField.TYPE_NAME:
+                ref = CustomField.refByQualifiedName(qualifiedName);
+                break;
+            case CustomTable.TYPE_NAME:
+                ref = CustomTable.refByQualifiedName(qualifiedName);
+                break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
