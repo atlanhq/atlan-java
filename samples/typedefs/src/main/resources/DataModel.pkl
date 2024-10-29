@@ -456,6 +456,10 @@ customTypes {
         type = "string"
         description = "Unique name of the association from which this attribute is related."
       }
+      ["\(a)\(dmEntityAssociation)QualifiedName"] {
+        type = "string"
+        description = "Unique name of the entity association to which this attribute is related."
+      }
     }
     relationships {
       ["data_model_attribute_data_model_attributes_1"] {
