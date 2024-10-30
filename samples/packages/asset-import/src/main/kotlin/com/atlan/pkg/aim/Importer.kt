@@ -146,6 +146,10 @@ object Importer {
                         trackBatches,
                         assetsFieldSeparator,
                     )
+                val includes = assetImporter.preprocess()
+                if (includes.hasLinks) {
+                    LinkCache.preload()
+                }
                 assetImporter.import()
             } else {
                 null
@@ -173,6 +177,9 @@ object Importer {
                         dataProductsFailOnErrors,
                         dataProductsFieldSeparator,
                     )
+                if (domainImporter.preprocess().hasLinks) {
+                    LinkCache.preload()
+                }
                 val resultsDomain = domainImporter.import()
                 logger.info { "=== Importing products... ===" }
                 val productImporter =
@@ -184,6 +191,9 @@ object Importer {
                         dataProductsFailOnErrors,
                         dataProductsFieldSeparator,
                     )
+                if (productImporter.preprocess().hasLinks) {
+                    LinkCache.preload()
+                }
                 val resultsProduct = productImporter.import()
                 resultsDomain?.combinedWith(resultsProduct)
             } else {
