@@ -149,10 +149,12 @@ object AssetRefXformer {
                                     // If the link is identical, skip it
                                     logger.debug { "Found matching name: ${link.name}" }
                                     found = true
+                                    break
                                 } else {
                                     // If the name has changed, update the name on the existing link
                                     logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
                                     update = Link.updater(link.qualifiedName, related.name).nullFields(related.nullFields).build()
+                                    break
                                 }
                             }
                         }
