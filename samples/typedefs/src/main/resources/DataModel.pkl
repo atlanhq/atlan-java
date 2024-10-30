@@ -301,10 +301,12 @@ customTypes {
       }
       ["\(a)\(dmEntityAssociation)ToQualifiedName"] {
         type = "string"
+        indexAs = "keyword"
         description = "Unique name of the association to which this entity is related."
       }
       ["\(a)\(dmEntityAssociation)FromQualifiedName"] {
         type = "string"
+        indexAs = "keyword"
         description = "Unique name of the association from which this entity is related."
       }
     }
@@ -450,11 +452,18 @@ customTypes {
       }
       ["\(a)\(dmAttributeAssociation)ToQualifiedName"] {
         type = "string"
+        indexAs = "keyword"
         description = "Unique name of the association to which this attribute is related."
       }
       ["\(a)\(dmAttributeAssociation)FromQualifiedName"] {
         type = "string"
+        indexAs = "keyword"
         description = "Unique name of the association from which this attribute is related."
+      }
+      ["\(a)\(dmEntityAssociation)QualifiedName"] {
+        type = "string"
+        indexAs = "keyword"
+        description = "Unique name of the entity association to which this attribute is related."
       }
     }
     relationships {

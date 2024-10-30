@@ -17,6 +17,7 @@ import com.atlan.pkg.cache.LinkCache
 import com.atlan.serde.Serde
 import com.atlan.util.ParallelBatch
 import mu.KLogger
+import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -24,6 +25,7 @@ import java.util.concurrent.atomic.AtomicLong
  */
 object AssetRefXformer {
     const val TYPE_QN_DELIMITER = "@"
+    private val logger = KotlinLogging.logger {}
 
     /**
      * Encodes (serializes) an asset reference into a string form.
@@ -142,16 +144,22 @@ object AssetRefXformer {
                         var update: Link? = null
                         for (link in existingLinks) {
                             if (link.link == related.link) {
+                                logger.debug { "Found matching link for: ${link.link}" }
                                 if (link.name == related.name) {
                                     // If the link is identical, skip it
+                                    logger.debug { "Found matching name: ${link.name}" }
                                     found = true
+                                    break
                                 } else {
                                     // If the name has changed, update the name on the existing link
+                                    logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
                                     update = Link.updater(link.qualifiedName, related.name).nullFields(related.nullFields).build()
+                                    break
                                 }
                             }
                         }
                         if (!found && update == null) {
+                            logger.debug { "No match found for : ${related.link} creating new link" }
                             // Otherwise create an entirely new link (idempotently)
                             update = Link.creator(from, related.name, related.link, true).nullFields(related.nullFields).build()
                         }
