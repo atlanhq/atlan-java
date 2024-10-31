@@ -153,7 +153,7 @@ object AssetRefXformer {
                                 } else {
                                     // If the name has changed, update the name on the existing link
                                     logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
-                                    update = Link.updater(link.qualifiedName, related.name).nullFields(related.nullFields).build()
+                                    update = Link.updater(link.qualifiedName, related.name).link(link.link).nullFields(related.nullFields).build()
                                     break
                                 }
                             }
