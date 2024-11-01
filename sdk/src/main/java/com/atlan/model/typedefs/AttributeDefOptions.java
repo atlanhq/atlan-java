@@ -104,6 +104,8 @@ public class AttributeDefOptions extends AtlanObject {
             DbtSource.TYPE_NAME,
             DbtTag.TYPE_NAME,
             DbtTest.TYPE_NAME,
+            DetectiDataDossier.TYPE_NAME,
+            DetectiDataDossierElement.TYPE_NAME,
             DomoCard.TYPE_NAME,
             DomoDashboard.TYPE_NAME,
             DomoDataset.TYPE_NAME,
