@@ -36,7 +36,7 @@ object DataProductCache : AssetCache() {
                             .pageSize(50)
                             .toRequest()
                     var response = request.search()
-                    while (response != null && response.approximateCount > 0) {
+                    while (response != null && response.assets?.isNotEmpty() ?: false) {
                         for (candidate in response) {
                             val dp = candidate as DataProduct
                             val domId = DataDomainXformer.encode(dp.dataDomain as DataDomain)

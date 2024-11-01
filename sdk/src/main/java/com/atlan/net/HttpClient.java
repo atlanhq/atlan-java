@@ -8,13 +8,10 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
-import com.atlan.serde.Serde;
 import com.atlan.util.Stopwatch;
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.extern.slf4j.Slf4j;
@@ -179,13 +176,7 @@ public abstract class HttpClient {
      * @return a string containing the value of the {@code User-Agent} header
      */
     protected static String buildUserAgentString(AtlanClient client) {
-        String userAgent = String.format("Atlan-JavaSDK/%s", Atlan.VERSION);
-
-        if (client.getAppInfo() != null) {
-            userAgent += " " + formatAppInfo(client.getAppInfo());
-        }
-
-        return userAgent;
+        return buildXAtlanClientUserAgentString(client);
     }
 
     /**
@@ -195,26 +186,17 @@ public abstract class HttpClient {
      * @return a string containing the value of the {@code X-Atlan-Client-User-Agent} header
      */
     protected static String buildXAtlanClientUserAgentString(AtlanClient client) {
-        String[] propertyNames = {
-            "os.name", "os.version", "os.arch", "java.version", "java.vendor", "java.vm.version", "java.vm.vendor"
-        };
-
-        Map<String, String> propertyMap = new HashMap<>();
-        for (String propertyName : propertyNames) {
-            propertyMap.put(propertyName, System.getProperty(propertyName));
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("atlan-java/%s", Atlan.VERSION));
+        sb.append(String.format(
+                " (%s; %s; rv:%s)",
+                System.getProperty("os.name"), System.getProperty("os.arch"), System.getProperty("os.version")));
+        sb.append(String.format(" %s/%s", System.getProperty("java.vendor"), System.getProperty("java.version")));
+        sb.append(String.format(" %s/%s", System.getProperty("java.vm.vendor"), System.getProperty("java.vm.version")));
+        if (client.getAppInfo() != null) {
+            sb.append(formatAppInfo(client.getAppInfo()));
         }
-        propertyMap.put("bindings.version", Atlan.VERSION);
-        propertyMap.put("lang", "Java");
-        propertyMap.put("publisher", "Atlan");
-
-        try {
-            if (client.getAppInfo() != null) {
-                propertyMap.put("application", Serde.allInclusiveMapper.writeValueAsString(client.getAppInfo()));
-            }
-            return Serde.allInclusiveMapper.writeValueAsString(propertyMap);
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to build client user agent string.", e);
-        }
+        return sb.toString();
     }
 
     private static String formatAppInfo(Map<String, String> info) {
