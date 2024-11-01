@@ -31,11 +31,17 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
     private static final String DOSSIER_NAME = PREFIX + "-dossier";
     private static final String ELEMENT_NAME1 = PREFIX + "-e1";
     private static final String ELEMENT_NAME2 = PREFIX + "-e2";
+    private static final String DB_NAME = PREFIX + "-db";
+    private static final String SCH_NAME = PREFIX + "-sch";
+    private static final String TBL_NAME = PREFIX + "-tbl";
+    private static final String VIEW_NAME = PREFIX + "-view";
 
     private static Connection connection = null;
     private static DetectiDataDossier dossier = null;
     private static DetectiDataDossierElement element1 = null;
     private static DetectiDataDossierElement element2 = null;
+    private static Table tbl = null;
+    private static View view = null;
 
     @Test(groups = {"dd.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
@@ -43,10 +49,35 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"dd.create.rdbms"},
+            dependsOnGroups = {"dd.create.connection"})
+    void createRDBMS() throws AtlanException {
+        Database db = Database.creator(DB_NAME, connection.getQualifiedName()).build();
+        Schema sch = Schema.creator(SCH_NAME, db).build();
+        Table cTBL = Table.creator(TBL_NAME, sch).build();
+        View cVIEW = View.creator(VIEW_NAME, sch).build();
+        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(db, sch, cTBL, cVIEW), false);
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 4);
+        db = response.getResult(db);
+        assertNotNull(db);
+        sch = response.getResult(sch);
+        assertNotNull(sch);
+        tbl = response.getResult(cTBL);
+        assertNotNull(tbl);
+        view = response.getResult(cVIEW);
+        assertNotNull(view);
+    }
+
+    @Test(
             groups = {"dd.create.dossier"},
             dependsOnGroups = {"dd.create.connection"})
     void createDossier() throws AtlanException {
         DetectiDataDossier toCreate = DetectiDataDossier.creator(DOSSIER_NAME, connection.getQualifiedName())
+                .detectiDataPrivacyClassification("PII")
+                .detectiDataTrustScore(92L)
                 .build();
         AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
@@ -62,10 +93,12 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
             groups = {"dd.create.elements"},
             dependsOnGroups = {"dd.create.dossier"})
     void createElements() throws AtlanException {
-        DetectiDataDossierElement toCreate1 =
-                DetectiDataDossierElement.creator(ELEMENT_NAME1, dossier).build();
-        DetectiDataDossierElement toCreate2 =
-                DetectiDataDossierElement.creator(ELEMENT_NAME2, dossier).build();
+        DetectiDataDossierElement toCreate1 = DetectiDataDossierElement.creator(ELEMENT_NAME1, dossier)
+                .detectiDataComponentScore(94L)
+                .build();
+        DetectiDataDossierElement toCreate2 = DetectiDataDossierElement.creator(ELEMENT_NAME2, dossier)
+                .detectiDataComponentScore(90L)
+                .build();
         AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(toCreate1, toCreate2), false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -94,6 +127,37 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
         assertEquals(element2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(element2.getDetectiDataDossierName(), DOSSIER_NAME);
         assertEquals(element2.getDetectiDataDossierQualifiedName(), dossier.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"dd.create.lineage"},
+            dependsOnGroups = {"dd.create.elements", "dd.create.rdbms"})
+    void createLineage() throws AtlanException {
+        LineageProcess p1 = LineageProcess.creator(
+                        "tbl > element1",
+                        connection.getQualifiedName(),
+                        element1.getQualifiedName(),
+                        List.of(tbl.trimToReference()),
+                        List.of(element1.trimToReference()),
+                        null)
+                .build();
+        LineageProcess p2 = LineageProcess.creator(
+                        "view > element2",
+                        connection.getQualifiedName(),
+                        element2.getQualifiedName(),
+                        List.of(view.trimToReference()),
+                        List.of(element2.trimToReference()),
+                        null)
+                .build();
+        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(p1, p2), false);
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 4);
+        assertEquals(response.getCreatedAssets().size(), 2);
+        Set<String> types =
+                response.getCreatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains(LineageProcess.TYPE_NAME));
     }
 
     @Test(
