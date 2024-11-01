@@ -245,6 +245,12 @@ public interface ICatalog {
             case DbtTest.TYPE_NAME:
                 ref = DbtTest.refByQualifiedName(qualifiedName);
                 break;
+            case DetectiDataDossier.TYPE_NAME:
+                ref = DetectiDataDossier.refByQualifiedName(qualifiedName);
+                break;
+            case DetectiDataDossierElement.TYPE_NAME:
+                ref = DetectiDataDossierElement.refByQualifiedName(qualifiedName);
+                break;
             case DomoCard.TYPE_NAME:
                 ref = DomoCard.refByQualifiedName(qualifiedName);
                 break;
