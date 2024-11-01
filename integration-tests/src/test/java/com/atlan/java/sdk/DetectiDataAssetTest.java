@@ -272,7 +272,7 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"dd.purge.connection"},
-            dependsOnGroups = {"dd.create.*", "dd.read.*", "dd.search.*", "dd.update.*", "dd.purge.field"},
+            dependsOnGroups = {"dd.create.*", "dd.read.*", "dd.search.*", "dd.update.*", "dd.purge.element"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
