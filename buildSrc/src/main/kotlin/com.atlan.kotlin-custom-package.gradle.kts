@@ -92,7 +92,6 @@ configurations.all {
             versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
         )
     }
-    exclude(group = "org.threeten", module = "threetenbp")
 }
 
 kotlin {
