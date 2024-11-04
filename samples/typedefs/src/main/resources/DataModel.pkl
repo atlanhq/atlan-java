@@ -271,13 +271,13 @@ customTypes {
         description = "Represents the generalization-specialization relationship between a general entity (parent) and specialized entities (children)."
         parent {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmEntity)\(generalization)Entity"
-          description = "General entity, representing shared characteristics of specialized entities."
+          attribute = "\(a)\(dmEntity)\(specialization)Entities"
+          description = "Specialized entities derived from the general entity."
         }
         children {
           type = "\(t)\(dmEntity)"
-          attribute = "\(a)\(dmEntity)\(specialization)Entities"
-          description = "Specialized entities derived from the general entity."
+          attribute = "\(a)\(dmEntity)\(generalization)Entity"
+          description = "General entity, representing shared characteristics of specialized entities."
         }
       }
     }
