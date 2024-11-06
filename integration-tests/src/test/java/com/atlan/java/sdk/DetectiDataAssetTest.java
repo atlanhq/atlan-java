@@ -149,11 +149,19 @@ public class DetectiDataAssetTest extends AtlanLiveTest {
                         List.of(element2.trimToReference()),
                         null)
                 .build();
-        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(p1, p2), false);
+        LineageProcess p3 = LineageProcess.creator(
+            "elements > dossier",
+            connection.getQualifiedName(),
+            dossier.getQualifiedName(),
+            List.of(element1.trimToReference(), element2.trimToReference()),
+            List.of(dossier.trimToReference()),
+            null)
+            .build();
+        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(p1, p2, p3), false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
-        assertEquals(response.getUpdatedAssets().size(), 4);
-        assertEquals(response.getCreatedAssets().size(), 2);
+        assertEquals(response.getUpdatedAssets().size(), 5);
+        assertEquals(response.getCreatedAssets().size(), 3);
         Set<String> types =
                 response.getCreatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
