@@ -38,5 +38,4 @@ configurations.all {
             libs.commons.io,
         )
     }
-    exclude(group = "org.threeten", module = "threetenbp")
 }
