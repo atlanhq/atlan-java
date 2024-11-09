@@ -15,11 +15,16 @@ import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.CsvRecordHandler
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.concurrent.Callable
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -95,6 +100,7 @@ class CSVReader
                         val transformed = csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                         csv.writeRecord(transformed)
                     }
+                    preproc.close()
                 }
                 csvPreprocessor.finalize(header, outputFile)
             } else {
@@ -102,6 +108,7 @@ class CSVReader
                 preproc.stream().skip(1).forEach { r: CsvRecord ->
                     csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                 }
+                preproc.close()
                 csvPreprocessor.finalize(header)
             }
         }
@@ -125,6 +132,19 @@ class CSVReader
             skipColumns: Set<String> = setOf(),
         ): ImportResults {
             val client = Atlan.getDefaultClient()
+            val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
+            val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
+            var someFailure = false
+
+            val parallelism = ForkJoinPool.getCommonPoolParallelism()
+            val filteredRowCount = AtomicLong(0)
+            counter.stream().skip(1).parallel().forEach { row ->
+                if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
+                    filteredRowCount.incrementAndGet()
+                }
+            }
+            counter.close()
+            val totalRowCount = filteredRowCount.get()
             val primaryBatch =
                 ParallelBatch(
                     client,
@@ -137,6 +157,7 @@ class CSVReader
                     caseSensitive,
                     creationHandling,
                     tableViewAgnostic,
+                    totalRowCount.toInt(),
                 )
             val relatedBatch =
                 ParallelBatch(
@@ -150,39 +171,72 @@ class CSVReader
                     caseSensitive,
                     AssetCreationHandling.FULL,
                     false,
+                    totalRowCount.toInt(),
                 )
-            val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
-            val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
-            var someFailure = false
 
-            val filteredRowCount = AtomicLong(0)
-            counter.stream().skip(1).parallel().forEach { row ->
+            // Step 0: split the single file into one file per thread
+            val csvChunkFiles = mutableListOf<Path>()
+            val chunkSize = totalRowCount / parallelism
+            val currentRecordCount = AtomicLong(0)
+            var chunkPath = Files.createTempFile("chunk_0", ".csv")
+            var writer = CSVWriter(chunkPath.toString(), ',')
+            reader.stream().skip(1).forEach { row: CsvRecord ->
+                // Split the original file up into multiple smaller files for parallel-processing
                 if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
-                    filteredRowCount.incrementAndGet()
-                }
-            }
-            val totalRowCount = filteredRowCount.get()
-            // Step 1: load the main assets
-            logger.info { "Loading a total of $totalRowCount assets..." }
-            val count = AtomicLong(0)
-            reader.stream().skip(1).parallel().forEach { r: CsvRecord ->
-                val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
-                if (assets != null) {
-                    try {
-                        val asset = assets.primary.build()
-                        primaryBatch.add(asset)
-                        Utils.logProgress(count, totalRowCount, logger, batchSize)
-                        if (assets.related.isNotEmpty()) {
-                            relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
-                        }
-                        if (assets.delete.isNotEmpty()) {
-                            deferDeletes[asset.guid] = assets.delete
-                        }
-                    } catch (e: AtlanException) {
-                        logger.error("Unable to load batch.", e)
+                    // open initial file
+                    val current = currentRecordCount.incrementAndGet()
+                    writer.writeRecord(row.fields)
+                    if (current > chunkSize) {
+                        writer.close()
+                        csvChunkFiles.add(chunkPath)
+                        currentRecordCount.set(0)
+                        chunkPath = Paths.get("tmp_${csvChunkFiles.size}.csv")
+                        writer = CSVWriter(chunkPath.toString(), ',')
                     }
                 }
             }
+            reader.close()
+            writer.close()
+            if (currentRecordCount.get() > 0) {
+                // If there are any remaining records, close the writer and add it
+                csvChunkFiles.add(chunkPath)
+            }
+            // Step 1: load the main assets
+            logger.info { "Loading a total of $totalRowCount assets..." }
+            val count = AtomicLong(0)
+            ForkJoinPool.commonPool().invokeAll(
+                csvChunkFiles.map { f ->
+                    Callable {
+                        val reader =
+                            CsvReader.builder()
+                                .fieldSeparator(',')
+                                .quoteCharacter('"')
+                                .skipEmptyLines(true)
+                                .ignoreDifferentFieldCount(false)
+                                .build(CsvRecordHandler(), f)
+                        reader.stream().forEach { r: CsvRecord ->
+                            val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
+                            if (assets != null) {
+                                try {
+                                    val asset = assets.primary.build()
+                                    primaryBatch.add(asset)
+                                    Utils.logProgress(count, totalRowCount, logger, batchSize)
+                                    if (assets.related.isNotEmpty()) {
+                                        relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
+                                    }
+                                    if (assets.delete.isNotEmpty()) {
+                                        deferDeletes[asset.guid] = assets.delete
+                                    }
+                                } catch (e: AtlanException) {
+                                    logger.error("Unable to load batch.", e)
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+            // Delete temp files
+            csvChunkFiles.forEach { it.toFile().delete() }
             primaryBatch.flush()
             val totalCreates = primaryBatch.numCreated
             val totalUpdates = primaryBatch.numUpdated
@@ -338,6 +392,8 @@ class CSVReader
         /** {@inheritDoc}  */
         @Throws(IOException::class)
         override fun close() {
+            preproc.close()
+            counter.close()
             reader.close()
         }
 
