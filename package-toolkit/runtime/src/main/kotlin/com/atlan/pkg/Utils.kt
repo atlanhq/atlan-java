@@ -3,9 +3,9 @@
 package com.atlan.pkg
 
 import com.atlan.Atlan
+import com.atlan.cache.OffHeapAssetCache
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.cache.PersistentConnectionCache
@@ -18,6 +18,7 @@ import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
+import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -812,8 +813,8 @@ object Utils {
      * @param fallback directory to use for a fallback backing store for the cache
      */
     fun updateConnectionCache(
-        added: Collection<Asset>? = null,
-        removed: Collection<Asset>? = null,
+        added: OffHeapAssetCache? = null,
+        removed: OffHeapAssetCache? = null,
         fallback: String = Paths.get(separator, "tmp").toString(),
     ) {
         val map = CacheUpdates.build(added, removed)
@@ -835,8 +836,8 @@ object Utils {
                 logger.debug(e) { "Location attempted from backing store: connection-cache/$connectionQN.sqlite" }
             }
             val cache = PersistentConnectionCache(tmpFile)
-            cache.addAssets(assets.added)
-            cache.deleteAssets(assets.removed)
+            cache.addAssets(assets.added.values())
+            cache.deleteAssets(assets.removed.values())
             // Replace the cache with the updated one
             try {
                 sync.uploadTo(tmpFile, "connection-cache/$connectionQN.sqlite")
@@ -848,42 +849,40 @@ object Utils {
     }
 
     private data class CacheUpdates(
-        val added: MutableList<Asset>,
-        val removed: MutableList<Asset>,
+        val added: OffHeapAssetCache,
+        val removed: OffHeapAssetCache,
     ) {
         companion object {
             fun build(
-                add: Collection<Asset>?,
-                remove: Collection<Asset>?,
+                add: OffHeapAssetCache?,
+                remove: OffHeapAssetCache?,
             ): Map<String, CacheUpdates> {
                 val client = Atlan.getDefaultClient()
                 val map = mutableMapOf<String, CacheUpdates>()
-                add?.forEach { asset ->
+                add?.values()?.forEach { asset ->
                     val connectionQN = asset.connectionQualifiedName
                     connectionQN?.let {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = mutableListOf(asset),
-                                    removed = mutableListOf(),
+                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add.size(), AssetBatch.EXEMPLAR_COLUMN),
+                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove?.size() ?: -1, AssetBatch.EXEMPLAR_COLUMN),
                                 )
-                        } else {
-                            map[it]!!.added.add(asset)
                         }
+                        map[it]!!.added.add(asset)
                     } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
-                remove?.forEach { asset ->
+                remove?.values()?.forEach { asset ->
                     val connectionQN = asset.connectionQualifiedName
                     connectionQN?.let {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = mutableListOf(),
-                                    removed = mutableListOf(asset),
+                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add?.size() ?: -1, AssetBatch.EXEMPLAR_COLUMN),
+                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove.size(), AssetBatch.EXEMPLAR_COLUMN),
                                 )
-                        } else {
-                            map[it]!!.removed.add(asset)
                         }
+                        map[it]!!.removed.add(asset)
                     } ?: logger.debug { "No connection qualifiedName found for asset -- skipping: ${asset.toJson(client)}" }
                 }
                 return map

@@ -3,6 +3,7 @@
 package com.atlan.util;
 
 import com.atlan.AtlanClient;
+import com.atlan.cache.OffHeapAssetCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -44,6 +45,15 @@ public class AssetBatch {
         OVERWRITE,
         MERGE,
     }
+
+    public static final Column EXEMPLAR_COLUMN = Column._internal()
+            .guid(UUID.randomUUID().toString())
+            .qualifiedName("default/somewhere/1234567890/database/schema/table/column_name")
+            .connectionQualifiedName("default/somewhere/1234567890")
+            .name("column_name")
+            .tenantId("default")
+            .order(10)
+            .build();
 
     /** Connectivity to an Atlan tenant. */
     private AtlanClient client;
@@ -102,20 +112,24 @@ public class AssetBatch {
     @Getter
     private final AtomicLong numRestored = new AtomicLong(0);
 
+    /** Number of assets that were skipped during processing (no details, just a count). */
+    @Getter
+    private final AtomicLong numSkipped = new AtomicLong(0);
+
     /** Assets that were created (minimal info only). */
     @Getter
-    private final List<Asset> created = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapAssetCache created;
 
     /** Assets that were updated (minimal info only). */
     @Getter
-    private final List<Asset> updated = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapAssetCache updated;
 
     /**
      * Assets that were potentially restored from being archived, or otherwise touched without actually
      * being updated (minimal info only).
      */
     @Getter
-    private final List<Asset> restored = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapAssetCache restored;
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
@@ -123,7 +137,7 @@ public class AssetBatch {
 
     /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
     @Getter
-    private final List<Asset> skipped = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapAssetCache skipped;
 
     /** Map from placeholder GUID to resolved (actual) GUID, for all assets that were processed through the batch. */
     @Getter
@@ -314,6 +328,97 @@ public class AssetBatch {
             boolean caseInsensitive,
             AssetCreationHandling creationHandling,
             boolean tableViewAgnostic) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseInsensitive,
+                creationHandling,
+                tableViewAgnostic,
+                -1);
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+     * @param totalSize total anticipated size of all assets to be batched
+     */
+    public AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseInsensitive,
+            AssetCreationHandling creationHandling,
+            boolean tableViewAgnostic,
+            int totalSize) {
+        this(
+                client,
+                maxSize,
+                replaceAtlanTags,
+                customMetadataHandling,
+                captureFailures,
+                updateOnly,
+                track,
+                caseInsensitive,
+                creationHandling,
+                tableViewAgnostic,
+                new OffHeapAssetCache("created" + Thread.currentThread().getId(), totalSize),
+                new OffHeapAssetCache("updated" + Thread.currentThread().getId(), totalSize),
+                new OffHeapAssetCache("restored" + Thread.currentThread().getId(), totalSize),
+                new OffHeapAssetCache("skipped" + Thread.currentThread().getId(), totalSize));
+    }
+
+    /**
+     * Create a new batch of assets to be bulk-saved.
+     *
+     * @param client connectivity to Atlan
+     * @param maxSize maximum size of each batch that should be processed (per API call)
+     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
+     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
+     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
+     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
+     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
+     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+     * @param created off-heap cache for assets created by the batch
+     * @param updated off-heap cache for assets updated by the batch
+     * @param restored off-heap cache for assets restored by the batch
+     * @param skipped off-heap cache for assets skipped by the batch
+     */
+    protected AssetBatch(
+            AtlanClient client,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling,
+            boolean captureFailures,
+            boolean updateOnly,
+            boolean track,
+            boolean caseInsensitive,
+            AssetCreationHandling creationHandling,
+            boolean tableViewAgnostic,
+            OffHeapAssetCache created,
+            OffHeapAssetCache updated,
+            OffHeapAssetCache restored,
+            OffHeapAssetCache skipped) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -324,6 +429,10 @@ public class AssetBatch {
         this.updateOnly = updateOnly;
         this.caseInsensitive = caseInsensitive;
         this.tableViewAgnostic = tableViewAgnostic;
+        this.created = created;
+        this.updated = updated;
+        this.restored = restored;
+        this.skipped = skipped;
     }
 
     /**
@@ -419,6 +528,7 @@ public class AssetBatch {
                         } else {
                             // Otherwise, if it still does not match any fallback and cannot be created, skip it
                             track(skipped, asset);
+                            numSkipped.getAndIncrement();
                         }
                     } else if (creationHandling == AssetCreationHandling.PARTIAL) {
                         // Append isPartial(true) onto the asset before adding it to the batch, to ensure only
@@ -426,6 +536,7 @@ public class AssetBatch {
                         addPartialAsset(asset, revised);
                     } else {
                         track(skipped, asset);
+                        numSkipped.getAndIncrement();
                     }
                 }
             } else {
@@ -504,14 +615,6 @@ public class AssetBatch {
                 resolvedGuids.putAll(response.getGuidAssignments());
             }
             if (sent != null) {
-                Set<String> createdGuids;
-                Set<String> updatedGuids;
-                synchronized (created) {
-                    createdGuids = created.stream().map(Asset::getGuid).collect(Collectors.toSet());
-                }
-                synchronized (updated) {
-                    updatedGuids = updated.stream().map(Asset::getGuid).collect(Collectors.toSet());
-                }
                 for (Asset one : sent) {
                     String guid = one.getGuid();
                     if (guid != null
@@ -522,7 +625,7 @@ public class AssetBatch {
                         resolvedGuids.put(guid, guid);
                     }
                     String mappedGuid = resolvedGuids.getOrDefault(guid, guid);
-                    if (!createdGuids.contains(mappedGuid) && !updatedGuids.contains(mappedGuid)) {
+                    if (!created.containsKey(mappedGuid) && !updated.containsKey(mappedGuid)) {
                         // Ensure any assets that do not show as either created or updated are still tracked
                         // as possibly restored
                         track(restored, one);
@@ -539,7 +642,7 @@ public class AssetBatch {
         }
     }
 
-    private void track(List<Asset> tracker, Asset candidate) {
+    private void track(OffHeapAssetCache tracker, Asset candidate) {
         try {
             tracker.add(buildCacheable(candidate.trimToRequired(), candidate));
         } catch (InvalidRequestException e) {

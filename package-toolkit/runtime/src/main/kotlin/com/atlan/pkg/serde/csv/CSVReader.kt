@@ -138,7 +138,7 @@ class CSVReader
 
             val parallelism = ForkJoinPool.getCommonPoolParallelism()
             val filteredRowCount = AtomicLong(0)
-            counter.stream().skip(1).parallel().forEach { row ->
+            counter.stream().skip(1).forEach { row ->
                 if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
                     filteredRowCount.incrementAndGet()
                 }
@@ -233,7 +233,7 @@ class CSVReader
                             }
                         }
                     }
-                }
+                },
             )
             // Delete temp files
             csvChunkFiles.forEach { it.toFile().delete() }
@@ -241,7 +241,7 @@ class CSVReader
             val totalCreates = primaryBatch.numCreated
             val totalUpdates = primaryBatch.numUpdated
             val totalRestore = primaryBatch.numRestored
-            val totalSkipped = primaryBatch.skipped.size
+            val totalSkipped = primaryBatch.numSkipped
             val totalFailures = AtomicLong(0)
             someFailure = someFailure || primaryBatch.failures.isNotEmpty()
             logFailures(primaryBatch, logger, totalFailures)
@@ -381,9 +381,9 @@ class CSVReader
             b: ParallelBatch,
             logger: KLogger,
         ) {
-            if (b.skipped.isNotEmpty()) {
+            if (b.skipped.isNotEmpty) {
                 logger.info { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
-                b.skipped?.forEach {
+                b.skipped?.values()?.forEach {
                     logger.info { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
                 }
             }

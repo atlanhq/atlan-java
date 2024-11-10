@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
-import com.atlan.model.assets.Asset
+import com.atlan.cache.OffHeapAssetCache
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
@@ -52,8 +52,8 @@ class DeltaProcessor(
      *
      * @param modifiedAssets list of assets that were modified by the processing up to the point of this delta detection
      */
-    fun run(modifiedAssets: List<Asset>? = null) {
-        var deletedAssets: List<Asset>? = null
+    fun run(modifiedAssets: OffHeapAssetCache? = null) {
+        var deletedAssets: OffHeapAssetCache? = null
         if (semantic == "full") {
             if (qualifiedNamePrefix.isNullOrBlank()) {
                 logger.warn { "Unable to determine qualifiedName prefix, will not delete any assets." }

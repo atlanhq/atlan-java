@@ -20,6 +20,8 @@ dependencies {
     api(libs.freemarker)
     api(libs.openlineage)
     implementation(libs.classgraph)
+    implementation(platform(libs.chronicle.bom))
+    implementation(libs.chronicle.map)
     testImplementation(libs.bundles.java.test)
     testImplementation(libs.bundles.log4j)
     testImplementation(project(":mocks"))

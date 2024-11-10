@@ -2,7 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
-import com.atlan.model.assets.Asset
+import com.atlan.cache.OffHeapAssetCache
+import com.atlan.util.AssetBatch
 import com.atlan.util.AssetBatch.AssetIdentity
 
 /**
@@ -50,10 +51,10 @@ data class ImportResults(
     data class Details(
         val guidAssignments: Map<String, String>,
         val qualifiedNames: Map<AssetIdentity, String>,
-        val created: List<Asset>?,
-        val updated: List<Asset>?,
-        val restored: List<Asset>?,
-        val skipped: List<Asset>,
+        val created: OffHeapAssetCache?,
+        val updated: OffHeapAssetCache?,
+        val restored: OffHeapAssetCache?,
+        val skipped: OffHeapAssetCache?,
         val numCreated: Long,
         val numUpdated: Long,
         val numRestored: Long,
@@ -71,10 +72,10 @@ data class ImportResults(
             return Details(
                 this.guidAssignments.plus(other.guidAssignments),
                 this.qualifiedNames.plus(other.qualifiedNames),
-                this.created?.plus(other.created ?: listOf()),
-                this.updated?.plus(other.updated ?: listOf()),
-                this.restored?.plus(other.restored ?: listOf()),
-                this.skipped.plus(other.skipped),
+                if (this.created == null) other.created else this.created.combinedWith(other.created),
+                if (this.updated == null) other.updated else this.updated.combinedWith(other.updated),
+                if (this.restored == null) other.restored else this.restored.combinedWith(other.restored),
+                if (this.skipped == null) other.skipped else this.skipped.combinedWith(other.skipped),
                 this.numCreated.plus(other.numCreated),
                 this.numUpdated.plus(other.numUpdated),
                 this.numRestored.plus(other.numRestored),
@@ -90,22 +91,24 @@ data class ImportResults(
          * @param results one or more import results to combine
          * @return the list of assets that were either created or updated, from across all the provided results
          */
-        fun getAllModifiedAssets(vararg results: ImportResults?): List<Asset> {
-            val list = mutableListOf<Asset>()
+        fun getAllModifiedAssets(vararg results: ImportResults?): OffHeapAssetCache {
+            var totalCreated = 0
+            var totalUpdated = 0
+            var totalRestored = 0
             results.filterNotNull()
                 .forEach { result ->
-                    result.primary.created?.let { list.addAll(it) }
-                    result.primary.updated?.let {
-                        // Only included updated results if they are full updates (not
-                        // related asset updates)
-                        it.filter { asset ->
-                            !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank()
-                        }.forEach { asset -> list.add(asset) }
-                    }
-                    // Also include any results that may be restored assets
-                    result.primary.restored?.let { list.addAll(it) }
+                    totalCreated += result.primary.created?.size() ?: 0
+                    totalUpdated += result.primary.updated?.size() ?: 0
+                    totalRestored += result.primary.restored?.size() ?: 0
                 }
-            return list
+            val combined = OffHeapAssetCache("allModified", totalCreated + totalUpdated + totalRestored, AssetBatch.EXEMPLAR_COLUMN)
+            results.filterNotNull()
+                .forEach { result ->
+                    combined.extendedWith(result.primary.created)
+                    combined.extendedWith(result.primary.restored)
+                    combined.extendedWith(result.primary.updated) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
+                }
+            return combined
         }
     }
 }
