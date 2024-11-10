@@ -43,8 +43,10 @@ public class OffHeapAssetCache implements Closeable {
     public OffHeapAssetCache(String name, int anticipatedSize, Asset exemplar) {
         try {
             backingStore = Files.createTempFile(name, ".dat");
-            ChronicleMapBuilder<UUID, Asset> builder =
-                    ChronicleMap.of(UUID.class, Asset.class).name(name).constantKeySizeBySample(UUID.randomUUID()).checksumEntries(false);
+            ChronicleMapBuilder<UUID, Asset> builder = ChronicleMap.of(UUID.class, Asset.class)
+                    .name(name)
+                    .constantKeySizeBySample(UUID.randomUUID())
+                    .checksumEntries(false);
             if (exemplar != null) {
                 builder.averageValue(exemplar);
             }
