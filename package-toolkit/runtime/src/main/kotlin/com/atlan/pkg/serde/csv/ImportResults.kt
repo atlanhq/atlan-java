@@ -40,25 +40,30 @@ data class ImportResults(
      *
      * @param guidAssignments mapping from placeholder to actual (resolved) GUIDs, even if no change was made to an asset
      * @param qualifiedNames mapping from case-insensitive to actual (resolved) qualifiedName, even if no change was made to an asset
-     * @param created list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
-     * @param updated list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
-     * @param restored list of (minimal) assets that were potentially-restored (note: when tracking is turned off in batch-processing, this will be null)
-     * @param skipped list of (minimal) assets that were skipped
+     * @param createdIn list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
+     * @param updatedIn list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
+     * @param restoredIn list of (minimal) assets that were potentially-restored (note: when tracking is turned off in batch-processing, this will be null)
+     * @param skippedIn list of (minimal) assets that were skipped
      * @param numCreated number of assets that were created (count only)
      * @param numUpdated number of assets that were updated (count only)
      * @param numRestored number of assets that were potentially restored (count only)
      */
-    data class Details(
+    class Details(
         val guidAssignments: Map<String, String>,
         val qualifiedNames: Map<AssetIdentity, String>,
-        val created: OffHeapAssetCache?,
-        val updated: OffHeapAssetCache?,
-        val restored: OffHeapAssetCache?,
-        val skipped: OffHeapAssetCache?,
+        createdIn: OffHeapAssetCache?,
+        updatedIn: OffHeapAssetCache?,
+        restoredIn: OffHeapAssetCache?,
+        skippedIn: OffHeapAssetCache?,
         val numCreated: Long,
         val numUpdated: Long,
         val numRestored: Long,
     ) {
+        val created = createdIn?.copy()
+        val updated = updatedIn?.copy()
+        val restored = restoredIn?.copy()
+        val skipped = skippedIn?.copy()
+
         /**
          * Combine this set of details with another.
          *
@@ -107,6 +112,14 @@ data class ImportResults(
                     combined.extendedWith(result.primary.created)
                     combined.extendedWith(result.primary.restored)
                     combined.extendedWith(result.primary.updated) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
+                    result.primary.created?.close()
+                    result.primary.restored?.close()
+                    result.primary.updated?.close()
+                    result.primary.skipped?.close()
+                    result.related.created?.close()
+                    result.related.updated?.close()
+                    result.related.restored?.close()
+                    result.related.skipped?.close()
                 }
             return combined
         }

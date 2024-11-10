@@ -5,6 +5,7 @@ package com.atlan.cache;
 import com.atlan.model.assets.Asset;
 import com.atlan.util.AssetBatch;
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -158,12 +159,24 @@ public class OffHeapAssetCache implements Closeable {
     }
 
     /**
+     * Create a copy of this cache and return it.
+     *
+     * @return a copy of this cache
+     */
+    public OffHeapAssetCache copy() {
+        OffHeapAssetCache copy =
+                new OffHeapAssetCache(this.internal.name(), this.internal.size(), AssetBatch.EXEMPLAR_COLUMN);
+        copy.internal.putAll(this.internal);
+        return copy;
+    }
+
+    /**
      * Indicates whether the cache has already been closed.
      *
      * @return true if the cache has been closed, otherwise false
      */
-    public boolean isClosed() {
-        return internal.isClosed();
+    public boolean isNotClosed() {
+        return !internal.isClosed();
     }
 
     /**
@@ -174,8 +187,11 @@ public class OffHeapAssetCache implements Closeable {
     @Override
     public void close() throws IOException {
         internal.close();
-        if (!backingStore.toFile().delete()) {
-            throw new IOException("Unable to delete off-heap cache: " + backingStore);
+        File file = backingStore.toFile();
+        if (file.exists()) {
+            if (!file.delete()) {
+                throw new IOException("Unable to delete off-heap cache: " + backingStore);
+            }
         }
     }
 
@@ -195,8 +211,24 @@ public class OffHeapAssetCache implements Closeable {
                 new OffHeapAssetCache(this.internal.name(), this.size() + other.size(), AssetBatch.EXEMPLAR_COLUMN);
         combined.internal.putAll(this.internal);
         combined.internal.putAll(other.internal);
-        this.close();
-        other.close();
+        IOException exception = null;
+        try {
+            this.close();
+        } catch (IOException e) {
+            exception = e;
+        }
+        try {
+            other.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        if (exception != null) {
+            throw exception;
+        }
         return combined;
     }
 

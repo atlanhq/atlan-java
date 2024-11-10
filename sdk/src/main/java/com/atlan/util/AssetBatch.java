@@ -21,6 +21,8 @@ import com.atlan.model.enums.AssetCreationHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.serde.Serde;
+import java.io.Closeable;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -35,7 +37,7 @@ import lombok.Getter;
  * Utility class for managing bulk updates in batches.
  */
 @Builder
-public class AssetBatch {
+public class AssetBatch implements Closeable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
             Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME);
@@ -445,6 +447,52 @@ public class AssetBatch {
     public AssetMutationResponse add(Asset single) throws AtlanException {
         _batch.add(single);
         return process();
+    }
+
+    /**
+     * Close the batch by freeing up any resources it has used.
+     * Note: this will clear any internal caches of results, so only call this after you have processed those!
+     *
+     * @throws IOException on any problems freeing up resources
+     */
+    @Override
+    public void close() throws IOException {
+        IOException exception = null;
+        try {
+            created.close();
+        } catch (IOException e) {
+            exception = e;
+        }
+        try {
+            updated.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        try {
+            restored.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        try {
+            skipped.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        if (exception != null) {
+            throw exception;
+        }
     }
 
     /**

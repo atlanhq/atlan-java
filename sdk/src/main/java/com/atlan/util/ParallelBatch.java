@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AssetCreationHandling;
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +24,7 @@ import lombok.Builder;
  * Utility class for managing bulk updates across multiple parallel-running batches.
  */
 @Builder
-public class ParallelBatch {
+public class ParallelBatch implements Closeable {
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -519,13 +520,13 @@ public class ParallelBatch {
             lock.writeLock().lock();
             try {
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getCreated().isClosed()) {
+                    if (batch.getCreated().isNotClosed()) {
                         totalCreated += batch.getCreated().size();
                     }
                 }
                 created = new OffHeapAssetCache("p-created", totalCreated);
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getCreated().isClosed()) {
+                    if (batch.getCreated().isNotClosed()) {
                         created.extendedWith(batch.getCreated());
                         try {
                             batch.getCreated().close();
@@ -560,13 +561,13 @@ public class ParallelBatch {
             lock.writeLock().lock();
             try {
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getUpdated().isClosed()) {
+                    if (batch.getUpdated().isNotClosed()) {
                         totalUpdated += batch.getUpdated().size();
                     }
                 }
                 updated = new OffHeapAssetCache("p-updated", totalUpdated);
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getUpdated().isClosed()) {
+                    if (batch.getUpdated().isNotClosed()) {
                         updated.extendedWith(batch.getUpdated());
                         try {
                             batch.getUpdated().close();
@@ -602,13 +603,13 @@ public class ParallelBatch {
             lock.writeLock().lock();
             try {
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getRestored().isClosed()) {
+                    if (batch.getRestored().isNotClosed()) {
                         totalRestored += batch.getRestored().size();
                     }
                 }
                 restored = new OffHeapAssetCache("p-restored", totalRestored);
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getRestored().isClosed()) {
+                    if (batch.getRestored().isNotClosed()) {
                         restored.extendedWith(batch.getRestored());
                         try {
                             batch.getRestored().close();
@@ -671,13 +672,13 @@ public class ParallelBatch {
             lock.writeLock().lock();
             try {
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getSkipped().isClosed()) {
+                    if (batch.getSkipped().isNotClosed()) {
                         totalSkipped += batch.getSkipped().size();
                     }
                 }
                 skipped = new OffHeapAssetCache("p-skipped", totalSkipped);
                 for (AssetBatch batch : batchMap.values()) {
-                    if (!batch.getSkipped().isClosed()) {
+                    if (batch.getSkipped().isNotClosed()) {
                         skipped.extendedWith(batch.getSkipped());
                         try {
                             batch.getSkipped().close();
@@ -759,6 +760,63 @@ public class ParallelBatch {
             return resolvedQualifiedNames;
         } finally {
             lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * Close the batch by freeing up any resources it has used.
+     * Note: this will clear any internal caches of results, so only call this after you have processed those!
+     *
+     * @throws IOException on any problems freeing up resources
+     */
+    @Override
+    public void close() throws IOException {
+        IOException exception = null;
+        for (AssetBatch batch : batchMap.values()) {
+            try {
+                batch.close();
+            } catch (IOException e) {
+                if (exception == null) {
+                    exception = e;
+                } else {
+                    exception.addSuppressed(e);
+                }
+            }
+        }
+        try {
+            created.close();
+        } catch (IOException e) {
+            exception = e;
+        }
+        try {
+            updated.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        try {
+            restored.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        try {
+            skipped.close();
+        } catch (IOException e) {
+            if (exception == null) {
+                exception = e;
+            } else {
+                exception.addSuppressed(e);
+            }
+        }
+        if (exception != null) {
+            throw exception;
         }
     }
 }
