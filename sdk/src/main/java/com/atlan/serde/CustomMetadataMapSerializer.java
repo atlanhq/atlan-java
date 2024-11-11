@@ -69,7 +69,7 @@ public class CustomMetadataMapSerializer extends StdSerializer<Map<String, Custo
                         JacksonUtils.serializeObject(gen, cmId, Collections.emptyMap());
                     } else {
                         try {
-                            cmId = client.getCustomMetadataCache().getIdForName(cmName);
+                            cmId = client.getCustomMetadataCache().getSidForName(cmName);
                             if (cma != null) {
                                 Map<String, Object> idToValue = new HashMap<>();
                                 client.getCustomMetadataCache()

@@ -19,6 +19,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
+    private static final AtlanGroup EXEMPLAR_GROUP = AtlanGroup.builder()
+            .id(UUID.randomUUID().toString())
+            .name("group_name")
+            .alias("Group Name")
+            .path("/group_name")
+            .attributes(AtlanGroup.GroupAttributes.builder()
+                    .alias(List.of("Group Name"))
+                    .createdAt(List.of("1234567890"))
+                    .createdBy(List.of("someone"))
+                    .description(List.of("could be empty"))
+                    .isDefault(List.of("false"))
+                    .build())
+            .personas(new TreeSet<>(Set.of(AtlanGroup.Persona.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("Persona Name")
+                    .displayName("Persona Name")
+                    .qualifiedName("default/E8XsHwbZ995WWk2ajSVoWN")
+                    .build())))
+            .roles(new TreeSet<>(Set.of("persona_E8XsHwbZ995WWk2ajSVoWN")))
+            .userCount(10L)
+            .build();
+
     private volatile Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 
     private final GroupsEndpoint groupsEndpoint;
@@ -32,6 +54,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = groupsEndpoint.list();
+        initializeOffHeap("group", groups.size(), groups.isEmpty() ? EXEMPLAR_GROUP : groups.get(0), AtlanGroup.class);
         mapAliasToId.clear();
         for (AtlanGroup group : groups) {
             String groupId = group.getId();

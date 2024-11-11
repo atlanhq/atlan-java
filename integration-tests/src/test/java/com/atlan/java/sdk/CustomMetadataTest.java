@@ -669,7 +669,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.create.cm.raci"})
     void removeAttribute() throws AtlanException {
         CustomMetadataDef existing =
-                Atlan.getDefaultClient().getCustomMetadataCache().getCustomMetadataDef(CM_RACI);
+                Atlan.getDefaultClient().getCustomMetadataCache().getByName(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef existingAttr : existingAttrs) {
@@ -744,7 +744,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.read.cm.structure.1"})
     void recreateAttribute() throws AtlanException {
         CustomMetadataDef existing =
-                Atlan.getDefaultClient().getCustomMetadataCache().getCustomMetadataDef(CM_RACI);
+                Atlan.getDefaultClient().getCustomMetadataCache().getByName(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef attributeDef : existingAttrs) {

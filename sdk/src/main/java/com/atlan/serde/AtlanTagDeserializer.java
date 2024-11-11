@@ -66,7 +66,7 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
         String sourceAttachmentsAttrId;
         try {
             // Translate the ID-string to a human-readable name
-            clsName = client.getAtlanTagCache().getNameForId(clsId);
+            clsName = client.getAtlanTagCache().getNameForSid(clsId);
             sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the Atlan tag was deleted since but the

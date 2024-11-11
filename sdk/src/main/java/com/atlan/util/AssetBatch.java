@@ -48,15 +48,6 @@ public class AssetBatch implements Closeable {
         MERGE,
     }
 
-    public static final Column EXEMPLAR_COLUMN = Column._internal()
-            .guid(UUID.randomUUID().toString())
-            .qualifiedName("default/somewhere/1234567890/database/schema/table/column_name")
-            .connectionQualifiedName("default/somewhere/1234567890")
-            .name("column_name")
-            .tenantId("default")
-            .order(10)
-            .build();
-
     /** Connectivity to an Atlan tenant. */
     private AtlanClient client;
 

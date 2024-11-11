@@ -66,7 +66,7 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
         String cmName = null;
         try {
             // Translate the ID-string to a human-readable name
-            cmName = client.getCustomMetadataCache().getNameForId(cmId);
+            cmName = client.getCustomMetadataCache().getNameForSid(cmId);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the custom metadata was deleted since but the
             // audit record remains

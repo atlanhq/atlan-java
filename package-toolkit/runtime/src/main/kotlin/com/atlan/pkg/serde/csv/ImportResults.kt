@@ -3,7 +3,6 @@
 package com.atlan.pkg.serde.csv
 
 import com.atlan.cache.OffHeapAssetCache
-import com.atlan.util.AssetBatch
 import com.atlan.util.AssetBatch.AssetIdentity
 
 /**
@@ -106,7 +105,7 @@ data class ImportResults(
                     totalUpdated += result.primary.updated?.size() ?: 0
                     totalRestored += result.primary.restored?.size() ?: 0
                 }
-            val combined = OffHeapAssetCache("allModified", totalCreated + totalUpdated + totalRestored, AssetBatch.EXEMPLAR_COLUMN)
+            val combined = OffHeapAssetCache("allModified", totalCreated + totalUpdated + totalRestored)
             results.filterNotNull()
                 .forEach { result ->
                     combined.extendedWith(result.primary.created)

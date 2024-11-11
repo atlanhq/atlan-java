@@ -4,6 +4,8 @@ package com.atlan.cache;
 
 import com.atlan.api.RolesEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanRole;
 import com.atlan.model.admin.RoleResponse;
 import java.util.*;
@@ -28,6 +30,11 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
         // Note: we will only retrieve and cache the workspace-level roles, which all
         // start with '$'
         RoleResponse response = rolesEndpoint.list("{\"name\":{\"$ilike\":\"$%\"}}");
+        if (response == null || response.getRecords().isEmpty()) {
+            throw new NotFoundException(ErrorCode.ROLES_NOT_FOUND);
+        }
+        initializeOffHeap(
+                "role", response.getRecords().size(), response.getRecords().get(0), AtlanRole.class);
         cacheResponse(response);
     }
 

@@ -18,7 +18,6 @@ import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
-import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -28,6 +27,7 @@ import mu.KLogger
 import mu.KotlinLogging
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
+import java.io.Closeable
 import java.io.File
 import java.io.File.separator
 import java.io.IOException
@@ -820,30 +820,32 @@ object Utils {
         val map = CacheUpdates.build(added, removed)
         logger.info { "Updating connection caches for ${map.size} connections..." }
         val sync = getBackingStore(fallback)
-        for ((connectionQN, assets) in map) {
-            logger.info { "Updating connection cache for: $connectionQN" }
-            val paths = mutableListOf<String>()
-            paths.addAll(fallback.split(separator))
-            paths.add("cache")
-            paths.addAll(connectionQN.split("/"))
-            val tmpFile = paths.joinToString(separator = separator)
-            // Retrieve any pre-existing cache first, so we can update it
-            try {
-                sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
-                logger.info { " ... downloaded pre-existing cache to update" }
-            } catch (e: IOException) {
-                logger.info { " ... unable to download pre-existing cache, creating a new one" }
-                logger.debug(e) { "Location attempted from backing store: connection-cache/$connectionQN.sqlite" }
-            }
-            val cache = PersistentConnectionCache(tmpFile)
-            cache.addAssets(assets.added.values())
-            cache.deleteAssets(assets.removed.values())
-            // Replace the cache with the updated one
-            try {
-                sync.uploadTo(tmpFile, "connection-cache/$connectionQN.sqlite")
-                logger.info { " ... uploaded updated cache" }
-            } catch (e: IOException) {
-                logger.error(e) { " ... unable to upload updated cache: connection-cache/$connectionQN.sqlite" }
+        for ((connectionQN, cacheUpdates) in map) {
+            cacheUpdates.use { assets ->
+                logger.info { "Updating connection cache for: $connectionQN" }
+                val paths = mutableListOf<String>()
+                paths.addAll(fallback.split(separator))
+                paths.add("cache")
+                paths.addAll(connectionQN.split("/"))
+                val tmpFile = paths.joinToString(separator = separator)
+                // Retrieve any pre-existing cache first, so we can update it
+                try {
+                    sync.downloadFrom("connection-cache/$connectionQN.sqlite", tmpFile)
+                    logger.info { " ... downloaded pre-existing cache to update" }
+                } catch (e: IOException) {
+                    logger.info { " ... unable to download pre-existing cache, creating a new one" }
+                    logger.debug(e) { "Location attempted from backing store: connection-cache/$connectionQN.sqlite" }
+                }
+                val cache = PersistentConnectionCache(tmpFile)
+                cache.addAssets(assets.added.values())
+                cache.deleteAssets(assets.removed.values())
+                // Replace the cache with the updated one
+                try {
+                    sync.uploadTo(tmpFile, "connection-cache/$connectionQN.sqlite")
+                    logger.info { " ... uploaded updated cache" }
+                } catch (e: IOException) {
+                    logger.error(e) { " ... unable to upload updated cache: connection-cache/$connectionQN.sqlite" }
+                }
             }
         }
     }
@@ -851,7 +853,7 @@ object Utils {
     private data class CacheUpdates(
         val added: OffHeapAssetCache,
         val removed: OffHeapAssetCache,
-    ) {
+    ) : Closeable {
         companion object {
             fun build(
                 add: OffHeapAssetCache?,
@@ -865,8 +867,8 @@ object Utils {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add.size(), AssetBatch.EXEMPLAR_COLUMN),
-                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove?.size() ?: -1, AssetBatch.EXEMPLAR_COLUMN),
+                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add.size()),
+                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove?.size() ?: -1),
                                 )
                         }
                         map[it]!!.added.add(asset)
@@ -878,8 +880,8 @@ object Utils {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add?.size() ?: -1, AssetBatch.EXEMPLAR_COLUMN),
-                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove.size(), AssetBatch.EXEMPLAR_COLUMN),
+                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add?.size() ?: -1),
+                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove.size()),
                                 )
                         }
                         map[it]!!.removed.add(asset)
@@ -887,6 +889,22 @@ object Utils {
                 }
                 return map
             }
+        }
+
+        /** {@inheritDoc} */
+        override fun close() {
+            var exception: IOException? = null
+            try {
+                added.close()
+            } catch (e: IOException) {
+                exception = e
+            }
+            try {
+                removed.close()
+            } catch (e: IOException) {
+                if (exception == null) exception = e else exception.addSuppressed(e)
+            }
+            if (exception != null) throw exception
         }
     }
 }

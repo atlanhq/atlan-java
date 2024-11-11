@@ -66,7 +66,7 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
             event: AtlanEvent,
             logger: Logger,
         ): Boolean {
-            return Atlan.getDefaultClient().customMetadataCache.getIdForName(CM_SCORING) != null && event.payload?.asset != null
+            return Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING) != null && event.payload?.asset != null
         }
 
         /** {@inheritDoc}  */

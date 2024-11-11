@@ -486,7 +486,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             String guid, String cmName, CustomMetadataAttributes values, RequestOptions options) throws AtlanException {
         if (values != null) {
             // Ensure the custom metadata exists first — this will throw an exception if not
-            client.getCustomMetadataCache().getIdForName(cmName);
+            client.getCustomMetadataCache().getSidForName(cmName);
             String url = String.format(
                     "%s%s",
                     getBaseUrl(),
@@ -523,7 +523,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public void replaceCustomMetadata(
             String guid, String cmName, CustomMetadataAttributes values, RequestOptions options) throws AtlanException {
-        String cmId = client.getCustomMetadataCache().getIdForName(cmName);
+        String cmId = client.getCustomMetadataCache().getSidForName(cmName);
         Map<String, Object> baseMap = client.getCustomMetadataCache().getEmptyAttributes(cmName);
         if (values != null && !values.isEmpty()) {
             baseMap.putAll(values.getAttributes());
@@ -559,7 +559,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public void removeCustomMetadata(String guid, String cmName, RequestOptions options) throws AtlanException {
         // Ensure the custom metadata exists first — this will throw an exception if not
-        client.getCustomMetadataCache().getIdForName(cmName);
+        client.getCustomMetadataCache().getSidForName(cmName);
         Map<String, Object> map = client.getCustomMetadataCache().getEmptyAttributes(cmName);
         CustomMetadataAttributes cma =
                 CustomMetadataAttributes.builder().attributes(map).build();
@@ -862,7 +862,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         // Note: here we need to directly translate to an ID because it is a path
         // parameter in the API call
-        String atlanTagId = client.getAtlanTagCache().getIdForName(atlanTagName);
+        String atlanTagId = client.getAtlanTagCache().getSidForName(atlanTagName);
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
@@ -1214,7 +1214,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 client.getCustomMetadataCache().getIdMapFromNameMap(name, attributes, businessMetadataAttributes);
                 if (includeName) {
                     Map<String, Map<String, Object>> wrapped = new LinkedHashMap<>();
-                    String cmId = client.getCustomMetadataCache().getIdForName(name);
+                    String cmId = client.getCustomMetadataCache().getSidForName(name);
                     wrapped.put(cmId, businessMetadataAttributes);
                     return client.writeValueAsString(wrapped);
                 } else {

@@ -117,7 +117,7 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static synchronized void purge(AtlanClient client, String displayName) throws AtlanException {
-        String internalName = client.getCustomMetadataCache().getIdForName(displayName);
+        String internalName = client.getCustomMetadataCache().getSidForName(displayName);
         client.typeDefs.purge(internalName);
     }
 }

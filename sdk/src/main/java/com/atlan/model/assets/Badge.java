@@ -321,7 +321,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     public static String generateQualifiedName(AtlanClient client, String cmName, String cmAttribute)
             throws AtlanException {
-        String cmId = client.getCustomMetadataCache().getIdForName(cmName);
+        String cmId = client.getCustomMetadataCache().getSidForName(cmName);
         String cmAttrId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return "badges/global/" + cmId + "." + cmAttrId;
     }

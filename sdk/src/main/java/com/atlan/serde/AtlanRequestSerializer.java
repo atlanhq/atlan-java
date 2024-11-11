@@ -63,7 +63,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             String clsName = cls.getTypeName();
             String clsId;
             try {
-                clsId = client.getAtlanTagCache().getIdForName(clsName);
+                clsId = client.getAtlanTagCache().getSidForName(clsName);
             } catch (NotFoundException e) {
                 clsId = AtlanClient.DELETED_AUDIT_OBJECT;
             } catch (AtlanException e) {
@@ -78,7 +78,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             String cmName = destinationAttribute;
             Map<String, Object> attrValues = new HashMap<>();
             try {
-                destinationAttribute = client.getCustomMetadataCache().getIdForName(cmName);
+                destinationAttribute = client.getCustomMetadataCache().getSidForName(cmName);
                 client.getCustomMetadataCache()
                         .getAttributesFromCustomMetadata(destinationAttribute, cmName, cm.getAttributes(), attrValues);
             } catch (NotFoundException e) {

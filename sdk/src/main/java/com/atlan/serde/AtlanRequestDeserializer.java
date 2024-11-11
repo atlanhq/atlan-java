@@ -76,7 +76,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                                 JacksonUtils.deserializeBoolean(jsonPayload, "removePropagationsOnEntityDelete");
                         String humanReadableAtlanTag;
                         try {
-                            humanReadableAtlanTag = client.getAtlanTagCache().getNameForId(typeName);
+                            humanReadableAtlanTag = client.getAtlanTagCache().getNameForSid(typeName);
                         } catch (NotFoundException e) {
                             humanReadableAtlanTag = AtlanClient.DELETED_AUDIT_OBJECT;
                         } catch (AtlanException e) {

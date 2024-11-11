@@ -52,7 +52,7 @@ public class TagFilter {
      */
     public static TagFilter of(AtlanClient client, String tagName) {
         try {
-            String clsId = client.getAtlanTagCache().getIdForName(tagName);
+            String clsId = client.getAtlanTagCache().getSidForName(tagName);
             return TagFilter._internal().displayName(tagName).name(clsId).build();
         } catch (AtlanException e) {
             log.error("Unable to translate tag -- skipping: {}", tagName, e);

@@ -267,6 +267,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-048",
             "Requested OpenLineage connector type {0} is not configured.",
             "You must first run the appropriate marketplace package to configure OpenLineage for this connector before you can send events for it."),
+    CANNOT_CACHE_REFRESH_BY_SID(
+            400,
+            "ATLAN-JAVA-400-049",
+            "Objects with secondary IDs can only be cached in bulk, not individually.",
+            "This code path is intentionally unreachable. If you receive this error, please raise a ticket on the GitHub repository for the SDK."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
@@ -479,6 +484,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-031",
             "Source-synced tag with ID {0} does not exist.",
             "Verify the source-synced tag ID provided is a valid source-synced tag ID. This should be the qualifiedName of the source-synced tag in Atlan."),
+    ROLES_NOT_FOUND(
+            404,
+            "ATLAN-JAVA-404-032",
+            "No roles found in Atlan.",
+            "Verify your tenant is fully configured. If you believe it is, please raise this with Atlan support."),
 
     CONFLICT_PASSTHROUGH(
             409,

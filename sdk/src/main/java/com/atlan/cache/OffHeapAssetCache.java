@@ -3,26 +3,25 @@
 package com.atlan.cache;
 
 import com.atlan.model.assets.Asset;
-import com.atlan.util.AssetBatch;
-import java.io.Closeable;
-import java.io.File;
+import com.atlan.model.assets.Column;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Collection;
 import java.util.UUID;
 import java.util.function.Predicate;
-import net.openhft.chronicle.map.ChronicleMap;
-import net.openhft.chronicle.map.ChronicleMapBuilder;
 
 /**
  * Generic class through which to cache any assets efficiently, off-heap, to avoid risking extreme
  * memory usage.
  */
-public class OffHeapAssetCache implements Closeable {
+public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
 
-    private final Path backingStore;
-    private final ChronicleMap<UUID, Asset> internal;
+    public static final Column EXEMPLAR_COLUMN = Column._internal()
+            .guid(UUID.randomUUID().toString())
+            .qualifiedName("default/somewhere/1234567890/database/schema/table/column_name")
+            .connectionQualifiedName("default/somewhere/1234567890")
+            .name("column_name")
+            .tenantId("default")
+            .order(10)
+            .build();
 
     /**
      * Construct new asset cache.
@@ -31,7 +30,7 @@ public class OffHeapAssetCache implements Closeable {
      * @param anticipatedSize number of entries we expect to put in the cache
      */
     public OffHeapAssetCache(String name, int anticipatedSize) {
-        this(name, anticipatedSize, AssetBatch.EXEMPLAR_COLUMN);
+        this(name, anticipatedSize, EXEMPLAR_COLUMN);
     }
 
     /**
@@ -42,120 +41,18 @@ public class OffHeapAssetCache implements Closeable {
      * @param exemplar sample asset value for what will be stored in the cache
      */
     public OffHeapAssetCache(String name, int anticipatedSize, Asset exemplar) {
-        try {
-            backingStore = Files.createTempFile(name, ".dat");
-            ChronicleMapBuilder<UUID, Asset> builder = ChronicleMap.of(UUID.class, Asset.class)
-                    .name(name)
-                    .constantKeySizeBySample(UUID.randomUUID())
-                    .checksumEntries(false);
-            if (exemplar != null) {
-                builder.averageValue(exemplar);
-            }
-            if (anticipatedSize > 0) {
-                builder.entries(anticipatedSize);
-            } else {
-                builder.entries(1_000_000);
-            }
-            internal = builder.createPersistedTo(backingStore.toFile());
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
-        }
+        super(name, anticipatedSize > 0 ? anticipatedSize : 1_000_000, exemplar, Asset.class);
     }
 
     /**
-     * Add a new asset to the cache.
-     * Note: the asset MUST have a real (not a placeholder) GUID to be cached.
+     * Add an asset into the cache.
+     * Note: the object MUST have a real (not a placeholder) UUID to be cached.
      *
      * @param asset to add to the cache
-     * @return any asset that was previously cached with the same GUID, or null if no such GUID has ever been cached
+     * @return any asset that was previously cached with the same UUID, or null if no such UUID has ever been cached
      */
     public Asset add(Asset asset) {
         return put(asset.getGuid(), asset);
-    }
-
-    /**
-     * Retrieve an asset from the cache by its GUID.
-     *
-     * @param guid of the asset to retrieve
-     * @return the asset with that GUID, or null if it is not in the cache
-     */
-    public Asset get(String guid) {
-        return internal.get(UUID.fromString(guid));
-    }
-
-    /**
-     * Put an asset into the cache by its GUID.
-     *
-     * @param guid of the asset to put into the cache
-     * @param asset to put into the cache
-     * @return any asset that was previously cached with the same GUID, or null if no such GUID has ever been cached
-     */
-    private Asset put(String guid, Asset asset) {
-        return internal.put(UUID.fromString(guid), asset);
-    }
-
-    /**
-     * Check whether the cache has an asset in it with the provided GUID.
-     *
-     * @param guid of the asset to check exists in the cache
-     * @return true if and only if the cache has an asset with this GUID in it
-     */
-    public boolean containsKey(String guid) {
-        return internal.containsKey(UUID.fromString(guid));
-    }
-
-    /**
-     * Retrieve the number of assets currently held in the cache.
-     *
-     * @return the number of assets currently in the cache
-     */
-    public int size() {
-        return internal.size();
-    }
-
-    /**
-     * Retrieve the number of assets currently held in the cache.
-     *
-     * @return the number of assets currently in the cache
-     */
-    public int getSize() {
-        return size();
-    }
-
-    /**
-     * Indicates whether the cache has no entries.
-     *
-     * @return true if the cache has no entries, otherwise false
-     */
-    public boolean isEmpty() {
-        return internal.isEmpty();
-    }
-
-    /**
-     * Indicates whether the cache has any entries.
-     *
-     * @return true if the cache has at least one entry, otherwise false
-     */
-    public boolean isNotEmpty() {
-        return !isEmpty();
-    }
-
-    /**
-     * Retrieve all the keys held in the cache.
-     *
-     * @return a collection of all keys held in the cache
-     */
-    public Collection<UUID> keys() {
-        return internal.keySet();
-    }
-
-    /**
-     * Retrieve all the assets held in the cache.
-     *
-     * @return a collection of all assets held in the cache
-     */
-    public Collection<Asset> values() {
-        return internal.values();
     }
 
     /**
@@ -164,35 +61,9 @@ public class OffHeapAssetCache implements Closeable {
      * @return a copy of this cache
      */
     public OffHeapAssetCache copy() {
-        OffHeapAssetCache copy =
-                new OffHeapAssetCache(this.internal.name(), this.internal.size(), AssetBatch.EXEMPLAR_COLUMN);
+        OffHeapAssetCache copy = new OffHeapAssetCache(this.internal.name(), this.internal.size());
         copy.internal.putAll(this.internal);
         return copy;
-    }
-
-    /**
-     * Indicates whether the cache has already been closed.
-     *
-     * @return true if the cache has been closed, otherwise false
-     */
-    public boolean isNotClosed() {
-        return !internal.isClosed();
-    }
-
-    /**
-     * Clean up the cache, once it is no longer needed.
-     *
-     * @throws IOException if unable to remove the temporary file holding the cache
-     */
-    @Override
-    public void close() throws IOException {
-        internal.close();
-        File file = backingStore.toFile();
-        if (file.exists()) {
-            if (!file.delete()) {
-                throw new IOException("Unable to delete off-heap cache: " + backingStore);
-            }
-        }
     }
 
     /**
@@ -207,8 +78,7 @@ public class OffHeapAssetCache implements Closeable {
         if (other == null) {
             return this;
         }
-        OffHeapAssetCache combined =
-                new OffHeapAssetCache(this.internal.name(), this.size() + other.size(), AssetBatch.EXEMPLAR_COLUMN);
+        OffHeapAssetCache combined = new OffHeapAssetCache(this.internal.name(), this.size() + other.size());
         combined.internal.putAll(this.internal);
         combined.internal.putAll(other.internal);
         IOException exception = null;
@@ -252,7 +122,7 @@ public class OffHeapAssetCache implements Closeable {
      */
     public void extendedWith(OffHeapAssetCache other, Predicate<Asset> isValid) {
         if (other != null) {
-            for (Asset one : other.internal.values()) {
+            for (Asset one : other.values()) {
                 if (isValid.test(one)) {
                     put(one.getGuid(), one);
                 }

@@ -101,7 +101,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         val client = Atlan.getDefaultClient()
         removeConnection(c1, c1Type)
         removeConnection(c2, c2Type)
-        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
+        client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
     }
 
     @Test
