@@ -26,8 +26,5 @@ pkl {
 }
 
 tasks.getByName("genPklTypedefs") {
-    dependsOn(
-        ":typedef-toolkit:model:genKotlin",
-        ":typedef-toolkit:model:generateBuildInfo",
-    )
+    dependsOn(":typedef-toolkit:model:genKotlin")
 }

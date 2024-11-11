@@ -2,16 +2,15 @@
    Copyright 2024 Atlan Pte. Ltd. */
 amends "modulepath:/PipelineConfig.pkl"
 import "pkl:semver"
-import "modulepath:/BuildInfo.pkl"
 
 packageId = "@csa/verification-enforcer"
 packageName = "Verification Enforcer"
-version = semver.Version(BuildInfo.VERSION)
+version = semver.Version(read("prop:VERSION_NAME"))
 description = "Ensures any asset marked VERIFIED meets a minimum standard, or if not it is automatically reverted to DRAFT."
 iconUrl = "https://assets.atlan.com/assets/ph-seal-check-light.svg"
 docsUrl = "https://solutions.atlan.com/verification-enforcer/"
 implementationLanguage = "Kotlin"
-containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
+containerImage = "ghcr.io/atlanhq/\(name):\(version)"
 containerCommand {
   "/dumb-init"
   "--"

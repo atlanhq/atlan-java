@@ -1,12 +1,11 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
 amends "pkl:Project"
-import "BuildInfo.pkl"
 
 package {
   name = "model"
   baseUri = "package://developer.atlan.com/toolkits/typedef/\(name)"
-  version = BuildInfo.VERSION
+  version = read("env:VERSION_NAME")
   packageZipUrl = "https://developer.atlan.com/toolkits/typedef/\(name)@\(version).zip"
   sourceCode = "https://github.com/atlanhq/atlan-java"
   sourceCodeUrlScheme = "\(sourceCode)/blob/v\(version)/pkl%{path}#L%{line}-%{endLine}"

@@ -32,7 +32,8 @@ pkl {
     project {
         packagers {
             register("makePklPackages") {
-                projectDirectories.from(file("build/resources/main/"))
+                projectDirectories.from(file("src/main/resources/"))
+                environmentVariables.put("VERSION_NAME", version.toString())
             }
         }
     }
@@ -52,7 +53,6 @@ tasks {
         }
         mergeServiceFiles()
         dependsOn(
-            "generateBuildInfo",
             ":package-toolkit:runtime:genPklConnectors",
         )
     }
@@ -63,7 +63,6 @@ tasks {
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
         dependsOn(
-            "generateBuildInfo",
             ":package-toolkit:runtime:genPklConnectors",
         )
     }
@@ -72,6 +71,9 @@ tasks {
     }
     getByName("genKotlin") {
         dependsOn(":package-toolkit:runtime:genPklConnectorsGatherImports")
+    }
+    getByName("makePklPackages") {
+        dependsOn("processResources")
     }
 }
 
@@ -83,22 +85,6 @@ task("sourcesJar", type = Jar::class) {
 java {
     withSourcesJar()
     withJavadocJar()
-}
-
-tasks.create<Copy>("generateBuildInfo") {
-    val templateContext = mapOf("version" to version)
-    inputs.properties(templateContext) // for gradle up-to-date check
-    from("src/main/templates/BuildInfo.pkl")
-    into("src/main/resources")
-    expand(templateContext)
-    dependsOn(tasks.getByName("genKotlin"))
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-tasks.getByName("makePklPackages") {
-    sourceSets["main"].resources.srcDir("${layout.buildDirectory.get()}/resources/main")
-    dependsOn(tasks.getByName("generateBuildInfo"))
-    dependsOn("processResources")
 }
 
 publishing {

@@ -46,6 +46,7 @@ java {
 
 tasks {
     shadowJar {
+        dependsOn("genPklConnectors")
         isZip64 = true
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
@@ -217,7 +218,10 @@ tasks {
 
     jar {
         archiveBaseName.set(jarName)
-        dependsOn(shadowJar)
+        dependsOn(
+            shadowJar,
+            "genPklConnectors",
+        )
         // Necessary to avoid log4j falling back to a non-performant way to walk the stack
         manifest {
             attributes(Pair("Multi-Release", "true"))
@@ -228,9 +232,6 @@ tasks {
         dependsOn("genPklConnectors")
     }
 
-    getByName("genPklConnectors") {
-        dependsOn(":package-toolkit:config:generateBuildInfo")
-    }
     getByName("sourcesJar") {
         dependsOn("genPklConnectors")
     }

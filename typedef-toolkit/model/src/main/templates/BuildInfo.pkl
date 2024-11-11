@@ -1,9 +1,0 @@
-/* SPDX-License-Identifier: Apache-2.0
-   Copyright 2024 Atlan Pte. Ltd. */
-
-/// Captures static information about the build.
-@ModuleInfo { minPklVersion = "0.25.2" }
-module BuildInfo
-
-/// Version of the SDK used to build the package config toolkit.
-hidden const VERSION: String = "${version}"

@@ -36,8 +36,9 @@ pkl {
     evaluators {
         register("genCustomPkg") {
             sourceModules.add("src/main/resources/package.pkl")
-            modulePath.from(file("$rootDir/package-toolkit/config/build/resources/main"))
+            modulePath.from(file("$rootDir/package-toolkit/config/src/main/resources"))
             multipleFileOutputDir.set(layout.projectDirectory)
+            externalProperties.put("VERSION_NAME", version.toString())
         }
     }
 }
@@ -64,7 +65,6 @@ tasks {
         delete(jarPath)
     }
     getByName("genCustomPkg") {
-        dependsOn(":package-toolkit:config:generateBuildInfo")
         dependsOn(":package-toolkit:config:processResources")
         dependsOn("compileKotlin")
     }

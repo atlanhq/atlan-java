@@ -2,17 +2,16 @@
    Copyright 2024 Atlan Pte. Ltd. */
 amends "modulepath:/Config.pkl"
 import "pkl:semver"
-import "modulepath:/BuildInfo.pkl"
 
 packageId = "@csa/lake-formation-tag-sync"
 packageName = "Lake Formation Tag Sync"
-version = semver.Version(BuildInfo.VERSION)
+version = semver.Version(read("prop:VERSION_NAME"))
 description = "Add Lake Formation Tags as custom metadata properties on assets."
 iconUrl = "http://assets.atlan.com/assets/ph-flow-arrow-light.svg"
 docsUrl = "https://solutions.atlan.com/lake-formation-tag-sync/"
 implementationLanguage = "Kotlin"
-containerImage = "ghcr.io/atlanhq/\(name):\(BuildInfo.VERSION)"
-containerImagePullPolicy = if (BuildInfo.VERSION.endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
+containerImage = "ghcr.io/atlanhq/\(name):\(version)"
+containerImagePullPolicy = if (version.toString().endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
 containerCommand {
   "/dumb-init"
   "--"
