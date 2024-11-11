@@ -24,6 +24,7 @@ import mu.KotlinLogging
  * @param connectionImporter that was used to import connections
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ViewImporter(
     private val preprocessed: Importer.Results,
@@ -33,6 +34,7 @@ class ViewImporter(
     private val connectionImporter: ConnectionImporter,
     trackBatches: Boolean,
     fieldSeparator: Char,
+    private val failOnErrors: Boolean = true,
 ) : AssetImporter(
         preprocessed.preprocessedFile,
         attrsToOverwrite,
@@ -42,6 +44,7 @@ class ViewImporter(
         KotlinLogging.logger {},
         trackBatches,
         fieldSeparator,
+        failOnErrors,
     ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

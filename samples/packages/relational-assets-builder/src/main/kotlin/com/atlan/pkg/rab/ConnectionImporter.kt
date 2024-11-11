@@ -25,6 +25,7 @@ import mu.KotlinLogging
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ConnectionImporter(
     private val preprocessed: Importer.Results,
@@ -33,6 +34,7 @@ class ConnectionImporter(
     private val batchSize: Int,
     trackBatches: Boolean,
     fieldSeparator: Char,
+    private val failOnErrors: Boolean = true,
 ) : AssetImporter(
         preprocessed.preprocessedFile,
         attrsToOverwrite,
@@ -47,6 +49,7 @@ class ConnectionImporter(
         KotlinLogging.logger {},
         trackBatches,
         fieldSeparator,
+        failOnErrors,
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
