@@ -2,35 +2,48 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import mu.KotlinLogging
 
-object GlossaryCache : AssetCache() {
+object GlossaryCache : AssetCache<Glossary>() {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
 
+    /** {@inheritDoc} */
+    override fun lookupByName(name: String?) {
+        val result = lookupByIdentity(name)
+        if (result != null) cache(result.guid, name, result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByIdentity(identity: String?): Asset? {
+    private fun lookupByIdentity(identity: String?): Glossary? {
         try {
             return Glossary.findByName(identity)
         } catch (e: AtlanException) {
             logger.warn { "Unable to find glossary: $identity" }
+            logger.debug(e) { "Full details: " }
         }
         identity?.let { addToIgnore(identity) }
         return null
     }
 
+    /** {@inheritDoc} */
+    override fun lookupById(id: String?) {
+        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(
+    private fun lookupById(
         guid: String?,
         currentAttempt: Int,
         maxRetries: Int,
-    ): Asset? {
+    ): Glossary? {
         try {
             val glossary =
                 Glossary.select()
@@ -40,13 +53,13 @@ object GlossaryCache : AssetCache() {
                     .stream()
                     .findFirst()
             if (glossary.isPresent) {
-                return glossary.get()
+                return glossary.get() as Glossary
             } else {
                 if (currentAttempt >= maxRetries) {
                     logger.warn { "No glossary found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                    return lookupById(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
@@ -58,18 +71,26 @@ object GlossaryCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Asset): String {
+    override fun getIdentityForAsset(asset: Glossary): String {
         return asset.name
     }
 
     /** {@inheritDoc} */
-    override fun preload() {
-        logger.info { "Caching all glossaries, up-front..." }
+    override fun refreshCache() {
+        val request =
+            Glossary.select()
+                .includesOnResults(includesOnResults)
+                .pageSize(1)
+                .toRequest()
+        val response = request.search()
+        logger.info { "Caching all ${response.approximateCount ?: 0} glossaries, up-front..." }
+        initializeOffHeap("glossary", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Glossary, Glossary::class.java)
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { glossary ->
-                addByGuid(glossary.guid, glossary)
+                glossary as Glossary
+                cache(glossary.guid, getIdentityForAsset(glossary), glossary)
             }
     }
 }

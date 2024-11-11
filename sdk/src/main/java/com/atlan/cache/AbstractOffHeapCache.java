@@ -38,7 +38,8 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
                     .constantKeySizeBySample(UUID.randomUUID())
                     .checksumEntries(false)
                     .averageValue(exemplar)
-                    .entries(anticipatedSize > 0 ? anticipatedSize : 10000);
+                    .entries(anticipatedSize > 0 ? anticipatedSize : 10_000)
+                    .maxBloatFactor(2.0);
             internal = builder.createPersistedTo(backingStore.toFile());
         } catch (IOException e) {
             throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
