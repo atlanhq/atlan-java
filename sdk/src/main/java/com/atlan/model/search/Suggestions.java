@@ -371,7 +371,7 @@ public class Suggestions {
                     if (!value.isBlank()) {
                         String name;
                         try {
-                            name = client.getAtlanTagCache().getNameForId(value);
+                            name = client.getAtlanTagCache().getNameForSid(value);
                         } catch (NotFoundException e) {
                             name = Serde.DELETED_AUDIT_OBJECT;
                         }

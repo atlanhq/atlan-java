@@ -30,7 +30,7 @@ public class OpenLineageOutputDataset extends OpenLineageDataset {
      * should be a list of all input datasets' fields that are used as input into the output column.
      */
     @Singular
-    Map<String, List<OpenLineage.ColumnLineageDatasetFacetFieldsAdditionalInputFields>> toFields;
+    Map<String, List<OpenLineage.InputField>> toFields;
 
     /**
      * Builds the minimal object necessary to create an OpenLineage dataset use-able as a lineage target.
@@ -63,8 +63,7 @@ public class OpenLineageOutputDataset extends OpenLineageDataset {
         } else {
             OpenLineage.ColumnLineageDatasetFacetFieldsBuilder fieldsBuilder =
                     openLineage.newColumnLineageDatasetFacetFieldsBuilder();
-            for (Map.Entry<String, List<OpenLineage.ColumnLineageDatasetFacetFieldsAdditionalInputFields>> entry :
-                    toFields.entrySet()) {
+            for (Map.Entry<String, List<OpenLineage.InputField>> entry : toFields.entrySet()) {
                 fieldsBuilder.put(
                         entry.getKey(),
                         openLineage

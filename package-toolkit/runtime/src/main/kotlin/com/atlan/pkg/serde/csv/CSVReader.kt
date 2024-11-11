@@ -15,11 +15,16 @@ import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.CsvRecordHandler
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.concurrent.Callable
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -95,6 +100,7 @@ class CSVReader
                         val transformed = csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                         csv.writeRecord(transformed)
                     }
+                    preproc.close()
                 }
                 csvPreprocessor.finalize(header, outputFile)
             } else {
@@ -102,6 +108,7 @@ class CSVReader
                 preproc.stream().skip(1).forEach { r: CsvRecord ->
                     csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
                 }
+                preproc.close()
                 csvPreprocessor.finalize(header)
             }
         }
@@ -125,20 +132,32 @@ class CSVReader
             skipColumns: Set<String> = setOf(),
         ): ImportResults {
             val client = Atlan.getDefaultClient()
-            val primaryBatch =
-                ParallelBatch(
-                    client,
-                    batchSize,
-                    includesTags,
-                    customMetadataHandling,
-                    true,
-                    updateOnly,
-                    trackBatches,
-                    caseSensitive,
-                    creationHandling,
-                    tableViewAgnostic,
-                )
-            val relatedBatch =
+            val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
+            val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
+            var someFailure = false
+
+            val parallelism = ForkJoinPool.getCommonPoolParallelism()
+            val filteredRowCount = AtomicLong(0)
+            counter.stream().skip(1).forEach { row ->
+                if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
+                    filteredRowCount.incrementAndGet()
+                }
+            }
+            counter.close()
+            val totalRowCount = filteredRowCount.get()
+            ParallelBatch(
+                client,
+                batchSize,
+                includesTags,
+                customMetadataHandling,
+                true,
+                updateOnly,
+                trackBatches,
+                caseSensitive,
+                creationHandling,
+                tableViewAgnostic,
+                totalRowCount.toInt(),
+            ).use { primaryBatch ->
                 ParallelBatch(
                     client,
                     batchSize,
@@ -150,159 +169,193 @@ class CSVReader
                     caseSensitive,
                     AssetCreationHandling.FULL,
                     false,
-                )
-            val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
-            val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
-            var someFailure = false
-
-            val filteredRowCount = AtomicLong(0)
-            counter.stream().skip(1).parallel().forEach { row ->
-                if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
-                    filteredRowCount.incrementAndGet()
-                }
-            }
-            val totalRowCount = filteredRowCount.get()
-            // Step 1: load the main assets
-            logger.info { "Loading a total of $totalRowCount assets..." }
-            val count = AtomicLong(0)
-            reader.stream().skip(1).parallel().forEach { r: CsvRecord ->
-                val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
-                if (assets != null) {
-                    try {
-                        val asset = assets.primary.build()
-                        primaryBatch.add(asset)
-                        Utils.logProgress(count, totalRowCount, logger, batchSize)
-                        if (assets.related.isNotEmpty()) {
-                            relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
+                    totalRowCount.toInt(),
+                ).use { relatedBatch ->
+                    // Step 0: split the single file into one file per thread
+                    val csvChunkFiles = mutableListOf<Path>()
+                    val chunkSize = totalRowCount / parallelism
+                    val currentRecordCount = AtomicLong(0)
+                    var chunkPath = Files.createTempFile("chunk_0", ".csv")
+                    var writer = CSVWriter(chunkPath.toString(), ',')
+                    reader.stream().skip(1).forEach { row: CsvRecord ->
+                        // Split the original file up into multiple smaller files for parallel-processing
+                        if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
+                            // open initial file
+                            val current = currentRecordCount.incrementAndGet()
+                            writer.writeRecord(row.fields)
+                            if (current > chunkSize) {
+                                writer.close()
+                                csvChunkFiles.add(chunkPath)
+                                currentRecordCount.set(0)
+                                chunkPath = Paths.get("tmp_${csvChunkFiles.size}.csv")
+                                writer = CSVWriter(chunkPath.toString(), ',')
+                            }
                         }
-                        if (assets.delete.isNotEmpty()) {
-                            deferDeletes[asset.guid] = assets.delete
-                        }
-                    } catch (e: AtlanException) {
-                        logger.error("Unable to load batch.", e)
                     }
-                }
-            }
-            primaryBatch.flush()
-            val totalCreates = primaryBatch.numCreated
-            val totalUpdates = primaryBatch.numUpdated
-            val totalRestore = primaryBatch.numRestored
-            val totalSkipped = primaryBatch.skipped.size
-            val totalFailures = AtomicLong(0)
-            someFailure = someFailure || primaryBatch.failures.isNotEmpty()
-            logFailures(primaryBatch, logger, totalFailures)
-            logSkipped(primaryBatch, logger)
-            logger.info { "Total assets created : $totalCreates" }
-            logger.info { "Total assets updated : $totalUpdates" }
-            logger.info { "Total assets restored: $totalRestore" }
-            logger.info { "Total assets skipped : $totalSkipped" }
-            logger.info { "Total assets failed  : $totalFailures" }
-
-            // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
-            val totalRelated = AtomicLong(0)
-            val relatedCount = AtomicLong(0)
-            val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
-            relatedHolds.values.forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
-            logger.info { "Processing $totalRelated total related assets in a second pass." }
-            relatedHolds.entries.parallelStream().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
-                val placeholderGuid = hold.key
-                val relatedAssetHold = hold.value
-                val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
-                if (!resolvedGuid.isNullOrBlank()) {
-                    val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
-                    AssetRefXformer.buildRelated(
-                        resolvedAsset,
-                        relatedAssetHold.relatedMap,
-                        relatedBatch,
-                        relatedCount,
-                        totalRelated,
-                        logger,
-                        batchSize,
-                    )
-                } else {
-                    logger.info { " ... skipped related asset as primary asset was skipped (above)." }
-                    relatedCount.getAndIncrement()
-                }
-            }
-            deferDeletes.entries.parallelStream().forEach { delete: MutableMap.MutableEntry<String, Set<AtlanField>> ->
-                val placeholderGuid = delete.key
-                val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
-                if (!resolvedGuid.isNullOrBlank()) {
-                    searchAndDelete[resolvedGuid] = delete.value
-                }
-            }
-
-            // Step 3: final-flush the deferred related assets
-            relatedBatch.flush()
-            val totalCreatesR = relatedBatch.numCreated
-            val totalUpdatesR = relatedBatch.numUpdated
-            val totalFailuresR = AtomicLong(0)
-            someFailure = someFailure || relatedBatch.failures.isNotEmpty()
-            logFailures(relatedBatch, logger, totalFailuresR)
-            logger.info { "Total related assets created: $totalCreatesR" }
-            logger.info { "Total related assets updated: $totalUpdatesR" }
-            logger.info { "Total related assets failed : $totalFailuresR" }
-
-            // Step 4: bulk-delete any related assets marked for removal
-            val totalToScan = searchAndDelete.size.toLong()
-            val totalScanned = AtomicLong(0)
-            val totalDeleted = AtomicLong(0)
-            logger.info { "Scanning $totalToScan total assets in a final pass for possible README removal." }
-            searchAndDelete.entries.parallelStream().forEach { entry ->
-                val guid = entry.key
-                val fields = entry.value
-                client.assets.select()
-                    .where(Asset.GUID.eq(guid))
-                    .includesOnResults(fields)
-                    .stream()
-                    .forEach { result ->
-                        val guids = mutableListOf<String>()
-                        for (field in fields) {
-                            val getter = ReflectionCache.getGetter(result.javaClass, field.atlanFieldName)
-                            val reference = getter.invoke(result)
-                            if (reference is Asset) {
-                                guids.add(reference.guid)
-                            } else if (reference != null && Collection::class.java.isAssignableFrom(reference.javaClass)) {
-                                for (element in reference as Collection<*>) {
-                                    if (element is Asset) {
-                                        guids.add(element.guid)
+                    reader.close()
+                    writer.close()
+                    if (currentRecordCount.get() > 0) {
+                        // If there are any remaining records, close the writer and add it
+                        csvChunkFiles.add(chunkPath)
+                    }
+                    // Step 1: load the main assets
+                    logger.info { "Loading a total of $totalRowCount assets..." }
+                    val count = AtomicLong(0)
+                    ForkJoinPool.commonPool().invokeAll(
+                        csvChunkFiles.map { f ->
+                            Callable {
+                                val reader =
+                                    CsvReader.builder()
+                                        .fieldSeparator(',')
+                                        .quoteCharacter('"')
+                                        .skipEmptyLines(true)
+                                        .ignoreDifferentFieldCount(false)
+                                        .build(CsvRecordHandler(), f)
+                                reader.stream().forEach { r: CsvRecord ->
+                                    val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
+                                    if (assets != null) {
+                                        try {
+                                            val asset = assets.primary.build()
+                                            primaryBatch.add(asset)
+                                            Utils.logProgress(count, totalRowCount, logger, batchSize)
+                                            if (assets.related.isNotEmpty()) {
+                                                relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
+                                            }
+                                            if (assets.delete.isNotEmpty()) {
+                                                deferDeletes[asset.guid] = assets.delete
+                                            }
+                                        } catch (e: AtlanException) {
+                                            logger.error("Unable to load batch.", e)
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if (guids.isNotEmpty()) {
-                            val response = client.assets.delete(guids, AtlanDeleteType.SOFT)
-                            totalDeleted.getAndAdd(response.deletedAssets.size.toLong())
+                        },
+                    )
+                    // Delete temp files
+                    csvChunkFiles.forEach { it.toFile().delete() }
+                    primaryBatch.flush()
+                    val totalCreates = primaryBatch.numCreated
+                    val totalUpdates = primaryBatch.numUpdated
+                    val totalRestore = primaryBatch.numRestored
+                    val totalSkipped = primaryBatch.numSkipped
+                    val totalFailures = AtomicLong(0)
+                    someFailure = someFailure || primaryBatch.failures.isNotEmpty()
+                    logFailures(primaryBatch, logger, totalFailures)
+                    logSkipped(primaryBatch, logger)
+                    logger.info { "Total assets created : $totalCreates" }
+                    logger.info { "Total assets updated : $totalUpdates" }
+                    logger.info { "Total assets restored: $totalRestore" }
+                    logger.info { "Total assets skipped : $totalSkipped" }
+                    logger.info { "Total assets failed  : $totalFailures" }
+
+                    // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
+                    val totalRelated = AtomicLong(0)
+                    val relatedCount = AtomicLong(0)
+                    val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
+                    relatedHolds.values.forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
+                    logger.info { "Processing $totalRelated total related assets in a second pass." }
+                    relatedHolds.entries.parallelStream().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
+                        val placeholderGuid = hold.key
+                        val relatedAssetHold = hold.value
+                        val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
+                        if (!resolvedGuid.isNullOrBlank()) {
+                            val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
+                            AssetRefXformer.buildRelated(
+                                resolvedAsset,
+                                relatedAssetHold.relatedMap,
+                                relatedBatch,
+                                relatedCount,
+                                totalRelated,
+                                logger,
+                                batchSize,
+                            )
+                        } else {
+                            logger.info { " ... skipped related asset as primary asset was skipped (above)." }
+                            relatedCount.getAndIncrement()
                         }
                     }
-                Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
+                    deferDeletes.entries.parallelStream().forEach { delete: MutableMap.MutableEntry<String, Set<AtlanField>> ->
+                        val placeholderGuid = delete.key
+                        val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
+                        if (!resolvedGuid.isNullOrBlank()) {
+                            searchAndDelete[resolvedGuid] = delete.value
+                        }
+                    }
+
+                    // Step 3: final-flush the deferred related assets
+                    relatedBatch.flush()
+                    val totalCreatesR = relatedBatch.numCreated
+                    val totalUpdatesR = relatedBatch.numUpdated
+                    val totalFailuresR = AtomicLong(0)
+                    someFailure = someFailure || relatedBatch.failures.isNotEmpty()
+                    logFailures(relatedBatch, logger, totalFailuresR)
+                    logger.info { "Total related assets created: $totalCreatesR" }
+                    logger.info { "Total related assets updated: $totalUpdatesR" }
+                    logger.info { "Total related assets failed : $totalFailuresR" }
+
+                    // Step 4: bulk-delete any related assets marked for removal
+                    val totalToScan = searchAndDelete.size.toLong()
+                    val totalScanned = AtomicLong(0)
+                    val totalDeleted = AtomicLong(0)
+                    logger.info { "Scanning $totalToScan total assets in a final pass for possible README removal." }
+                    searchAndDelete.entries.parallelStream().forEach { entry ->
+                        val guid = entry.key
+                        val fields = entry.value
+                        client.assets.select()
+                            .where(Asset.GUID.eq(guid))
+                            .includesOnResults(fields)
+                            .stream()
+                            .forEach { result ->
+                                val guids = mutableListOf<String>()
+                                for (field in fields) {
+                                    val getter = ReflectionCache.getGetter(result.javaClass, field.atlanFieldName)
+                                    val reference = getter.invoke(result)
+                                    if (reference is Asset) {
+                                        guids.add(reference.guid)
+                                    } else if (reference != null && Collection::class.java.isAssignableFrom(reference.javaClass)) {
+                                        for (element in reference as Collection<*>) {
+                                            if (element is Asset) {
+                                                guids.add(element.guid)
+                                            }
+                                        }
+                                    }
+                                }
+                                if (guids.isNotEmpty()) {
+                                    val response = client.assets.delete(guids, AtlanDeleteType.SOFT)
+                                    totalDeleted.getAndAdd(response.deletedAssets.size.toLong())
+                                }
+                            }
+                        Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
+                    }
+                    logger.info { "Total READMEs deleted: $totalDeleted" }
+                    return ImportResults(
+                        someFailure,
+                        ImportResults.Details(
+                            primaryBatch.resolvedGuids,
+                            primaryBatch.resolvedQualifiedNames,
+                            primaryBatch.created,
+                            primaryBatch.updated,
+                            primaryBatch.restored,
+                            primaryBatch.skipped,
+                            primaryBatch.numCreated,
+                            primaryBatch.numUpdated,
+                            primaryBatch.numRestored,
+                        ),
+                        ImportResults.Details(
+                            relatedBatch.resolvedGuids,
+                            primaryBatch.resolvedQualifiedNames,
+                            relatedBatch.created,
+                            relatedBatch.updated,
+                            relatedBatch.restored,
+                            relatedBatch.skipped,
+                            relatedBatch.numCreated,
+                            relatedBatch.numUpdated,
+                            relatedBatch.numRestored,
+                        ),
+                    )
+                }
             }
-            logger.info { "Total READMEs deleted: $totalDeleted" }
-            return ImportResults(
-                someFailure,
-                ImportResults.Details(
-                    primaryBatch.resolvedGuids,
-                    primaryBatch.resolvedQualifiedNames,
-                    primaryBatch.created,
-                    primaryBatch.updated,
-                    primaryBatch.restored,
-                    primaryBatch.skipped,
-                    primaryBatch.numCreated,
-                    primaryBatch.numUpdated,
-                    primaryBatch.numRestored,
-                ),
-                ImportResults.Details(
-                    relatedBatch.resolvedGuids,
-                    primaryBatch.resolvedQualifiedNames,
-                    relatedBatch.created,
-                    relatedBatch.updated,
-                    relatedBatch.restored,
-                    relatedBatch.skipped,
-                    relatedBatch.numCreated,
-                    relatedBatch.numUpdated,
-                    relatedBatch.numRestored,
-                ),
-            )
         }
 
         private fun logFailures(
@@ -327,9 +380,9 @@ class CSVReader
             b: ParallelBatch,
             logger: KLogger,
         ) {
-            if (b.skipped.isNotEmpty()) {
+            if (b.skipped.isNotEmpty) {
                 logger.info { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
-                b.skipped?.forEach {
+                b.skipped?.values()?.forEach {
                     logger.info { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
                 }
             }
@@ -338,6 +391,8 @@ class CSVReader
         /** {@inheritDoc}  */
         @Throws(IOException::class)
         override fun close() {
+            preproc.close()
+            counter.close()
             reader.close()
         }
 

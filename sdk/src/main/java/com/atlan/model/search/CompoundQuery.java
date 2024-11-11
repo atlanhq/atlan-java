@@ -103,7 +103,7 @@ public abstract class CompoundQuery {
         public B tagged(Collection<String> atlanTagNames) throws AtlanException {
             List<String> values = new ArrayList<>();
             for (String name : atlanTagNames) {
-                values.add(client.getAtlanTagCache().getIdForName(name));
+                values.add(client.getAtlanTagCache().getSidForName(name));
             }
             return whereSome(Asset.ATLAN_TAGS.in(values)) // direct Atlan tags
                     .whereSome(Asset.PROPAGATED_ATLAN_TAGS.in(values)) // propagated Atlan tags
@@ -150,7 +150,7 @@ public abstract class CompoundQuery {
          * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
          */
         public B taggedWithValue(String atlanTagName, String value, boolean directly) throws AtlanException {
-            String tagId = client.getAtlanTagCache().getIdForName(atlanTagName);
+            String tagId = client.getAtlanTagCache().getSidForName(atlanTagName);
             List<Asset> syncedTags = client.assets.select().where(ITag.MAPPED_ATLAN_TAG_NAME.eq(tagId)).stream()
                     .toList();
             String syncedTagQN;

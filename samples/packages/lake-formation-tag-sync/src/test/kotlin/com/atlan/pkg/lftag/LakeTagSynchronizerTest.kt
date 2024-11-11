@@ -142,7 +142,7 @@ class LakeTagSynchronizerTest : PackageTest() {
     override fun teardown() {
         val client = Atlan.getDefaultClient()
         removeConnection(c1, connectorType)
-        client.typeDefs.purge(client.customMetadataCache.getIdForName(cm1))
+        client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
         EnumDef.purge(enum1)
     }
 

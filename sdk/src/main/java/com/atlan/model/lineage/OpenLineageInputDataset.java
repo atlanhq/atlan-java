@@ -58,9 +58,9 @@ public class OpenLineageInputDataset extends OpenLineageDataset {
      * @param fieldName name of the field within the input dataset to reference
      * @return a reference to the field within this input dataset
      */
-    public OpenLineage.ColumnLineageDatasetFacetFieldsAdditionalInputFieldsBuilder fromField(String fieldName) {
+    public OpenLineage.InputFieldBuilder fromField(String fieldName) {
         return openLineage
-                .newColumnLineageDatasetFacetFieldsAdditionalInputFieldsBuilder()
+                .newInputFieldBuilder()
                 .namespace(get_dataset().getNamespace())
                 .name(get_dataset().getName())
                 .field(fieldName);

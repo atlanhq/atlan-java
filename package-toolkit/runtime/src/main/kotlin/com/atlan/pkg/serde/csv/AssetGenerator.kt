@@ -60,7 +60,7 @@ interface AssetGenerator {
      *
      * @param list of assets that were created (minimal info for each)
      */
-    fun cacheCreated(list: List<Asset>) {
+    fun cacheCreated(list: Collection<Asset>) {
         // Do nothing, by default
     }
 }

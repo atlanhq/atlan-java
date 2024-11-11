@@ -2,7 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
-import com.atlan.model.assets.Asset
+import com.atlan.cache.OffHeapAssetCache
 import com.atlan.util.AssetBatch.AssetIdentity
 
 /**
@@ -39,25 +39,30 @@ data class ImportResults(
      *
      * @param guidAssignments mapping from placeholder to actual (resolved) GUIDs, even if no change was made to an asset
      * @param qualifiedNames mapping from case-insensitive to actual (resolved) qualifiedName, even if no change was made to an asset
-     * @param created list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
-     * @param updated list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
-     * @param restored list of (minimal) assets that were potentially-restored (note: when tracking is turned off in batch-processing, this will be null)
-     * @param skipped list of (minimal) assets that were skipped
+     * @param createdIn list of (minimal) assets that were created (note: when tracking is turned off in batch-processing, this will be null)
+     * @param updatedIn list of (minimal) assets that were updated (note: when tracking is turned off in batch-processing, this will be null)
+     * @param restoredIn list of (minimal) assets that were potentially-restored (note: when tracking is turned off in batch-processing, this will be null)
+     * @param skippedIn list of (minimal) assets that were skipped
      * @param numCreated number of assets that were created (count only)
      * @param numUpdated number of assets that were updated (count only)
      * @param numRestored number of assets that were potentially restored (count only)
      */
-    data class Details(
+    class Details(
         val guidAssignments: Map<String, String>,
         val qualifiedNames: Map<AssetIdentity, String>,
-        val created: List<Asset>?,
-        val updated: List<Asset>?,
-        val restored: List<Asset>?,
-        val skipped: List<Asset>,
+        createdIn: OffHeapAssetCache?,
+        updatedIn: OffHeapAssetCache?,
+        restoredIn: OffHeapAssetCache?,
+        skippedIn: OffHeapAssetCache?,
         val numCreated: Long,
         val numUpdated: Long,
         val numRestored: Long,
     ) {
+        val created = createdIn?.copy()
+        val updated = updatedIn?.copy()
+        val restored = restoredIn?.copy()
+        val skipped = skippedIn?.copy()
+
         /**
          * Combine this set of details with another.
          *
@@ -71,10 +76,10 @@ data class ImportResults(
             return Details(
                 this.guidAssignments.plus(other.guidAssignments),
                 this.qualifiedNames.plus(other.qualifiedNames),
-                this.created?.plus(other.created ?: listOf()),
-                this.updated?.plus(other.updated ?: listOf()),
-                this.restored?.plus(other.restored ?: listOf()),
-                this.skipped.plus(other.skipped),
+                if (this.created == null) other.created else this.created.combinedWith(other.created),
+                if (this.updated == null) other.updated else this.updated.combinedWith(other.updated),
+                if (this.restored == null) other.restored else this.restored.combinedWith(other.restored),
+                if (this.skipped == null) other.skipped else this.skipped.combinedWith(other.skipped),
                 this.numCreated.plus(other.numCreated),
                 this.numUpdated.plus(other.numUpdated),
                 this.numRestored.plus(other.numRestored),
@@ -90,22 +95,32 @@ data class ImportResults(
          * @param results one or more import results to combine
          * @return the list of assets that were either created or updated, from across all the provided results
          */
-        fun getAllModifiedAssets(vararg results: ImportResults?): List<Asset> {
-            val list = mutableListOf<Asset>()
+        fun getAllModifiedAssets(vararg results: ImportResults?): OffHeapAssetCache {
+            var totalCreated = 0
+            var totalUpdated = 0
+            var totalRestored = 0
             results.filterNotNull()
                 .forEach { result ->
-                    result.primary.created?.let { list.addAll(it) }
-                    result.primary.updated?.let {
-                        // Only included updated results if they are full updates (not
-                        // related asset updates)
-                        it.filter { asset ->
-                            !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank()
-                        }.forEach { asset -> list.add(asset) }
-                    }
-                    // Also include any results that may be restored assets
-                    result.primary.restored?.let { list.addAll(it) }
+                    totalCreated += result.primary.created?.size() ?: 0
+                    totalUpdated += result.primary.updated?.size() ?: 0
+                    totalRestored += result.primary.restored?.size() ?: 0
                 }
-            return list
+            val combined = OffHeapAssetCache("allModified", totalCreated + totalUpdated + totalRestored)
+            results.filterNotNull()
+                .forEach { result ->
+                    combined.extendedWith(result.primary.created)
+                    combined.extendedWith(result.primary.restored)
+                    combined.extendedWith(result.primary.updated) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
+                    result.primary.created?.close()
+                    result.primary.restored?.close()
+                    result.primary.updated?.close()
+                    result.primary.skipped?.close()
+                    result.related.created?.close()
+                    result.related.updated?.close()
+                    result.related.restored?.close()
+                    result.related.skipped?.close()
+                }
+            return combined
         }
     }
 }

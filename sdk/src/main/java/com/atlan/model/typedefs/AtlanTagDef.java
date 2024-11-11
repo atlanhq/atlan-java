@@ -134,7 +134,7 @@ public class AtlanTagDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static synchronized void purge(AtlanClient client, String displayName) throws AtlanException {
-        String internalName = client.getAtlanTagCache().getIdForName(displayName);
+        String internalName = client.getAtlanTagCache().getSidForName(displayName);
         client.typeDefs.purge(internalName);
     }
 }

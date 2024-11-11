@@ -63,7 +63,7 @@ public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
                 sourceAttachmentsAttrId = "";
             } else {
                 try {
-                    clsId = client.getAtlanTagCache().getIdForName(clsName);
+                    clsId = client.getAtlanTagCache().getSidForName(clsName);
                     sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId);
                 } catch (AtlanException e) {
                     throw new IOException("Unable to find Atlan tag with name: " + clsName, e);

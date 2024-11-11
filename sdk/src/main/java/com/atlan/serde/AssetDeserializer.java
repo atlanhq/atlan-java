@@ -267,7 +267,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 String tagId = element.asText();
                 String name = null;
                 try {
-                    name = client.getAtlanTagCache().getNameForId(tagId);
+                    name = client.getAtlanTagCache().getNameForSid(tagId);
                 } catch (NotFoundException e) {
                     log.debug(
                             "Unable to find tag with ID {}, deserializing as {}.",
@@ -280,7 +280,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 if (name == null) {
                     // Note: the name could be null here either because it was not found in the
                     // first place (NotFoundException), or because it is already tracked as deleted
-                    // (in which case it'll come back from getNameForId as null rather than a NFE).
+                    // (in which case it'll come back from getNameForSid as null rather than a NFE).
                     name = Serde.DELETED_AUDIT_OBJECT;
                 }
                 clsNames.add(name);

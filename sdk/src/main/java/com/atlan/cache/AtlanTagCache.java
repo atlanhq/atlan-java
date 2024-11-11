@@ -4,8 +4,11 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.*;
+import com.atlan.model.enums.AtlanIcon;
+import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.model.typedefs.AtlanTagOptions;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import java.util.*;
@@ -19,8 +22,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
-    private volatile Map<String, String> mapIdToSourceTagsAttrId = new ConcurrentHashMap<>();
-    private volatile Set<String> deletedIds = ConcurrentHashMap.newKeySet();
+    private static final AtlanTagDef EXEMPLAR_TAG = AtlanTagDef.builder()
+            .guid(UUID.randomUUID().toString())
+            .name("a3ZhUpnaq4Q9o37gV2anFX")
+            .displayName("Tag Name")
+            .createdBy("someone")
+            .updatedBy("someone")
+            .createTime(1234567890123L)
+            .updateTime(1234567890123L)
+            .version(1L)
+            .typeVersion("1.0")
+            .description("Could be empty")
+            .options(AtlanTagOptions.withIcon(AtlanIcon.ATLAN_TAG, AtlanTagColor.GRAY))
+            .skipDisplayNameUniquenessCheck(false)
+            .build();
+
+    private volatile Map<String, String> mapSidToSourceTagsAttrSid = new ConcurrentHashMap<>();
+    private volatile Set<String> deletedSids = ConcurrentHashMap.newKeySet();
     private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
@@ -41,12 +59,13 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
-        mapIdToSourceTagsAttrId.clear();
-        deletedIds.clear();
+        initializeOffHeap("tag", tags.size(), tags.isEmpty() ? EXEMPLAR_TAG : tags.get(0), AtlanTagDef.class);
+        mapSidToSourceTagsAttrSid.clear();
+        deletedSids.clear();
         deletedNames.clear();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
-            cache(typeId, clsDef.getDisplayName(), clsDef);
+            cache(clsDef.getGuid(), typeId, clsDef.getDisplayName(), clsDef);
             List<AttributeDef> attrs = clsDef.getAttributeDefs();
             String sourceTagsId = "";
             if (attrs != null && !attrs.isEmpty()) {
@@ -56,7 +75,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
                     }
                 }
             }
-            mapIdToSourceTagsAttrId.put(typeId, sourceTagsId);
+            mapSidToSourceTagsAttrSid.put(typeId, sourceTagsId);
         }
     }
 
@@ -75,7 +94,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
     private String getSourceTagsAttrIdFromId(String id) {
         lock.readLock().lock();
         try {
-            return mapIdToSourceTagsAttrId.get(id);
+            return mapSidToSourceTagsAttrSid.get(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -102,7 +121,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
     private boolean isDeletedId(String id) {
         lock.readLock().lock();
         try {
-            return deletedIds.contains(id);
+            return deletedSids.contains(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -111,7 +130,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
     private void addDeletedId(String id) {
         lock.writeLock().lock();
         try {
-            deletedIds.add(id);
+            deletedSids.add(id);
         } finally {
             lock.writeLock().unlock();
         }
@@ -140,6 +159,36 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
         }
         try {
             return super.getNameForId(id, allowRefresh);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedId(id);
+            throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getSidForName(String name, boolean allowRefresh) throws AtlanException {
+        if (name != null && isDeletedName(name)) {
+            return null;
+        }
+        try {
+            return super.getSidForName(name, allowRefresh);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedName(name);
+            throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getNameForSid(String id, boolean allowRefresh) throws AtlanException {
+        if (id != null && isDeletedId(id)) {
+            return null;
+        }
+        try {
+            return super.getNameForSid(id, allowRefresh);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
             addDeletedId(id);

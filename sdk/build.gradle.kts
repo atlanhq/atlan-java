@@ -5,7 +5,7 @@ version = versionId
 
 plugins {
     id("com.atlan.java")
-    id("com.atlan.java-test")
+    id("com.adarshr.test-logger")
     alias(libs.plugins.shadow)
     alias(libs.plugins.git.publish)
     `maven-publish`
@@ -20,36 +20,46 @@ dependencies {
     api(libs.freemarker)
     api(libs.openlineage)
     implementation(libs.classgraph)
+    implementation(platform(libs.chronicle.bom))
+    implementation(libs.chronicle.map)
     testImplementation(libs.bundles.java.test)
     testImplementation(libs.bundles.log4j)
     testImplementation(project(":mocks"))
 }
 
-tasks.jar {
-    manifest {
-        attributes(
-            "Implementation-Title" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
-            "Implementation-Version" to versionId,
-            "Implementation-Vendor" to providers.gradleProperty("VENDOR_NAME").get(),
-            "Bundle-SymbolicName" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
-            "Export-Package" to "${providers.gradleProperty("GROUP").get()}.*")
-        archiveVersion.set(versionId)
+tasks {
+    test {
+        useTestNG {
+            options {
+                testLogging.showStandardStreams = true
+            }
+        }
+        jvmArgs = providers.gradleProperty("org.gradle.jvmargs").get().split(" ")
     }
-    archiveBaseName.set(jarName)
-}
-
-tasks.shadowJar {
-    archiveBaseName.set(jarName)
-    archiveClassifier.set("jar-with-dependencies")
-    configurations = listOf(project.configurations.runtimeClasspath.get())
-}
-
-tasks.javadoc {
-    title = "Atlan Java SDK $versionId"
-}
-
-tasks.spotlessJava {
-    dependsOn("generateJava")
+    jar {
+        manifest {
+            attributes(
+                "Implementation-Title" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
+                "Implementation-Version" to versionId,
+                "Implementation-Vendor" to providers.gradleProperty("VENDOR_NAME").get(),
+                "Bundle-SymbolicName" to providers.gradleProperty("SDK_ARTIFACT_ID").get(),
+                "Export-Package" to "${providers.gradleProperty("GROUP").get()}.*"
+            )
+            archiveVersion.set(versionId)
+        }
+        archiveBaseName.set(jarName)
+    }
+    shadowJar {
+        archiveBaseName.set(jarName)
+        archiveClassifier.set("jar-with-dependencies")
+        configurations = listOf(project.configurations.runtimeClasspath.get())
+    }
+    javadoc {
+        title = "Atlan Java SDK $versionId"
+    }
+    spotlessJava {
+        dependsOn("generateJava")
+    }
 }
 
 gitPublish {

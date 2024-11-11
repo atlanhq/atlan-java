@@ -177,7 +177,7 @@ public class RequestsTest extends AtlanLiveTest {
         while (tagId == null && count < maxTries) {
             try {
                 requestsClient.getAtlanTagCache().refresh();
-                tagId = requestsClient.getAtlanTagCache().getIdForName(ATLAN_TAG_NAME);
+                tagId = requestsClient.getAtlanTagCache().getSidForName(ATLAN_TAG_NAME);
             } catch (NotFoundException | AuthenticationException e) {
                 log.debug("Atlan tag not yet visible to secondary client, retrying...");
             }

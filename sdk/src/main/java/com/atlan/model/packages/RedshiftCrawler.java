@@ -40,7 +40,7 @@ public class RedshiftCrawler extends AbstractCrawler {
         return creator(
                 client,
                 connectionName,
-                List.of(client.getRoleCache().getIdForName("$admins")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 true,

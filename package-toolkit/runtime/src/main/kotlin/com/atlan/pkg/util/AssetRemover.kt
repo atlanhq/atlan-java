@@ -3,6 +3,7 @@
 package com.atlan.pkg.util
 
 import com.atlan.Atlan
+import com.atlan.cache.OffHeapAssetCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.cache.PersistentConnectionCache
@@ -47,7 +48,7 @@ class AssetRemover(
 ) {
     private val client = Atlan.getDefaultClient()
     val assetsToDelete = ConcurrentHashMap<AssetIdentity, String>()
-    val guidsToDeleteToDetails = ConcurrentHashMap<String, Asset>()
+    lateinit var guidsToDeleteToDetails: OffHeapAssetCache
 
     companion object {
         private const val QUERY_BATCH = 50
@@ -77,6 +78,7 @@ class AssetRemover(
                 assetsToDelete[it] = ""
             }
         }
+        guidsToDeleteToDetails = OffHeapAssetCache("delete", assetsToDelete.size)
     }
 
     /**
@@ -93,7 +95,7 @@ class AssetRemover(
      *
      * @return a list of the assets that were deleted
      */
-    fun deleteAssets(): List<Asset> {
+    fun deleteAssets(): OffHeapAssetCache {
         translateToGuids()
         return deleteAssetsByGuid()
     }
@@ -204,7 +206,7 @@ class AssetRemover(
     private fun validateResult(asset: Asset) {
         val candidate = AssetIdentity(asset.typeName, asset.qualifiedName)
         if (assetsToDelete.containsKey(candidate)) {
-            guidsToDeleteToDetails[asset.guid] = asset
+            guidsToDeleteToDetails.add(asset)
         }
     }
 
@@ -213,16 +215,16 @@ class AssetRemover(
      *
      * @return a list of the assets that were deleted
      */
-    private fun deleteAssetsByGuid(): List<Asset> {
-        if (guidsToDeleteToDetails.isNotEmpty()) {
+    private fun deleteAssetsByGuid(): OffHeapAssetCache {
+        if (guidsToDeleteToDetails.isNotEmpty) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = guidsToDeleteToDetails.keys.filter { it.isNotBlank() }.toList()
+            val guidList = guidsToDeleteToDetails.keys()
             val totalToDelete = guidList.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 if (totalToDelete > 0) {
-                    client.assets.delete(guidList, deletionType)
+                    client.assets.delete(guidList.map { it.toString() }, deletionType)
                 }
             } else {
                 // Delete in parallel
@@ -235,11 +237,11 @@ class AssetRemover(
                         val i = currentCount.getAndAdd(DELETION_BATCH.toLong())
                         logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                         if (batch.isNotEmpty()) {
-                            client.assets.delete(batch, deletionType)
+                            client.assets.delete(batch.map { it.toString() }, deletionType)
                         }
                     }
             }
         }
-        return guidsToDeleteToDetails.values.map { it }
+        return guidsToDeleteToDetails
     }
 }

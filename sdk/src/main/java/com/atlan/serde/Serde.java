@@ -309,7 +309,7 @@ public class Serde {
             if (fieldName.equals("purposeAtlanTags")) {
                 String value;
                 try {
-                    value = client.getAtlanTagCache().getNameForId(element.asText());
+                    value = client.getAtlanTagCache().getNameForSid(element.asText());
                 } catch (NotFoundException e) {
                     value = Serde.DELETED_AUDIT_OBJECT;
                 } catch (AtlanException e) {
@@ -349,7 +349,7 @@ public class Serde {
             Object value = JacksonUtils.deserializePrimitive(primitive, method);
             if (fieldName.equals("mappedAtlanTagName")) {
                 try {
-                    value = client.getAtlanTagCache().getNameForId(primitive.asText());
+                    value = client.getAtlanTagCache().getNameForSid(primitive.asText());
                 } catch (NotFoundException e) {
                     value = Serde.DELETED_AUDIT_OBJECT;
                 } catch (AtlanException e) {

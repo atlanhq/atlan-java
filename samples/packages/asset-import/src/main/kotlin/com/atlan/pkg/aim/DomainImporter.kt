@@ -65,7 +65,7 @@ class DomainImporter(
     private val cache = DataDomainCache
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: List<Asset>) {
+    override fun cacheCreated(list: Collection<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity

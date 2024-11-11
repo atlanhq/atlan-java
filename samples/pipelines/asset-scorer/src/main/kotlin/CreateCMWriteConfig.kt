@@ -50,7 +50,7 @@ object CreateCMWriteConfig {
      */
     private fun createCMIfNotExists(config: AssetScorerCfg) {
         try {
-            Atlan.getDefaultClient().customMetadataCache.getIdForName(CM_SCORING)
+            Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING)
         } catch (e: NotFoundException) {
             logger.info { "Creating scorecard custom metadata $CM_SCORING.$CM_ATTR_COMPOSITE_SCORE" }
             try {
@@ -102,7 +102,7 @@ object CreateCMWriteConfig {
             } catch (conflict: ConflictException) {
                 // Handle cross-thread race condition that the typedef has since been created
                 try {
-                    Atlan.getDefaultClient().customMetadataCache.getIdForName(CM_SCORING)
+                    Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING)
                 } catch (eConflict: AtlanException) {
                     logger.error(
                         "Unable to look up {} custom metadata, even though it should already exist.",

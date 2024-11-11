@@ -69,7 +69,7 @@ class Policies(
         if (policy.accessControl?.typeName == "Purpose") {
             // In this case the "resources" are tags, so we should translate the tag names
             return policy.policyResources?.joinToString("\n") {
-                client.atlanTagCache.getNameForId(it.substringAfter("tag:"))
+                client.atlanTagCache.getNameForSid(it.substringAfter("tag:"))
             } ?: ""
         }
         // Otherwise, we should consider how to translate the resources based on the

@@ -94,7 +94,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                             if (fieldName.equals("mappedAtlanTagName")) {
                                 String mappedName;
                                 try {
-                                    mappedName = client.getAtlanTagCache().getIdForName(attrValue.toString());
+                                    mappedName = client.getAtlanTagCache().getSidForName(attrValue.toString());
                                 } catch (NotFoundException e) {
                                     mappedName = Serde.DELETED_AUDIT_OBJECT;
                                 } catch (AtlanException e) {
@@ -108,7 +108,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                 List<String> mappedNames = new ArrayList<>();
                                 for (Object one : (Collection<?>) attrValue) {
                                     try {
-                                        String name = client.getAtlanTagCache().getIdForName(one.toString());
+                                        String name = client.getAtlanTagCache().getSidForName(one.toString());
                                         if (name == null) {
                                             name = Serde.DELETED_AUDIT_OBJECT;
                                         }

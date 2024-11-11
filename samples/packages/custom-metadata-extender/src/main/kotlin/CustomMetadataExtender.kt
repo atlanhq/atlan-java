@@ -102,7 +102,7 @@ object CustomMetadataExtender {
             }
             else -> logger.info { "Not extending custom metadata to any additional domains." }
         }
-        val cm = Atlan.getDefaultClient().customMetadataCache.getCustomMetadataDef(cmName)
+        val cm = Atlan.getDefaultClient().customMetadataCache.getByName(cmName)
         if (cm == null) {
             logger.error { "Unable to find custom metadata with name: $cmName" }
         } else {

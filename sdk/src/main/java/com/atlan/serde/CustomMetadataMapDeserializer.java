@@ -65,7 +65,7 @@ public class CustomMetadataMapDeserializer extends StdDeserializer<Map<String, C
         for (Iterator<String> it = root.fieldNames(); it.hasNext(); ) {
             String cmId = it.next();
             try {
-                String cmName = client.getCustomMetadataCache().getNameForId(cmId);
+                String cmName = client.getCustomMetadataCache().getNameForSid(cmId);
                 CustomMetadataAttributes cma =
                         client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, root.get(cmId));
                 map.put(cmName, cma);

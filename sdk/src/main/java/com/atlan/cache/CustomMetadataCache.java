@@ -4,10 +4,25 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.*;
+import com.atlan.model.assets.DataDomain;
+import com.atlan.model.assets.DataProduct;
+import com.atlan.model.assets.File;
+import com.atlan.model.assets.Glossary;
+import com.atlan.model.assets.GlossaryCategory;
+import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.MaterializedView;
+import com.atlan.model.assets.Table;
+import com.atlan.model.assets.View;
 import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.enums.AtlanCustomAttributeCardinality;
+import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
+import com.atlan.model.enums.AtlanIcon;
+import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AttributeDef;
+import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
+import com.atlan.model.typedefs.CustomMetadataOptions;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.serde.Removable;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,11 +38,61 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
-    private volatile Map<String, AttributeDef> attrCacheById = new ConcurrentHashMap<>();
+    private static final CustomMetadataDef EXEMPLAR_CM = CustomMetadataDef.builder()
+            .guid(UUID.randomUUID().toString())
+            .name("M0UR6QD4avS7fjkGUTZpOt")
+            .displayName("Custom Metadata Name")
+            .createdBy("someone")
+            .updatedBy("someone")
+            .createTime(1234567890123L)
+            .updateTime(1234567890123L)
+            .version(1L)
+            .description("Could be empty")
+            .typeVersion("1.0")
+            .attributeDef(AttributeDef.builder()
+                    .name("leA0qSwISgLL5b1chFWa6d")
+                    .displayName("Some Score")
+                    .description("Could also be empty")
+                    .typeName("float")
+                    .isDefaultValueNull(false)
+                    .isOptional(true)
+                    .cardinality(AtlanCustomAttributeCardinality.SINGLE)
+                    .valuesMinCount(0L)
+                    .valuesMaxCount(1L)
+                    .isUnique(false)
+                    .isIndexable(false)
+                    .includeInNotification(true)
+                    .skipScrubbing(false)
+                    .searchWeight(-1L)
+                    .options(AttributeDefOptions.builder()
+                            .customMetadataVersion("v2")
+                            .applicableEntityTypes(Set.of("Asset"))
+                            .applicableConnection("default/snowflake/1234567890")
+                            .applicableGlossary("something@somewhere")
+                            .applicableDomain("")
+                            .allowSearch(false)
+                            .maxStrLength("100000000")
+                            .allowFiltering(true)
+                            .multiValueSelect(false)
+                            .showInOverview(false)
+                            .primitiveType(AtlanCustomAttributePrimitiveType.DECIMAL)
+                            .isEnum(false)
+                            .applicableAssetTypes(Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
+                            .applicableGlossaryTypes(
+                                    Set.of(Glossary.TYPE_NAME, GlossaryCategory.TYPE_NAME, GlossaryTerm.TYPE_NAME))
+                            .applicableDomainTypes(Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME))
+                            .applicableOtherAssetTypes(Set.of(File.TYPE_NAME))
+                            .build())
+                    .isNew(true)
+                    .build())
+            .options(CustomMetadataOptions.withIcon(AtlanIcon.ATLAN_TAG, AtlanTagColor.GRAY, true))
+            .build();
 
-    private volatile Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
-    private volatile Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
-    private volatile Set<String> archivedAttrIds = ConcurrentHashMap.newKeySet();
+    private volatile Map<String, AttributeDef> attrCacheBySid = new ConcurrentHashMap<>();
+
+    private volatile Map<String, Map<String, String>> mapAttrSidToName = new ConcurrentHashMap<>();
+    private volatile Map<String, Map<String, String>> mapAttrNameToSid = new ConcurrentHashMap<>();
+    private volatile Set<String> archivedAttrSids = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -47,25 +112,30 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        attrCacheById.clear();
-        mapAttrIdToName.clear();
-        mapAttrNameToId.clear();
-        archivedAttrIds.clear();
+        initializeOffHeap(
+                "cm",
+                customMetadata.size(),
+                customMetadata.isEmpty() ? EXEMPLAR_CM : customMetadata.get(0),
+                CustomMetadataDef.class);
+        attrCacheBySid.clear();
+        mapAttrSidToName.clear();
+        mapAttrNameToSid.clear();
+        archivedAttrSids.clear();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
-            cache(typeId, bmDef.getDisplayName(), bmDef);
-            mapAttrIdToName.put(typeId, new ConcurrentHashMap<>());
-            mapAttrNameToId.put(typeId, new ConcurrentHashMap<>());
+            cache(bmDef.getGuid(), typeId, bmDef.getDisplayName(), bmDef);
+            mapAttrSidToName.put(typeId, new ConcurrentHashMap<>());
+            mapAttrNameToSid.put(typeId, new ConcurrentHashMap<>());
             for (AttributeDef attributeDef : bmDef.getAttributeDefs()) {
                 String attrId = attributeDef.getName();
                 String attrName = attributeDef.getDisplayName();
-                mapAttrIdToName.get(typeId).put(attrId, attrName);
-                attrCacheById.put(attrId, attributeDef);
+                mapAttrSidToName.get(typeId).put(attrId, attrName);
+                attrCacheBySid.put(attrId, attributeDef);
                 if (attributeDef.isArchived()) {
-                    archivedAttrIds.add(attrId);
+                    archivedAttrSids.add(attrId);
                 } else {
                     String existingId =
-                            mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
+                            mapAttrNameToSid.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
                     if (existingId != null) {
                         throw new LogicException(
                                 ErrorCode.DUPLICATE_CUSTOM_ATTRIBUTES,
@@ -92,7 +162,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private AttributeDef getAttrById(String id) {
         lock.readLock().lock();
         try {
-            return attrCacheById.get(id);
+            return attrCacheBySid.get(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -101,7 +171,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private Map<String, String> getAttrNameFromId(String id) {
         lock.readLock().lock();
         try {
-            return mapAttrIdToName.get(id);
+            return mapAttrSidToName.get(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -110,7 +180,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private Map<String, String> getAttrIdFromName(String name) {
         lock.readLock().lock();
         try {
-            return mapAttrNameToId.get(name);
+            return mapAttrNameToSid.get(name);
         } finally {
             lock.readLock().unlock();
         }
@@ -119,7 +189,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private boolean isArchivedAttr(String id) {
         lock.readLock().lock();
         try {
-            return archivedAttrIds.contains(id);
+            return archivedAttrSids.contains(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -167,12 +237,12 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             refresh();
         }
         Map<String, List<AttributeDef>> map = new HashMap<>();
-        Set<Map.Entry<String, CustomMetadataDef>> entrySet = entrySet();
+        Set<Map.Entry<UUID, CustomMetadataDef>> entrySet = entrySet();
         lock.readLock().lock();
         try {
-            for (Map.Entry<String, CustomMetadataDef> entry : entrySet) {
-                String typeId = entry.getKey();
-                String typeName = getNameForId(typeId);
+            for (Map.Entry<UUID, CustomMetadataDef> entry : entrySet) {
+                UUID id = entry.getKey();
+                String typeName = getNameForId(id.toString());
                 CustomMetadataDef typeDef = entry.getValue();
                 List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
                 List<AttributeDef> toInclude;
@@ -222,7 +292,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
     public String getAttrIdForName(String setName, String attributeName, boolean allowRefresh) throws AtlanException {
-        String setId = getIdForName(setName, allowRefresh);
+        String setId = getSidForName(setName, allowRefresh);
         return getAttrIdForNameFromSetId(setId, attributeName, allowRefresh);
     }
 
@@ -255,7 +325,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public String getAttributeForSearchResults(String setName, String attributeName, boolean allowRefresh)
             throws AtlanException {
-        String setId = getIdForName(setName, allowRefresh);
+        String setId = getSidForName(setName, allowRefresh);
         String attrId = _getAttributeForSearchResults(setId, attributeName);
         if (attrId == null && allowRefresh) {
             // If we've not found any names, refresh the cache and look again (could be stale)
@@ -291,7 +361,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
      */
     public Set<String> getAttributesForSearchResults(String setName, boolean allowRefresh) throws AtlanException {
-        String setId = getIdForName(setName, allowRefresh);
+        String setId = getSidForName(setName, allowRefresh);
         Set<String> dotNames = _getAttributesForSearchResults(setId);
         if (dotNames == null && allowRefresh) {
             // If we've not found any names, refresh the cache and look again (could be stale)
@@ -320,34 +390,6 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             return setId + "." + subMap.get(attrName);
         }
         return null;
-    }
-
-    /**
-     * Retrieve the full custom metadata structure definition.
-     *
-     * @param setName human-readable name of the custom metadata set
-     * @return the full custom metadata structure definition for that set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public CustomMetadataDef getCustomMetadataDef(String setName) throws AtlanException {
-        return getCustomMetadataDef(setName, true);
-    }
-
-    /**
-     * Retrieve the full custom metadata structure definition.
-     *
-     * @param setName human-readable name of the custom metadata set
-     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
-     * @return the full custom metadata structure definition for that set
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
-     */
-    public CustomMetadataDef getCustomMetadataDef(String setName, boolean allowRefresh) throws AtlanException {
-        String setId = getIdForName(setName, allowRefresh);
-        return getObjectById(setId);
     }
 
     /**
@@ -491,7 +533,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public Map<String, Object> getEmptyAttributes(String customMetadataName, boolean allowRefresh)
             throws AtlanException {
-        String cmId = getIdForName(customMetadataName, allowRefresh);
+        String cmId = getSidForName(customMetadataName, allowRefresh);
         Map<String, String> attributes = getAttrIdFromName(cmId);
         Map<String, Object> empty = new LinkedHashMap<>();
         for (String attrName : attributes.keySet()) {
@@ -533,7 +575,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         if (customMetadata != null) {
             for (Map.Entry<String, CustomMetadataAttributes> entry : customMetadata.entrySet()) {
                 String cmName = entry.getKey();
-                String cmId = getIdForName(cmName, allowRefresh);
+                String cmId = getSidForName(cmName, allowRefresh);
                 CustomMetadataAttributes attrs = entry.getValue();
                 Map<String, Object> bmAttrs = businessAttributes.getOrDefault(cmId, new LinkedHashMap<>());
                 getAttributesFromCustomMetadata(cmId, cmName, attrs, bmAttrs, allowRefresh);
@@ -622,7 +664,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             Map<String, Object> idToValue,
             boolean allowRefresh)
             throws AtlanException {
-        String cmId = getIdForName(customMetadataName, allowRefresh);
+        String cmId = getSidForName(customMetadataName, allowRefresh);
         for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
             String attrName = entry.getKey();
             String cmAttrId = getAttrIdForNameFromSetId(cmId, attrName, allowRefresh);
@@ -657,7 +699,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         while (itrCM.hasNext()) {
             String cmId = itrCM.next();
             try {
-                String cmName = getNameForId(cmId, allowRefresh);
+                String cmName = getNameForSid(cmId, allowRefresh);
                 JsonNode bmAttrs = businessAttributes.get(cmId);
                 CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs, allowRefresh);
                 if (!cma.isEmpty()) {
@@ -769,7 +811,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             if (indexOfDot > 0) {
                 String cmId = compositeId.substring(0, indexOfDot);
                 try {
-                    String cmName = getNameForId(cmId, allowRefresh);
+                    String cmName = getNameForSid(cmId, allowRefresh);
                     if (!builderMap.containsKey(cmName)) {
                         builderMap.put(cmName, CustomMetadataAttributes.builder());
                     }
