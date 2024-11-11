@@ -36,7 +36,6 @@ public class AbstractProcessTest {
                 Collections.singletonList(S3Object.refByGuid("six")),
                 Collections.singletonList(Table.refByGuid("eighs")),
                 null);
-        System.out.println("QN1_hash: " + qn1);
         assertNotNull(qn1);
         assertNotNull(qn2);
         assertNotNull(qn3);
@@ -62,7 +61,6 @@ public class AbstractProcessTest {
                 Collections.singletonList(S3Object.refByGuid("six")),
                 Collections.singletonList(Table.refByGuid("eight")),
                 LineageProcess.refByGuid("ten"));
-        System.out.println("QN1_hash: " + qn1);
         String qn3 = LineageProcess.generateQualifiedName(
                 "one",
                 connectionQualifiedName,
