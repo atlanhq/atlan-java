@@ -25,6 +25,8 @@ pkl {
     }
 }
 
-tasks.getByName("genPklTypedefs") {
-    dependsOn(":typedef-toolkit:model:genKotlin")
+tasks {
+    getByName("genPklTypedefsGatherImports") {
+        dependsOn(":typedef-toolkit:model:genKotlin")
+    }
 }
