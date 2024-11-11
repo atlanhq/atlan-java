@@ -14,6 +14,24 @@ dependencies {
     api(libs.pkl.config)
 }
 
+pkl {
+    kotlinCodeGenerators {
+        register("genKotlin") {
+            indent.set("    ")
+            outputDir.set(layout.projectDirectory.dir("src/main"))
+            sourceModules.add(file("src/main/resources/Model.pkl"))
+        }
+    }
+    project {
+        packagers {
+            register("makePklPackages") {
+                projectDirectories.from(file("src/main/resources/"))
+                environmentVariables.put("VERSION_NAME", version.toString())
+            }
+        }
+    }
+}
+
 tasks {
     shadowJar {
         isZip64 = true
@@ -32,10 +50,12 @@ tasks {
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        dependsOn("generateBuildInfo")
     }
     assemble {
         dependsOn("makePklPackages")
+    }
+    getByName("makePklPackages") {
+        dependsOn("processResources")
     }
 }
 
@@ -47,39 +67,6 @@ task("sourcesJar", type = Jar::class) {
 java {
     withSourcesJar()
     withJavadocJar()
-}
-
-pkl {
-    kotlinCodeGenerators {
-        register("genKotlin") {
-            indent.set("    ")
-            outputDir.set(layout.projectDirectory.dir("src/main"))
-            sourceModules.add(file("src/main/resources/Model.pkl"))
-        }
-    }
-    project {
-        packagers {
-            register("makePklPackages") {
-                projectDirectories.from(file("build/resources/main/"))
-            }
-        }
-    }
-}
-
-tasks.create<Copy>("generateBuildInfo") {
-    val templateContext = mapOf("version" to version)
-    inputs.properties(templateContext) // for gradle up-to-date check
-    from("src/main/templates/BuildInfo.pkl")
-    into("src/main/resources")
-    expand(templateContext)
-    dependsOn(tasks.getByName("genKotlin"))
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-tasks.getByName("makePklPackages") {
-    sourceSets["main"].resources.srcDir("${layout.buildDirectory.get()}/resources/main")
-    dependsOn(tasks.getByName("generateBuildInfo"))
-    dependsOn("processResources")
 }
 
 publishing {

@@ -17,47 +17,6 @@ dependencies {
     implementation(project(":package-toolkit:runtime"))
 }
 
-tasks {
-    shadowJar {
-        isZip64 = true
-        archiveBaseName.set(jarName)
-        archiveClassifier.set("jar-with-dependencies")
-        dependencies {
-            include(dependency("org.pkl-lang:pkl-config-kotlin:.*"))
-            include(dependency("org.pkl-lang:pkl-config-java-all:.*"))
-            include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
-            include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
-            include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
-        }
-        mergeServiceFiles()
-        dependsOn(
-            "generateBuildInfo",
-            ":package-toolkit:runtime:genPklConnectors",
-        )
-    }
-    jar {
-        archiveBaseName.set(jarName)
-        dependsOn(shadowJar)
-    }
-    processResources {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        dependsOn("generateBuildInfo")
-    }
-    assemble {
-        dependsOn("makePklPackages")
-    }
-}
-
-task("sourcesJar", type = Jar::class) {
-    archiveClassifier.set("sources")
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
-
 pkl {
     kotlinCodeGenerators {
         register("genKotlin") {
@@ -73,26 +32,59 @@ pkl {
     project {
         packagers {
             register("makePklPackages") {
-                projectDirectories.from(file("build/resources/main/"))
+                projectDirectories.from(file("src/main/resources/"))
+                environmentVariables.put("VERSION_NAME", version.toString())
             }
         }
     }
 }
 
-tasks.create<Copy>("generateBuildInfo") {
-    val templateContext = mapOf("version" to version)
-    inputs.properties(templateContext) // for gradle up-to-date check
-    from("src/main/templates/BuildInfo.pkl")
-    into("src/main/resources")
-    expand(templateContext)
-    dependsOn(tasks.getByName("genKotlin"))
+tasks {
+    shadowJar {
+        isZip64 = true
+        archiveBaseName.set(jarName)
+        archiveClassifier.set("jar-with-dependencies")
+        dependencies {
+            include(dependency("org.pkl-lang:pkl-config-kotlin:.*"))
+            include(dependency("org.pkl-lang:pkl-config-java-all:.*"))
+            include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
+            include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
+            include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
+        }
+        mergeServiceFiles()
+        dependsOn(
+            ":package-toolkit:runtime:genPklConnectors",
+        )
+    }
+    jar {
+        archiveBaseName.set(jarName)
+        dependsOn(shadowJar)
+    }
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        dependsOn(
+            ":package-toolkit:runtime:genPklConnectors",
+        )
+    }
+    assemble {
+        dependsOn("makePklPackages")
+    }
+    getByName("genKotlin") {
+        dependsOn(":package-toolkit:runtime:genPklConnectorsGatherImports")
+    }
+    getByName("makePklPackages") {
+        dependsOn("processResources")
+    }
+}
+
+task("sourcesJar", type = Jar::class) {
+    archiveClassifier.set("sources")
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-tasks.getByName("makePklPackages") {
-    sourceSets["main"].resources.srcDir("${layout.buildDirectory.get()}/resources/main")
-    dependsOn(tasks.getByName("generateBuildInfo"))
-    dependsOn("processResources")
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {

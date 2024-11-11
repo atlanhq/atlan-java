@@ -209,8 +209,6 @@ object Importer {
             )
         val colResults = columnImporter.import()
 
-        val modifiedAssets = ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults)
-
         val connectionQN =
             if (deltaSemantic == "full") {
                 val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
@@ -225,8 +223,8 @@ object Importer {
                 null
             }
 
-        val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
-        val delta =
+        ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+            val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
             DeltaProcessor(
                 semantic = deltaSemantic,
                 qualifiedNamePrefix = connectionQN,
@@ -245,8 +243,8 @@ object Importer {
                         outputHeaders = targetHeaders,
                     ),
                 outputDirectory = outputDirectory,
-            )
-        delta.run(modifiedAssets)
+            ).run(modifiedAssets)
+        }
         return connectionQN
     }
 

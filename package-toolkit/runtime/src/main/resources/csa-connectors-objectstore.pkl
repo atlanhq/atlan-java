@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "../../../../config/build/resources/main/Credential.pkl"
-import "../../../../config/build/resources/main/Config.pkl"
+amends "../../../../config/src/main/resources/Credential.pkl"
+import "../../../../config/src/main/resources/Config.pkl"
 
 name = "csa-connectors-objectstore"
 source = "Object Store"
