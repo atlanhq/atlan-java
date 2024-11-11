@@ -3,6 +3,7 @@
 package com.atlan.pkg.cache
 
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
 import mu.KotlinLogging
@@ -20,6 +21,13 @@ object LinkCache : AssetCache<Link>() {
 
     private val includesOnResults: List<AtlanField> = listOf(Link.NAME, Link.STATUS, Link.LINK, Link.ASSET)
     private val includesOnRelations: List<AtlanField> = listOf(Asset.GUID)
+
+    private val EXEMPLAR_LINK =
+        Link.creator(
+            GlossaryTerm.refByQualifiedName("ObfuscatedTermName@ObfuscatedGlossaryName"),
+            "Link Title",
+            "https://example.com/somewhere/within/a/site.html",
+        ).build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -78,7 +86,7 @@ object LinkCache : AssetCache<Link>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response?.approximateCount ?: 0} links, up-front..." }
-        initializeOffHeap("link", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Link, Link::class.java)
+        initializeOffHeap("link", response, EXEMPLAR_LINK)
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

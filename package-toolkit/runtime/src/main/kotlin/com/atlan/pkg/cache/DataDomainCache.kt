@@ -16,6 +16,11 @@ object DataDomainCache : AssetCache<DataDomain>() {
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
 
+    private val EXEMPLAR_DOMAIN =
+        DataDomain.creator("Domain Name")
+            .description("Could be empty")
+            .build()
+
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
         throw IllegalStateException("Domain cache can only be preloaded en-masse, not retrieved domain-by-domain.")
@@ -85,7 +90,7 @@ object DataDomainCache : AssetCache<DataDomain>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data domains, up-front..." }
-        initializeOffHeap("datadomain", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as DataDomain, DataDomain::class.java)
+        initializeOffHeap("datadomain", response, EXEMPLAR_DOMAIN)
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))

@@ -14,6 +14,11 @@ object GlossaryCache : AssetCache<Glossary>() {
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
 
+    private val EXEMPLAR_GLOSSARY =
+        Glossary.creator("Glossary Name")
+            .userDescription("Could be empty")
+            .build()
+
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
         val result = lookupByIdentity(name)
@@ -84,7 +89,7 @@ object GlossaryCache : AssetCache<Glossary>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} glossaries, up-front..." }
-        initializeOffHeap("glossary", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Glossary, Glossary::class.java)
+        initializeOffHeap("glossary", response, EXEMPLAR_GLOSSARY)
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)

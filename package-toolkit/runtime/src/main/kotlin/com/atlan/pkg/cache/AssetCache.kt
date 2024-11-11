@@ -5,6 +5,7 @@ package com.atlan.pkg.cache
 import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.model.search.IndexSearchResponse
 import mu.KotlinLogging
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -21,6 +22,28 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
 
     init {
         this.bulkRefresh.set(false)
+    }
+
+    /**
+     * Initialize the off-heap storage for this cache.
+     *
+     * @param name of the cache
+     * @param response containing the first asset and total count of existing assets for the cache
+     * @param exemplar representative asset to use for space estimates, in case there are currently no assets in the tenant
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun initializeOffHeap(
+        name: String,
+        response: IndexSearchResponse?,
+        exemplar: T,
+    ) {
+        val first = response?.assets?.get(0)
+        initializeOffHeap(
+            name,
+            response?.approximateCount?.toInt() ?: 0,
+            if (first != null) first as T else exemplar,
+            exemplar.javaClass,
+        )
     }
 
     /**

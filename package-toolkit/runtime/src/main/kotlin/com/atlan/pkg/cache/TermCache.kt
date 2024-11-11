@@ -5,6 +5,7 @@ package com.atlan.pkg.cache
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
@@ -16,6 +17,12 @@ object TermCache : AssetCache<GlossaryTerm>() {
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
+
+    private val EXEMPLAR_TERM =
+        GlossaryTerm.creator("Term Name", "ObfuscatedGlossaryName")
+            .userDescription("Could be empty")
+            .category(GlossaryCategory.refByQualifiedName("ObfuscatedCategory@ObfuscatedGlossary"))
+            .build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -113,7 +120,7 @@ object TermCache : AssetCache<GlossaryTerm>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
-        initializeOffHeap("term", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as GlossaryTerm, GlossaryTerm::class.java)
+        initializeOffHeap("term", response, EXEMPLAR_TERM)
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

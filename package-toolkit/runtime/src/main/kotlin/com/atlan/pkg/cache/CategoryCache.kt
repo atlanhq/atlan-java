@@ -20,6 +20,11 @@ object CategoryCache : AssetCache<GlossaryCategory>() {
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
 
+    private val EXEMPLAR_CATEGORY =
+        GlossaryCategory.creator("Category Name", "ObfuscatedGlossaryName")
+            .userDescription("Could be empty")
+            .build()
+
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
         throw IllegalStateException("Category cache can only be preloaded en-masse, not retrieved category-by-category.")
@@ -157,7 +162,7 @@ object CategoryCache : AssetCache<GlossaryCategory>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} categories, up-front..." }
-        initializeOffHeap("category", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as GlossaryCategory, GlossaryCategory::class.java)
+        initializeOffHeap("category", response, EXEMPLAR_CATEGORY)
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)
