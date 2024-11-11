@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 plugins {
     id("com.atlan.java")
-    id("com.atlan.java-test")
 }
 
 dependencies {
@@ -12,4 +11,15 @@ dependencies {
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     implementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
+}
+
+tasks {
+    test {
+        useTestNG {
+            options {
+                testLogging.showStandardStreams = true
+            }
+        }
+        jvmArgs = providers.gradleProperty("org.gradle.jvmargs").get().split(" ")
+    }
 }

@@ -71,6 +71,8 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
         try {
             mapIdToName.clear();
             mapNameToId.clear();
+            mapIdToSid.clear();
+            mapSidToId.clear();
             refreshCache();
         } finally {
             lock.writeLock().unlock();
@@ -180,13 +182,9 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @param object the object to cache (if any)
      */
     protected void cache(String id, String sid, String name, T object) {
-        mapIdToName.put(id, name);
-        mapNameToId.put(name, id);
+        cache(id, name, object);
         mapIdToSid.put(id, sid);
         mapSidToId.put(sid, id);
-        if (object != null) {
-            mapIdToObject.put(id, object);
-        }
     }
 
     /**
@@ -256,6 +254,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return the ID of the object (if cached), or null
      */
     protected String getIdFromName(String name) {
+        if (name == null) return null;
         lock.readLock().lock();
         try {
             return mapNameToId.get(name);
@@ -271,6 +270,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return the name of the object (if cached), or null
      */
     protected String getNameFromId(String id) {
+        if (id == null) return null;
         lock.readLock().lock();
         try {
             return mapIdToName.get(id);
@@ -286,6 +286,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return the ID of the object (if cached), or null
      */
     protected String getIdFromSid(String sid) {
+        if (sid == null) return null;
         lock.readLock().lock();
         try {
             return mapSidToId.get(sid);
@@ -301,6 +302,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return the secondary ID of the object (if cached), or null
      */
     protected String getSidFromId(String id) {
+        if (id == null) return null;
         lock.readLock().lock();
         try {
             return mapIdToSid.get(id);
@@ -338,6 +340,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      * @return the object itself (if cached), or null
      */
     protected T getObjectById(String id) {
+        if (id == null) return null;
         lock.readLock().lock();
         try {
             return mapIdToObject.get(id);
