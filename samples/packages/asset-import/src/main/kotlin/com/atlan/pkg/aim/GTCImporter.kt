@@ -35,7 +35,7 @@ abstract class GTCImporter(
     attrsToOverwrite: List<AtlanField>,
     updateOnly: Boolean,
     batchSize: Int,
-    protected val cache: AssetCache,
+    protected val cache: AssetCache<*>,
     typeNameFilter: String,
     logger: KLogger,
     failOnErrors: Boolean,
@@ -59,10 +59,7 @@ abstract class GTCImporter(
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            val result = cache.lookupAssetByGuid(asset.guid, maxRetries = 5)
-            result?.let {
-                cache.addByGuid(asset.guid, result)
-            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
+            cache.cacheById(asset.guid)
         }
     }
 
