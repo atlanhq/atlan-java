@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2023 Atlan Pte. Ltd.
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jdk-ubi9-minimal
 
 LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \
       org.opencontainers.image.source="https://github.com/atlanhq/atlan-java" \
@@ -13,15 +13,6 @@ RUN wget -O /dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.
 COPY assembly /opt/jars
 
 ENV CLASSPATH="/opt/jars/*:/opt/app/*"
-ENV JAVA_TOOL_OPTIONS="\
-    --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED \
-    --add-exports=java.base/sun.nio.ch=ALL-UNNAMED \
-    --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED \
-    --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED \
-    --add-opens=jdk.compiler/com.sun.tools.javac=ALL-UNNAMED \
-    --add-opens=java.base/java.lang=ALL-UNNAMED \
-    --add-opens=java.base/java.lang.reflect=ALL-UNNAMED \
-    --add-opens=java.base/java.io=ALL-UNNAMED \
-    --add-opens=java.base/java.util=ALL-UNNAMED"
+ENV JAVA_TOOL_OPTIONS="--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED --add-exports=java.base/sun.nio.ch=ALL-UNNAMED --add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-opens=jdk.compiler/com.sun.tools.javac=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED"
 
 ENTRYPOINT ["/dumb-init", "--", "java"]
