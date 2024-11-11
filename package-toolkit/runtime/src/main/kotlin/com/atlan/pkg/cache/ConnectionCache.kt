@@ -24,6 +24,11 @@ object ConnectionCache : AssetCache<Connection>() {
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
 
+    private val EXEMPLAR_CONNECTION =
+        Connection.creator("Sample Connection", AtlanConnectorType.SNOWFLAKE)
+            .description("Could be empty")
+            .build()
+
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
         val result = lookupByIdentity(name)
@@ -139,7 +144,7 @@ object ConnectionCache : AssetCache<Connection>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
-        initializeOffHeap("connection", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Connection, Connection::class.java)
+        initializeOffHeap("connection", response, EXEMPLAR_CONNECTION)
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

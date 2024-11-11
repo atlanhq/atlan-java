@@ -4,9 +4,15 @@ package com.atlan.pkg.cache
 
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
+import com.atlan.model.assets.MaterializedView
+import com.atlan.model.assets.Table
+import com.atlan.model.assets.View
+import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.search.FluentSearch
 import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
@@ -17,6 +23,16 @@ object DataProductCache : AssetCache<DataProduct>() {
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
     private val includesOnRelations: List<AtlanField> = listOf(DataDomain.NAME)
+
+    private val EXEMPLAR_PRODUCT =
+        DataProduct.creator(
+            "Product Name",
+            "ObfuscatedDomainName",
+            FluentSearch._internal()
+                .where(Asset.TYPE_NAME.`in`(listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)))
+                .where(Asset.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
+                .build(),
+        ).build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -122,7 +138,7 @@ object DataProductCache : AssetCache<DataProduct>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
-        initializeOffHeap("dataproduct", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as DataProduct, DataProduct::class.java)
+        initializeOffHeap("dataproduct", response, EXEMPLAR_PRODUCT)
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
