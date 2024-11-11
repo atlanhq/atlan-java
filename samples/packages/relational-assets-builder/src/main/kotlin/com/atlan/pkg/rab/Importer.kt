@@ -128,6 +128,7 @@ object Importer {
                 1,
                 true,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         connectionImporter.import()
 
@@ -141,6 +142,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val dbResults = databaseImporter.import()
 
@@ -154,6 +156,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val schResults = schemaImporter.import()
 
@@ -167,6 +170,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val tblResults = tableImporter.import()
 
@@ -180,6 +184,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val viewResults = viewImporter.import()
 
@@ -193,6 +198,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val mviewResults = materializedViewImporter.import()
 
@@ -206,6 +212,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val colResults = columnImporter.import()
 

@@ -35,6 +35,7 @@ import mu.KLogger
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 abstract class AssetImporter(
     private val filename: String,
@@ -45,6 +46,7 @@ abstract class AssetImporter(
     logger: KLogger,
     trackBatches: Boolean,
     fieldSeparator: Char,
+    private val failOnErrors: Boolean = true,
 ) : CSVImporter(
         filename,
         logger,
@@ -54,6 +56,7 @@ abstract class AssetImporter(
         batchSize = batchSize,
         trackBatches = trackBatches,
         fieldSeparator = fieldSeparator,
+        failOnErrors = failOnErrors,
     ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
