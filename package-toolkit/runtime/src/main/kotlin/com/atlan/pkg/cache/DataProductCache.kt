@@ -2,8 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
@@ -12,14 +12,20 @@ import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object DataProductCache : AssetCache() {
+object DataProductCache : AssetCache<DataProduct>() {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
     private val includesOnRelations: List<AtlanField> = listOf(DataDomain.NAME)
 
+    /** {@inheritDoc} */
+    override fun lookupByName(name: String?) {
+        val result = lookupByIdentity(name)
+        if (result != null) cache(result.guid, name, result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByIdentity(identity: String?): Asset? {
+    private fun lookupByIdentity(identity: String?): DataProduct? {
         val tokens = identity?.split(DataDomainXformer.DATA_PRODUCT_DELIMITER)
         if (tokens?.size == 2) {
             val productName = tokens[0]
@@ -62,12 +68,18 @@ object DataProductCache : AssetCache() {
         return null
     }
 
+    /** {@inheritDoc} */
+    override fun lookupById(id: String?) {
+        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(
+    private fun lookupById(
         guid: String?,
         currentAttempt: Int,
         maxRetries: Int,
-    ): Asset? {
+    ): DataProduct? {
         try {
             val dp =
                 DataProduct.select()
@@ -78,13 +90,13 @@ object DataProductCache : AssetCache() {
                     .stream()
                     .findFirst()
             if (dp.isPresent) {
-                return dp.get()
+                return dp.get() as DataProduct
             } else {
                 if (currentAttempt >= maxRetries) {
                     logger.warn { "No data product found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                    return lookupById(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
@@ -96,24 +108,28 @@ object DataProductCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Asset): String {
-        return when (asset) {
-            is DataProduct -> {
-                "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(asset.dataDomain as DataDomain)}"
-            }
-            else -> ""
-        }
+    override fun getIdentityForAsset(asset: DataProduct): String {
+        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(asset.dataDomain as DataDomain)}"
     }
 
     /** {@inheritDoc} */
-    override fun preload() {
-        logger.info { "Caching all data products, up-front..." }
+    override fun refreshCache() {
+        val request =
+            DataProduct.select()
+                .includesOnResults(includesOnResults)
+                .includesOnRelations(includesOnRelations)
+                .pageSize(1)
+                .toRequest()
+        val response = request.search()
+        logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
+        initializeOffHeap("dataproduct", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as DataProduct, DataProduct::class.java)
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)
             .forEach { dp ->
-                addByGuid(dp.guid, dp)
+                dp as DataProduct
+                cache(dp.guid, getIdentityForAsset(dp), dp)
             }
     }
 }

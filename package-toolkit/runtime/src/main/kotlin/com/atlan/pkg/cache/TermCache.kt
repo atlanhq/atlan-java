@@ -2,8 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
@@ -11,16 +11,20 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object TermCache : AssetCache() {
+object TermCache : AssetCache<GlossaryTerm>() {
     private val logger = KotlinLogging.logger {}
-
-    private var preloaded = false
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
 
+    /** {@inheritDoc} */
+    override fun lookupByName(name: String?) {
+        val result = lookupByIdentity(name)
+        if (result != null) cache(result.guid, name, result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByIdentity(identity: String?): Asset? {
+    private fun lookupByIdentity(identity: String?): GlossaryTerm? {
         val tokens = identity?.split(GlossaryXformer.GLOSSARY_DELIMITER)
         if (tokens?.size == 2) {
             val termName = tokens[0]
@@ -39,7 +43,7 @@ object TermCache : AssetCache() {
                             .stream()
                             .findFirst()
                     if (term.isPresent) {
-                        return term.get()
+                        return term.get() as GlossaryTerm
                     }
                 } catch (e: AtlanException) {
                     logger.warn { "Unable to lookup or find term: $identity" }
@@ -55,12 +59,18 @@ object TermCache : AssetCache() {
         return null
     }
 
+    /** {@inheritDoc} */
+    override fun lookupById(id: String?) {
+        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(
+    private fun lookupById(
         guid: String?,
         currentAttempt: Int,
         maxRetries: Int,
-    ): Asset? {
+    ): GlossaryTerm? {
         try {
             val term =
                 GlossaryTerm.select()
@@ -71,13 +81,13 @@ object TermCache : AssetCache() {
                     .stream()
                     .findFirst()
             if (term.isPresent) {
-                return term.get()
+                return term.get() as GlossaryTerm
             } else {
                 if (currentAttempt >= maxRetries) {
                     logger.warn { "No term found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                    return lookupById(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
@@ -89,27 +99,28 @@ object TermCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Asset): String {
-        return when (asset) {
-            is GlossaryTerm -> {
-                "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
-            }
-            else -> ""
-        }
+    override fun getIdentityForAsset(asset: GlossaryTerm): String {
+        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
     }
 
     /** {@inheritDoc} */
-    override fun preload() {
-        if (!preloaded) {
-            logger.info { "Caching all terms, up-front..." }
+    override fun refreshCache() {
+        val request =
             GlossaryTerm.select()
                 .includesOnResults(includesOnResults)
                 .includesOnRelations(includesOnRelations)
-                .stream(true)
-                .forEach { term ->
-                    addByGuid(term.guid, term)
-                }
-            preloaded = true
-        }
+                .pageSize(1)
+                .toRequest()
+        val response = request.search()
+        logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
+        initializeOffHeap("term", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as GlossaryTerm, GlossaryTerm::class.java)
+        GlossaryTerm.select()
+            .includesOnResults(includesOnResults)
+            .includesOnRelations(includesOnRelations)
+            .stream(true)
+            .forEach { term ->
+                term as GlossaryTerm
+                cache(term.guid, getIdentityForAsset(term), term)
+            }
     }
 }

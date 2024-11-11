@@ -76,10 +76,7 @@ class ConnectionImporter(
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            val result = ConnectionCache.lookupAssetByGuid(asset.guid, maxRetries = 5)
-            result?.let {
-                ConnectionCache.addByGuid(asset.guid, result)
-            } ?: throw IllegalStateException("Result of searching by GUID for ${asset.guid} was null.")
+            ConnectionCache.cacheById(asset.guid)
         }
     }
 }

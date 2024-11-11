@@ -19,13 +19,19 @@ import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
-object ConnectionCache : AssetCache() {
+object ConnectionCache : AssetCache<Connection>() {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
 
+    /** {@inheritDoc} */
+    override fun lookupByName(name: String?) {
+        val result = lookupByIdentity(name)
+        if (result != null) cache(result.guid, name, result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByIdentity(identity: String?): Asset? {
+    private fun lookupByIdentity(identity: String?): Connection? {
         val tokens = identity?.split(ConnectionXformer.CONNECTION_DELIMITER)
         if (tokens?.size == 2) {
             val name = tokens[0]
@@ -47,12 +53,18 @@ object ConnectionCache : AssetCache() {
         return null
     }
 
+    /** {@inheritDoc} */
+    override fun lookupById(id: String?) {
+        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+    }
+
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(
+    private fun lookupById(
         guid: String?,
         currentAttempt: Int,
         maxRetries: Int,
-    ): Asset? {
+    ): Connection? {
         try {
             val connection =
                 Connection.select()
@@ -68,7 +80,7 @@ object ConnectionCache : AssetCache() {
                     logger.warn { "No connection found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                    return lookupById(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
@@ -80,17 +92,8 @@ object ConnectionCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Asset): String {
-        return when (asset) {
-            is Connection -> {
-                if (asset.connectorType != null) {
-                    getIdentityForAsset(asset.name, asset.connectorType)
-                } else {
-                    ""
-                }
-            }
-            else -> ""
-        }
+    override fun getIdentityForAsset(asset: Connection): String {
+        return if (asset.connectorType == null) "" else getIdentityForAsset(asset.name, asset.connectorType)
     }
 
     /**
@@ -115,8 +118,8 @@ object ConnectionCache : AssetCache() {
      */
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
-        listAll().forEach { connection ->
-            connection as Connection
+        listAll().forEach { (_, connection) ->
+            connection
             val connectorType =
                 if (connection.connectorType == null) {
                     "(not enumerated)"
@@ -129,13 +132,21 @@ object ConnectionCache : AssetCache() {
     }
 
     /** {@inheritDoc} */
-    override fun preload() {
-        logger.info { "Caching all connections, up-front..." }
+    override fun refreshCache() {
+        val request =
+            Connection.select()
+                .includesOnResults(includesOnResults)
+                .pageSize(1)
+                .toRequest()
+        val response = request.search()
+        logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
+        initializeOffHeap("connection", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Connection, Connection::class.java)
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { connection ->
-                addByGuid(connection.guid, connection)
+                connection as Connection
+                cache(connection.guid, getIdentityForAsset(connection), connection)
             }
     }
 
@@ -147,7 +158,7 @@ object ConnectionCache : AssetCache() {
      * @param connection the result from a search
      * @return the accessible connection, in full
      */
-    private fun isAccessible(connection: Asset): Asset {
+    private fun isAccessible(connection: Asset): Connection {
         try {
             val candidate =
                 Atlan.getDefaultClient().assets.get(
@@ -164,7 +175,7 @@ object ConnectionCache : AssetCache() {
                 // definition overrun the retry limit
                 throw ApiException(ErrorCode.RETRY_OVERRUN, null)
             }
-            return candidate.asset
+            return candidate.asset as Connection
         } catch (e: PermissionException) {
             // If we get a permission exception after the built-in retries above, throw it
             // onwards as a retry overrun

@@ -2,9 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
@@ -14,24 +14,29 @@ import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 
-object CategoryCache : AssetCache() {
+object CategoryCache : AssetCache<GlossaryCategory>() {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
 
-    /** {@inheritDoc}  */
-    override fun lookupAssetByIdentity(identity: String?): Asset? {
-        // Always return null, as the cache should always be preloaded
-        return null
+    /** {@inheritDoc} */
+    override fun lookupByName(name: String?) {
+        throw IllegalStateException("Category cache can only be preloaded en-masse, not retrieved category-by-category.")
+    }
+
+    /** {@inheritDoc} */
+    override fun lookupById(id: String?) {
+        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
     /** {@inheritDoc}  */
-    override fun lookupAssetByGuid(
+    private fun lookupById(
         guid: String?,
         currentAttempt: Int,
         maxRetries: Int,
-    ): Asset? {
+    ): GlossaryCategory? {
         try {
             val category =
                 GlossaryCategory.select()
@@ -43,13 +48,13 @@ object CategoryCache : AssetCache() {
                     .stream()
                     .findFirst()
             if (category.isPresent) {
-                return category.get()
+                return category.get() as GlossaryCategory
             } else {
                 if (currentAttempt >= maxRetries) {
                     logger.warn { "No category found with GUID: $guid" }
                 } else {
                     Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupAssetByGuid(guid, currentAttempt + 1, maxRetries)
+                    return lookupById(guid, currentAttempt + 1, maxRetries)
                 }
             }
         } catch (e: AtlanException) {
@@ -100,15 +105,21 @@ object CategoryCache : AssetCache() {
                     parent?.let {
                         val parentIdentity = getIdentity(parent.guid)
                         val parentPath = parentIdentity?.split(GLOSSARY_DELIMITER)?.get(0) ?: ""
-                        addByIdentity(
+                        cache(
+                            category.guid,
                             "$parentPath${GlossaryCategoryXformer.CATEGORY_DELIMITER}${category.name}$GLOSSARY_DELIMITER$glossaryName",
                             category,
                         )
-                    } ?: addByIdentity("${category.name}$GLOSSARY_DELIMITER$glossaryName", category)
+                    } ?: cache(
+                        category.guid,
+                        "${category.name}$GLOSSARY_DELIMITER$glossaryName",
+                        category,
+                    )
                     categories.add(category)
                 }
             } catch (e: NotFoundException) {
                 logger.warn { "There are no categories in glossary $glossaryName -- nothing to cache." }
+                logger.debug(e) { "Full details:" }
             }
         } else {
             logger.warn {
@@ -119,31 +130,34 @@ object CategoryCache : AssetCache() {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Asset): String {
-        return when (asset) {
-            is GlossaryCategory -> {
-                // Note: this only works as long as we always ensure that categories are loaded
-                // in level-order (parents before children)
-                val parentIdentity =
-                    if (asset.parentCategory == null) {
-                        ""
-                    } else {
-                        getIdentity(asset.parentCategory.guid)
-                    }
-                return if (parentIdentity.isNullOrBlank()) {
-                    "${asset.name}${GLOSSARY_DELIMITER}${asset.anchor.name}"
-                } else {
-                    val parentPath = parentIdentity.split(GLOSSARY_DELIMITER)[0]
-                    "$parentPath${GlossaryCategoryXformer.CATEGORY_DELIMITER}${asset.name}$GLOSSARY_DELIMITER${asset.anchor.name}"
-                }
+    override fun getIdentityForAsset(asset: GlossaryCategory): String {
+        // Note: this only works as long as we always ensure that categories are loaded
+        // in level-order (parents before children)
+        val parentIdentity =
+            if (asset.parentCategory == null) {
+                ""
+            } else {
+                getIdentity(asset.parentCategory.guid)
             }
-            else -> ""
+        return if (parentIdentity.isNullOrBlank()) {
+            "${asset.name}${GLOSSARY_DELIMITER}${asset.anchor.name}"
+        } else {
+            val parentPath = parentIdentity.split(GLOSSARY_DELIMITER)[0]
+            "$parentPath${GlossaryCategoryXformer.CATEGORY_DELIMITER}${asset.name}$GLOSSARY_DELIMITER${asset.anchor.name}"
         }
     }
 
     /** {@inheritDoc} */
-    override fun preload() {
-        logger.info { "Caching all categories, up-front..." }
+    override fun refreshCache() {
+        val request =
+            GlossaryCategory.select()
+                .includesOnResults(includesOnResults)
+                .includesOnRelations(includesOnRelations)
+                .pageSize(1)
+                .toRequest()
+        val response = request.search()
+        logger.info { "Caching all ${response.approximateCount ?: 0} categories, up-front..." }
+        initializeOffHeap("category", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as GlossaryCategory, GlossaryCategory::class.java)
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)
