@@ -528,18 +528,18 @@ public class AssetBatch implements Closeable {
                 if (caseInsensitive) {
                     builder = client.assets.select(true).minSomes(1);
                     for (String qn : qualifiedNames) {
-                        builder.whereSome(Asset.QUALIFIED_NAME.eq(qn, true));
+                        builder.whereSome(Asset.QUALIFIED_NAME.eq(qn, caseInsensitive));
                     }
                 } else {
                     builder = client.assets.select(true).where(Asset.QUALIFIED_NAME.in(qualifiedNames));
                 }
                 builder.pageSize(maxSize).stream().forEach(asset -> {
-                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);
+                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
                     found.put(assetId, asset.getQualifiedName());
                 });
                 revised = new ArrayList<>();
                 for (Asset asset : _batch) {
-                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), true);
+                    AssetIdentity assetId = new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
                     // If found, with a type match, go ahead and update it
                     if (found.containsKey(assetId)) {
                         // Replace the actual qualifiedName on the asset before adding it to the batch
@@ -548,10 +548,10 @@ public class AssetBatch implements Closeable {
                         addFuzzyMatched(asset, asset.getTypeName(), found.get(assetId), revised);
                     } else if (tableViewAgnostic && TABLE_LEVEL_ASSETS.contains(asset.getTypeName())) {
                         // If found as a different (but acceptable) type, update that instead
-                        AssetIdentity asTable = new AssetIdentity(Table.TYPE_NAME, asset.getQualifiedName(), true);
-                        AssetIdentity asView = new AssetIdentity(View.TYPE_NAME, asset.getQualifiedName(), true);
+                        AssetIdentity asTable = new AssetIdentity(Table.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
+                        AssetIdentity asView = new AssetIdentity(View.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         AssetIdentity asMaterializedView =
-                                new AssetIdentity(MaterializedView.TYPE_NAME, asset.getQualifiedName(), true);
+                                new AssetIdentity(MaterializedView.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         if (found.containsKey(asTable)) {
                             addFuzzyMatched(asset, Table.TYPE_NAME, found.get(asTable), revised);
                         } else if (found.containsKey(asView)) {
@@ -673,7 +673,7 @@ public class AssetBatch implements Closeable {
                     if (caseInsensitive) {
                         String typeName = one.getTypeName();
                         String qualifiedName = one.getQualifiedName();
-                        AssetIdentity id = new AssetIdentity(typeName, qualifiedName, true);
+                        AssetIdentity id = new AssetIdentity(typeName, qualifiedName, caseInsensitive);
                         resolvedQualifiedNames.put(id, qualifiedName);
                     }
                 }
