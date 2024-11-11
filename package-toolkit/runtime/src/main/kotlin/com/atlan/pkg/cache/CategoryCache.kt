@@ -157,7 +157,7 @@ object CategoryCache : AssetCache<GlossaryCategory>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} categories, up-front..." }
-        initializeOffHeap("category", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as GlossaryCategory, GlossaryCategory::class.java)
+        initializeOffHeap("category", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as GlossaryCategory, GlossaryCategory::class.java)
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)

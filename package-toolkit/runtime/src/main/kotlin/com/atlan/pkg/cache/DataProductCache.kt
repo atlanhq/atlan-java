@@ -122,7 +122,7 @@ object DataProductCache : AssetCache<DataProduct>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
-        initializeOffHeap("dataproduct", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as DataProduct, DataProduct::class.java)
+        initializeOffHeap("dataproduct", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as DataProduct, DataProduct::class.java)
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

@@ -85,7 +85,7 @@ object DataDomainCache : AssetCache<DataDomain>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data domains, up-front..." }
-        initializeOffHeap("datadomain", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as DataDomain, DataDomain::class.java)
+        initializeOffHeap("datadomain", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as DataDomain, DataDomain::class.java)
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))

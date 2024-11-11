@@ -113,7 +113,7 @@ object TermCache : AssetCache<GlossaryTerm>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
-        initializeOffHeap("term", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as GlossaryTerm, GlossaryTerm::class.java)
+        initializeOffHeap("term", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as GlossaryTerm, GlossaryTerm::class.java)
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

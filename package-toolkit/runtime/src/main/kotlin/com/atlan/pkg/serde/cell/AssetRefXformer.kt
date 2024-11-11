@@ -126,7 +126,7 @@ object AssetRefXformer {
         batchSize: Int,
     ) {
         val totalCount = totalRelated.get()
-        relatedAssets.forEach { (fieldName, relatives) ->
+        relatedAssets.forEach { (_, relatives) ->
             for (related in relatives) {
                 when (related) {
                     is Readme -> {
