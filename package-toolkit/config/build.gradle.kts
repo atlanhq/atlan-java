@@ -17,6 +17,27 @@ dependencies {
     implementation(project(":package-toolkit:runtime"))
 }
 
+pkl {
+    kotlinCodeGenerators {
+        register("genKotlin") {
+            indent.set("    ")
+            outputDir.set(layout.projectDirectory.dir("src/main"))
+            sourceModules.add(file("src/main/resources/Config.pkl"))
+            sourceModules.add(file("src/main/resources/Connectors.pkl"))
+            sourceModules.add(file("src/main/resources/Credential.pkl"))
+            sourceModules.add(file("src/main/resources/Renderers.pkl"))
+            // sourceModules.add(file("src/main/resources/Flow.pkl"))
+        }
+    }
+    project {
+        packagers {
+            register("makePklPackages") {
+                projectDirectories.from(file("build/resources/main/"))
+            }
+        }
+    }
+}
+
 tasks {
     shadowJar {
         isZip64 = true
@@ -41,10 +62,16 @@ tasks {
     }
     processResources {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        dependsOn("generateBuildInfo")
+        dependsOn(
+            "generateBuildInfo",
+            ":package-toolkit:runtime:genPklConnectors",
+        )
     }
     assemble {
         dependsOn("makePklPackages")
+    }
+    getByName("genKotlin") {
+        dependsOn(":package-toolkit:runtime:genPklConnectorsGatherImports")
     }
 }
 
@@ -56,27 +83,6 @@ task("sourcesJar", type = Jar::class) {
 java {
     withSourcesJar()
     withJavadocJar()
-}
-
-pkl {
-    kotlinCodeGenerators {
-        register("genKotlin") {
-            indent.set("    ")
-            outputDir.set(layout.projectDirectory.dir("src/main"))
-            sourceModules.add(file("src/main/resources/Config.pkl"))
-            sourceModules.add(file("src/main/resources/Connectors.pkl"))
-            sourceModules.add(file("src/main/resources/Credential.pkl"))
-            sourceModules.add(file("src/main/resources/Renderers.pkl"))
-            // sourceModules.add(file("src/main/resources/Flow.pkl"))
-        }
-    }
-    project {
-        packagers {
-            register("makePklPackages") {
-                projectDirectories.from(file("build/resources/main/"))
-            }
-        }
-    }
 }
 
 tasks.create<Copy>("generateBuildInfo") {

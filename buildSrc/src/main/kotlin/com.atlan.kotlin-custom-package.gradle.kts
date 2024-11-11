@@ -68,6 +68,9 @@ tasks {
         dependsOn(":package-toolkit:config:processResources")
         dependsOn("compileKotlin")
     }
+    getByName("genCustomPkgGatherImports") {
+        dependsOn(":package-toolkit:config:processResources")
+    }
     assemble {
         dependsOn("genCustomPkg")
     }
