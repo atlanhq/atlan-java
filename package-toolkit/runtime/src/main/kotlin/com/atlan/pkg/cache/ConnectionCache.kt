@@ -119,7 +119,6 @@ object ConnectionCache : AssetCache<Connection>() {
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { (_, connection) ->
-            connection
             val connectorType =
                 if (connection.connectorType == null) {
                     "(not enumerated)"
@@ -140,7 +139,7 @@ object ConnectionCache : AssetCache<Connection>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
-        initializeOffHeap("connection", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Connection, Connection::class.java)
+        initializeOffHeap("connection", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Connection, Connection::class.java)
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

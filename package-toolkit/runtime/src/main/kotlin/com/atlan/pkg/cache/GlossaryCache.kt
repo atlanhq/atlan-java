@@ -84,7 +84,7 @@ object GlossaryCache : AssetCache<Glossary>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} glossaries, up-front..." }
-        initializeOffHeap("glossary", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Glossary, Glossary::class.java)
+        initializeOffHeap("glossary", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Glossary, Glossary::class.java)
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)

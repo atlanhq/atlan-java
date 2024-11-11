@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
 import mu.KotlinLogging
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -32,6 +33,8 @@ object LinkCache : AssetCache<Link>() {
 
     /**
      * Retrieve the pre-existing links for a particular asset.
+     * Note: these links may have made-up UUIDs, so should never be used as-is for updates (always trim them
+     * first, or use their contents in an updater method, instead).
      *
      * @param guid of the asset for which to retrieve pre-existing links
      * @return the set of (minimal) links that already exist on the asset
@@ -47,15 +50,16 @@ object LinkCache : AssetCache<Link>() {
      */
     fun add(link: Link) {
         link.asset?.let {
+            val linkId = if (link.guid.startsWith("-")) UUID.randomUUID().toString() else link.guid
             val ref = (link.asset as Asset).trimToReference()
             val url = link.link
             val assetGuid = link.asset.guid
             val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).build()
-            cache(minimal.guid, getIdentityForAsset(minimal), minimal)
+            cache(linkId, getIdentityForAsset(minimal), minimal)
             if (!byAssetGuid.containsKey(assetGuid)) {
                 byAssetGuid[assetGuid] = ConcurrentHashMap.newKeySet()
             }
-            byAssetGuid[assetGuid]?.add(link.guid)
+            byAssetGuid[assetGuid]?.add(linkId)
         }
     }
 
@@ -74,7 +78,7 @@ object LinkCache : AssetCache<Link>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response?.approximateCount ?: 0} links, up-front..." }
-        initializeOffHeap("link", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Link, Link::class.java)
+        initializeOffHeap("link", response?.approximateCount?.toInt() ?: 0, response?.assets?.get(0) as Link, Link::class.java)
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
