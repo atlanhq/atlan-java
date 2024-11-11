@@ -5,6 +5,7 @@ version = versionId
 
 plugins {
     id("com.atlan.java")
+    id("com.adarshr.test-logger")
     alias(libs.plugins.shadow)
     alias(libs.plugins.git.publish)
     `maven-publish`
