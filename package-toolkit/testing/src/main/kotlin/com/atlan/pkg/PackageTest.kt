@@ -502,9 +502,7 @@ abstract class PackageTest {
         properties.teardown()
         vars.teardown()
         sysExit.teardown()
-        // Close client (to clean up any caches)
-        client.close()
-        // Close any other package runtime-managed caches (to clean them)
+        // Close any package runtime-managed caches (to clean them)
         LinkCache.close()
         GlossaryCache.close()
         CategoryCache.close()
@@ -512,5 +510,7 @@ abstract class PackageTest {
         DataDomainCache.close()
         DataProductCache.close()
         ConnectionCache.close()
+        // Close client (to clean up any caches)
+        client.close()
     }
 }

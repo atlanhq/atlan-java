@@ -23,7 +23,8 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetImportCfg>()
-        import(config, outputDirectory)
+        val results = import(config, outputDirectory)
+        results?.close()
     }
 
     fun import(

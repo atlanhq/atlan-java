@@ -19,10 +19,10 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
 
     private static final AtlanRole EXEMPLAR_ROLE = AtlanRole.builder()
             .id(UUID.randomUUID().toString())
-            .name("role_name")
+            .name("$admin")
             .clientRole(false)
-            .description("Could be empty")
-            .level("defcon5")
+            .description("Admin")
+            .level("workspace")
             .memberCount("100")
             .userCount("100")
             .build();
