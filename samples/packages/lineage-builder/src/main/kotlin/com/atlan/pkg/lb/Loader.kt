@@ -134,7 +134,8 @@ object Loader {
                     assetsBatchSize = batchSize,
                     assetsFieldSeparator = fieldSeparator.toString(),
                 )
-            Importer.import(lineageConfig, outputDirectory)
+            Importer.import(lineageConfig, outputDirectory)?.close()
+            assetResults?.close()
         }
     }
 
