@@ -96,11 +96,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="../model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></code></div>
-<div class="col-second even-row-color"><code><a href="#EXEMPLAR_COLUMN" class="member-name-link">EXEMPLAR_COLUMN</a></code></div>
+<div class="col-first even-row-color"><code>final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_INIT_SIZE" class="member-name-link">DEFAULT_INIT_SIZE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final net.openhft.chronicle.map.ChronicleMap&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#internal" class="member-name-link">internal</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="../model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#EXEMPLAR_COLUMN" class="member-name-link">EXEMPLAR_COLUMN</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -159,26 +159,36 @@ loadScripts(document, 'script');</script>
 <div class="block">Check whether the cache has an object in it with the provided UUID.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copy()" class="member-name-link">copy</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copy(boolean)" class="member-name-link">copy</a><wbr>(boolean&nbsp;closeOriginal)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Create a copy of this cache and return it.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extendedWith(com.atlan.cache.OffHeapAssetCache)" class="member-name-link">extendedWith</a><wbr>(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#entrySet()" class="member-name-link">entrySet</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Extend this cache with all the entries from the provided cache.</div>
+<div class="block">Retrieve all entries held in the cache.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extendedWith(com.atlan.cache.OffHeapAssetCache,java.util.function.Predicate)" class="member-name-link">extendedWith</a><wbr>(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extendedWith(com.atlan.cache.OffHeapAssetCache,boolean)" class="member-name-link">extendedWith</a><wbr>(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
+ boolean&nbsp;closeOriginal)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Extend this cache with all the entries from the provided cache.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#extendedWith(com.atlan.cache.OffHeapAssetCache,boolean,java.util.function.Predicate)" class="member-name-link">extendedWith</a><wbr>(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
+ boolean&nbsp;closeOriginal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Extend this cache with all the entries from the provided cache.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve an object from the cache by its ID.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSize()" class="member-name-link">getSize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -210,14 +220,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Put an object into the cache by its ID.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#putAll(com.atlan.cache.AbstractOffHeapCache)" class="member-name-link">putAll</a><wbr>(com.atlan.cache.AbstractOffHeapCache&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;other)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Put all the provided entries into the cache.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve the number of objects currently held in the cache.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve all the objects held in the cache.</div>
 </div>
 </div>
@@ -244,9 +259,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="internal">
-<h3>internal</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">net.openhft.chronicle.map.ChronicleMap&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</span>&nbsp;<span class="element-name">internal</span></div>
+<section class="detail" id="DEFAULT_INIT_SIZE">
+<h3>DEFAULT_INIT_SIZE</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_INIT_SIZE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../constant-values.html#com.atlan.cache.OffHeapAssetCache.DEFAULT_INIT_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -308,13 +331,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="copy()">
+<section class="detail" id="copy(boolean)">
 <h3>copy</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a></span>&nbsp;<span class="element-name">copy</span>()</div>
-<div class="block">Create a copy of this cache and return it.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a></span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(boolean&nbsp;closeOriginal)</span>
+                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Create a copy of this cache and return it.
+ Note: this will not close the original cache (so you need to handle that yourself!)</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>closeOriginal</code> - if true, close the original cache from which we copied after the copy is complete</dd>
 <dt>Returns:</dt>
 <dd>a copy of this cache</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if unable to close the original caches</dd>
 </dl>
 </section>
 </li>
@@ -336,27 +365,37 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="extendedWith(com.atlan.cache.OffHeapAssetCache)">
+<section class="detail" id="extendedWith(com.atlan.cache.OffHeapAssetCache,boolean)">
 <h3>extendedWith</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">extendedWith</span><wbr><span class="parameters">(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">extendedWith</span><wbr><span class="parameters">(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
+ boolean&nbsp;closeOriginal)</span>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Extend this cache with all the entries from the provided cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>closeOriginal</code> - if true, close the provided cache after the extension is complete</dd>
 <dd><code>other</code> - other cache with which to extend this one</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - on any error closing the provided cache</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="extendedWith(com.atlan.cache.OffHeapAssetCache,java.util.function.Predicate)">
+<section class="detail" id="extendedWith(com.atlan.cache.OffHeapAssetCache,boolean,java.util.function.Predicate)">
 <h3>extendedWith</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">extendedWith</span><wbr><span class="parameters">(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</span></div>
+ boolean&nbsp;closeOriginal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</span>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Extend this cache with all the entries from the provided cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>other</code> - other cache with which to extend this one</dd>
+<dd><code>closeOriginal</code> - if true, close the provided cache after the extension is complete</dd>
 <dd><code>isValid</code> - boolean method that takes a single asset as an argument, and only when evaluated to true for
                 an asset in the other cache will that entry from the other cache be included in this one</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - on any error closing the provided cache</dd>
 </dl>
 </section>
 </li>
@@ -385,6 +424,17 @@ loadScripts(document, 'script');</script>
 <dd><code>object</code> - to put into the cache</dd>
 <dt>Returns:</dt>
 <dd>any object that was previously cached with the same UUID, or null if no such UUID has ever been cached</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="putAll(com.atlan.cache.AbstractOffHeapCache)">
+<h3>putAll</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">putAll</span><wbr><span class="parameters">(com.atlan.cache.AbstractOffHeapCache&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;other)</span></div>
+<div class="block">Put all the provided entries into the cache.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>other</code> - cache of entries to add to the cache</dd>
 </dl>
 </section>
 </li>
@@ -468,6 +518,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="entrySet()">
+<h3>entrySet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&gt;</span>&nbsp;<span class="element-name">entrySet</span>()</div>
+<div class="block">Retrieve all entries held in the cache.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an entry set of all objects (and keys) held in the cache</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="isNotClosed()">
 <h3>isNotClosed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNotClosed</span>()</div>
@@ -492,6 +553,12 @@ loadScripts(document, 'script');</script>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if unable to remove the temporary file holding the cache</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getName()">
+<h3>getName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
 </section>
 </li>
 </ul>
