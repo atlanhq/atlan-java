@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.openhft.chronicle.map.ChronicleMap;
 import net.openhft.chronicle.map.ChronicleMapBuilder;
@@ -29,6 +30,9 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     volatile ChronicleMap<UUID, T> internal;
     private final long maxSize;
 
+    @Getter
+    private final String name;
+
     /**
      * Construct new object cache.
      *
@@ -39,6 +43,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      */
     public AbstractOffHeapCache(String name, int anticipatedSize, T exemplar, Class<T> valueClass) {
         try {
+            this.name = name;
             backingStore = Files.createTempFile(name, ".dat");
             int initSize = Math.max(DEFAULT_INIT_SIZE, anticipatedSize);
             internal = createNew(name, exemplar, valueClass, initSize, backingStore);
@@ -100,13 +105,13 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     /**
      * Put all the provided entries into the cache.
      *
-     * @param map of entries to add to the cache
+     * @param other cache of entries to add to the cache
      */
-    protected void putAll(Map<UUID, T> map) {
-        if (internal.size() + map.size() >= (maxSize * FILL_FACTOR)) {
-            autoExtend(internal.size() + map.size());
+    protected void putAll(AbstractOffHeapCache<T> other) {
+        if (internal.size() + other.internal.size() >= (maxSize * FILL_FACTOR)) {
+            autoExtend(internal.size() + other.internal.size());
         }
-        internal.putAll(map);
+        internal.putAll(other.internal);
     }
 
     /**

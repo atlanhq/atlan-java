@@ -64,8 +64,8 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
      * @throws IOException if unable to close the original caches
      */
     public OffHeapAssetCache copy(boolean closeOriginal) throws IOException {
-        OffHeapAssetCache copy = new OffHeapAssetCache(this.internal.name(), this.internal.size());
-        copy.internal.putAll(this.internal);
+        OffHeapAssetCache copy = new OffHeapAssetCache(this.getName(), this.size());
+        copy.putAll(this);
         if (closeOriginal) {
             this.close();
         }
@@ -84,9 +84,9 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
         if (other == null) {
             return this;
         }
-        OffHeapAssetCache combined = new OffHeapAssetCache(this.internal.name(), this.size() + other.size());
-        combined.putAll(this.internal);
-        combined.putAll(other.internal);
+        OffHeapAssetCache combined = new OffHeapAssetCache(this.getName(), this.size() + other.size());
+        combined.putAll(this);
+        combined.putAll(other);
         IOException exception = null;
         try {
             this.close();
