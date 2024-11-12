@@ -230,7 +230,7 @@ object Importer {
                 null
             }
 
-        ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+        ImportResults.getAllModifiedAssets(true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
             val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
             DeltaProcessor(
                 semantic = deltaSemantic,
