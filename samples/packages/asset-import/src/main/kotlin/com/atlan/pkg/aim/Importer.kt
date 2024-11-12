@@ -5,7 +5,13 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
+import com.atlan.pkg.cache.CategoryCache
+import com.atlan.pkg.cache.ConnectionCache
+import com.atlan.pkg.cache.DataDomainCache
+import com.atlan.pkg.cache.DataProductCache
+import com.atlan.pkg.cache.GlossaryCache
 import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter.Companion.attributesToClear
 import com.atlan.pkg.serde.csv.ImportResults
@@ -116,7 +122,7 @@ object Importer {
                         glossariesFieldSeparator,
                     )
                 val resultsTerm = termImporter.import()
-                resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
+                ImportResults.combineAll(true, resultsGlossary, resultsCategory, resultsTerm)
             } else {
                 null
             }
@@ -195,17 +201,17 @@ object Importer {
                     LinkCache.preload()
                 }
                 val resultsProduct = productImporter.import()
-                resultsDomain?.combinedWith(resultsProduct)
+                ImportResults.combineAll(true, resultsDomain, resultsProduct)
             } else {
                 null
             }
 
-        Utils.updateConnectionCache(
-            added = ImportResults.getAllModifiedAssets(resultsAssets),
-            fallback = outputDirectory,
-        )
-
-        val resultsAssetsGTC = resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
-        return resultsDDP?.combinedWith(resultsAssetsGTC) ?: resultsAssetsGTC
+        ImportResults.getAllModifiedAssets(false, resultsAssets).use { allModified ->
+            Utils.updateConnectionCache(
+                added = allModified,
+                fallback = outputDirectory,
+            )
+        }
+        return ImportResults.combineAll(true, resultsGTC, resultsDDP, resultsAssets)
     }
 }

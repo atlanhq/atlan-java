@@ -19,15 +19,16 @@ import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
-object ConnectionCache : AssetCache<Connection>() {
+object ConnectionCache : AssetCache<Connection>(
+    "connection",
+    Connection.creator("Sample Connection", AtlanConnectorType.SNOWFLAKE)
+        .description("Could be empty")
+        .build(),
+    Connection::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
-
-    private val EXEMPLAR_CONNECTION =
-        Connection.creator("Sample Connection", AtlanConnectorType.SNOWFLAKE)
-            .description("Could be empty")
-            .build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -144,7 +145,7 @@ object ConnectionCache : AssetCache<Connection>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
-        initializeOffHeap("connection", response, EXEMPLAR_CONNECTION)
+        resetOffHeap(response)
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

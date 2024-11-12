@@ -17,9 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RoleCache extends AbstractMassCache<AtlanRole> {
 
+    private static final AtlanRole EXEMPLAR_ROLE = AtlanRole.builder()
+            .id(UUID.randomUUID().toString())
+            .name("role_name")
+            .clientRole(false)
+            .description("Could be empty")
+            .level("defcon5")
+            .memberCount("100")
+            .userCount("100")
+            .build();
+
     private final RolesEndpoint rolesEndpoint;
 
     public RoleCache(RolesEndpoint rolesEndpoint) {
+        super("role", EXEMPLAR_ROLE, AtlanRole.class);
         this.rolesEndpoint = rolesEndpoint;
     }
 
@@ -33,8 +44,7 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
         if (response == null || response.getRecords().isEmpty()) {
             throw new NotFoundException(ErrorCode.ROLES_NOT_FOUND);
         }
-        initializeOffHeap(
-                "role", response.getRecords().size(), response.getRecords().get(0), AtlanRole.class);
+        setParameters(response.getRecords().size(), response.getRecords().get(0));
         cacheResponse(response);
     }
 

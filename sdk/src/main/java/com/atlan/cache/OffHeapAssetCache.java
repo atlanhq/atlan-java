@@ -41,7 +41,7 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
      * @param exemplar sample asset value for what will be stored in the cache
      */
     public OffHeapAssetCache(String name, int anticipatedSize, Asset exemplar) {
-        super(name, anticipatedSize > 0 ? anticipatedSize : 1_000_000, exemplar, Asset.class);
+        super(name, anticipatedSize, exemplar, Asset.class);
     }
 
     /**
@@ -57,12 +57,18 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
 
     /**
      * Create a copy of this cache and return it.
+     * Note: this will not close the original cache (so you need to handle that yourself!)
      *
+     * @param closeOriginal if true, close the original cache from which we copied after the copy is complete
      * @return a copy of this cache
+     * @throws IOException if unable to close the original caches
      */
-    public OffHeapAssetCache copy() {
+    public OffHeapAssetCache copy(boolean closeOriginal) throws IOException {
         OffHeapAssetCache copy = new OffHeapAssetCache(this.internal.name(), this.internal.size());
         copy.internal.putAll(this.internal);
+        if (closeOriginal) {
+            this.close();
+        }
         return copy;
     }
 
@@ -79,8 +85,8 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
             return this;
         }
         OffHeapAssetCache combined = new OffHeapAssetCache(this.internal.name(), this.size() + other.size());
-        combined.internal.putAll(this.internal);
-        combined.internal.putAll(other.internal);
+        combined.putAll(this.internal);
+        combined.putAll(other.internal);
         IOException exception = null;
         try {
             this.close();
@@ -105,11 +111,16 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
     /**
      * Extend this cache with all the entries from the provided cache.
      *
+     * @param closeOriginal if true, close the provided cache after the extension is complete
      * @param other other cache with which to extend this one
+     * @throws IOException on any error closing the provided cache
      */
-    public void extendedWith(OffHeapAssetCache other) {
+    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal) throws IOException {
         if (other != null) {
             this.internal.putAll(other.internal);
+            if (closeOriginal) {
+                other.close();
+            }
         }
     }
 
@@ -117,15 +128,21 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
      * Extend this cache with all the entries from the provided cache.
      *
      * @param other other cache with which to extend this one
+     * @param closeOriginal if true, close the provided cache after the extension is complete
      * @param isValid boolean method that takes a single asset as an argument, and only when evaluated to true for
      *                an asset in the other cache will that entry from the other cache be included in this one
+     * @throws IOException on any error closing the provided cache
      */
-    public void extendedWith(OffHeapAssetCache other, Predicate<Asset> isValid) {
+    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal, Predicate<Asset> isValid)
+            throws IOException {
         if (other != null) {
             for (Asset one : other.values()) {
                 if (isValid.test(one)) {
                     put(one.getGuid(), one);
                 }
+            }
+            if (closeOriginal) {
+                other.close();
             }
         }
     }

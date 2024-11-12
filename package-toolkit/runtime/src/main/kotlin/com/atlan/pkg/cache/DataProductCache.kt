@@ -18,21 +18,22 @@ import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object DataProductCache : AssetCache<DataProduct>() {
+object DataProductCache : AssetCache<DataProduct>(
+    "dataproduct",
+    DataProduct.creator(
+        "Product Name",
+        "ObfuscatedDomainName",
+        FluentSearch._internal()
+            .where(Asset.TYPE_NAME.`in`(listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)))
+            .where(Asset.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
+            .build(),
+    ).build(),
+    DataProduct::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
     private val includesOnRelations: List<AtlanField> = listOf(DataDomain.NAME)
-
-    private val EXEMPLAR_PRODUCT =
-        DataProduct.creator(
-            "Product Name",
-            "ObfuscatedDomainName",
-            FluentSearch._internal()
-                .where(Asset.TYPE_NAME.`in`(listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)))
-                .where(Asset.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
-                .build(),
-        ).build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -138,7 +139,7 @@ object DataProductCache : AssetCache<DataProduct>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
-        initializeOffHeap("dataproduct", response, EXEMPLAR_PRODUCT)
+        resetOffHeap(response)
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

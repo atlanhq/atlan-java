@@ -266,14 +266,14 @@ class AssetImporter(
             }
             val typeLoadingOrder = getLoadOrder(includes.typesInFile)
             logger.info { "Asset loading order: $typeLoadingOrder" }
-            var combinedResults: ImportResults? = null
+            val individualResults = mutableListOf<ImportResults?>()
             typeLoadingOrder.forEach {
                 typeToProcess = it
                 logger.info { "--- Importing $typeToProcess assets... ---" }
                 val results = super.import(columnsToSkip)
-                combinedResults = combinedResults?.combinedWith(results) ?: results
+                individualResults.add(results)
             }
-            return combinedResults
+            return ImportResults.combineAll(true, *individualResults.toTypedArray())
         }
     }
 

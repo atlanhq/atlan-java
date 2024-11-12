@@ -48,7 +48,7 @@ object LakeTagSynchronizer {
     ): Boolean {
         val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        var combinedResults: ImportResults? = null
+        var anyFailure = false
 
         val mapper = jacksonObjectMapper()
 
@@ -97,9 +97,10 @@ object LakeTagSynchronizer {
                     assetsFieldSeparator = ",",
                 )
             val result = Importer.import(importConfig, outputDirectory)
-            combinedResults = combinedResults?.combinedWith(result) ?: result
+            anyFailure = anyFailure || result?.anyFailures ?: false
+            result?.close() // Clean up the results if we won't use them
         }
-        return !(combinedResults?.anyFailures ?: false)
+        return !anyFailure
     }
 
     private fun createMissingEnums(

@@ -175,7 +175,7 @@ class CSVReader
                     val csvChunkFiles = mutableListOf<Path>()
                     val chunkSize = totalRowCount / parallelism
                     val currentRecordCount = AtomicLong(0)
-                    var chunkPath = Files.createTempFile("chunk_0", ".csv")
+                    var chunkPath = Files.createTempFile("chunk_0_", ".csv")
                     var writer = CSVWriter(chunkPath.toString(), ',')
                     reader.stream().skip(1).forEach { row: CsvRecord ->
                         // Split the original file up into multiple smaller files for parallel-processing
@@ -187,7 +187,7 @@ class CSVReader
                                 writer.close()
                                 csvChunkFiles.add(chunkPath)
                                 currentRecordCount.set(0)
-                                chunkPath = Paths.get("tmp_${csvChunkFiles.size}.csv")
+                                chunkPath = Files.createTempFile("chunk_${csvChunkFiles.size}_", ".csv")
                                 writer = CSVWriter(chunkPath.toString(), ',')
                             }
                         }
@@ -201,37 +201,33 @@ class CSVReader
                     // Step 1: load the main assets
                     logger.info { "Loading a total of $totalRowCount assets..." }
                     val count = AtomicLong(0)
-                    ForkJoinPool.commonPool().invokeAll(
-                        csvChunkFiles.map { f ->
-                            Callable {
-                                val reader =
-                                    CsvReader.builder()
-                                        .fieldSeparator(',')
-                                        .quoteCharacter('"')
-                                        .skipEmptyLines(true)
-                                        .ignoreDifferentFieldCount(false)
-                                        .build(CsvRecordHandler(), f)
-                                reader.stream().forEach { r: CsvRecord ->
-                                    val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
-                                    if (assets != null) {
-                                        try {
-                                            val asset = assets.primary.build()
-                                            primaryBatch.add(asset)
-                                            Utils.logProgress(count, totalRowCount, logger, batchSize)
-                                            if (assets.related.isNotEmpty()) {
-                                                relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
-                                            }
-                                            if (assets.delete.isNotEmpty()) {
-                                                deferDeletes[asset.guid] = assets.delete
-                                            }
-                                        } catch (e: AtlanException) {
-                                            logger.error("Unable to load batch.", e)
-                                        }
+                    csvChunkFiles.parallelStream().forEach { f ->
+                        val reader =
+                            CsvReader.builder()
+                                .fieldSeparator(',')
+                                .quoteCharacter('"')
+                                .skipEmptyLines(true)
+                                .ignoreDifferentFieldCount(false)
+                                .build(CsvRecordHandler(), f)
+                        reader.stream().forEach { r: CsvRecord ->
+                            val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
+                            if (assets != null) {
+                                try {
+                                    val asset = assets.primary.build()
+                                    primaryBatch.add(asset)
+                                    Utils.logProgress(count, totalRowCount, logger, batchSize)
+                                    if (assets.related.isNotEmpty()) {
+                                        relatedHolds[asset.guid] = RelatedAssetHold(asset, assets.related)
                                     }
+                                    if (assets.delete.isNotEmpty()) {
+                                        deferDeletes[asset.guid] = assets.delete
+                                    }
+                                } catch (e: AtlanException) {
+                                    logger.error("Unable to load batch.", e)
                                 }
                             }
-                        },
-                    )
+                        }
+                    }
                     // Delete temp files
                     csvChunkFiles.forEach { it.toFile().delete() }
                     primaryBatch.flush()
@@ -329,30 +325,36 @@ class CSVReader
                         Utils.logProgress(totalScanned, totalToScan, logger, batchSize)
                     }
                     logger.info { "Total READMEs deleted: $totalDeleted" }
+                    // Note: it looks weird that we combineAll here, but this is necessary to COPY contents of
+                    // the details, as the originals will be auto-closed prior to returning
                     return ImportResults(
                         someFailure,
-                        ImportResults.Details(
-                            primaryBatch.resolvedGuids,
-                            primaryBatch.resolvedQualifiedNames,
-                            primaryBatch.created,
-                            primaryBatch.updated,
-                            primaryBatch.restored,
-                            primaryBatch.skipped,
-                            primaryBatch.numCreated,
-                            primaryBatch.numUpdated,
-                            primaryBatch.numRestored,
-                        ),
-                        ImportResults.Details(
-                            relatedBatch.resolvedGuids,
-                            primaryBatch.resolvedQualifiedNames,
-                            relatedBatch.created,
-                            relatedBatch.updated,
-                            relatedBatch.restored,
-                            relatedBatch.skipped,
-                            relatedBatch.numCreated,
-                            relatedBatch.numUpdated,
-                            relatedBatch.numRestored,
-                        ),
+                        ImportResults.Details.combineAll(
+                            true,
+                            ImportResults.Details(
+                                primaryBatch.resolvedGuids,
+                                primaryBatch.resolvedQualifiedNames,
+                                primaryBatch.created,
+                                primaryBatch.updated,
+                                primaryBatch.restored,
+                                primaryBatch.skipped,
+                                primaryBatch.numCreated,
+                                primaryBatch.numUpdated,
+                                primaryBatch.numRestored
+                            )),
+                        ImportResults.Details.combineAll(
+                            true,
+                            ImportResults.Details(
+                                relatedBatch.resolvedGuids,
+                                primaryBatch.resolvedQualifiedNames,
+                                relatedBatch.created,
+                                relatedBatch.updated,
+                                relatedBatch.restored,
+                                relatedBatch.skipped,
+                                relatedBatch.numCreated,
+                                relatedBatch.numUpdated,
+                                relatedBatch.numRestored,
+                            )),
                     )
                 }
             }

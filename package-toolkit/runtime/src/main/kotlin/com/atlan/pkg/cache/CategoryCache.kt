@@ -14,20 +14,21 @@ import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 
-object CategoryCache : AssetCache<GlossaryCategory>() {
+object CategoryCache : AssetCache<GlossaryCategory>(
+    "category",
+    GlossaryCategory.creator("Category Name", "ObfuscatedGlossaryName")
+        .userDescription("Could be empty")
+        .build(),
+    GlossaryCategory::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
 
-    private val EXEMPLAR_CATEGORY =
-        GlossaryCategory.creator("Category Name", "ObfuscatedGlossaryName")
-            .userDescription("Could be empty")
-            .build()
-
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
-        throw IllegalStateException("Category cache can only be preloaded en-masse, not retrieved category-by-category.")
+        // Do nothing: category cache can only be preloaded en-masse, not retrieved category-by-category.
     }
 
     /** {@inheritDoc} */
@@ -162,7 +163,7 @@ object CategoryCache : AssetCache<GlossaryCategory>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} categories, up-front..." }
-        initializeOffHeap("category", response, EXEMPLAR_CATEGORY)
+        resetOffHeap(response)
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)

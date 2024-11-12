@@ -17,6 +17,13 @@ import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.HttpClient
+import com.atlan.pkg.cache.CategoryCache
+import com.atlan.pkg.cache.ConnectionCache
+import com.atlan.pkg.cache.DataDomainCache
+import com.atlan.pkg.cache.DataProductCache
+import com.atlan.pkg.cache.GlossaryCache
+import com.atlan.pkg.cache.LinkCache
+import com.atlan.pkg.cache.TermCache
 import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -495,5 +502,15 @@ abstract class PackageTest {
         properties.teardown()
         vars.teardown()
         sysExit.teardown()
+        // Close client (to clean up any caches)
+        client.close()
+        // Close any other package runtime-managed caches (to clean them)
+        LinkCache.close()
+        GlossaryCache.close()
+        CategoryCache.close()
+        TermCache.close()
+        DataDomainCache.close()
+        DataProductCache.close()
+        ConnectionCache.close()
     }
 }

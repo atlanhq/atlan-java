@@ -91,18 +91,14 @@ class DomainImporter(
         }
 
         logger.info { "Loading domains in multiple passes, by level..." }
-        var combinedResults: ImportResults? = null
+        val individualResults = mutableListOf<ImportResults?>()
         while (levelToProcess < maxDomainDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess domains... ---" }
             val results = super.import(colsToSkip)
-            if (combinedResults == null) {
-                combinedResults = results
-            } else if (results != null) {
-                combinedResults = combinedResults.combinedWith(results)
-            }
+            individualResults.add(results)
         }
-        return combinedResults
+        return ImportResults.combineAll(true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */
