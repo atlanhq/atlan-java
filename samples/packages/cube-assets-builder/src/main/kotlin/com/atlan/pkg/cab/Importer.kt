@@ -169,22 +169,22 @@ object Importer {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
-        val modifiedAssets = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults)
-
-        val delta =
-            DeltaProcessor(
-                semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
-                qualifiedNamePrefix = cubeQN,
-                removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-                previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-                resolver = AssetImporter,
-                preprocessedDetails = preprocessedDetails,
-                typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-                logger = logger,
-                previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
-                outputDirectory = outputDirectory,
-            )
-        delta.run(modifiedAssets)
+        ImportResults.getAllModifiedAssets(true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+            val delta =
+                DeltaProcessor(
+                    semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+                    qualifiedNamePrefix = cubeQN,
+                    removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    resolver = AssetImporter,
+                    preprocessedDetails = preprocessedDetails,
+                    typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+                    logger = logger,
+                    previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+                    outputDirectory = outputDirectory,
+                )
+            delta.run(modifiedAssets)
+        }
         return cubeQN
     }
 

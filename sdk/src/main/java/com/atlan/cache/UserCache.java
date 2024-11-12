@@ -10,7 +10,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,13 +18,31 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserCache extends AbstractMassCache<AtlanUser> {
 
-    private volatile Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
+    private static final AtlanUser EXEMPLAR_USER = AtlanUser.builder()
+            .id(UUID.randomUUID().toString())
+            .firstName("Someone")
+            .lastName("Somewhere")
+            .email("someone@somewhere.com")
+            .emailVerified(true)
+            .createdTimestamp(1234567890L)
+            .attributes(AtlanUser.UserAttributes.builder()
+                    .invitedAt(List.of("1234567890"))
+                    .invitedBy(List.of("someone-else"))
+                    .build())
+            .personas(new TreeSet<>(Set.of(AtlanUser.Persona.builder()
+                    .id(UUID.randomUUID().toString())
+                    .name("Persona Name")
+                    .displayName("Persona Name")
+                    .build())))
+            .roles(List.of("persona_E8XsHwbZ995WWk2ajSVoWN"))
+            .groupCount(10L)
+            .build();
 
     private final UsersEndpoint usersEndpoint;
     private final ApiTokensEndpoint apiTokensEndpoint;
 
     public UserCache(UsersEndpoint usersEndpoint, ApiTokensEndpoint apiTokensEndpoint) {
-        super();
+        super("user", EXEMPLAR_USER, AtlanUser.class);
         this.usersEndpoint = usersEndpoint;
         this.apiTokensEndpoint = apiTokensEndpoint;
         this.bulkRefresh.set(false); // Default to a lazily-loaded cache for users
@@ -36,37 +53,28 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
         List<AtlanUser> users = usersEndpoint.list();
-        initializeOffHeap("user", users.size(), users.get(0), AtlanUser.class);
-        mapEmailToId.clear();
+        setParameters(users.size(), users.isEmpty() ? null : users.get(0));
         for (AtlanUser user : users) {
             String userId = user.getId();
             String userName = user.getUsername();
             String email = user.getEmail();
             if (userId != null && userName != null && email != null) {
-                cache(userId, userName, user);
+                cache(userId, email, userName, user);
             }
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected void cache(String id, String name, AtlanUser object) {
-        super.cache(id, name, object);
-        if (object != null) {
-            String email = object.getEmail();
-            if (email != null) {
-                mapEmailToId.put(email, id);
-            }
-        }
-    }
-
-    private String getIdFromEmail(String email) {
-        lock.readLock().lock();
-        try {
-            return mapEmailToId.get(email);
-        } finally {
-            lock.readLock().unlock();
-        }
+    /**
+     * Retrieve a user by their email address.
+     *
+     * @param email of the user
+     * @return the user, if any exists with that email address
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the user cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no email was provided for the user to retrieve
+     */
+    public AtlanUser getByEmail(String email) throws AtlanException {
+        return getBySid(email);
     }
 
     /**
@@ -91,7 +99,8 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
                 if (token == null) {
                     throw new NotFoundException(ErrorCode.API_TOKEN_NOT_FOUND_BY_NAME, username);
                 } else {
-                    cache(token.getId(), username, null);
+                    AtlanUser api = getUserForApiToken(username, token.getId());
+                    cache(token.getId(), api.getEmail(), username, api);
                     return token.getId();
                 }
             }
@@ -124,20 +133,7 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
      * @throws InvalidRequestException if no name was provided for the user to retrieve
      */
     public String getIdForEmail(String email, boolean allowRefresh) throws AtlanException {
-        if (email != null && !email.isEmpty()) {
-            String userId = getIdFromEmail(email);
-            if (userId == null && allowRefresh) {
-                // If not found, refresh the cache and look again (could be stale)
-                cacheByEmail(email);
-                userId = getIdFromEmail(email);
-            }
-            if (userId == null) {
-                throw new NotFoundException(ErrorCode.USER_NOT_FOUND_BY_EMAIL, email);
-            }
-            return userId;
-        } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_USER_EMAIL);
-        }
+        return getIdForSid(email, allowRefresh);
     }
 
     /**
@@ -160,7 +156,8 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
             ApiToken token = apiTokensEndpoint.getByGuid(id);
             if (token != null) {
                 String username = token.getApiTokenUsername();
-                cache(id, username, null);
+                AtlanUser api = getUserForApiToken(username, token.getId());
+                cache(token.getId(), api.getEmail(), username, api);
                 return username;
             }
             // Otherwise, attempt to retrieve it and allow the cache to be refreshed when doing so
@@ -176,12 +173,13 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
             if (token == null) {
                 throw new NotFoundException(ErrorCode.API_TOKEN_NOT_FOUND_BY_NAME, username);
             } else {
-                cache(token.getId(), username, null);
+                AtlanUser api = getUserForApiToken(username, token.getId());
+                cache(token.getId(), api.getEmail(), username, api);
             }
         } else {
             AtlanUser user = usersEndpoint.getByUsername(username);
             if (user != null) {
-                cache(user.getId(), username, user);
+                cache(user.getId(), user.getEmail(), username, user);
             }
         }
     }
@@ -192,32 +190,15 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
         try {
             AtlanUser user = usersEndpoint.getByGuid(id);
             if (user != null) {
-                cache(id, user.getUsername(), user);
+                cache(id, user.getEmail(), user.getUsername(), user);
             }
         } catch (NotFoundException e) {
             // Otherwise, check if it is an API token
             ApiToken token = apiTokensEndpoint.getByGuid(id);
             if (token != null) {
-                cache(id, token.getApiTokenUsername(), null);
-            }
-        }
-    }
-
-    /**
-     * Wraps a single object lookup for the cache with necessary concurrency controls.
-     *
-     * @param email unique email address for the user
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    public void cacheByEmail(String email) throws AtlanException {
-        if (bulkRefresh.get()) {
-            refresh();
-        } else {
-            lock.writeLock().lock();
-            try {
-                lookupByEmail(email);
-            } finally {
-                lock.writeLock().unlock();
+                String username = token.getApiTokenUsername();
+                AtlanUser api = getUserForApiToken(username, token.getId());
+                cache(token.getId(), api.getEmail(), username, api);
             }
         }
     }
@@ -228,12 +209,21 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
      * @param email unique email address for the user
      * @throws AtlanException on any error communicating with Atlan
      */
-    protected void lookupByEmail(String email) throws AtlanException {
+    @Override
+    protected void lookupBySid(String email) throws AtlanException {
         List<AtlanUser> users = usersEndpoint.getByEmail(email);
         if (users != null && !users.isEmpty()) {
             for (AtlanUser user : users) {
-                cache(user.getId(), user.getUsername(), user);
+                cache(user.getId(), user.getEmail(), user.getUsername(), user);
             }
         }
+    }
+
+    private static AtlanUser getUserForApiToken(String tokenName, String id) {
+        return AtlanUser.builder()
+                .id(id)
+                .username(tokenName)
+                .email(id + "@atlan.com")
+                .build();
     }
 }

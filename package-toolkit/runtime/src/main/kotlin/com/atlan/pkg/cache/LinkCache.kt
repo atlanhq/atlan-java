@@ -5,6 +5,7 @@ package com.atlan.pkg.cache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Link
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import mu.KotlinLogging
 import java.util.UUID
@@ -14,20 +15,21 @@ import java.util.concurrent.ConcurrentHashMap
  * Cache for links, since these have purely generated qualifiedNames (a UUID).
  * Note that this entire cache relies on first being preloaded -- otherwise nothing will every be found in it.
  */
-object LinkCache : AssetCache<Link>() {
+object LinkCache : AssetCache<Link>(
+    "link",
+    Link.creator(
+        GlossaryTerm.refByQualifiedName("ObfuscatedTermName@ObfuscatedGlossaryName"),
+        "Link Title",
+        "https://example.com/somewhere/within/a/site.html",
+    ).build(),
+    Link::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val byAssetGuid: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
 
     private val includesOnResults: List<AtlanField> = listOf(Link.NAME, Link.STATUS, Link.LINK, Link.ASSET)
     private val includesOnRelations: List<AtlanField> = listOf(Asset.GUID)
-
-    private val EXEMPLAR_LINK =
-        Link.creator(
-            GlossaryTerm.refByQualifiedName("ObfuscatedTermName@ObfuscatedGlossaryName"),
-            "Link Title",
-            "https://example.com/somewhere/within/a/site.html",
-        ).build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -62,7 +64,7 @@ object LinkCache : AssetCache<Link>() {
             val ref = (link.asset as Asset).trimToReference()
             val url = link.link
             val assetGuid = link.asset.guid
-            val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).build()
+            val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).status(AtlanStatus.ACTIVE).build()
             cache(linkId, getIdentityForAsset(minimal), minimal)
             if (!byAssetGuid.containsKey(assetGuid)) {
                 byAssetGuid[assetGuid] = ConcurrentHashMap.newKeySet()
@@ -86,7 +88,7 @@ object LinkCache : AssetCache<Link>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response?.approximateCount ?: 0} links, up-front..." }
-        initializeOffHeap("link", response, EXEMPLAR_LINK)
+        resetOffHeap(response)
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

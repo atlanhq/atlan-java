@@ -14,7 +14,15 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
  */
-abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
+abstract class AssetCache<T : Asset>(
+    cacheName: String,
+    exemplar: T,
+    valueClass: Class<T>,
+) : AbstractMassCache<T>(
+        cacheName,
+        exemplar,
+        valueClass,
+    ) {
     private val logger = KotlinLogging.logger {}
 
     private var preloaded = AtomicBoolean(false)
@@ -25,25 +33,15 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
     }
 
     /**
-     * Initialize the off-heap storage for this cache.
+     * Set the parameters for the off-heap storage for this cache.
      *
-     * @param name of the cache
      * @param response containing the first asset and total count of existing assets for the cache
-     * @param exemplar representative asset to use for space estimates, in case there are currently no assets in the tenant
      */
     @Suppress("UNCHECKED_CAST")
-    fun initializeOffHeap(
-        name: String,
-        response: IndexSearchResponse?,
-        exemplar: T,
-    ) {
+    fun resetOffHeap(response: IndexSearchResponse?) {
         val first = response?.assets?.get(0)
-        initializeOffHeap(
-            name,
-            response?.approximateCount?.toInt() ?: 0,
-            if (first != null) first as T else exemplar,
-            exemplar.javaClass,
-        )
+        setParameters(response?.approximateCount?.toInt() ?: 0, if (first != null) first as T else null)
+        initializeOffHeap()
     }
 
     /**
@@ -54,7 +52,8 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
      */
     fun getByIdentity(identity: String): T? {
         if (ignore.containsKey(identity)) return null
-        if (!containsIdentity(identity)) lookupByName(identity)
+        if (!isNameKnown(identity)) lookupByName(identity)
+        if (!isNameKnown(identity)) return null
         return getByName(identity, false) as T
     }
 
@@ -66,7 +65,8 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
      */
     fun getByGuid(guid: String): T? {
         if (ignore.containsKey(guid)) return null
-        if (!containsGuid(guid)) lookupById(guid)
+        if (!isIdKnown(guid)) lookupById(guid)
+        if (!isIdKnown(guid)) return null
         return getById(guid, false) as T
     }
 
@@ -81,32 +81,26 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
     }
 
     /**
-     * Indicates whether the cache already contains an asset with a given identity.
-     *
-     * @param identity of the asset to check for presence in the cache
-     * @return true if this identity is already in the cache, false otherwise
-     */
-    fun containsIdentity(identity: String): Boolean {
-        return isNameKnown(identity)
-    }
-
-    /**
-     * Indicates whether the cache already contains an asset with a given GUID.
-     *
-     * @param guid unique identifier (GUID) of the asset to check for presence in the cache
-     * @return true if this GUID is already in the cache, false otherwise
-     */
-    fun containsGuid(guid: String): Boolean {
-        return isIdKnown(guid)
-    }
-
-    /**
      * Mark the provided asset identity as one to ignore.
      *
      * @param id any identity for the asset, either GUID or string identity
      */
     protected fun addToIgnore(id: String) {
         ignore[id] = id
+    }
+
+    /** {@inheritDoc} */
+    override fun cache(
+        id: String,
+        name: String?,
+        asset: T?,
+    ) {
+        if (asset != null && !isArchived(id, asset)) {
+            val identity = name ?: getIdentityForAsset(asset)
+            super.cache(id, identity, asset)
+            ignore.remove(id)
+            ignore.remove(name)
+        }
     }
 
     /**
@@ -150,7 +144,7 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
     @Synchronized
     fun preload() {
         if (!preloaded.get()) {
-            refreshCache()
+            refresh()
             preloaded.set(true)
         }
     }

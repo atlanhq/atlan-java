@@ -23,7 +23,8 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetImportCfg>()
-        import(config, outputDirectory)
+        val results = import(config, outputDirectory)
+        results?.close()
     }
 
     fun import(
@@ -116,7 +117,7 @@ object Importer {
                         glossariesFieldSeparator,
                     )
                 val resultsTerm = termImporter.import()
-                resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
+                ImportResults.combineAll(true, resultsGlossary, resultsCategory, resultsTerm)
             } else {
                 null
             }
@@ -195,17 +196,17 @@ object Importer {
                     LinkCache.preload()
                 }
                 val resultsProduct = productImporter.import()
-                resultsDomain?.combinedWith(resultsProduct)
+                ImportResults.combineAll(true, resultsDomain, resultsProduct)
             } else {
                 null
             }
 
-        Utils.updateConnectionCache(
-            added = ImportResults.getAllModifiedAssets(resultsAssets),
-            fallback = outputDirectory,
-        )
-
-        val resultsAssetsGTC = resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
-        return resultsDDP?.combinedWith(resultsAssetsGTC) ?: resultsAssetsGTC
+        ImportResults.getAllModifiedAssets(false, resultsAssets).use { allModified ->
+            Utils.updateConnectionCache(
+                added = allModified,
+                fallback = outputDirectory,
+            )
+        }
+        return ImportResults.combineAll(true, resultsGTC, resultsDDP, resultsAssets)
     }
 }

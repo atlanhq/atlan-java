@@ -44,6 +44,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
     private final TypeDefsEndpoint typeDefsEndpoint;
 
     public AtlanTagCache(TypeDefsEndpoint typeDefsEndpoint) {
+        super("tag", EXEMPLAR_TAG, AtlanTagDef.class);
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
@@ -59,7 +60,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
-        initializeOffHeap("tag", tags.size(), tags.isEmpty() ? EXEMPLAR_TAG : tags.get(0), AtlanTagDef.class);
+        setParameters(tags.size(), tags.isEmpty() ? null : tags.get(0));
         mapSidToSourceTagsAttrSid.clear();
         deletedSids.clear();
         deletedNames.clear();

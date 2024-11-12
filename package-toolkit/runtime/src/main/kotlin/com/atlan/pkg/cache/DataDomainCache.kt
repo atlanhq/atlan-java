@@ -11,19 +11,20 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import mu.KotlinLogging
 
-object DataDomainCache : AssetCache<DataDomain>() {
+object DataDomainCache : AssetCache<DataDomain>(
+    "datadomain",
+    DataDomain.creator("Domain Name")
+        .description("Could be empty")
+        .build(),
+    DataDomain::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
 
-    private val EXEMPLAR_DOMAIN =
-        DataDomain.creator("Domain Name")
-            .description("Could be empty")
-            .build()
-
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
-        throw IllegalStateException("Domain cache can only be preloaded en-masse, not retrieved domain-by-domain.")
+        // Do nothing: domain cache can only be preloaded en-masse, not retrieved domain-by-domain.
     }
 
     /** {@inheritDoc} */
@@ -90,7 +91,7 @@ object DataDomainCache : AssetCache<DataDomain>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} data domains, up-front..." }
-        initializeOffHeap("datadomain", response, EXEMPLAR_DOMAIN)
+        resetOffHeap(response)
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))

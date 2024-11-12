@@ -7,7 +7,6 @@ import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.lftag.model.LFTagData
-import com.atlan.pkg.serde.csv.ImportResults
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -48,7 +47,7 @@ object LakeTagSynchronizer {
     ): Boolean {
         val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
         val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        var combinedResults: ImportResults? = null
+        var anyFailure = false
 
         val mapper = jacksonObjectMapper()
 
@@ -97,9 +96,10 @@ object LakeTagSynchronizer {
                     assetsFieldSeparator = ",",
                 )
             val result = Importer.import(importConfig, outputDirectory)
-            combinedResults = combinedResults?.combinedWith(result) ?: result
+            anyFailure = anyFailure || result?.anyFailures ?: false
+            result?.close() // Clean up the results if we won't use them
         }
-        return !(combinedResults?.anyFailures ?: false)
+        return !anyFailure
     }
 
     private fun createMissingEnums(

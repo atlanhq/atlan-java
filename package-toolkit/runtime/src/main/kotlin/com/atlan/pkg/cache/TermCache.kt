@@ -12,17 +12,18 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object TermCache : AssetCache<GlossaryTerm>() {
+object TermCache : AssetCache<GlossaryTerm>(
+    "term",
+    GlossaryTerm.creator("Term Name", "ObfuscatedGlossaryName")
+        .userDescription("Could be empty")
+        .category(GlossaryCategory.refByQualifiedName("ObfuscatedCategory@ObfuscatedGlossary"))
+        .build(),
+    GlossaryTerm::class.java,
+) {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
-
-    private val EXEMPLAR_TERM =
-        GlossaryTerm.creator("Term Name", "ObfuscatedGlossaryName")
-            .userDescription("Could be empty")
-            .category(GlossaryCategory.refByQualifiedName("ObfuscatedCategory@ObfuscatedGlossary"))
-            .build()
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
@@ -120,7 +121,7 @@ object TermCache : AssetCache<GlossaryTerm>() {
                 .toRequest()
         val response = request.search()
         logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
-        initializeOffHeap("term", response, EXEMPLAR_TERM)
+        resetOffHeap(response)
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

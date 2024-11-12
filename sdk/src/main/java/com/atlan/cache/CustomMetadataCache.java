@@ -97,6 +97,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private final TypeDefsEndpoint typeDefsEndpoint;
 
     public CustomMetadataCache(TypeDefsEndpoint typeDefsEndpoint) {
+        super("cm", EXEMPLAR_CM, CustomMetadataDef.class);
         this.typeDefsEndpoint = typeDefsEndpoint;
     }
 
@@ -112,11 +113,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        initializeOffHeap(
-                "cm",
-                customMetadata.size(),
-                customMetadata.isEmpty() ? EXEMPLAR_CM : customMetadata.get(0),
-                CustomMetadataDef.class);
+        setParameters(customMetadata.size(), customMetadata.isEmpty() ? null : customMetadata.get(0));
         attrCacheBySid.clear();
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();

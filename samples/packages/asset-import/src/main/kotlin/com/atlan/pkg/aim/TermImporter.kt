@@ -70,11 +70,7 @@ class TermImporter(
             // or we will end up with duplicates (links) or extra audit log messages (tags, README)
             logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
             val secondPassResults = super.import(secondPassSkip)
-            if (secondPassResults != null) {
-                firstPassResults.combinedWith(secondPassResults)
-            } else {
-                firstPassResults
-            }
+            return ImportResults.combineAll(true, firstPassResults, secondPassResults)
         } else {
             null
         }

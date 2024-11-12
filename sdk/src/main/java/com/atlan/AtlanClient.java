@@ -9,6 +9,7 @@ import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -22,7 +23,7 @@ import lombok.Setter;
 /**
  * Configuration for the SDK against a particular Atlan tenant.
  */
-public class AtlanClient {
+public class AtlanClient implements Closeable {
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
@@ -383,5 +384,30 @@ public class AtlanClient {
         appInfo.put("version", version);
         appInfo.put("url", url);
         appInfo.put("partner_id", partnerId);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void close() throws IOException {
+        IOException e = null;
+        if (atlanTagCache != null) e = closeCache(atlanTagCache, null);
+        if (customMetadataCache != null) e = closeCache(customMetadataCache, e);
+        if (userCache != null) e = closeCache(userCache, e);
+        if (groupCache != null) e = closeCache(groupCache, e);
+        if (roleCache != null) e = closeCache(roleCache, e);
+        if (e != null) throw e;
+    }
+
+    private IOException closeCache(AbstractMassCache<?> cache, IOException previous) {
+        try {
+            cache.close();
+        } catch (IOException e) {
+            if (previous != null) {
+                previous.addSuppressed(e);
+            } else {
+                previous = e;
+            }
+        }
+        return previous;
     }
 }
