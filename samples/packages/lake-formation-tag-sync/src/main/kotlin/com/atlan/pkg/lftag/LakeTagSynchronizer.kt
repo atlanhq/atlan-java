@@ -7,7 +7,6 @@ import LakeFormationTagSyncCfg
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.lftag.model.LFTagData
-import com.atlan.pkg.serde.csv.ImportResults
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue

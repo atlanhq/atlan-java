@@ -19,10 +19,10 @@ abstract class AssetCache<T : Asset>(
     exemplar: T,
     valueClass: Class<T>,
 ) : AbstractMassCache<T>(
-    cacheName,
-    exemplar,
-    valueClass,
-) {
+        cacheName,
+        exemplar,
+        valueClass,
+    ) {
     private val logger = KotlinLogging.logger {}
 
     private var preloaded = AtomicBoolean(false)
@@ -90,7 +90,11 @@ abstract class AssetCache<T : Asset>(
     }
 
     /** {@inheritDoc} */
-    override fun cache(id: String, name: String?, asset: T?) {
+    override fun cache(
+        id: String,
+        name: String?,
+        asset: T?,
+    ) {
         if (asset != null && !isArchived(id, asset)) {
             val identity = name ?: getIdentityForAsset(asset)
             super.cache(id, identity, asset)

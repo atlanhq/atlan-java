@@ -51,7 +51,10 @@ data class ImportResults(
              * @param others the sets of details to combine
              * @return the combined set of details, as a single set of details
              */
-            fun combineAll(closeOriginal: Boolean, vararg others: Details?): Details {
+            fun combineAll(
+                closeOriginal: Boolean,
+                vararg others: Details?,
+            ): Details {
                 var totalCreated = 0
                 var totalUpdated = 0
                 var totalRestored = 0
@@ -131,7 +134,10 @@ data class ImportResults(
          * @param results one or more import results to combine
          * @return the list of assets that were either created or updated, from across all the provided results
          */
-        fun getAllModifiedAssets(closeOriginal: Boolean = true, vararg results: ImportResults?): OffHeapAssetCache {
+        fun getAllModifiedAssets(
+            closeOriginal: Boolean = true,
+            vararg results: ImportResults?,
+        ): OffHeapAssetCache {
             var totalCreated = 0
             var totalUpdated = 0
             var totalRestored = 0
@@ -168,7 +174,10 @@ data class ImportResults(
          * @param results one or more import results to combine
          * @return the combined import results
          */
-        fun combineAll(closeOriginal: Boolean = true, vararg results: ImportResults?): ImportResults? {
+        fun combineAll(
+            closeOriginal: Boolean = true,
+            vararg results: ImportResults?,
+        ): ImportResults? {
             if (results.isEmpty()) return null
             var anyFailures = false
             val primaries = mutableListOf<Details>()
@@ -180,11 +189,12 @@ data class ImportResults(
                     related.add(result.related)
                 }
             if (primaries.isEmpty()) return null
-            val ir = ImportResults(
-                anyFailures,
-                Details.combineAll(closeOriginal, *primaries.toTypedArray()),
-                Details.combineAll(closeOriginal, *related.toTypedArray()),
-            )
+            val ir =
+                ImportResults(
+                    anyFailures,
+                    Details.combineAll(closeOriginal, *primaries.toTypedArray()),
+                    Details.combineAll(closeOriginal, *related.toTypedArray()),
+                )
             results.filterNotNull()
                 .forEach { result ->
                     if (closeOriginal) {

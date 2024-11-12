@@ -22,7 +22,6 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.concurrent.Callable
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.atomic.AtomicLong
@@ -340,8 +339,9 @@ class CSVReader
                                 primaryBatch.skipped,
                                 primaryBatch.numCreated,
                                 primaryBatch.numUpdated,
-                                primaryBatch.numRestored
-                            )),
+                                primaryBatch.numRestored,
+                            ),
+                        ),
                         ImportResults.Details.combineAll(
                             true,
                             ImportResults.Details(
@@ -354,7 +354,8 @@ class CSVReader
                                 relatedBatch.numCreated,
                                 relatedBatch.numUpdated,
                                 relatedBatch.numRestored,
-                            )),
+                            ),
+                        ),
                     )
                 }
             }

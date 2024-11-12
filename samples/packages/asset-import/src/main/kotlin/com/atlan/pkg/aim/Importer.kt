@@ -5,13 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cache.CategoryCache
-import com.atlan.pkg.cache.ConnectionCache
-import com.atlan.pkg.cache.DataDomainCache
-import com.atlan.pkg.cache.DataProductCache
-import com.atlan.pkg.cache.GlossaryCache
 import com.atlan.pkg.cache.LinkCache
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter.Companion.attributesToClear
 import com.atlan.pkg.serde.csv.ImportResults
