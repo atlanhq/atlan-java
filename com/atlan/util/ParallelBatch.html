@@ -185,20 +185,6 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-last odd-row-color">
 <div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,int)" class="member-name-link">ParallelBatch</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- int&nbsp;maxSize,
- boolean&nbsp;replaceAtlanTags,
- <a href="AssetBatch.CustomMetadataHandling.html" title="enum class in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
- boolean&nbsp;captureFailures,
- boolean&nbsp;updateOnly,
- boolean&nbsp;track,
- boolean&nbsp;caseSensitive,
- <a href="../model/enums/AssetCreationHandling.html" title="enum class in com.atlan.model.enums">AssetCreationHandling</a>&nbsp;creationHandling,
- boolean&nbsp;tableViewAgnostic,
- int&nbsp;totalSize)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
-</div>
 </div>
 </section>
 </li>
@@ -488,37 +474,6 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dd><code>caseSensitive</code> - (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)</dd>
 <dd><code>creationHandling</code> - if assets are to be created, how they should be created (as full assets or only partial assets)</dd>
 <dd><code>tableViewAgnostic</code> - if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,int)">
-<h3>ParallelBatch</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ParallelBatch</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- int&nbsp;maxSize,
- boolean&nbsp;replaceAtlanTags,
- <a href="AssetBatch.CustomMetadataHandling.html" title="enum class in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
- boolean&nbsp;captureFailures,
- boolean&nbsp;updateOnly,
- boolean&nbsp;track,
- boolean&nbsp;caseSensitive,
- <a href="../model/enums/AssetCreationHandling.html" title="enum class in com.atlan.model.enums">AssetCreationHandling</a>&nbsp;creationHandling,
- boolean&nbsp;tableViewAgnostic,
- int&nbsp;totalSize)</span></div>
-<div class="block">Create a new batch of assets to be bulk-saved, in parallel (across threads).</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to Atlan</dd>
-<dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
-<dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>
-<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
-<dd><code>captureFailures</code> - when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)</dd>
-<dd><code>updateOnly</code> - when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)</dd>
-<dd><code>track</code> - when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch</dd>
-<dd><code>caseSensitive</code> - (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)</dd>
-<dd><code>creationHandling</code> - if assets are to be created, how they should be created (as full assets or only partial assets)</dd>
-<dd><code>tableViewAgnostic</code> - if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)</dd>
-<dd><code>totalSize</code> - total anticipated size of all assets to be batched</dd>
 </dl>
 </section>
 </li>

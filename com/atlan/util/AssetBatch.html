@@ -195,7 +195,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-last odd-row-color">
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,int)" class="member-name-link">AssetBatch</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache)" class="member-name-link">AssetBatch</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  int&nbsp;maxSize,
  boolean&nbsp;replaceAtlanTags,
  <a href="AssetBatch.CustomMetadataHandling.html" title="enum class in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
@@ -205,7 +205,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
  boolean&nbsp;caseInsensitive,
  <a href="../model/enums/AssetCreationHandling.html" title="enum class in com.atlan.model.enums">AssetCreationHandling</a>&nbsp;creationHandling,
  boolean&nbsp;tableViewAgnostic,
- int&nbsp;totalSize)</code></div>
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;created,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;updated,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;restored,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 </div>
@@ -488,7 +491,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,int)">
+<section class="detail" id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache)">
 <h3>AssetBatch</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AssetBatch</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  int&nbsp;maxSize,
@@ -500,7 +503,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
  boolean&nbsp;caseInsensitive,
  <a href="../model/enums/AssetCreationHandling.html" title="enum class in com.atlan.model.enums">AssetCreationHandling</a>&nbsp;creationHandling,
  boolean&nbsp;tableViewAgnostic,
- int&nbsp;totalSize)</span></div>
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;created,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;updated,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;restored,
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped)</span></div>
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -514,7 +520,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dd><code>caseInsensitive</code> - (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way</dd>
 <dd><code>creationHandling</code> - if assets are to be created, how they should be created (as full assets or only partial assets)</dd>
 <dd><code>tableViewAgnostic</code> - if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)</dd>
-<dd><code>totalSize</code> - total anticipated size of all assets to be batched</dd>
+<dd><code>created</code> - off-heap asset cache tracking assets that have been created</dd>
+<dd><code>updated</code> - off-heap asset cache tracking assets that have been updated</dd>
+<dd><code>restored</code> - off-heap asset cache tracking assets that have been restored</dd>
+<dd><code>skipped</code> - off-heap asset cache tracking assets that have been skipped</dd>
 </dl>
 </section>
 </li>
