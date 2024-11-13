@@ -655,8 +655,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             } catch (NotFoundException e) {
                 log.warn(
                         "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
-                        cmId,
-                        e);
+                        cmId);
+                log.debug("Details:", e);
             }
         }
         return map;
@@ -796,8 +796,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 } catch (NotFoundException e) {
                     log.warn(
                             "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
-                            cmId,
-                            e);
+                            cmId);
+                    log.debug("Details:", e);
                 }
             }
         }
