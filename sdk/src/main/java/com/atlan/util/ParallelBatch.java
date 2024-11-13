@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -312,14 +311,6 @@ public class ParallelBatch implements Closeable {
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
         long id = Thread.currentThread().getId();
-        // Assumes the assets are evenly-split across threads:
-        int totalPerThread;
-        if (totalSize > 0) {
-            totalPerThread =
-                    (totalSize + ForkJoinPool.getCommonPoolParallelism() - 1) / ForkJoinPool.getCommonPoolParallelism();
-        } else {
-            totalPerThread = totalSize;
-        }
         // Note: these are thread-specific operations, so not explicitly locked or synchronized
         AssetBatch batch = batchMap.computeIfAbsent(
                 id,
@@ -333,8 +324,7 @@ public class ParallelBatch implements Closeable {
                         track,
                         !caseSensitive,
                         creationHandling,
-                        tableViewAgnostic,
-                        totalPerThread));
+                        tableViewAgnostic));
         return batch.add(single);
     }
 
