@@ -1,9 +1,9 @@
 [versions]
 jackson = "2.18.1"
 slf4j = "2.0.16"
-elasticsearch = "8.15.3"
+elasticsearch = "8.16.0"
 freemarker = "2.3.33"
-classgraph = "4.8.177"
+classgraph = "4.8.179"
 testng = "7.10.2"
 log4j = "2.24.1"
 wiremock = "3.9.2"
