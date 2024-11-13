@@ -131,7 +131,7 @@ object Importer {
                 fieldSeparator,
                 assetsFailOnErrors,
             )
-        connectionImporter.import()
+        connectionImporter.import()?.close()
 
         logger.info { " --- Importing databases... ---" }
         val databaseImporter =
