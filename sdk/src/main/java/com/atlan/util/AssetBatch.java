@@ -321,10 +321,14 @@ public class AssetBatch implements Closeable {
                 caseInsensitive,
                 creationHandling,
                 tableViewAgnostic,
-                new OffHeapAssetCache(client, "created_" + Thread.currentThread().getId() + "_"),
-                new OffHeapAssetCache(client, "updated_" + Thread.currentThread().getId() + "_"),
-                new OffHeapAssetCache(client, "restored_" + Thread.currentThread().getId() + "_"),
-                new OffHeapAssetCache(client, "skipped_" + Thread.currentThread().getId() + "_"));
+                new OffHeapAssetCache(
+                        client, "created_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "updated_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "restored_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "skipped_" + Thread.currentThread().getId() + "_"));
     }
 
     /**
