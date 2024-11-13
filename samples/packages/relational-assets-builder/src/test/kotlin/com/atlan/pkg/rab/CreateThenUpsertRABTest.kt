@@ -170,6 +170,10 @@ class CreateThenUpsertRABTest : PackageTest() {
             Column.DISPLAY_NAME,
             Column.DESCRIPTION,
             Column.DATA_TYPE,
+            Column.PRECISION,
+            Column.NUMERIC_SCALE,
+            Column.MAX_LENGTH,
+            Column.RAW_DATA_TYPE_DEFINITION,
             Column.ORDER,
         )
 
@@ -365,6 +369,8 @@ class CreateThenUpsertRABTest : PackageTest() {
                     assertEquals("VARCHAR", col.dataType)
                     assertEquals(1, col.order)
                     assertEquals(displayCol1, col.displayName)
+                    assertEquals(255, col.maxLength)
+                    assertEquals("NVARCHAR(255)", col.rawDataTypeDefinition)
                 }
                 "COL2" -> {
                     assertEquals("BIGINT", col.dataType)
@@ -486,6 +492,9 @@ class CreateThenUpsertRABTest : PackageTest() {
                         assertEquals("DECIMAL", col.dataType)
                         assertEquals(2, col.order)
                         assertEquals("Test column 4", col.displayName)
+                        assertEquals(5.0, col.numericScale)
+                        assertEquals(3, col.precision)
+                        assertEquals("decimal(3,5)", col.rawDataTypeDefinition)
                     }
                 }
             }
