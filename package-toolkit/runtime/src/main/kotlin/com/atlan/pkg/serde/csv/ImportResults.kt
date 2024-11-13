@@ -64,9 +64,9 @@ data class ImportResults(
                 var totalSkipped = 0L
                 others.filterNotNull()
                     .forEach { result ->
-                        totalCreated += result.created?.size ?: 0
-                        totalUpdated += result.updated?.size() ?: 0
-                        totalRestored += result.restored?.size() ?: 0
+                        totalCreated += result.numCreated
+                        totalUpdated += result.numUpdated
+                        totalRestored += result.numRestored
                         totalSkipped += result.skipped?.size() ?: 0
                     }
                 val created = OffHeapAssetCache(client, "ir-created")
@@ -77,8 +77,8 @@ data class ImportResults(
                 val qualifiedNames = mutableMapOf<AssetIdentity, String>()
                 others.filterNotNull()
                     .forEach { result ->
-                        guidAssignments.plus(result.guidAssignments)
-                        qualifiedNames.plus(result.qualifiedNames)
+                        guidAssignments.putAll(result.guidAssignments)
+                        qualifiedNames.putAll(result.qualifiedNames)
                         created.extendedWith(result.created, closeOriginal)
                         updated.extendedWith(result.updated, closeOriginal)
                         restored.extendedWith(result.restored, closeOriginal)

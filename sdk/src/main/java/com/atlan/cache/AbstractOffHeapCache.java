@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Spliterator;
 import java.util.Spliterators;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
@@ -41,7 +40,6 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     private final AtlanClient client;
     private final Path backingStore;
     private volatile RocksDB internal;
-    private volatile AtomicLong count = new AtomicLong(0L);
 
     @Getter
     private final String name;
@@ -144,9 +142,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
         try {
             byte[] existing = internal.get(key);
             internal.put(key, value);
-            if (existing == null) {
-                count.getAndIncrement();
-            } else {
+            if (existing != null) {
                 return deserializeValue(existing);
             }
         } catch (RocksDBException e) {
@@ -193,7 +189,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      * @return the number of objects currently in the cache
      */
     public long size() {
-        return count.get();
+        return entrySet().count();
     }
 
     /**
@@ -211,7 +207,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      * @return true if the cache has no entries, otherwise false
      */
     public boolean isEmpty() {
-        return count.get() == 0;
+        return size() == 0;
     }
 
     /**
