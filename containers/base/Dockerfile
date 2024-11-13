@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2023 Atlan Pte. Ltd.
-FROM eclipse-temurin:17-jre-ubi-minimal
+FROM eclipse-temurin:17-jre-ubi9-minimal
 
 LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \
       org.opencontainers.image.source="https://github.com/atlanhq/atlan-java" \
