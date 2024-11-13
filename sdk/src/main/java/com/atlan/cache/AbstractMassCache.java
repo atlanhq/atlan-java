@@ -224,6 +224,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     protected boolean isEmpty() {
         lock.readLock().lock();
         try {
+            if (mapIdToObject == null) return true;
             return mapIdToObject.isEmpty();
         } finally {
             lock.readLock().unlock();
@@ -238,6 +239,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     protected Stream<Map.Entry<String, T>> entrySet() {
         lock.readLock().lock();
         try {
+            if (mapIdToObject == null) return Stream.empty();
             return mapIdToObject.entrySet();
         } finally {
             lock.readLock().unlock();
@@ -372,6 +374,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
         if (id == null) return null;
         lock.readLock().lock();
         try {
+            if (mapIdToObject == null) return null;
             return mapIdToObject.get(id);
         } finally {
             lock.readLock().unlock();
