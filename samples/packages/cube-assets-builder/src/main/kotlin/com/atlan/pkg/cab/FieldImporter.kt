@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
 import com.atlan.model.enums.AssetCreationHandling
@@ -130,7 +131,7 @@ class FieldImporter(
             val results = super.import(columnsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

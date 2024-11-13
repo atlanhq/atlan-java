@@ -439,15 +439,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getCreated() {
         if (!track) return null;
         if (created == null) {
-            int totalCreated = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getCreated().isNotClosed()) {
-                        totalCreated += batch.getCreated().size();
-                    }
-                }
-                created = new OffHeapAssetCache("p-created", totalCreated);
+                created = new OffHeapAssetCache(client, "p-created");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getCreated().isNotClosed()) {
                         try {
@@ -477,15 +471,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getUpdated() {
         if (!track) return null;
         if (updated == null) {
-            int totalUpdated = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getUpdated().isNotClosed()) {
-                        totalUpdated += batch.getUpdated().size();
-                    }
-                }
-                updated = new OffHeapAssetCache("p-updated", totalUpdated);
+                updated = new OffHeapAssetCache(client, "p-updated");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getUpdated().isNotClosed()) {
                         try {
@@ -516,15 +504,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getRestored() {
         if (!track) return null;
         if (restored == null) {
-            int totalRestored = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getRestored().isNotClosed()) {
-                        totalRestored += batch.getRestored().size();
-                    }
-                }
-                restored = new OffHeapAssetCache("p-restored", totalRestored);
+                restored = new OffHeapAssetCache(client, "p-restored");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getRestored().isNotClosed()) {
                         try {
@@ -585,15 +567,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getSkipped() {
         if (!track) return null;
         if (skipped == null) {
-            int totalSkipped = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getSkipped().isNotClosed()) {
-                        totalSkipped += batch.getSkipped().size();
-                    }
-                }
-                skipped = new OffHeapAssetCache("p-skipped", totalSkipped);
+                skipped = new OffHeapAssetCache(client, "p-skipped");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getSkipped().isNotClosed()) {
                         try {

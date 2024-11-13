@@ -867,8 +867,8 @@ object Utils {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add.size()),
-                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove?.size() ?: -1),
+                                    added = OffHeapAssetCache(client, connectionQN.replace('/', '_')),
+                                    removed = OffHeapAssetCache(client, connectionQN.replace('/', '_')),
                                 )
                         }
                         map[it]!!.added.add(asset)
@@ -880,8 +880,8 @@ object Utils {
                         if (!map.containsKey(it)) {
                             map[it] =
                                 CacheUpdates(
-                                    added = OffHeapAssetCache(connectionQN.replace('/', '_'), add?.size() ?: -1),
-                                    removed = OffHeapAssetCache(connectionQN.replace('/', '_'), remove.size()),
+                                    added = OffHeapAssetCache(client, connectionQN.replace('/', '_')),
+                                    removed = OffHeapAssetCache(client, connectionQN.replace('/', '_')),
                                 )
                         }
                         map[it]!!.removed.add(asset)

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
@@ -70,7 +71,7 @@ class TermImporter(
             // or we will end up with duplicates (links) or extra audit log messages (tags, README)
             logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
             val secondPassResults = super.import(secondPassSkip)
-            return ImportResults.combineAll(true, firstPassResults, secondPassResults)
+            return ImportResults.combineAll(Atlan.getDefaultClient(), true, firstPassResults, secondPassResults)
         } else {
             null
         }

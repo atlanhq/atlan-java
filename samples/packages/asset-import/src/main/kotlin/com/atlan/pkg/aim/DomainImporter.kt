@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -19,6 +20,7 @@ import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.stream.Stream
 import kotlin.math.max
 
 /**
@@ -65,7 +67,7 @@ class DomainImporter(
     private val cache = DataDomainCache
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: Collection<Asset>) {
+    override fun cacheCreated(list: Stream<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
@@ -98,7 +100,7 @@ class DomainImporter(
             val results = super.import(colsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

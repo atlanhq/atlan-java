@@ -20,8 +20,7 @@ dependencies {
     api(libs.freemarker)
     api(libs.openlineage)
     implementation(libs.classgraph)
-    implementation(platform(libs.chronicle.bom))
-    implementation(libs.chronicle.map)
+    implementation(libs.rocksdb)
     testImplementation(libs.bundles.java.test)
     testImplementation(libs.bundles.log4j)
     testImplementation(project(":mocks"))
@@ -34,7 +33,6 @@ tasks {
                 testLogging.showStandardStreams = true
             }
         }
-        jvmArgs = providers.gradleProperty("org.gradle.jvmargs").get().split(" ")
     }
     jar {
         manifest {

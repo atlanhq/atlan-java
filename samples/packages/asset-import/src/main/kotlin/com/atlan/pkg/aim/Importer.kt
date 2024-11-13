@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.Atlan
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
@@ -117,7 +118,7 @@ object Importer {
                         glossariesFieldSeparator,
                     )
                 val resultsTerm = termImporter.import()
-                ImportResults.combineAll(true, resultsGlossary, resultsCategory, resultsTerm)
+                ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsGlossary, resultsCategory, resultsTerm)
             } else {
                 null
             }
@@ -196,17 +197,17 @@ object Importer {
                     LinkCache.preload()
                 }
                 val resultsProduct = productImporter.import()
-                ImportResults.combineAll(true, resultsDomain, resultsProduct)
+                ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsDomain, resultsProduct)
             } else {
                 null
             }
 
-        ImportResults.getAllModifiedAssets(false, resultsAssets).use { allModified ->
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), false, resultsAssets).use { allModified ->
             Utils.updateConnectionCache(
                 added = allModified,
                 fallback = outputDirectory,
             )
         }
-        return ImportResults.combineAll(true, resultsGTC, resultsDDP, resultsAssets)
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsGTC, resultsDDP, resultsAssets)
     }
 }

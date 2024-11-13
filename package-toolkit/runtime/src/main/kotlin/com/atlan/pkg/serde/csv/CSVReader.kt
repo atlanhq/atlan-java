@@ -329,6 +329,7 @@ class CSVReader
                     return ImportResults(
                         someFailure,
                         ImportResults.Details.combineAll(
+                            client,
                             true,
                             ImportResults.Details(
                                 primaryBatch.resolvedGuids,
@@ -343,6 +344,7 @@ class CSVReader
                             ),
                         ),
                         ImportResults.Details.combineAll(
+                            client,
                             true,
                             ImportResults.Details(
                                 relatedBatch.resolvedGuids,

@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
+import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.Closeable
@@ -47,18 +48,20 @@ data class ImportResults(
             /**
              * Combine multiple sets of details with another.
              *
+             * @param client connectivity to the Atlan tenant
              * @param closeOriginal whether to close the original caches
              * @param others the sets of details to combine
              * @return the combined set of details, as a single set of details
              */
             fun combineAll(
+                client: AtlanClient,
                 closeOriginal: Boolean,
                 vararg others: Details?,
             ): Details {
-                var totalCreated = 0
-                var totalUpdated = 0
-                var totalRestored = 0
-                var totalSkipped = 0
+                var totalCreated = 0L
+                var totalUpdated = 0L
+                var totalRestored = 0L
+                var totalSkipped = 0L
                 others.filterNotNull()
                     .forEach { result ->
                         totalCreated += result.created?.size ?: 0
@@ -66,10 +69,10 @@ data class ImportResults(
                         totalRestored += result.restored?.size() ?: 0
                         totalSkipped += result.skipped?.size() ?: 0
                     }
-                val created = OffHeapAssetCache("ir-created", totalCreated)
-                val updated = OffHeapAssetCache("ir-updated", totalUpdated)
-                val restored = OffHeapAssetCache("ir-restored", totalRestored)
-                val skipped = OffHeapAssetCache("ir-skipped", totalSkipped)
+                val created = OffHeapAssetCache(client, "ir-created")
+                val updated = OffHeapAssetCache(client, "ir-updated")
+                val restored = OffHeapAssetCache(client, "ir-restored")
+                val skipped = OffHeapAssetCache(client, "ir-skipped")
                 val guidAssignments = mutableMapOf<String, String>()
                 val qualifiedNames = mutableMapOf<AssetIdentity, String>()
                 others.filterNotNull()
@@ -91,9 +94,9 @@ data class ImportResults(
                     updated,
                     restored,
                     skipped,
-                    totalCreated.toLong(),
-                    totalUpdated.toLong(),
-                    totalRestored.toLong(),
+                    totalCreated,
+                    totalUpdated,
+                    totalRestored,
                 )
             }
         }
@@ -130,24 +133,26 @@ data class ImportResults(
          * Retrieve all the assets that were created or updated across any of the provided
          * import results.
          *
+         * @param client connectivity to the Atlan tenant
          * @param closeOriginal whether to close the original caches
          * @param results one or more import results to combine
          * @return the list of assets that were either created or updated, from across all the provided results
          */
         fun getAllModifiedAssets(
+            client: AtlanClient,
             closeOriginal: Boolean = true,
             vararg results: ImportResults?,
         ): OffHeapAssetCache {
-            var totalCreated = 0
-            var totalUpdated = 0
-            var totalRestored = 0
+            var totalCreated = 0L
+            var totalUpdated = 0L
+            var totalRestored = 0L
             results.filterNotNull()
                 .forEach { result ->
                     totalCreated += result.primary.created?.size() ?: 0
                     totalUpdated += result.primary.updated?.size() ?: 0
                     totalRestored += result.primary.restored?.size() ?: 0
                 }
-            val combined = OffHeapAssetCache("allModified", totalCreated + totalUpdated + totalRestored)
+            val combined = OffHeapAssetCache(client, "allModified")
             results.filterNotNull()
                 .forEach { result ->
                     combined.extendedWith(result.primary.created, closeOriginal)
@@ -170,11 +175,13 @@ data class ImportResults(
         /**
          * Combine all the provided import results together.
          *
+         * @param client connectivity to the Atlan tenant
          * @param closeOriginal whether to close the original caches
          * @param results one or more import results to combine
          * @return the combined import results
          */
         fun combineAll(
+            client: AtlanClient,
             closeOriginal: Boolean = true,
             vararg results: ImportResults?,
         ): ImportResults? {
@@ -192,8 +199,8 @@ data class ImportResults(
             val ir =
                 ImportResults(
                     anyFailures,
-                    Details.combineAll(closeOriginal, *primaries.toTypedArray()),
-                    Details.combineAll(closeOriginal, *related.toTypedArray()),
+                    Details.combineAll(client, closeOriginal, *primaries.toTypedArray()),
+                    Details.combineAll(client, closeOriginal, *related.toTypedArray()),
                 )
             results.filterNotNull()
                 .forEach { result ->

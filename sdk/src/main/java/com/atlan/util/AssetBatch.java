@@ -361,11 +361,15 @@ public class AssetBatch implements Closeable {
         this.updateOnly = updateOnly;
         this.caseInsensitive = caseInsensitive;
         this.tableViewAgnostic = tableViewAgnostic;
-        this.created = new OffHeapAssetCache("created" + Thread.currentThread().getId(), totalSize);
-        this.updated = new OffHeapAssetCache("updated" + Thread.currentThread().getId(), totalSize);
-        this.restored =
-                new OffHeapAssetCache("restored" + Thread.currentThread().getId(), totalSize);
-        this.skipped = new OffHeapAssetCache("skipped" + Thread.currentThread().getId(), totalSize);
+        // TODO: do we need these here anymore, or can we pass them in instead?
+        this.created =
+                new OffHeapAssetCache(client, "created" + Thread.currentThread().getId());
+        this.updated =
+                new OffHeapAssetCache(client, "updated" + Thread.currentThread().getId());
+        this.restored = new OffHeapAssetCache(
+                client, "restored" + Thread.currentThread().getId());
+        this.skipped =
+                new OffHeapAssetCache(client, "skipped" + Thread.currentThread().getId());
     }
 
     /**

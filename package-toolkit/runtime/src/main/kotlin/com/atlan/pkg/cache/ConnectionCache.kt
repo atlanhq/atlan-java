@@ -19,13 +19,7 @@ import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
-object ConnectionCache : AssetCache<Connection>(
-    "connection",
-    Connection.creator("Sample Connection", AtlanConnectorType.SNOWFLAKE)
-        .description("Could be empty")
-        .build(),
-    Connection::class.java,
-) {
+object ConnectionCache : AssetCache<Connection>("connection") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
@@ -138,14 +132,9 @@ object ConnectionCache : AssetCache<Connection>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            Connection.select()
-                .includesOnResults(includesOnResults)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
-        resetOffHeap(response)
+        val count = Connection.select().count()
+        logger.info { "Caching all $count connections, up-front..." }
+        resetOffHeap()
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

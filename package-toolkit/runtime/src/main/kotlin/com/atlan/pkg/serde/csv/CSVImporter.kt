@@ -14,6 +14,7 @@ import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch
 import mu.KLogger
 import java.lang.reflect.InvocationTargetException
+import java.util.stream.Stream
 import kotlin.system.exitProcess
 
 /**
@@ -113,7 +114,7 @@ abstract class CSVImporter(
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
-            cacheCreated(results.primary.created?.values() ?: listOf())
+            cacheCreated(results.primary.created?.values() ?: Stream.empty())
             return results
         }
     }

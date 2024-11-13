@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.csv
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
+import java.util.stream.Stream
 
 /**
  * Interface to generate an asset object from a row of string values.
@@ -60,7 +61,7 @@ interface AssetGenerator {
      *
      * @param list of assets that were created (minimal info for each)
      */
-    fun cacheCreated(list: Collection<Asset>) {
+    fun cacheCreated(list: Stream<Asset>) {
         // Do nothing, by default
     }
 }

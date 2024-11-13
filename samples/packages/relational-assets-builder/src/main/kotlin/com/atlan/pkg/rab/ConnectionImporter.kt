@@ -10,6 +10,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
+import java.util.stream.Stream
 
 /**
  * Import connections into Atlan from a provided CSV file.
@@ -75,7 +76,7 @@ class ConnectionImporter(
     }
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: Collection<Asset>) {
+    override fun cacheCreated(list: Stream<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity

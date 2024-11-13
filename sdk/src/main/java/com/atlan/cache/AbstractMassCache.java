@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,10 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractMassCache<T extends AtlanObject> implements Closeable {
 
+    private final AtlanClient client;
     private final String cacheName;
-    private volatile T exemplar;
-    private final Class<T> valueClass;
-    private volatile int totalCapacity = -1;
 
     private volatile Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private volatile Map<String, String> mapNameToId = new ConcurrentHashMap<>();
@@ -46,34 +46,17 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      * Note: ideally, before using, also set the total capacity.
      *
      * @param cacheName name of the cache
-     * @param exemplar example object to estimate overall size needed for cache
-     * @param valueClass class of all objects in the cache
      */
-    public AbstractMassCache(String cacheName, T exemplar, Class<T> valueClass) {
+    public AbstractMassCache(AtlanClient client, String cacheName) {
+        this.client = client;
         this.cacheName = cacheName;
-        this.exemplar = exemplar;
-        this.valueClass = valueClass;
-    }
-
-    /**
-     * Set up the sizing parameters of the cache.
-     * Note: this should be called before ANY call to the {@code cache} method, or it will have no effect!
-     *
-     * @param capacity anticipated maximum capacity of the cache
-     * @param exemplar example object to estimate overall size needed for cache
-     */
-    protected void setParameters(int capacity, T exemplar) {
-        this.totalCapacity = capacity;
-        if (exemplar != null) {
-            this.exemplar = exemplar;
-        }
     }
 
     /**
      * Initializes a new off-heap cache for the objects themselves.
      * This will be automatically called either when an entry is first added or the cache as a whole is refreshed.
      */
-    protected void initializeOffHeap() {
+    protected void resetOffHeap() {
         if (mapIdToObject != null) {
             try {
                 mapIdToObject.close();
@@ -81,7 +64,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
                 throw new IllegalStateException("Unable to close existing off-heap cache.", e);
             }
         }
-        mapIdToObject = new AbstractOffHeapCache<>(cacheName, totalCapacity, exemplar, valueClass);
+        mapIdToObject = new AbstractOffHeapCache<>(client, cacheName);
     }
 
     /**
@@ -211,7 +194,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
         mapNameToId.put(name, id);
         if (object != null) {
             if (mapIdToObject == null) {
-                initializeOffHeap();
+                resetOffHeap();
             }
             mapIdToObject.put(id, object);
         }
@@ -252,7 +235,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      *
      * @return an iterable set of entries of objects that are cached
      */
-    protected Set<Map.Entry<UUID, T>> entrySet() {
+    protected Stream<Map.Entry<String, T>> entrySet() {
         lock.readLock().lock();
         try {
             return mapIdToObject.entrySet();

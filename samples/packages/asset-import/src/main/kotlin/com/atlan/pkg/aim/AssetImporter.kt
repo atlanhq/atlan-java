@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
@@ -273,7 +274,7 @@ class AssetImporter(
                 val results = super.import(columnsToSkip)
                 individualResults.add(results)
             }
-            return ImportResults.combineAll(true, *individualResults.toTypedArray())
+            return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
         }
     }
 
