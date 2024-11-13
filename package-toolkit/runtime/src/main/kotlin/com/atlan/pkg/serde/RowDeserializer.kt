@@ -117,37 +117,53 @@ class RowDeserializer(
         return null
     }
 
+    /**
+     * Retrieve the decoded cell value for the specified field -- AFTER it has been transformed.
+     *
+     * @param fieldName of the field to retrieve
+     * @return the decoded value for that cell
+     */
     fun getValue(fieldName: String): Any? {
+        val rValue = getRawValue(fieldName)
+        return if (fieldName.contains(CM_HEADING_DELIMITER)) {
+            // Custom metadata field...
+            val cache = Atlan.getDefaultClient().customMetadataCache
+            val tokens = fieldName.split(CM_HEADING_DELIMITER)
+            val setName = tokens[0]
+            val attrName = tokens[1]
+            val attrId = cache.getAttrIdForName(setName, attrName)
+            if (attrId != null) {
+                val attrDef = cache.getAttributeDef(attrId)
+                return FieldSerde.getCustomMetadataValueFromString(attrDef, rValue)
+            } else {
+                // If we cannot translate via the attribute def, return it as-is
+                rValue
+            }
+        } else {
+            // "Normal" field...
+            val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
+            if (setter != null) {
+                FieldSerde.getValueFromCell(rValue, setter, logger)
+            } else {
+                // If this isn't a "real" field, return it as a simple string
+                rValue
+            }
+        }
+    }
+
+    /**
+     * Retrieve the raw cell value for the specified field -- without ANY decoding applied to it.
+     *
+     * @param fieldName of the field to retrieve
+     * @return the raw, un-decoded value for that cell
+     */
+    fun getRawValue(fieldName: String): String {
         if (fieldName.isNotBlank()) {
             val i = heading.indexOf(fieldName)
             if (i >= 0) {
-                val rValue = CSVXformer.trimWhitespace(row[i])
-                return if (fieldName.contains(CM_HEADING_DELIMITER)) {
-                    // Custom metadata field...
-                    val cache = Atlan.getDefaultClient().customMetadataCache
-                    val tokens = fieldName.split(CM_HEADING_DELIMITER)
-                    val setName = tokens[0]
-                    val attrName = tokens[1]
-                    val attrId = cache.getAttrIdForName(setName, attrName)
-                    if (attrId != null) {
-                        val attrDef = cache.getAttributeDef(attrId)
-                        return FieldSerde.getCustomMetadataValueFromString(attrDef, rValue)
-                    } else {
-                        // If we cannot translate via the attribute def, return it as-is
-                        rValue
-                    }
-                } else {
-                    // "Normal" field...
-                    val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
-                    if (setter != null) {
-                        FieldSerde.getValueFromCell(rValue, setter, logger)
-                    } else {
-                        // If this isn't a "real" field, return it as a simple string
-                        rValue
-                    }
-                }
+                return CSVXformer.trimWhitespace(row[i])
             }
         }
-        return null
+        return ""
     }
 }
