@@ -109,7 +109,7 @@ object Importer {
                 true,
                 fieldSeparator,
             )
-        connectionImporter.import()
+        connectionImporter.import()?.close()
 
         logger.info { " --- Importing cubes... ---" }
         val cubeImporter =
@@ -166,7 +166,7 @@ object Importer {
 
         // Retrieve the qualifiedName of the cube that was imported
         val cubeQN =
-            cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
+            cubeImporterResults?.primary?.guidAssignments?.values?.firstOrNull()?.let {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
