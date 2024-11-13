@@ -60,23 +60,11 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
         this.client = client;
         this.name = name;
         try (Options options = new Options().setCreateIfMissing(true)) {
-            backingStore = Files.createTempDirectory("rdb_" + name);
-            internal = createNew(backingStore, options);
+            backingStore = Files.createTempDirectory("rdb_" + name + "_");
+            internal = RocksDB.open(options, backingStore.toString());
         } catch (IOException | RocksDBException e) {
             throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
         }
-    }
-
-    /**
-     * Create a new off-heap object cache.
-     *
-     * @param store where to store it on disk
-     * @param options options to use for creating it
-     * @return the new off-heap cache, ready-to-use
-     * @throws RocksDBException on any error creating the new off-heap cache
-     */
-    private RocksDB createNew(Path store, Options options) throws RocksDBException {
-        return RocksDB.open(options, store.toString());
     }
 
     private static byte[] serializeKey(String key) {
