@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -55,9 +54,6 @@ public class ParallelBatch implements Closeable {
 
     /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
     private final boolean tableViewAgnostic;
-
-    /** Total anticipated size of all assets to be batched. */
-    private final int totalSize;
 
     private final ConcurrentHashMap<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
     private final List<AssetBatch.FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
@@ -249,47 +245,6 @@ public class ParallelBatch implements Closeable {
             boolean caseSensitive,
             AssetCreationHandling creationHandling,
             boolean tableViewAgnostic) {
-        this(
-                client,
-                maxSize,
-                replaceAtlanTags,
-                customMetadataHandling,
-                captureFailures,
-                updateOnly,
-                track,
-                caseSensitive,
-                creationHandling,
-                tableViewAgnostic,
-                -1);
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
-     *
-     * @param client connectivity to Atlan
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
-     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
-     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
-     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
-     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
-     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param totalSize total anticipated size of all assets to be batched
-     */
-    public ParallelBatch(
-            AtlanClient client,
-            int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
-            boolean captureFailures,
-            boolean updateOnly,
-            boolean track,
-            boolean caseSensitive,
-            AssetCreationHandling creationHandling,
-            boolean tableViewAgnostic,
-            int totalSize) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -300,7 +255,6 @@ public class ParallelBatch implements Closeable {
         this.updateOnly = updateOnly;
         this.caseSensitive = caseSensitive;
         this.tableViewAgnostic = tableViewAgnostic;
-        this.totalSize = totalSize;
     }
 
     /**
@@ -312,14 +266,6 @@ public class ParallelBatch implements Closeable {
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
         long id = Thread.currentThread().getId();
-        // Assumes the assets are evenly-split across threads:
-        int totalPerThread;
-        if (totalSize > 0) {
-            totalPerThread =
-                    (totalSize + ForkJoinPool.getCommonPoolParallelism() - 1) / ForkJoinPool.getCommonPoolParallelism();
-        } else {
-            totalPerThread = totalSize;
-        }
         // Note: these are thread-specific operations, so not explicitly locked or synchronized
         AssetBatch batch = batchMap.computeIfAbsent(
                 id,
@@ -333,8 +279,7 @@ public class ParallelBatch implements Closeable {
                         track,
                         !caseSensitive,
                         creationHandling,
-                        tableViewAgnostic,
-                        totalPerThread));
+                        tableViewAgnostic));
         return batch.add(single);
     }
 
@@ -439,15 +384,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getCreated() {
         if (!track) return null;
         if (created == null) {
-            int totalCreated = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getCreated().isNotClosed()) {
-                        totalCreated += batch.getCreated().size();
-                    }
-                }
-                created = new OffHeapAssetCache("p-created", totalCreated);
+                created = new OffHeapAssetCache(client, "p-created");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getCreated().isNotClosed()) {
                         try {
@@ -477,15 +416,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getUpdated() {
         if (!track) return null;
         if (updated == null) {
-            int totalUpdated = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getUpdated().isNotClosed()) {
-                        totalUpdated += batch.getUpdated().size();
-                    }
-                }
-                updated = new OffHeapAssetCache("p-updated", totalUpdated);
+                updated = new OffHeapAssetCache(client, "p-updated");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getUpdated().isNotClosed()) {
                         try {
@@ -516,15 +449,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getRestored() {
         if (!track) return null;
         if (restored == null) {
-            int totalRestored = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getRestored().isNotClosed()) {
-                        totalRestored += batch.getRestored().size();
-                    }
-                }
-                restored = new OffHeapAssetCache("p-restored", totalRestored);
+                restored = new OffHeapAssetCache(client, "p-restored");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getRestored().isNotClosed()) {
                         try {
@@ -585,15 +512,9 @@ public class ParallelBatch implements Closeable {
     public OffHeapAssetCache getSkipped() {
         if (!track) return null;
         if (skipped == null) {
-            int totalSkipped = 0;
             lock.writeLock().lock();
             try {
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getSkipped().isNotClosed()) {
-                        totalSkipped += batch.getSkipped().size();
-                    }
-                }
-                skipped = new OffHeapAssetCache("p-skipped", totalSkipped);
+                skipped = new OffHeapAssetCache(client, "p-skipped");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getSkipped().isNotClosed()) {
                         try {

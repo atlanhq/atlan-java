@@ -8,7 +8,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.util.AssetBatch
 import com.atlan.util.AssetBatch.AssetIdentity
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
@@ -19,6 +18,7 @@ import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
+import kotlin.streams.asSequence
 
 /**
  * Utility class to help pre-calculate a delta between full-load files.
@@ -48,7 +48,7 @@ class AssetRemover(
 ) {
     private val client = Atlan.getDefaultClient()
     val assetsToDelete = ConcurrentHashMap<AssetIdentity, String>()
-    lateinit var guidsToDeleteToDetails: OffHeapAssetCache
+    private lateinit var guidsToDeleteToDetails: OffHeapAssetCache
 
     companion object {
         private const val QUERY_BATCH = 50
@@ -78,7 +78,7 @@ class AssetRemover(
                 assetsToDelete[it] = ""
             }
         }
-        guidsToDeleteToDetails = OffHeapAssetCache("delete", assetsToDelete.size)
+        guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
     }
 
     /**
@@ -108,7 +108,7 @@ class AssetRemover(
      * @throws IOException if there is no typeName column in the CSV file
      */
     @Throws(IOException::class)
-    private fun getAssetIdentities(filename: String): Set<AssetBatch.AssetIdentity> {
+    private fun getAssetIdentities(filename: String): Set<AssetIdentity> {
         val header = CSVXformer.getHeader(filename, ',')
         val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         if (typeIdx < 0) {
@@ -124,7 +124,7 @@ class AssetRemover(
                 .skipEmptyLines(true)
                 .ignoreDifferentFieldCount(false)
         val reader = builder.ofCsvRecord(inputFile)
-        val set = mutableSetOf<AssetBatch.AssetIdentity>()
+        val set = mutableSetOf<AssetIdentity>()
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
             val typeName = values[typeIdx]!!
@@ -134,7 +134,7 @@ class AssetRemover(
             if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
                 val qualifiedName =
                     agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)
-                set.add(AssetBatch.AssetIdentity(typeName, qualifiedName))
+                set.add(AssetIdentity(typeName, qualifiedName))
             } else {
                 logger.warn { "Unknown connection used in asset -- skipping: $agnosticQN" }
             }
@@ -218,13 +218,13 @@ class AssetRemover(
     private fun deleteAssetsByGuid(): OffHeapAssetCache {
         if (guidsToDeleteToDetails.isNotEmpty) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = guidsToDeleteToDetails.keys()
-            val totalToDelete = guidList.size
+            val guidList = guidsToDeleteToDetails.entrySet()
+            val totalToDelete = guidsToDeleteToDetails.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 if (totalToDelete > 0) {
-                    client.assets.delete(guidList.map { it.toString() }, deletionType)
+                    client.assets.delete(guidList.map { it.key.toString() }.toList(), deletionType)
                 }
             } else {
                 // Delete in parallel

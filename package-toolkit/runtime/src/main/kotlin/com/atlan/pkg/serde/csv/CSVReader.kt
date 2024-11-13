@@ -155,7 +155,6 @@ class CSVReader
                 caseSensitive,
                 creationHandling,
                 tableViewAgnostic,
-                totalRowCount.toInt(),
             ).use { primaryBatch ->
                 ParallelBatch(
                     client,
@@ -168,7 +167,6 @@ class CSVReader
                     caseSensitive,
                     AssetCreationHandling.FULL,
                     false,
-                    totalRowCount.toInt(),
                 ).use { relatedBatch ->
                     // Step 0: split the single file into one file per thread
                     val csvChunkFiles = mutableListOf<Path>()
@@ -329,6 +327,7 @@ class CSVReader
                     return ImportResults(
                         someFailure,
                         ImportResults.Details.combineAll(
+                            client,
                             true,
                             ImportResults.Details(
                                 primaryBatch.resolvedGuids,
@@ -343,6 +342,7 @@ class CSVReader
                             ),
                         ),
                         ImportResults.Details.combineAll(
+                            client,
                             true,
                             ImportResults.Details(
                                 relatedBatch.resolvedGuids,

@@ -11,6 +11,7 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
+import java.util.stream.Stream
 
 /**
  * Import glossaries, terms and categories (only) into Atlan from a provided CSV file.
@@ -54,7 +55,7 @@ abstract class GTCImporter(
     // Note: Always track batches (above) for GTC importers, to ensure cache is managed
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: Collection<Asset>) {
+    override fun cacheCreated(list: Stream<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity

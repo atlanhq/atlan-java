@@ -7,6 +7,7 @@ import com.atlan.model.assets.Column
 import mu.KotlinLogging
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.stream.Stream
 
 /**
  * Cache that contains a listing of all asset identities for a given connection, and stores
@@ -59,7 +60,7 @@ class PersistentConnectionCache(
      *
      * @param assets to remove from the cache
      */
-    fun deleteAssets(assets: Collection<Asset>) {
+    fun deleteAssets(assets: Stream<Asset>) {
         DriverManager.getConnection(dbString).use { connection ->
             connection.prepareStatement("delete from entities where type_name = ? and qual_name = ?").use { ps ->
                 assets.forEach { a ->
@@ -76,7 +77,7 @@ class PersistentConnectionCache(
      *
      * @param assets to add to the cache
      */
-    fun addAssets(assets: Collection<Asset>) {
+    fun addAssets(assets: Stream<Asset>) {
         DriverManager.getConnection(dbString).use { connection ->
             connection.prepareStatement("insert or replace into entities values(?, ?, ?, ?, ?, ?)").use { ps ->
                 assets.forEach { a ->

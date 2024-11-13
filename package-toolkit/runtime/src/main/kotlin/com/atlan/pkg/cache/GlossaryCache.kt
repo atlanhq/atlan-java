@@ -9,13 +9,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import mu.KotlinLogging
 
-object GlossaryCache : AssetCache<Glossary>(
-    "glossary",
-    Glossary.creator("Glossary Name")
-        .userDescription("Could be empty")
-        .build(),
-    Glossary::class.java,
-) {
+object GlossaryCache : AssetCache<Glossary>("glossary") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
@@ -83,14 +77,9 @@ object GlossaryCache : AssetCache<Glossary>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            Glossary.select()
-                .includesOnResults(includesOnResults)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} glossaries, up-front..." }
-        resetOffHeap(response)
+        val count = Glossary.select().count()
+        logger.info { "Caching all $count glossaries, up-front..." }
+        resetOffHeap()
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)

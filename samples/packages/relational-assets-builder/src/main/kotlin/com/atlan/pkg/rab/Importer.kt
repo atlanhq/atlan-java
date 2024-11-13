@@ -3,6 +3,7 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -230,7 +231,7 @@ object Importer {
                 null
             }
 
-        ImportResults.getAllModifiedAssets(true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
             val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
             DeltaProcessor(
                 semantic = deltaSemantic,

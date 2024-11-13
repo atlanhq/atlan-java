@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.ApiTokensEndpoint;
 import com.atlan.api.UsersEndpoint;
 import com.atlan.exception.AtlanException;
@@ -18,33 +19,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserCache extends AbstractMassCache<AtlanUser> {
 
-    private static final AtlanUser EXEMPLAR_USER = AtlanUser.builder()
-            .id(UUID.randomUUID().toString())
-            .firstName("Someone")
-            .lastName("Somewhere")
-            .email("someone@somewhere.com")
-            .emailVerified(true)
-            .createdTimestamp(1234567890L)
-            .attributes(AtlanUser.UserAttributes.builder()
-                    .invitedAt(List.of("1234567890"))
-                    .invitedBy(List.of("someone-else"))
-                    .build())
-            .personas(new TreeSet<>(Set.of(AtlanUser.Persona.builder()
-                    .id(UUID.randomUUID().toString())
-                    .name("Persona Name")
-                    .displayName("Persona Name")
-                    .build())))
-            .roles(List.of("persona_E8XsHwbZ995WWk2ajSVoWN"))
-            .groupCount(10L)
-            .build();
-
     private final UsersEndpoint usersEndpoint;
     private final ApiTokensEndpoint apiTokensEndpoint;
 
-    public UserCache(UsersEndpoint usersEndpoint, ApiTokensEndpoint apiTokensEndpoint) {
-        super("user", EXEMPLAR_USER, AtlanUser.class);
-        this.usersEndpoint = usersEndpoint;
-        this.apiTokensEndpoint = apiTokensEndpoint;
+    public UserCache(AtlanClient client) {
+        super(client, "user");
+        this.usersEndpoint = client.users;
+        this.apiTokensEndpoint = client.apiTokens;
         this.bulkRefresh.set(false); // Default to a lazily-loaded cache for users
     }
 
@@ -53,7 +34,7 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
         List<AtlanUser> users = usersEndpoint.list();
-        setParameters(users.size(), users.isEmpty() ? null : users.get(0));
+        resetOffHeap();
         for (AtlanUser user : users) {
             String userId = user.getId();
             String userName = user.getUsername();

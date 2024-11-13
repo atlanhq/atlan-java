@@ -230,12 +230,12 @@ public class AtlanClient implements Closeable {
         sso = new SSOEndpoint(this);
         openLineage = new OpenLineageEndpoint(this);
         contracts = new ContractsEndpoint(this);
-        atlanTagCache = new AtlanTagCache(typeDefs);
-        customMetadataCache = new CustomMetadataCache(typeDefs);
+        atlanTagCache = new AtlanTagCache(this);
+        customMetadataCache = new CustomMetadataCache(this);
         enumCache = new EnumCache(typeDefs);
-        groupCache = new GroupCache(groups);
-        roleCache = new RoleCache(roles);
-        userCache = new UserCache(users, apiTokens);
+        groupCache = new GroupCache(this);
+        roleCache = new RoleCache(this);
+        userCache = new UserCache(this);
         connectionCache = new ConnectionCache(this);
         sourceTagCache = new SourceTagCache(this);
         assetDeserializer = new AssetDeserializer(this);
@@ -281,6 +281,18 @@ public class AtlanClient implements Closeable {
     }
 
     /**
+     * Deserialize a string value into an object.
+     * @param value the value to deserialize
+     * @param typeRef the expected object type of the deserialization
+     * @return the deserialized object
+     * @param <T> type of the deserialized object
+     * @throws IOException on any errors doing the deserialization
+     */
+    public <T> T readValue(byte[] value, TypeReference<T> typeRef) throws IOException {
+        return mapper.readValue(value, typeRef);
+    }
+
+    /**
      * Converts from a JSON representation into an object.
      * @param value the JSON representation
      * @param typeReference the expected object type of the deserialization
@@ -313,6 +325,17 @@ public class AtlanClient implements Closeable {
      */
     public <T> String writeValueAsString(T value) throws IOException {
         return mapper.writeValueAsString(value);
+    }
+
+    /**
+     * Serialize an object into a JSON byte-array.
+     * @param value the object to serialize
+     * @return a byte-array giving the JSON representing the object
+     * @param <T> type of the object
+     * @throws IOException on any errors doing the serialization
+     */
+    public <T> byte[] writeValueAsBytes(T value) throws IOException {
+        return mapper.writeValueAsBytes(value);
     }
 
     /**

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.CategoryCache
@@ -67,7 +68,7 @@ class CategoryImporter(
             val results = super.import(colsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

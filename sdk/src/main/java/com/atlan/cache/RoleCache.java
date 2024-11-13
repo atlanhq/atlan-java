@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.RolesEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -17,21 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RoleCache extends AbstractMassCache<AtlanRole> {
 
-    private static final AtlanRole EXEMPLAR_ROLE = AtlanRole.builder()
-            .id(UUID.randomUUID().toString())
-            .name("$admin")
-            .clientRole(false)
-            .description("Admin")
-            .level("workspace")
-            .memberCount("100")
-            .userCount("100")
-            .build();
-
     private final RolesEndpoint rolesEndpoint;
 
-    public RoleCache(RolesEndpoint rolesEndpoint) {
-        super("role", EXEMPLAR_ROLE, AtlanRole.class);
-        this.rolesEndpoint = rolesEndpoint;
+    public RoleCache(AtlanClient client) {
+        super(client, "role");
+        this.rolesEndpoint = client.roles;
     }
 
     /** {@inheritDoc} */
@@ -44,7 +35,7 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
         if (response == null || response.getRecords().isEmpty()) {
             throw new NotFoundException(ErrorCode.ROLES_NOT_FOUND);
         }
-        setParameters(response.getRecords().size(), response.getRecords().get(0));
+        resetOffHeap();
         cacheResponse(response);
     }
 

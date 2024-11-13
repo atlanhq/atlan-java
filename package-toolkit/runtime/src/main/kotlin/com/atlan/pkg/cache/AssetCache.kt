@@ -2,26 +2,23 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
-import com.atlan.model.search.IndexSearchResponse
 import mu.KotlinLogging
-import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.stream.Stream
 
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
  */
 abstract class AssetCache<T : Asset>(
     cacheName: String,
-    exemplar: T,
-    valueClass: Class<T>,
 ) : AbstractMassCache<T>(
+        Atlan.getDefaultClient(),
         cacheName,
-        exemplar,
-        valueClass,
     ) {
     private val logger = KotlinLogging.logger {}
 
@@ -30,18 +27,6 @@ abstract class AssetCache<T : Asset>(
 
     init {
         this.bulkRefresh.set(false)
-    }
-
-    /**
-     * Set the parameters for the off-heap storage for this cache.
-     *
-     * @param response containing the first asset and total count of existing assets for the cache
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun resetOffHeap(response: IndexSearchResponse?) {
-        val first = response?.assets?.get(0)
-        setParameters(response?.approximateCount?.toInt() ?: 0, if (first != null) first as T else null)
-        initializeOffHeap()
     }
 
     /**
@@ -108,7 +93,7 @@ abstract class AssetCache<T : Asset>(
      *
      * @return the set of all assets in the cache
      */
-    protected fun listAll(): Set<Map.Entry<UUID, T>> {
+    protected fun listAll(): Stream<Map.Entry<String, T>> {
         return entrySet()
     }
 

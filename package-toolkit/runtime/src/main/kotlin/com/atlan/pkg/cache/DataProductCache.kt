@@ -4,32 +4,15 @@ package com.atlan.pkg.cache
 
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.assets.MaterializedView
-import com.atlan.model.assets.Table
-import com.atlan.model.assets.View
-import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
-import com.atlan.model.search.FluentSearch
 import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object DataProductCache : AssetCache<DataProduct>(
-    "dataproduct",
-    DataProduct.creator(
-        "Product Name",
-        "ObfuscatedDomainName",
-        FluentSearch._internal()
-            .where(Asset.TYPE_NAME.`in`(listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)))
-            .where(Asset.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
-            .build(),
-    ).build(),
-    DataProduct::class.java,
-) {
+object DataProductCache : AssetCache<DataProduct>("product") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
@@ -131,15 +114,9 @@ object DataProductCache : AssetCache<DataProduct>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            DataProduct.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
-        resetOffHeap(response)
+        val count = DataProduct.select().count()
+        logger.info { "Caching all $count data products, up-front..." }
+        resetOffHeap()
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

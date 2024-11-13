@@ -321,7 +321,14 @@ public class AssetBatch implements Closeable {
                 caseInsensitive,
                 creationHandling,
                 tableViewAgnostic,
-                -1);
+                new OffHeapAssetCache(
+                        client, "created_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "updated_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "restored_" + Thread.currentThread().getId() + "_"),
+                new OffHeapAssetCache(
+                        client, "skipped_" + Thread.currentThread().getId() + "_"));
     }
 
     /**
@@ -337,7 +344,10 @@ public class AssetBatch implements Closeable {
      * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
      * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
      * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param totalSize total anticipated size of all assets to be batched
+     * @param created off-heap asset cache tracking assets that have been created
+     * @param updated off-heap asset cache tracking assets that have been updated
+     * @param restored off-heap asset cache tracking assets that have been restored
+     * @param skipped off-heap asset cache tracking assets that have been skipped
      */
     public AssetBatch(
             AtlanClient client,
@@ -350,7 +360,10 @@ public class AssetBatch implements Closeable {
             boolean caseInsensitive,
             AssetCreationHandling creationHandling,
             boolean tableViewAgnostic,
-            int totalSize) {
+            OffHeapAssetCache created,
+            OffHeapAssetCache updated,
+            OffHeapAssetCache restored,
+            OffHeapAssetCache skipped) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -361,11 +374,10 @@ public class AssetBatch implements Closeable {
         this.updateOnly = updateOnly;
         this.caseInsensitive = caseInsensitive;
         this.tableViewAgnostic = tableViewAgnostic;
-        this.created = new OffHeapAssetCache("created" + Thread.currentThread().getId(), totalSize);
-        this.updated = new OffHeapAssetCache("updated" + Thread.currentThread().getId(), totalSize);
-        this.restored =
-                new OffHeapAssetCache("restored" + Thread.currentThread().getId(), totalSize);
-        this.skipped = new OffHeapAssetCache("skipped" + Thread.currentThread().getId(), totalSize);
+        this.created = created;
+        this.updated = updated;
+        this.restored = restored;
+        this.skipped = skipped;
     }
 
     /**

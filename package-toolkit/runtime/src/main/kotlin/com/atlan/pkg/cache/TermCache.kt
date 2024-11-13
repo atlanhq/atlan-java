@@ -5,21 +5,13 @@ package com.atlan.pkg.cache
 import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Glossary
-import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object TermCache : AssetCache<GlossaryTerm>(
-    "term",
-    GlossaryTerm.creator("Term Name", "ObfuscatedGlossaryName")
-        .userDescription("Could be empty")
-        .category(GlossaryCategory.refByQualifiedName("ObfuscatedCategory@ObfuscatedGlossary"))
-        .build(),
-    GlossaryTerm::class.java,
-) {
+object TermCache : AssetCache<GlossaryTerm>("term") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
@@ -113,15 +105,9 @@ object TermCache : AssetCache<GlossaryTerm>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            GlossaryTerm.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
-        resetOffHeap(response)
+        val count = GlossaryTerm.select().count()
+        logger.info { "Caching all $count terms, up-front..." }
+        resetOffHeap()
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

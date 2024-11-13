@@ -14,13 +14,7 @@ import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 
-object CategoryCache : AssetCache<GlossaryCategory>(
-    "category",
-    GlossaryCategory.creator("Category Name", "ObfuscatedGlossaryName")
-        .userDescription("Could be empty")
-        .build(),
-    GlossaryCategory::class.java,
-) {
+object CategoryCache : AssetCache<GlossaryCategory>("category") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
@@ -155,15 +149,9 @@ object CategoryCache : AssetCache<GlossaryCategory>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            GlossaryCategory.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} categories, up-front..." }
-        resetOffHeap(response)
+        val count = GlossaryCategory.select().count()
+        logger.info { "Caching all $count categories, up-front..." }
+        resetOffHeap()
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)

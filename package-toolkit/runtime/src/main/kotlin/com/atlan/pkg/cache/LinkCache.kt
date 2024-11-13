@@ -3,7 +3,6 @@
 package com.atlan.pkg.cache
 
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Link
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
@@ -15,15 +14,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Cache for links, since these have purely generated qualifiedNames (a UUID).
  * Note that this entire cache relies on first being preloaded -- otherwise nothing will every be found in it.
  */
-object LinkCache : AssetCache<Link>(
-    "link",
-    Link.creator(
-        GlossaryTerm.refByQualifiedName("ObfuscatedTermName@ObfuscatedGlossaryName"),
-        "Link Title",
-        "https://example.com/somewhere/within/a/site.html",
-    ).build(),
-    Link::class.java,
-) {
+object LinkCache : AssetCache<Link>("link") {
     private val logger = KotlinLogging.logger {}
 
     private val byAssetGuid: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
@@ -80,15 +71,9 @@ object LinkCache : AssetCache<Link>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            Link.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response?.approximateCount ?: 0} links, up-front..." }
-        resetOffHeap(response)
+        val count = Link.select().count()
+        logger.info { "Caching all $count links, up-front..." }
+        resetOffHeap()
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

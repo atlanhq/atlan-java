@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.GroupsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -17,33 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
-    private static final AtlanGroup EXEMPLAR_GROUP = AtlanGroup.builder()
-            .id(UUID.randomUUID().toString())
-            .name("group_name")
-            .alias("Group Name")
-            .path("/group_name")
-            .attributes(AtlanGroup.GroupAttributes.builder()
-                    .alias(List.of("Group Name"))
-                    .createdAt(List.of("1234567890"))
-                    .createdBy(List.of("someone"))
-                    .description(List.of("could be empty"))
-                    .isDefault(List.of("false"))
-                    .build())
-            .personas(new TreeSet<>(Set.of(AtlanGroup.Persona.builder()
-                    .id(UUID.randomUUID().toString())
-                    .name("Persona Name")
-                    .displayName("Persona Name")
-                    .qualifiedName("default/E8XsHwbZ995WWk2ajSVoWN")
-                    .build())))
-            .roles(new TreeSet<>(Set.of("persona_E8XsHwbZ995WWk2ajSVoWN")))
-            .userCount(10L)
-            .build();
-
     private final GroupsEndpoint groupsEndpoint;
 
-    public GroupCache(GroupsEndpoint groupsEndpoint) {
-        super("group", EXEMPLAR_GROUP, AtlanGroup.class);
-        this.groupsEndpoint = groupsEndpoint;
+    public GroupCache(AtlanClient client) {
+        super(client, "group");
+        this.groupsEndpoint = client.groups;
     }
 
     /** {@inheritDoc} */
@@ -51,7 +30,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = groupsEndpoint.list();
-        setParameters(groups.size(), groups.isEmpty() ? null : groups.get(0));
+        resetOffHeap();
         for (AtlanGroup group : groups) {
             String groupId = group.getId();
             String groupName = group.getName();

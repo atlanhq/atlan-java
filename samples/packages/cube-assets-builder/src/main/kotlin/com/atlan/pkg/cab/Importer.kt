@@ -3,6 +3,7 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
@@ -169,7 +170,7 @@ object Importer {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
-        ImportResults.getAllModifiedAssets(true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
             val delta =
                 DeltaProcessor(
                     semantic = Utils.getOrDefault(config.deltaSemantic, "full"),

@@ -11,13 +11,7 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import mu.KotlinLogging
 
-object DataDomainCache : AssetCache<DataDomain>(
-    "datadomain",
-    DataDomain.creator("Domain Name")
-        .description("Could be empty")
-        .build(),
-    DataDomain::class.java,
-) {
+object DataDomainCache : AssetCache<DataDomain>("domain") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
@@ -84,14 +78,9 @@ object DataDomainCache : AssetCache<DataDomain>(
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            DataDomain.select()
-                .includesOnResults(includesOnResults)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} data domains, up-front..." }
-        resetOffHeap(response)
+        val count = DataDomain.select().count()
+        logger.info { "Caching all $count data domains, up-front..." }
+        resetOffHeap()
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))
