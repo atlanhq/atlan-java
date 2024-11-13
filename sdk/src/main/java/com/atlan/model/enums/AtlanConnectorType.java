@@ -132,7 +132,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     TREASURE_DATA("treasure-data", AtlanConnectionCategory.SAAS),
     SAP_GIGYA("sap-gigya", AtlanConnectionCategory.SAAS),
     SAP_HYBRIS("sap-hybris", AtlanConnectionCategory.SAAS),
-    IDM_DB2("ibmdb2", AtlanConnectionCategory.DATABASE),
+    IBM_DB2("ibmdb2", AtlanConnectionCategory.DATABASE),
     ;
 
     @JsonValue
