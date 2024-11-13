@@ -324,39 +324,41 @@ class CSVReader
                     logger.info { "Total READMEs deleted: $totalDeleted" }
                     // Note: it looks weird that we combineAll here, but this is necessary to COPY contents of
                     // the details, as the originals will be auto-closed prior to returning
-                    return ImportResults(
-                        someFailure,
-                        ImportResults.Details.combineAll(
-                            client,
-                            true,
-                            ImportResults.Details(
-                                primaryBatch.resolvedGuids,
-                                primaryBatch.resolvedQualifiedNames,
-                                primaryBatch.created,
-                                primaryBatch.updated,
-                                primaryBatch.restored,
-                                primaryBatch.skipped,
-                                primaryBatch.numCreated,
-                                primaryBatch.numUpdated,
-                                primaryBatch.numRestored,
+                    val results =
+                        ImportResults(
+                            someFailure,
+                            ImportResults.Details.combineAll(
+                                client,
+                                true,
+                                ImportResults.Details(
+                                    primaryBatch.resolvedGuids.toMap(),
+                                    primaryBatch.resolvedQualifiedNames.toMap(),
+                                    primaryBatch.created,
+                                    primaryBatch.updated,
+                                    primaryBatch.restored,
+                                    primaryBatch.skipped,
+                                    primaryBatch.numCreated,
+                                    primaryBatch.numUpdated,
+                                    primaryBatch.numRestored,
+                                ),
                             ),
-                        ),
-                        ImportResults.Details.combineAll(
-                            client,
-                            true,
-                            ImportResults.Details(
-                                relatedBatch.resolvedGuids,
-                                primaryBatch.resolvedQualifiedNames,
-                                relatedBatch.created,
-                                relatedBatch.updated,
-                                relatedBatch.restored,
-                                relatedBatch.skipped,
-                                relatedBatch.numCreated,
-                                relatedBatch.numUpdated,
-                                relatedBatch.numRestored,
+                            ImportResults.Details.combineAll(
+                                client,
+                                true,
+                                ImportResults.Details(
+                                    relatedBatch.resolvedGuids.toMap(),
+                                    primaryBatch.resolvedQualifiedNames.toMap(),
+                                    relatedBatch.created,
+                                    relatedBatch.updated,
+                                    relatedBatch.restored,
+                                    relatedBatch.skipped,
+                                    relatedBatch.numCreated,
+                                    relatedBatch.numUpdated,
+                                    relatedBatch.numRestored,
+                                ),
                             ),
-                        ),
-                    )
+                        )
+                    return results
                 }
             }
         }
