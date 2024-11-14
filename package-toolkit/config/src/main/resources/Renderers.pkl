@@ -865,7 +865,7 @@ local class WorkflowContainer {
     }
     new NameValuePair {
       name = "AZURE_STORAGE_CONTAINER_NAME"
-      value = "argo-artifacts"
+      value = "objectstore"
     }
     new ConfigMapEntry {
       name = "CLOUD_PROVIDER"
