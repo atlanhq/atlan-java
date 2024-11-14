@@ -251,9 +251,11 @@ class AssetImporter(
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
+        val colsToSkip = columnsToSkip.toMutableSet()
+        colsToSkip.add(Asset.GUID.atlanFieldName)
         if (updateOnly) {
             // If we're only updating, process as before (in-parallel, any order)
-            return super.import(columnsToSkip)
+            return super.import(colsToSkip)
         } else {
             // Otherwise, we need to do multi-pass loading:
             //  - Import assets in tiered order, top-to-bottom
@@ -271,7 +273,7 @@ class AssetImporter(
             typeLoadingOrder.forEach {
                 typeToProcess = it
                 logger.info { "--- Importing $typeToProcess assets... ---" }
-                val results = super.import(columnsToSkip)
+                val results = super.import(colsToSkip)
                 individualResults.add(results)
             }
             return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
