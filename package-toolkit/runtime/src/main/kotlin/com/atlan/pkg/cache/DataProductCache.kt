@@ -116,7 +116,6 @@ object DataProductCache : AssetCache<DataProduct>("product") {
     override fun refreshCache() {
         val count = DataProduct.select().count()
         logger.info { "Caching all $count data products, up-front..." }
-        resetOffHeap()
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

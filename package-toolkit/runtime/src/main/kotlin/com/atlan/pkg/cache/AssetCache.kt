@@ -57,12 +57,20 @@ abstract class AssetCache<T : Asset>(
 
     /**
      * Retrieve the unique identity of an asset from the cache by its globally-unique identifier.
+     * Note: this allows you to bypass the read lock, in order to avoid potential deadlock situations,
+     * however you should ONLY do this if you know PRECISELY that you are still controlling the ordering
+     * of reads and writes (as concurrency safety will be bypassed when the read lock is bypassed) -- if
+     * you are not careful you may get a cache miss which would otherwise have been a cache hit.
      *
      * @param guid unique identifier (GUID) of the asset to retrieve
+     * @param bypassReadLock whether to bypass the read lock (necessary if we're reading while inside a write lock)
      * @return the identity of the specified GUID, or null if no identity could be found
      */
-    fun getIdentity(guid: String): String? {
-        return getNameFromId(guid)
+    fun getIdentity(
+        guid: String,
+        bypassReadLock: Boolean = false,
+    ): String? {
+        return getNameFromId(guid, bypassReadLock)
     }
 
     /**

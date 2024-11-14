@@ -39,10 +39,10 @@ public class PurposeTest extends AtlanLiveTest {
     private static final String API_TOKEN_NAME = PREFIX;
 
     private static final String PERSONA_NAME = "Data Assets";
-    private static final String DB_NAME = "RAW";
-    private static final String SCHEMA_NAME = "WIDEWORLDIMPORTERS_WAREHOUSE";
-    private static final String TABLE_NAME = "PACKAGETYPES";
-    private static final String COLUMN_NAME = "PACKAGETYPENAME";
+    private static final String DB_NAME = "ANALYTICS";
+    private static final String SCHEMA_NAME = "WIDE_WORLD_IMPORTERS";
+    private static final String TABLE_NAME = "STG_PACKAGE_TYPES";
+    private static final String COLUMN_NAME = "PACKAGE_TYPE_NAME";
 
     public static Persona persona = null;
     public static Purpose purpose = null;
@@ -251,7 +251,7 @@ public class PurposeTest extends AtlanLiveTest {
         assertTrue(response.getRows().size() > 1);
         List<String> row = response.getRows().get(0);
         assertFalse(row.isEmpty());
-        assertEquals(row.size(), 7);
+        assertEquals(row.size(), 5);
         assertFalse(row.get(2).isEmpty());
         assertFalse(row.get(2).startsWith("Xx")); // Ensure it is NOT redacted
     }
@@ -303,7 +303,7 @@ public class PurposeTest extends AtlanLiveTest {
         assertTrue(response.getRows().size() > 1);
         List<String> row = response.getRows().get(0);
         assertFalse(row.isEmpty());
-        assertEquals(row.size(), 7);
+        assertEquals(row.size(), 5);
         assertFalse(row.get(2).isEmpty());
         assertTrue(row.get(2).startsWith("Xx")); // Ensure it IS redacted
     }

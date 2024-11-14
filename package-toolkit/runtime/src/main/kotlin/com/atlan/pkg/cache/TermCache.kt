@@ -107,7 +107,6 @@ object TermCache : AssetCache<GlossaryTerm>("term") {
     override fun refreshCache() {
         val count = GlossaryTerm.select().count()
         logger.info { "Caching all $count terms, up-front..." }
-        resetOffHeap()
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

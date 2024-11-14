@@ -80,7 +80,6 @@ object DataDomainCache : AssetCache<DataDomain>("domain") {
     override fun refreshCache() {
         val count = DataDomain.select().count()
         logger.info { "Caching all $count data domains, up-front..." }
-        resetOffHeap()
         DataDomain.select()
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))

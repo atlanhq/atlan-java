@@ -218,7 +218,7 @@ class ImportGlossariesTest : PackageTest() {
                 .includeOnRelations(Glossary.NAME)
                 .toRequest()
         val response = retrySearchUntil(request, 4)
-        val aryaman = client.userCache.getByEmail("aryaman.bhushan@atlan.com").username
+        val chris = client.userCache.getByEmail("chris@atlan.com").username
         val g1categories = response.assets
         assertEquals(4, g1categories.size)
         g1categories.forEach { category ->
@@ -232,7 +232,7 @@ class ImportGlossariesTest : PackageTest() {
                 }
                 "Cat2" -> {
                     assertEquals("Test category 2 for asset import package.", category.userDescription)
-                    assertEquals(setOf("chris", aryaman), category.ownerUsers)
+                    assertEquals(setOf("chris", chris), category.ownerUsers)
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
                 "Cat1.a" -> {
@@ -502,8 +502,8 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(1, term.categories.size)
         assertEquals(setOf("Cat2"), term.categories.map(IGlossaryCategory::getName).toSet())
         assertEquals("Test term A for asset import package (single category).", term.userDescription)
-        val aryaman = client.userCache.getByEmail("aryaman.bhushan@atlan.com").username
-        assertEquals(setOf("chris", aryaman), term.ownerUsers)
+        val chris = client.userCache.getByEmail("chris@atlan.com").username
+        assertEquals(setOf("chris", chris), term.ownerUsers)
         assertTrue(term.ownerGroups.isNullOrEmpty())
         assertEquals(CertificateStatus.VERIFIED, term.certificateStatus)
         assertTrue(term.certificateStatusMessage.isNullOrEmpty())

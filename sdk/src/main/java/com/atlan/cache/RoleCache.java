@@ -35,7 +35,6 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
         if (response == null || response.getRecords().isEmpty()) {
             throw new NotFoundException(ErrorCode.ROLES_NOT_FOUND);
         }
-        resetOffHeap();
         cacheResponse(response);
     }
 

@@ -51,7 +51,6 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        resetOffHeap();
         attrCacheBySid.clear();
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();
@@ -655,8 +654,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             } catch (NotFoundException e) {
                 log.warn(
                         "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
-                        cmId,
-                        e);
+                        cmId);
+                log.debug("Details:", e);
             }
         }
         return map;
@@ -796,8 +795,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
                 } catch (NotFoundException e) {
                     log.warn(
                             "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
-                            cmId,
-                            e);
+                            cmId);
+                    log.debug("Details:", e);
                 }
             }
         }

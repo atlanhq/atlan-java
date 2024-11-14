@@ -30,7 +30,6 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = groupsEndpoint.list();
-        resetOffHeap();
         for (AtlanGroup group : groups) {
             String groupId = group.getId();
             String groupName = group.getName();

@@ -43,7 +43,6 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
-        resetOffHeap();
         mapSidToSourceTagsAttrSid.clear();
         deletedSids.clear();
         deletedNames.clear();

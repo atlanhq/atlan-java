@@ -73,7 +73,6 @@ object LinkCache : AssetCache<Link>("link") {
     override fun refreshCache() {
         val count = Link.select().count()
         logger.info { "Caching all $count links, up-front..." }
-        resetOffHeap()
         Link.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
