@@ -35,7 +35,6 @@ import org.testng.Assert.assertNotNull
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
-import org.testng.annotations.AfterSuite
 import org.testng.annotations.BeforeClass
 import uk.org.webcompere.systemstubs.SystemStubs.withEnvironmentVariable
 import uk.org.webcompere.systemstubs.properties.SystemProperties
@@ -75,6 +74,22 @@ abstract class PackageTest(
     @BeforeClass
     fun testsSetup() {
         File(testDirectory).mkdirs()
+        // TODO: if we move to passing a set logger everywhere, this could be an option...
+        // val testClassName = this::class.simpleName ?: "UnknownTestClass"
+        // val context = LogManager.getContext(false)
+        // val layout = PatternLayout.newBuilder()
+        //     .withPattern("%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n")
+        //     .build()
+        // val appender = FileAppender.Builder()
+        //     .withFileName(Paths.get(testDirectory, "debug.log").toString())
+        //     .withAppend(false)
+        //     .setName("???")
+        //     .setLayout(layout)
+        //     .setImmediateFlush(true)
+        //     .build()
+        // appender.start()
+        // context.getLogger(testClassName)
+        System.setProperty("logDirectory", testDirectory)
         properties.set("logDirectory", testDirectory)
         properties.setup()
         sysExit.setup()
@@ -283,6 +298,23 @@ abstract class PackageTest(
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
         private val mapper = Serde.createMapper(client).registerKotlinModule()
+
+        /**
+         *  Close all package runtime-managed caches, static client, etc.
+         *  Note: this can ONLY be called at the very end of ALL tests -- not just the end of a suite.
+         *  (Which means it would ultimately need to be orchestrated by Gradle, most likely.)
+         */
+        fun cleanupAll() {
+            println("Cleaning up shared objects...")
+            LinkCache.close()
+            GlossaryCache.close()
+            CategoryCache.close()
+            TermCache.close()
+            DataDomainCache.close()
+            DataProductCache.close()
+            ConnectionCache.close()
+            client.close()
+        }
     }
 
     /**
@@ -508,21 +540,5 @@ abstract class PackageTest(
         }
         properties.teardown()
         sysExit.teardown()
-    }
-
-    /** Teardown any cross-test shared objects. */
-    @AfterSuite
-    fun shareablesTeardown() {
-        logger.info { "Cleaning up shared objects..." }
-        // Close any package runtime-managed caches (to clean them)
-        LinkCache.close()
-        GlossaryCache.close()
-        CategoryCache.close()
-        TermCache.close()
-        DataDomainCache.close()
-        DataProductCache.close()
-        ConnectionCache.close()
-        // Close client (to clean up any caches)
-        client.close()
     }
 }
