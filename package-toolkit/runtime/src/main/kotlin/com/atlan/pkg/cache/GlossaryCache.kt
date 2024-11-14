@@ -79,7 +79,6 @@ object GlossaryCache : AssetCache<Glossary>("glossary") {
     override fun refreshCache() {
         val count = Glossary.select().count()
         logger.info { "Caching all $count glossaries, up-front..." }
-        resetOffHeap()
         Glossary.select()
             .includesOnResults(includesOnResults)
             .stream(true)
