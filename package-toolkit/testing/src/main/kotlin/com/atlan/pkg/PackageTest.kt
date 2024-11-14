@@ -34,6 +34,7 @@ import org.testng.Assert.assertNotNull
 import org.testng.Assert.assertTrue
 import org.testng.ITestContext
 import org.testng.annotations.AfterClass
+import org.testng.annotations.AfterSuite
 import org.testng.annotations.BeforeClass
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables
 import uk.org.webcompere.systemstubs.properties.SystemProperties
@@ -502,6 +503,11 @@ abstract class PackageTest {
         properties.teardown()
         vars.teardown()
         sysExit.teardown()
+    }
+
+    /** Teardown any cross-test shared objects. */
+    @AfterSuite
+    fun shareablesTeardown() {
         // Close any package runtime-managed caches (to clean them)
         LinkCache.close()
         GlossaryCache.close()

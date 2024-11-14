@@ -28,10 +28,9 @@ public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
      * Note: the object MUST have a real (not a placeholder) UUID to be cached.
      *
      * @param asset to add to the cache
-     * @return any asset that was previously cached with the same UUID, or null if no such UUID has ever been cached
      */
-    public Asset add(Asset asset) {
-        return put(asset.getGuid(), asset);
+    public void add(Asset asset) {
+        put(asset.getGuid(), asset);
     }
 
     /**
