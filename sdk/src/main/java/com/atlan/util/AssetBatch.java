@@ -20,6 +20,7 @@ import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.enums.AssetCreationHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.serde.Serde;
 import java.io.Closeable;
 import java.io.IOException;
@@ -485,11 +486,12 @@ public class AssetBatch implements Closeable {
                 } else {
                     builder = client.assets.select(true).where(Asset.QUALIFIED_NAME.in(qualifiedNames));
                 }
-                builder.pageSize(maxSize).stream().forEach(asset -> {
-                    AssetIdentity assetId =
-                            new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
-                    found.put(assetId, asset.getQualifiedName());
-                });
+                builder.pageSize(Math.max(maxSize * 2, IndexSearchDSL.DEFAULT_PAGE_SIZE)).stream()
+                        .forEach(asset -> {
+                            AssetIdentity assetId =
+                                    new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
+                            found.put(assetId, asset.getQualifiedName());
+                        });
                 revised = new ArrayList<>();
                 for (Asset asset : _batch) {
                     AssetIdentity assetId =
