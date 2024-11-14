@@ -521,7 +521,7 @@ public class AssetBatch implements Closeable {
                             addPartialAsset(asset, revised);
                         } else if (creationHandling == AssetCreationHandling.FULL) {
                             // Still create it (full), if not found and full asset creation is allowed
-                            revised.addAll(_batch);
+                            revised.add(asset);
                         } else {
                             // Otherwise, if it still does not match any fallback and cannot be created, skip it
                             track(skipped, asset);
