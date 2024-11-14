@@ -9,6 +9,8 @@ import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
 import java.io.File
 import java.math.BigDecimal
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 /**
  * Test export of detailed view and change information.
@@ -32,6 +34,8 @@ class ExportDetailsTest : PackageTest() {
                 changesMax = 100,
                 changesDetails = "YES",
                 changesAutomations = "SDK",
+                changesFrom = Instant.now().minus(1, ChronoUnit.DAYS).epochSecond,
+                changesTo = Instant.now().epochSecond,
                 includeSearches = "YES",
             ),
         )

@@ -2,33 +2,21 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.*;
-import com.atlan.model.assets.DataDomain;
-import com.atlan.model.assets.DataProduct;
-import com.atlan.model.assets.File;
-import com.atlan.model.assets.Glossary;
-import com.atlan.model.assets.GlossaryCategory;
-import com.atlan.model.assets.GlossaryTerm;
-import com.atlan.model.assets.MaterializedView;
-import com.atlan.model.assets.Table;
-import com.atlan.model.assets.View;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.enums.AtlanCustomAttributeCardinality;
-import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
-import com.atlan.model.typedefs.CustomMetadataOptions;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.serde.Removable;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,56 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
-    private static final CustomMetadataDef EXEMPLAR_CM = CustomMetadataDef.builder()
-            .guid(UUID.randomUUID().toString())
-            .name("M0UR6QD4avS7fjkGUTZpOt")
-            .displayName("Custom Metadata Name")
-            .createdBy("someone")
-            .updatedBy("someone")
-            .createTime(1234567890123L)
-            .updateTime(1234567890123L)
-            .version(1L)
-            .description("Could be empty")
-            .typeVersion("1.0")
-            .attributeDef(AttributeDef.builder()
-                    .name("leA0qSwISgLL5b1chFWa6d")
-                    .displayName("Some Score")
-                    .description("Could also be empty")
-                    .typeName("float")
-                    .isDefaultValueNull(false)
-                    .isOptional(true)
-                    .cardinality(AtlanCustomAttributeCardinality.SINGLE)
-                    .valuesMinCount(0L)
-                    .valuesMaxCount(1L)
-                    .isUnique(false)
-                    .isIndexable(false)
-                    .includeInNotification(true)
-                    .skipScrubbing(false)
-                    .searchWeight(-1L)
-                    .options(AttributeDefOptions.builder()
-                            .customMetadataVersion("v2")
-                            .applicableEntityTypes(Set.of("Asset"))
-                            .applicableConnection("default/snowflake/1234567890")
-                            .applicableGlossary("something@somewhere")
-                            .applicableDomain("")
-                            .allowSearch(false)
-                            .maxStrLength("100000000")
-                            .allowFiltering(true)
-                            .multiValueSelect(false)
-                            .showInOverview(false)
-                            .primitiveType(AtlanCustomAttributePrimitiveType.DECIMAL)
-                            .isEnum(false)
-                            .applicableAssetTypes(Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
-                            .applicableGlossaryTypes(
-                                    Set.of(Glossary.TYPE_NAME, GlossaryCategory.TYPE_NAME, GlossaryTerm.TYPE_NAME))
-                            .applicableDomainTypes(Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME))
-                            .applicableOtherAssetTypes(Set.of(File.TYPE_NAME))
-                            .build())
-                    .isNew(true)
-                    .build())
-            .options(CustomMetadataOptions.withIcon(AtlanIcon.ATLAN_TAG, AtlanTagColor.GRAY, true))
-            .build();
-
     private volatile Map<String, AttributeDef> attrCacheBySid = new ConcurrentHashMap<>();
 
     private volatile Map<String, Map<String, String>> mapAttrSidToName = new ConcurrentHashMap<>();
@@ -96,8 +34,9 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
-    public CustomMetadataCache(TypeDefsEndpoint typeDefsEndpoint) {
-        this.typeDefsEndpoint = typeDefsEndpoint;
+    public CustomMetadataCache(AtlanClient client) {
+        super(client, "cm");
+        this.typeDefsEndpoint = client.typeDefs;
     }
 
     /** {@inheritDoc} */
@@ -112,11 +51,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        initializeOffHeap(
-                "cm",
-                customMetadata.size(),
-                customMetadata.isEmpty() ? EXEMPLAR_CM : customMetadata.get(0),
-                CustomMetadataDef.class);
+        resetOffHeap();
         attrCacheBySid.clear();
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();
@@ -237,26 +172,38 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             refresh();
         }
         Map<String, List<AttributeDef>> map = new HashMap<>();
-        Set<Map.Entry<UUID, CustomMetadataDef>> entrySet = entrySet();
+        Stream<Map.Entry<String, CustomMetadataDef>> entrySet = entrySet();
         lock.readLock().lock();
         try {
-            for (Map.Entry<UUID, CustomMetadataDef> entry : entrySet) {
-                UUID id = entry.getKey();
-                String typeName = getNameForId(id.toString());
-                CustomMetadataDef typeDef = entry.getValue();
-                List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
-                List<AttributeDef> toInclude;
-                if (includeDeleted) {
-                    toInclude = attributeDefs;
-                } else {
-                    toInclude = new ArrayList<>();
-                    for (AttributeDef attributeDef : attributeDefs) {
-                        if (!attributeDef.isArchived()) {
-                            toInclude.add(attributeDef);
+            AtomicReference<AtlanException> found = new AtomicReference<>();
+            entrySet.forEach(entry -> {
+                try {
+                    String id = entry.getKey();
+                    String typeName = getNameForId(id);
+                    CustomMetadataDef typeDef = entry.getValue();
+                    List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
+                    List<AttributeDef> toInclude;
+                    if (includeDeleted) {
+                        toInclude = attributeDefs;
+                    } else {
+                        toInclude = new ArrayList<>();
+                        for (AttributeDef attributeDef : attributeDefs) {
+                            if (!attributeDef.isArchived()) {
+                                toInclude.add(attributeDef);
+                            }
                         }
                     }
+                    map.put(typeName, toInclude);
+                } catch (AtlanException e) {
+                    if (found.get() != null) {
+                        found.get().addSuppressed(e);
+                    } else {
+                        found.set(e);
+                    }
                 }
-                map.put(typeName, toInclude);
+            });
+            if (found.get() != null) {
+                throw found.get();
             }
         } finally {
             lock.readLock().unlock();

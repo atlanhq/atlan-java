@@ -19,7 +19,7 @@ import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
-object ConnectionCache : AssetCache<Connection>() {
+object ConnectionCache : AssetCache<Connection>("connection") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
@@ -119,7 +119,6 @@ object ConnectionCache : AssetCache<Connection>() {
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { (_, connection) ->
-            connection
             val connectorType =
                 if (connection.connectorType == null) {
                     "(not enumerated)"
@@ -133,14 +132,9 @@ object ConnectionCache : AssetCache<Connection>() {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            Connection.select()
-                .includesOnResults(includesOnResults)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} connections, up-front..." }
-        initializeOffHeap("connection", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as Connection, Connection::class.java)
+        val count = Connection.select().count()
+        logger.info { "Caching all $count connections, up-front..." }
+        resetOffHeap()
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

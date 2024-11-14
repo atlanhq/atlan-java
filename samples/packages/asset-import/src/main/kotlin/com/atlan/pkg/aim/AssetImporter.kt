@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
@@ -266,14 +267,14 @@ class AssetImporter(
             }
             val typeLoadingOrder = getLoadOrder(includes.typesInFile)
             logger.info { "Asset loading order: $typeLoadingOrder" }
-            var combinedResults: ImportResults? = null
+            val individualResults = mutableListOf<ImportResults?>()
             typeLoadingOrder.forEach {
                 typeToProcess = it
                 logger.info { "--- Importing $typeToProcess assets... ---" }
                 val results = super.import(columnsToSkip)
-                combinedResults = combinedResults?.combinedWith(results) ?: results
+                individualResults.add(results)
             }
-            return combinedResults
+            return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
         }
     }
 

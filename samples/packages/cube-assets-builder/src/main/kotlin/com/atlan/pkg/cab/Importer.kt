@@ -3,6 +3,7 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
@@ -108,7 +109,7 @@ object Importer {
                 true,
                 fieldSeparator,
             )
-        connectionImporter.import()
+        connectionImporter.import()?.close()
 
         logger.info { " --- Importing cubes... ---" }
         val cubeImporter =
@@ -165,26 +166,26 @@ object Importer {
 
         // Retrieve the qualifiedName of the cube that was imported
         val cubeQN =
-            cubeImporterResults?.primary?.guidAssignments?.values?.first().let {
+            cubeImporterResults?.primary?.guidAssignments?.values?.firstOrNull()?.let {
                 Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
             }
 
-        val modifiedAssets = ImportResults.getAllModifiedAssets(cubeImporterResults, dimResults, hierResults, fieldResults)
-
-        val delta =
-            DeltaProcessor(
-                semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
-                qualifiedNamePrefix = cubeQN,
-                removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-                previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-                resolver = AssetImporter,
-                preprocessedDetails = preprocessedDetails,
-                typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-                logger = logger,
-                previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
-                outputDirectory = outputDirectory,
-            )
-        delta.run(modifiedAssets)
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+            val delta =
+                DeltaProcessor(
+                    semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+                    qualifiedNamePrefix = cubeQN,
+                    removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    resolver = AssetImporter,
+                    preprocessedDetails = preprocessedDetails,
+                    typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+                    logger = logger,
+                    previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+                    outputDirectory = outputDirectory,
+                )
+            delta.run(modifiedAssets)
+        }
         return cubeQN
     }
 

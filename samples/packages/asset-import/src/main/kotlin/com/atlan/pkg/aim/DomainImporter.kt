@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -19,6 +20,7 @@ import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.stream.Stream
 import kotlin.math.max
 
 /**
@@ -65,7 +67,7 @@ class DomainImporter(
     private val cache = DataDomainCache
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: Collection<Asset>) {
+    override fun cacheCreated(list: Stream<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
@@ -91,18 +93,14 @@ class DomainImporter(
         }
 
         logger.info { "Loading domains in multiple passes, by level..." }
-        var combinedResults: ImportResults? = null
+        val individualResults = mutableListOf<ImportResults?>()
         while (levelToProcess < maxDomainDepth.get()) {
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess domains... ---" }
             val results = super.import(colsToSkip)
-            if (combinedResults == null) {
-                combinedResults = results
-            } else if (results != null) {
-                combinedResults = combinedResults.combinedWith(results)
-            }
+            individualResults.add(results)
         }
-        return combinedResults
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

@@ -11,7 +11,7 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object TermCache : AssetCache<GlossaryTerm>() {
+object TermCache : AssetCache<GlossaryTerm>("term") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
@@ -105,15 +105,9 @@ object TermCache : AssetCache<GlossaryTerm>() {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            GlossaryTerm.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} terms, up-front..." }
-        initializeOffHeap("term", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as GlossaryTerm, GlossaryTerm::class.java)
+        val count = GlossaryTerm.select().count()
+        logger.info { "Caching all $count terms, up-front..." }
+        resetOffHeap()
         GlossaryTerm.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

@@ -2,13 +2,11 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.*;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AtlanTagDef;
-import com.atlan.model.typedefs.AtlanTagOptions;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import java.util.*;
@@ -22,29 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
-    private static final AtlanTagDef EXEMPLAR_TAG = AtlanTagDef.builder()
-            .guid(UUID.randomUUID().toString())
-            .name("a3ZhUpnaq4Q9o37gV2anFX")
-            .displayName("Tag Name")
-            .createdBy("someone")
-            .updatedBy("someone")
-            .createTime(1234567890123L)
-            .updateTime(1234567890123L)
-            .version(1L)
-            .typeVersion("1.0")
-            .description("Could be empty")
-            .options(AtlanTagOptions.withIcon(AtlanIcon.ATLAN_TAG, AtlanTagColor.GRAY))
-            .skipDisplayNameUniquenessCheck(false)
-            .build();
-
     private volatile Map<String, String> mapSidToSourceTagsAttrSid = new ConcurrentHashMap<>();
     private volatile Set<String> deletedSids = ConcurrentHashMap.newKeySet();
     private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
-    public AtlanTagCache(TypeDefsEndpoint typeDefsEndpoint) {
-        this.typeDefsEndpoint = typeDefsEndpoint;
+    public AtlanTagCache(AtlanClient client) {
+        super(client, "tag");
+        this.typeDefsEndpoint = client.typeDefs;
     }
 
     /** {@inheritDoc} */
@@ -59,7 +43,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
-        initializeOffHeap("tag", tags.size(), tags.isEmpty() ? EXEMPLAR_TAG : tags.get(0), AtlanTagDef.class);
+        resetOffHeap();
         mapSidToSourceTagsAttrSid.clear();
         deletedSids.clear();
         deletedNames.clear();

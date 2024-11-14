@@ -29,7 +29,6 @@ tasks {
                 threadCount = 1
             }
         }
-        jvmArgs = providers.gradleProperty("org.gradle.jvmargs").get().split(" ")
     }
 }
 

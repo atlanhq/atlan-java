@@ -2,18 +2,24 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
+import com.atlan.Atlan
 import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
 import mu.KotlinLogging
-import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.stream.Stream
 
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
  */
-abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
+abstract class AssetCache<T : Asset>(
+    cacheName: String,
+) : AbstractMassCache<T>(
+        Atlan.getDefaultClient(),
+        cacheName,
+    ) {
     private val logger = KotlinLogging.logger {}
 
     private var preloaded = AtomicBoolean(false)
@@ -31,7 +37,8 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
      */
     fun getByIdentity(identity: String): T? {
         if (ignore.containsKey(identity)) return null
-        if (!containsIdentity(identity)) lookupByName(identity)
+        if (!isNameKnown(identity)) lookupByName(identity)
+        if (!isNameKnown(identity)) return null
         return getByName(identity, false) as T
     }
 
@@ -43,7 +50,8 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
      */
     fun getByGuid(guid: String): T? {
         if (ignore.containsKey(guid)) return null
-        if (!containsGuid(guid)) lookupById(guid)
+        if (!isIdKnown(guid)) lookupById(guid)
+        if (!isIdKnown(guid)) return null
         return getById(guid, false) as T
     }
 
@@ -58,26 +66,6 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
     }
 
     /**
-     * Indicates whether the cache already contains an asset with a given identity.
-     *
-     * @param identity of the asset to check for presence in the cache
-     * @return true if this identity is already in the cache, false otherwise
-     */
-    fun containsIdentity(identity: String): Boolean {
-        return isNameKnown(identity)
-    }
-
-    /**
-     * Indicates whether the cache already contains an asset with a given GUID.
-     *
-     * @param guid unique identifier (GUID) of the asset to check for presence in the cache
-     * @return true if this GUID is already in the cache, false otherwise
-     */
-    fun containsGuid(guid: String): Boolean {
-        return isIdKnown(guid)
-    }
-
-    /**
      * Mark the provided asset identity as one to ignore.
      *
      * @param id any identity for the asset, either GUID or string identity
@@ -86,12 +74,26 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
         ignore[id] = id
     }
 
+    /** {@inheritDoc} */
+    override fun cache(
+        id: String,
+        name: String?,
+        asset: T?,
+    ) {
+        if (asset != null && !isArchived(id, asset)) {
+            val identity = name ?: getIdentityForAsset(asset)
+            super.cache(id, identity, asset)
+            ignore.remove(id)
+            ignore.remove(name)
+        }
+    }
+
     /**
      * List all the assets held in the cache.
      *
      * @return the set of all assets in the cache
      */
-    protected fun listAll(): Set<Map.Entry<UUID, T>> {
+    protected fun listAll(): Stream<Map.Entry<String, T>> {
         return entrySet()
     }
 
@@ -127,7 +129,7 @@ abstract class AssetCache<T : Asset> : AbstractMassCache<T>() {
     @Synchronized
     fun preload() {
         if (!preloaded.get()) {
-            refreshCache()
+            refresh()
             preloaded.set(true)
         }
     }

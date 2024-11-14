@@ -2,15 +2,14 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.GroupsEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.admin.GroupResponse;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -19,34 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GroupCache extends AbstractMassCache<AtlanGroup> {
 
-    private static final AtlanGroup EXEMPLAR_GROUP = AtlanGroup.builder()
-            .id(UUID.randomUUID().toString())
-            .name("group_name")
-            .alias("Group Name")
-            .path("/group_name")
-            .attributes(AtlanGroup.GroupAttributes.builder()
-                    .alias(List.of("Group Name"))
-                    .createdAt(List.of("1234567890"))
-                    .createdBy(List.of("someone"))
-                    .description(List.of("could be empty"))
-                    .isDefault(List.of("false"))
-                    .build())
-            .personas(new TreeSet<>(Set.of(AtlanGroup.Persona.builder()
-                    .id(UUID.randomUUID().toString())
-                    .name("Persona Name")
-                    .displayName("Persona Name")
-                    .qualifiedName("default/E8XsHwbZ995WWk2ajSVoWN")
-                    .build())))
-            .roles(new TreeSet<>(Set.of("persona_E8XsHwbZ995WWk2ajSVoWN")))
-            .userCount(10L)
-            .build();
-
-    private volatile Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
-
     private final GroupsEndpoint groupsEndpoint;
 
-    public GroupCache(GroupsEndpoint groupsEndpoint) {
-        this.groupsEndpoint = groupsEndpoint;
+    public GroupCache(AtlanClient client) {
+        super(client, "group");
+        this.groupsEndpoint = client.groups;
     }
 
     /** {@inheritDoc} */
@@ -54,33 +30,11 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = groupsEndpoint.list();
-        initializeOffHeap("group", groups.size(), groups.isEmpty() ? EXEMPLAR_GROUP : groups.get(0), AtlanGroup.class);
-        mapAliasToId.clear();
+        resetOffHeap();
         for (AtlanGroup group : groups) {
             String groupId = group.getId();
             String groupName = group.getName();
-            cache(groupId, groupName, group);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void cache(String id, String name, AtlanGroup object) {
-        super.cache(id, name, object);
-        if (object != null) {
-            String alias = object.getAlias();
-            if (alias != null) {
-                mapAliasToId.put(alias, id);
-            }
-        }
-    }
-
-    private String getIdFromAlias(String alias) {
-        lock.readLock().lock();
-        try {
-            return mapAliasToId.get(alias);
-        } finally {
-            lock.readLock().unlock();
+            cache(groupId, group.getAlias(), groupName, group);
         }
     }
 
@@ -108,20 +62,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
     public String getIdForAlias(String alias, boolean allowRefresh) throws AtlanException {
-        if (alias != null && !alias.isEmpty()) {
-            String groupId = getIdFromAlias(alias);
-            if (groupId == null && allowRefresh) {
-                // If not found, refresh the cache and look again (could be stale)
-                cacheByAlias(alias);
-                groupId = getIdFromAlias(alias);
-            }
-            if (groupId == null) {
-                throw new NotFoundException(ErrorCode.GROUP_NOT_FOUND_BY_ALIAS, alias);
-            }
-            return groupId;
-        } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ALIAS);
-        }
+        return getIdForSid(alias, allowRefresh);
     }
 
     /**
@@ -148,8 +89,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
     public String getNameForAlias(String alias, boolean allowRefresh) throws AtlanException {
-        String guid = getIdForAlias(alias, allowRefresh);
-        return getNameForId(guid, false);
+        return getNameForSid(alias, allowRefresh);
     }
 
     /** {@inheritDoc} */
@@ -166,32 +106,9 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
         cacheResponse(response);
     }
 
-    /**
-     * Wraps a single object lookup for the cache with necessary concurrency controls.
-     *
-     * @param alias name of the group as it appears in the UI
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    public void cacheByAlias(String alias) throws AtlanException {
-        if (bulkRefresh.get()) {
-            refresh();
-        } else {
-            lock.writeLock().lock();
-            try {
-                lookupByAlias(alias);
-            } finally {
-                lock.writeLock().unlock();
-            }
-        }
-    }
-
-    /**
-     * Logic to look up a single object for the cache.
-     *
-     * @param alias name of the group as it appears in the UI
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    protected void lookupByAlias(String alias) throws AtlanException {
+    /** {@inheritDoc} */
+    @Override
+    protected void lookupBySid(String alias) throws AtlanException {
         GroupResponse response = groupsEndpoint.list("{\"alias\":\"" + alias + "\"}");
         cacheResponse(response);
     }
@@ -201,7 +118,7 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
             List<AtlanGroup> groups = response.getRecords();
             for (AtlanGroup group : groups) {
                 String groupId = group.getId();
-                cache(groupId, group.getName(), group);
+                cache(groupId, group.getAlias(), group.getName(), group);
             }
         }
     }

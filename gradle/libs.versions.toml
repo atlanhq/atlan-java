@@ -1,15 +1,15 @@
 [versions]
 jackson = "2.18.1"
 slf4j = "2.0.16"
-elasticsearch = "8.15.3"
+elasticsearch = "8.16.0"
 freemarker = "2.3.33"
-classgraph = "4.8.177"
+classgraph = "4.8.179"
 testng = "7.10.2"
 log4j = "2.24.1"
 wiremock = "3.9.2"
 jnanoid = "2.0.0"
 numaflow = "0.9.0"
-awssdk = "2.29.9"
+awssdk = "2.29.11"
 gcs = "26.50.0"
 system-stubs = "2.1.7"
 fastcsv = "3.4.0"
@@ -32,7 +32,7 @@ protobuf = "4.28.3"
 akka = "2.8.8"
 kotlin = "2.0.21"
 kotlin-mu = "3.0.5"
-chronicle = "2.26ea59"
+rocksdb = "9.7.3"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -77,8 +77,7 @@ protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", versio
 akka-actor = { module = "com.typesafe.akka:akka-actor_3", version.ref = "akka" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-mu" }
-chronicle-bom = { module = "net.openhft:chronicle-bom", version.ref = "chronicle" }
-chronicle-map = { module = "net.openhft:chronicle-map" }
+rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]

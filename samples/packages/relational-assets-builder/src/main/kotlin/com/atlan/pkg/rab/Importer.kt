@@ -3,6 +3,7 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
+import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -128,8 +129,9 @@ object Importer {
                 1,
                 true,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
-        connectionImporter.import()
+        connectionImporter.import()?.close()
 
         logger.info { " --- Importing databases... ---" }
         val databaseImporter =
@@ -141,6 +143,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val dbResults = databaseImporter.import()
 
@@ -154,6 +157,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val schResults = schemaImporter.import()
 
@@ -167,6 +171,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val tblResults = tableImporter.import()
 
@@ -180,6 +185,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val viewResults = viewImporter.import()
 
@@ -193,6 +199,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val mviewResults = materializedViewImporter.import()
 
@@ -206,6 +213,7 @@ object Importer {
                 connectionImporter,
                 trackBatches,
                 fieldSeparator,
+                assetsFailOnErrors,
             )
         val colResults = columnImporter.import()
 
@@ -223,7 +231,7 @@ object Importer {
                 null
             }
 
-        ImportResults.getAllModifiedAssets(dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
             val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
             DeltaProcessor(
                 semantic = deltaSemantic,

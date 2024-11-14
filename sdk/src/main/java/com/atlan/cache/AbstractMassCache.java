@@ -2,18 +2,20 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AtlanObject;
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +24,10 @@ import lombok.extern.slf4j.Slf4j;
  * a cache is populated en-masse through batch refreshing.
  */
 @Slf4j
-public abstract class AbstractMassCache<T extends AtlanObject> {
+public abstract class AbstractMassCache<T extends AtlanObject> implements Closeable {
+
+    private final AtlanClient client;
+    private final String cacheName;
 
     private volatile Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private volatile Map<String, String> mapNameToId = new ConcurrentHashMap<>();
@@ -37,26 +42,29 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
     protected AtomicBoolean bulkRefresh = new AtomicBoolean(true);
 
     /**
-     * Initializes a new off-heap cache for the objects themselves.
-     * This must be implemented, to include an efficient initial query for an exemplar value and anticipated
-     * overall size of the cache, through which to initialize the off-heap cache.
+     * Define a new mass cache with the provided details.
+     * Note: ideally, before using, also set the total capacity.
      *
-     * @param name of the off-heap cache
-     * @param totalCapacity maximum number of objects expected in the cache
-     * @param exemplar object that is a representative example of what will be in the cache
-     * @param valueClazz class of objects that will be in the cache
-     * @throws AtlanException on any error communicating with Atlan
+     * @param cacheName name of the cache
      */
-    protected void initializeOffHeap(String name, int totalCapacity, T exemplar, Class<T> valueClazz)
-            throws AtlanException {
+    public AbstractMassCache(AtlanClient client, String cacheName) {
+        this.client = client;
+        this.cacheName = cacheName;
+    }
+
+    /**
+     * Initializes a new off-heap cache for the objects themselves.
+     * This will be automatically called either when an entry is first added or the cache as a whole is refreshed.
+     */
+    protected void resetOffHeap() {
         if (mapIdToObject != null) {
             try {
                 mapIdToObject.close();
             } catch (IOException e) {
-                throw new LogicException(ErrorCode.ERROR_PASSTHROUGH, e);
+                throw new IllegalStateException("Unable to close existing off-heap cache.", e);
             }
         }
-        mapIdToObject = new AbstractOffHeapCache<>(name, totalCapacity, exemplar, valueClazz);
+        mapIdToObject = new AbstractOffHeapCache<>(client, cacheName);
     }
 
     /**
@@ -108,7 +116,12 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
         if (bulkRefresh.get()) {
             refresh();
         } else {
-            throw new InvalidRequestException(ErrorCode.CANNOT_CACHE_REFRESH_BY_SID);
+            lock.writeLock().lock();
+            try {
+                lookupBySid(sid);
+            } finally {
+                lock.writeLock().unlock();
+            }
         }
     }
 
@@ -148,6 +161,19 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
 
     /**
      * Logic to look up a single object for the cache.
+     * Note: by default this is not implemented (and will immediately error), so override it if you intend the cache
+     * to be populated by secondary ID lookups.
+     *
+     * @param sid unique secondary internal identifier for the object
+     * @throws AtlanException on any error communicating with Atlan
+     * @throws InvalidRequestException if not overridden with logic to update cache by secondary ID lookups
+     */
+    protected void lookupBySid(String sid) throws AtlanException {
+        throw new InvalidRequestException(ErrorCode.CANNOT_CACHE_REFRESH_BY_SID);
+    }
+
+    /**
+     * Logic to look up a single object for the cache.
      *
      * @param name unique name for the object
      * @throws AtlanException on any error communicating with Atlan
@@ -167,6 +193,9 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
         mapIdToName.put(id, name);
         mapNameToId.put(name, id);
         if (object != null) {
+            if (mapIdToObject == null) {
+                resetOffHeap();
+            }
             mapIdToObject.put(id, object);
         }
     }
@@ -195,6 +224,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
     protected boolean isEmpty() {
         lock.readLock().lock();
         try {
+            if (mapIdToObject == null) return true;
             return mapIdToObject.isEmpty();
         } finally {
             lock.readLock().unlock();
@@ -206,10 +236,11 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
      *
      * @return an iterable set of entries of objects that are cached
      */
-    protected Set<Map.Entry<UUID, T>> entrySet() {
+    protected Stream<Map.Entry<String, T>> entrySet() {
         lock.readLock().lock();
         try {
-            return mapIdToObject.internal.entrySet();
+            if (mapIdToObject == null) return Stream.empty();
+            return mapIdToObject.entrySet();
         } finally {
             lock.readLock().unlock();
         }
@@ -343,6 +374,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
         if (id == null) return null;
         lock.readLock().lock();
         try {
+            if (mapIdToObject == null) return null;
             return mapIdToObject.get(id);
         } finally {
             lock.readLock().unlock();
@@ -386,6 +418,46 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
             return id;
         } else {
             throw new InvalidRequestException(ErrorCode.MISSING_NAME);
+        }
+    }
+
+    /**
+     * Translate the provided Atlan-internal secondary ID to its Atlan-internal ID string.
+     *
+     * @param sid Atlan-internal secondary ID
+     * @return unique Atlan-internal ID string for the object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the object to retrieve
+     */
+    public String getIdForSid(String sid) throws AtlanException {
+        return getIdForSid(sid, true);
+    }
+
+    /**
+     * Translate the provided Atlan-internal secondary ID to its Atlan-internal ID string.
+     *
+     * @param sid Atlan-internal secondary ID
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return unique Atlan-internal ID string for the object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the object to retrieve
+     */
+    public String getIdForSid(String sid, boolean allowRefresh) throws AtlanException {
+        if (sid != null && !sid.isEmpty()) {
+            String id = getIdFromSid(sid);
+            if (id == null && allowRefresh) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheBySid(sid);
+                id = getIdFromSid(sid);
+            }
+            if (id == null) {
+                throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_SID, sid);
+            }
+            return id;
+        } else {
+            throw new InvalidRequestException(ErrorCode.MISSING_ID);
         }
     }
 
@@ -550,6 +622,38 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
     }
 
     /**
+     * Retrieve the actual object by Atlan-internal secondary ID string.
+     *
+     * @param sid Atlan-internal secondary ID string
+     * @return the object with that secondary ID
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the object to retrieve
+     */
+    public T getBySid(String sid) throws AtlanException {
+        return getBySid(sid, true);
+    }
+
+    /**
+     * Retrieve the actual object by Atlan-internal secondary ID string.
+     *
+     * @param sid Atlan-internal secondary ID string
+     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @return the object with that secondary ID
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the object to retrieve
+     */
+    public T getBySid(String sid, boolean allowRefresh) throws AtlanException {
+        if (sid != null && !sid.isEmpty()) {
+            String id = getIdForSid(sid, allowRefresh);
+            return getById(id, false);
+        } else {
+            throw new InvalidRequestException(ErrorCode.MISSING_ID);
+        }
+    }
+
+    /**
      * Retrieve the actual object by human-readable name.
      *
      * @param name human-readable name of the object
@@ -578,6 +682,19 @@ public abstract class AbstractMassCache<T extends AtlanObject> {
             return getById(id, false);
         } else {
             throw new InvalidRequestException(ErrorCode.MISSING_NAME);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void close() throws IOException {
+        lock.writeLock().lock();
+        try {
+            if (mapIdToObject != null) {
+                mapIdToObject.close();
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 }

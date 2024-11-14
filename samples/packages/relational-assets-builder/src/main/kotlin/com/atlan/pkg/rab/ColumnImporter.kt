@@ -7,6 +7,7 @@ import com.atlan.model.assets.Column
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.cell.DataTypeXformer
 import mu.KotlinLogging
 
 /**
@@ -24,6 +25,7 @@ import mu.KotlinLogging
  * @param connectionImporter that was used to import connections
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ColumnImporter(
     private val preprocessed: Importer.Results,
@@ -33,6 +35,7 @@ class ColumnImporter(
     private val connectionImporter: ConnectionImporter,
     trackBatches: Boolean,
     fieldSeparator: Char,
+    private val failOnErrors: Boolean = true,
 ) : AssetImporter(
         preprocessed.preprocessedFile,
         attrsToOverwrite,
@@ -42,6 +45,7 @@ class ColumnImporter(
         KotlinLogging.logger {},
         trackBatches,
         fieldSeparator,
+        failOnErrors,
     ) {
     companion object {
         const val COLUMN_PARENT_QN = "columnParentQualifiedName"
@@ -56,6 +60,14 @@ class ColumnImporter(
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
         val parentType = preprocessed.entityQualifiedNameToType[qnDetails.parentUniqueQN] ?: throw IllegalStateException("Could not find any table/view at: ${qnDetails.parentUniqueQN}")
-        return Column.creator(name, parentType, parentQN, order)
+        val builder = Column.creator(name, parentType, parentQN, order)
+        val rawDataType = deserializer.getRawValue(Column.DATA_TYPE.atlanFieldName)
+        if (rawDataType.isNotBlank()) {
+            builder.rawDataTypeDefinition(rawDataType)
+            DataTypeXformer.getPrecision(rawDataType)?.let { builder.precision(it) }
+            DataTypeXformer.getScale(rawDataType)?.let { builder.numericScale(it) }
+            DataTypeXformer.getMaxLength(rawDataType)?.let { builder.maxLength(it) }
+        }
+        return builder
     }
 }

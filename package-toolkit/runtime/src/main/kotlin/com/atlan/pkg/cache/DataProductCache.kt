@@ -12,7 +12,7 @@ import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object DataProductCache : AssetCache<DataProduct>() {
+object DataProductCache : AssetCache<DataProduct>("product") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
@@ -114,15 +114,9 @@ object DataProductCache : AssetCache<DataProduct>() {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val request =
-            DataProduct.select()
-                .includesOnResults(includesOnResults)
-                .includesOnRelations(includesOnRelations)
-                .pageSize(1)
-                .toRequest()
-        val response = request.search()
-        logger.info { "Caching all ${response.approximateCount ?: 0} data products, up-front..." }
-        initializeOffHeap("dataproduct", response?.approximateCount?.toInt() ?: 0, response?.assets[0] as DataProduct, DataProduct::class.java)
+        val count = DataProduct.select().count()
+        logger.info { "Caching all $count data products, up-front..." }
+        resetOffHeap()
         DataProduct.select()
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)

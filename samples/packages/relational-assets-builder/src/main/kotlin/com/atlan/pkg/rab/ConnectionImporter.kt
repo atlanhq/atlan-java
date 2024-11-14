@@ -10,6 +10,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.serde.RowDeserializer
 import mu.KotlinLogging
+import java.util.stream.Stream
 
 /**
  * Import connections into Atlan from a provided CSV file.
@@ -25,6 +26,7 @@ import mu.KotlinLogging
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ConnectionImporter(
     private val preprocessed: Importer.Results,
@@ -33,6 +35,7 @@ class ConnectionImporter(
     private val batchSize: Int,
     trackBatches: Boolean,
     fieldSeparator: Char,
+    private val failOnErrors: Boolean = true,
 ) : AssetImporter(
         preprocessed.preprocessedFile,
         attrsToOverwrite,
@@ -47,6 +50,7 @@ class ConnectionImporter(
         KotlinLogging.logger {},
         trackBatches,
         fieldSeparator,
+        failOnErrors,
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
@@ -72,7 +76,7 @@ class ConnectionImporter(
     }
 
     /** {@inheritDoc} */
-    override fun cacheCreated(list: Collection<Asset>) {
+    override fun cacheCreated(list: Stream<Asset>) {
         // Cache any assets that were created by processing
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity

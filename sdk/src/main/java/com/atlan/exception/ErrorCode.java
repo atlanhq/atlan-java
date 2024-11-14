@@ -489,6 +489,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-032",
             "No roles found in Atlan.",
             "Verify your tenant is fully configured. If you believe it is, please raise this with Atlan support."),
+    ID_NOT_FOUND_BY_SID(
+            404,
+            "ATLAN-JAVA-404-033",
+            "Object with secondary name {0} does not exist.",
+            "Verify the object name provided is a valid secondary object name."),
 
     CONFLICT_PASSTHROUGH(
             409,

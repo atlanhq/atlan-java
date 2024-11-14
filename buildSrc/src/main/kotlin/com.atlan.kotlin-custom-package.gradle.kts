@@ -56,7 +56,6 @@ tasks {
                 testLogging.showStandardStreams = true
             }
         }
-        jvmArgs = providers.gradleProperty("org.gradle.jvmargs").get().split(" ")
         onlyIf {
             project.hasProperty("packageTests")
         }

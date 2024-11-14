@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.Atlan
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
@@ -23,7 +24,8 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AssetImportCfg>()
-        import(config, outputDirectory)
+        val results = import(config, outputDirectory)
+        results?.close()
     }
 
     fun import(
@@ -116,7 +118,7 @@ object Importer {
                         glossariesFieldSeparator,
                     )
                 val resultsTerm = termImporter.import()
-                resultsGlossary?.combinedWith(resultsCategory)?.combinedWith(resultsTerm)
+                ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsGlossary, resultsCategory, resultsTerm)
             } else {
                 null
             }
@@ -195,17 +197,17 @@ object Importer {
                     LinkCache.preload()
                 }
                 val resultsProduct = productImporter.import()
-                resultsDomain?.combinedWith(resultsProduct)
+                ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsDomain, resultsProduct)
             } else {
                 null
             }
 
-        Utils.updateConnectionCache(
-            added = ImportResults.getAllModifiedAssets(resultsAssets),
-            fallback = outputDirectory,
-        )
-
-        val resultsAssetsGTC = resultsGTC?.combinedWith(resultsAssets) ?: resultsAssets
-        return resultsDDP?.combinedWith(resultsAssetsGTC) ?: resultsAssetsGTC
+        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), false, resultsAssets).use { allModified ->
+            Utils.updateConnectionCache(
+                added = allModified,
+                fallback = outputDirectory,
+            )
+        }
+        return ImportResults.combineAll(Atlan.getDefaultClient(), true, resultsGTC, resultsDDP, resultsAssets)
     }
 }

@@ -15,77 +15,54 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import lombok.Builder;
 
 /**
  * Utility class for managing bulk updates across multiple parallel-running batches.
  */
-@Builder
 public class ParallelBatch implements Closeable {
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     /** Connectivity to an Atlan tenant. */
-    private AtlanClient client;
+    private final AtlanClient client;
 
     /** Maximum number of assets to submit in each batch. */
-    @Builder.Default
-    private int maxSize = 20;
+    private final int maxSize;
 
     /** Whether to replace Atlan tags (true), or ignore them (false). */
-    @Builder.Default
-    private boolean replaceAtlanTags = false;
+    private final boolean replaceAtlanTags;
 
     /** How to handle any custom metadata on assets (ignore, replace, or merge). */
-    @Builder.Default
-    private AssetBatch.CustomMetadataHandling customMetadataHandling = AssetBatch.CustomMetadataHandling.IGNORE;
+    private final AssetBatch.CustomMetadataHandling customMetadataHandling;
 
     /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
-    @Builder.Default
-    private boolean captureFailures = false;
+    private final boolean captureFailures;
 
     /** Whether to track the basic information about every asset that is created or updated (true) or only track counts (false). */
-    @Builder.Default
-    private boolean track = true;
+    private final boolean track;
 
     /** Whether to allow assets to be created (false) or only allow existing assets to be updated (true). */
-    @Builder.Default
-    private boolean updateOnly = false;
+    private final boolean updateOnly;
 
     /** When running with {@link #updateOnly} as true, whether to consider only exact matches (false) or ignore case (true). */
-    @Builder.Default
-    private boolean caseSensitive = true;
+    private final boolean caseSensitive;
 
     /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
-    @Builder.Default
-    private AssetCreationHandling creationHandling = AssetCreationHandling.FULL;
+    private final AssetCreationHandling creationHandling;
 
     /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
-    @Builder.Default
-    private boolean tableViewAgnostic = false;
-
-    /** Total anticipated size of all assets to be batched. */
-    @Builder.Default
-    private int totalSize = -1;
+    private final boolean tableViewAgnostic;
 
     private final ConcurrentHashMap<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
     private final List<AssetBatch.FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
     private final Map<String, String> resolvedGuids = new ConcurrentHashMap<>();
     private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new ConcurrentHashMap<>();
 
-    @Builder.Default
     private OffHeapAssetCache created = null;
-
-    @Builder.Default
     private OffHeapAssetCache updated = null;
-
-    @Builder.Default
     private OffHeapAssetCache restored = null;
-
-    @Builder.Default
     private OffHeapAssetCache skipped = null;
 
     /**
@@ -268,99 +245,6 @@ public class ParallelBatch implements Closeable {
             boolean caseSensitive,
             AssetCreationHandling creationHandling,
             boolean tableViewAgnostic) {
-        this(
-                client,
-                maxSize,
-                replaceAtlanTags,
-                customMetadataHandling,
-                captureFailures,
-                updateOnly,
-                track,
-                caseSensitive,
-                creationHandling,
-                tableViewAgnostic,
-                -1);
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
-     *
-     * @param client connectivity to Atlan
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
-     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
-     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
-     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
-     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
-     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param totalSize total anticipated size of all assets to be batched
-     */
-    public ParallelBatch(
-            AtlanClient client,
-            int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
-            boolean captureFailures,
-            boolean updateOnly,
-            boolean track,
-            boolean caseSensitive,
-            AssetCreationHandling creationHandling,
-            boolean tableViewAgnostic,
-            int totalSize) {
-        this(
-                client,
-                maxSize,
-                replaceAtlanTags,
-                customMetadataHandling,
-                captureFailures,
-                updateOnly,
-                track,
-                caseSensitive,
-                creationHandling,
-                tableViewAgnostic,
-                totalSize,
-                new OffHeapAssetCache("p-created", totalSize),
-                new OffHeapAssetCache("p-updated", totalSize),
-                new OffHeapAssetCache("p-restored", totalSize),
-                new OffHeapAssetCache("p-skipped", totalSize));
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved, in parallel (across threads).
-     *
-     * @param client connectivity to Atlan
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
-     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
-     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
-     * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
-     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
-     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param created off-heap cache for assets created by the batch
-     * @param updated off-heap cache for assets updated by the batch
-     * @param restored off-heap cache for assets restored by the batch
-     * @param skipped off-heap cache for assets skipped by the batch
-     */
-    protected ParallelBatch(
-            AtlanClient client,
-            int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
-            boolean captureFailures,
-            boolean updateOnly,
-            boolean track,
-            boolean caseSensitive,
-            AssetCreationHandling creationHandling,
-            boolean tableViewAgnostic,
-            int totalSize,
-            OffHeapAssetCache created,
-            OffHeapAssetCache updated,
-            OffHeapAssetCache restored,
-            OffHeapAssetCache skipped) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -371,11 +255,6 @@ public class ParallelBatch implements Closeable {
         this.updateOnly = updateOnly;
         this.caseSensitive = caseSensitive;
         this.tableViewAgnostic = tableViewAgnostic;
-        this.totalSize = totalSize;
-        this.created = created;
-        this.updated = updated;
-        this.restored = restored;
-        this.skipped = skipped;
     }
 
     /**
@@ -387,14 +266,6 @@ public class ParallelBatch implements Closeable {
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
         long id = Thread.currentThread().getId();
-        // Assumes the assets are evenly-split across threads:
-        int totalPerThread;
-        if (totalSize > 0) {
-            totalPerThread =
-                    (totalSize + ForkJoinPool.getCommonPoolParallelism() - 1) / ForkJoinPool.getCommonPoolParallelism();
-        } else {
-            totalPerThread = totalSize;
-        }
         // Note: these are thread-specific operations, so not explicitly locked or synchronized
         AssetBatch batch = batchMap.computeIfAbsent(
                 id,
@@ -408,8 +279,7 @@ public class ParallelBatch implements Closeable {
                         track,
                         !caseSensitive,
                         creationHandling,
-                        tableViewAgnostic,
-                        totalPerThread));
+                        tableViewAgnostic));
         return batch.add(single);
     }
 
@@ -512,24 +382,15 @@ public class ParallelBatch implements Closeable {
      * @return all created assets, across all parallel batches
      */
     public OffHeapAssetCache getCreated() {
-        if (!track) {
-            return null;
-        }
-        if (created == null || created.isEmpty()) {
-            int totalCreated = 0;
+        if (!track) return null;
+        if (created == null) {
             lock.writeLock().lock();
             try {
+                created = new OffHeapAssetCache(client, "p-created");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getCreated().isNotClosed()) {
-                        totalCreated += batch.getCreated().size();
-                    }
-                }
-                created = new OffHeapAssetCache("p-created", totalCreated);
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getCreated().isNotClosed()) {
-                        created.extendedWith(batch.getCreated());
                         try {
-                            batch.getCreated().close();
+                            created.extendedWith(batch.getCreated(), true);
                         } catch (IOException e) {
                             throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
                         }
@@ -553,24 +414,15 @@ public class ParallelBatch implements Closeable {
      * @return all updated assets, across all parallel batches
      */
     public OffHeapAssetCache getUpdated() {
-        if (!track) {
-            return null;
-        }
-        if (updated == null || updated.isEmpty()) {
-            int totalUpdated = 0;
+        if (!track) return null;
+        if (updated == null) {
             lock.writeLock().lock();
             try {
+                updated = new OffHeapAssetCache(client, "p-updated");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getUpdated().isNotClosed()) {
-                        totalUpdated += batch.getUpdated().size();
-                    }
-                }
-                updated = new OffHeapAssetCache("p-updated", totalUpdated);
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getUpdated().isNotClosed()) {
-                        updated.extendedWith(batch.getUpdated());
                         try {
-                            batch.getUpdated().close();
+                            updated.extendedWith(batch.getUpdated(), true);
                         } catch (IOException e) {
                             throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
                         }
@@ -595,24 +447,15 @@ public class ParallelBatch implements Closeable {
      * @return all potentially restored assets, across all parallel batches
      */
     public OffHeapAssetCache getRestored() {
-        if (!track) {
-            return null;
-        }
-        if (restored == null || restored.isEmpty()) {
-            int totalRestored = 0;
+        if (!track) return null;
+        if (restored == null) {
             lock.writeLock().lock();
             try {
+                restored = new OffHeapAssetCache(client, "p-restored");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getRestored().isNotClosed()) {
-                        totalRestored += batch.getRestored().size();
-                    }
-                }
-                restored = new OffHeapAssetCache("p-restored", totalRestored);
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getRestored().isNotClosed()) {
-                        restored.extendedWith(batch.getRestored());
                         try {
-                            batch.getRestored().close();
+                            restored.extendedWith(batch.getRestored(), true);
                         } catch (IOException e) {
                             throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
                         }
@@ -667,21 +510,15 @@ public class ParallelBatch implements Closeable {
      * @return all assets that were skipped, across all parallel batches
      */
     public OffHeapAssetCache getSkipped() {
-        if (skipped == null || skipped.isEmpty()) {
-            int totalSkipped = 0;
+        if (!track) return null;
+        if (skipped == null) {
             lock.writeLock().lock();
             try {
+                skipped = new OffHeapAssetCache(client, "p-skipped");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getSkipped().isNotClosed()) {
-                        totalSkipped += batch.getSkipped().size();
-                    }
-                }
-                skipped = new OffHeapAssetCache("p-skipped", totalSkipped);
-                for (AssetBatch batch : batchMap.values()) {
-                    if (batch.getSkipped().isNotClosed()) {
-                        skipped.extendedWith(batch.getSkipped());
                         try {
-                            batch.getSkipped().close();
+                            skipped.extendedWith(batch.getSkipped(), true);
                         } catch (IOException e) {
                             throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
                         }

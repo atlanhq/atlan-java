@@ -29,14 +29,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
  * Utility class for managing bulk updates in batches.
  */
-@Builder
 public class AssetBatch implements Closeable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
@@ -49,43 +47,34 @@ public class AssetBatch implements Closeable {
     }
 
     /** Connectivity to an Atlan tenant. */
-    private AtlanClient client;
+    private final AtlanClient client;
 
     /** Maximum number of assets to submit in each batch. */
-    @Builder.Default
-    private int maxSize = 20;
+    private final int maxSize;
 
     /** Whether to replace Atlan tags (true), or ignore them (false). */
-    @Builder.Default
-    private boolean replaceAtlanTags = false;
+    private final boolean replaceAtlanTags;
 
     /** How to handle any custom metadata on assets (ignore, replace, or merge). */
-    @Builder.Default
-    private CustomMetadataHandling customMetadataHandling = CustomMetadataHandling.IGNORE;
+    private final CustomMetadataHandling customMetadataHandling;
 
     /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
-    @Builder.Default
-    private boolean captureFailures = false;
+    private final boolean captureFailures;
 
     /** Whether to allow assets to be created (false) or only allow existing assets to be updated (true). */
-    @Builder.Default
-    private boolean updateOnly = false;
+    private final boolean updateOnly;
 
     /** Whether to track the basic information about every asset that is created or updated (true) or only track counts (false). */
-    @Builder.Default
-    private boolean track = true;
+    private final boolean track;
 
     /** When running with {@link #updateOnly} as true, whether to consider only exact matches (false) or ignore case (true). */
-    @Builder.Default
-    private boolean caseInsensitive = false;
+    private final boolean caseInsensitive;
 
     /** When allowing assets to be created, how to handle those creations (full assets or partial assets). */
-    @Builder.Default
-    private AssetCreationHandling creationHandling = AssetCreationHandling.FULL;
+    private final AssetCreationHandling creationHandling;
 
     /** Whether tables and views should be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa). */
-    @Builder.Default
-    private boolean tableViewAgnostic = false;
+    private final boolean tableViewAgnostic;
 
     /** Internal queue for building up assets to be saved. */
     private final List<Asset> _batch = Collections.synchronizedList(new ArrayList<>());
@@ -332,7 +321,14 @@ public class AssetBatch implements Closeable {
                 caseInsensitive,
                 creationHandling,
                 tableViewAgnostic,
-                -1);
+                new OffHeapAssetCache(
+                        client, "created_" + Thread.currentThread().getId()),
+                new OffHeapAssetCache(
+                        client, "updated_" + Thread.currentThread().getId()),
+                new OffHeapAssetCache(
+                        client, "restored_" + Thread.currentThread().getId()),
+                new OffHeapAssetCache(
+                        client, "skipped_" + Thread.currentThread().getId()));
     }
 
     /**
@@ -348,56 +344,12 @@ public class AssetBatch implements Closeable {
      * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
      * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
      * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param totalSize total anticipated size of all assets to be batched
+     * @param created off-heap asset cache tracking assets that have been created
+     * @param updated off-heap asset cache tracking assets that have been updated
+     * @param restored off-heap asset cache tracking assets that have been restored
+     * @param skipped off-heap asset cache tracking assets that have been skipped
      */
     public AssetBatch(
-            AtlanClient client,
-            int maxSize,
-            boolean replaceAtlanTags,
-            CustomMetadataHandling customMetadataHandling,
-            boolean captureFailures,
-            boolean updateOnly,
-            boolean track,
-            boolean caseInsensitive,
-            AssetCreationHandling creationHandling,
-            boolean tableViewAgnostic,
-            int totalSize) {
-        this(
-                client,
-                maxSize,
-                replaceAtlanTags,
-                customMetadataHandling,
-                captureFailures,
-                updateOnly,
-                track,
-                caseInsensitive,
-                creationHandling,
-                tableViewAgnostic,
-                new OffHeapAssetCache("created" + Thread.currentThread().getId(), totalSize),
-                new OffHeapAssetCache("updated" + Thread.currentThread().getId(), totalSize),
-                new OffHeapAssetCache("restored" + Thread.currentThread().getId(), totalSize),
-                new OffHeapAssetCache("skipped" + Thread.currentThread().getId(), totalSize));
-    }
-
-    /**
-     * Create a new batch of assets to be bulk-saved.
-     *
-     * @param client connectivity to Atlan
-     * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
-     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
-     * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
-     * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
-     * @param track when false, details about each created and updated asset will no longer be tracked (only an overall count of each) -- useful if you intend to send close to (or more than) 1 million assets through a batch
-     * @param caseInsensitive (only applies when updateOnly is true) when matching assets, search for their qualifiedName in a case-insensitive way
-     * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
-     * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
-     * @param created off-heap cache for assets created by the batch
-     * @param updated off-heap cache for assets updated by the batch
-     * @param restored off-heap cache for assets restored by the batch
-     * @param skipped off-heap cache for assets skipped by the batch
-     */
-    protected AssetBatch(
             AtlanClient client,
             int maxSize,
             boolean replaceAtlanTags,
@@ -450,12 +402,12 @@ public class AssetBatch implements Closeable {
     public void close() throws IOException {
         IOException exception = null;
         try {
-            created.close();
+            if (created != null) created.close();
         } catch (IOException e) {
             exception = e;
         }
         try {
-            updated.close();
+            if (updated != null) updated.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;
@@ -464,7 +416,7 @@ public class AssetBatch implements Closeable {
             }
         }
         try {
-            restored.close();
+            if (restored != null) restored.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;
@@ -473,7 +425,7 @@ public class AssetBatch implements Closeable {
             }
         }
         try {
-            skipped.close();
+            if (skipped != null) skipped.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;
@@ -670,8 +622,8 @@ public class AssetBatch implements Closeable {
                     String mappedGuid = resolvedGuids.getOrDefault(guid, guid);
                     if (!created.containsKey(mappedGuid) && !updated.containsKey(mappedGuid)) {
                         // Ensure any assets that do not show as either created or updated are still tracked
-                        // as possibly restored
-                        track(restored, one);
+                        // as possibly restored (and inject the mapped GUID in case it had a placeholder)
+                        track(restored, (Asset) one.toBuilder().guid(mappedGuid).build());
                         numRestored.getAndIncrement();
                     }
                     if (caseInsensitive) {
