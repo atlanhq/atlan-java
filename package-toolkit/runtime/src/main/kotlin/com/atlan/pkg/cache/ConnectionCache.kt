@@ -134,7 +134,6 @@ object ConnectionCache : AssetCache<Connection>("connection") {
     override fun refreshCache() {
         val count = Connection.select().count()
         logger.info { "Caching all $count connections, up-front..." }
-        resetOffHeap()
         Connection.select()
             .includesOnResults(includesOnResults)
             .stream(true)

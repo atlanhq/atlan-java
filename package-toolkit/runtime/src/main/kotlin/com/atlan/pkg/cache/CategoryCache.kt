@@ -73,7 +73,7 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
      *
      * @param glossaryName name of the glossary for which to bulk-cache categories
      */
-    fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
+    private fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
         return this.traverseAndCacheHierarchy(glossaryName, emptyList())
     }
 
@@ -103,7 +103,10 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
                     val parent = category.parentCategory
                     category as GlossaryCategory
                     parent?.let {
-                        val parentIdentity = getIdentity(parent.guid)
+                        // Note: this MUST bypass the read lock, since it is called within a write lock
+                        // (otherwise, this will become a deadlock -- the read will wait until write lock is released,
+                        // which will never happen because it is waiting on this read operation to complete.)
+                        val parentIdentity = getIdentity(parent.guid, true)
                         val parentPath = parentIdentity?.split(GLOSSARY_DELIMITER)?.get(0) ?: ""
                         cache(
                             category.guid,
@@ -151,7 +154,6 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
     override fun refreshCache() {
         val count = GlossaryCategory.select().count()
         logger.info { "Caching all $count categories, up-front..." }
-        resetOffHeap()
         Glossary.select()
             .includeOnResults(Glossary.NAME)
             .stream(true)

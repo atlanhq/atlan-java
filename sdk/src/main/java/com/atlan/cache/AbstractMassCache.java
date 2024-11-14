@@ -50,13 +50,14 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public AbstractMassCache(AtlanClient client, String cacheName) {
         this.client = client;
         this.cacheName = cacheName;
+        this.mapIdToObject = new AbstractOffHeapCache<>(client, cacheName);
     }
 
     /**
      * Initializes a new off-heap cache for the objects themselves.
      * This will be automatically called either when an entry is first added or the cache as a whole is refreshed.
      */
-    protected void resetOffHeap() {
+    private void resetOffHeap() {
         if (mapIdToObject != null) {
             try {
                 mapIdToObject.close();
@@ -81,6 +82,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
             mapNameToId.clear();
             mapIdToSid.clear();
             mapSidToId.clear();
+            resetOffHeap();
             refreshCache();
         } finally {
             lock.writeLock().unlock();
@@ -192,12 +194,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     protected void cache(String id, String name, T object) {
         mapIdToName.put(id, name);
         mapNameToId.put(name, id);
-        if (object != null) {
-            if (mapIdToObject == null) {
-                resetOffHeap();
-            }
-            mapIdToObject.put(id, object);
-        }
+        mapIdToObject.put(id, object);
     }
 
     /**
@@ -302,6 +299,34 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      */
     protected String getNameFromId(String id) {
         if (id == null) return null;
+        return getNameFromId(id, false);
+    }
+
+    /**
+     * Thread-safe cache retrieval of the name of an object by its ID, when not bypassing the read lock.
+     * Note: this allows you to bypass the read lock, in order to avoid potential deadlock situations,
+     * however you should ONLY do this if you know PRECISELY that you are still controlling the ordering
+     * of reads and writes (as concurrency safety will be bypassed when the read lock is bypassed) -- if
+     * you are not careful you may get a cache miss which would otherwise have been a cache hit.
+     *
+     * @param id of the object
+     * @param bypassReadLock whether to bypass the read lock (necessary if we're reading while inside a write lock)
+     * @return the name of the object (if cached), or null
+     */
+    protected String getNameFromId(String id, boolean bypassReadLock) {
+        if (id == null) return null;
+        if (bypassReadLock) {
+            return getNameFromIdWithoutLock(id);
+        } else {
+            return getNameFromIdWithLock(id);
+        }
+    }
+
+    private String getNameFromIdWithoutLock(String id) {
+        return mapNameToId.get(id);
+    }
+
+    private String getNameFromIdWithLock(String id) {
         lock.readLock().lock();
         try {
             return mapIdToName.get(id);

@@ -34,7 +34,6 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
     protected void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
         List<AtlanUser> users = usersEndpoint.list();
-        resetOffHeap();
         for (AtlanUser user : users) {
             String userId = user.getId();
             String userName = user.getUsername();

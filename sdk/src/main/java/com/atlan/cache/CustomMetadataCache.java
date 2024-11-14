@@ -51,7 +51,6 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             throw new AuthenticationException(ErrorCode.EXPIRED_API_TOKEN);
         }
         List<CustomMetadataDef> customMetadata = response.getCustomMetadataDefs();
-        resetOffHeap();
         attrCacheBySid.clear();
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();

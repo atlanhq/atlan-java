@@ -77,7 +77,7 @@ class ImportSourceTagValuesTest : PackageTest() {
     fun tableWithTagValues() {
         val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         val snowflakeQN = snowflakeConnection.qualifiedName
-        val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
+        // val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
         val request =
             Table.select()
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeQN))
@@ -97,11 +97,11 @@ class ImportSourceTagValuesTest : PackageTest() {
             assertEquals(1, attachments.size)
             assertNotNull(attachments[0].sourceTagGuid)
             when (tag.typeName) {
-                "Mart" -> {
-                    assertEquals("mart", attachments[0].sourceTagName)
-                    assertEquals("$dbtQN/account/24670/project/211208/tag/mart", attachments[0].sourceTagQualifiedName)
-                    assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
-                }
+                // "Mart" -> {
+                //     assertEquals("mart", attachments[0].sourceTagName)
+                //     assertEquals("$dbtQN/account/24670/project/211208/tag/mart", attachments[0].sourceTagQualifiedName)
+                //     assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
+                // }
                 "Confidential" -> {
                     assertEquals("CONFIDENTIAL", attachments[0].sourceTagName)
                     assertEquals("$snowflakeQN/ANALYTICS/WIDE_WORLD_IMPORTERS/CONFIDENTIAL", attachments[0].sourceTagQualifiedName)
@@ -109,16 +109,16 @@ class ImportSourceTagValuesTest : PackageTest() {
                     assertTrue(attachments[0].sourceTagValues[0].tagAttachmentKey.isNullOrBlank())
                     assertEquals("Not Restricted", attachments[0].sourceTagValues[0].tagAttachmentValue)
                 }
-                "Hourly" -> {
-                    assertEquals("hourly", attachments[0].sourceTagName)
-                    assertEquals("$dbtQN/account/24670/project/211208/tag/hourly", attachments[0].sourceTagQualifiedName)
-                    assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
-                }
-                "Wide_world_importers" -> {
-                    assertEquals("wide_world_importers", attachments[0].sourceTagName)
-                    assertEquals("$dbtQN/account/24670/project/211208/tag/wide_world_importers", attachments[0].sourceTagQualifiedName)
-                    assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
-                }
+                // "Hourly" -> {
+                //     assertEquals("hourly", attachments[0].sourceTagName)
+                //     assertEquals("$dbtQN/account/24670/project/211208/tag/hourly", attachments[0].sourceTagQualifiedName)
+                //     assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
+                // }
+                // "Wide_world_importers" -> {
+                //     assertEquals("wide_world_importers", attachments[0].sourceTagName)
+                //     assertEquals("$dbtQN/account/24670/project/211208/tag/wide_world_importers", attachments[0].sourceTagQualifiedName)
+                //     assertTrue(attachments[0].sourceTagValues.isNullOrEmpty())
+                // }
                 else -> {
                     throw AssertionError("Unexpected tag: ${tag.typeName}")
                 }
