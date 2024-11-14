@@ -33,16 +33,16 @@ private const val NON_PI = "non-pi"
 
 private const val FULL_HISTORY = "fullhistory"
 
-class LakeTagSynchronizerTest : PackageTest() {
+class LakeTagSynchronizerTest : PackageTest("lts") {
     override val logger = KotlinLogging.logger {}
-    private val c1 = makeUnique("lftagdb")
+    private val c1 = makeUnique("c1")
     private var connectionQualifiedName = ""
     private var schemaGuid = ""
     private var tableGuid = ""
     private var columnGuid = ""
-    private val cm1 = makeUnique("lftcm")
+    private val cm1 = makeUnique("cm")
 
-    private val enum1 = makeUnique("lfenum")
+    private val enum1 = makeUnique("enum")
     private val mapper = jacksonObjectMapper()
 
     private val connectorType = AtlanConnectorType.MINISQL
@@ -128,14 +128,14 @@ class LakeTagSynchronizerTest : PackageTest() {
         createCustomMetadata()
         createMetadataMap()
         copyTagFile()
-        setup(
+        runCustomPackage(
             LakeFormationTagSyncCfg(
                 "DIRECT",
                 "s3",
                 true,
             ),
+            LakeTagSynchronizer::main,
         )
-        LakeTagSynchronizer.main(arrayOf(testDirectory))
         Thread.sleep(15000)
     }
 

@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit
 /**
  * Test export of detailed view and change information.
  */
-class ExportDetailsTest : PackageTest() {
+class ExportDetailsTest : PackageTest("d") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -25,7 +25,7 @@ class ExportDetailsTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdoptionExportCfg(
                 includeViews = "BY_VIEWS",
                 viewsMax = 100,
@@ -38,8 +38,8 @@ class ExportDetailsTest : PackageTest() {
                 changesTo = Instant.now().epochSecond,
                 includeSearches = "YES",
             ),
+            AdoptionExporter::main,
         )
-        AdoptionExporter.main(arrayOf(testDirectory))
     }
 
     @Test

@@ -10,6 +10,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
@@ -36,7 +37,7 @@ import org.testng.ITestContext
 import org.testng.annotations.AfterClass
 import org.testng.annotations.AfterSuite
 import org.testng.annotations.BeforeClass
-import uk.org.webcompere.systemstubs.environment.EnvironmentVariables
+import uk.org.webcompere.systemstubs.SystemStubs.withEnvironmentVariable
 import uk.org.webcompere.systemstubs.properties.SystemProperties
 import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
@@ -48,24 +49,15 @@ import kotlin.math.round
 /**
  * Base class that all package integration tests should extend.
  */
-abstract class PackageTest {
+abstract class PackageTest(
+    val tag: String,
+) {
     protected abstract val logger: KLogger
 
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
-    private val vars = EnvironmentVariables()
     private val properties = SystemProperties()
     private val sysExit = SystemExit()
-    protected val testDirectory: String
-
-    /**
-     * Create the class-unique directory before doing anything else,
-     * since a given test class may want to create files here even just to
-     * configure how a custom package runs.
-     */
-    init {
-        testDirectory = makeUnique("dir")
-        File(testDirectory).mkdirs()
-    }
+    protected val testDirectory = makeUnique("")
 
     /** Implement any logic necessary for setting up the test to be run. */
     abstract fun setup()
@@ -82,6 +74,7 @@ abstract class PackageTest {
      */
     @BeforeClass
     fun testsSetup() {
+        File(testDirectory).mkdirs()
         properties.set("logDirectory", testDirectory)
         properties.setup()
         sysExit.setup()
@@ -95,7 +88,7 @@ abstract class PackageTest {
      * @return the string with a unique suffix
      */
     fun makeUnique(input: String): String {
-        return "$PREFIX${input}_$nanoId"
+        return "${PREFIX}_${tag}_${input}_$nanoId"
     }
 
     /**
@@ -284,7 +277,7 @@ abstract class PackageTest {
                 'Y',
                 'Z',
             )
-        private const val PREFIX = "jpkg_"
+        private const val PREFIX = "jpkg"
         private const val TAG_REMOVAL_RETRIES = 30
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
@@ -413,11 +406,19 @@ abstract class PackageTest {
                 .stream()
                 .map { it.guid }
                 .toList()
+        val categories =
+            GlossaryCategory.select()
+                .where(GlossaryCategory.ANCHOR.eq(glossary.qualifiedName))
+                .stream()
+                .map { it.guid }
+                .toList()
+        logger.info { " --- Purging glossary $name, ${categories.size} categories, and ${terms.size} terms... ---" }
         try {
             if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
+            if (categories.isNotEmpty()) client.assets.delete(categories, AtlanDeleteType.HARD)
             Glossary.purge(glossary.guid)
         } catch (e: Exception) {
-            logger.error(e) { "Unable to purge glossary or its terms: $name" }
+            logger.error(e) { "Unable to purge glossary or its contents: $name" }
         }
     }
 
@@ -467,11 +468,14 @@ abstract class PackageTest {
     }
 
     /**
-     * Set up a custom package with the provided configuration.
+     * Set up and run a custom package, using the provided configuration.
      *
-     * @param cfg for the custom package to run with
+     * @param cfg for the custom package
      */
-    fun setup(cfg: CustomConfig) {
+    fun runCustomPackage(
+        cfg: CustomConfig,
+        mainMethod: (Array<String>) -> Unit,
+    ) {
         cfg.runtime =
             RuntimeConfig(
                 userId = null,
@@ -480,8 +484,9 @@ abstract class PackageTest {
                 agentPackageName = null,
                 agentWorkflowId = null,
             )
-        vars.set("NESTED_CONFIG", mapper.writeValueAsString(cfg))
-        vars.setup()
+        withEnvironmentVariable("NESTED_CONFIG", mapper.writeValueAsString(cfg)).execute {
+            mainMethod(arrayOf(testDirectory))
+        }
     }
 
     /**
@@ -492,6 +497,7 @@ abstract class PackageTest {
     @AfterClass(alwaysRun = true)
     fun testsTeardown(context: ITestContext) {
         try {
+            logger.info { "Tearing down..." }
             teardown()
             val keepLogs = context.failedTests.size() > 0 || context.passedTests.size() == 0
             if (!keepLogs) {
@@ -501,13 +507,13 @@ abstract class PackageTest {
             logger.error(e) { "Failed to teardown." }
         }
         properties.teardown()
-        vars.teardown()
         sysExit.teardown()
     }
 
     /** Teardown any cross-test shared objects. */
     @AfterSuite
     fun shareablesTeardown() {
+        logger.info { "Cleaning up shared objects..." }
         // Close any package runtime-managed caches (to clean them)
         LinkCache.close()
         GlossaryCache.close()

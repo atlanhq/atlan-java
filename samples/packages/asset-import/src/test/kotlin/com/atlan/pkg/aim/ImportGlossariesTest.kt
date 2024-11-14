@@ -40,13 +40,13 @@ import kotlin.test.assertNotNull
 /**
  * Test import of a glossary and its inter-related contents.
  */
-class ImportGlossariesTest : PackageTest() {
+class ImportGlossariesTest : PackageTest("ig") {
     override val logger = KotlinLogging.logger {}
 
-    private val glossary1 = makeUnique("igg1")
-    private val glossary2 = makeUnique("igg2")
-    private val tag1 = makeUnique("igt1")
-    private val tag2 = makeUnique("igt2")
+    private val glossary1 = makeUnique("g1")
+    private val glossary2 = makeUnique("g2")
+    private val tag1 = makeUnique("t1")
+    private val tag2 = makeUnique("t2")
 
     private val testFile = "input.csv"
     private val revisedFile = "with_desc.csv"
@@ -168,14 +168,14 @@ class ImportGlossariesTest : PackageTest() {
     override fun setup() {
         prepFile()
         createTags()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -185,7 +185,7 @@ class ImportGlossariesTest : PackageTest() {
         removeTag(tag2)
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun glossary1Created() {
         val g1 = Glossary.findByName(glossary1, glossaryAttrs)
         assertNotNull(g1)
@@ -196,7 +196,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals(CertificateStatus.VERIFIED, g1.certificateStatus)
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun glossary2Created() {
         val g2 = Glossary.findByName(glossary2, glossaryAttrs)
         assertNotNull(g2)
@@ -208,7 +208,7 @@ class ImportGlossariesTest : PackageTest() {
         assertEquals("With a message!", g2.certificateStatusMessage)
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request =
@@ -249,7 +249,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request =
@@ -284,7 +284,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(glossary1)!!
         val request =
@@ -310,7 +310,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.create"])
+    @Test(groups = ["aim.ig.create"])
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(glossary2)!!
         val request =
@@ -406,22 +406,22 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.runUpdate"], dependsOnGroups = ["aim.gloss.create"])
-    fun upsertRevisions() {
+    @Test(groups = ["aim.ig.runUpdate"], dependsOnGroups = ["aim.ig.create"])
+    fun upsertIG() {
         modifyFile()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, revisedFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index to become consistent
         Thread.sleep(10000)
     }
 
-    @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
+    @Test(groups = ["aim.ig.update"], dependsOnGroups = ["aim.ig.runUpdate"])
     fun tagsUnchanged() {
         val g1 = Glossary.findByName(glossary1)!!
         val request =
@@ -447,7 +447,7 @@ class ImportGlossariesTest : PackageTest() {
         }
     }
 
-    @Test(groups = ["aim.gloss.update"], dependsOnGroups = ["aim.gloss.runUpdate"])
+    @Test(groups = ["aim.ig.update"], dependsOnGroups = ["aim.ig.runUpdate"])
     fun descriptionsAdded() {
         val g1 = Glossary.findByName(glossary1)!!
         val request =
@@ -574,12 +574,12 @@ class ImportGlossariesTest : PackageTest() {
         assertTrue(term.classifies.isNullOrEmpty())
     }
 
-    @Test(dependsOnGroups = ["aim.gloss.*"])
+    @Test(dependsOnGroups = ["aim.ig.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["aim.gloss.*"])
+    @Test(dependsOnGroups = ["aim.ig.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

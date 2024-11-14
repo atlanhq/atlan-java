@@ -19,10 +19,10 @@ import kotlin.test.assertNotNull
 /**
  * Test detection of duplicate assets.
  */
-class ImpactReportTest : PackageTest() {
+class ImpactReportTest : PackageTest("ir") {
     override val logger = KotlinLogging.logger {}
 
-    private val glossaryName = makeUnique("mdir")
+    private val glossaryName = makeUnique("g1")
     private val files =
         listOf(
             "debug.log",
@@ -30,13 +30,13 @@ class ImpactReportTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             MetadataImpactReportCfg(
                 glossaryName = glossaryName,
                 includeDetails = true,
             ),
+            Reporter::main,
         )
-        Reporter.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -201,14 +201,14 @@ class ImpactReportTest : PackageTest() {
 
     @Test(groups = ["mdir.runUpdate"], dependsOnGroups = ["mdir.create"])
     fun rerunReport() {
-        setup(
+        runCustomPackage(
             MetadataImpactReportCfg(
                 includeGlossary = "TRUE",
                 glossaryName = glossaryName,
                 includeDetails = true,
             ),
+            Reporter::main,
         )
-        Reporter.main(arrayOf(testDirectory))
     }
 
     @Test(dependsOnGroups = ["mdir.*"])

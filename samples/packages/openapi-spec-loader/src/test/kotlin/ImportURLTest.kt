@@ -15,25 +15,25 @@ import kotlin.test.assertNotNull
 /**
  * Test import of the canonical PetStore example from Swagger.
  */
-class ImportURLTest : PackageTest() {
+class ImportURLTest : PackageTest("u") {
     override val logger = KotlinLogging.logger {}
 
     private val connectorType = AtlanConnectorType.API
-    private val testId = makeUnique("oau")
+    private val testId = makeUnique("c1")
     private val files =
         listOf(
             "debug.log",
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             OpenAPISpecLoaderCfg(
                 specUrl = "https://petstore3.swagger.io/api/v3/openapi.json",
                 connectionUsage = "CREATE",
                 connection = Connection.creator(testId, connectorType).build(),
             ),
+            OpenAPISpecLoader::main,
         )
-        OpenAPISpecLoader.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {

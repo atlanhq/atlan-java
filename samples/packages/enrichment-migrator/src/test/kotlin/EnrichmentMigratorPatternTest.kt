@@ -15,7 +15,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class EnrichmentMigratorPatternTest : PackageTest() {
+class EnrichmentMigratorPatternTest : PackageTest("p") {
     override val logger = KotlinLogging.logger {}
 
     private val targetDbName1 = "db_test02"
@@ -24,8 +24,8 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     private val dbNamePattern = "db_test.."
     private val userDescription = "Some user description"
 
-    private val c1 = makeUnique("empc1")
-    private val c2 = makeUnique("empc2")
+    private val c1 = makeUnique("c1")
+    private val c2 = makeUnique("c2")
     private val c1Type = AtlanConnectorType.AWS_GREENGRASS
     private val c2Type = AtlanConnectorType.MPARTICLE
     private var sourceConnectionQualifiedName = ""
@@ -82,7 +82,7 @@ class EnrichmentMigratorPatternTest : PackageTest() {
     override fun setup() {
         createConnections()
         createAssets()
-        setup(
+        runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
@@ -91,8 +91,8 @@ class EnrichmentMigratorPatternTest : PackageTest() {
                 failOnErrors = false,
                 limitType = "EXCLUDE",
             ),
+            EnrichmentMigrator::main,
         )
-        EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
     }
 

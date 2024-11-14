@@ -12,7 +12,7 @@ import java.io.File
 /**
  * Test export of only users.
  */
-class ExportUsersTest : PackageTest() {
+class ExportUsersTest : PackageTest("u") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -22,14 +22,14 @@ class ExportUsersTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdminExportCfg(
                 objectsToInclude = listOf("users"),
                 includeNativePolicies = false,
                 emailAddresses = null,
             ),
+            AdminExporter::main,
         )
-        AdminExporter.main(arrayOf(testDirectory))
     }
 
     @Test

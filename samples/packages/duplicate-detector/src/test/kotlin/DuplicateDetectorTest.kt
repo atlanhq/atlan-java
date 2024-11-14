@@ -16,7 +16,7 @@ import kotlin.test.assertNotNull
 /**
  * Test detection of duplicate assets.
  */
-class DuplicateDetectorTest : PackageTest() {
+class DuplicateDetectorTest : PackageTest("dd") {
     override val logger = KotlinLogging.logger {}
 
     private val testId = makeUnique("dd")
@@ -27,15 +27,15 @@ class DuplicateDetectorTest : PackageTest() {
     private val glossaryName = testId
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             DuplicateDetectorCfg(
                 glossaryName = glossaryName,
                 qnPrefix = "default/snowflake",
                 controlConfigStrategy = "default",
                 assetTypes = listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME),
             ),
+            DuplicateDetector::main,
         )
-        DuplicateDetector.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {

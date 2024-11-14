@@ -34,13 +34,13 @@ import kotlin.test.assertNull
 /**
  * Test creation of cube assets followed by an upsert of the same cube assets.
  */
-class CreateThenUpsertCABTest : PackageTest() {
+class CreateThenUpsertCABTest : PackageTest("ctu") {
     override val logger = KotlinLogging.logger {}
 
-    private val conn1 = makeUnique("ctuc1")
+    private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.ESSBASE
-    private val tag1 = makeUnique("ctuct1")
-    private val tag2 = makeUnique("ctuct2")
+    private val tag1 = makeUnique("t1")
+    private val tag2 = makeUnique("t2")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -174,14 +174,14 @@ class CreateThenUpsertCABTest : PackageTest() {
     override fun setup() {
         prepFile()
         createTags()
-        setup(
+        runCustomPackage(
             CubeAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -534,7 +534,7 @@ class CreateThenUpsertCABTest : PackageTest() {
     @Test(groups = ["cab.ctu.runUpdate"], dependsOnGroups = ["cab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
-        setup(
+        runCustomPackage(
             CubeAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
@@ -543,8 +543,8 @@ class CreateThenUpsertCABTest : PackageTest() {
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
                 deltaRemovalType = "purge",
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(10000)
     }

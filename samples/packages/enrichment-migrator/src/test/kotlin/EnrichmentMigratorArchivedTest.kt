@@ -18,10 +18,10 @@ import kotlin.test.assertTrue
 /**
  * Test migration of asset metadata.
  */
-class EnrichmentMigratorArchivedTest : PackageTest() {
+class EnrichmentMigratorArchivedTest : PackageTest("a") {
     override val logger = KotlinLogging.logger {}
 
-    private val c1 = makeUnique("ema1")
+    private val c1 = makeUnique("c1")
     private val connectorType = AtlanConnectorType.AWS_SITE_WISE
 
     private val files =
@@ -72,15 +72,15 @@ class EnrichmentMigratorArchivedTest : PackageTest() {
         createAssets()
         archiveTable()
         val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
-        setup(
+        runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(connection),
                 targetConnection = listOf(connection),
                 failOnErrors = false,
                 includeArchived = true,
             ),
+            EnrichmentMigrator::main,
         )
-        EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
     }
 

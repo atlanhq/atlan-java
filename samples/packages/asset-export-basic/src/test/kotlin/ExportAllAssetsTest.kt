@@ -9,7 +9,7 @@ import kotlin.test.Test
 /**
  * Test export of all assets and glossaries.
  */
-class ExportAllAssetsTest : PackageTest() {
+class ExportAllAssetsTest : PackageTest("aa") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -20,14 +20,14 @@ class ExportAllAssetsTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AssetExportBasicCfg(
                 exportScope = "ALL",
                 qnPrefix = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)?.qualifiedName,
                 includeGlossaries = true,
             ),
+            Exporter::main,
         )
-        Exporter.main(arrayOf(testDirectory))
     }
 
     @Test

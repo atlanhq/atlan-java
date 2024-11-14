@@ -12,7 +12,7 @@ import java.io.File
 /**
  * Test export of all policies, including internal.
  */
-class ExportAllPoliciesTest : PackageTest() {
+class ExportAllPoliciesTest : PackageTest("ap") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -22,7 +22,7 @@ class ExportAllPoliciesTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdminExportCfg(
                 objectsToInclude =
                     listOf(
@@ -31,8 +31,8 @@ class ExportAllPoliciesTest : PackageTest() {
                 includeNativePolicies = true,
                 emailAddresses = null,
             ),
+            AdminExporter::main,
         )
-        AdminExporter.main(arrayOf(testDirectory))
     }
 
     @Test

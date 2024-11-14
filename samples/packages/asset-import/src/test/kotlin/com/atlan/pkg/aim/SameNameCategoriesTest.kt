@@ -15,10 +15,10 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing categories with the same name at a given level,
  * but in different parent paths.
  */
-class SameNameCategoriesTest : PackageTest() {
+class SameNameCategoriesTest : PackageTest("snc") {
     override val logger = KotlinLogging.logger {}
 
-    private val glossaryName = makeUnique("sncg1")
+    private val glossaryName = makeUnique("g1")
 
     private val testFile = "same_name_categories.csv"
 
@@ -44,15 +44,15 @@ class SameNameCategoriesTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = false,
                 trackBatches = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
