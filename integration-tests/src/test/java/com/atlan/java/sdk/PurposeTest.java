@@ -41,8 +41,8 @@ public class PurposeTest extends AtlanLiveTest {
     private static final String PERSONA_NAME = "Data Assets";
     private static final String DB_NAME = "ANALYTICS";
     private static final String SCHEMA_NAME = "WIDE_WORLD_IMPORTERS";
-    private static final String TABLE_NAME = "STG_PACKAGE_TYPES";
-    private static final String COLUMN_NAME = "PACKAGE_TYPE_NAME";
+    private static final String TABLE_NAME = "STG_STATE_PROVINCES";
+    private static final String COLUMN_NAME = "LATEST_RECORDED_POPULATION";
 
     public static Persona persona = null;
     public static Purpose purpose = null;
@@ -50,6 +50,8 @@ public class PurposeTest extends AtlanLiveTest {
     private static QueryRequest query = null;
     private static Connection snowflake = null;
     private static String columnQualifiedName = null;
+
+    private static final String REDACTED_NUMBER = "0000000";
 
     @Test(groups = {"purpose.invalid.purpose"})
     void createInvalidPurpose() {
@@ -251,9 +253,9 @@ public class PurposeTest extends AtlanLiveTest {
         assertTrue(response.getRows().size() > 1);
         List<String> row = response.getRows().get(0);
         assertFalse(row.isEmpty());
-        assertEquals(row.size(), 5);
-        assertFalse(row.get(2).isEmpty());
-        assertFalse(row.get(2).startsWith("Xx")); // Ensure it is NOT redacted
+        assertEquals(row.size(), 10);
+        assertFalse(row.get(6).isEmpty());
+        assertNotEquals(row.get(6), REDACTED_NUMBER); // Ensure it is NOT redacted
     }
 
     @Test(
@@ -303,9 +305,9 @@ public class PurposeTest extends AtlanLiveTest {
         assertTrue(response.getRows().size() > 1);
         List<String> row = response.getRows().get(0);
         assertFalse(row.isEmpty());
-        assertEquals(row.size(), 5);
-        assertFalse(row.get(2).isEmpty());
-        assertTrue(row.get(2).startsWith("Xx")); // Ensure it IS redacted
+        assertEquals(row.size(), 10);
+        assertFalse(row.get(6).isEmpty());
+        assertEquals(row.get(6), REDACTED_NUMBER); // Ensure it IS redacted
     }
 
     @Test(
