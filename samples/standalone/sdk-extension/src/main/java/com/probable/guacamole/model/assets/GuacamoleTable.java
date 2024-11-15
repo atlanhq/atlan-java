@@ -12,6 +12,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IAirflowTask;
+import com.atlan.model.assets.IApplicationContainer;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICatalog;
@@ -67,6 +68,14 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** TBC */
     @Attribute
