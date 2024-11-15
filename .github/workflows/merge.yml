@@ -139,6 +139,8 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      - name: Set Gradle heap memory
+        run: echo "GRADLE_OPTS=-Xmx2g" >> $GITHUB_ENV
       - name: Publish Javadoc
         run: |
           ./gradlew gitPublishPush --stacktrace --info
