@@ -74,18 +74,16 @@ class AssetChanges(
         val assetMap = getAssetDetails(changeCountMap)
         changeCountMap.forEach { (guid, changeCount) ->
             val asset = assetMap[guid]
-            if (asset != null) {
-                xlsx.appendRow(
-                    sheet,
-                    listOf(
-                        asset.typeName,
-                        asset.qualifiedName,
-                        asset.name,
-                        changeCount,
-                        Utils.getAssetLink(guid),
-                    ),
-                )
-            }
+            xlsx.appendRow(
+                sheet,
+                listOf(
+                    asset?.typeName ?: "(deleted)",
+                    asset?.qualifiedName ?: guid,
+                    asset?.name ?: "(deleted)",
+                    changeCount,
+                    Utils.getAssetLink(guid),
+                ),
+            )
         }
     }
 }
