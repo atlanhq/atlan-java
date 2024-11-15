@@ -114,7 +114,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(com.atlan.model.assets.Asset)" class="member-name-link">add</a><wbr>(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add an asset into the cache.</div>
@@ -175,7 +175,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether the cache has any entries.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#put(java.lang.String,T)" class="member-name-link">put</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -237,14 +237,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="add(com.atlan.model.assets.Asset)">
 <h3>add</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</span></div>
 <div class="block">Add an asset into the cache.
  Note: the object MUST have a real (not a placeholder) UUID to be cached.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>asset</code> - to add to the cache</dd>
-<dt>Returns:</dt>
-<dd>any asset that was previously cached with the same UUID, or null if no such UUID has ever been cached</dd>
 </dl>
 </section>
 </li>
@@ -299,15 +297,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="put(java.lang.String,T)">
 <h3 id="put(java.lang.String,com.atlan.model.core.AtlanObject)">put</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></span>&nbsp;<span class="element-name">put</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">put</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;object)</span></div>
 <div class="block">Put an object into the cache by its ID.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>id</code> - of the object to put into the cache</dd>
 <dd><code>object</code> - to put into the cache</dd>
-<dt>Returns:</dt>
-<dd>any object that was previously cached with the same UUID, or null if no such UUID has ever been cached</dd>
 </dl>
 </section>
 </li>
