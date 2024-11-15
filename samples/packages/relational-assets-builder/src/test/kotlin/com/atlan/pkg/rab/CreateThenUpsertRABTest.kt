@@ -36,13 +36,13 @@ import kotlin.test.assertNotNull
 /**
  * Test creation of relational assets followed by an upsert of the same relational assets.
  */
-class CreateThenUpsertRABTest : PackageTest() {
+class CreateThenUpsertRABTest : PackageTest("ctu") {
     override val logger = KotlinLogging.logger {}
 
-    private val conn1 = makeUnique("ctu1")
+    private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.ICEBERG
-    private val tag1 = makeUnique("ctut1")
-    private val tag2 = makeUnique("ctut2")
+    private val tag1 = makeUnique("t1")
+    private val tag2 = makeUnique("t2")
 
     private val testFile = "input.csv"
     private val revisedFile = "revised.csv"
@@ -180,15 +180,15 @@ class CreateThenUpsertRABTest : PackageTest() {
     override fun setup() {
         prepFile()
         createTags()
-        setup(
+        runCustomPackage(
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 deltaSemantic = "full",
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -532,7 +532,7 @@ class CreateThenUpsertRABTest : PackageTest() {
     @Test(groups = ["rab.ctu.runUpdate"], dependsOnGroups = ["rab.ctu.create"])
     fun upsertRevisions() {
         modifyFile()
-        setup(
+        runCustomPackage(
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "upsert",
@@ -540,8 +540,8 @@ class CreateThenUpsertRABTest : PackageTest() {
                 deltaSemantic = "full",
                 previousFileDirect = Paths.get(testDirectory, testFile).toString(),
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!

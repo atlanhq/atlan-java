@@ -13,7 +13,7 @@ import java.math.BigDecimal
 /**
  * Test export of asset views adoption information, sorted by raw views.
  */
-class ExportRawViewsTest : PackageTest() {
+class ExportRawViewsTest : PackageTest("rv") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -23,13 +23,13 @@ class ExportRawViewsTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdoptionExportCfg(
                 includeViews = "BY_VIEWS",
                 viewsMax = 100,
             ),
+            AdoptionExporter::main,
         )
-        AdoptionExporter.main(arrayOf(testDirectory))
     }
 
     @Test

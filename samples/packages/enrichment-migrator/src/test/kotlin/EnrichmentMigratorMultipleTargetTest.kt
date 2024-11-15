@@ -15,12 +15,12 @@ import kotlin.test.assertEquals
 /**
  * Test migration of asset metadata.
  */
-class EnrichmentMigratorMultipleTargetTest : PackageTest() {
+class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     override val logger = KotlinLogging.logger {}
 
-    private val c1 = makeUnique("emmc1")
-    private val c2 = makeUnique("emmc2")
-    private val c3 = makeUnique("emmc3")
+    private val c1 = makeUnique("c1")
+    private val c2 = makeUnique("c2")
+    private val c3 = makeUnique("c3")
     private val c1Type = AtlanConnectorType.REDIS
     private val c2Type = AtlanConnectorType.STARBURST_GALAXY
     private val c3Type = AtlanConnectorType.STARBURST_GALAXY
@@ -73,7 +73,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
         createConnections()
         createAssets()
         Thread.sleep(15000)
-        setup(
+        runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
                 targetConnection =
@@ -85,8 +85,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest() {
                 limitType = "INCLUDE",
                 attributesList = listOf("description"),
             ),
+            EnrichmentMigrator::main,
         )
-        EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
     }
 

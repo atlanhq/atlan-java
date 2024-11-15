@@ -31,15 +31,15 @@ import kotlin.test.assertTrue
 /**
  * Test import of a very simple file containing assigned terms.
  */
-class LinkTermsTest : PackageTest() {
+class LinkTermsTest : PackageTest("lt") {
     override val logger = KotlinLogging.logger {}
 
-    private val glossaryName = makeUnique("ltg1")
-    private val connectionName = makeUnique("ltc1")
+    private val glossaryName = makeUnique("g1")
+    private val connectionName = makeUnique("c1")
     private val connectorType = AtlanConnectorType.NETEZZA
 
-    private val tag1 = makeUnique("ltt1")
-    private val tag2 = makeUnique("ltt2")
+    private val tag1 = makeUnique("t1")
+    private val tag2 = makeUnique("t2")
 
     private val testFile = "input.csv"
     private val revisedFile = "case_insensitive.csv"
@@ -118,15 +118,15 @@ class LinkTermsTest : PackageTest() {
         val connection = createConnection()
         prepFile(connection.qualifiedName)
         createTags()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsAttrToOverwrite = listOf(),
                 assetsFailOnErrors = false,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -248,9 +248,9 @@ class LinkTermsTest : PackageTest() {
     }
 
     @Test(groups = ["aim.lt.runUpdate"], dependsOnGroups = ["aim.lt.create"])
-    fun upsertRevisions() {
+    fun upsertLT() {
         modifyFile()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "update",
@@ -258,8 +258,8 @@ class LinkTermsTest : PackageTest() {
                 assetsFailOnErrors = true,
                 assetsTableViewAgnostic = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(10000)
     }

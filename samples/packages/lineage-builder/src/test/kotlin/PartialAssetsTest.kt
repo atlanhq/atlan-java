@@ -27,10 +27,10 @@ import kotlin.test.assertTrue
 /**
  * Test creation of lineage using partial assets.
  */
-class PartialAssetsTest : PackageTest() {
+class PartialAssetsTest : PackageTest("pa") {
     override val logger = KotlinLogging.logger {}
 
-    private val connectionName = makeUnique("pat")
+    private val connectionName = makeUnique("c1")
     private val connectorType = AtlanConnectorType.MATILLION
 
     private val testFile = "input.csv"
@@ -84,14 +84,14 @@ class PartialAssetsTest : PackageTest() {
     override fun setup() {
         createConnection()
         prepFile()
-        setup(
+        runCustomPackage(
             LineageBuilderCfg(
                 lineageFile = Paths.get(testDirectory, testFile).toString(),
                 lineageUpsertSemantic = "partial",
                 lineageFailOnErrors = false,
             ),
+            Loader::main,
         )
-        Loader.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {
@@ -263,15 +263,15 @@ class PartialAssetsTest : PackageTest() {
         val result = resp.getResult(revised)
         assertFalse(result.isPartial)
         modifyFile()
-        setup(
+        runCustomPackage(
             LineageBuilderCfg(
                 lineageFile = Paths.get(testDirectory, revisedFile).toString(),
                 lineageUpsertSemantic = "partial",
                 lineageCaseSensitive = false,
                 lineageFailOnErrors = true,
             ),
+            Loader::main,
         )
-        Loader.main(arrayOf(testDirectory))
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(5000)
     }

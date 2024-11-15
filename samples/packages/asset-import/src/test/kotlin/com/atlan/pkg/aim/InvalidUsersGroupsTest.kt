@@ -15,11 +15,11 @@ import kotlin.test.assertNotNull
 /**
  * Test import of a glossary that has invalid users and groups defined.
  */
-class InvalidUsersGroupsTest : PackageTest() {
+class InvalidUsersGroupsTest : PackageTest("iug") {
     override val logger = KotlinLogging.logger {}
 
-    private val glossary1 = makeUnique("iugg1")
-    private val glossary2 = makeUnique("iugg2")
+    private val glossary1 = makeUnique("g1")
+    private val glossary2 = makeUnique("g2")
 
     private val testFile = "input.csv"
 
@@ -46,7 +46,7 @@ class InvalidUsersGroupsTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 assetsFile = null,
                 assetsUpsertSemantic = null,
@@ -57,8 +57,8 @@ class InvalidUsersGroupsTest : PackageTest() {
                 glossariesAttrToOverwrite = listOf(),
                 glossariesFailOnErrors = false,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {

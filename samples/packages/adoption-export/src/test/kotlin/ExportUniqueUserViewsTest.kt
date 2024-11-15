@@ -13,7 +13,7 @@ import java.math.BigDecimal
 /**
  * Test export of asset views adoption information, sorted by number of unique users.
  */
-class ExportUniqueUserViewsTest : PackageTest() {
+class ExportUniqueUserViewsTest : PackageTest("uuv") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -23,13 +23,13 @@ class ExportUniqueUserViewsTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdoptionExportCfg(
                 includeViews = "BY_USERS",
                 viewsMax = 100,
             ),
+            AdoptionExporter::main,
         )
-        AdoptionExporter.main(arrayOf(testDirectory))
     }
 
     @Test

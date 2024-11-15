@@ -20,10 +20,10 @@ import kotlin.test.assertNotNull
 /**
  * Test import of source tag values.
  */
-class ImportSourceTagValuesTest : PackageTest() {
+class ImportSourceTagValuesTest : PackageTest("istv") {
     override val logger = KotlinLogging.logger {}
 
-    private val table = makeUnique("istv")
+    private val table = makeUnique("t1")
 
     private val testFile = "source_tag_values.csv"
 
@@ -51,14 +51,14 @@ class ImportSourceTagValuesTest : PackageTest() {
     override fun setup() {
         val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         prepFile(snowflakeConnection.qualifiedName)
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {

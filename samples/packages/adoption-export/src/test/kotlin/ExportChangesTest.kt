@@ -13,7 +13,7 @@ import java.math.BigDecimal
 /**
  * Test export of asset changes information.
  */
-class ExportChangesTest : PackageTest() {
+class ExportChangesTest : PackageTest("c") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -23,13 +23,13 @@ class ExportChangesTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AdoptionExportCfg(
                 includeChanges = "YES",
                 changesMax = 100,
             ),
+            AdoptionExporter::main,
         )
-        AdoptionExporter.main(arrayOf(testDirectory))
     }
 
     @Test

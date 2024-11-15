@@ -23,7 +23,6 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 import org.rocksdb.RocksIterator;
@@ -44,10 +43,6 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     @Getter
     private final String name;
 
-    static {
-        RocksDB.loadLibrary();
-    }
-
     /**
      * Construct new object cache.
      *
@@ -57,9 +52,9 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     public AbstractOffHeapCache(AtlanClient client, String name) {
         this.client = client;
         this.name = name;
-        try (Options options = new Options().setCreateIfMissing(true)) {
+        try {
             backingStore = Files.createTempDirectory("rdb_" + name + "_");
-            internal = RocksDB.open(options, backingStore.toString());
+            internal = RocksDB.open(backingStore.toString());
         } catch (IOException | RocksDBException e) {
             throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
         }
@@ -134,23 +129,15 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      *
      * @param id of the object to put into the cache
      * @param object to put into the cache
-     * @return any object that was previously cached with the same UUID, or null if no such UUID has ever been cached
      */
-    protected T put(String id, T object) {
+    protected void put(String id, T object) {
         byte[] key = serializeKey(id);
         byte[] value = serializeValue(object);
         try {
-            byte[] existing = internal.get(key);
             internal.put(key, value);
-            if (existing != null) {
-                return deserializeValue(existing);
-            }
         } catch (RocksDBException e) {
             throw new IllegalStateException("Unable to put value for key: " + id, e);
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to translate existing value for key: " + id, e);
         }
-        return null;
     }
 
     /**

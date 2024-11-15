@@ -18,13 +18,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class ImportDataDomainTest : PackageTest() {
+class ImportDataDomainTest : PackageTest("idd") {
     override val logger = KotlinLogging.logger {}
 
-    private val dataDomain1 = makeUnique("idd1")
-    private val dataDomain2 = makeUnique("idd2")
-    private val dataDomain3 = makeUnique("idd3")
-    private val dataProduct1 = makeUnique("idp1")
+    private val dataDomain1 = makeUnique("d1")
+    private val dataDomain2 = makeUnique("d2")
+    private val dataDomain3 = makeUnique("d3")
+    private val dataProduct1 = makeUnique("p1")
     private lateinit var d1: DataDomain
     private lateinit var d2: DataDomain
     private lateinit var d3: DataDomain
@@ -88,7 +88,7 @@ class ImportDataDomainTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        setup(
+        runCustomPackage(
             AssetImportCfg(
                 assetsFile = null,
                 assetsFailOnErrors = true,
@@ -98,8 +98,8 @@ class ImportDataDomainTest : PackageTest() {
                 dataProductsAttrToOverwrite = listOf(),
                 dataProductsFailOnErrors = true,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
         d1 = findDataDomain(dataDomain1)
         d2 = findDataDomain(dataDomain2)
         d3 = findDataDomain(dataDomain3)

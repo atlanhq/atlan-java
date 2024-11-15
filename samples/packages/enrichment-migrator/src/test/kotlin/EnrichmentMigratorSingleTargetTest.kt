@@ -22,14 +22,14 @@ import kotlin.test.assertNotNull
 /**
  * Test migration of asset metadata.
  */
-class EnrichmentMigratorSingleTargetTest : PackageTest() {
+class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     override val logger = KotlinLogging.logger {}
 
-    private val c1 = makeUnique("emstc1")
-    private val c2 = makeUnique("emstc2")
+    private val c1 = makeUnique("c1")
+    private val c2 = makeUnique("c2")
     private val c1Type = AtlanConnectorType.GAINSIGHT
     private val c2Type = AtlanConnectorType.GRAPHQL
-    private val cm1 = makeUnique("emstcm")
+    private val cm1 = makeUnique("cm")
     private val now = Instant.now().toEpochMilli()
 
     private val files =
@@ -84,7 +84,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
         createConnections()
         createCustomMetadata()
         createAssets()
-        setup(
+        runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
                 targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
@@ -92,8 +92,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest() {
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
             ),
+            EnrichmentMigrator::main,
         )
-        EnrichmentMigrator.main(arrayOf(testDirectory))
         Thread.sleep(15000)
     }
 

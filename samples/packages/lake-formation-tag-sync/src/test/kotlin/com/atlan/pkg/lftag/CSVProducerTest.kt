@@ -9,7 +9,7 @@ import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
 
-class CSVProducerTest : PackageTest() {
+class CSVProducerTest : PackageTest("csv") {
     override val logger = KotlinLogging.logger {}
 
     override fun setup() {

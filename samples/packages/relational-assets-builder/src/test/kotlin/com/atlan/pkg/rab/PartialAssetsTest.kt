@@ -28,10 +28,10 @@ import kotlin.test.assertNotNull
 /**
  * Test creation of partial relational assets.
  */
-class PartialAssetsTest : PackageTest() {
+class PartialAssetsTest : PackageTest("pa") {
     override val logger = KotlinLogging.logger {}
 
-    private val conn1 = makeUnique("pc1")
+    private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.MARIADB
 
     private val testFile = "input.csv"
@@ -139,15 +139,15 @@ class PartialAssetsTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        setup(
+        runCustomPackage(
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "partial",
                 assetsFailOnErrors = true,
                 trackBatches = false,
             ),
+            Importer::main,
         )
-        Importer.main(arrayOf(testDirectory))
     }
 
     override fun teardown() {

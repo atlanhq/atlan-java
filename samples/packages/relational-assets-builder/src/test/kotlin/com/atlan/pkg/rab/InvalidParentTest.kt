@@ -16,7 +16,7 @@ import kotlin.test.assertFailsWith
 /**
  * Test creation of relational assets where one of the columns has an invalid parent.
  */
-class InvalidParentTest : PackageTest() {
+class InvalidParentTest : PackageTest("ip") {
     override val logger = KotlinLogging.logger {}
 
     private val conn1 = makeUnique("c1")
@@ -55,14 +55,14 @@ class InvalidParentTest : PackageTest() {
 
     override fun setup() {
         prepFile()
-        setup(
-            RelationalAssetsBuilderCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "upsert",
-            ),
-        )
         assertFailsWith(IllegalStateException::class, "Could not find any table/view at: $conn1/azure-cosmos-db/cosmosdb/xyz/schemaMismatch") {
-            Importer.main(arrayOf(testDirectory))
+            runCustomPackage(
+                RelationalAssetsBuilderCfg(
+                    assetsFile = Paths.get(testDirectory, testFile).toString(),
+                    assetsUpsertSemantic = "upsert",
+                ),
+                Importer::main,
+            )
         }
     }
 

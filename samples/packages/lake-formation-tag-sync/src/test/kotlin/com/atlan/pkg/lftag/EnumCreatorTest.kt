@@ -23,10 +23,10 @@ private const val TAG_KEY_OPTION = "someone"
 private const val TAG_KEY_STRING = "other"
 private val ORIGINAL_VALUES = setOf(ONE, FOUR)
 
-class EnumCreatorTest : PackageTest() {
+class EnumCreatorTest : PackageTest("en") {
     override val logger = KotlinLogging.logger {}
-    private val enum1 = makeUnique("lfenum")
-    private val cm1 = makeUnique("lftcm")
+    private val enum1 = makeUnique("enum")
+    private val cm1 = makeUnique("cm")
     private val tagToMetadataMapper =
         TagToMetadataMapper(
             mapOf(

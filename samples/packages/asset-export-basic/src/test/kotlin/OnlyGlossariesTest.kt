@@ -7,7 +7,7 @@ import kotlin.test.Test
 /**
  * Test export of only glossaries, no assets.
  */
-class OnlyGlossariesTest : PackageTest() {
+class OnlyGlossariesTest : PackageTest("og") {
     override val logger = KotlinLogging.logger {}
 
     private val files =
@@ -18,14 +18,14 @@ class OnlyGlossariesTest : PackageTest() {
         )
 
     override fun setup() {
-        setup(
+        runCustomPackage(
             AssetExportBasicCfg(
                 exportScope = "GLOSSARIES_ONLY",
                 qnPrefix = "",
                 includeGlossaries = false,
             ),
+            Exporter::main,
         )
-        Exporter.main(arrayOf(testDirectory))
     }
 
     @Test
