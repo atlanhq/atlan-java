@@ -253,7 +253,9 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public boolean isNameKnown(String name) {
         lock.readLock().lock();
         try {
-            return mapNameToId.containsKey(name);
+            String id = mapNameToId.get(name);
+            if (id == null) return false;
+            return mapIdToObject.containsKey(id);
         } finally {
             lock.readLock().unlock();
         }
@@ -269,7 +271,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public boolean isIdKnown(String id) {
         lock.readLock().lock();
         try {
-            return mapIdToName.containsKey(id);
+            return mapIdToObject.containsKey(id);
         } finally {
             lock.readLock().unlock();
         }

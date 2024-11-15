@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.Getter;
@@ -39,6 +41,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     private final AtlanClient client;
     private final Path backingStore;
     private volatile RocksDB internal;
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     @Getter
     private final String name;
@@ -52,11 +55,14 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     public AbstractOffHeapCache(AtlanClient client, String name) {
         this.client = client;
         this.name = name;
+        lock.writeLock().lock();
         try {
             backingStore = Files.createTempDirectory("rdb_" + name + "_");
             internal = RocksDB.open(backingStore.toString());
         } catch (IOException | RocksDBException e) {
             throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 
@@ -77,7 +83,11 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
             buffer.putInt(typeNameLength);
             buffer.put(typeName);
             buffer.put(json);
-            return buffer.array();
+            if (buffer.hasArray()) {
+                return buffer.array();
+            } else {
+                return null;
+            }
         } catch (IOException e) {
             throw new RuntimeException("Unable to serialize value.", e);
         }
@@ -114,11 +124,21 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      */
     public T get(String id) {
         byte[] key = serializeKey(id);
+        byte[] value;
+        lock.readLock().lock();
         try {
-            byte[] value = internal.get(key);
-            return deserializeValue(value);
+            value = internal.get(key);
         } catch (RocksDBException e) {
             throw new IllegalStateException("Unable to get value for key: " + id, e);
+        } finally {
+            lock.readLock().unlock();
+        }
+        try {
+            if (value == null || value.length == 0) {
+                log.warn("Null or empty value retrieved for ID: {} -- short-circuiting.", id);
+                return null;
+            }
+            return deserializeValue(value);
         } catch (IOException e) {
             throw new IllegalStateException("Unable to translate value for key: " + id, e);
         }
@@ -133,10 +153,15 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     protected void put(String id, T object) {
         byte[] key = serializeKey(id);
         byte[] value = serializeValue(object);
+        if (value == null || value.length == 0)
+            log.warn(" ... zero-length serialized object being added ({}): {}", id, object);
+        lock.writeLock().lock();
         try {
             internal.put(key, value);
         } catch (RocksDBException e) {
             throw new IllegalStateException("Unable to put value for key: " + id, e);
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 
@@ -153,7 +178,12 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
                     batch.put(iterator.key(), iterator.value());
                 }
             }
-            internal.write(options, batch);
+            lock.writeLock().lock();
+            try {
+                internal.write(options, batch);
+            } finally {
+                lock.writeLock().unlock();
+            }
         } catch (RocksDBException e) {
             throw new IllegalStateException("Error putting all values into cache.", e);
         }
@@ -167,7 +197,12 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      */
     public boolean containsKey(String id) {
         byte[] key = serializeKey(id);
-        return internal.keyExists(key);
+        lock.readLock().lock();
+        try {
+            return internal.keyExists(key);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -241,13 +276,18 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     @Override
     public void close() throws IOException {
         log.debug("Closing off-heap cache ({}): {}", getName(), backingStore);
-        internal.close();
-        File file = backingStore.toFile();
-        if (file.exists() && file.isDirectory()) {
-            deleteDirectory(backingStore);
-            log.debug(" ... cache deleted.");
-        } else {
-            log.debug(" ... cache already deleted.");
+        lock.writeLock().lock();
+        try {
+            internal.close();
+            File file = backingStore.toFile();
+            if (file.exists() && file.isDirectory()) {
+                deleteDirectory(backingStore);
+                log.debug(" ... cache deleted.");
+            } else {
+                log.debug(" ... cache already deleted.");
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 

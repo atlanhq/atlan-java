@@ -238,11 +238,7 @@ public class SearchableAttribute<T extends SearchableAttribute<?>> extends Attri
     }
 
     public String getEnumForAttr() {
-        return getRenamed()
-                .replaceAll("_", "")
-                .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
-                .replaceAll("([a-z])([A-Z])", "$1_$2")
-                .toUpperCase(Locale.ROOT);
+        return StringUtils.getUpperSnakeCase(getRenamed());
     }
 
     /** {@inheritDoc} */
