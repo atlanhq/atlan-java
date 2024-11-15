@@ -118,6 +118,16 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#$fillValuesFrom(C)" class="member-name-link">$fillValuesFrom</a><wbr>(<a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">C</a>&nbsp;instance)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applicationContainer(com.atlan.model.assets.IApplicationContainer)" class="member-name-link">applicationContainer</a><wbr>(<a href="IApplicationContainer.html" title="interface in com.atlan.model.assets">IApplicationContainer</a>&nbsp;applicationContainer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ApplicationContainer asset containing this Catalog asset.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#assetApplicationQualifiedName(java.lang.String)" class="member-name-link">assetApplicationQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;assetApplicationQualifiedName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Qualified name of the Application Container that contains this asset.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">C</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#build()" class="member-name-link">build</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -149,59 +159,77 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelEntityRelatedToEntities()" class="member-name-link">clearModelEntityRelatedToEntities</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelImplementedEntities()" class="member-name-link">clearModelImplementedEntities</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelEntitySpecializationEntities()" class="member-name-link">clearModelEntitySpecializationEntities</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelVersions()" class="member-name-link">clearModelVersions</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelImplementedEntities()" class="member-name-link">clearModelImplementedEntities</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromAirflowTasks()" class="member-name-link">clearOutputFromAirflowTasks</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearModelVersions()" class="member-name-link">clearModelVersions</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromProcesses()" class="member-name-link">clearOutputFromProcesses</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromAirflowTasks()" class="member-name-link">clearOutputFromAirflowTasks</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromSparkJobs()" class="member-name-link">clearOutputFromSparkJobs</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromProcesses()" class="member-name-link">clearOutputFromProcesses</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)" class="member-name-link">inputToAirflowTask</a><wbr>(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromSparkJobs()" class="member-name-link">clearOutputFromSparkJobs</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToAirflowTasks(java.util.Collection)" class="member-name-link">inputToAirflowTasks</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;inputToAirflowTasks)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)" class="member-name-link">inputToAirflowTask</a><wbr>(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToProcess(com.atlan.model.assets.ILineageProcess)" class="member-name-link">inputToProcess</a><wbr>(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;inputToProcess)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToAirflowTasks(java.util.Collection)" class="member-name-link">inputToAirflowTasks</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt;&nbsp;inputToAirflowTasks)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToProcesses(java.util.Collection)" class="member-name-link">inputToProcesses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;inputToProcesses)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToProcess(com.atlan.model.assets.ILineageProcess)" class="member-name-link">inputToProcess</a><wbr>(<a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&nbsp;inputToProcess)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToSparkJob(com.atlan.model.assets.ISparkJob)" class="member-name-link">inputToSparkJob</a><wbr>(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;inputToSparkJob)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToProcesses(java.util.Collection)" class="member-name-link">inputToProcesses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt;&nbsp;inputToProcesses)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToSparkJobs(java.util.Collection)" class="member-name-link">inputToSparkJobs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;inputToSparkJobs)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToSparkJob(com.atlan.model.assets.ISparkJob)" class="member-name-link">inputToSparkJob</a><wbr>(<a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&nbsp;inputToSparkJob)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelBusinessDate(java.lang.Long)" class="member-name-link">modelBusinessDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;modelBusinessDate)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToSparkJobs(java.util.Collection)" class="member-name-link">inputToSparkJobs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;inputToSparkJobs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelBusinessDate(java.lang.Long)" class="member-name-link">modelBusinessDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;modelBusinessDate)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Business date for the asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelDomain(java.lang.String)" class="member-name-link">modelDomain</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelDomain)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelDomain(java.lang.String)" class="member-name-link">modelDomain</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelDomain)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Model domain in which this asset exists.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttribute(com.atlan.model.assets.IModelAttribute)" class="member-name-link">modelEntityAttribute</a><wbr>(<a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&nbsp;modelEntityAttribute)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttributeCount(java.lang.Long)" class="member-name-link">modelEntityAttributeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;modelEntityAttributeCount)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttribute(com.atlan.model.assets.IModelAttribute)" class="member-name-link">modelEntityAttribute</a><wbr>(<a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&nbsp;modelEntityAttribute)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttributeCount(java.lang.Long)" class="member-name-link">modelEntityAttributeCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;modelEntityAttributeCount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of attributes in the entity.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttributes(java.util.Collection)" class="member-name-link">modelEntityAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt;&nbsp;modelEntityAttributes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityAttributes(java.util.Collection)" class="member-name-link">modelEntityAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt;&nbsp;modelEntityAttributes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityGeneralizationEntity(com.atlan.model.assets.IModelEntity)" class="member-name-link">modelEntityGeneralizationEntity</a><wbr>(<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&nbsp;modelEntityGeneralizationEntity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">General entity, representing shared characteristics of specialized entities.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityGeneralizationName(java.lang.String)" class="member-name-link">modelEntityGeneralizationName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelEntityGeneralizationName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Name of the general entity.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityGeneralizationQualifiedName(java.lang.String)" class="member-name-link">modelEntityGeneralizationQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelEntityGeneralizationQualifiedName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique identifier for the general entity.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityImplementedByAsset(com.atlan.model.assets.ICatalog)" class="member-name-link">modelEntityImplementedByAsset</a><wbr>(<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a>&nbsp;modelEntityImplementedByAsset)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -241,6 +269,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntityRelatedToEntity(com.atlan.model.assets.IModelEntityAssociation)" class="member-name-link">modelEntityRelatedToEntity</a><wbr>(<a href="IModelEntityAssociation.html" title="interface in com.atlan.model.assets">IModelEntityAssociation</a>&nbsp;modelEntityRelatedToEntity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntitySpecializationEntities(java.util.Collection)" class="member-name-link">modelEntitySpecializationEntities</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;&nbsp;modelEntitySpecializationEntities)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntitySpecializationEntity(com.atlan.model.assets.IModelEntity)" class="member-name-link">modelEntitySpecializationEntity</a><wbr>(<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&nbsp;modelEntitySpecializationEntity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modelEntitySubjectArea(java.lang.String)" class="member-name-link">modelEntitySubjectArea</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelEntitySubjectArea)</code></div>
@@ -402,6 +436,28 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="applicationContainer(com.atlan.model.assets.IApplicationContainer)">
+<h3>applicationContainer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">applicationContainer</span><wbr><span class="parameters">(<a href="IApplicationContainer.html" title="interface in com.atlan.model.assets">IApplicationContainer</a>&nbsp;applicationContainer)</span></div>
+<div class="block">ApplicationContainer asset containing this Catalog asset.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="assetApplicationQualifiedName(java.lang.String)">
+<h3>assetApplicationQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">assetApplicationQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;assetApplicationQualifiedName)</span></div>
+<div class="block">Qualified name of the Application Container that contains this asset.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="inputToAirflowTask(com.atlan.model.assets.IAirflowTask)">
 <h3>inputToAirflowTask</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">inputToAirflowTask</span><wbr><span class="parameters">(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</span></div>
@@ -504,6 +560,39 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="clearModelEntityAttributes()">
 <h3>clearModelEntityAttributes</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">clearModelEntityAttributes</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="modelEntityGeneralizationEntity(com.atlan.model.assets.IModelEntity)">
+<h3>modelEntityGeneralizationEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">modelEntityGeneralizationEntity</span><wbr><span class="parameters">(<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&nbsp;modelEntityGeneralizationEntity)</span></div>
+<div class="block">General entity, representing shared characteristics of specialized entities.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="modelEntityGeneralizationName(java.lang.String)">
+<h3>modelEntityGeneralizationName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">modelEntityGeneralizationName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelEntityGeneralizationName)</span></div>
+<div class="block">Name of the general entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="modelEntityGeneralizationQualifiedName(java.lang.String)">
+<h3>modelEntityGeneralizationQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">modelEntityGeneralizationQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;modelEntityGeneralizationQualifiedName)</span></div>
+<div class="block">Unique identifier for the general entity.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -616,6 +705,24 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="clearModelEntityRelatedToEntities()">
 <h3>clearModelEntityRelatedToEntities</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">clearModelEntityRelatedToEntities</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="modelEntitySpecializationEntity(com.atlan.model.assets.IModelEntity)">
+<h3>modelEntitySpecializationEntity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">modelEntitySpecializationEntity</span><wbr><span class="parameters">(<a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&nbsp;modelEntitySpecializationEntity)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="modelEntitySpecializationEntities(java.util.Collection)">
+<h3>modelEntitySpecializationEntities</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">modelEntitySpecializationEntities</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt;&nbsp;modelEntitySpecializationEntities)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearModelEntitySpecializationEntities()">
+<h3>clearModelEntitySpecializationEntities</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ModelEntity.ModelEntityBuilder.html" title="type parameter in ModelEntity.ModelEntityBuilder">B</a></span>&nbsp;<span class="element-name">clearModelEntitySpecializationEntities</span>()</div>
 </section>
 </li>
 <li>

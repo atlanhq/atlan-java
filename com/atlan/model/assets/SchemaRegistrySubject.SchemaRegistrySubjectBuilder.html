@@ -119,8 +119,18 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#$fillValuesFrom(C)" class="member-name-link">$fillValuesFrom</a><wbr>(<a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">C</a>&nbsp;instance)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asset(com.atlan.model.assets.IAsset)" class="member-name-link">asset</a><wbr>(<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&nbsp;asset)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applicationContainer(com.atlan.model.assets.IApplicationContainer)" class="member-name-link">applicationContainer</a><wbr>(<a href="IApplicationContainer.html" title="interface in com.atlan.model.assets">IApplicationContainer</a>&nbsp;applicationContainer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ApplicationContainer asset containing this Catalog asset.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asset(com.atlan.model.assets.IAsset)" class="member-name-link">asset</a><wbr>(<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&nbsp;asset)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#assetApplicationQualifiedName(java.lang.String)" class="member-name-link">assetApplicationQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;assetApplicationQualifiedName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Qualified name of the Application Container that contains this asset.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#assets(java.util.Collection)" class="member-name-link">assets</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;&nbsp;assets)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -306,6 +316,28 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">C</a> extends <a href="SchemaRegistrySubject.html" title="class in com.atlan.model.assets">SchemaRegistrySubject</a>,<wbr><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a> extends <a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="class in com.atlan.model.assets">SchemaRegistrySubject.SchemaRegistrySubjectBuilder</a>&lt;<a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">C</a>,<wbr><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a>&gt;&gt;</code></dd>
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="applicationContainer(com.atlan.model.assets.IApplicationContainer)">
+<h3>applicationContainer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></span>&nbsp;<span class="element-name">applicationContainer</span><wbr><span class="parameters">(<a href="IApplicationContainer.html" title="interface in com.atlan.model.assets">IApplicationContainer</a>&nbsp;applicationContainer)</span></div>
+<div class="block">ApplicationContainer asset containing this Catalog asset.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="assetApplicationQualifiedName(java.lang.String)">
+<h3>assetApplicationQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="type parameter in SchemaRegistrySubject.SchemaRegistrySubjectBuilder">B</a></span>&nbsp;<span class="element-name">assetApplicationQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;assetApplicationQualifiedName)</span></div>
+<div class="block">Qualified name of the Application Container that contains this asset.</div>
+<dl class="notes">
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>
 </dl>
