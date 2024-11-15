@@ -385,7 +385,7 @@ class CSVReader
             b: ParallelBatch,
             logger: KLogger,
         ) {
-            if (b.skipped.isNotEmpty) {
+            if (b.skipped != null && b.skipped.isNotEmpty) {
                 logger.info { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
                 b.skipped?.values()?.forEach {
                     logger.info { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }

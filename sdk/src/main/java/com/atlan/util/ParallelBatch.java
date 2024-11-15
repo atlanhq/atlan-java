@@ -621,12 +621,12 @@ public class ParallelBatch implements Closeable {
             }
         }
         try {
-            created.close();
+            if (created != null) created.close();
         } catch (IOException e) {
             exception = e;
         }
         try {
-            updated.close();
+            if (updated != null) updated.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;
@@ -635,7 +635,7 @@ public class ParallelBatch implements Closeable {
             }
         }
         try {
-            restored.close();
+            if (restored != null) restored.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;
@@ -644,7 +644,7 @@ public class ParallelBatch implements Closeable {
             }
         }
         try {
-            skipped.close();
+            if (skipped != null) skipped.close();
         } catch (IOException e) {
             if (exception == null) {
                 exception = e;

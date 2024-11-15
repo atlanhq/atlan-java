@@ -420,7 +420,8 @@ abstract class PackageTest(
                 Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
                 removeTag(displayName, retryCount + 1)
             } else {
-                logger.error(e) { "Unable to remove tag: $displayName" }
+                logger.error { "Unable to remove tag: $displayName" }
+                logger.debug(e) { "Full details:" }
             }
         }
     }
