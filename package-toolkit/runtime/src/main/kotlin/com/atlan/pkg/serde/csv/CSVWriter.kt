@@ -89,13 +89,13 @@ class CSVWriter
             pageSize: Int,
             logger: KLogger,
         ) {
-            logger.info("Extracting a total of {} assets...", totalAssetCount)
+            logger.info { "Extracting a total of $totalAssetCount assets..." }
             val count = AtomicLong(0)
             val map = ConcurrentHashMap<String, String>()
             stream.forEach { a: Asset ->
                 writeAsset(a, assetToRow, count, totalAssetCount, pageSize, map, logger)
             }
-            logger.info("Total unique assets extracted: {}", map.size)
+            logger.info { "Total unique assets extracted: ${map.size}" }
         }
 
         /**
@@ -133,7 +133,7 @@ class CSVWriter
         ) {
             val duplicate = map.put(a.guid, a.typeName + "::" + a.guid)
             if (duplicate != null) {
-                logger.warn("Hit a duplicate asset entry — there could be page skew: {}", duplicate)
+                logger.warn { "Hit a duplicate asset entry — there could be page skew: $duplicate" }
             }
             val values = assetToRow.buildFromAsset(a)
             writeRecord(values)

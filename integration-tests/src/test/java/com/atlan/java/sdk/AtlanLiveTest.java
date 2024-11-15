@@ -61,6 +61,8 @@ public abstract class AtlanLiveTest {
 
     @BeforeClass
     public void setLogName() {
+        // TODO: this doesn't really work -- different tests' entries are showing up in others' log files
+        //  when run in parallel (works fine for running tests individually)
         ThreadContext.put("className", this.getClass().getSimpleName());
     }
 

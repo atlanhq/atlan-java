@@ -5,6 +5,7 @@ package com.atlan.util;
 import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 
+import java.util.Locale;
 import org.testng.annotations.Test;
 
 public class StringUtilsTest {
@@ -58,5 +59,42 @@ public class StringUtilsTest {
         String decoded = StringUtils.decodeContent(encoded);
         assertNotNull(decoded);
         assertEquals(decoded, test);
+    }
+
+    @Test
+    void snakeCaseSimple() {
+        final String test = "SomeName";
+        String snakeCaseU = StringUtils.getUpperSnakeCase(test);
+        assertEquals(snakeCaseU, "SOME_NAME");
+        String snakeCaseL = StringUtils.getLowerSnakeCase(test);
+        assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
+    }
+
+    @Test
+    void snakeCaseAcronymInMiddle() {
+        final String test = "domainGUIDs";
+        String snakeCaseU = StringUtils.getUpperSnakeCase(test);
+        assertEquals(snakeCaseU, "DOMAIN_GUIDS");
+        String snakeCaseL = StringUtils.getLowerSnakeCase(test);
+        assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
+        final String test2 = "assetPolicyGUIDs";
+        snakeCaseU = StringUtils.getUpperSnakeCase(test2);
+        assertEquals(snakeCaseU, "ASSET_POLICY_GUIDS");
+        snakeCaseL = StringUtils.getLowerSnakeCase(test2);
+        assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
+        final String test3 = "nonCompliantAssetPolicyGUIDs";
+        snakeCaseU = StringUtils.getUpperSnakeCase(test3);
+        assertEquals(snakeCaseU, "NON_COMPLIANT_ASSET_POLICY_GUIDS");
+        snakeCaseL = StringUtils.getLowerSnakeCase(test3);
+        assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
+    }
+
+    @Test
+    void snakeCaseAcronymAtEnd() {
+        final String test = "dbtRawSQL";
+        String snakeCaseU = StringUtils.getLowerSnakeCase(test);
+        assertEquals(snakeCaseU, "dbt_raw_sql");
+        String snakeCaseL = StringUtils.getLowerSnakeCase(test);
+        assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
     }
 }
