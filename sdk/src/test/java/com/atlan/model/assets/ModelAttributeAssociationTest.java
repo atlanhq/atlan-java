@@ -73,6 +73,8 @@ public class ModelAttributeAssociationTest {
             .modelVersionAgnosticQualifiedName("String0")
             .modelVersionName("String0")
             .modelVersionQualifiedName("String0")
+            .applicationContainer(ApplicationContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .assetApplicationQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -441,6 +443,7 @@ public class ModelAttributeAssociationTest {
             .modelAttributeAssociationLabel("String0")
             .modelAttributeAssociationTo(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelAttributeAssociationToQualifiedName("String0")
+            .modelEntityAssociationQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();

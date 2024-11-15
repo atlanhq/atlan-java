@@ -112,6 +112,9 @@ public interface IAtlanQuery {
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
     /** TBC */
+    IApplicationContainer getApplicationContainer();
+
+    /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
     /** TBC */
@@ -134,6 +137,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getAssetAnomaloSourceUrl();
+
+    /** TBC */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();

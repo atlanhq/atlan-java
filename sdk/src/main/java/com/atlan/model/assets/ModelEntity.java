@@ -16,7 +16,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,14 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -79,6 +86,18 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     @Singular
     SortedSet<IModelAttribute> modelEntityAttributes;
 
+    /** General entity, representing shared characteristics of specialized entities. */
+    @Attribute
+    IModelEntity modelEntityGeneralizationEntity;
+
+    /** Name of the general entity. */
+    @Attribute
+    String modelEntityGeneralizationName;
+
+    /** Unique identifier for the general entity. */
+    @Attribute
+    String modelEntityGeneralizationQualifiedName;
+
     /** Assets that implement this entity. */
     @Attribute
     @Singular
@@ -112,6 +131,11 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     @Singular
     SortedSet<IModelEntityAssociation> modelEntityRelatedToEntities;
 
+    /** Specialized entities derived from the general entity. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelEntitySpecializationEntities;
+
     /** Subject area of the entity. */
     @Attribute
     String modelEntitySubjectArea;
@@ -129,7 +153,6 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Simple name of the model in which this asset exists, or empty if it is itself a data model. */

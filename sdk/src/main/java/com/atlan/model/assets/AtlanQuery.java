@@ -17,7 +17,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -52,6 +51,14 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** TBC */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** TBC */
     @Attribute
@@ -144,7 +151,6 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     /** TBC */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** TBC */

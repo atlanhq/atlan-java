@@ -15,6 +15,7 @@ public enum AtlanConnectionCategory implements AtlanEnum {
     ELT("elt"),
     DATABASE("database"),
     API("API"),
+    APPLICATION("application"),
     EVENT_BUS("eventbus"),
     DATA_QUALITY("data-quality"),
     SCHEMA_REGISTRY("schema-registry");

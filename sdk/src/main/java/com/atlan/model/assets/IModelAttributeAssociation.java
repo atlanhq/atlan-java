@@ -55,6 +55,10 @@ public interface IModelAttributeAssociation {
     KeywordField MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME =
             new KeywordField("modelAttributeAssociationToQualifiedName", "modelAttributeAssociationToQualifiedName");
 
+    /** Unique name of the entity association to which this attribute is related. */
+    KeywordField MODEL_ENTITY_ASSOCIATION_QUALIFIED_NAME =
+            new KeywordField("modelEntityAssociationQualifiedName", "modelEntityAssociationQualifiedName");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -82,6 +86,9 @@ public interface IModelAttributeAssociation {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -105,6 +112,9 @@ public interface IModelAttributeAssociation {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -432,6 +442,9 @@ public interface IModelAttributeAssociation {
 
     /** Model domain in which this asset exists. */
     String getModelDomain();
+
+    /** Unique name of the entity association to which this attribute is related. */
+    String getModelEntityAssociationQualifiedName();
 
     /** Simple name of the entity in which this asset exists, or empty if it is itself a data model entity. */
     String getModelEntityName();

@@ -16,7 +16,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +49,14 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** Alias for this partition. */
     @Attribute
     String alias;
+
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
@@ -151,7 +158,6 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */

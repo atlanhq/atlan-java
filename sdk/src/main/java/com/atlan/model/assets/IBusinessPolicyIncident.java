@@ -43,7 +43,7 @@ public interface IBusinessPolicyIncident {
             new NumericField("businessPolicyIncidentNoncompliantCount", "businessPolicyIncidentNoncompliantCount");
 
     /** policy ids related to this incident */
-    KeywordField BUSINESS_POLICY_INCIDENT_RELATED_POLICY_GUI_DS =
+    KeywordField BUSINESS_POLICY_INCIDENT_RELATED_POLICY_GUIDS =
             new KeywordField("businessPolicyIncidentRelatedPolicyGUIDs", "businessPolicyIncidentRelatedPolicyGUIDs");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */

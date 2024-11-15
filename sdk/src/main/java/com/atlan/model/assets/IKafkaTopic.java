@@ -39,10 +39,6 @@ public interface IKafkaTopic {
     /** Consumer groups subscribed to this topic. */
     RelationField KAFKA_CONSUMER_GROUPS = new RelationField("kafkaConsumerGroups");
 
-    /** Comma seperated Cleanup policy for this topic. */
-    KeywordField KAFKA_TOPIC_CLEANUP_POLICIES =
-            new KeywordField("kafkaTopicCleanupPolicies", "kafkaTopicCleanupPolicies");
-
     /** Cleanup policy for this topic. */
     KeywordField KAFKA_TOPIC_CLEANUP_POLICY = new KeywordField("kafkaTopicCleanupPolicy", "kafkaTopicCleanupPolicy");
 
@@ -52,6 +48,10 @@ public interface IKafkaTopic {
 
     /** Whether this topic is an internal topic (true) or not (false). */
     BooleanField KAFKA_TOPIC_IS_INTERNAL = new BooleanField("kafkaTopicIsInternal", "kafkaTopicIsInternal");
+
+    /** Comma seperated Cleanup policy for this topic. */
+    KeywordField KAFKA_TOPIC_LOG_CLEANUP_POLICY =
+            new KeywordField("kafkaTopicLogCleanupPolicy", "kafkaTopicLogCleanupPolicy");
 
     /** Number of partitions for this topic. */
     NumericField KAFKA_TOPIC_PARTITIONS_COUNT =
@@ -101,6 +101,9 @@ public interface IKafkaTopic {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -124,6 +127,9 @@ public interface IKafkaTopic {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -404,9 +410,6 @@ public interface IKafkaTopic {
     /** Consumer groups subscribed to this topic. */
     SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups();
 
-    /** Comma seperated Cleanup policy for this topic. */
-    String getKafkaTopicCleanupPolicies();
-
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 
@@ -415,6 +418,9 @@ public interface IKafkaTopic {
 
     /** Whether this topic is an internal topic (true) or not (false). */
     Boolean getKafkaTopicIsInternal();
+
+    /** Comma seperated Cleanup policy for this topic. */
+    String getKafkaTopicLogCleanupPolicy();
 
     /** Number of partitions for this topic. */
     Long getKafkaTopicPartitionsCount();
