@@ -321,11 +321,11 @@ public class ApplicationContainer extends Asset
      */
     public static ApplicationContainerBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return ApplicationContainer._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
-            .name(name)
-            .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.APPLICATION);
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.APPLICATION);
     }
 
     /**
@@ -337,9 +337,9 @@ public class ApplicationContainer extends Asset
      */
     public static ApplicationContainerBuilder<?, ?> updater(String qualifiedName, String name) {
         return ApplicationContainer._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .qualifiedName(qualifiedName)
-            .name(name);
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
     }
 
     /**
