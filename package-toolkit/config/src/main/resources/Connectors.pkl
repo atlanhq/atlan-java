@@ -385,6 +385,10 @@ hidden const SPARK: Type = new {
   value = "spark"
   category = "elt"
 }
+hidden const APPLICATION: Type = new {
+  value = "application"
+  category = "application"
+}
 hidden const MPARTICLE: Type = new {
   value = "mparticle"
   category = "database"

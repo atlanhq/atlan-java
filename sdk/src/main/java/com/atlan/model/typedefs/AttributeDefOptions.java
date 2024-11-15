@@ -50,6 +50,7 @@ public class AttributeDefOptions extends AtlanObject {
             AirflowDag.TYPE_NAME,
             AirflowTask.TYPE_NAME,
             AnomaloCheck.TYPE_NAME,
+            ApplicationContainer.TYPE_NAME,
             AtlanCollection.TYPE_NAME,
             AtlanQuery.TYPE_NAME,
             AuthPolicy.TYPE_NAME,

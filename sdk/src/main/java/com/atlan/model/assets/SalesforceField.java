@@ -16,7 +16,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +49,14 @@ public class SalesforceField extends Asset
     /** Name of this asset in the Salesforce API. */
     @Attribute
     String apiName;
+
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** Data type of values in this field. */
     @Attribute
@@ -118,7 +125,6 @@ public class SalesforceField extends Asset
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Number of digits allowed to the right of the decimal point. */

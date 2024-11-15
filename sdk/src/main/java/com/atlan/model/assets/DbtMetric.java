@@ -17,7 +17,6 @@ import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.DbtMetricFilter;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +46,14 @@ public class DbtMetric extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** TBC */
     @Attribute
@@ -191,7 +198,6 @@ public class DbtMetric extends Asset
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */

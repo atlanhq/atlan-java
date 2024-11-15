@@ -109,6 +109,9 @@ public interface IMaterializedView {
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
     /** TBC */
+    IApplicationContainer getApplicationContainer();
+
+    /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
     /** TBC */
@@ -131,6 +134,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getAssetAnomaloSourceUrl();
+
+    /** TBC */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();

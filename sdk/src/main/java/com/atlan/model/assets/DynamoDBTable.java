@@ -53,6 +53,14 @@ public class DynamoDBTable extends Asset
     @Attribute
     String alias;
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -220,7 +228,6 @@ public class DynamoDBTable extends Asset
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Represents attributes for describing the key schema for the table and indexes. */
