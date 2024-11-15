@@ -71,6 +71,9 @@ public interface ILink {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** Asset to which the link is attached. */
     IAsset getAsset();
 
@@ -97,6 +100,9 @@ public interface ILink {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();

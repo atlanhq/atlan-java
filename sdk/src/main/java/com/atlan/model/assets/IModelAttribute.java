@@ -40,6 +40,10 @@ public interface IModelAttribute {
     /** Entity (or versions of an entity) in which this attribute exists. */
     RelationField MODEL_ATTRIBUTE_ENTITIES = new RelationField("modelAttributeEntities");
 
+    /** When true, this attribute has relationships with other attributes. */
+    BooleanField MODEL_ATTRIBUTE_HAS_RELATIONSHIPS =
+            new BooleanField("modelAttributeHasRelationships", "modelAttributeHasRelationships");
+
     /** When true, the values in this attribute are derived data. */
     BooleanField MODEL_ATTRIBUTE_IS_DERIVED = new BooleanField("modelAttributeIsDerived", "modelAttributeIsDerived");
 
@@ -97,6 +101,9 @@ public interface IModelAttribute {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -120,6 +127,9 @@ public interface IModelAttribute {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -429,6 +439,9 @@ public interface IModelAttribute {
 
     /** Entity (or versions of an entity) in which this attribute exists. */
     SortedSet<IModelEntity> getModelAttributeEntities();
+
+    /** When true, this attribute has relationships with other attributes. */
+    Boolean getModelAttributeHasRelationships();
 
     /** When true, the values in this attribute are derived data. */
     Boolean getModelAttributeIsDerived();

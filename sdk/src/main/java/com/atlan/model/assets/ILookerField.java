@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
@@ -54,6 +55,17 @@ public interface ILookerField {
 
     /** Deprecated. */
     KeywordField LOOKER_FIELD_DATA_TYPE = new KeywordField("lookerFieldDataType", "lookerFieldDataType");
+
+    /** Whether the looker field asset is coming from a refinement */
+    BooleanField LOOKER_FIELD_IS_REFINED = new BooleanField("lookerFieldIsRefined", "lookerFieldIsRefined");
+
+    /** Absolute path of the file where the refinement of the field is declared. */
+    TextField LOOKER_FIELD_REFINEMENT_FILE_PATH =
+            new TextField("lookerFieldRefinementFilePath", "lookerFieldRefinementFilePath");
+
+    /** Line number in the lookerFieldRefinementFilePath where this refinement of the field is declared. */
+    TextField LOOKER_FIELD_REFINEMENT_LINE_NUMBER =
+            new TextField("lookerFieldRefinementLineNumber", "lookerFieldRefinementLineNumber");
 
     /** Unique name of the look in which this field is used. */
     KeywordTextField LOOKER_LOOK_QUALIFIED_NAME =
@@ -118,6 +130,9 @@ public interface ILookerField {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -141,6 +156,9 @@ public interface ILookerField {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -453,6 +471,15 @@ public interface ILookerField {
 
     /** Deprecated. */
     String getLookerFieldDataType();
+
+    /** Whether the looker field asset is coming from a refinement */
+    Boolean getLookerFieldIsRefined();
+
+    /** Absolute path of the file where the refinement of the field is declared. */
+    String getLookerFieldRefinementFilePath();
+
+    /** Line number in the lookerFieldRefinementFilePath where this refinement of the field is declared. */
+    String getLookerFieldRefinementLineNumber();
 
     /** Unique name of the look in which this field is used. */
     String getLookerLookQualifiedName();

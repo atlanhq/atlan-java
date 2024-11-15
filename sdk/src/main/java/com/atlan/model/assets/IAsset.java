@@ -309,7 +309,7 @@ public interface IAsset {
     NumericField ASSET_POLICIES_COUNT = new NumericField("assetPoliciesCount", "assetPoliciesCount");
 
     /** Array of policy ids governing this asset */
-    KeywordField ASSET_POLICY_GUI_DS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
+    KeywordField ASSET_POLICY_GUIDS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
 
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
@@ -375,7 +375,7 @@ public interface IAsset {
     KeywordTextField DISPLAY_NAME = new KeywordTextField("displayName", "displayName.keyword", "displayName");
 
     /** Array of domain guids linked to this asset */
-    KeywordField DOMAIN_GUI_DS = new KeywordField("domainGUIDs", "domainGUIDs");
+    KeywordField DOMAIN_GUIDS = new KeywordField("domainGUIDs", "domainGUIDs");
 
     /** TBC */
     RelationField FILES = new RelationField("files");
@@ -432,7 +432,7 @@ public interface IAsset {
     KeywordTextStemmedField NAME = new KeywordTextStemmedField("name", "name.keyword", "name", "name.stemmed");
 
     /** Array of policy ids non-compliant to this asset */
-    KeywordField NON_COMPLIANT_ASSET_POLICY_GUI_DS =
+    KeywordField NON_COMPLIANT_ASSET_POLICY_GUIDS =
             new KeywordField("nonCompliantAssetPolicyGUIDs", "nonCompliantAssetPolicyGUIDs");
 
     /** Data products for which this asset is an output port. */

@@ -63,6 +63,9 @@ public interface IAzureEventHub {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -86,6 +89,9 @@ public interface IAzureEventHub {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -369,9 +375,6 @@ public interface IAzureEventHub {
     /** Consumer groups subscribed to this topic. */
     SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups();
 
-    /** Comma seperated Cleanup policy for this topic. */
-    String getKafkaTopicCleanupPolicies();
-
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 
@@ -380,6 +383,9 @@ public interface IAzureEventHub {
 
     /** Whether this topic is an internal topic (true) or not (false). */
     Boolean getKafkaTopicIsInternal();
+
+    /** Comma seperated Cleanup policy for this topic. */
+    String getKafkaTopicLogCleanupPolicy();
 
     /** Number of partitions for this topic. */
     Long getKafkaTopicPartitionsCount();

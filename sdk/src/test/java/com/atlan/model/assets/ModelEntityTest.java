@@ -73,6 +73,8 @@ public class ModelEntityTest {
             .modelVersionAgnosticQualifiedName("String0")
             .modelVersionName("String0")
             .modelVersionQualifiedName("String0")
+            .applicationContainer(ApplicationContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .assetApplicationQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -438,6 +440,9 @@ public class ModelEntityTest {
             .modelEntityAttributeCount(123456789L)
             .modelEntityAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityAttribute(ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelEntityGeneralizationEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelEntityGeneralizationName("String0")
+            .modelEntityGeneralizationQualifiedName("String0")
             .modelEntityImplementedByAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityImplementedByAsset(
                     AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
@@ -453,6 +458,9 @@ public class ModelEntityTest {
             .modelEntityRelatedToEntity(ModelEntityAssociation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityRelatedToEntity(
                     ModelEntityAssociation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelEntitySpecializationEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelEntitySpecializationEntity(
+                    ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .modelEntitySubjectArea("String0")
             .modelVersion(ModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelVersion(ModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

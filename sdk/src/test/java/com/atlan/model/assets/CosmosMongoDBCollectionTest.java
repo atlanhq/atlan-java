@@ -73,6 +73,8 @@ public class CosmosMongoDBCollectionTest {
             .mongoDBCollectionTotalIndexSize(123456789L)
             .mongoDBDatabase(MongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .noSQLSchemaDefinition("String0")
+            .applicationContainer(ApplicationContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .assetApplicationQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

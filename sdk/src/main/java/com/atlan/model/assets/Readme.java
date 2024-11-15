@@ -13,7 +13,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -43,9 +42,17 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
     /** Asset that this README describes. */
     @Attribute
     IAsset asset;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -73,7 +80,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
