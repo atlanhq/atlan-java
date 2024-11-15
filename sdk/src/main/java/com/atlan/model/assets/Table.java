@@ -52,6 +52,14 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     String alias;
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -181,7 +189,6 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */

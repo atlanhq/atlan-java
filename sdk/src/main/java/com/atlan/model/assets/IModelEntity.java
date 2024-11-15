@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -40,6 +41,17 @@ public interface IModelEntity {
     /** Individual attributes that make up the entity. */
     RelationField MODEL_ENTITY_ATTRIBUTES = new RelationField("modelEntityAttributes");
 
+    /** General entity, representing shared characteristics of specialized entities. */
+    RelationField MODEL_ENTITY_GENERALIZATION_ENTITY = new RelationField("modelEntityGeneralizationEntity");
+
+    /** Name of the general entity. */
+    KeywordTextField MODEL_ENTITY_GENERALIZATION_NAME = new KeywordTextField(
+            "modelEntityGeneralizationName", "modelEntityGeneralizationName.keyword", "modelEntityGeneralizationName");
+
+    /** Unique identifier for the general entity. */
+    KeywordField MODEL_ENTITY_GENERALIZATION_QUALIFIED_NAME =
+            new KeywordField("modelEntityGeneralizationQualifiedName", "modelEntityGeneralizationQualifiedName");
+
     /** Assets that implement this entity. */
     RelationField MODEL_ENTITY_IMPLEMENTED_BY_ASSETS = new RelationField("modelEntityImplementedByAssets");
 
@@ -54,6 +66,9 @@ public interface IModelEntity {
 
     /** Association to which this entity is related. */
     RelationField MODEL_ENTITY_RELATED_TO_ENTITIES = new RelationField("modelEntityRelatedToEntities");
+
+    /** Specialized entities derived from the general entity. */
+    RelationField MODEL_ENTITY_SPECIALIZATION_ENTITIES = new RelationField("modelEntitySpecializationEntities");
 
     /** Subject area of the entity. */
     KeywordField MODEL_ENTITY_SUBJECT_AREA = new KeywordField("modelEntitySubjectArea", "modelEntitySubjectArea");
@@ -88,6 +103,9 @@ public interface IModelEntity {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -111,6 +129,9 @@ public interface IModelEntity {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -427,6 +448,15 @@ public interface IModelEntity {
     /** Individual attributes that make up the entity. */
     SortedSet<IModelAttribute> getModelEntityAttributes();
 
+    /** General entity, representing shared characteristics of specialized entities. */
+    IModelEntity getModelEntityGeneralizationEntity();
+
+    /** Name of the general entity. */
+    String getModelEntityGeneralizationName();
+
+    /** Unique identifier for the general entity. */
+    String getModelEntityGeneralizationQualifiedName();
+
     /** Assets that implement this entity. */
     SortedSet<ICatalog> getModelEntityImplementedByAssets();
 
@@ -447,6 +477,9 @@ public interface IModelEntity {
 
     /** Association to which this entity is related. */
     SortedSet<IModelEntityAssociation> getModelEntityRelatedToEntities();
+
+    /** Specialized entities derived from the general entity. */
+    SortedSet<IModelEntity> getModelEntitySpecializationEntities();
 
     /** Subject area of the entity. */
     String getModelEntitySubjectArea();

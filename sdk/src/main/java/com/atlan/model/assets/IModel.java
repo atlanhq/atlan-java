@@ -209,6 +209,9 @@ public interface IModel {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    IApplicationContainer getApplicationContainer();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -232,6 +235,9 @@ public interface IModel {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
+
+    /** Qualified name of the Application Container that contains this asset. */
+    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();

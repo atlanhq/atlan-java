@@ -17,7 +17,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +46,14 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -67,10 +74,6 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
-    /** Comma seperated Cleanup policy for this topic. */
-    @Attribute
-    String kafkaTopicCleanupPolicies;
-
     /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
@@ -82,6 +85,10 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     /** Whether this topic is an internal topic (true) or not (false). */
     @Attribute
     Boolean kafkaTopicIsInternal;
+
+    /** Comma seperated Cleanup policy for this topic. */
+    @Attribute
+    String kafkaTopicLogCleanupPolicy;
 
     /** Number of partitions for this topic. */
     @Attribute
@@ -110,7 +117,6 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */

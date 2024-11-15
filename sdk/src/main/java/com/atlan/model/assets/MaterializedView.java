@@ -53,6 +53,14 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** TBC */
+    @Attribute
+    String assetApplicationQualifiedName;
+
+    /** TBC */
+    @Attribute
     String calculationViewName;
 
     /** TBC */
@@ -130,7 +138,6 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** TBC */

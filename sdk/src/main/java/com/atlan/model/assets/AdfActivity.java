@@ -155,6 +155,14 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     @Attribute
     String adfPipelineQualifiedName;
 
+    /** ApplicationContainer asset containing this Catalog asset. */
+    @Attribute
+    IApplicationContainer applicationContainer;
+
+    /** Qualified name of the Application Container that contains this asset. */
+    @Attribute
+    String assetApplicationQualifiedName;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -173,7 +181,6 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
 
     /** Tasks from which this asset is output. */
