@@ -296,6 +296,7 @@ public final class StringUtils {
 
     private static String getSnakeCase(String text) {
         return text.replaceAll("_", "")
+                .replaceAll("GUIDs", "Guids")
                 .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
                 .replaceAll("([a-z])([A-Z])", "$1_$2");
     }

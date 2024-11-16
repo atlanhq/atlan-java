@@ -54,7 +54,6 @@ abstract class PackageTest(
     protected abstract val logger: KLogger
 
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
-    private val properties = SystemProperties()
     private val sysExit = SystemExit()
     protected val testDirectory = makeUnique("")
 
@@ -90,8 +89,6 @@ abstract class PackageTest(
         // appender.start()
         // context.getLogger(testClassName)
         System.setProperty("logDirectory", testDirectory)
-        properties.set("logDirectory", testDirectory)
-        properties.setup()
         sysExit.setup()
         setup()
     }
@@ -518,7 +515,9 @@ abstract class PackageTest(
                 agentWorkflowId = null,
             )
         withEnvironmentVariable("NESTED_CONFIG", mapper.writeValueAsString(cfg)).execute {
-            mainMethod(arrayOf(testDirectory))
+            SystemProperties("logDirectory", testDirectory).execute {
+                mainMethod(arrayOf(testDirectory))
+            }
         }
     }
 
@@ -539,7 +538,6 @@ abstract class PackageTest(
         } catch (e: Exception) {
             logger.error(e) { "Failed to teardown." }
         }
-        properties.teardown()
         sysExit.teardown()
     }
 }
