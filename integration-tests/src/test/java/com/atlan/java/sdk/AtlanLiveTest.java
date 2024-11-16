@@ -139,11 +139,41 @@ public abstract class AtlanLiveTest {
      */
     protected static IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
             throws AtlanException, InterruptedException {
+        return retrySearchUntil(request, expectedSize, false);
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected static IndexSearchResponse retrySearchUntil(
+            IndexSearchRequest request, long expectedSize, boolean isDeleteQuery)
+            throws AtlanException, InterruptedException {
         int count = 1;
         IndexSearchResponse response = request.search();
-        while (response.getApproximateCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+        boolean remainingActive = true;
+        if (isDeleteQuery) {
+            remainingActive = !(response.getAssets().stream()
+                    .filter(it -> it.getStatus() != AtlanStatus.DELETED)
+                    .toList()
+                    .isEmpty());
+        }
+        while ((response.getApproximateCount() < expectedSize || remainingActive)
+                && count < Atlan.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search();
+            if (isDeleteQuery) {
+                remainingActive = !(response.getAssets().stream()
+                        .filter(it -> it.getStatus() != AtlanStatus.DELETED)
+                        .toList()
+                        .isEmpty());
+            }
             count++;
         }
         assertNotNull(response);

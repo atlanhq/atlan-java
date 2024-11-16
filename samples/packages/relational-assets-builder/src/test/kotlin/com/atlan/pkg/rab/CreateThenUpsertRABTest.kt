@@ -397,10 +397,14 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
                     .includeOnRelations(Asset.NAME)
                     .includeOnRelations(Readme.DESCRIPTION)
                     .toRequest()
-            val response = retrySearchUntil(request, 1)
+            val response = retrySearchUntil(request, 1, true)
             val found = response.assets
             assertEquals(1, found.size)
             val view = found[0] as View
+            if (view.status != AtlanStatus.DELETED) {
+                logger.error { "Exact request: ${request.toJson(client)}" }
+                logger.error { "Exact response: ${response.rawJsonObject}" }
+            }
             assertEquals(AtlanStatus.DELETED, view.status)
         } else {
             val request =
@@ -450,11 +454,15 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
                     .where(Column.STATUS.eq(AtlanStatus.DELETED))
                     .includesOnResults(columnAttrs)
                     .toRequest()
-            val response = retrySearchUntil(request, 2)
+            val response = retrySearchUntil(request, 2, true)
             val found = response.assets
             assertEquals(2, found.size)
             val states = found.stream().map(Asset::getStatus).toList().toSet()
             assertEquals(1, states.size)
+            if (states.first() != AtlanStatus.DELETED) {
+                logger.error { "Exact request: ${request.toJson(client)}" }
+                logger.error { "Exact response: ${response.rawJsonObject}" }
+            }
             assertEquals(AtlanStatus.DELETED, states.first())
         } else {
             val request =
