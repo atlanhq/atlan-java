@@ -159,20 +159,20 @@ public abstract class AtlanLiveTest {
         IndexSearchResponse response = request.search();
         boolean remainingActive = true;
         if (isDeleteQuery) {
-            remainingActive = !(response.getAssets().stream()
+            remainingActive = !response.getAssets().stream()
                     .filter(it -> it.getStatus() != AtlanStatus.DELETED)
                     .toList()
-                    .isEmpty());
+                    .isEmpty();
         }
         while ((response.getApproximateCount() < expectedSize || remainingActive)
                 && count < Atlan.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search();
             if (isDeleteQuery) {
-                remainingActive = !(response.getAssets().stream()
+                remainingActive = !response.getAssets().stream()
                         .filter(it -> it.getStatus() != AtlanStatus.DELETED)
                         .toList()
-                        .isEmpty());
+                        .isEmpty();
             }
             count++;
         }
