@@ -14,6 +14,7 @@ import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.model.typedefs.AtlanTagDef
@@ -191,12 +192,20 @@ abstract class PackageTest(
     fun retrySearchUntil(
         request: IndexSearchRequest,
         expectedSize: Long,
+        isDeleteQuery: Boolean = false,
     ): IndexSearchResponse {
         var count = 1
         var response = request.search()
-        while (response.approximateCount < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+        var remainingActive = true
+        if (isDeleteQuery) {
+            remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+        }
+        while ((response.approximateCount < expectedSize || remainingActive) && count < (Atlan.getMaxNetworkRetries() * 2)) {
             Thread.sleep(HttpClient.waitTime(count).toMillis())
             response = request.search()
+            if (isDeleteQuery) {
+                remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+            }
             count++
         }
         assertFalse(response.approximateCount < expectedSize, "Search retries overran - found ${response.approximateCount} results when expecting $expectedSize.")

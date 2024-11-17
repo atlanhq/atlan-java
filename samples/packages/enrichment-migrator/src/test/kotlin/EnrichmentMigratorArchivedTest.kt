@@ -8,6 +8,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.model.search.IndexSearchResponse
 import com.atlan.pkg.PackageTest
 import com.atlan.util.AssetBatch
 import mu.KotlinLogging
@@ -98,13 +99,18 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
                 .toRequest()
         var count = 0
         var status = AtlanStatus.DELETED
-        while (status == AtlanStatus.DELETED && count < Atlan.getDefaultClient().maxNetworkRetries) {
-            val response = retrySearchUntil(request, 1)
+        var response: IndexSearchResponse? = null
+        while (status == AtlanStatus.DELETED && count < (Atlan.getDefaultClient().maxNetworkRetries * 2)) {
+            response = retrySearchUntil(request, 1)
             val list = response.stream().toList()
             assertTrue(list.isNotEmpty())
             assertEquals(1, list.size)
             status = list[0].status
             count++
+        }
+        if (status != AtlanStatus.ACTIVE) {
+            logger.error { "Exact request ($count): ${request.toJson(client)}" }
+            logger.error { "Exact response ($count): ${response?.rawJsonObject}" }
         }
         assertEquals(AtlanStatus.ACTIVE, status)
     }
