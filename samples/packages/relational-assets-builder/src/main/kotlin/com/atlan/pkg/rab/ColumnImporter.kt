@@ -64,9 +64,12 @@ class ColumnImporter(
         val rawDataType = deserializer.getRawValue(Column.DATA_TYPE.atlanFieldName)
         if (rawDataType.isNotBlank()) {
             builder.rawDataTypeDefinition(rawDataType)
-            DataTypeXformer.getPrecision(rawDataType)?.let { builder.precision(it) }
-            DataTypeXformer.getScale(rawDataType)?.let { builder.numericScale(it) }
-            DataTypeXformer.getMaxLength(rawDataType)?.let { builder.maxLength(it) }
+            if (!rawDataType.contains("<") && !rawDataType.contains(">")) {
+                // Only attempt to parse things like precision, scale and max-length if this is not a complex type
+                DataTypeXformer.getPrecision(rawDataType)?.let { builder.precision(it) }
+                DataTypeXformer.getScale(rawDataType)?.let { builder.numericScale(it) }
+                DataTypeXformer.getMaxLength(rawDataType)?.let { builder.maxLength(it) }
+            }
         }
         return builder
     }
