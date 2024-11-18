@@ -264,7 +264,7 @@ customTypes {
             type = "Catalog"
             attribute = "\(a)ImplementedEntities"
             description = "Entities implemented by this asset."
-          }    
+          }
         }
       }
     ["data_model_entity_generalization_specialization"] {
@@ -290,13 +290,13 @@ customTypes {
     attributes {
       ["\(a)\(dmEntityAssociation)Cardinality"] {
         label = "cardinality"
-        description = "Cardinality of the data entity association."
+        description = "(Deprecated) Cardinality of the data entity association."
         type = "enum"
         enumName = "\(t)CardinalityType"
       }
       ["\(a)\(dmEntityAssociation)Label"] {
         label = "label"
-        description = "Label of the data entity association."
+        description = "(Deprecated) Label of the data entity association."
         type = "string"
       }
       ["\(a)\(dmEntityAssociation)ToQualifiedName"] {
@@ -304,10 +304,40 @@ customTypes {
         indexAs = "keyword"
         description = "Unique name of the association to which this entity is related."
       }
+      ["\(a)\(dmEntityAssociation)ToLabel"] {
+        label = "to label"
+        description = "Label when read from the association to which this entity is related."
+        type = "string"
+      }
+      ["\(a)\(dmEntityAssociation)ToMinCardinality"] {
+        label = "to minimum cardinality"
+        description = "Minimum cardinality of the data entity to which the association exists."
+        type = "long"
+      }
+      ["\(a)\(dmEntityAssociation)ToMaxCardinality"] {
+        label = "to maximum cardinality"
+        description = "Maximum cardinality of the data entity to which the association exists."
+        type = "long"
+      }
       ["\(a)\(dmEntityAssociation)FromQualifiedName"] {
         type = "string"
         indexAs = "keyword"
         description = "Unique name of the association from which this entity is related."
+      }
+      ["\(a)\(dmEntityAssociation)FromLabel"] {
+        label = "from label"
+        description = "Label when read from the association from which this entity is related."
+        type = "string"
+      }
+      ["\(a)\(dmEntityAssociation)FromMinCardinality"] {
+        label = "from minimum cardinality"
+        description = "Minimum cardinality of the data entity from which the association exists."
+        type = "long"
+      }
+      ["\(a)\(dmEntityAssociation)FromMaxCardinality"] {
+        label = "from maximum cardinality"
+        description = "Maximum cardinality of the data entity from which the association exists."
+        type = "long"
       }
     }
     enums {
@@ -441,13 +471,13 @@ customTypes {
     attributes {
       ["\(a)\(dmAttributeAssociation)Cardinality"] {
         label = "cardinality"
-        description = "Cardinality of the data attribute association."
+        description = "(Deprecated) Cardinality of the data attribute association."
         type = "enum"
         enumName = "\(t)CardinalityType"
       }
       ["\(a)\(dmAttributeAssociation)Label"] {
         label = "label"
-        description = "Label of the data attribute association."
+        description = "(Deprecated) Label of the data attribute association."
         type = "string"
       }
       ["\(a)\(dmAttributeAssociation)ToQualifiedName"] {
@@ -455,10 +485,40 @@ customTypes {
         indexAs = "keyword"
         description = "Unique name of the association to which this attribute is related."
       }
+      ["\(a)\(dmAttributeAssociation)ToLabel"] {
+        label = "to label"
+        description = "Label when read from the association to which this attribute is related."
+        type = "string"
+      }
+      ["\(a)\(dmAttributeAssociation)ToMinCardinality"] {
+        label = "to minimum cardinality"
+        description = "Minimum cardinality of the attribute to which the association exists."
+        type = "long"
+      }
+      ["\(a)\(dmAttributeAssociation)ToMaxCardinality"] {
+        label = "to maximum cardinality"
+        description = "Maximum cardinality of the attribute to which the association exists."
+        type = "long"
+      }
       ["\(a)\(dmAttributeAssociation)FromQualifiedName"] {
         type = "string"
         indexAs = "keyword"
         description = "Unique name of the association from which this attribute is related."
+      }
+      ["\(a)\(dmAttributeAssociation)FromLabel"] {
+        label = "from label"
+        description = "Label when read from the association from which this attribute is related."
+        type = "string"
+      }
+      ["\(a)\(dmAttributeAssociation)FromMinCardinality"] {
+        label = "from minimum cardinality"
+        description = "Minimum cardinality of the attribute from which the association exists."
+        type = "long"
+      }
+      ["\(a)\(dmAttributeAssociation)FromMaxCardinality"] {
+        label = "from maximum cardinality"
+        description = "Maximum cardinality of the attribute from which the association exists."
+        type = "long"
       }
       ["\(a)\(dmEntityAssociation)QualifiedName"] {
         type = "string"
