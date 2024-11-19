@@ -35,7 +35,6 @@ public class CredentialResponse extends ApiResource {
     Object level;
     Object connection;
     String username;
-    String password;
 
     @JsonProperty("extra")
     Map<String, String> extras;
