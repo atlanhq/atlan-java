@@ -4,11 +4,15 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.cache.CategoryCache
 import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
@@ -74,6 +78,31 @@ class SameNameCategoriesTest : PackageTest("snc") {
         assertEquals(5, bfs.size)
         val ordered = bfs.map { it.name }.toList()
         assertTrue(listOf("root", "c1", "c2", "same", "same") == ordered || listOf("root", "c2", "c1", "same", "same") == ordered)
+    }
+
+    @Test
+    fun termsCreated() {
+        val g = Glossary.findByName(glossaryName)!!
+        val t1 = GlossaryTerm.findByNameFast("t1", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
+        assertNotNull(t1)
+        assertNotNull(t1.categories)
+        assertEquals(1, t1.categories.size)
+        val c1Guid = t1.categories.first().guid
+        val t2 = GlossaryTerm.findByNameFast("t2", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
+        assertNotNull(t2)
+        assertNotNull(t2.categories)
+        assertEquals(1, t2.categories.size)
+        val c2Guid = t2.categories.first().guid
+        assertNotEquals(c1Guid, c2Guid)
+    }
+
+    @Test
+    fun categoriesProperlyCached() {
+        CategoryCache.refresh() // Note: refresh to ensure that loading the cache from scratch it still resolves properly
+        val cat1 = CategoryCache.getByIdentity("root@c1@same@@@$glossaryName")
+        assertNotNull(cat1)
+        val cat2 = CategoryCache.getByIdentity("root@c2@same@@@$glossaryName")
+        assertNotNull(cat2)
     }
 
     @Test
