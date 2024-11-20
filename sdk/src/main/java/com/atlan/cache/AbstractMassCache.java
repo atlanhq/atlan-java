@@ -325,7 +325,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     }
 
     private String getNameFromIdWithoutLock(String id) {
-        return mapNameToId.get(id);
+        return mapIdToName.get(id);
     }
 
     private String getNameFromIdWithLock(String id) {
