@@ -12,7 +12,6 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.IAirflowTask;
-import com.atlan.model.assets.IApplicationContainer;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICatalog;
@@ -22,6 +21,7 @@ import com.atlan.model.assets.IDbtSource;
 import com.atlan.model.assets.IDbtTest;
 import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
+import com.atlan.model.assets.IModelAttribute;
 import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
@@ -68,14 +68,6 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
 
     /** TBC */
     @Attribute
@@ -226,8 +218,12 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** Entities implemented by this asset. */
     @Attribute
     @Singular
-    @JsonProperty("modelEntityImplemented")
     SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** TBC */
     @Attribute
