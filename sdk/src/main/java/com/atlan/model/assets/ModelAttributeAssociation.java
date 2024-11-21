@@ -47,14 +47,6 @@ public class ModelAttributeAssociation extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -70,7 +62,7 @@ public class ModelAttributeAssociation extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** Cardinality of the data attribute association. */
+    /** (Deprecated) Cardinality of the data attribute association. */
     @Attribute
     ModelCardinalityType modelAttributeAssociationCardinality;
 
@@ -78,17 +70,41 @@ public class ModelAttributeAssociation extends Asset
     @Attribute
     IModelAttribute modelAttributeAssociationFrom;
 
+    /** Label when read from the association from which this attribute is related. */
+    @Attribute
+    String modelAttributeAssociationFromLabel;
+
+    /** Maximum cardinality of the attribute from which the association exists. */
+    @Attribute
+    Long modelAttributeAssociationFromMaxCardinality;
+
+    /** Minimum cardinality of the attribute from which the association exists. */
+    @Attribute
+    Long modelAttributeAssociationFromMinCardinality;
+
     /** Unique name of the association from which this attribute is related. */
     @Attribute
     String modelAttributeAssociationFromQualifiedName;
 
-    /** Label of the data attribute association. */
+    /** (Deprecated) Label of the data attribute association. */
     @Attribute
     String modelAttributeAssociationLabel;
 
     /** Attribute to which this association is related. */
     @Attribute
     IModelAttribute modelAttributeAssociationTo;
+
+    /** Label when read from the association to which this attribute is related. */
+    @Attribute
+    String modelAttributeAssociationToLabel;
+
+    /** Maximum cardinality of the attribute to which the association exists. */
+    @Attribute
+    Long modelAttributeAssociationToMaxCardinality;
+
+    /** Minimum cardinality of the attribute to which the association exists. */
+    @Attribute
+    Long modelAttributeAssociationToMinCardinality;
 
     /** Unique name of the association to which this attribute is related. */
     @Attribute
@@ -124,6 +140,11 @@ public class ModelAttributeAssociation extends Asset
     @Attribute
     @Date
     Long modelExpiredAtSystemDate;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

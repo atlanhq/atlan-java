@@ -44,14 +44,6 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;
@@ -106,6 +98,11 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

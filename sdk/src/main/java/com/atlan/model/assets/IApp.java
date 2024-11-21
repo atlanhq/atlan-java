@@ -247,6 +247,9 @@ public interface IApp {
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
@@ -396,6 +399,12 @@ public interface IApp {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();

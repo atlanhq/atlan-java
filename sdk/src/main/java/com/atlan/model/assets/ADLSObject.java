@@ -135,14 +135,6 @@ public class ADLSObject extends Asset
     @Attribute
     Boolean adlsObjectVersionLevelImmutabilitySupport;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Location of this asset in Azure. */
     @Attribute
     String azureLocation;
@@ -170,6 +162,11 @@ public class ADLSObject extends Asset
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

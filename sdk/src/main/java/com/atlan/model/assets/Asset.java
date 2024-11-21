@@ -110,6 +110,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IAnomaloCheck> anomaloChecks;
 
+    /** Application asset containing this Asset. */
+    @Attribute
+    IApplication application;
+
+    /** Qualified name of the Application that contains this asset. */
+    @Attribute
+    String applicationQualifiedName;
+
     /** All associated Anomalo check types. */
     @Attribute
     @Singular
@@ -363,6 +371,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<String> assetMcIncidentTypes;
+
+    /** Tracks whether this asset is monitored by MC or not */
+    @Attribute
+    Boolean assetMcIsMonitored;
 
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     @Attribute

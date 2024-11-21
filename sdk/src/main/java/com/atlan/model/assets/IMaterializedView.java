@@ -109,7 +109,10 @@ public interface IMaterializedView {
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
     /** TBC */
-    IApplicationContainer getApplicationContainer();
+    IApplication getApplication();
+
+    /** TBC */
+    String getApplicationQualifiedName();
 
     /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -134,9 +137,6 @@ public interface IMaterializedView {
 
     /** TBC */
     String getAssetAnomaloSourceUrl();
-
-    /** TBC */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -290,6 +290,9 @@ public interface IMaterializedView {
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentTypes();
+
+    /** TBC */
+    Boolean getAssetMcIsMonitored();
 
     /** TBC */
     Long getAssetMcLastSyncRunAt();
@@ -482,6 +485,9 @@ public interface IMaterializedView {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** TBC */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** TBC */
     SortedSet<IModelEntity> getModelImplementedEntities();

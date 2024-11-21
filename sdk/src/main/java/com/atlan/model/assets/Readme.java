@@ -42,17 +42,9 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
     /** Asset that this README describes. */
     @Attribute
     IAsset asset;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -76,6 +68,11 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     /** URL to the resource. */
     @Attribute
     String link;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

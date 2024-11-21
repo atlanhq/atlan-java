@@ -53,14 +53,6 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** TBC */
-    @Attribute
-    String assetApplicationQualifiedName;
-
-    /** TBC */
-    @Attribute
     String calculationViewName;
 
     /** TBC */
@@ -134,6 +126,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Attribute
     @Date
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** TBC */
     @Attribute
