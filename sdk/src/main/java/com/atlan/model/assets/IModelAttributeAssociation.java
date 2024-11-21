@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.ModelCardinalityType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -33,23 +34,47 @@ public interface IModelAttributeAssociation {
 
     public static final String TYPE_NAME = "ModelAttributeAssociation";
 
-    /** Cardinality of the data attribute association. */
+    /** (Deprecated) Cardinality of the data attribute association. */
     KeywordField MODEL_ATTRIBUTE_ASSOCIATION_CARDINALITY =
             new KeywordField("modelAttributeAssociationCardinality", "modelAttributeAssociationCardinality");
 
     /** Attribute from which this association is related. */
     RelationField MODEL_ATTRIBUTE_ASSOCIATION_FROM = new RelationField("modelAttributeAssociationFrom");
 
+    /** Label when read from the association from which this attribute is related. */
+    KeywordField MODEL_ATTRIBUTE_ASSOCIATION_FROM_LABEL =
+            new KeywordField("modelAttributeAssociationFromLabel", "modelAttributeAssociationFromLabel");
+
+    /** Maximum cardinality of the attribute from which the association exists. */
+    NumericField MODEL_ATTRIBUTE_ASSOCIATION_FROM_MAX_CARDINALITY = new NumericField(
+            "modelAttributeAssociationFromMaxCardinality", "modelAttributeAssociationFromMaxCardinality");
+
+    /** Minimum cardinality of the attribute from which the association exists. */
+    NumericField MODEL_ATTRIBUTE_ASSOCIATION_FROM_MIN_CARDINALITY = new NumericField(
+            "modelAttributeAssociationFromMinCardinality", "modelAttributeAssociationFromMinCardinality");
+
     /** Unique name of the association from which this attribute is related. */
     KeywordField MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME = new KeywordField(
             "modelAttributeAssociationFromQualifiedName", "modelAttributeAssociationFromQualifiedName");
 
-    /** Label of the data attribute association. */
+    /** (Deprecated) Label of the data attribute association. */
     KeywordField MODEL_ATTRIBUTE_ASSOCIATION_LABEL =
             new KeywordField("modelAttributeAssociationLabel", "modelAttributeAssociationLabel");
 
     /** Attribute to which this association is related. */
     RelationField MODEL_ATTRIBUTE_ASSOCIATION_TO = new RelationField("modelAttributeAssociationTo");
+
+    /** Label when read from the association to which this attribute is related. */
+    KeywordField MODEL_ATTRIBUTE_ASSOCIATION_TO_LABEL =
+            new KeywordField("modelAttributeAssociationToLabel", "modelAttributeAssociationToLabel");
+
+    /** Maximum cardinality of the attribute to which the association exists. */
+    NumericField MODEL_ATTRIBUTE_ASSOCIATION_TO_MAX_CARDINALITY =
+            new NumericField("modelAttributeAssociationToMaxCardinality", "modelAttributeAssociationToMaxCardinality");
+
+    /** Minimum cardinality of the attribute to which the association exists. */
+    NumericField MODEL_ATTRIBUTE_ASSOCIATION_TO_MIN_CARDINALITY =
+            new NumericField("modelAttributeAssociationToMinCardinality", "modelAttributeAssociationToMinCardinality");
 
     /** Unique name of the association to which this attribute is related. */
     KeywordField MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME =
@@ -86,8 +111,11 @@ public interface IModelAttributeAssociation {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    IApplicationContainer getApplicationContainer();
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -112,9 +140,6 @@ public interface IModelAttributeAssociation {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
-
-    /** Qualified name of the Application Container that contains this asset. */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -269,6 +294,9 @@ public interface IModelAttributeAssociation {
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
@@ -419,20 +447,38 @@ public interface IModelAttributeAssociation {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Cardinality of the data attribute association. */
+    /** (Deprecated) Cardinality of the data attribute association. */
     ModelCardinalityType getModelAttributeAssociationCardinality();
 
     /** Attribute from which this association is related. */
     IModelAttribute getModelAttributeAssociationFrom();
 
+    /** Label when read from the association from which this attribute is related. */
+    String getModelAttributeAssociationFromLabel();
+
+    /** Maximum cardinality of the attribute from which the association exists. */
+    Long getModelAttributeAssociationFromMaxCardinality();
+
+    /** Minimum cardinality of the attribute from which the association exists. */
+    Long getModelAttributeAssociationFromMinCardinality();
+
     /** Unique name of the association from which this attribute is related. */
     String getModelAttributeAssociationFromQualifiedName();
 
-    /** Label of the data attribute association. */
+    /** (Deprecated) Label of the data attribute association. */
     String getModelAttributeAssociationLabel();
 
     /** Attribute to which this association is related. */
     IModelAttribute getModelAttributeAssociationTo();
+
+    /** Label when read from the association to which this attribute is related. */
+    String getModelAttributeAssociationToLabel();
+
+    /** Maximum cardinality of the attribute to which the association exists. */
+    Long getModelAttributeAssociationToMaxCardinality();
+
+    /** Minimum cardinality of the attribute to which the association exists. */
+    Long getModelAttributeAssociationToMinCardinality();
 
     /** Unique name of the association to which this attribute is related. */
     String getModelAttributeAssociationToQualifiedName();
@@ -457,6 +503,9 @@ public interface IModelAttributeAssociation {
 
     /** System expiration date for the asset. */
     Long getModelExpiredAtSystemDate();
+
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();

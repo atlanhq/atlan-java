@@ -44,14 +44,6 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Explores that exist within this model. */
     @Attribute
     @Singular
@@ -80,6 +72,11 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     /** Look that exists for this model. */
     @Attribute
     ILookerLook look;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

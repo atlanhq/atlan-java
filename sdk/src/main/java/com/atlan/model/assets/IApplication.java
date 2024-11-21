@@ -8,7 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for all Application types.
+ * Instances of Application in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -31,8 +31,8 @@ public interface IApplication {
 
     public static final String TYPE_NAME = "Application";
 
-    /** Unique identifier for the Application asset from the source system. */
-    KeywordField APPLICATION_ID = new KeywordField("applicationId", "applicationId");
+    /** Assets contained within this Application. */
+    RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -61,11 +61,17 @@ public interface IApplication {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    IApplicationContainer getApplicationContainer();
+    /** Unique identifier for the App asset from the source system. */
+    String getAppId();
 
-    /** Unique identifier for the Application asset from the source system. */
-    String getApplicationId();
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
+
+    /** Assets contained within this Application. */
+    SortedSet<IAsset> getApplicationOwnedAssets();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -90,9 +96,6 @@ public interface IApplication {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
-
-    /** Qualified name of the Application Container that contains this asset. */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -247,6 +250,9 @@ public interface IApplication {
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
@@ -396,6 +402,9 @@ public interface IApplication {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();

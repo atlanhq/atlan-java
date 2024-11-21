@@ -47,14 +47,6 @@ public class ModelEntityAssociation extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -79,7 +71,7 @@ public class ModelEntityAssociation extends Asset
     @Attribute
     String modelDomain;
 
-    /** Cardinality of the data entity association. */
+    /** (Deprecated) Cardinality of the data entity association. */
     @Attribute
     ModelCardinalityType modelEntityAssociationCardinality;
 
@@ -87,17 +79,41 @@ public class ModelEntityAssociation extends Asset
     @Attribute
     IModelEntity modelEntityAssociationFrom;
 
+    /** Label when read from the association from which this entity is related. */
+    @Attribute
+    String modelEntityAssociationFromLabel;
+
+    /** Maximum cardinality of the data entity from which the association exists. */
+    @Attribute
+    Long modelEntityAssociationFromMaxCardinality;
+
+    /** Minimum cardinality of the data entity from which the association exists. */
+    @Attribute
+    Long modelEntityAssociationFromMinCardinality;
+
     /** Unique name of the association from which this entity is related. */
     @Attribute
     String modelEntityAssociationFromQualifiedName;
 
-    /** Label of the data entity association. */
+    /** (Deprecated) Label of the data entity association. */
     @Attribute
     String modelEntityAssociationLabel;
 
     /** Entity to which this association is related. */
     @Attribute
     IModelEntity modelEntityAssociationTo;
+
+    /** Label when read from the association to which this entity is related. */
+    @Attribute
+    String modelEntityAssociationToLabel;
+
+    /** Maximum cardinality of the data entity to which the association exists. */
+    @Attribute
+    Long modelEntityAssociationToMaxCardinality;
+
+    /** Minimum cardinality of the data entity to which the association exists. */
+    @Attribute
+    Long modelEntityAssociationToMinCardinality;
 
     /** Unique name of the association to which this entity is related. */
     @Attribute
@@ -120,6 +136,11 @@ public class ModelEntityAssociation extends Asset
     @Attribute
     @Date
     Long modelExpiredAtSystemDate;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

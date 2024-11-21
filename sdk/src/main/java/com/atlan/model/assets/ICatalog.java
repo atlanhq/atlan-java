@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -32,13 +31,6 @@ public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    RelationField APPLICATION_CONTAINER = new RelationField("applicationContainer");
-
-    /** Qualified name of the Application Container that contains this asset. */
-    KeywordField ASSET_APPLICATION_QUALIFIED_NAME =
-            new KeywordField("assetApplicationQualifiedName", "assetApplicationQualifiedName");
-
     /** Tasks to which this asset provides input. */
     RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
 
@@ -47,6 +39,9 @@ public interface ICatalog {
 
     /** TBC */
     RelationField INPUT_TO_SPARK_JOBS = new RelationField("inputToSparkJobs");
+
+    /** Attributes implemented by this asset. */
+    RelationField MODEL_IMPLEMENTED_ATTRIBUTES = new RelationField("modelImplementedAttributes");
 
     /** Entities implemented by this asset. */
     RelationField MODEL_IMPLEMENTED_ENTITIES = new RelationField("modelImplementedEntities");
@@ -118,8 +113,8 @@ public interface ICatalog {
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
                 break;
-            case ApplicationContainer.TYPE_NAME:
-                ref = ApplicationContainer.refByQualifiedName(qualifiedName);
+            case Application.TYPE_NAME:
+                ref = Application.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -135,6 +130,9 @@ public interface ICatalog {
                 break;
             case AzureServiceBusTopic.TYPE_NAME:
                 ref = AzureServiceBusTopic.refByQualifiedName(qualifiedName);
+                break;
+            case BusinessProcessModelEntity.TYPE_NAME:
+                ref = BusinessProcessModelEntity.refByQualifiedName(qualifiedName);
                 break;
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
@@ -704,8 +702,11 @@ public interface ICatalog {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    IApplicationContainer getApplicationContainer();
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -730,9 +731,6 @@ public interface ICatalog {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
-
-    /** Qualified name of the Application Container that contains this asset. */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -887,6 +885,9 @@ public interface ICatalog {
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
@@ -1036,6 +1037,9 @@ public interface ICatalog {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();

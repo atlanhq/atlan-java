@@ -8,7 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,17 +22,17 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instances of ApplicationContainer in Atlan.
+ * Base class for all BusinessProcessModel types.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IApplicationContainer {
+public interface IBusinessProcessModel {
 
-    public static final String TYPE_NAME = "ApplicationContainer";
+    public static final String TYPE_NAME = "BusinessProcessModel";
 
-    /** Catalog assets contained within this ApplicationContainer. */
-    RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
+    /** Type attribute for the BusinessProcessModel asset to help distinguish the entity type. */
+    KeywordField BUSINESS_PROCESS_MODEL_TYPE = new KeywordField("businessProcessModelType", "businessProcessModelType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -61,14 +61,11 @@ public interface IApplicationContainer {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    IApplicationContainer getApplicationContainer();
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
 
-    /** Unique identifier for the Application asset from the source system. */
-    String getApplicationId();
-
-    /** Catalog assets contained within this ApplicationContainer. */
-    SortedSet<ICatalog> getApplicationOwnedAssets();
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -93,9 +90,6 @@ public interface IApplicationContainer {
 
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
-
-    /** Qualified name of the Application Container that contains this asset. */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -250,6 +244,9 @@ public interface IApplicationContainer {
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
@@ -300,6 +297,9 @@ public interface IApplicationContainer {
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** Type attribute for the BusinessProcessModel asset to help distinguish the entity type. */
+    String getBusinessProcessModelType();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -399,6 +399,9 @@ public interface IApplicationContainer {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();

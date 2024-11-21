@@ -112,7 +112,10 @@ public interface IAtlanQuery {
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
     /** TBC */
-    IApplicationContainer getApplicationContainer();
+    IApplication getApplication();
+
+    /** TBC */
+    String getApplicationQualifiedName();
 
     /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -137,9 +140,6 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getAssetAnomaloSourceUrl();
-
-    /** TBC */
-    String getAssetApplicationQualifiedName();
 
     /** TBC */
     String getAssetCoverImage();
@@ -293,6 +293,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentTypes();
+
+    /** TBC */
+    Boolean getAssetMcIsMonitored();
 
     /** TBC */
     Long getAssetMcLastSyncRunAt();
@@ -494,6 +497,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     SortedSet<IMetric> getMetrics();
+
+    /** TBC */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
 
     /** TBC */
     SortedSet<IModelEntity> getModelImplementedEntities();

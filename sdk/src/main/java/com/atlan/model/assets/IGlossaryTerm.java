@@ -144,6 +144,12 @@ public interface IGlossaryTerm {
     SortedSet<IGlossaryTerm> getAntonyms();
 
     /** TBC */
+    IApplication getApplication();
+
+    /** TBC */
+    String getApplicationQualifiedName();
+
+    /** TBC */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
     /** TBC */
@@ -319,6 +325,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<String> getAssetMcIncidentTypes();
+
+    /** TBC */
+    Boolean getAssetMcIsMonitored();
 
     /** TBC */
     Long getAssetMcLastSyncRunAt();

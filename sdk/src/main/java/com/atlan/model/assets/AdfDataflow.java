@@ -86,14 +86,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     @Singular
     SortedSet<IAdfPipeline> adfPipelines;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -108,6 +100,11 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

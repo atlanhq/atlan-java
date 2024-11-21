@@ -64,6 +64,12 @@ public interface IAsset {
     /** Checks that run on this asset. */
     RelationField ANOMALO_CHECKS = new RelationField("anomaloChecks");
 
+    /** Application asset containing this Asset. */
+    RelationField APPLICATION = new RelationField("application");
+
+    /** Qualified name of the Application that contains this asset. */
+    KeywordField APPLICATION_QUALIFIED_NAME = new KeywordField("applicationQualifiedName", "applicationQualifiedName");
+
     /** All associated Anomalo check types. */
     KeywordField ASSET_ANOMALO_APPLIED_CHECK_TYPES =
             new KeywordField("assetAnomaloAppliedCheckTypes", "assetAnomaloAppliedCheckTypes");
@@ -283,6 +289,9 @@ public interface IAsset {
 
     /** List of Monte Carlo incident types associated with this asset. */
     KeywordField ASSET_MC_INCIDENT_TYPES = new KeywordField("assetMcIncidentTypes", "assetMcIncidentTypes");
+
+    /** Tracks whether this asset is monitored by MC or not */
+    BooleanField ASSET_MC_IS_MONITORED = new BooleanField("assetMcIsMonitored", "assetMcIsMonitored");
 
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     NumericField ASSET_MC_LAST_SYNC_RUN_AT = new NumericField("assetMcLastSyncRunAt", "assetMcLastSyncRunAt");
@@ -597,6 +606,12 @@ public interface IAsset {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -773,6 +788,9 @@ public interface IAsset {
 
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
+
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
 
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();

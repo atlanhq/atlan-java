@@ -46,14 +46,6 @@ public class TableauDatasource extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Notes related to this datasource being cerfified, in Tableau. */
     @Attribute
     String certificationNote;
@@ -98,6 +90,11 @@ public class TableauDatasource extends Asset
     /** Whether this datasource is published (true) or embedded (false). */
     @Attribute
     Boolean isPublished;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

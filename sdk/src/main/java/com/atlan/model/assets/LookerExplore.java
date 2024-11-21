@@ -44,14 +44,6 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Fields that exist within this Explore. */
     @Attribute
     @Singular
@@ -75,6 +67,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     /** Model in which this explore exists. */
     @Attribute
     ILookerModel model;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

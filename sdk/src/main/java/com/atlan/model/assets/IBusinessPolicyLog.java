@@ -78,6 +78,12 @@ public interface IBusinessPolicyLog {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** Application asset containing this Asset. */
+    IApplication getApplication();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
+
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
 
@@ -254,6 +260,9 @@ public interface IBusinessPolicyLog {
 
     /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
+
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
 
     /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();

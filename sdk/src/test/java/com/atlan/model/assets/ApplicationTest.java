@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ApplicationContainerTest {
+public class ApplicationTest {
 
-    private static final ApplicationContainer full = ApplicationContainer._internal()
+    private static final Application full = Application._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,15 +59,16 @@ public class ApplicationContainerTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .applicationId("String0")
-            .applicationContainer(ApplicationContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .assetApplicationQualifiedName("String0")
+            .appId("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedAttribute(
+                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -89,6 +90,8 @@ public class ApplicationContainerTest {
             .announcementUpdatedBy("String0")
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .anomaloCheck(AnomaloCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .application(Application.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationQualifiedName("String0")
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
             .assetAnomaloCheckCount(123456789L)
@@ -159,6 +162,7 @@ public class ApplicationContainerTest {
             .assetMcIncidentSubType("String1")
             .assetMcIncidentType("String0")
             .assetMcIncidentType("String1")
+            .assetMcIsMonitored(true)
             .assetMcLastSyncRunAt(123456789L)
             .assetMcMonitorName("String0")
             .assetMcMonitorName("String1")
@@ -424,22 +428,22 @@ public class ApplicationContainerTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .applicationOwnedAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .applicationOwnedAsset(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .applicationOwnedAsset(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationOwnedAsset(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static ApplicationContainer frodo;
+    private static Application frodo;
     private static String serialized;
 
-    @Test(groups = {"ApplicationContainer.builderEquivalency"})
+    @Test(groups = {"Application.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ApplicationContainer.serialize"},
-            dependsOnGroups = {"ApplicationContainer.builderEquivalency"})
+            groups = {"Application.serialize"},
+            dependsOnGroups = {"Application.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(Atlan.getDefaultClient());
@@ -448,17 +452,17 @@ public class ApplicationContainerTest {
     }
 
     @Test(
-            groups = {"ApplicationContainer.deserialize"},
-            dependsOnGroups = {"ApplicationContainer.serialize"})
+            groups = {"Application.deserialize"},
+            dependsOnGroups = {"Application.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ApplicationContainer.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, Application.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ApplicationContainer.equivalency"},
-            dependsOnGroups = {"ApplicationContainer.serialize", "ApplicationContainer.deserialize"})
+            groups = {"Application.equivalency"},
+            dependsOnGroups = {"Application.serialize", "Application.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -467,8 +471,8 @@ public class ApplicationContainerTest {
     }
 
     @Test(
-            groups = {"ApplicationContainer.equivalency"},
-            dependsOnGroups = {"ApplicationContainer.serialize", "ApplicationContainer.deserialize"})
+            groups = {"Application.equivalency"},
+            dependsOnGroups = {"Application.serialize", "Application.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

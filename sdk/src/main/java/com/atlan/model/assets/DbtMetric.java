@@ -47,14 +47,6 @@ public class DbtMetric extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** TBC */
     @Attribute
     @Singular
@@ -194,6 +186,11 @@ public class DbtMetric extends Asset
     /** Type of the metric. */
     @Attribute
     String metricType;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

@@ -50,14 +50,6 @@ public class SalesforceObject extends Asset
     @Attribute
     String apiName;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Number of fields in this object. */
     @Attribute
     Long fieldCount;
@@ -98,6 +90,11 @@ public class SalesforceObject extends Asset
     @Attribute
     @Singular
     SortedSet<ISalesforceField> lookupFields;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

@@ -62,14 +62,6 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Attribute
     String alias;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -223,6 +215,11 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Attribute
     @Date
     Long lastProfiledAt;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

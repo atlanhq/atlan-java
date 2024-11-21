@@ -45,14 +45,6 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Sub-projects that exist within this project. */
     @Attribute
     @Singular
@@ -86,6 +78,11 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     /** Whether this project is a top-level project (true) or not (false). */
     @Attribute
     Boolean isTopLevelProject;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

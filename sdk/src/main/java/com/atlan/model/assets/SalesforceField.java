@@ -50,14 +50,6 @@ public class SalesforceField extends Asset
     @Attribute
     String apiName;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Data type of values in this field. */
     @Attribute
     String dataType;
@@ -121,6 +113,11 @@ public class SalesforceField extends Asset
     /** Maximum length of this field. */
     @Attribute
     Long maxLength;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

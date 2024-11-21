@@ -44,14 +44,6 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Deprecated. */
     @Attribute
     @Singular
@@ -80,6 +72,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     /** Deprecated. */
     @Attribute
     ILookerModel model;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute

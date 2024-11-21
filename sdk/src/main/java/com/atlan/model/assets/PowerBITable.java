@@ -45,14 +45,6 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ApplicationContainer asset containing this Catalog asset. */
-    @Attribute
-    IApplicationContainer applicationContainer;
-
-    /** Qualified name of the Application Container that contains this asset. */
-    @Attribute
-    String assetApplicationQualifiedName;
-
     /** Columns that exist within this table. */
     @Attribute
     @Singular
@@ -95,6 +87,11 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Attribute
     @Singular
     SortedSet<IPowerBIMeasure> measures;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Entities implemented by this asset. */
     @Attribute
