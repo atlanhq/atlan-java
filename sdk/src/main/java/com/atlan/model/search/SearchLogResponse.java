@@ -2,6 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import static com.atlan.model.search.IndexSearchDSL.DEFAULT_PAGE_SIZE;
+
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
@@ -31,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchLogResponse extends ApiResource implements Iterable<SearchLogEntry> {
     private static final long serialVersionUID = 2L;
-    private static final long MASS_EXTRACT_THRESHOLD = 10000L;
+    private static final long MASS_EXTRACT_THRESHOLD = 10000L - DEFAULT_PAGE_SIZE;
 
     private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
@@ -63,7 +65,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
     public SearchLogResponse getNextPage() throws AtlanException {
         IndexSearchDSL dsl = getSearchParameters().getDsl();
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
-        int page = dsl.getSize() == null ? 10 : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
         SearchLogRequest.SearchLogRequestBuilder<?, ?> next = SearchLogRequest.builder(dsl);
@@ -120,7 +122,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
                 }
             }
         }
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         long firstRecord = -2L;
         long lastRecord;
         if (getLogEntries().size() > 1) {
@@ -166,7 +168,7 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
     private SearchLogResponse getFirstPageTimestampOrdered() throws AtlanException {
         IndexSearchDSL dsl = getSearchParameters().getDsl();
         List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
         return SearchLogRequest.builder(dsl).build().search(client);
     }
