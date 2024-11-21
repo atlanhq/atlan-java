@@ -267,7 +267,7 @@ customTypes {
           }
         }
       }
-    ["data_model_entity_generalization_specialization"] {
+      ["data_model_entity_generalization_specialization"] {
         description = "Represents the generalization-specialization relationship between a general entity (parent) and specialized entities (children)."
         parent {
           type = "\(t)\(dmEntity)"
@@ -458,6 +458,21 @@ customTypes {
             type = "\(t)\(dmAttribute)"
             attribute = "\(a)\(dmAttribute)MappedFromAttributes"
             description = "Attributes from which this attribute is mapped."
+          }
+        }
+      }
+      ["data_model_attribute_implemented_assets"] {
+        description = "Relationship between model attributes and their implementing assets."
+        peers {
+          new {
+            type = "\(t)\(dmAttribute)"
+            attribute = "\(a)\(dmAttribute)ImplementedByAssets"
+            description = "Assets that implement this attribute."
+          }
+          new {
+            type = "Catalog"
+            attribute = "\(a)ImplementedAttributes"
+            description = "Attributes implemented by this asset."
           }
         }
       }
