@@ -1,7 +1,9 @@
-name,anchor,typeName,parentCategory
-{GLOSSARY},,AtlasGlossary,
-root,{GLOSSARY},AtlasGlossaryCategory,
-c1,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY}
-c2,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY}
-same,{GLOSSARY},AtlasGlossaryCategory,root@c1@@@{GLOSSARY}
-same,{GLOSSARY},AtlasGlossaryCategory,root@c2@@@{GLOSSARY}
+name,anchor,typeName,parentCategory,categories
+{GLOSSARY},,AtlasGlossary,,
+root,{GLOSSARY},AtlasGlossaryCategory,,
+c1,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY},
+c2,{GLOSSARY},AtlasGlossaryCategory,root@@@{GLOSSARY},
+same,{GLOSSARY},AtlasGlossaryCategory,root@c1@@@{GLOSSARY},
+same,{GLOSSARY},AtlasGlossaryCategory,root@c2@@@{GLOSSARY},
+t1,{GLOSSARY},AtlasGlossaryTerm,,root@c1@same@@@{GLOSSARY}
+t2,{GLOSSARY},AtlasGlossaryTerm,,root@c2@same@@@{GLOSSARY}

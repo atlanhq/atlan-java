@@ -2,6 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import static com.atlan.model.search.IndexSearchDSL.DEFAULT_PAGE_SIZE;
+
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
@@ -29,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuditSearchResponse extends ApiResource implements Iterable<EntityAudit> {
     private static final long serialVersionUID = 2L;
-    private static final long MASS_EXTRACT_THRESHOLD = 10000L;
+    private static final long MASS_EXTRACT_THRESHOLD = 10000L - DEFAULT_PAGE_SIZE;
 
     private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
@@ -65,7 +67,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
     public AuditSearchResponse getNextPage() throws AtlanException {
         IndexSearchDSL dsl = getRequest().getDsl();
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
-        int page = dsl.getSize() == null ? 10 : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
         AuditSearchRequest.AuditSearchRequestBuilder<?, ?> next =
@@ -128,7 +130,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
                 }
             }
         }
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         long firstRecord = -2L;
         long lastRecord;
         if (getEntityAudits().size() > 1) {
@@ -183,7 +185,7 @@ public class AuditSearchResponse extends ApiResource implements Iterable<EntityA
     private AuditSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
         IndexSearchDSL dsl = getRequest().getDsl();
         List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
         AuditSearchRequest.AuditSearchRequestBuilder<?, ?> first =
                 AuditSearchRequest.builder().dsl(dsl);

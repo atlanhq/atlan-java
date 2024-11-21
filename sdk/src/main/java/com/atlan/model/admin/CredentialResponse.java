@@ -3,6 +3,8 @@
 package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -10,6 +12,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("cast")
 public class CredentialResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
@@ -31,6 +34,10 @@ public class CredentialResponse extends ApiResource {
     Object metadata;
     Object level;
     Object connection;
+    String username;
+
+    @JsonProperty("extra")
+    Map<String, String> extras;
 
     /**
      * Convert this response into a credential builder.
