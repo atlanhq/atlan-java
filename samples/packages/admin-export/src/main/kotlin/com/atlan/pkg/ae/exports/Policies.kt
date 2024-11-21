@@ -4,10 +4,12 @@ package com.atlan.pkg.ae.exports
 
 import com.atlan.Atlan
 import com.atlan.AtlanClient
+import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.pkg.ae.AdminExporter.ConnectionId
 import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.serde.Serde
 import mu.KLogger
 
 class Policies(
@@ -68,9 +70,15 @@ class Policies(
     ): String {
         if (policy.accessControl?.typeName == "Purpose") {
             // In this case the "resources" are tags, so we should translate the tag names
-            return policy.policyResources?.joinToString("\n") {
-                client.atlanTagCache.getNameForSid(it.substringAfter("tag:"))
-            } ?: ""
+            try {
+                return policy.policyResources?.joinToString("\n") {
+                    client.atlanTagCache.getNameForSid(it.substringAfter("tag:")) ?: Serde.DELETED_AUDIT_OBJECT
+                } ?: Serde.DELETED_AUDIT_OBJECT
+            } catch (e: AtlanException) {
+                logger.warn { "Unable to find the tag associated with the policy -- marking it as removed." }
+                logger.debug(e) { "Full details:" }
+            }
+            return Serde.DELETED_AUDIT_OBJECT
         }
         // Otherwise, we should consider how to translate the resources based on the
         // subcategory of the policy
