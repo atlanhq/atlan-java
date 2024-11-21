@@ -37,7 +37,7 @@ object EnrichmentMigrator {
             } else {
                 "$sourceConnectionQN/$sourcePrefix"
             }
-        val caseSensitive = Utils.getOrDefault(config.caseSensitive, false)
+        val caseSensitive = Utils.getOrDefault(config.caseSensitive, true)
         val tableViewAgnostic = Utils.getOrDefault(config.tableViewAgnostic, false)
 
         // 1. Extract the enriched metadata

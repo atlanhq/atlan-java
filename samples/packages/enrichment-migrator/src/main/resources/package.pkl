@@ -83,12 +83,12 @@ uiConfig {
         ["case_sensitive"] = new BooleanInput {
           title = "Case-sensitive match for updates"
           required = false
-          helpText = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No)."
+          helpText = "Whether to use case-sensitive matching on the target assets (Yes) or try case-insensitive matching (No)."
         }
         ["table_view_agnostic"] = new BooleanInput {
           title = "Table/view agnostic?"
           required = false
-          helpText = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No)."
+          helpText = "Whether to attempt to migrate source metadata from a table, view or materialized view to any corresponding table, view or materialized view in the target (Yes) or strictly adhere to identical types from the source (No)."
         }
         ["field_separator"] = new TextInput {
           title = "Field separator"
