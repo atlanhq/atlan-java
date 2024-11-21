@@ -1,13 +1,13 @@
 <#macro all>
     /**
-     * Builds the minimal object necessary to create an ApplicationContainer asset.
+     * Builds the minimal object necessary to create an Application asset.
      *
      * @param name of the application
      * @param connectionQualifiedName unique name of the connection through which the application is accessible
      * @return the minimal object necessary to create the application, as a builder
      */
-    public static ApplicationContainerBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        return ApplicationContainer._internal()
+    public static ApplicationBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return Application._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
             .name(name)
@@ -16,14 +16,14 @@
     }
 
     /**
-     * Builds the minimal object necessary to update an ApplicationContainer.
+     * Builds the minimal object necessary to update an Application.
      *
      * @param qualifiedName of the application
      * @param name of the application
      * @return the minimal request necessary to update the application, as a builder
      */
-    public static ApplicationContainerBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ApplicationContainer._internal()
+    public static ApplicationBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Application._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .qualifiedName(qualifiedName)
             .name(name);
@@ -48,7 +48,7 @@
      * @throws InvalidRequestException if any of the minimal set of required properties for application are not found in the initial object
      */
     @Override
-    public ApplicationContainerBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public ApplicationBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
