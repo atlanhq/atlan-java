@@ -167,6 +167,8 @@ uiConfig {
       whenInputs { ["config_type"] = "advanced" }
       required {
         "fail_on_errors"
+        "case_sensitive"
+        "table_view_agnostic"
         "field_separator"
         "batch_size"
       }
