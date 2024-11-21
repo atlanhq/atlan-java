@@ -38389,9 +38389,43 @@ loadScripts(document, 'script');</script>
 <div class="block">Type of query.</div>
 </li>
 <li class="block-list">
+<h5>searchMetadata</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="com/atlan/model/search/IndexSearchResponse.Metadata.html" title="class in com.atlan.model.search">IndexSearchResponse.Metadata</a>&gt; searchMetadata</pre>
+<div class="block">Details about each search result, only available when <code>showSearchMetadata</code> is true in the request.</div>
+</li>
+<li class="block-list">
 <h5>searchParameters</h5>
 <pre><a href="com/atlan/model/search/SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a> searchParameters</pre>
 <div class="block">Parameters for the search.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.search.IndexSearchResponse.Metadata">
+<h3>Class&nbsp;<a href="com/atlan/model/search/IndexSearchResponse.Metadata.html" title="class in com.atlan.model.search">com.atlan.model.search.IndexSearchResponse.Metadata</a></h3>
+<div class="type-signature">class Metadata extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>highlights</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a> highlights</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>sorts</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt; sorts</pre>
+<div class="block">Tags to associate with the search request.</div>
 </li>
 </ul>
 </section>
