@@ -2,6 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import static com.atlan.model.search.IndexSearchDSL.DEFAULT_PAGE_SIZE;
+
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
@@ -11,6 +13,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +25,10 @@ import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -35,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
-    private static final long MASS_EXTRACT_THRESHOLD = 100000L;
+    private static final long MASS_EXTRACT_THRESHOLD = 100000L - DEFAULT_PAGE_SIZE;
 
     private static final int CHARACTERISTICS = Spliterator.NONNULL | Spliterator.IMMUTABLE | Spliterator.ORDERED;
 
@@ -57,8 +63,28 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     /** Approximate number of total results. */
     Long approximateCount;
 
+    /** Details about each search result, only available when {@code showSearchMetadata} is true in the request. */
+    Map<String, Metadata> searchMetadata;
+
     /** Map of results for the requested aggregations. */
     Map<String, AggregationResult> aggregations;
+
+    @Getter
+    @Jacksonized
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    public static final class Metadata extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
+        /** TBC */
+        Object highlights;
+
+        /** Tags to associate with the search request. */
+        @JsonProperty("sort")
+        @Singular
+        List<Object> sorts;
+    }
 
     /**
      * Retrieve the next page of results from this response.
@@ -70,7 +96,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     public IndexSearchResponse getNextPage() throws AtlanException {
         IndexSearchDSL dsl = getQuery();
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
@@ -110,7 +136,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 }
             }
         }
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         long firstRecord = -2L;
         long lastRecord;
         if (getAssets().size() > 1) {
@@ -164,7 +190,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     private IndexSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
         IndexSearchDSL dsl = getQuery();
         List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
-        int page = dsl.getSize() == null ? IndexSearchDSL.DEFAULT_PAGE_SIZE : dsl.getSize();
+        int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> first = IndexSearchRequest.builder(dsl);
         if (searchParameters.getAttributes() != null) {
@@ -227,8 +253,8 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         try {
             pageSize = getQuery().getSize();
         } catch (LogicException e) {
-            log.warn("Unable to parse page size from query, falling back to {}.", IndexSearchDSL.DEFAULT_PAGE_SIZE, e);
-            pageSize = IndexSearchDSL.DEFAULT_PAGE_SIZE;
+            log.warn("Unable to parse page size from query, falling back to {}.", DEFAULT_PAGE_SIZE, e);
+            pageSize = DEFAULT_PAGE_SIZE;
         }
         IndexSearchResponseSpliterator spliterator =
                 new IndexSearchResponseSpliterator(this, 0, this.getApproximateCount(), pageSize);
