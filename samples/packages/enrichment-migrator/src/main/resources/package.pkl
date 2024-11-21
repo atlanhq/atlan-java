@@ -80,6 +80,16 @@ uiConfig {
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
         }
+        ["case_sensitive"] = new BooleanInput {
+          title = "Case-sensitive match for updates"
+          required = false
+          helpText = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No)."
+        }
+        ["table_view_agnostic"] = new BooleanInput {
+          title = "Table/view agnostic?"
+          required = false
+          helpText = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No)."
+        }
         ["field_separator"] = new TextInput {
           title = "Field separator"
           required = false
