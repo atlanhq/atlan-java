@@ -300,7 +300,8 @@ public class SupersetAssetTest extends AtlanLiveTest {
                 "superset.search.*",
                 "superset.update.*",
                 "superset.purge.chart"
-            })
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
