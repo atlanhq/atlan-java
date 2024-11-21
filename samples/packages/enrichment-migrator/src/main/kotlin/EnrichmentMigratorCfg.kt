@@ -25,6 +25,8 @@ data class EnrichmentMigratorCfg(
     @JsonProperty("include_archived") val includeArchived: Boolean? = null,
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
+    @JsonProperty("case_sensitive") val caseSensitive: Boolean? = null,
+    @JsonProperty("table_view_agnostic") val tableViewAgnostic: Boolean? = null,
     @JsonProperty("field_separator") val fieldSeparator: String? = null,
     @JsonProperty("batch_size") val batchSize: Number? = null,
     @JsonProperty("limit_type") val limitType: String? = null,
