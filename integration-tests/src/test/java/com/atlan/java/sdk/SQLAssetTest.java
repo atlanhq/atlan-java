@@ -1780,21 +1780,24 @@ public class SQLAssetTest extends AtlanLiveTest {
                 "asset.search.*",
                 "asset.update.*",
                 "asset.purge.column*"
-            })
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
 
     @Test(
             groups = {"asset.purge.groups"},
-            dependsOnGroups = {"asset.purge.connection"})
+            dependsOnGroups = {"asset.purge.connection"},
+            alwaysRun = true)
     void purgeGroups() throws AtlanException {
         AtlanGroup.delete(ownerGroup.getId());
     }
 
     @Test(
             groups = {"asset.purge.atlantags"},
-            dependsOnGroups = {"asset.purge.connection"})
+            dependsOnGroups = {"asset.purge.connection"},
+            alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
         AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME1);
         AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME2);
@@ -1802,7 +1805,8 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"asset.purge.glossary"},
-            dependsOnGroups = {"asset.purge.connection"})
+            dependsOnGroups = {"asset.purge.connection"},
+            alwaysRun = true)
     void purgeGlossary() throws AtlanException {
         GlossaryTest.deleteTerm(term1.getGuid());
         GlossaryTest.deleteTerm(term2.getGuid());

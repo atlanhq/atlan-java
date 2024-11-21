@@ -223,7 +223,8 @@ public class APIAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"api.purge.connection"},
-            dependsOnGroups = {"api.create.*", "api.read.*", "api.search.*", "api.update.*", "api.purge.path"})
+            dependsOnGroups = {"api.create.*", "api.read.*", "api.search.*", "api.update.*", "api.purge.path"},
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
