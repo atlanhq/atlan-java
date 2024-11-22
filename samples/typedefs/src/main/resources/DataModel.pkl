@@ -484,56 +484,15 @@ customTypes {
     icon = modelIcon
     description = "Instance of a data attribute association in Atlan."
     attributes {
-      ["\(a)\(dmAttributeAssociation)Cardinality"] {
-        label = "cardinality"
-        description = "(Deprecated) Cardinality of the data attribute association."
-        type = "enum"
-        enumName = "\(t)CardinalityType"
-      }
-      ["\(a)\(dmAttributeAssociation)Label"] {
-        label = "label"
-        description = "(Deprecated) Label of the data attribute association."
-        type = "string"
-      }
       ["\(a)\(dmAttributeAssociation)ToQualifiedName"] {
         type = "string"
         indexAs = "keyword"
         description = "Unique name of the association to which this attribute is related."
       }
-      ["\(a)\(dmAttributeAssociation)ToLabel"] {
-        label = "to label"
-        description = "Label when read from the association to which this attribute is related."
-        type = "string"
-      }
-      ["\(a)\(dmAttributeAssociation)ToMinCardinality"] {
-        label = "to minimum cardinality"
-        description = "Minimum cardinality of the attribute to which the association exists."
-        type = "long"
-      }
-      ["\(a)\(dmAttributeAssociation)ToMaxCardinality"] {
-        label = "to maximum cardinality"
-        description = "Maximum cardinality of the attribute to which the association exists."
-        type = "long"
-      }
       ["\(a)\(dmAttributeAssociation)FromQualifiedName"] {
         type = "string"
         indexAs = "keyword"
         description = "Unique name of the association from which this attribute is related."
-      }
-      ["\(a)\(dmAttributeAssociation)FromLabel"] {
-        label = "from label"
-        description = "Label when read from the association from which this attribute is related."
-        type = "string"
-      }
-      ["\(a)\(dmAttributeAssociation)FromMinCardinality"] {
-        label = "from minimum cardinality"
-        description = "Minimum cardinality of the attribute from which the association exists."
-        type = "long"
-      }
-      ["\(a)\(dmAttributeAssociation)FromMaxCardinality"] {
-        label = "from maximum cardinality"
-        description = "Maximum cardinality of the attribute from which the association exists."
-        type = "long"
       }
       ["\(a)\(dmEntityAssociation)QualifiedName"] {
         type = "string"
