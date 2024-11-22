@@ -156,7 +156,7 @@ class ADLSSync(
             if (latestFileKey.isNotBlank()) {
                 val local = File(localDirectory, latestFileKey).path
                 downloadFrom(
-                    latestFileKey,
+                    File(prefix, latestFileKey).path,
                     local,
                 )
                 local
