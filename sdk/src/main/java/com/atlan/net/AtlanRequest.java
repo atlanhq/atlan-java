@@ -15,12 +15,18 @@ import java.net.URL;
 import java.util.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldDefaults;
 
 /** A request to Atlan's API. */
-@Value
+@Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@EqualsAndHashCode
+@ToString
 @Accessors(fluent = true)
 public class AtlanRequest {
     /** Connectivity to the Atlan tenant. */
@@ -55,6 +61,12 @@ public class AtlanRequest {
 
     /** Unique identifier (GUID) of this request. */
     String requestId;
+
+    /** Whether the API token needs to be confirmed. */
+    boolean checkApiToken;
+
+    /** MIME type of content that should be accepted. */
+    String acceptType;
 
     /**
      * Initializes a new instance of the {@link AtlanRequest} class, used for the majority of requests.
@@ -107,6 +119,8 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.isEmpty()) ? null : HttpContent.buildJSONEncodedContent(body);
+            this.checkApiToken = true;
+            this.acceptType = acceptType;
             this.headers = buildHeaders(true, options, acceptType);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
@@ -151,7 +165,9 @@ public class AtlanRequest {
                 }
             }
             this.content = HttpContent.buildMultipartFormDataContent(parameters, filename);
-            this.headers = buildHeaders(true, options, "application/json");
+            this.checkApiToken = true;
+            this.acceptType = "application/json";
+            this.headers = buildHeaders(true, options, acceptType);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
@@ -185,10 +201,21 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = FormEncoder.createHttpContent(map);
-            this.headers = buildHeaders(false, options, "application/json");
+            this.checkApiToken = false;
+            this.acceptType = "application/json";
+            this.headers = buildHeaders(false, options, acceptType);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
+    }
+
+    /**
+     * Rebuild the headers for the request, i.e. to include any revised token details.
+     *
+     * @throws AuthenticationException on any issue rebuilding the headers for the request
+     */
+    public void rebuildHeaders() throws AuthenticationException {
+        headers = buildHeaders(checkApiToken, options(), acceptType);
     }
 
     private HttpHeaders buildHeaders(boolean checkApiToken, RequestOptions provided, String acceptType)

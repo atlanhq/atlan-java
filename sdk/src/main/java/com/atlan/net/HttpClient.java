@@ -248,6 +248,7 @@ public abstract class HttpClient {
                         log.info(" ... authentication failed, attempting to exchange new token for user: {}", userId);
                         String token = request.client().impersonate.user(userId);
                         request.client().setApiToken(token);
+                        request.rebuildHeaders();
                         return true;
                     } catch (AtlanException e) {
                         log.warn(" ... attempt to impersonate user {} failed, not retrying.", userId, exception);
