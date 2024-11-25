@@ -35,6 +35,7 @@ class ConnectionImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
+        null,
         preprocessed.preprocessedFile,
         attrsToOverwrite,
         creationHandling,

@@ -18,11 +18,11 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.DeltaProcessor
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
-import kotlin.jvm.optionals.getOrNull
 import kotlin.system.exitProcess
 
 /**
@@ -100,6 +100,8 @@ object Importer {
         // Note: we force-track the batches here to ensure any created connections are cached
         // (without tracking, any connections created will NOT be cached, either, which will then cause issues
         // with the subsequent processing steps.)
+        // We also need to load these connections first, irrespective of any delta calculation, so that
+        // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
         val connectionImporter =
             ConnectionImporter(
                 preprocessedDetails,
@@ -111,80 +113,91 @@ object Importer {
             )
         connectionImporter.import()?.close()
 
-        logger.info { " --- Importing cubes... ---" }
-        val cubeImporter =
-            CubeImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                true,
-                fieldSeparator,
-            )
-        val cubeImporterResults = cubeImporter.import()
+        val connectionQN = ConnectionCache.getIdentityMap().getOrDefault(preprocessedDetails.connectionIdentity, null)
+        if (connectionQN == null) {
+            logger.error { "Unable to determine the qualifiedName of the connection that is being loaded -- exiting." }
+            exitProcess(105)
+        }
+        val cubeQN = "$connectionQN/${preprocessedDetails.assetRootName}"
 
-        logger.info { " --- Importing dimensions... ---" }
-        val dimensionImporter =
-            DimensionImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-            )
-        val dimResults = dimensionImporter.import()
+        DeltaProcessor(
+            semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+            qualifiedNamePrefix = cubeQN,
+            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+            previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+            resolver = AssetImporter,
+            preprocessedDetails = preprocessedDetails,
+            typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
+            logger = logger,
+            reloadSemantic = Utils.getOrDefault(config.deltaReloadCalculation, "all"),
+            previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+            outputDirectory = outputDirectory,
+        ).use { delta ->
 
-        logger.info { " --- Importing hierarchies... ---" }
-        val hierarchyImporter =
-            HierarchyImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-            )
-        val hierResults = hierarchyImporter.import()
+            delta.calculate()
 
-        logger.info { " --- Importing fields... ---" }
-        val fieldImporter =
-            FieldImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-            )
-        fieldImporter.preprocess()
-        val fieldResults = fieldImporter.import()
-
-        // Retrieve the qualifiedName of the cube that was imported
-        val cubeQN =
-            cubeImporterResults?.primary?.guidAssignments?.values?.firstOrNull()?.let {
-                Cube.select().where(Cube.GUID.eq(it)).pageSize(1).stream().findFirst().getOrNull()?.qualifiedName
-            }
-
-        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
-            val delta =
-                DeltaProcessor(
-                    semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
-                    qualifiedNamePrefix = cubeQN,
-                    removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-                    resolver = AssetImporter,
-                    preprocessedDetails = preprocessedDetails,
-                    typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
-                    logger = logger,
-                    previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
-                    outputDirectory = outputDirectory,
+            logger.info { " --- Importing cubes... ---" }
+            val cubeImporter =
+                CubeImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    true,
+                    fieldSeparator,
                 )
-            delta.run(modifiedAssets)
+            val cubeImporterResults = cubeImporter.import()
+
+            logger.info { " --- Importing dimensions... ---" }
+            val dimensionImporter =
+                DimensionImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                )
+            val dimResults = dimensionImporter.import()
+
+            logger.info { " --- Importing hierarchies... ---" }
+            val hierarchyImporter =
+                HierarchyImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                )
+            val hierResults = hierarchyImporter.import()
+
+            logger.info { " --- Importing fields... ---" }
+            val fieldImporter =
+                FieldImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                )
+            fieldImporter.preprocess()
+            val fieldResults = fieldImporter.import()
+
+            delta.processDeletions()
+
+            ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+                delta.updateConnectionCache(modifiedAssets)
+            }
         }
         return cubeQN
     }
@@ -199,6 +212,7 @@ object Importer {
         ) {
         val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
         var cubeName: String? = null
+        var connectionIdentity: AssetResolver.ConnectionIdentity? = null
 
         override fun preprocessRow(
             row: List<String>,
@@ -214,6 +228,13 @@ object Importer {
                 logger.error { "Cube name changed mid-file: $cubeName -> $cubeNameOnRow" }
                 logger.error { "This package is designed to only process a single cube per input file, exiting." }
                 exitProcess(101)
+            }
+            if (connectionIdentity == null) {
+                val name = row.getOrNull(header.indexOf("connectionName"))
+                val type = row.getOrNull(header.indexOf("connectorType"))
+                if (name != null && type != null) {
+                    connectionIdentity = AssetResolver.ConnectionIdentity(name, type)
+                }
             }
             val values = row.toMutableList()
             val typeName = values[typeIdx]
@@ -248,6 +269,7 @@ object Importer {
                 results.hasLinks,
                 results.hasTermAssignments,
                 filename,
+                connectionIdentity,
                 qualifiedNameToChildCount,
             )
         }
@@ -258,6 +280,7 @@ object Importer {
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
         preprocessedFile: String,
+        val connectionIdentity: AssetResolver.ConnectionIdentity?,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
     ) : DeltaProcessor.Results(
             assetRootName = assetRootName,

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataTypeXformer
+import com.atlan.pkg.util.DeltaProcessor
 import mu.KotlinLogging
 
 /**
@@ -18,6 +19,7 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
@@ -28,6 +30,7 @@ import mu.KotlinLogging
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ColumnImporter(
+    private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
     private val creationHandling: AssetCreationHandling,
@@ -37,6 +40,7 @@ class ColumnImporter(
     fieldSeparator: Char,
     private val failOnErrors: Boolean = true,
 ) : AssetImporter(
+        delta,
         preprocessed.preprocessedFile,
         attrsToOverwrite,
         creationHandling,
