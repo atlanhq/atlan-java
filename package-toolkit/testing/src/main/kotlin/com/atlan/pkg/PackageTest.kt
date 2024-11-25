@@ -196,7 +196,7 @@ abstract class PackageTest(
     ): IndexSearchResponse {
         var count = 1
         var response = request.search()
-        var remainingActive = true
+        var remainingActive = false
         if (isDeleteQuery) {
             remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
         }

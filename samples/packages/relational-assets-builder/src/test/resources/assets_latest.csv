@@ -2,7 +2,7 @@ typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnN
 Connection,{{CONNECTION1}},iceberg,,,,,,,,,,,,$admin,admins,chris
 Database,{{CONNECTION1}},iceberg,TEST_DB,,,,,Test DB,,,,,,,,
 Schema,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,,
-Table,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,"{{TAG1}}>>FULL
+Table,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,Now with a description,VERIFIED,Ready to use,<h1>Table readme</h1>,"{{TAG1}}>>FULL
 {{TAG2}}",,,
 Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL1,NVARCHAR(255),Test column 1,,,,,,,,
-Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,,,,,,,,
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,Now with a description,,,,,,,

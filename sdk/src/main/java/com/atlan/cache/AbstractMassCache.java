@@ -33,7 +33,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     private volatile Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private volatile Map<String, String> mapIdToSid = new ConcurrentHashMap<>();
     private volatile Map<String, String> mapSidToId = new ConcurrentHashMap<>();
-    private volatile AbstractOffHeapCache<T> mapIdToObject;
+    private volatile OffHeapObjectCache<T> mapIdToObject;
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -50,7 +50,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public AbstractMassCache(AtlanClient client, String cacheName) {
         this.client = client;
         this.cacheName = cacheName;
-        this.mapIdToObject = new AbstractOffHeapCache<>(client, cacheName);
+        this.mapIdToObject = new OffHeapObjectCache<>(client, cacheName);
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
                 throw new IllegalStateException("Unable to close existing off-heap cache.", e);
             }
         }
-        mapIdToObject = new AbstractOffHeapCache<>(client, cacheName);
+        mapIdToObject = new OffHeapObjectCache<>(client, cacheName);
     }
 
     /**

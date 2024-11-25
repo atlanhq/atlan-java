@@ -2,13 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
-import com.atlan.AtlanClient;
-import com.atlan.model.core.AtlanObject;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,13 +28,12 @@ import org.rocksdb.WriteBatch;
 import org.rocksdb.WriteOptions;
 
 /**
- * Generic class through which to cache any objects efficiently, off-heap, to avoid risking extreme
- * memory usage.
+ * Generic class through which to cache any key-value pairs efficiently, off-heap, to avoid
+ * risking extreme memory usage.
  */
 @Slf4j
-class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
+public abstract class AbstractOffHeapCache<K, V> implements Closeable {
 
-    private final AtlanClient client;
     private final Path backingStore;
     private volatile RocksDB internal;
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -49,11 +44,9 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     /**
      * Construct new object cache.
      *
-     * @param client connectivity to the Atlan tenant
      * @param name to distinguish which cache is which
      */
-    public AbstractOffHeapCache(AtlanClient client, String name) {
-        this.client = client;
+    public AbstractOffHeapCache(String name) {
         this.name = name;
         lock.writeLock().lock();
         try {
@@ -66,100 +59,58 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
         }
     }
 
-    private static byte[] serializeKey(String key) {
-        return key.getBytes(StandardCharsets.UTF_8);
-    }
+    protected abstract byte[] serializeKey(K key);
 
-    private static String deserializeKey(byte[] bytes) {
-        return new String(bytes, StandardCharsets.UTF_8);
-    }
+    protected abstract K deserializeKey(byte[] bytes) throws IOException;
 
-    private byte[] serializeValue(T value) {
-        byte[] typeName = value.getClass().getCanonicalName().getBytes(StandardCharsets.UTF_8);
-        int typeNameLength = typeName.length;
-        try {
-            byte[] json = client.writeValueAsBytes(value);
-            ByteBuffer buffer = ByteBuffer.allocate(typeNameLength + 4 + json.length);
-            buffer.putInt(typeNameLength);
-            buffer.put(typeName);
-            buffer.put(json);
-            if (buffer.hasArray()) {
-                return buffer.array();
-            } else {
-                return null;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to serialize value.", e);
-        }
-    }
+    protected abstract byte[] serializeValue(V value);
 
-    private static Object _deserializeValue(AtlanClient client, byte[] bytes) {
-        ByteBuffer buffer = ByteBuffer.wrap(bytes);
-        int typeNameLength = buffer.getInt();
-        byte[] typeNameBytes = new byte[typeNameLength];
-        buffer.get(typeNameBytes);
-        String typeName = new String(typeNameBytes, StandardCharsets.UTF_8);
-        try {
-            Class<?> type = Class.forName(typeName);
-            byte[] json = new byte[buffer.remaining()];
-            buffer.get(json);
-            return client.readValue(json, type);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Unable to find type: " + typeName + ".", e);
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to deserialize value.", e);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private T deserializeValue(byte[] bytes) throws IOException {
-        return (T) _deserializeValue(client, bytes);
-    }
+    protected abstract V deserializeValue(byte[] bytes) throws IOException;
 
     /**
-     * Retrieve an object from the cache by its ID.
+     * Retrieve a value from the cache by its key.
      *
-     * @param id of the object to retrieve
-     * @return the object with that UUID, or null if it is not in the cache
+     * @param key of the value to retrieve
+     * @return the value with that key, or null if it is not in the cache
      */
-    public T get(String id) {
-        byte[] key = serializeKey(id);
+    public V get(K key) {
+        byte[] kb = serializeKey(key);
         byte[] value;
         lock.readLock().lock();
         try {
-            value = internal.get(key);
+            value = internal.get(kb);
         } catch (RocksDBException e) {
-            throw new IllegalStateException("Unable to get value for key: " + id, e);
+            throw new IllegalStateException("Unable to get value for key: " + key, e);
         } finally {
             lock.readLock().unlock();
         }
         try {
             if (value == null || value.length == 0) {
-                log.warn("Null or empty value retrieved for ID: {} -- short-circuiting.", id);
+                log.warn("Null or empty value retrieved for ID: {} -- short-circuiting.", key);
                 return null;
             }
             return deserializeValue(value);
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to translate value for key: " + id, e);
+            throw new IllegalStateException("Unable to translate value for key: " + key, e);
         }
     }
 
     /**
-     * Put an object into the cache by its ID.
+     * Put a value into the cache by its key.
      *
-     * @param id of the object to put into the cache
-     * @param object to put into the cache
+     * @param key of the value to put into the cache
+     * @param value to put into the cache
      */
-    protected void put(String id, T object) {
-        byte[] key = serializeKey(id);
-        byte[] value = serializeValue(object);
-        if (value == null || value.length == 0)
-            log.warn(" ... zero-length serialized object being added ({}): {}", id, object);
+    public void put(K key, V value) {
+        byte[] kb = serializeKey(key);
+        byte[] vb = serializeValue(value);
+        if (vb == null || vb.length == 0)
+            log.warn(" ... zero-length serialized object being added ({}): {}", key, value);
         lock.writeLock().lock();
         try {
-            internal.put(key, value);
+            internal.put(kb, vb);
         } catch (RocksDBException e) {
-            throw new IllegalStateException("Unable to put value for key: " + id, e);
+            throw new IllegalStateException("Unable to put value for key: " + key, e);
         } finally {
             lock.writeLock().unlock();
         }
@@ -170,7 +121,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
      *
      * @param other cache of entries to add to the cache
      */
-    protected void putAll(AbstractOffHeapCache<T> other) {
+    public void putAll(AbstractOffHeapCache<K, V> other) {
         try (WriteBatch batch = new WriteBatch();
                 WriteOptions options = new WriteOptions()) {
             try (RocksIterator iterator = other.internal.newIterator()) {
@@ -190,34 +141,34 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     }
 
     /**
-     * Check whether the cache has an object in it with the provided UUID.
+     * Check whether the cache has a value in it with the provided key.
      *
-     * @param id of the object to check exists in the cache
-     * @return true if and only if the cache has an object with this UUID in it
+     * @param key of the value to check exists in the cache
+     * @return true if and only if the cache has a value with this key in it
      */
-    public boolean containsKey(String id) {
-        byte[] key = serializeKey(id);
+    public boolean containsKey(K key) {
+        byte[] kb = serializeKey(key);
         lock.readLock().lock();
         try {
-            return internal.keyExists(key);
+            return internal.keyExists(kb);
         } finally {
             lock.readLock().unlock();
         }
     }
 
     /**
-     * Retrieve the number of objects currently held in the cache.
+     * Retrieve the number of entries currently held in the cache.
      *
-     * @return the number of objects currently in the cache
+     * @return the number of entries currently in the cache
      */
     public long size() {
         return entrySet().count();
     }
 
     /**
-     * Retrieve the number of objects currently held in the cache.
+     * Retrieve the number of entries currently held in the cache.
      *
-     * @return the number of objects currently in the cache
+     * @return the number of entries currently in the cache
      */
     public long getSize() {
         return size();
@@ -242,21 +193,21 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     }
 
     /**
-     * Retrieve all the objects held in the cache.
+     * Retrieve all the values held in the cache.
      *
-     * @return a collection of all objects held in the cache
+     * @return a stream of all values held in the cache
      */
-    public Stream<T> values() {
-        return new EntryIterator<T>(client, internal.newIterator()).stream().map(Map.Entry::getValue);
+    public Stream<V> values() {
+        return new EntryIterator<>(this, internal.newIterator()).stream().map(Map.Entry::getValue);
     }
 
     /**
      * Retrieve all entries held in the cache.
      *
-     * @return an entry set of all objects (and keys) held in the cache
+     * @return an entry set of all keys (and their values) held in the cache
      */
-    public Stream<Map.Entry<String, T>> entrySet() {
-        return new EntryIterator<T>(client, internal.newIterator()).stream();
+    public Stream<Map.Entry<K, V>> entrySet() {
+        return new EntryIterator<>(this, internal.newIterator()).stream();
     }
 
     /**
@@ -310,21 +261,17 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
     /**
      * Iterator and streaming over entries in the cache, since it could be too large to fit into memory.
      *
-     * @param <T> object type to iterate over
+     * @param <K> type of the keys in the cache
+     * @param <V> type of the values in the cache
      */
-    static final class EntryIterator<T extends AtlanObject> implements Iterator<Map.Entry<String, T>>, AutoCloseable {
-        private final AtlanClient client;
+    private static final class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>>, AutoCloseable {
+        private final AbstractOffHeapCache<K, V> cache;
         private final RocksIterator iterator;
 
-        public EntryIterator(AtlanClient client, RocksIterator iterator) {
-            this.client = client;
+        public EntryIterator(AbstractOffHeapCache<K, V> cache, RocksIterator iterator) {
+            this.cache = cache;
             this.iterator = iterator;
             this.iterator.seekToFirst(); // Start from the first entry
-        }
-
-        @SuppressWarnings("unchecked")
-        private T deserializeValue(byte[] bytes) throws IOException {
-            return (T) _deserializeValue(client, bytes);
         }
 
         /** {@inheritDoc} */
@@ -335,15 +282,15 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
 
         /** {@inheritDoc} */
         @Override
-        public Map.Entry<String, T> next() {
+        public Map.Entry<K, V> next() {
             if (!hasNext()) {
                 throw new IllegalStateException("No more elements in the cache.");
             }
             byte[] key = iterator.key();
             byte[] value = iterator.value();
             try {
-                Map.Entry<String, T> entry =
-                        new AbstractMap.SimpleEntry<>(deserializeKey(key), deserializeValue(value));
+                Map.Entry<K, V> entry =
+                        new AbstractMap.SimpleEntry<>(cache.deserializeKey(key), cache.deserializeValue(value));
                 iterator.next(); // Move to the next entry
                 return entry;
             } catch (IOException e) {
@@ -358,7 +305,7 @@ class AbstractOffHeapCache<T extends AtlanObject> implements Closeable {
         }
 
         /** Convert this iterator into a stream of cache entries. */
-        public Stream<Map.Entry<String, T>> stream() {
+        public Stream<Map.Entry<K, V>> stream() {
             return StreamSupport.stream(
                             Spliterators.spliteratorUnknownSize(this, Spliterator.ORDERED | Spliterator.NONNULL), false)
                     .onClose(this::close);

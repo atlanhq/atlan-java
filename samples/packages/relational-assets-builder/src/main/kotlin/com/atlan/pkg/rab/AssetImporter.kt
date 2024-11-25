@@ -19,6 +19,7 @@ import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
 import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
+import com.atlan.pkg.util.DeltaProcessor
 import mu.KLogger
 
 /**
@@ -29,6 +30,7 @@ import mu.KLogger
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param delta the processor containing any details about file deltas
  * @param filename name of the file to import
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
@@ -38,6 +40,7 @@ import mu.KLogger
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 abstract class AssetImporter(
+    private val delta: DeltaProcessor?,
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
     private val creationHandling: AssetCreationHandling,
@@ -126,5 +129,20 @@ abstract class AssetImporter(
                 parent?.partialQN ?: "",
             )
         }
+    }
+
+    /** {@inheritDoc} */
+    override fun includeRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): Boolean {
+        if (super.includeRow(row, header, typeIdx, qnIdx)) {
+            delta?.resolveAsset(row, header)?.let { identity ->
+                return delta.reloadAsset(identity)
+            } ?: return true
+        }
+        return false
     }
 }

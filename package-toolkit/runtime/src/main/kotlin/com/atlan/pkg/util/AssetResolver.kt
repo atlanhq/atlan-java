@@ -2,6 +2,10 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
+import com.atlan.model.assets.Asset
+import com.atlan.util.AssetBatch.AssetIdentity
+import java.io.IOException
+
 /**
  * Interface for resolving asset identities entirely from CSV file input (no calls to Atlan).
  */
@@ -46,5 +50,37 @@ interface AssetResolver {
         override fun toString(): String {
             return "$name/$type"
         }
+    }
+
+    /**
+     * Resolve the asset represented by a row of values in a CSV to an asset identity.
+     *
+     * @param values row of values for that asset from the CSV
+     * @param header order of column names in the CSV file being processed
+     * @param connectionsMap cache of connection qualifiedNames, keyed by connection identity
+     * @return a unique asset identity for that row of the CSV
+     */
+    @Throws(IOException::class)
+    fun resolveAsset(
+        values: List<String>,
+        header: List<String>,
+        connectionsMap: Map<ConnectionIdentity, String>,
+    ): AssetIdentity? {
+        val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
+        if (typeIdx < 0) {
+            throw IOException(
+                "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
+            )
+        }
+        val typeName = values[typeIdx]
+        val qnDetails = getQualifiedNameDetails(values, header, typeName)
+        val agnosticQN = qnDetails.uniqueQN
+        val connectionIdentity = getConnectionIdentityFromQN(agnosticQN)
+        if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
+            val qualifiedName =
+                agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)
+            return AssetIdentity(typeName, qualifiedName)
+        }
+        return null
     }
 }

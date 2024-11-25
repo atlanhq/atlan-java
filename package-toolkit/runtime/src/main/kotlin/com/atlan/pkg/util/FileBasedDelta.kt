@@ -6,16 +6,17 @@ import com.atlan.Atlan
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanDeleteType
+import com.atlan.pkg.cache.ChecksumCache
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.util.AssetBatch.AssetIdentity
+import com.google.common.hash.Hashing
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KLogger
 import java.io.File.separator
 import java.io.IOException
 import java.nio.file.Paths
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
 import kotlin.streams.asSequence
@@ -23,31 +24,38 @@ import kotlin.streams.asSequence
 /**
  * Utility class to help pre-calculate a delta between full-load files.
  * When we receive files that contain a full load (refresh) of an entire set of assets, it can
- * be very time-consuming to figure out which assets to remove. This utility class tackles the
- * problem by comparing the latest input file with a previously-loaded input file in order to
- * calculate which assets appeared in the previously-loaded input file which no longer appear in
- * the latest input file. This is done entirely independently of any calls to Atlan itself,
- * thereby reducing time to calculate which assets should be removed.
+ * be very time-consuming to figure out which assets have actually changed or need to be removed.
+ * This utility class tackles the problem by comparing the latest input file with a
+ * previously-loaded input file in order to calculate which assets appeared in the previously-loaded
+ * input file which no longer appear in the latest input file (and therefore need to be removed).
+ * It also calculates a checksum for each comparable row between the files, and only retains any
+ * rows in the new file that have a different checksum than they did in the previous file
+ * (indicating that something on them has changed, and therefore they need to be re-loaded).
+ * This is done entirely independently of any calls to Atlan itself, thereby reducing time to
+ * calculate which assets should be removed or updated.
  *
  * @param connectionsMap a mapping from tenant-agnostic connection identity to tenant-specific qualifiedName for the connection
  * @param resolver for resolving asset identities entirely from CSV file input (no calls to Atlan)
  * @param logger for tracking status and documenting any errors
- * @param removeTypes names of asset types that should be considered for deleted (default: all)
+ * @param removeTypes names of asset types that should be considered for deletion (default: all)
  * @param removalPrefix qualifiedName prefix that must match an asset for it to be deleted (default: all)
  * @param purge if true, any asset that matches will be permanently deleted (otherwise, default: only archived)
+ * @param compareChecksums if true, compare the checksums of every asset identity to determine which have changed (otherwise, default: skip checksum comparisons)
  * @param fallback directory to use as a fallback backing store (locally) in the absence of an object store
  */
-class AssetRemover(
+class FileBasedDelta(
     private val connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
     private val resolver: AssetResolver,
     private val logger: KLogger,
     private val removeTypes: List<String> = listOf(),
     private val removalPrefix: String = "",
     private val purge: Boolean = false,
+    private val compareChecksums: Boolean = false,
     private val fallback: String = Paths.get(separator, "tmp").toString(),
-) {
+) : AutoCloseable {
     private val client = Atlan.getDefaultClient()
-    val assetsToDelete = ConcurrentHashMap<AssetIdentity, String>()
+    val assetsToReload = ChecksumCache("changes")
+    val assetsToDelete = ChecksumCache("deletes")
     private lateinit var guidsToDeleteToDetails: OffHeapAssetCache
 
     companion object {
@@ -56,26 +64,36 @@ class AssetRemover(
     }
 
     /**
-     * Calculate which qualifiedNames should be deleted, by determining which qualifiedNames
-     * appear in the previousFile that no longer appear in the currentFile.
+     * Calculate which assets should be reloaded or deleted, by determining which unique
+     * asset identities appear in the previousFile that no longer appear in the currentFile,
+     * or which identities appear to have different content between the two files.
      *
      * @param currentFile the latest file that should be loaded
      * @param previousFile the previous file that was loaded for the same assets
      * @throws IOException if there is no typeName column in the CSV file
      */
     @Throws(IOException::class)
-    fun calculateDeletions(
+    fun calculateDelta(
         currentFile: String,
         previousFile: String,
     ) {
         logger.info { " --- Calculating delta... ---" }
         logger.info { " ... latest file: $currentFile" }
         logger.info { " ... previous file: $previousFile" }
-        val currentIdentities = getAssetIdentities(currentFile)
-        val previousIdentities = getAssetIdentities(previousFile)
-        previousIdentities.forEach {
-            if (!currentIdentities.contains(it)) {
-                assetsToDelete[it] = ""
+        ChecksumCache("current-checksum").use { current ->
+            getAssetChecksums(currentFile, current)
+            ChecksumCache("previous-checksum").use { previous ->
+                getAssetChecksums(previousFile, previous)
+                previous.entrySet().forEach { entry ->
+                    if (!current.containsKey(entry.key)) {
+                        assetsToDelete.put(entry.key, entry.value)
+                    } else if (compareChecksums) {
+                        val checksum = entry.value
+                        if (current.get(entry.key) != checksum) {
+                            assetsToReload.put(entry.key, checksum)
+                        }
+                    }
+                }
             }
         }
         guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
@@ -87,7 +105,7 @@ class AssetRemover(
      * @return true if there is at least one asset to be deleted, otherwise false
      */
     fun hasAnythingToDelete(): Boolean {
-        return assetsToDelete.isNotEmpty()
+        return assetsToDelete.isNotEmpty
     }
 
     /**
@@ -101,14 +119,36 @@ class AssetRemover(
     }
 
     /**
+     * Resolve the asset represented by a row of values in a CSV to an asset identity.
+     *
+     * @param values row of values for that asset from the CSV
+     * @param header order of column names in the CSV file being processed
+     * @return a unique asset identity for that row of the CSV
+     */
+    @Throws(IOException::class)
+    fun resolveAsset(
+        values: List<String>,
+        header: List<String>,
+    ): AssetIdentity? {
+        val identity = resolver.resolveAsset(values, header, connectionsMap)
+        if (identity == null) {
+            logger.warn { "Unknown connection used in asset -- skipping: $values" }
+        }
+        return identity
+    }
+
+    /**
      * Create a set of unique asset identities that appear in the provided file.
      *
      * @param filename to a CSV file having at least a typeName field
-     * @return set of unique asset identities present in the file
+     * @param cache in which to record the checksums
      * @throws IOException if there is no typeName column in the CSV file
      */
     @Throws(IOException::class)
-    private fun getAssetIdentities(filename: String): Set<AssetIdentity> {
+    private fun getAssetChecksums(
+        filename: String,
+        cache: ChecksumCache,
+    ) {
         val header = CSVXformer.getHeader(filename, ',')
         val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         if (typeIdx < 0) {
@@ -124,22 +164,15 @@ class AssetRemover(
                 .skipEmptyLines(true)
                 .ignoreDifferentFieldCount(false)
         val reader = builder.ofCsvRecord(inputFile)
-        val set = mutableSetOf<AssetIdentity>()
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
-            val typeName = values[typeIdx]!!
-            val qnDetails = resolver.getQualifiedNameDetails(values, header, typeName)
-            val agnosticQN = qnDetails.uniqueQN
-            val connectionIdentity = resolver.getConnectionIdentityFromQN(agnosticQN)
-            if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
-                val qualifiedName =
-                    agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)
-                set.add(AssetIdentity(typeName, qualifiedName))
-            } else {
-                logger.warn { "Unknown connection used in asset -- skipping: $agnosticQN" }
+            val assetIdentity = resolveAsset(values, header)
+            if (assetIdentity != null) {
+                val singleLine = r.fields.joinToString("§")
+                val checksum = Hashing.murmur3_128().hashString(singleLine, Charsets.UTF_8).toString()
+                cache.put(assetIdentity, checksum)
             }
         }
-        return set
     }
 
     /**
@@ -150,13 +183,13 @@ class AssetRemover(
         logger.info { " --- Translating $totalToTranslate qualifiedNames to GUIDs... ---" }
         // Skip archived assets, as they're already deleted (leave it to separate process to
         // purge them, if desired)
-        val qualifiedNamesToDelete = assetsToDelete.map { it.key.qualifiedName }.toList()
         val currentCount = AtomicLong(0)
         if (totalToTranslate < QUERY_BATCH) {
-            translate(qualifiedNamesToDelete)
+            translate(assetsToDelete.entrySet().map { it.key.qualifiedName }.toList())
         } else {
             // Translate from qualifiedName to GUID in parallel
-            qualifiedNamesToDelete
+            assetsToDelete.entrySet()
+                .map { it.key.qualifiedName }
                 .asSequence()
                 .chunked(QUERY_BATCH)
                 .toList()
@@ -243,5 +276,36 @@ class AssetRemover(
             }
         }
         return guidsToDeleteToDetails
+    }
+
+    /** {@inheritDoc} */
+    override fun close() {
+        var exception: Exception? = null
+        try {
+            assetsToReload.close()
+        } catch (e: Exception) {
+            exception = e
+        }
+        try {
+            assetsToDelete.close()
+        } catch (e: Exception) {
+            if (exception != null) {
+                exception.addSuppressed(e)
+            } else {
+                exception = e
+            }
+        }
+        try {
+            guidsToDeleteToDetails.close()
+        } catch (e: Exception) {
+            if (exception != null) {
+                exception.addSuppressed(e)
+            } else {
+                exception = e
+            }
+        }
+        if (exception != null) {
+            throw exception
+        }
     }
 }

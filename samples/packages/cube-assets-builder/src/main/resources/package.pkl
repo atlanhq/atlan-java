@@ -104,6 +104,16 @@ uiConfig {
           default = "archive"
           helpText = "How to delete any assets not found in the latest file."
         }
+        ["delta_reload_calculation"] = new Radio {
+          title = "Reload which assets"
+          required = false
+          possibleValues {
+            ["all"] = "All assets"
+            ["changes"] = "Changed assets only"
+          }
+          default = "all"
+          helpText = "Which assets to reload from the latest input CSV file. Changed assets only will calculate which assets have changed between the files and only attempt to reload those changes."
+        }
         ["previous_file_direct"] = new TextInput {
           title = "Previous file"
           required = false
@@ -177,7 +187,7 @@ uiConfig {
     }
     new UIRule {
       whenInputs { ["delta_semantic"] = "full" }
-      required { "delta_removal_type" }
+      required { "delta_removal_type" "delta_reload_calculation" }
     }
   }
 }

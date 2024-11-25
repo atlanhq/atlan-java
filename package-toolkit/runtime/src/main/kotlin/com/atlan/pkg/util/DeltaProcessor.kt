@@ -8,8 +8,10 @@ import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 import java.io.File.separator
+import java.io.IOException
 import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
@@ -27,6 +29,7 @@ import java.time.format.DateTimeFormatter
  * @param preprocessedDetails details retrieved from pre-processing the input CSV file
  * @param typesToRemove limit the asset types that will be removed to this collection of type names
  * @param logger for logging
+ * @param reloadSemantic the type of reload to do for assets (default {@code all} will reload any assets that are not deleted, whether changed or not)
  * @param previousFilePreprocessor responsible for pre-processing the previous CSV file (if provided directly)
  * @param outputDirectory local directory where files can be written and compared
  * @param previousFileProcessedExtension extension to use in the object store for files that have been processed
@@ -40,28 +43,28 @@ class DeltaProcessor(
     val preprocessedDetails: Results,
     val typesToRemove: Collection<String>,
     private val logger: KLogger,
+    val reloadSemantic: String = "all",
     val previousFilePreprocessor: CSVPreprocessor? = null,
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
-) {
+) : AutoCloseable {
+    private val objectStore = Utils.getBackingStore(outputDirectory)
+    private var initialLoad: Boolean = true
+    private var delta: FileBasedDelta? = null
+    private var deletedAssets: OffHeapAssetCache? = null
+    private val reloadAll = reloadSemantic == "all"
+
     /**
-     * Run the delta detection.
-     * This includes: determining which assets should be deleted, deleting those assets, and updating
-     * the persistent connection cache by removing any deleted assets and creating / updating any assets
-     * that were created or modified.
-     *
-     * @param modifiedAssets list of assets that were modified by the processing up to the point of this delta detection
+     * Calculate any delta from the provided file context.
      */
-    fun run(modifiedAssets: OffHeapAssetCache? = null) {
-        var deletedAssets: OffHeapAssetCache? = null
+    fun calculate() {
         if (semantic == "full") {
             if (qualifiedNamePrefix.isNullOrBlank()) {
-                logger.warn { "Unable to determine qualifiedName prefix, will not delete any assets." }
+                logger.warn { "Unable to determine qualifiedName prefix, cannot calculate any delta." }
             } else {
                 val purgeAssets = removalType == "purge"
                 val assetRootName = preprocessedDetails.assetRootName
                 val previousFileLocation = "$previousFilesPrefix/$qualifiedNamePrefix"
-                val objectStore = Utils.getBackingStore(outputDirectory)
                 val previousFile =
                     if (previousFilePreprocessor != null && previousFilePreprocessor.filename.isNotBlank()) {
                         transformPreviousRaw(assetRootName, previousFilePreprocessor)
@@ -69,36 +72,114 @@ class DeltaProcessor(
                         objectStore.copyLatestFrom(previousFileLocation, previousFileProcessedExtension, outputDirectory)
                     }
                 if (previousFile.isNotBlank()) {
-                    // If there was a previous file, calculate the delta to see what we need
-                    // to delete
-                    val assetRemover =
-                        AssetRemover(
+                    // If there was a previous file, calculate the delta (changes + deletions)
+                    initialLoad = false
+                    delta =
+                        FileBasedDelta(
                             ConnectionCache.getIdentityMap(),
                             resolver,
                             logger,
                             typesToRemove.toList(),
                             qualifiedNamePrefix,
                             purgeAssets,
+                            !reloadAll,
                             outputDirectory,
                         )
-                    assetRemover.calculateDeletions(preprocessedDetails.preprocessedFile, previousFile)
-                    if (assetRemover.hasAnythingToDelete()) {
-                        // Note: this will update the persistent connection cache for both adds and deletes
-                        deletedAssets = assetRemover.deleteAssets()
-                    }
+                    delta!!.calculateDelta(preprocessedDetails.preprocessedFile, previousFile)
                 } else {
                     logger.info { "No previous file found, treated it as an initial load." }
                 }
-                // Copy processed files to specified location in object storage for future comparison purposes
-                uploadToBackingStore(objectStore, preprocessedDetails.preprocessedFile, qualifiedNamePrefix, previousFileProcessedExtension)
             }
         }
+    }
+
+    /**
+     * Resolve the asset represented by a row of values in a CSV to an asset identity.
+     *
+     * @param values row of values for that asset from the CSV
+     * @param header order of column names in the CSV file being processed
+     * @return a unique asset identity for that row of the CSV
+     */
+    @Throws(IOException::class)
+    fun resolveAsset(
+        values: List<String>,
+        header: List<String>,
+    ): AssetIdentity? {
+        return delta?.resolveAsset(values, header)
+    }
+
+    /**
+     * Determine whether the provided asset identity should be processed (true) or skipped (false).
+     *
+     * @param identity of the asset to check whether reloading should occur
+     * @return true if the asset with this identity should be reloaded, otherwise false
+     */
+    fun reloadAsset(identity: AssetIdentity): Boolean {
+        if (!reloadAll) {
+            return delta?.assetsToReload?.containsKey(identity) ?: true
+        }
+        return true
+    }
+
+    /**
+     * Delete any assets that were detected by the delta to be deleted.
+     */
+    fun processDeletions() {
+        if (!initialLoad && delta!!.hasAnythingToDelete()) {
+            // Note: this will update the persistent connection cache for both adds and deletes
+            deletedAssets = delta!!.deleteAssets()
+        }
+    }
+
+    /**
+     * Upload the latest processed file to the backing store, to persist the state for the next run.
+     */
+    fun uploadStateToBackingStore() {
+        if (!qualifiedNamePrefix.isNullOrBlank()) {
+            // Copy processed files to specified location in object storage for future comparison purposes
+            uploadToBackingStore(objectStore, preprocessedDetails.preprocessedFile, qualifiedNamePrefix, previousFileProcessedExtension)
+        }
+    }
+
+    /**
+     * Update the persistent connection cache with details of any assets that were added or removed.
+     *
+     * @param modifiedAssets cache of assets that were created or modified (whether by initial processing or reloading)
+     */
+    fun updateConnectionCache(modifiedAssets: OffHeapAssetCache? = null) {
         // Update the connection cache with any changes (added and / or removed assets)
         Utils.updateConnectionCache(
             added = modifiedAssets,
             removed = deletedAssets,
             fallback = outputDirectory,
         )
+    }
+
+    /** {@inheritDoc} */
+    override fun close() {
+        uploadStateToBackingStore()
+        var exception: Exception? = null
+        if (delta != null) {
+            try {
+                delta!!.close()
+            } catch (e: Exception) {
+                exception = e
+            }
+        }
+        if (deletedAssets != null) {
+            try {
+                deletedAssets!!.close()
+            } catch (e: Exception) {
+                if (exception != null) {
+                    exception.addSuppressed(e)
+                } else {
+                    exception = e
+                }
+            }
+        }
+        if (exception != null) {
+            throw exception
+        }
     }
 
     /**
