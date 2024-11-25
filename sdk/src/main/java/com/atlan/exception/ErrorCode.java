@@ -277,7 +277,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             401,
             "ATLAN-JAVA-401-000",
             "Server responded with {0}: {1}",
-            "Your API or bearer token is either invalid or has expired, or you are attempting to access a URL you are not authorized to access. Ensure you are using a valid token, or try obtaining a new token and try again."),
+            "Your API or bearer token is either invalid or has expired, or you are attempting to access a URL you are not authorized to access. Ensure you are using a valid token, that there is no service outage for the underlying authorization component, or try obtaining a new token and try again."),
     NO_API_TOKEN(
             401,
             "ATLAN-JAVA-401-001",

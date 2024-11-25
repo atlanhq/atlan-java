@@ -121,6 +121,8 @@ object Importer {
         // Note: we force-track the batches here to ensure any created connections are cached
         // (without tracking, any connections created will NOT be cached, either, which will then cause issues
         // with the subsequent processing steps.)
+        // We also need to load these connections first, irrespective of any delta calculation, so that
+        // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
         val connectionImporter =
             ConnectionImporter(
                 preprocessedDetails,
@@ -132,90 +134,6 @@ object Importer {
                 assetsFailOnErrors,
             )
         connectionImporter.import()?.close()
-
-        logger.info { " --- Importing databases... ---" }
-        val databaseImporter =
-            DatabaseImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val dbResults = databaseImporter.import()
-
-        logger.info { " --- Importing schemas... ---" }
-        val schemaImporter =
-            SchemaImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val schResults = schemaImporter.import()
-
-        logger.info { " --- Importing tables... ---" }
-        val tableImporter =
-            TableImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val tblResults = tableImporter.import()
-
-        logger.info { " --- Importing views... ---" }
-        val viewImporter =
-            ViewImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val viewResults = viewImporter.import()
-
-        logger.info { " --- Importing materialized views... ---" }
-        val materializedViewImporter =
-            MaterializedViewImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val mviewResults = materializedViewImporter.import()
-
-        logger.info { " --- Importing columns... ---" }
-        val columnImporter =
-            ColumnImporter(
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                batchSize,
-                connectionImporter,
-                trackBatches,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
-        val colResults = columnImporter.import()
 
         val connectionQN =
             if (deltaSemantic == "full") {
@@ -231,27 +149,125 @@ object Importer {
                 null
             }
 
-        ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
-            val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
-            DeltaProcessor(
-                semantic = deltaSemantic,
-                qualifiedNamePrefix = connectionQN,
-                removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
-                previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-                resolver = AssetImporter,
-                preprocessedDetails = preprocessedDetails,
-                typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
-                logger = logger,
-                previousFilePreprocessor =
-                    Preprocessor(
-                        previousFileDirect,
-                        fieldSeparator,
-                        true,
-                        outputFile = "$previousFileDirect.transformed.csv",
-                        outputHeaders = targetHeaders,
-                    ),
-                outputDirectory = outputDirectory,
-            ).run(modifiedAssets)
+        val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
+        DeltaProcessor(
+            semantic = deltaSemantic,
+            qualifiedNamePrefix = connectionQN,
+            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+            previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+            resolver = AssetImporter,
+            preprocessedDetails = preprocessedDetails,
+            typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
+            logger = logger,
+            reloadSemantic = Utils.getOrDefault(config.deltaReloadCalculation, "all"),
+            previousFilePreprocessor =
+                Preprocessor(
+                    previousFileDirect,
+                    fieldSeparator,
+                    true,
+                    outputFile = "$previousFileDirect.transformed.csv",
+                    outputHeaders = targetHeaders,
+                ),
+            outputDirectory = outputDirectory,
+        ).use { delta ->
+
+            delta.calculate()
+
+            logger.info { " --- Importing databases... ---" }
+            val databaseImporter =
+                DatabaseImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val dbResults = databaseImporter.import()
+
+            logger.info { " --- Importing schemas... ---" }
+            val schemaImporter =
+                SchemaImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val schResults = schemaImporter.import()
+
+            logger.info { " --- Importing tables... ---" }
+            val tableImporter =
+                TableImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val tblResults = tableImporter.import()
+
+            logger.info { " --- Importing views... ---" }
+            val viewImporter =
+                ViewImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val viewResults = viewImporter.import()
+
+            logger.info { " --- Importing materialized views... ---" }
+            val materializedViewImporter =
+                MaterializedViewImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val mviewResults = materializedViewImporter.import()
+
+            logger.info { " --- Importing columns... ---" }
+            val columnImporter =
+                ColumnImporter(
+                    delta,
+                    preprocessedDetails,
+                    assetAttrsToOverwrite,
+                    assetsSemantic,
+                    batchSize,
+                    connectionImporter,
+                    trackBatches,
+                    fieldSeparator,
+                    assetsFailOnErrors,
+                )
+            val colResults = columnImporter.import()
+
+            delta.processDeletions()
+
+            ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+                delta.updateConnectionCache(modifiedAssets)
+            }
         }
         return connectionQN
     }

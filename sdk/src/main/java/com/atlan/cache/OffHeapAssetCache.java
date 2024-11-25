@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * Generic class through which to cache any assets efficiently, off-heap, to avoid risking extreme
  * memory usage.
  */
-public class OffHeapAssetCache extends AbstractOffHeapCache<Asset> {
+public class OffHeapAssetCache extends OffHeapObjectCache<Asset> {
 
     /**
      * Construct new asset cache.
