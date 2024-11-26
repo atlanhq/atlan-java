@@ -14,6 +14,7 @@ import com.atlan.model.relations.Reference;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Singular;
 
@@ -81,6 +82,11 @@ public class FluentLineage {
     @Builder.Default
     FilterList.Condition relationshipsCondition = FilterList.Condition.AND;
 
+    /** Whether to include immediate neighbors of the starting asset in the response. */
+    @Builder.Default
+    @JsonProperty("immediateNeighbours")
+    Boolean immediateNeighbors = false;
+
     /**
      * Assets to include in the results. Any assets not matching these filters will not be included in the results,
      * but will still be traversed in the lineage so that any assets beyond them are still considered for inclusion
@@ -147,6 +153,9 @@ public class FluentLineage {
                         .build());
             }
             request.relationshipTraversalFilters(relationships.build());
+        }
+        if (immediateNeighbors != null) {
+            request.immediateNeighbors(immediateNeighbors);
         }
         if (includesInResults != null) {
             FilterList.FilterListBuilder<?, ?> entities = FilterList.builder().condition(includesCondition);
