@@ -37,6 +37,7 @@ class ConnectionImporter(
     fieldSeparator: Char,
     private val failOnErrors: Boolean = true,
 ) : AssetImporter(
+        null,
         preprocessed.preprocessedFile,
         attrsToOverwrite,
         // Only allow full or updates to connections, as partial connections would be hidden

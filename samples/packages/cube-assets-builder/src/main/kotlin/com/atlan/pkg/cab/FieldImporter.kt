@@ -9,6 +9,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.util.DeltaProcessor
 import com.atlan.util.StringUtils
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
@@ -22,6 +23,7 @@ import kotlin.math.max
  * particular cube field's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that cube field's field to getAttributesToOverwrite.
  *
+ * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
@@ -31,6 +33,7 @@ import kotlin.math.max
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class FieldImporter(
+    private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
     private val creationHandling: AssetCreationHandling,
@@ -39,6 +42,7 @@ class FieldImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
+        delta,
         preprocessed.preprocessedFile,
         attrsToOverwrite,
         creationHandling,
@@ -141,22 +145,25 @@ class FieldImporter(
         typeIdx: Int,
         qnIdx: Int,
     ): Boolean {
-        val nameIdx = header.indexOf(FIELD_NAME)
-        val parentIdx = header.indexOf(PARENT_FIELD_QN)
+        if (super.includeRow(row, header, typeIdx, qnIdx)) {
+            val nameIdx = header.indexOf(FIELD_NAME)
+            val parentIdx = header.indexOf(PARENT_FIELD_QN)
 
-        val maxBound = max(typeIdx, max(nameIdx, parentIdx))
-        if (maxBound > row.size || row[typeIdx] != typeNameFilter) {
-            // If any of the columns are beyond the size of the row, or the row
-            // represents something other than a field, short-circuit
-            return false
+            val maxBound = max(typeIdx, max(nameIdx, parentIdx))
+            if (maxBound > row.size || row[typeIdx] != typeNameFilter) {
+                // If any of the columns are beyond the size of the row, or the row
+                // represents something other than a field, short-circuit
+                return false
+            }
+            val fieldGeneration = getFieldGeneration(row, header)
+            if (fieldGeneration != generationToProcess) {
+                // If this field is a different generation than we are currently processing,
+                // short-circuit
+                return false
+            }
+            return row[typeIdx] == typeNameFilter
         }
-        val fieldGeneration = getFieldGeneration(row, header)
-        if (fieldGeneration != generationToProcess) {
-            // If this field is a different generation than we are currently processing,
-            // short-circuit
-            return false
-        }
-        return row[typeIdx] == typeNameFilter
+        return false
     }
 
     /** {@inheritDoc} */

@@ -716,6 +716,25 @@ public class AssetBatch implements Closeable {
             }
         }
 
+        /**
+         * Reverse-engineer an asset identity from a string representation.
+         *
+         * @param combined the combined (serialized) asset identity
+         * @return the actual asset identity
+         */
+        public static AssetIdentity fromString(String combined) {
+            String[] tokens = combined.split("::");
+            if (tokens.length != 2) {
+                throw new IllegalArgumentException("Invalid asset identity: " + combined);
+            }
+            return new AssetIdentity(tokens[0], tokens[1]);
+        }
+
+        /**
+         * Simplify an asset identity down to a string representation.
+         *
+         * @return the combined (serialized) asset identity
+         */
         @Override
         public String toString() {
             return typeName + "::" + qualifiedName;

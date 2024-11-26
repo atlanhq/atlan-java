@@ -22,6 +22,7 @@ data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_upsert_semantic") val assetsUpsertSemantic: String? = null,
     @JsonProperty("delta_semantic") val deltaSemantic: String? = null,
     @JsonProperty("delta_removal_type") val deltaRemovalType: String? = null,
+    @JsonProperty("delta_reload_calculation") val deltaReloadCalculation: String? = null,
     @JsonProperty("previous_file_direct") val previousFileDirect: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
