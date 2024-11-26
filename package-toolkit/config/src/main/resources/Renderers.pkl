@@ -58,7 +58,7 @@ const function getWorkflowTemplate(m: Config): FileOutput = new FileOutput {
       initContainers = if (credVariable != null) new Listing {
         new WorkflowContainer {
           name = "fetch-credentials"
-          image = "ghcr.io/atlanhq/rest-master:b988ab8"
+          image = "ghcr.io/atlanhq/rest-master:af621a5"
           command = new Listing {
             "/bin/sh"
             "-c"
