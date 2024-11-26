@@ -3,7 +3,9 @@
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.exception.ErrorCode
 import com.atlan.exception.InvalidRequestException
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
@@ -103,6 +105,7 @@ object EnrichmentMigrator {
                     MigratorContext(
                         sourceConnectionQN = sourceConnectionQN,
                         targetConnectionQN = targetConnectionQN,
+                        targetConnectionName = getConnectionName(targetConnectionQN),
                         includeArchived = includeArchived,
                         sourceDatabaseName = sourceDatabaseName,
                         targetDatabaseName = targetDatabaseName,
@@ -158,6 +161,23 @@ object EnrichmentMigrator {
     }
 
     @JvmStatic
+    fun getConnectionName(connectionQN: String): String {
+        val connection =
+            Connection.select()
+                .where(Asset.QUALIFIED_NAME.eq(connectionQN))
+                .stream()
+                .findFirst()
+        if (connection.isEmpty) {
+            throw NotFoundException(
+                ErrorCode.ASSET_NOT_FOUND_BY_QN,
+                connectionQN,
+                "Connection",
+            )
+        }
+        return connection.get().name
+    }
+
+    @JvmStatic
     fun getTargetDatabaseName(
         targetConnectionQN: String,
         targetDatabasePattern: String,
@@ -166,7 +186,7 @@ object EnrichmentMigrator {
             return listOf("")
         }
         val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
-        if (databaseNames.size < 1) {
+        if (databaseNames.isEmpty()) {
             throw InvalidRequestException(
                 ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
                 "at least one",
@@ -201,6 +221,7 @@ object EnrichmentMigrator {
     data class MigratorContext(
         val sourceConnectionQN: String,
         val targetConnectionQN: String,
+        val targetConnectionName: String,
         val includeArchived: Boolean,
         val sourceDatabaseName: String,
         val targetDatabaseName: String,
