@@ -153,7 +153,7 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 <code><a href="IModel.html#MODEL_BUSINESS_DATE">MODEL_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_DOMAIN">MODEL_DOMAIN</a>, <a href="IModel.html#MODEL_ENTITY_NAME">MODEL_ENTITY_NAME</a>, <a href="IModel.html#MODEL_ENTITY_QUALIFIED_NAME">MODEL_ENTITY_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_EXPIRED_AT_BUSINESS_DATE">MODEL_EXPIRED_AT_BUSINESS_DATE</a>, <a href="IModel.html#MODEL_EXPIRED_AT_SYSTEM_DATE">MODEL_EXPIRED_AT_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_NAME">MODEL_NAME</a>, <a href="IModel.html#MODEL_NAMESPACE">MODEL_NAMESPACE</a>, <a href="IModel.html#MODEL_QUALIFIED_NAME">MODEL_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_SYSTEM_DATE">MODEL_SYSTEM_DATE</a>, <a href="IModel.html#MODEL_TYPE">MODEL_TYPE</a>, <a href="IModel.html#MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME">MODEL_VERSION_AGNOSTIC_QUALIFIED_NAME</a>, <a href="IModel.html#MODEL_VERSION_NAME">MODEL_VERSION_NAME</a>, <a href="IModel.html#MODEL_VERSION_QUALIFIED_NAME">MODEL_VERSION_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IModelAttributeAssociation">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></h3>
-<code><a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_CARDINALITY">MODEL_ATTRIBUTE_ASSOCIATION_CARDINALITY</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM">MODEL_ATTRIBUTE_ASSOCIATION_FROM</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM_LABEL">MODEL_ATTRIBUTE_ASSOCIATION_FROM_LABEL</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM_MAX_CARDINALITY">MODEL_ATTRIBUTE_ASSOCIATION_FROM_MAX_CARDINALITY</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM_MIN_CARDINALITY">MODEL_ATTRIBUTE_ASSOCIATION_FROM_MIN_CARDINALITY</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME">MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_LABEL">MODEL_ATTRIBUTE_ASSOCIATION_LABEL</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO">MODEL_ATTRIBUTE_ASSOCIATION_TO</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO_LABEL">MODEL_ATTRIBUTE_ASSOCIATION_TO_LABEL</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO_MAX_CARDINALITY">MODEL_ATTRIBUTE_ASSOCIATION_TO_MAX_CARDINALITY</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO_MIN_CARDINALITY">MODEL_ATTRIBUTE_ASSOCIATION_TO_MIN_CARDINALITY</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME">MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME</a>, <a href="IModelAttributeAssociation.html#MODEL_ENTITY_ASSOCIATION_QUALIFIED_NAME">MODEL_ENTITY_ASSOCIATION_QUALIFIED_NAME</a></code></div>
+<code><a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM">MODEL_ATTRIBUTE_ASSOCIATION_FROM</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME">MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO">MODEL_ATTRIBUTE_ASSOCIATION_TO</a>, <a href="IModelAttributeAssociation.html#MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME">MODEL_ATTRIBUTE_ASSOCIATION_TO_QUALIFIED_NAME</a>, <a href="IModelAttributeAssociation.html#MODEL_ENTITY_ASSOCIATION_QUALIFIED_NAME">MODEL_ENTITY_ASSOCIATION_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -301,60 +301,20 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/ModelCardinalityType.html" title="enum class in com.atlan.model.enums">ModelCardinalityType</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationCardinality()" class="member-name-link">getModelAttributeAssociationCardinality</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFrom()" class="member-name-link">getModelAttributeAssociationFrom</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">(Deprecated) Cardinality of the data attribute association.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFrom()" class="member-name-link">getModelAttributeAssociationFrom</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Attribute from which this association is related.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFromLabel()" class="member-name-link">getModelAttributeAssociationFromLabel</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Label when read from the association from which this attribute is related.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFromMaxCardinality()" class="member-name-link">getModelAttributeAssociationFromMaxCardinality</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Maximum cardinality of the attribute from which the association exists.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFromMinCardinality()" class="member-name-link">getModelAttributeAssociationFromMinCardinality</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Minimum cardinality of the attribute from which the association exists.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationFromQualifiedName()" class="member-name-link">getModelAttributeAssociationFromQualifiedName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the association from which this attribute is related.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationLabel()" class="member-name-link">getModelAttributeAssociationLabel</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationTo()" class="member-name-link">getModelAttributeAssociationTo</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">(Deprecated) Label of the data attribute association.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationTo()" class="member-name-link">getModelAttributeAssociationTo</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Attribute to which this association is related.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationToLabel()" class="member-name-link">getModelAttributeAssociationToLabel</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Label when read from the association to which this attribute is related.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationToMaxCardinality()" class="member-name-link">getModelAttributeAssociationToMaxCardinality</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Maximum cardinality of the attribute to which the association exists.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationToMinCardinality()" class="member-name-link">getModelAttributeAssociationToMinCardinality</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Minimum cardinality of the attribute to which the association exists.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModelAttributeAssociationToQualifiedName()" class="member-name-link">getModelAttributeAssociationToQualifiedName</a>()</code></div>
@@ -1718,17 +1678,6 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 </section>
 </li>
 <li>
-<section class="detail" id="getModelAttributeAssociationCardinality()">
-<h3>getModelAttributeAssociationCardinality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../enums/ModelCardinalityType.html" title="enum class in com.atlan.model.enums">ModelCardinalityType</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationCardinality</span>()</div>
-<div class="block">(Deprecated) Cardinality of the data attribute association.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationCardinality()">getModelAttributeAssociationCardinality</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getModelAttributeAssociationFrom()">
 <h3>getModelAttributeAssociationFrom</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationFrom</span>()</div>
@@ -1736,39 +1685,6 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationFrom()">getModelAttributeAssociationFrom</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationFromLabel()">
-<h3>getModelAttributeAssociationFromLabel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationFromLabel</span>()</div>
-<div class="block">Label when read from the association from which this attribute is related.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationFromLabel()">getModelAttributeAssociationFromLabel</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationFromMaxCardinality()">
-<h3>getModelAttributeAssociationFromMaxCardinality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationFromMaxCardinality</span>()</div>
-<div class="block">Maximum cardinality of the attribute from which the association exists.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationFromMaxCardinality()">getModelAttributeAssociationFromMaxCardinality</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationFromMinCardinality()">
-<h3>getModelAttributeAssociationFromMinCardinality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationFromMinCardinality</span>()</div>
-<div class="block">Minimum cardinality of the attribute from which the association exists.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationFromMinCardinality()">getModelAttributeAssociationFromMinCardinality</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
 </dl>
 </section>
 </li>
@@ -1784,17 +1700,6 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 </section>
 </li>
 <li>
-<section class="detail" id="getModelAttributeAssociationLabel()">
-<h3>getModelAttributeAssociationLabel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationLabel</span>()</div>
-<div class="block">(Deprecated) Label of the data attribute association.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationLabel()">getModelAttributeAssociationLabel</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getModelAttributeAssociationTo()">
 <h3>getModelAttributeAssociationTo</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationTo</span>()</div>
@@ -1802,39 +1707,6 @@ implements <a href="IModelAttributeAssociation.html" title="interface in com.atl
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationTo()">getModelAttributeAssociationTo</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationToLabel()">
-<h3>getModelAttributeAssociationToLabel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationToLabel</span>()</div>
-<div class="block">Label when read from the association to which this attribute is related.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationToLabel()">getModelAttributeAssociationToLabel</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationToMaxCardinality()">
-<h3>getModelAttributeAssociationToMaxCardinality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationToMaxCardinality</span>()</div>
-<div class="block">Maximum cardinality of the attribute to which the association exists.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationToMaxCardinality()">getModelAttributeAssociationToMaxCardinality</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getModelAttributeAssociationToMinCardinality()">
-<h3>getModelAttributeAssociationToMinCardinality</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getModelAttributeAssociationToMinCardinality</span>()</div>
-<div class="block">Minimum cardinality of the attribute to which the association exists.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IModelAttributeAssociation.html#getModelAttributeAssociationToMinCardinality()">getModelAttributeAssociationToMinCardinality</a></code>&nbsp;in interface&nbsp;<code><a href="IModelAttributeAssociation.html" title="interface in com.atlan.model.assets">IModelAttributeAssociation</a></code></dd>
 </dl>
 </section>
 </li>
