@@ -11,10 +11,10 @@ import com.atlan.model.enums.AtlanLineageDirection;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.fields.*;
 import com.atlan.model.relations.Reference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Singular;
 
