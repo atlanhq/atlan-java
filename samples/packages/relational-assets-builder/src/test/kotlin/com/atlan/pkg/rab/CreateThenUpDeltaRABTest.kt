@@ -32,6 +32,7 @@ import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 /**
  * Test creation of relational assets followed by an upsert of the same relational assets, including calculating a delta.
@@ -93,6 +94,10 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 }
             }
         }
+        // Create some net-new assets
+        output.appendText("View,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,,,New view,,DRAFT,,,,,,\n")
+        output.appendText("Column,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL5,Int32,Test column 5,,,,,,,,\n")
+        output.appendText("Column,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL6,varchar(200),Test column 6,,,,,,,,\n")
     }
 
     private fun createTags() {
@@ -277,10 +282,10 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         assertEquals(1, sch.viewCount)
         assertEquals(1, sch.tables.size)
         assertEquals("TEST_TBL", sch.tables.first().name)
+        assertEquals(1, sch.views.size)
         if (displayName == "Revised schema") {
-            assertTrue(sch.views.isEmpty())
+            assertEquals("TEST_NEW_V", sch.views.first().name)
         } else {
-            assertEquals(1, sch.views.size)
             assertEquals("TEST_VIEW", sch.views.first().name)
         }
     }
@@ -531,17 +536,17 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         val assets = cache.listAssets()
         assertNotNull(assets)
         assertFalse(assets.isEmpty())
+        assertEquals(8, assets.size)
+        assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
+        assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+        assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
         if (created) {
-            assertEquals(8, assets.size)
-            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
-            assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
+            assertEquals(setOf("COL1", "COL2", "COL3", "COL4"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
+            assertEquals(setOf("TEST_VIEW"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         } else {
-            assertEquals(5, assets.size)
-            assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
-            assertEquals(2, assets.count { it.typeName == Column.TYPE_NAME })
-            assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
+            assertEquals(setOf("COL1", "COL2", "COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
+            assertEquals(setOf("TEST_NEW_V"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         }
     }
 
@@ -605,6 +610,81 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
     fun columnsForView1Removed() {
         validateColumnsForView(false)
+    }
+
+    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    fun entirelyNewView() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val request =
+            View.select()
+                .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .includesOnResults(tableAttrs)
+                .includeOnRelations(Asset.NAME)
+                .includeOnRelations(Readme.DESCRIPTION)
+                .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
+        assertEquals(1, found.size)
+        val view = found[0] as View
+        assertEquals("TEST_NEW_V", view.name)
+        assertEquals("New view", view.displayName)
+        assertEquals(c1.qualifiedName, view.connectionQualifiedName)
+        assertEquals(conn1Type, view.connectorType)
+        assertEquals(CertificateStatus.DRAFT, view.certificateStatus)
+        assertTrue(view.certificateStatusMessage.isNullOrBlank())
+        assertEquals(2, view.columnCount)
+        assertNull(view.readme)
+        assertTrue(view.atlanTags.isNullOrEmpty())
+        assertEquals(2, view.columns.size)
+        val colNames = view.columns.stream().map(IColumn::getName).toList()
+        assertTrue(colNames.contains("COL5"))
+        assertTrue(colNames.contains("COL6"))
+        blockForBackgroundTasks(client, listOf(view.guid), 60)
+    }
+
+    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    fun entirelyNewViewColumns() {
+        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val request =
+            Column.select()
+                .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Column.VIEW_NAME.eq("TEST_NEW_V"))
+                .includesOnResults(columnAttrs)
+                .toRequest()
+        val response = retrySearchUntil(request, 2)
+        val found = response.assets
+        assertEquals(2, found.size)
+        val colNames = found.stream().map(Asset::getName).toList()
+        assertTrue(colNames.contains("COL5"))
+        assertTrue(colNames.contains("COL6"))
+        found.forEach { col ->
+            col as Column
+            assertEquals(c1.qualifiedName, col.connectionQualifiedName)
+            assertEquals(conn1Type, col.connectorType)
+            assertEquals("TEST_DB", col.databaseName)
+            assertTrue(col.databaseQualifiedName.endsWith("/TEST_DB"))
+            assertEquals("TEST_SCHEMA", col.schemaName)
+            assertTrue(col.schemaQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA"))
+            assertEquals("TEST_NEW_V", col.viewName)
+            assertTrue(col.viewQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_NEW_V"))
+            assertTrue(col.tableName.isNullOrEmpty())
+            assertTrue(col.tableQualifiedName.isNullOrEmpty())
+            when (col.name) {
+                "COL5" -> {
+                    assertEquals("INT32", col.dataType)
+                    assertEquals(1, col.order)
+                    assertEquals("Test column 5", col.displayName)
+                }
+
+                "COL6" -> {
+                    assertEquals("VARCHAR", col.dataType)
+                    assertEquals(2, col.order)
+                    assertEquals("Test column 6", col.displayName)
+                    assertEquals(200, col.maxLength)
+                    assertEquals("varchar(200)", col.rawDataTypeDefinition)
+                }
+            }
+        }
     }
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])

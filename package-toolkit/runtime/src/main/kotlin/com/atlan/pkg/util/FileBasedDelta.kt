@@ -94,6 +94,15 @@ class FileBasedDelta(
                         }
                     }
                 }
+                if (compareChecksums) {
+                    // Now go through the latest file, and if there are any assets there that did not
+                    // appear in the previous file these are net-new assets -- make sure we include them, too
+                    current.entrySet().forEach { entry ->
+                        if (!previous.containsKey(entry.key)) {
+                            assetsToReload.put(entry.key, entry.value)
+                        }
+                    }
+                }
             }
         }
         guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
