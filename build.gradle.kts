@@ -36,6 +36,8 @@ configurations.all {
             libs.akka.actor,
             libs.commons.compress,
             libs.commons.io,
+            libs.jetty.http,
+            libs.netty.common,
         )
     }
 }
