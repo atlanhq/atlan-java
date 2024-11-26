@@ -89,7 +89,7 @@ public class HttpURLConnectionClient extends HttpClient {
         userAgentHeadersMap.put("User-Agent", List.of(buildUserAgentString(request.client())));
         userAgentHeadersMap.put(
                 "X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString(request.client())));
-
+        userAgentHeadersMap.put("x-atlan-client-origin", List.of("product_sdk"));
         return request.headers()
                 .withAdditionalHeaders(request.client().getExtraHeaders())
                 .withAdditionalHeaders(userAgentHeadersMap);

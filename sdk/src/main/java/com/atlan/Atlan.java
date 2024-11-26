@@ -20,10 +20,8 @@ public abstract class Atlan {
 
     // Note: these are set here so that they can be overridden,
     // i.e. when using the SDK in a workflow setting
-    public static final Map<String, List<String>> EXTRA_HEADERS = Map.ofEntries(
-            Map.entry("x-atlan-agent", List.of("sdk")),
-            Map.entry("x-atlan-agent-id", List.of("java")),
-            Map.entry("x-atlan-client-origin", List.of("product_sdk")));
+    public static final Map<String, List<String>> EXTRA_HEADERS =
+            Map.ofEntries(Map.entry("x-atlan-agent", List.of("sdk")), Map.entry("x-atlan-agent-id", List.of("java")));
 
     public static volatile boolean enableTelemetry = true;
 
