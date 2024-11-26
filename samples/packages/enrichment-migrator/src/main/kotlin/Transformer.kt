@@ -21,12 +21,16 @@ class Transformer(
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         // Pick the fields to include in the output based on the header,
         // and replace the source connection with the target connection
+        val rowIsConnection = (inputRow[Asset.TYPE_NAME.atlanFieldName] == "Connection")
         val values =
             header.map {
                 val raw =
                     if (it == Asset.STATUS.atlanFieldName) {
                         // Add the status column as explicitly ACTIVE (to convert any included archived assets)
                         AtlanStatus.ACTIVE.value
+                    } else if (rowIsConnection && it == Asset.NAME.atlanFieldName) {
+                        // Don't change the name of the connection
+                        ctx.targetConnectionName
                     } else {
                         inputRow[it] ?: ""
                     }
