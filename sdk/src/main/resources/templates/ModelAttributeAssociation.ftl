@@ -66,8 +66,7 @@
             .modelAttributeAssociationFrom(ModelAttribute.refByQualifiedName(fromQualifiedName))
             .modelAttributeAssociationFromQualifiedName(fromQualifiedName)
             .modelAttributeAssociationTo(ModelAttribute.refByQualifiedName(toQualifiedName))
-            .modelAttributeAssociationToQualifiedName(toQualifiedName)
-            .modelAttributeAssociationLabel(name);
+            .modelAttributeAssociationToQualifiedName(toQualifiedName);
     }
 
     /**

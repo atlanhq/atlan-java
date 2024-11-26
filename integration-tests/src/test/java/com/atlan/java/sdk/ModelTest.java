@@ -154,7 +154,6 @@ public class ModelTest extends AtlanLiveTest {
                 .build();
         ModelAttributeAssociation aa = ModelAttributeAssociation.creator(AA1_NAME, first, second)
                 .modelBusinessDate(future)
-                .modelAttributeAssociationCardinality(ModelCardinalityType.ONE_TO_MANY)
                 .build();
         AssetMutationResponse response =
                 Atlan.getDefaultClient().assets.save(List.of(entity2, first, second, ea, aa), false);

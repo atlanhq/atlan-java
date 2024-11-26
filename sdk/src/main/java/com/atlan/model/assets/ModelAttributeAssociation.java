@@ -11,7 +11,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.ModelCardinalityType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
@@ -62,49 +61,17 @@ public class ModelAttributeAssociation extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** (Deprecated) Cardinality of the data attribute association. */
-    @Attribute
-    ModelCardinalityType modelAttributeAssociationCardinality;
-
     /** Attribute from which this association is related. */
     @Attribute
     IModelAttribute modelAttributeAssociationFrom;
-
-    /** Label when read from the association from which this attribute is related. */
-    @Attribute
-    String modelAttributeAssociationFromLabel;
-
-    /** Maximum cardinality of the attribute from which the association exists. */
-    @Attribute
-    Long modelAttributeAssociationFromMaxCardinality;
-
-    /** Minimum cardinality of the attribute from which the association exists. */
-    @Attribute
-    Long modelAttributeAssociationFromMinCardinality;
 
     /** Unique name of the association from which this attribute is related. */
     @Attribute
     String modelAttributeAssociationFromQualifiedName;
 
-    /** (Deprecated) Label of the data attribute association. */
-    @Attribute
-    String modelAttributeAssociationLabel;
-
     /** Attribute to which this association is related. */
     @Attribute
     IModelAttribute modelAttributeAssociationTo;
-
-    /** Label when read from the association to which this attribute is related. */
-    @Attribute
-    String modelAttributeAssociationToLabel;
-
-    /** Maximum cardinality of the attribute to which the association exists. */
-    @Attribute
-    Long modelAttributeAssociationToMaxCardinality;
-
-    /** Minimum cardinality of the attribute to which the association exists. */
-    @Attribute
-    Long modelAttributeAssociationToMinCardinality;
 
     /** Unique name of the association to which this attribute is related. */
     @Attribute
@@ -486,8 +453,7 @@ public class ModelAttributeAssociation extends Asset
                 .modelAttributeAssociationFrom(ModelAttribute.refByQualifiedName(fromQualifiedName))
                 .modelAttributeAssociationFromQualifiedName(fromQualifiedName)
                 .modelAttributeAssociationTo(ModelAttribute.refByQualifiedName(toQualifiedName))
-                .modelAttributeAssociationToQualifiedName(toQualifiedName)
-                .modelAttributeAssociationLabel(name);
+                .modelAttributeAssociationToQualifiedName(toQualifiedName);
     }
 
     /**
