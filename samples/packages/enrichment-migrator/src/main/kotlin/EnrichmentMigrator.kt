@@ -3,7 +3,9 @@
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.exception.ErrorCode
 import com.atlan.exception.InvalidRequestException
+import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
@@ -11,6 +13,7 @@ import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
 import mu.KotlinLogging
 import java.io.File
+import kotlin.jvm.optionals.getOrElse
 
 /**
  * Actually run the migrator, taking all settings from environment variables.
@@ -103,6 +106,7 @@ object EnrichmentMigrator {
                     MigratorContext(
                         sourceConnectionQN = sourceConnectionQN,
                         targetConnectionQN = targetConnectionQN,
+                        targetConnectionName = getConnectionName(targetConnectionQN),
                         includeArchived = includeArchived,
                         sourceDatabaseName = sourceDatabaseName,
                         targetDatabaseName = targetDatabaseName,
@@ -158,6 +162,19 @@ object EnrichmentMigrator {
     }
 
     @JvmStatic
+    fun getConnectionName(connectionQN: String): String {
+        val connection =
+            Connection.select()
+                .where(Asset.QUALIFIED_NAME.eq(connectionQN))
+                .stream()
+                .findFirst()
+                .getOrElse {
+                    throw NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, connectionQN, "Connection")
+                }
+        return connection.name
+    }
+
+    @JvmStatic
     fun getTargetDatabaseName(
         targetConnectionQN: String,
         targetDatabasePattern: String,
@@ -166,7 +183,7 @@ object EnrichmentMigrator {
             return listOf("")
         }
         val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
-        if (databaseNames.size < 1) {
+        if (databaseNames.isEmpty()) {
             throw InvalidRequestException(
                 ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
                 "at least one",
@@ -201,6 +218,7 @@ object EnrichmentMigrator {
     data class MigratorContext(
         val sourceConnectionQN: String,
         val targetConnectionQN: String,
+        val targetConnectionName: String,
         val includeArchived: Boolean,
         val sourceDatabaseName: String,
         val targetDatabaseName: String,
