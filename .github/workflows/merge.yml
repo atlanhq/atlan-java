@@ -139,11 +139,9 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-      - name: Set Gradle heap memory
-        run: echo "GRADLE_OPTS=-Xmx4g" >> $GITHUB_ENV
       - name: Publish Javadoc
         run: |
-          ./gradlew gitPublishPush --stacktrace --info
+          ./gradlew gitPublishPush --stacktrace --info -Dorg.gradle.jvmargs="-Xms512m -Xmx2g -XX:MaxMetaspaceSize=512m"
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
