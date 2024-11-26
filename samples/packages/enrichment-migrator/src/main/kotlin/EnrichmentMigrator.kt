@@ -13,6 +13,7 @@ import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
 import mu.KotlinLogging
 import java.io.File
+import kotlin.jvm.optionals.getOrElse
 
 /**
  * Actually run the migrator, taking all settings from environment variables.
@@ -167,14 +168,10 @@ object EnrichmentMigrator {
                 .where(Asset.QUALIFIED_NAME.eq(connectionQN))
                 .stream()
                 .findFirst()
-        if (connection.isEmpty) {
-            throw NotFoundException(
-                ErrorCode.ASSET_NOT_FOUND_BY_QN,
-                connectionQN,
-                "Connection",
-            )
-        }
-        return connection.get().name
+                .getOrElse {
+                    throw NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, connectionQN, "Connection")
+                }
+        return connection.name
     }
 
     @JvmStatic
