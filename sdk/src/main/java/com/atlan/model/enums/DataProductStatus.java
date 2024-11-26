@@ -11,6 +11,7 @@ public enum DataProductStatus implements AtlanEnum {
     ACTIVE("Active"),
     SUNSET("Sunset"),
     ARCHIVED("Archived"),
+    DRAFT("Draft"),
     ;
 
     @JsonValue
