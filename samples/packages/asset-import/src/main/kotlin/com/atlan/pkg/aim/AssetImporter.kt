@@ -192,6 +192,7 @@ import com.atlan.model.assets.ThoughtspotView
 import com.atlan.model.assets.ThoughtspotWorksheet
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
@@ -199,6 +200,7 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
@@ -247,17 +249,98 @@ class AssetImporter(
         trackBatches = trackBatches,
         fieldSeparator = fieldSeparator,
     ) {
+    private var header = emptyList<String>()
     private var typeToProcess = ""
+    private val cyclicalRelationships = mutableMapOf<String, Set<String>>()
+    private val mapToSecondPass = mutableMapOf<String, Set<String>>()
+    private val secondPassRemain =
+        setOf(
+            Asset.QUALIFIED_NAME.atlanFieldName,
+            Asset.NAME.atlanFieldName,
+            // TODO: other required fields, across ALL (non-GTC, non-mesh) types
+        )
+
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): RowPreprocessor.Results {
+        // Retrieve all relationships and filter to any cyclical relationships
+        // (meaning relationships where both ends are of the same type)
+        val typeDefs = Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
+        typeDefs.relationshipDefs.stream()
+            .filter { it.endDef1.type == it.endDef2.type && it.endDef1.cardinality == it.endDef2.cardinality }
+            .forEach { cyclicalRelationships[it.endDef1.type] = setOf(it.endDef1.name, it.endDef2.name) }
+        val results = super.preprocess(outputFile, outputHeaders)
+        return results
+    }
+
+    /** {@inheritDoc} */
+    override fun preprocessRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): List<String> {
+        // Check if the type on this row has any cyclical relationships as headers in the input file
+        val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+        if (!mapToSecondPass.containsKey(typeName)) {
+            if (this.header.isEmpty()) this.header = header
+            val cyclical = cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList()
+            if (cyclical.size == 2) {
+                val one = cyclical[0]
+                val two = cyclical[1]
+                if (header.contains(one) && header.contains(two)) {
+                    // If both ends of the same relationship are in the input file, throw an error
+                    // alerting the user that this can't work and they'll need to pick one end or the other
+                    throw IllegalStateException(
+                        """
+                        Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
+                        You should only use one end of this relationship or the other when importing.
+                        """.trimIndent(),
+                    )
+                }
+            }
+            // Retain any of the cyclical relationships that remain so that we can second-pass process them
+            val secondPassColumns = cyclical.filter { header.contains(it) }.toSet()
+            mapToSecondPass[typeName] = secondPassColumns
+        }
+        return row
+    }
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Asset.GUID.atlanFieldName)
         if (updateOnly) {
+            val cyclicalToSkip = mapToSecondPass.flatMap { it.value }
             // If we're only updating, process as before (in-parallel, any order)
-            return super.import(colsToSkip)
+            return if (cyclicalToSkip.isEmpty()) {
+                // Skip any second-pass logic if there are no cyclical relationships
+                logger.info { "--- Loading assets... ---" }
+                super.import(colsToSkip)
+            } else {
+                // Otherwise, import assets without any cyclical relationships, first
+                logger.info { "--- Loading assets in a first pass, without any cyclical relationships... ---" }
+                val firstPassSkip = colsToSkip.toMutableSet()
+                firstPassSkip.addAll(mapToSecondPass.flatMap { it.value })
+                val firstPassResults = super.import(firstPassSkip)
+                if (firstPassResults != null) {
+                    val secondPassSkip = colsToSkip.toMutableSet()
+                    secondPassSkip.addAll(header)
+                    secondPassSkip.removeAll(firstPassSkip)
+                    secondPassSkip.removeAll(secondPassRemain)
+                    // In this second pass we need to ignore fields that were loaded in the first pass,
+                    // or we will end up with duplicates (links) or extra audit log messages (tags, README)
+                    logger.info { "--- Loading cyclical relationships (second pass)... ---" }
+                    val secondPassResults = super.import(secondPassSkip)
+                    ImportResults.combineAll(Atlan.getDefaultClient(), true, firstPassResults, secondPassResults)
+                } else {
+                    null
+                }
+            }
         } else {
-            // Otherwise, we need to do multi-pass loading:
+            // Otherwise, we need to do multi-pass loading (at multiple levels):
             //  - Import assets in tiered order, top-to-bottom
             //  - Stop when we have processed all the types in the file
             val includes = preprocess()
@@ -272,9 +355,31 @@ class AssetImporter(
             val individualResults = mutableListOf<ImportResults?>()
             typeLoadingOrder.forEach {
                 typeToProcess = it
-                logger.info { "--- Importing $typeToProcess assets... ---" }
-                val results = super.import(colsToSkip)
-                individualResults.add(results)
+                val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
+                if (cyclicalForType.isEmpty()) {
+                    // If there are no cyclical relationships for this type, do everything in one pass
+                    logger.info { "--- Importing $typeToProcess assets... ---" }
+                    val results = super.import(colsToSkip)
+                    if (results != null) individualResults.add(results)
+                } else {
+                    // Otherwise, import assets without any cyclical relationships, first
+                    logger.info { "--- Importing $typeToProcess assets in a first pass, without any cyclical relationships... ---" }
+                    val firstPassSkip = colsToSkip.toMutableSet()
+                    firstPassSkip.addAll(cyclicalForType)
+                    val firstPassResults = super.import(firstPassSkip)
+                    if (firstPassResults != null) {
+                        individualResults.add(firstPassResults)
+                        val secondPassSkip = colsToSkip.toMutableSet()
+                        secondPassSkip.addAll(header)
+                        secondPassSkip.removeAll(firstPassSkip)
+                        secondPassSkip.removeAll(secondPassRemain)
+                        // In this second pass we need to ignore fields that were loaded in the first pass,
+                        // or we will end up with duplicates (links) or extra audit log messages (tags, README)
+                        logger.info { "--- Loading cyclical relationships for $typeToProcess (second pass)... ---" }
+                        val secondPassResults = super.import(secondPassSkip)
+                        if (secondPassResults != null) individualResults.add(secondPassResults)
+                    }
+                }
             }
             return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
         }
