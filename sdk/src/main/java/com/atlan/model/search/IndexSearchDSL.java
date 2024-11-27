@@ -73,4 +73,9 @@ public class IndexSearchDSL extends AtlanObject {
     /** (Optional) Properties by which to sort the results. */
     @Singular("sortOption")
     List<SortOptions> sort;
+
+    /** (Optional) Combination of sort values after which to start the next page. */
+    @JsonProperty("search_after")
+    @Singular
+    List<Object> pageOffsets;
 }
