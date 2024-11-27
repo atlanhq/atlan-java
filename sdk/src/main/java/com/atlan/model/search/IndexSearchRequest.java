@@ -110,6 +110,17 @@ public class IndexSearchRequest extends AtlanObject {
             Metadata.builder().utmTag(UTMTags.PROJECT_SDK_JAVA.getValue()).build();
 
     /**
+     * Whether to include lower-level search metadata in results (true) or not (false).
+     * This must be true in order to use extensive paging (beyond built-in thresholds).
+     */
+    @Builder.Default
+    Boolean showSearchMetadata = false;
+
+    /** TBC */
+    @Builder.Default
+    Boolean showHighlights = false;
+
+    /**
      * Run the search.
      *
      * @return the matching assets

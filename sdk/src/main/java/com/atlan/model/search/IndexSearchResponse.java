@@ -6,8 +6,6 @@ import static com.atlan.model.search.IndexSearchDSL.DEFAULT_PAGE_SIZE;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -122,48 +120,17 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
             return this;
         }
         IndexSearchDSL dsl = getQuery();
-
-        // Check for a timestamp condition to determine if this query is being streamed
-        Query query = dsl.getQuery();
-        List<Query> rewrittenFilters = new ArrayList<>();
-        boolean streamed = presortedByTimestamp(dsl.getSort());
-        if (query.isBool()) {
-            BoolQuery original = query.bool();
-            List<Query> filters = original.filter();
-            for (Query candidate : filters) {
-                if (!isPagingTimestampQuery(candidate)) {
-                    rewrittenFilters.add(candidate);
-                }
-            }
-        }
         int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
-        long firstRecord = -2L;
-        long lastRecord;
-        if (getAssets().size() > 1) {
-            firstRecord = getAssets().get(0).getCreateTime();
-            lastRecord = getAssets().get(getAssets().size() - 1).getCreateTime();
-        } else {
-            lastRecord = -2L;
-        }
-        if (streamed && firstRecord != lastRecord) {
-            // If we're streaming and the first and last record have different timestamps,
-            // page based on a new timestamp (to keep offsets low)
-            rewrittenFilters.add(getPagingTimestampQuery(lastRecord));
-            BoolQuery original = query.bool();
-            BoolQuery rewritten = BoolQuery.of(b -> b.filter(rewrittenFilters)
-                    .must(original.must())
-                    .mustNot(original.mustNot())
-                    .minimumShouldMatch(original.minimumShouldMatch())
-                    .should(original.should())
-                    .boost(original.boost()));
-            dsl = dsl.toBuilder().from(0).size(page).query(rewritten._toQuery()).build();
-        } else {
-            // If the first and last record in the page have the same timestamp,
-            // or we're not streaming, use "normal" offset-based paging
-            int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
-            dsl = dsl.toBuilder().from(from + getAssets().size()).size(page).build();
-        }
-
+        // Inject the search_after sorts to use for the subsequent page
+        List<Asset> results = getAssets();
+        Asset last = results.get(results.size() - 1);
+        Metadata offsets = getSearchMetadata().get(last.getGuid());
+        dsl = dsl.toBuilder()
+                .from(0)
+                .size(page)
+                .clearPageOffsets()
+                .pageOffsets(offsets.getSorts())
+                .build();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
         if (searchParameters.getAttributes() != null) {
             next = next.attributes(searchParameters.getAttributes());
@@ -171,20 +138,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         if (searchParameters.getRelationAttributes() != null) {
             next = next.relationAttributes(searchParameters.getRelationAttributes());
         }
-        return next.build().search(client);
-    }
-
-    private boolean isPagingTimestampQuery(Query candidate) {
-        return candidate.isRange()
-                && candidate.range().untyped().field().equals(Asset.CREATE_TIME.getInternalFieldName())
-                && candidate.range().untyped().gte() != null
-                && candidate.range().untyped().gte().to(Long.class) > 0
-                && candidate.range().untyped().lt() == null
-                && candidate.range().untyped().lte() == null;
-    }
-
-    private Query getPagingTimestampQuery(long lastTimestamp) {
-        return Asset.CREATE_TIME.gte(lastTimestamp);
+        return next.showSearchMetadata(true).build().search(client);
     }
 
     private IndexSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
@@ -199,7 +153,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         if (searchParameters.getRelationAttributes() != null) {
             first = first.relationAttributes(searchParameters.getRelationAttributes());
         }
-        return first.build().search(client);
+        return first.showSearchMetadata(true).build().search(client);
     }
 
     /**
@@ -479,6 +433,17 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     }
 
     /**
+     * Indicates whether the search is ready to use Elastic's search_after paging (true) or not (false).
+     *
+     * @param response the search response for which to check readiness
+     * @return true if the response is ready for search_after paging
+     */
+    public static boolean readyForSearchAfter(IndexSearchResponse response) {
+        return response.getSearchMetadata() != null
+                && !response.getSearchMetadata().isEmpty();
+    }
+
+    /**
      * Indicates whether the sort options contain any user-requested sorting (true) or not (false).
      *
      * @param sort list of sorting options
@@ -563,15 +528,14 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     private static class IndexSearchResponseBulkIterator implements Iterator<Asset> {
 
         private IndexSearchResponse response;
-        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
-        private final Set<String> processedGuids;
         private int i;
 
         public IndexSearchResponseBulkIterator(IndexSearchResponse response) {
             try {
                 IndexSearchDSL dsl = response.getQuery();
-                if (presortedByTimestamp(dsl.getSort())) {
-                    // If the results are already sorted in ascending order by timestamp, proceed
+                if (presortedByTimestamp(dsl.getSort()) && readyForSearchAfter(response)) {
+                    // If the results are already sorted in ascending order by timestamp,
+                    // and include necessary metadata for search_after, proceed
                     this.response = response;
                 } else if (hasUserRequestedSort(dsl.getSort())) {
                     // Alternatively, if they are sorted by any user-requested sort, we need to throw an error
@@ -584,7 +548,6 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
             } catch (AtlanException e) {
                 throw new RuntimeException("Unable to rewrite original query in preparation for iteration.", e);
             }
-            this.processedGuids = new HashSet<>();
             this.i = 0;
         }
 
@@ -598,16 +561,8 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
             }
             if (response.getAssets().size() > i) {
                 Asset candidate = response.getAssets().get(i);
-                if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
+                if (candidate != null) {
                     return true;
-                } else {
-                    for (int j = i; j < response.getAssets().size(); j++) {
-                        candidate = response.getAssets().get(j);
-                        if (candidate != null && !processedGuids.contains(candidate.getGuid())) {
-                            i = j;
-                            return true;
-                        }
-                    }
                 }
             }
             try {
@@ -622,9 +577,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         /** {@inheritDoc} */
         @Override
         public Asset next() {
-            Asset candidate = response.getAssets().get(i++);
-            processedGuids.add(candidate.getGuid());
-            return candidate;
+            return response.getAssets().get(i++);
         }
     }
 }
