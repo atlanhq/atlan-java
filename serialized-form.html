@@ -37324,6 +37324,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Starting point for paging. Defaults to 0 (very first result) if not overridden.</div>
 </li>
 <li class="block-list">
+<h5>pageOffsets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt; pageOffsets</pre>
+<div class="block">(Optional) Combination of sort values after which to start the next page.</div>
+</li>
+<li class="block-list">
 <h5>query</h5>
 <pre>co.elastic.clients.elasticsearch._types.query_dsl.Query query</pre>
 <div class="block">Query to run.</div>
@@ -37413,6 +37418,17 @@ loadScripts(document, 'script');</script>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> requestRelationshipAttrsForSearch</pre>
 <div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
  By default, this is false and therefore relationship-level attributes are not included.</div>
+</li>
+<li class="block-list">
+<h5>showHighlights</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> showHighlights</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>showSearchMetadata</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> showSearchMetadata</pre>
+<div class="block">Whether to include lower-level search metadata in results (true) or not (false).
+ This must be true in order to use extensive paging (beyond built-in thresholds).</div>
 </li>
 <li class="block-list">
 <h5>showSearchScore</h5>
