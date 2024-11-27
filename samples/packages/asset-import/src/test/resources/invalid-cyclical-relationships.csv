@@ -1,0 +1,7 @@
+typeName,name,qualifiedName,displayName,description,modelType,modelName,modelQualifiedName,connectorType,connectionQualifiedName,modelVersions,modelVersionQualifiedName,modelEntityMappedToEntities,modelEntityMappedFromEntities,modelEntityGeneralizationEntity,modelEntityAttributeCount
+ModelDataModel,LDM,{{CONNECTION}}/LDM,LDM,An example logical data model.,LOGICAL,,,model,{{CONNECTION}},,,,,,
+ModelDataModel,PDM,{{CONNECTION}}/PDM,PDM,An example physical data model.,PHYSICAL,,,model,{{CONNECTION}},,,,,,
+ModelVersion,v1,{{CONNECTION}}/LDM/v1,v1,,LOGICAL,LDM,{{CONNECTION}}/LDM,model,{{CONNECTION}},,,,,,
+ModelVersion,v1,{{CONNECTION}}/PDM/v1,v1,,PHYSICAL,PDM,{{CONNECTION}}/PDM,model,{{CONNECTION}},,,,,,
+ModelEntity,L_E1,{{CONNECTION}}/LDM/L_E1,L_E1,An example logical data model entity.,LOGICAL,LDM,{{CONNECTION}}/LDM,model,{{CONNECTION}},ModelVersion@{{CONNECTION}}/LDM/v1,{{CONNECTION}}/LDM/v1,ModelEntity@{{CONNECTION}}/PDM/P_E2,,,5
+ModelEntity,P_E2,{{CONNECTION}}/PDM/P_E2,P_E2,An example physical data model entity.,PHYSICAL,PDM,{{CONNECTION}}/PDM,model,{{CONNECTION}},ModelVersion@{{CONNECTION}}/PDM/v1,{{CONNECTION}}/PDM/v1,,ModelEntity@{{CONNECTION}}/LDM/L_E1,,5
