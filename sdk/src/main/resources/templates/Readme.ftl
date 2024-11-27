@@ -10,9 +10,12 @@
      */
     public static ReadmeBuilder<?, ?> creator(Asset asset, String content) throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
-        map.put("guid", asset.getQualifiedName());
+        map.put("guid", asset.getGuid());
         map.put("name", asset.getName());
         validateRelationship(asset.getTypeName(), map);
+        if (!StringUtils.isUUID(asset.getGuid())) {
+            throw new InvalidRequestException(ErrorCode.PLACEHOLDER_GUID, asset.getGuid());
+        }
         return creator(asset.trimToReference(), asset.getName(), content);
     }
 

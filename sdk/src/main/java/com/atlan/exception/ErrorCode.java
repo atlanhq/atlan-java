@@ -272,6 +272,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-049",
             "Objects with secondary IDs can only be cached in bulk, not individually.",
             "This code path is intentionally unreachable. If you receive this error, please raise a ticket on the GitHub repository for the SDK."),
+    PLACEHOLDER_GUID(
+            400,
+            "ATLAN-JAVA-400-050",
+            "A placeholder GUID was provided where a resolved GUID is required: {0}.",
+            "You must provide a real (resolved) GUID, not a placeholder, when carrying out the requested operation."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
