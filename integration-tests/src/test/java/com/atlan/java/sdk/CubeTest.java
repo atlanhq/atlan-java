@@ -9,7 +9,6 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
@@ -358,8 +357,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.search.assets"},
             dependsOnGroups = {"mdd.update.cube.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.SUPER_TYPE_NAMES.eq("MultiDimensionalDataset"))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))

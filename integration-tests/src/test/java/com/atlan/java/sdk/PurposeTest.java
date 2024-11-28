@@ -88,9 +88,8 @@ public class PurposeTest extends AtlanLiveTest {
         assertNotNull(token.getAttributes());
         assertNotNull(token.getAttributes().getAccessToken());
         // After creating the token, assign it to the "Data Assets" persona to grant it query access
-        ApiToken result = Atlan.getDefaultClient()
-                .apiTokens
-                .update(token.getId(), token.getDisplayName(), null, Set.of(persona.getQualifiedName()));
+        ApiToken result = client.apiTokens.update(
+                token.getId(), token.getDisplayName(), null, Set.of(persona.getQualifiedName()));
         assertNotNull(result);
         // Note: need to read the token back again to see its associated personas -- will leave that to later...
         assertNotNull(result.getAttributes());
@@ -180,7 +179,7 @@ public class PurposeTest extends AtlanLiveTest {
                         false)
                 .policyMaskType(DataMaskingType.REDACT)
                 .build();
-        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(metadata, data), false);
+        AssetMutationResponse response = client.assets.save(List.of(metadata, data), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -247,7 +246,7 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.read.query"},
             dependsOnGroups = {"purpose.create.query", "purpose.read.purposes.2", "purpose.update.asset"})
     void runQueryWithoutPolicy() throws AtlanException {
-        QueryResponse response = Atlan.getDefaultClient().queries.stream(query);
+        QueryResponse response = client.queries.stream(query);
         assertNotNull(response);
         assertNotNull(response.getRows());
         assertTrue(response.getRows().size() > 1);
@@ -335,7 +334,7 @@ public class PurposeTest extends AtlanLiveTest {
         if (token != null) {
             RequestsTest.deleteToken(token.getId());
         } else {
-            ApiToken local = Atlan.getDefaultClient().apiTokens.get(API_TOKEN_NAME);
+            ApiToken local = client.apiTokens.get(API_TOKEN_NAME);
             RequestsTest.deleteToken(local.getId());
         }
     }

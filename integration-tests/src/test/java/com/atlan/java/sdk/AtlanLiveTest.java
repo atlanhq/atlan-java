@@ -53,10 +53,13 @@ public abstract class AtlanLiveTest {
 
     public static final String DESCRIPTION = TESTING_STRING;
 
+    public static final AtlanClient client;
+
     static {
         Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setMaxNetworkRetries(10);
+        client = Atlan.getDefaultClient();
     }
 
     @BeforeClass

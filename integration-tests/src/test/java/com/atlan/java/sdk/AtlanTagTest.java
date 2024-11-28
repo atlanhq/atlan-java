@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.*;
@@ -32,7 +31,7 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the Atlan tag
      */
     static void createAtlanTag(String name) throws AtlanException {
-        createAtlanTag(Atlan.getDefaultClient(), name);
+        createAtlanTag(client, name);
     }
 
     /**
@@ -67,7 +66,6 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error deleting the Atlan tag
      */
     static void deleteAtlanTag(String name) throws AtlanException {
-        AtlanClient client = Atlan.getDefaultClient();
         String internalName = client.getAtlanTagCache().getSidForName(name);
         client.typeDefs.purge(
                 internalName,
@@ -80,7 +78,7 @@ public class AtlanTagTest extends AtlanLiveTest {
                         TAG_WITH_IMAGE,
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png")
                 .build();
-        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
+        AtlanTagDef response = tag.create(client);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
@@ -97,7 +95,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     void createTagWithIcon() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(TAG_WITH_ICON, AtlanIcon.BOOK_BOOKMARK, AtlanTagColor.YELLOW)
                 .build();
-        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
+        AtlanTagDef response = tag.create(client);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
@@ -112,7 +110,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     void createTagWithEmoji() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(TAG_WITH_EMOJI, AtlanTagOptions.withEmoji("\uD83D\uDC4D"))
                 .build();
-        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
+        AtlanTagDef response = tag.create(client);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
