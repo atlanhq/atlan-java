@@ -6,7 +6,6 @@ import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.Atlan;
-import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
@@ -41,7 +40,6 @@ public class InsightsTest extends AtlanLiveTest {
 
     @Test(groups = {"insights.create.collection"})
     void createCollection() throws AtlanException, InterruptedException {
-        AtlanClient client = Atlan.getDefaultClient();
         AtlanCollection col = AtlanCollection.creator(client, COLLECTION_NAME)
                 .adminGroup(PersonaTest.EXISTING_GROUP_NAME)
                 .build();
@@ -252,8 +250,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.search.assets"},
             dependsOnGroups = {"insights.update.query.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(collection.getQualifiedName()))
                 .pageSize(10)
@@ -379,7 +376,6 @@ public class InsightsTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeCollection() throws AtlanException, InterruptedException {
-        AtlanClient client = Atlan.getDefaultClient();
         String qualifiedName = collection.getQualifiedName();
         List<String> guids =
                 client.assets.select().where(Asset.QUALIFIED_NAME.startsWith(qualifiedName)).pageSize(50).stream()

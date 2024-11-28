@@ -10,7 +10,6 @@ import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
@@ -155,8 +154,7 @@ public class ModelTest extends AtlanLiveTest {
         ModelAttributeAssociation aa = ModelAttributeAssociation.creator(AA1_NAME, first, second)
                 .modelBusinessDate(future)
                 .build();
-        AssetMutationResponse response =
-                Atlan.getDefaultClient().assets.save(List.of(entity2, first, second, ea, aa), false);
+        AssetMutationResponse response = client.assets.save(List.of(entity2, first, second, ea, aa), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -527,8 +525,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.search.assets"},
             dependsOnGroups = {"model.update.model.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.SUPER_TYPE_NAMES.eq("Model"))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -633,7 +630,7 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.search.assets"})
     void searchPreHistory() throws AtlanException {
         // Should contain nothing -- we knew nothing prior to past
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), past - 1, connection.getQualifiedName(), null);
+        List<Asset> assets = IModel.findByTime(client, past - 1, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertTrue(assets.isEmpty());
     }
@@ -649,11 +646,11 @@ public class ModelTest extends AtlanLiveTest {
 
     private void validatePast(long time) throws AtlanException {
         // Should contain only the model that was created at this time
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
+        List<Asset> assets = IModel.findByTime(client, time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertEquals(assets.size(), 1);
         assertEquals(assets.get(0).getGuid(), model.getGuid());
-        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        ModelGraph g = ModelGraph.from(client, time, connection.getQualifiedName());
         assertNotNull(g);
         assertNotNull(g.getModel());
         assertEquals(g.getModel().getGuid(), model.getGuid());
@@ -672,7 +669,7 @@ public class ModelTest extends AtlanLiveTest {
 
     private void validatePresent(long time) throws AtlanException {
         // Should contain only the model (created previously) + entity that was created at this time
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
+        List<Asset> assets = IModel.findByTime(client, time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         // TODO: the modelBusinessDate on the version1 is greater than `present` so is excluded the first time, but it
         // should be included
@@ -693,7 +690,7 @@ public class ModelTest extends AtlanLiveTest {
             // misaligned)
             assertTrue(guids.contains(version2.getGuid()));
         }
-        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        ModelGraph g = ModelGraph.from(client, time, connection.getQualifiedName());
         assertNotNull(g);
         assertNotNull(g.getModel());
         assertEquals(g.getModel().getGuid(), model.getGuid());
@@ -722,7 +719,7 @@ public class ModelTest extends AtlanLiveTest {
         // - another entity + 2 attributes that were created at this time
         // - an entity association
         // - an attribute association
-        List<Asset> assets = IModel.findByTime(Atlan.getDefaultClient(), time, connection.getQualifiedName(), null);
+        List<Asset> assets = IModel.findByTime(client, time, connection.getQualifiedName(), null);
         assertNotNull(assets);
         assertEquals(assets.size(), 8);
         Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
@@ -743,7 +740,7 @@ public class ModelTest extends AtlanLiveTest {
         assertTrue(guids.contains(attr2.getGuid()));
         assertTrue(guids.contains(ea1.getGuid()));
         assertTrue(guids.contains(aa1.getGuid()));
-        ModelGraph g = ModelGraph.from(Atlan.getDefaultClient(), time, connection.getQualifiedName());
+        ModelGraph g = ModelGraph.from(client, time, connection.getQualifiedName());
         assertNotNull(g);
         assertNotNull(g.getModel());
         assertEquals(g.getModel().getGuid(), model.getGuid());

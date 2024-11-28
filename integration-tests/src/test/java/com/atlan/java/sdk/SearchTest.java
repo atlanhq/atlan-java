@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Glossary;
@@ -116,8 +115,7 @@ public class SearchTest extends AtlanLiveTest {
                 IReferenceable.GUID.getKeywordFieldName(),
                 dsl.getSort().get(0).field().field());
         // Sort without GUID
-        request = Atlan.getDefaultClient()
-                .assets
+        request = client.assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.eq("abc123"))
                 .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))
@@ -137,8 +135,7 @@ public class SearchTest extends AtlanLiveTest {
                 IReferenceable.GUID.getKeywordFieldName(),
                 dsl.getSort().get(1).field().field());
         // Sort with only GUID
-        request = Atlan.getDefaultClient()
-                .assets
+        request = client.assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.eq("abc123"))
                 .sort(IReferenceable.GUID.order(SortOrder.Asc))
@@ -154,8 +151,7 @@ public class SearchTest extends AtlanLiveTest {
                 IReferenceable.GUID.getKeywordFieldName(),
                 dsl.getSort().get(0).field().field());
         // Sort with GUID and others
-        request = Atlan.getDefaultClient()
-                .assets
+        request = client.assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.eq("abc123"))
                 .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))

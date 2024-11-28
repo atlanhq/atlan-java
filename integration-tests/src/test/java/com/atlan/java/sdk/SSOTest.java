@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.api.SSOEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -38,7 +37,7 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.create.mapping"},
             dependsOnGroups = {"sso.create.group"})
     void createSsoMapping() throws AtlanException {
-        SSOMapping response = Atlan.getDefaultClient().sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME);
+        SSOMapping response = client.sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME);
         assertNotNull(response);
     }
 
@@ -46,7 +45,7 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.read.mapping"},
             dependsOnGroups = {"sso.create.mapping"})
     void readSsoMapping() throws AtlanException {
-        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(SSO_TYPE);
+        List<SSOMapping> mappings = client.sso.listGroupMappings(SSO_TYPE);
         assertNotNull(mappings);
         for (SSOMapping mapping : mappings) {
             if (mapping.getName().contains(group1.getId())
@@ -64,17 +63,15 @@ public class SSOTest extends AtlanLiveTest {
             dependsOnGroups = {"sso.read.mapping"})
     void createSsoMappingAgain() {
         assertThrows(
-                InvalidRequestException.class,
-                () -> Atlan.getDefaultClient().sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME));
+                InvalidRequestException.class, () -> client.sso.createGroupMapping(SSO_TYPE, group1, SSO_GROUP_NAME));
     }
 
     @Test(
             groups = {"sso.update.mapping"},
             dependsOnGroups = {"sso.create.mapping.again"})
     void updateSsoMapping() throws AtlanException {
-        SSOMapping updated = Atlan.getDefaultClient()
-                .sso
-                .updateGroupMapping(SSO_TYPE, group1, groupMapping.getId(), SSO_GROUP_NAME_UPDATED);
+        SSOMapping updated =
+                client.sso.updateGroupMapping(SSO_TYPE, group1, groupMapping.getId(), SSO_GROUP_NAME_UPDATED);
         validateSsoMapping(group1, updated, true);
     }
 
@@ -82,9 +79,9 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.delete.mapping"},
             dependsOnGroups = {"sso.update.mapping"})
     void deleteSsoMapping() throws AtlanException, InterruptedException {
-        Atlan.getDefaultClient().sso.deleteGroupMapping(SSO_TYPE, groupMapping.getId());
+        client.sso.deleteGroupMapping(SSO_TYPE, groupMapping.getId());
         Thread.sleep(5000);
-        List<SSOMapping> mappings = Atlan.getDefaultClient().sso.listGroupMappings(SSO_TYPE);
+        List<SSOMapping> mappings = client.sso.listGroupMappings(SSO_TYPE);
         assertNotNull(mappings);
         SSOMapping local = null;
         for (SSOMapping mapping : mappings) {

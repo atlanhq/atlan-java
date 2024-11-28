@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
@@ -545,7 +544,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.contract"},
             dependsOnGroups = {"asset.create.column.*"})
     void generateContract() throws AtlanException {
-        String tableContract = Atlan.getDefaultClient().contracts.generateInitialSpec(table);
+        String tableContract = client.contracts.generateInitialSpec(table);
         assertNotNull(tableContract);
         assertTrue(tableContract.startsWith("---"));
         assertTrue(tableContract.contains("columns:"));
@@ -612,8 +611,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void searchByParentQN() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .active()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -630,7 +628,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         response.forEach(a -> guids.add(a.getGuid()));
 
         // Test sequential streaming
-        List<String> guidsSeq = Atlan.getDefaultClient()
+        List<String> guidsSeq = client
                 .assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -642,7 +640,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .collect(Collectors.toList());
 
         // Test parallel streaming
-        List<String> guidsPar = Atlan.getDefaultClient()
+        List<String> guidsPar = client
                 .assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -788,8 +786,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void testSearchIterators() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .active()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -1321,7 +1318,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         validateAudits(response.getEntityAudits());
 
-        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(Atlan.getDefaultClient())
+        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(client)
                 .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
                 .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
                 .pageSize(10);

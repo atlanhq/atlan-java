@@ -6,7 +6,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Column;
@@ -293,15 +292,14 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.update.product"},
             dependsOnGroups = {"mesh.create.product", "mesh.create.view"})
     void updateProduct() throws AtlanException {
-        FluentSearch query = Atlan.getDefaultClient()
-                .assets
+        FluentSearch query = client.assets
                 .select()
                 .whereSome(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
                 .whereSome(View.QUALIFIED_NAME.eq(view.getQualifiedName()))
                 .minSomes(1)
                 .build();
         DataProduct toUpdate = DataProduct.updater(product.getQualifiedName(), PROD_NAME)
-                .assetSelection(Atlan.getDefaultClient(), query)
+                .assetSelection(client, query)
                 .build();
         AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);

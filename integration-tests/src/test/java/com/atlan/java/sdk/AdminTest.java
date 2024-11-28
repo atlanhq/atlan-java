@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import java.time.LocalDate;
@@ -67,13 +66,13 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(groups = {"admin.read.roles"})
     void retrieveRoles() throws AtlanException {
-        String adminRoleGuid = Atlan.getDefaultClient().getRoleCache().getIdForName("$admin");
+        String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
         assertNotNull(adminRoleGuid);
     }
 
     @Test(groups = {"admin.read.sessions"})
     void retrieveSessions() throws AtlanException {
-        UserMinimalResponse response = Atlan.getDefaultClient().users.getCurrentUser();
+        UserMinimalResponse response = client.users.getCurrentUser();
         assertNotNull(response);
         AtlanUser user = response.toAtlanUser();
         assertNotNull(user);
@@ -105,11 +104,11 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(user1);
         assertNotNull(user1.getId());
         assertEquals(user1.getGroupCount().longValue(), defaultGroupCount);
-        users = Atlan.getDefaultClient().users.getByUsernames(List.of(FIXED_USER));
+        users = client.users.getByUsernames(List.of(FIXED_USER));
         assertNotNull(users);
         assertEquals(users.size(), 1);
         assertEquals(user1.getId(), users.get(0).getId());
-        users = Atlan.getDefaultClient().users.getByUsernames(List.of());
+        users = client.users.getByUsernames(List.of());
         assertNotNull(users);
         assertEquals(users.size(), 0);
         users = AtlanUser.getByEmail(EMAIL_DOMAIN);
@@ -120,11 +119,11 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(users);
         assertEquals(users.size(), 1);
         assertEquals(user1.getId(), users.get(0).getId());
-        users = Atlan.getDefaultClient().users.getByEmails(List.of(user1.getEmail()));
+        users = client.users.getByEmails(List.of(user1.getEmail()));
         assertNotNull(users);
         assertEquals(users.size(), 1);
         assertEquals(user1.getId(), users.get(0).getId());
-        users = Atlan.getDefaultClient().users.getByEmails(List.of());
+        users = client.users.getByEmails(List.of());
         assertNotNull(users);
         assertEquals(users.size(), 0);
     }
@@ -135,7 +134,7 @@ public class AdminTest extends AtlanLiveTest {
     void createGroup1() throws AtlanException {
         AtlanGroup group = AtlanGroup.creator(GROUP_NAME).build();
         String fixedUserId = AtlanUser.getByUsername(FIXED_USER).getId();
-        CreateGroupResponse response = Atlan.getDefaultClient().groups.create(group, List.of(fixedUserId));
+        CreateGroupResponse response = client.groups.create(group, List.of(fixedUserId));
         String groupGuid2 = response.getGroup();
         assertNotNull(groupGuid2);
         Map<String, CreateGroupResponse.UserStatus> statusMap = response.getUsers();
@@ -230,12 +229,10 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.read.logs"},
             dependsOnGroups = {"admin.read.users.*"})
     void retrieveLogs() throws AtlanException {
-        KeycloakEventResponse events = Atlan.getDefaultClient()
-                .logs
-                .getEvents(KeycloakEventRequest.builder()
-                        .dateFrom(YESTERDAY)
-                        .dateTo(TOMORROW)
-                        .build());
+        KeycloakEventResponse events = client.logs.getEvents(KeycloakEventRequest.builder()
+                .dateFrom(YESTERDAY)
+                .dateTo(TOMORROW)
+                .build());
         List<KeycloakEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
         assertFalse(results.isEmpty());
@@ -245,13 +242,11 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.read.logs"},
             dependsOnGroups = {"admin.read.users.*"})
     void retrieveAdminLogs() throws AtlanException {
-        AdminEventResponse events = Atlan.getDefaultClient()
-                .logs
-                .getAdminEvents(AdminEventRequest.builder()
-                        .realmId("default")
-                        .dateFrom(YESTERDAY)
-                        .dateTo(TOMORROW)
-                        .build());
+        AdminEventResponse events = client.logs.getAdminEvents(AdminEventRequest.builder()
+                .realmId("default")
+                .dateFrom(YESTERDAY)
+                .dateTo(TOMORROW)
+                .build());
         List<AdminEvent> results = events.stream().limit(1000).collect(Collectors.toList());
         assertNotNull(results);
         assertFalse(results.isEmpty());

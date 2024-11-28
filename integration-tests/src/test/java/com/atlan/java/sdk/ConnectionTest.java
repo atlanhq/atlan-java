@@ -41,7 +41,7 @@ public class ConnectionTest extends AtlanLiveTest {
      */
     public static Connection createConnection(String prefix, AtlanConnectorType type)
             throws AtlanException, InterruptedException {
-        return createConnection(Atlan.getDefaultClient(), prefix, type);
+        return createConnection(client, prefix, type);
     }
 
     /**
@@ -101,7 +101,7 @@ public class ConnectionTest extends AtlanLiveTest {
      * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
      */
     public static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
-        deleteConnection(Atlan.getDefaultClient(), qualifiedName, log);
+        deleteConnection(client, qualifiedName, log);
     }
 
     /**
