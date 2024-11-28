@@ -143,6 +143,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(com.atlan.model.admin.SSOProviderRequest)" class="member-name-link">configure</a><wbr>(<a href="../model/admin/SSOProviderRequest.html" title="class in com.atlan.model.admin">SSOProviderRequest</a>&nbsp;request)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Configure an SSO provider.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configure(com.atlan.model.admin.SSOProviderRequest,com.atlan.net.RequestOptions)" class="member-name-link">configure</a><wbr>(<a href="../model/admin/SSOProviderRequest.html" title="class in com.atlan.model.admin">SSOProviderRequest</a>&nbsp;request,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Configure an SSO provider.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createGroupMapping(java.lang.String,com.atlan.model.admin.AtlanGroup,java.lang.String)" class="member-name-link">createGroupMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
  <a href="../model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&nbsp;group,
@@ -157,6 +168,19 @@ loadScripts(document, 'script');</script>
  <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates a new Atlan SSO group mapping.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createMapping(java.lang.String,com.atlan.model.admin.SSOMapping)" class="member-name-link">createMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
+ <a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a>&nbsp;mapping)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new Atlan SSO mapping.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createMapping(java.lang.String,com.atlan.model.admin.SSOMapping,com.atlan.net.RequestOptions)" class="member-name-link">createMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
+ <a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a>&nbsp;mapping,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new Atlan SSO mapping.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deleteGroupMapping(java.lang.String,java.lang.String)" class="member-name-link">deleteGroupMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
@@ -299,6 +323,74 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="configure(com.atlan.model.admin.SSOProviderRequest)">
+<h3>configure</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configure</span><wbr><span class="parameters">(<a href="../model/admin/SSOProviderRequest.html" title="class in com.atlan.model.admin">SSOProviderRequest</a>&nbsp;request)</span>
+               throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Configure an SSO provider.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>request</code> - details of the configuration for an SSO provider</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="configure(com.atlan.model.admin.SSOProviderRequest,com.atlan.net.RequestOptions)">
+<h3>configure</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configure</span><wbr><span class="parameters">(<a href="../model/admin/SSOProviderRequest.html" title="class in com.atlan.model.admin">SSOProviderRequest</a>&nbsp;request,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</span>
+               throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Configure an SSO provider.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>request</code> - details of the configuration for an SSO provider</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createMapping(java.lang.String,com.atlan.model.admin.SSOMapping)">
+<h3>createMapping</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a></span>&nbsp;<span class="element-name">createMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
+ <a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a>&nbsp;mapping)</span>
+                         throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Creates a new Atlan SSO mapping.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ssoAlias</code> - name of the SSO provider</dd>
+<dd><code>mapping</code> - details of the mapping to create</dd>
+<dt>Returns:</dt>
+<dd>created SSO mapping</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createMapping(java.lang.String,com.atlan.model.admin.SSOMapping,com.atlan.net.RequestOptions)">
+<h3>createMapping</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a></span>&nbsp;<span class="element-name">createMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;ssoAlias,
+ <a href="../model/admin/SSOMapping.html" title="class in com.atlan.model.admin">SSOMapping</a>&nbsp;mapping,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</span>
+                         throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Creates a new Atlan SSO mapping.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ssoAlias</code> - name of the SSO provider</dd>
+<dd><code>mapping</code> - details of the mapping to create</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt>Returns:</dt>
+<dd>created SSO mapping</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="listGroupMappings(java.lang.String)">
 <h3>listGroupMappings</h3>

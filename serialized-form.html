@@ -3421,9 +3421,142 @@ loadScripts(document, 'script');</script>
 <div class="block">Internal name of the mapped group in Atlan.</div>
 </li>
 <li class="block-list">
+<h5>role</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> role</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
 <h5>syncMode</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> syncMode</pre>
 <div class="block">Mechanism used for the mapping.</div>
+</li>
+<li class="block-list">
+<h5>userAttribute</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> userAttribute</pre>
+<div class="block">Name of the user attribute.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.admin.SSOProviderRequest">
+<h3>Class&nbsp;<a href="com/atlan/model/admin/SSOProviderRequest.html" title="class in com.atlan.model.admin">com.atlan.model.admin.SSOProviderRequest</a></h3>
+<div class="type-signature">class SSOProviderRequest extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>addReadTokenRoleOnCreate</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> addReadTokenRoleOnCreate</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>alias</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> alias</pre>
+<div class="block">Alias for the SSO provider.</div>
+</li>
+<li class="block-list">
+<h5>config</h5>
+<pre><a href="com/atlan/model/admin/SSOProviderRequest.Config.html" title="class in com.atlan.model.admin">SSOProviderRequest.Config</a> config</pre>
+<div class="block">Configuration for the provider.</div>
+</li>
+<li class="block-list">
+<h5>displayName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> displayName</pre>
+<div class="block">Label to show users for logging in with this provider.</div>
+</li>
+<li class="block-list">
+<h5>enabled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> enabled</pre>
+<div class="block">Whether the provider should be active (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>firstBrokerLoginFlowAlias</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> firstBrokerLoginFlowAlias</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>linkOnly</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> linkOnly</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>providerId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> providerId</pre>
+<div class="block">Type of SSO provider (for example, <code>saml</code>).</div>
+</li>
+<li class="block-list">
+<h5>storeToken</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> storeToken</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>trustEmail</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> trustEmail</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.admin.SSOProviderRequest.Config">
+<h3>Class&nbsp;<a href="com/atlan/model/admin/SSOProviderRequest.Config.html" title="class in com.atlan.model.admin">com.atlan.model.admin.SSOProviderRequest.Config</a></h3>
+<div class="type-signature">class Config extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>nameIDPolicyFormat</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> nameIDPolicyFormat</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>postBindingAuthnRequest</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> postBindingAuthnRequest</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>postBindingResponse</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> postBindingResponse</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>principalType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> principalType</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>signingCertificate</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> signingCertificate</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>singleSignOnServiceUrl</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> singleSignOnServiceUrl</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>syncMode</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> syncMode</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 </section>
