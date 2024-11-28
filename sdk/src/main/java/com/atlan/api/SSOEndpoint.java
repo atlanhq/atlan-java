@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.admin.SSOMapping;
+import com.atlan.model.admin.SSOProviderRequest;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -38,6 +39,54 @@ public class SSOEndpoint extends HeraclesEndpoint {
 
     public SSOEndpoint(AtlanClient client) {
         super(client);
+    }
+
+    /**
+     * Configure an SSO provider.
+     *
+     * @param request details of the configuration for an SSO provider
+     * @throws AtlanException on any API communication issue
+     */
+    public void configure(SSOProviderRequest request) throws AtlanException {
+        configure(request, null);
+    }
+
+    /**
+     * Configure an SSO provider.
+     *
+     * @param request details of the configuration for an SSO provider
+     * @param options to override default client settings
+     * @throws AtlanException on any API communication issue
+     */
+    public void configure(SSOProviderRequest request, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, options);
+    }
+
+    /**
+     * Creates a new Atlan SSO mapping.
+     *
+     * @param ssoAlias name of the SSO provider
+     * @param mapping details of the mapping to create
+     * @return created SSO mapping
+     * @throws AtlanException on any API communication issue
+     */
+    public SSOMapping createMapping(String ssoAlias, SSOMapping mapping) throws AtlanException {
+        return createMapping(ssoAlias, mapping, null);
+    }
+
+    /**
+     * Creates a new Atlan SSO mapping.
+     *
+     * @param ssoAlias name of the SSO provider
+     * @param mapping details of the mapping to create
+     * @param options to override default client settings
+     * @return created SSO mapping
+     * @throws AtlanException on any API communication issue
+     */
+    public SSOMapping createMapping(String ssoAlias, SSOMapping mapping, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s/%s/mappers", getBaseUrl(), endpoint, ssoAlias);
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, mapping, SSOMapping.class, options);
     }
 
     /**
@@ -132,8 +181,7 @@ public class SSOEndpoint extends HeraclesEndpoint {
                 .identityProviderAlias(ssoAlias)
                 .identityProviderMapper(IDP_GROUP_MAPPER)
                 .build();
-        String url = String.format("%s%s/%s/mappers", getBaseUrl(), endpoint, ssoAlias);
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, SSOMapping.class, options);
+        return createMapping(ssoAlias, request, options);
     }
 
     /**
