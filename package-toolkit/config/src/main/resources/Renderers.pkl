@@ -269,6 +269,7 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 
     [handler_consoleHandler]
     class=StreamHandler
+    level=INFO
     formatter=simpleFormatter
     args=(sys.stdout,)
 
