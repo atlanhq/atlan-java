@@ -52,6 +52,10 @@ public class SSOMapping extends ApiResource {
         @JsonProperty("group")
         String groupName;
 
+        /** Name of the user attribute. */
+        @JsonProperty("user.attribute")
+        String userAttribute;
+
         /** Name of the SSO attribute containing the mapping. */
         @JsonProperty("attribute.name")
         String attributeName;
@@ -67,5 +71,8 @@ public class SSOMapping extends ApiResource {
         /** TBC */
         @JsonProperty("are.attribute.values.regex")
         String attributeValuesRegex;
+
+        /** TBC */
+        String role;
     }
 }
