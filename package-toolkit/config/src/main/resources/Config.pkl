@@ -302,8 +302,8 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     ["\(getPythonPkgName(m))/__init__.py"] = Renderers.getBlankFile()
     ["\(getPythonPkgName(m))/main.py.example"] = Renderers.getMainPy(getPythonPkgName(m))
     ["\(getPythonPkgName(m))/logging.conf"] = Renderers.getLoggingConfPy()
-    ["requirements.txt"] = Renderers.getRequirementsPy()
-    ["requirements-dev.txt"] = Renderers.getRequirementsDevPy()
+    ["requirements.txt.example"] = Renderers.getRequirementsPy()
+    ["requirements-dev.txt.example"] = Renderers.getRequirementsDevPy()
     ["version.txt"] = Renderers.getVersionPy(m)
     ["Dockerfile"] = Renderers.getDockerfilePy(getPythonPkgName(m))
   }
