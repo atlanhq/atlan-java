@@ -3,7 +3,7 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -44,17 +44,21 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<RelationalAssetsBuilderCfg>()
-        import(config, outputDirectory)
+        Utils.initializeContext(config).use { client ->
+            import(client, config, outputDirectory)
+        }
     }
 
     /**
      * Actually run the import.
      *
+     * @param client connectivity to the Atlan tenant
      * @param config for the package
      * @param outputDirectory in which to do any data processing
      * @return the qualifiedName of the connection that was delta-processed, or null if no delta-processing enabled
      */
     fun import(
+        client: AtlanClient,
         config: RelationalAssetsBuilderCfg,
         outputDirectory: String = "tmp",
     ): String? {
@@ -125,6 +129,7 @@ object Importer {
         // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
         val connectionImporter =
             ConnectionImporter(
+                client,
                 preprocessedDetails,
                 assetAttrsToOverwrite,
                 assetsSemantic,
@@ -176,6 +181,7 @@ object Importer {
             logger.info { " --- Importing databases... ---" }
             val databaseImporter =
                 DatabaseImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -191,6 +197,7 @@ object Importer {
             logger.info { " --- Importing schemas... ---" }
             val schemaImporter =
                 SchemaImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -206,6 +213,7 @@ object Importer {
             logger.info { " --- Importing tables... ---" }
             val tableImporter =
                 TableImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -221,6 +229,7 @@ object Importer {
             logger.info { " --- Importing views... ---" }
             val viewImporter =
                 ViewImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -236,6 +245,7 @@ object Importer {
             logger.info { " --- Importing materialized views... ---" }
             val materializedViewImporter =
                 MaterializedViewImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -251,6 +261,7 @@ object Importer {
             logger.info { " --- Importing columns... ---" }
             val columnImporter =
                 ColumnImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -263,10 +274,10 @@ object Importer {
                 )
             val colResults = columnImporter.import()
 
-            delta.processDeletions()
+            delta.processDeletions(client)
 
-            ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
-                delta.updateConnectionCache(modifiedAssets)
+            ImportResults.getAllModifiedAssets(client, true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+                delta.updateConnectionCache(client, modifiedAssets)
             }
         }
         return connectionQN

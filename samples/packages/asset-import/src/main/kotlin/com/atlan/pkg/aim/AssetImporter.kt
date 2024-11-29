@@ -2,7 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
-import com.atlan.Atlan
+import AssetImportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
@@ -194,6 +195,8 @@ import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
@@ -214,40 +217,27 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
- * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
- * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
- * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to write log entries
  */
 class AssetImporter(
-    private val filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
-    private val batchSize: Int,
-    private val caseSensitive: Boolean = true,
-    private val creationHandling: AssetCreationHandling = AssetCreationHandling.NONE,
-    private val tableViewAgnostic: Boolean = false,
-    private val failOnErrors: Boolean = true,
-    private val trackBatches: Boolean = true,
-    private val fieldSeparator: Char = ',',
+    ctx: PackageContext<AssetImportCfg>,
+    filename: String,
+    logger: KLogger,
 ) : CSVImporter(
+        ctx,
         filename,
-        logger = KotlinLogging.logger {},
-        attrsToOverwrite = attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
-        caseSensitive = caseSensitive,
-        creationHandling = creationHandling,
-        tableViewAgnostic = tableViewAgnostic,
-        failOnErrors = failOnErrors,
-        trackBatches = trackBatches,
-        fieldSeparator = fieldSeparator,
+        logger = logger,
+        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite!!.toMutableList(), "assets", logger),
+        updateOnly = ctx.config.assetsUpsertSemantic == "update",
+        batchSize = ctx.config.assetsBatchSize!!.toInt(),
+        caseSensitive = ctx.config.assetsCaseSensitive!!,
+        creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
+        tableViewAgnostic = ctx.config.assetsTableViewAgnostic!!,
+        failOnErrors = ctx.config.assetsFailOnErrors!!,
+        trackBatches = ctx.config.trackBatches!!,
+        fieldSeparator = ctx.config.assetsFieldSeparator!![0],
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
@@ -267,7 +257,7 @@ class AssetImporter(
     ): RowPreprocessor.Results {
         // Retrieve all relationships and filter to any cyclical relationships
         // (meaning relationships where both ends are of the same type)
-        val typeDefs = Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
+        val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
         typeDefs.relationshipDefs.stream()
             .filter { it.endDef1.type == it.endDef2.type && it.endDef1.cardinality == it.endDef2.cardinality }
             .forEach { cyclicalRelationships[it.endDef1.type] = setOf(it.endDef1.name, it.endDef2.name) }
@@ -334,7 +324,7 @@ class AssetImporter(
                     // or we will end up with duplicates (links) or extra audit log messages (tags, README)
                     logger.info { "--- Loading cyclical relationships (second pass)... ---" }
                     val secondPassResults = super.import(secondPassSkip)
-                    ImportResults.combineAll(Atlan.getDefaultClient(), true, firstPassResults, secondPassResults)
+                    ImportResults.combineAll(ctx.client, true, firstPassResults, secondPassResults)
                 } else {
                     null
                 }
@@ -345,10 +335,10 @@ class AssetImporter(
             //  - Stop when we have processed all the types in the file
             val includes = preprocess()
             if (includes.hasLinks) {
-                LinkCache.preload()
+                ctx.linkCache.preload()
             }
             if (includes.hasTermAssignments) {
-                TermCache.preload()
+                ctx.termCache.preload()
             }
             val typeLoadingOrder = getLoadOrder(includes.typesInFile)
             logger.info { "Asset loading order: $typeLoadingOrder" }
@@ -381,7 +371,7 @@ class AssetImporter(
                     }
                 }
             }
-            return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
+            return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
         }
     }
 

@@ -2,8 +2,11 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import AssetImportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
@@ -21,6 +24,7 @@ import java.util.stream.Stream
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
@@ -32,6 +36,7 @@ import java.util.stream.Stream
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class GTCImporter(
+    ctx: PackageContext<AssetImportCfg>,
     protected val filename: String,
     attrsToOverwrite: List<AtlanField>,
     updateOnly: Boolean,
@@ -42,6 +47,7 @@ abstract class GTCImporter(
     failOnErrors: Boolean,
     protected val fieldSeparator: Char,
 ) : CSVImporter(
+        ctx,
         filename,
         logger,
         typeNameFilter,

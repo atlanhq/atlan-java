@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.PackageParameter;
@@ -33,16 +32,6 @@ public class Workflow extends AtlanObject {
 
     /** Parameters to send to the workflow as a whole (not an individual task). */
     List<PackageParameter> payload;
-
-    /**
-     * Run the workflow immediately.
-     *
-     * @return the details of the workflow run
-     * @throws AtlanException on any API communication issue
-     */
-    public WorkflowResponse run() throws AtlanException {
-        return run(Atlan.getDefaultClient());
-    }
 
     /**
      * Run the workflow immediately.

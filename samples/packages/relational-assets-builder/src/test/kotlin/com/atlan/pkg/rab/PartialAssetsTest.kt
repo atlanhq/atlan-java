@@ -3,7 +3,6 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
@@ -51,7 +50,7 @@ class PartialAssetsTest : PackageTest("pa") {
                 val revised =
                     line
                         .replace("{{CONNECTION1}}", conn1)
-                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                        .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -166,9 +165,9 @@ class PartialAssetsTest : PackageTest("pa") {
         val c1 = found[0]
         assertEquals(conn1, c1.name)
         assertEquals(conn1Type, c1.connectorType)
-        val adminRoleId = Atlan.getDefaultClient().roleCache.getIdForName("\$admin")
+        val adminRoleId = client.roleCache.getIdForName("\$admin")
         assertEquals(setOf(adminRoleId), c1.adminRoles)
-        val apiToken = Atlan.getDefaultClient().users.currentUser.username
+        val apiToken = client.users.currentUser.username
         assertEquals(setOf("chris", apiToken), c1.adminUsers)
         assertEquals(setOf("admins"), c1.adminGroups)
         assertFalse(c1.isPartial)
@@ -232,7 +231,7 @@ class PartialAssetsTest : PackageTest("pa") {
         val displayName = "Test table"
         val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)

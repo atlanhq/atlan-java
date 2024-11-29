@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
@@ -110,7 +109,6 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     private fun createTags() {
         val maxNetworkRetries = 30
-        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.AIRPLANE, AtlanTagColor.GREEN).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROBOT, AtlanTagColor.RED).build()
         client.typeDefs.create(

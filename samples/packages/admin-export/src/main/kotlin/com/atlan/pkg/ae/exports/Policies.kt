@@ -2,25 +2,26 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.ae.exports
 
-import com.atlan.Atlan
+import AdminExportCfg
 import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AuthPolicy
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.ae.AdminExporter.ConnectionId
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.serde.Serde
 import mu.KLogger
 
 class Policies(
+    private val ctx: PackageContext<AdminExportCfg>,
     private val xlsx: ExcelWriter,
-    private val includeNative: Boolean,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, ConnectionId>,
     private val logger: KLogger,
 ) {
     fun export() {
-        logger.info { "Exporting policies, ${ if (includeNative) "including" else "excluding" } out-of-the-box..." }
+        logger.info { "Exporting policies, ${ if (ctx.config.includeNativePolicies) "including" else "excluding" } out-of-the-box..." }
         val sheet = xlsx.createSheet("Policies")
         xlsx.addHeader(
             sheet,
@@ -34,7 +35,6 @@ class Policies(
                 "Resources" to "Resources the policy controls",
             ),
         )
-        val client = Atlan.getDefaultClient()
         AuthPolicy.select()
             .includeOnResults(AuthPolicy.NAME)
             .includeOnResults(AuthPolicy.DESCRIPTION)
@@ -46,8 +46,8 @@ class Policies(
             .stream()
             .forEach { policy ->
                 policy as AuthPolicy
-                if (policy.accessControl != null || includeNative) {
-                    val resources = getResources(client, policy)
+                if (policy.accessControl != null || ctx.config.includeNativePolicies) {
+                    val resources = getResources(ctx.client, policy)
                     xlsx.appendRow(
                         sheet,
                         listOf(

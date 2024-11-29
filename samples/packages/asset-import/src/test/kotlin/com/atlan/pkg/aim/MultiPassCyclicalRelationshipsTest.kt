@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.ModelDataModel
 import com.atlan.model.assets.ModelEntity
@@ -78,7 +77,6 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
     }
 
     private fun createConnection(): Connection {
-        val client = Atlan.getDefaultClient()
         val c1 = Connection.creator(connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)

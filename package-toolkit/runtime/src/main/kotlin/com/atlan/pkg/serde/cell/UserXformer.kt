@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 
@@ -32,11 +32,13 @@ object UserXformer {
     /**
      * Decodes (deserializes) a string form into a validated username.
      *
+     * @param client connectivity to the Atlan tenant
      * @param userRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the username corresponding to the string
      */
     fun decode(
+        client: AtlanClient,
         userRef: String,
         fieldName: String,
     ): String {
@@ -44,14 +46,14 @@ object UserXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    Atlan.getDefaultClient().userCache.getIdForName(userRef)
+                    client.userCache.getIdForName(userRef)
                     return userRef
                 } catch (e: NotFoundException) {
                     try {
                         // Try again, this time looking up the user by email
-                        val idFromEmail = Atlan.getDefaultClient().userCache.getIdForEmail(userRef)
+                        val idFromEmail = client.userCache.getIdForEmail(userRef)
                         // And if found by email, return the username (since that's what we require)
-                        return Atlan.getDefaultClient().userCache.getNameForId(idFromEmail)
+                        return client.userCache.getNameForId(idFromEmail)
                     } catch (e: NotFoundException) {
                         throw NoSuchElementException("Username / email address $userRef is not known to Atlan.", e)
                     }

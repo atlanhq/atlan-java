@@ -45,6 +45,7 @@ uiConfig {
           required = true
           helpText = "Select the API token to add to the connection as an admin."
           width = 4
+          fallback = ""
         }
       }
     }

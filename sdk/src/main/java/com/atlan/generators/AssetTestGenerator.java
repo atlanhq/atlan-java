@@ -25,7 +25,7 @@ public class AssetTestGenerator extends AssetGenerator {
     protected final List<TestAttribute> testAttributes;
 
     public AssetTestGenerator(AssetGenerator asset, GeneratorConfig cfg) {
-        super(asset.getEntityDef(), cfg);
+        super(asset.getClient(), asset.getEntityDef(), cfg);
         this.asset = asset;
         this.testAttributes = new ArrayList<>();
     }

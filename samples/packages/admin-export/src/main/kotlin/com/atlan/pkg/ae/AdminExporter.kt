@@ -3,9 +3,11 @@
 package com.atlan.pkg.ae
 
 import AdminExportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.ae.exports.Groups
 import com.atlan.pkg.ae.exports.Personas
@@ -27,55 +29,54 @@ object AdminExporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AdminExportCfg>()
+        Utils.initializeContext(config).use { ctx ->
 
-        val objectsToInclude = Utils.getOrDefault(config.objectsToInclude, listOf("users", "groups"))
-        val includeNativePolicies = Utils.getOrDefault(config.includeNativePolicies, false)
-        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
+            // Before we start processing, will pre-cache all glossaries,
+            // so we can resolve them to meaningful names
+            val glossaryMap = preloadGlossaryNameMap(ctx)
+            val connectionMap = preloadConnectionMap(ctx)
 
-        // Before we start processing, will pre-cache all glossaries,
-        // so we can resolve them to meaningful names
-        val glossaryMap = preloadGlossaryNameMap()
-        val connectionMap = preloadConnectionMap()
-
-        val exportFile = "$outputDirectory${File.separator}$FILENAME"
-        ExcelWriter(exportFile).use { xlsx ->
-            objectsToInclude.forEach { objectName ->
-                when (objectName) {
-                    "users" -> Users(xlsx, logger).export()
-                    "groups" -> Groups(xlsx, logger).export()
-                    "personas" -> Personas(xlsx, glossaryMap, connectionMap, logger).export()
-                    "purposes" -> Purposes(xlsx, logger).export()
-                    "policies" -> Policies(xlsx, includeNativePolicies, glossaryMap, connectionMap, logger).export()
+            val exportFile = "$outputDirectory${File.separator}$FILENAME"
+            ExcelWriter(exportFile).use { xlsx ->
+                ctx.config.objectsToInclude.forEach { objectName ->
+                    when (objectName) {
+                        "users" -> Users(ctx, xlsx, logger).export()
+                        "groups" -> Groups(ctx, xlsx, logger).export()
+                        "personas" -> Personas(ctx, xlsx, glossaryMap, connectionMap, logger).export()
+                        "purposes" -> Purposes(ctx, xlsx, logger).export()
+                        "policies" -> Policies(ctx, xlsx, glossaryMap, connectionMap, logger).export()
+                    }
                 }
             }
-        }
 
-        when (deliveryType) {
-            "EMAIL" -> {
-                val emails = Utils.getAsList(config.emailAddresses)
-                if (emails.isNotEmpty()) {
-                    Utils.sendEmail(
-                        "[Atlan] Admin Export results",
-                        emails,
-                        "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
-                        listOf(File(exportFile)),
+            when (ctx.config.deliveryType) {
+                "EMAIL" -> {
+                    val emails = Utils.getAsList(config.emailAddresses)
+                    if (emails.isNotEmpty()) {
+                        Utils.sendEmail(
+                            "[Atlan] Admin Export results",
+                            emails,
+                            "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
+                            listOf(File(exportFile)),
+                        )
+                    }
+                }
+
+                "CLOUD" -> {
+                    Utils.uploadOutputFile(
+                        exportFile,
+                        Utils.getOrDefault(config.targetPrefix, ""),
+                        Utils.getOrDefault(config.targetKey, ""),
                     )
                 }
             }
-            "CLOUD" -> {
-                Utils.uploadOutputFile(
-                    exportFile,
-                    Utils.getOrDefault(config.targetPrefix, ""),
-                    Utils.getOrDefault(config.targetKey, ""),
-                )
-            }
+
         }
     }
 
-    private fun preloadGlossaryNameMap(): Map<String, String> {
+    private fun preloadGlossaryNameMap(ctx: PackageContext<AdminExportCfg>): Map<String, String> {
         val map = mutableMapOf<String, String>()
-        Glossary.select()
-            .pageSize(50)
+        Glossary.select(ctx.client)
             .stream()
             .forEach {
                 map[it.qualifiedName] = it.name
@@ -83,10 +84,9 @@ object AdminExporter {
         return map
     }
 
-    private fun preloadConnectionMap(): Map<String, ConnectionId> {
+    private fun preloadConnectionMap(ctx: PackageContext<AdminExportCfg>): Map<String, ConnectionId> {
         val map = mutableMapOf<String, ConnectionId>()
-        Connection.select()
-            .pageSize(50)
+        Connection.select(ctx.client)
             .includeOnResults(Connection.CONNECTOR_TYPE)
             .stream()
             .forEach {

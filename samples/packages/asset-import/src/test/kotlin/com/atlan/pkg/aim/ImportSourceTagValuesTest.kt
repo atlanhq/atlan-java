@@ -63,13 +63,13 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
 
     override fun teardown() {
         val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
-        Table.select()
+        Table.select(client)
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
             .where(Table.NAME.eq(table))
             .stream()
             .findFirst()
             .ifPresent {
-                Table.purge(it.guid)
+                Table.purge(client, it.guid)
             }
     }
 
@@ -79,7 +79,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
         val snowflakeQN = snowflakeConnection.qualifiedName
         // val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeQN))
                 .where(Table.NAME.eq(table))
                 .toRequest()

@@ -71,34 +71,6 @@
     }
 
     /**
-     * Find a Purpose by its human-readable name.
-     *
-     * @param name of the Purpose
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Purpose
-     * @return all Purposes with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Purpose does not exist
-     */
-    public static List<Purpose> findByName(String name, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Purpose by its human-readable name.
-     *
-     * @param name of the Purpose
-     * @param attributes an optional collection of attributes (checked) to retrieve for the Purpose
-     * @return all Purposes with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Purpose does not exist
-     */
-    public static List<Purpose> findByName(String name, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
      * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the purpose, if found.
      *
@@ -160,31 +132,6 @@
             throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
         }
         return results;
-    }
-
-    /**
-     * Builds the minimal object necessary to create a metadata policy for a Purpose.
-     *
-     * @param name of the policy
-     * @param purposeId unique identifier (GUID) of the purpose for which to create this metadata policy
-     * @param policyType type of policy (for example allow vs deny)
-     * @param actions to include in the policy
-     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
-     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
-     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
-     * @return the minimal request necessary to create the metadata policy for the Purpose, as a builder
-     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
-     */
-    public static AuthPolicy.AuthPolicyBuilder<?, ?> createMetadataPolicy(
-        String name,
-        String purposeId,
-        AuthPolicyType policyType,
-        Collection<PurposeMetadataAction> actions,
-        Collection<String> policyGroups,
-        Collection<String> policyUsers,
-        boolean allUsers)
-        throws AtlanException {
-        return createMetadataPolicy(Atlan.getDefaultClient(), name, purposeId, policyType, actions, policyGroups, policyUsers, allUsers);
     }
 
     /**
@@ -253,29 +200,6 @@
     /**
      * Builds the minimal object necessary to create a data policy for a Purpose.
      *
-     * @param name of the policy
-     * @param purposeId unique identifier (GUID) of the purpose for which to create this data policy
-     * @param policyType type of policy (for example allow vs deny)
-     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
-     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
-     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
-     * @return the minimal request necessary to create the data policy for the Purpose, as a builder
-     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
-     */
-    public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
-        String name,
-        String purposeId,
-        AuthPolicyType policyType,
-        Collection<String> policyGroups,
-        Collection<String> policyUsers,
-        boolean allUsers)
-        throws AtlanException {
-        return createDataPolicy(Atlan.getDefaultClient(), name, purposeId, policyType, policyGroups, policyUsers, allUsers);
-    }
-
-    /**
-     * Builds the minimal object necessary to create a data policy for a Purpose.
-     *
      * @param client connectivity to the Atlan tenant on which the policy is intended to be created
      * @param name of the policy
      * @param purposeId unique identifier (GUID) of the purpose for which to create this data policy
@@ -337,19 +261,6 @@
     /**
      * Remove the system description from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeDescription(String qualifiedName, String name, boolean isEnabled) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
-    }
-
-    /**
-     * Remove the system description from a ${className}.
-     *
      * @param client connectivity to the Atlan tenant from which to remove this ${className}'s description
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -359,19 +270,6 @@
      */
     public static ${className} removeDescription(AtlanClient client, String qualifiedName, String name, boolean isEnabled) throws AtlanException {
         return (${className}) Asset.removeDescription(client, updater(qualifiedName, name, isEnabled));
-    }
-
-    /**
-     * Remove the user's description from a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeUserDescription(String qualifiedName, String name, boolean isEnabled) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
     }
 
     /**

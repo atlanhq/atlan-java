@@ -4,14 +4,16 @@ package com.atlan.pkg.cache
 
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import mu.KotlinLogging
 
-object DataDomainCache : AssetCache<DataDomain>("domain") {
+class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, "domain") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)

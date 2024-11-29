@@ -62,8 +62,8 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
     }
 
     override fun teardown() {
-        Glossary.purge(Glossary.findByName(glossary1).guid)
-        Glossary.purge(Glossary.findByName(glossary2).guid)
+        Glossary.purge(client, Glossary.findByName(client, glossary1).guid)
+        Glossary.purge(client, Glossary.findByName(client, glossary2).guid)
     }
 
     @Test

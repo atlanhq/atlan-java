@@ -3,7 +3,6 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Cube
@@ -63,7 +62,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                         .replace("{{CONNECTION1}}", conn1)
                         .replace("{{TAG1}}", tag1)
                         .replace("{{TAG2}}", tag2)
-                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                        .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -79,7 +78,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                     val revised =
                         line
                             .replace("Test ", "Revised ")
-                            .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                            .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                     output.appendText("$revised\n")
                 }
             }
@@ -88,7 +87,6 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
 
     private fun createTags() {
         val maxNetworkRetries = 30
-        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.DATABASE, AtlanTagColor.GREEN).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.COLUMNS, AtlanTagColor.RED).build()
         client.typeDefs.create(
@@ -202,9 +200,9 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
         val c1 = found[0]
         assertEquals(conn1, c1.name)
         assertEquals(conn1Type, c1.connectorType)
-        val adminRoleId = Atlan.getDefaultClient().roleCache.getIdForName("\$admin")
+        val adminRoleId = client.roleCache.getIdForName("\$admin")
         assertEquals(setOf(adminRoleId), c1.adminRoles)
-        val apiToken = Atlan.getDefaultClient().users.currentUser.username
+        val apiToken = client.users.currentUser.username
         assertEquals(setOf("chris", apiToken), c1.adminUsers)
         assertEquals(setOf("admins"), c1.adminGroups)
     }

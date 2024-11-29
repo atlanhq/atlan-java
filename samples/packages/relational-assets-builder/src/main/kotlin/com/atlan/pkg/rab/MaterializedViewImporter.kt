@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.MaterializedView
 import com.atlan.model.enums.AssetCreationHandling
@@ -18,6 +19,7 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param client connectivity to the Atlan tenant
  * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
@@ -29,6 +31,7 @@ import mu.KotlinLogging
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class MaterializedViewImporter(
+    client: AtlanClient,
     private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
@@ -39,6 +42,7 @@ class MaterializedViewImporter(
     fieldSeparator: Char,
     private val failOnErrors: Boolean = true,
 ) : AssetImporter(
+        client,
         delta,
         preprocessed.preprocessedFile,
         attrsToOverwrite,

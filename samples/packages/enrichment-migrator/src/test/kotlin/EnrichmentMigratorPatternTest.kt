@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
@@ -39,14 +38,13 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        val batch = AssetBatch(client, 5)
         batch.add(Connection.creator(c1, c1Type).build())
         batch.add(Connection.creator(c2, c2Type).build())
         batch.flush()
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
         val connection1 = Connection.findByName(c1, c1Type)[0]!!
         this.sourceConnectionQualifiedName = connection1.qualifiedName
         val connection2 = Connection.findByName(c2, c2Type)[0]!!
@@ -228,10 +226,9 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
 
     @Test
     fun userDescriptionOnTarget() {
-        val client = Atlan.getDefaultClient()
         this.targetTableQualifiedNamesByName.forEach { entry ->
             val request =
-                Table.select()
+                Table.select(client)
                     .where(Table.QUALIFIED_NAME.eq(entry.value))
                     .includeOnResults(Asset.USER_DESCRIPTION)
                     .toRequest()

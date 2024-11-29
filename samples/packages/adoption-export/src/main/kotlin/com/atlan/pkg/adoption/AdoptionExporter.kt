@@ -3,8 +3,9 @@
 package com.atlan.pkg.adoption
 
 import AdoptionExportCfg
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges
 import com.atlan.pkg.adoption.exports.AssetViews
@@ -26,75 +27,60 @@ object AdoptionExporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<AdoptionExportCfg>()
+        Utils.initializeContext(config).use { ctx ->
 
-        val includeViews = Utils.getOrDefault(config.includeViews, "BY_VIEWS")
-        val includeChanges = Utils.getOrDefault(config.includeChanges, "NO") == "YES"
-        val includeSearches = Utils.getOrDefault(config.includeSearches, "NO") == "YES"
-        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
-
-        val exportFile = "$outputDirectory${File.separator}adoption-export.xlsx"
-        ExcelWriter(exportFile).use { xlsx ->
-            if (includeViews != "NONE") {
-                val maxAssets = Utils.getOrDefault(config.viewsMax, 100).toInt()
-                val includeDetails = Utils.getOrDefault(config.viewsDetails, "NO") == "YES"
-                val start = Utils.getOrDefault(config.viewsFrom, -1).toLong()
-                val end = Utils.getOrDefault(config.viewsTo, -1).toLong()
-                AssetViews(xlsx, logger, includeViews, maxAssets).export()
-                if (includeDetails) {
-                    DetailedUserViews(xlsx, logger, start, end).export()
+            val exportFile = "$outputDirectory${File.separator}adoption-export.xlsx"
+            ExcelWriter(exportFile).use { xlsx ->
+                if (ctx.config.includeViews != "NONE") {
+                    AssetViews(ctx, xlsx, logger).export()
+                    if (ctx.config.viewsDetails == "YES") {
+                        DetailedUserViews(ctx, xlsx, logger).export()
+                    }
+                }
+                if (ctx.config.includeChanges == "YES") {
+                    AssetChanges(ctx, xlsx, logger).export()
+                    if (ctx.config.changesDetails == "YES") {
+                        DetailedUserChanges(ctx, xlsx, logger).export()
+                    }
+                }
+                if (ctx.config.includeSearches == "YES") {
+                    DetailedSearches(ctx, xlsx, logger).export()
                 }
             }
-            if (includeChanges) {
-                val byUsers = Utils.getOrDefault(config.changesByUser, listOf())
-                val byAction = Utils.getOrDefault(config.changesTypes, listOf())
-                val start = Utils.getOrDefault(config.changesFrom, -1).toLong()
-                val end = Utils.getOrDefault(config.changesTo, -1).toLong()
-                val maxAssets = Utils.getOrDefault(config.changesMax, 100).toInt()
-                val includeDetails = Utils.getOrDefault(config.changesDetails, "NO") == "YES"
-                AssetChanges(xlsx, logger, byUsers, byAction, start, end, maxAssets).export()
-                if (includeDetails) {
-                    val includeAutomations = Utils.getOrDefault(config.changesAutomations, "NONE")
-                    DetailedUserChanges(xlsx, logger, byUsers, byAction, start, end, includeAutomations).export()
-                }
-            }
-            if (includeSearches) {
-                val start = Utils.getOrDefault(config.searchesFrom, -1).toLong()
-                val end = Utils.getOrDefault(config.searchesTo, -1).toLong()
-                DetailedSearches(xlsx, logger, start, end).export()
-            }
-        }
 
-        when (deliveryType) {
-            "EMAIL" -> {
-                val emails = Utils.getAsList(config.emailAddresses)
-                if (emails.isNotEmpty()) {
-                    Utils.sendEmail(
-                        "[Atlan] Adoption Export results",
-                        emails,
-                        "Hi there! As requested, please find attached the results of the Adoption Export package.\n\nAll the best!\nAtlan",
-                        listOf(File(exportFile)),
+            when (ctx.config.deliveryType) {
+                "EMAIL" -> {
+                    val emails = Utils.getAsList(config.emailAddresses)
+                    if (emails.isNotEmpty()) {
+                        Utils.sendEmail(
+                            "[Atlan] Adoption Export results",
+                            emails,
+                            "Hi there! As requested, please find attached the results of the Adoption Export package.\n\nAll the best!\nAtlan",
+                            listOf(File(exportFile)),
+                        )
+                    }
+                }
+
+                "CLOUD" -> {
+                    Utils.uploadOutputFile(
+                        exportFile,
+                        Utils.getOrDefault(config.targetPrefix, ""),
+                        Utils.getOrDefault(config.targetKey, ""),
                     )
                 }
             }
-            "CLOUD" -> {
-                Utils.uploadOutputFile(
-                    exportFile,
-                    Utils.getOrDefault(config.targetPrefix, ""),
-                    Utils.getOrDefault(config.targetKey, ""),
-                )
-            }
+
         }
     }
 
-    fun getAssetDetails(keyMap: Map<String, Any>): Map<String, Asset> {
-        val client = Atlan.getDefaultClient()
+    fun getAssetDetails(ctx: PackageContext<AdoptionExportCfg>, keyMap: Map<String, Any>): Map<String, Asset> {
         val fullList = keyMap.keys.toList()
         val totalCount = fullList.size
         val idxBatchSize = 300
         val detailMap = mutableMapOf<String, Asset>()
         for (i in 0..totalCount step idxBatchSize) {
             val subList = fullList.subList(i, min(i + idxBatchSize, totalCount))
-            client.assets
+            ctx.client.assets
                 .select()
                 .where(Asset.GUID.`in`(subList))
                 .includeOnResults(Asset.TYPE_NAME)

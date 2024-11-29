@@ -4,7 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
-import com.atlan.pkg.cache.ConnectionCache
+import com.atlan.pkg.PackageContext
 
 /**
  * Static object to transform connection references.
@@ -15,20 +15,21 @@ object ConnectionXformer {
     /**
      * Encodes (serializes) a connection reference into a string form.
      *
+     * @param ctx context in which the package is running
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(asset: Asset): String {
+    fun encode(ctx: PackageContext<*>,  asset: Asset): String {
         return when (asset) {
             is Connection -> {
-                val connection = ConnectionCache.getByGuid(asset.guid)
+                val connection = ctx.connectionCache.getByGuid(asset.guid)
                 if (connection is Connection) {
                     return encode(connection.name, connection.connectorType.value)
                 } else {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(asset)
+            else -> AssetRefXformer.encode(ctx, asset)
         }
     }
 
@@ -49,20 +50,22 @@ object ConnectionXformer {
     /**
      * Decodes (deserializes) a string form into a connection reference object.
      *
+     * @param ctx context in which the package is running
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the connection reference represented by the string
      */
     fun decode(
+        ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
             "connection" -> {
-                ConnectionCache.getByIdentity(assetRef)
+                ctx.connectionCache.getByIdentity(assetRef)
                     ?: throw NoSuchElementException("Connection $assetRef not found.")
             }
-            else -> AssetRefXformer.decode(assetRef, fieldName)
+            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }
 }

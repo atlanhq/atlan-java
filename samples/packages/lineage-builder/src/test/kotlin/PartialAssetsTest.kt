@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
@@ -75,7 +74,6 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun createConnection(): Connection {
-        val client = Atlan.getDefaultClient()
         val c1 = Connection.creator(connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
@@ -109,7 +107,7 @@ class PartialAssetsTest : PackageTest("pa") {
     fun partialSourceCreated() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.IS_PARTIAL)
@@ -168,7 +166,7 @@ class PartialAssetsTest : PackageTest("pa") {
     fun downstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.IS_PARTIAL)
@@ -176,7 +174,7 @@ class PartialAssetsTest : PackageTest("pa") {
         val response = retrySearchUntil(request, 1)
         val table = response.assets[0]!!
         val downstream =
-            FluentLineage.builder(Atlan.getDefaultClient(), table.guid)
+            FluentLineage.builder(client, table.guid)
                 .direction(AtlanLineageDirection.DOWNSTREAM)
                 .includeOnResults(Asset.NAME)
                 .includeOnResults(Asset.IS_PARTIAL)
@@ -196,7 +194,7 @@ class PartialAssetsTest : PackageTest("pa") {
     fun upstreamLineageExists() {
         val c = Connection.findByName(connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.IS_PARTIAL)
@@ -204,7 +202,7 @@ class PartialAssetsTest : PackageTest("pa") {
         val response = retrySearchUntil(request, 1)
         val view = response.assets[0]!!
         val upstream =
-            FluentLineage.builder(Atlan.getDefaultClient(), view.guid)
+            FluentLineage.builder(client, view.guid)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .includeOnResults(Asset.NAME)
                 .includeOnResults(Asset.IS_PARTIAL)
@@ -259,7 +257,7 @@ class PartialAssetsTest : PackageTest("pa") {
                 .isPartial(false)
                 .description("And with a description now, too...")
                 .build()
-        val resp = revised.save()
+        val resp = revised.save(client)
         val result = resp.getResult(revised)
         assertFalse(result.isPartial)
         modifyFile()

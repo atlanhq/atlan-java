@@ -2,18 +2,22 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.adoption.exports
 
+import AdoptionExportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.search.SearchLogRequest
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class DetailedSearches(
+    private val ctx: PackageContext<AdoptionExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
-    private val start: Long,
-    private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all UI-based searches between [${start * 1000}, ${end * 1000}]..." }
+        val start = ctx.config.searchesFrom!!.toLong() * 1000
+        val end = ctx.config.searchesTo!!.toLong() * 1000
+        logger.info { "Exporting details of all UI-based searches between [$start, $end]..." }
         val sheet = xlsx.createSheet("User searches")
         xlsx.addHeader(
             sheet,
@@ -26,8 +30,8 @@ class DetailedSearches(
                 "Qualified names" to "Unique name(s) of the first 20 assets that were found",
             ),
         )
-        SearchLogRequest.searches(start * 1000, end * 1000)
-            .stream()
+        SearchLogRequest.searches(start, end)
+            .stream(ctx.client)
             .forEach {
                 xlsx.appendRow(
                     sheet,

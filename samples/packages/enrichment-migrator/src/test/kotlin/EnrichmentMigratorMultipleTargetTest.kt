@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -32,7 +31,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        val batch = AssetBatch(client, 5)
         batch.add(Connection.creator(c1, c1Type).build())
         batch.add(Connection.creator(c2, c2Type).build())
         batch.add(Connection.creator(c3, c3Type).build())
@@ -40,7 +39,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
         val connection1 = Connection.findByName(c1, c1Type)[0]!!
         val connection2 = Connection.findByName(c2, c2Type)[0]!!
         val connection3 = Connection.findByName(c3, c3Type)[0]!!
@@ -99,7 +97,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     @Test
     fun datesOnTarget() {
         val targetConnection = Connection.findByName(c2, c2Type)[0]!!
-        Table.select()
+        Table.select(client)
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
             .includeOnResults(Table.DESCRIPTION)
             .stream()

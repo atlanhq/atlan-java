@@ -516,20 +516,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
-     */
-    @Override
-    public AsyncCreationResponse save() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
      * @param client connectivity to the Atlan tenant where this connection should be saved
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
@@ -555,21 +541,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
             }
         }
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
-     */
-    @Override
-    public AsyncCreationResponse save(boolean replaceAtlanTags) throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -609,11 +580,12 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * Add the API token configured for the default client as an admin for this Connection.
      * This is necessary to allow the API token to manage policies for the connection.
      *
+     * @param client connectivity to the Atlan tenant
      * @param impersonationToken a bearer token for an actual user who is already an admin for the Connection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
-        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
+    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken) throws AtlanException {
+        return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
     }
 
     /**

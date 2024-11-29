@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -39,7 +38,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
+        val batch = AssetBatch(client, 5)
         batch.add(Connection.creator(c1, c1Type).build())
         batch.add(Connection.creator(c2, c2Type).build())
         batch.flush()
@@ -47,13 +46,12 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
 
     private fun createCustomMetadata() {
         CustomMetadataDef.creator(cm1)
-            .attributeDef(AttributeDef.of("dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
+            .attributeDef(AttributeDef.of(client, "dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
             .build()
-            .create()
+            .create(client)
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
         val connection1 = Connection.findByName(c1, c1Type)[0]!!
         val connection2 = Connection.findByName(c2, c2Type)[0]!!
         val batch = AssetBatch(client, 20)
@@ -98,7 +96,6 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     override fun teardown() {
-        val client = Atlan.getDefaultClient()
         removeConnection(c1, c1Type)
         removeConnection(c2, c2Type)
         client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
@@ -107,10 +104,9 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     @Test
     fun datesOnTarget() {
         val targetConnection = Connection.findByName(c2, c2Type)[0]!!
-        val client = Atlan.getDefaultClient()
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .where(cmField.hasAnyValue())
                 .includeOnResults(cmField)

@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
 import com.atlan.model.enums.AssetCreationHandling
@@ -23,6 +23,7 @@ import kotlin.math.max
  * particular cube field's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that cube field's field to getAttributesToOverwrite.
  *
+ * @param client connectivity to the Atlan tenant
  * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
@@ -33,6 +34,7 @@ import kotlin.math.max
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class FieldImporter(
+    client: AtlanClient,
     private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
@@ -42,6 +44,7 @@ class FieldImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : AssetImporter(
+        client,
         delta,
         preprocessed.preprocessedFile,
         attrsToOverwrite,
@@ -135,7 +138,7 @@ class FieldImporter(
             val results = super.import(columnsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(client, true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

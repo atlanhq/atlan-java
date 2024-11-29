@@ -75,6 +75,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(groups = {"tag.create.image"})
     void createTagWithImage() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(
+                        client,
                         TAG_WITH_IMAGE,
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png")
                 .build();

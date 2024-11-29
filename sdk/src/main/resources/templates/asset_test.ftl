@@ -80,7 +80,7 @@ public class ${className}Test {
             dependsOnGroups = {"${className}.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -90,7 +90,7 @@ public class ${className}Test {
             dependsOnGroups = {"${className}.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ${className}.class);
+        frodo = MockTenant.client.readValue(serialized, ${className}.class);
         assertNotNull(frodo);
     }
 
@@ -100,7 +100,7 @@ public class ${className}Test {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

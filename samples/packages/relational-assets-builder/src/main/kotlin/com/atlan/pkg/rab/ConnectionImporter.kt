@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
@@ -20,6 +21,7 @@ import java.util.stream.Stream
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param client connectivity to the Atlan tenant
  * @param preprocessed details of the preprocessed CSV file
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
  * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
@@ -29,6 +31,7 @@ import java.util.stream.Stream
  * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  */
 class ConnectionImporter(
+    client: AtlanClient,
     private val preprocessed: Importer.Results,
     private val attrsToOverwrite: List<AtlanField>,
     private val creationHandling: AssetCreationHandling,
@@ -37,6 +40,7 @@ class ConnectionImporter(
     fieldSeparator: Char,
     private val failOnErrors: Boolean = true,
 ) : AssetImporter(
+        client,
         null,
         preprocessed.preprocessedFile,
         attrsToOverwrite,

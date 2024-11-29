@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
-import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Connection
 import com.atlan.model.core.AtlanObject
@@ -23,16 +22,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 object WidgetSerde {
     // Creates a single static mapper to use across calls
     private val mapper = jacksonObjectMapper()
-
-    fun getClient(): AtlanClient {
-        return try {
-            Atlan.getDefaultClient()
-        } catch (e: IllegalStateException) {
-            // Bootstrap a client for deserialization, if none is already configured
-            Atlan.setBaseUrl("INTERNAL")
-            Atlan.getDefaultClient()
-        }
-    }
+    private val client = AtlanClient("INTERNAL")
 
     class MultiSelectDeserializer : StdDeserializer<List<String>>(
         TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
@@ -143,7 +133,7 @@ object WidgetSerde {
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
                 if (!value.isNullOrEmpty()) {
-                    return getClient().readValue(value, Connection::class.java)
+                    return client.readValue(value, Connection::class.java)
                 }
             }
             return null
@@ -181,7 +171,7 @@ object WidgetSerde {
                 gen?.writeNull()
             } else {
                 when (value) {
-                    is AtlanObject -> gen?.writeString(value.toJson(getClient()))
+                    is AtlanObject -> gen?.writeString(value.toJson(client))
                     else -> gen?.writeString(mapper.writeValueAsString(value))
                 }
             }

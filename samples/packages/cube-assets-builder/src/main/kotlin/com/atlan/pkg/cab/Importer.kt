@@ -3,7 +3,7 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
@@ -39,17 +39,21 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<CubeAssetsBuilderCfg>()
-        import(config, outputDirectory)
+        Utils.initializeContext(config).use { client ->
+            import(client, config, outputDirectory)
+        }
     }
 
     /**
      * Actually import the cube assets.
      *
+     * @param client connectivity to the Atlan tenant
      * @param config the configuration for the import
      * @param outputDirectory (optional) into which to write any logs or preprocessing information
      * @return the qualifiedName of the cube that was imported, or null if no cube was loaded
      */
     fun import(
+        client: AtlanClient,
         config: CubeAssetsBuilderCfg,
         outputDirectory: String = "tmp",
     ): String? {
@@ -104,6 +108,7 @@ object Importer {
         // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
         val connectionImporter =
             ConnectionImporter(
+                client,
                 preprocessedDetails,
                 assetAttrsToOverwrite,
                 assetsSemantic,
@@ -139,6 +144,7 @@ object Importer {
             logger.info { " --- Importing cubes... ---" }
             val cubeImporter =
                 CubeImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -153,6 +159,7 @@ object Importer {
             logger.info { " --- Importing dimensions... ---" }
             val dimensionImporter =
                 DimensionImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -167,6 +174,7 @@ object Importer {
             logger.info { " --- Importing hierarchies... ---" }
             val hierarchyImporter =
                 HierarchyImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -181,6 +189,7 @@ object Importer {
             logger.info { " --- Importing fields... ---" }
             val fieldImporter =
                 FieldImporter(
+                    client,
                     delta,
                     preprocessedDetails,
                     assetAttrsToOverwrite,
@@ -193,10 +202,10 @@ object Importer {
             fieldImporter.preprocess()
             val fieldResults = fieldImporter.import()
 
-            delta.processDeletions()
+            delta.processDeletions(client)
 
-            ImportResults.getAllModifiedAssets(Atlan.getDefaultClient(), true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
-                delta.updateConnectionCache(modifiedAssets)
+            ImportResults.getAllModifiedAssets(client, true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+                delta.updateConnectionCache(client, modifiedAssets)
             }
         }
         return cubeQN

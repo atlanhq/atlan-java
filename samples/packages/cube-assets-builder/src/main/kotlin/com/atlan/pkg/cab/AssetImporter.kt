@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Cube
@@ -29,6 +30,7 @@ import mu.KLogger
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param client connectivity to the Atlan tenant
  * @param delta the processor containing any details about file deltas
  * @param filename name of the file to import
  * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
@@ -38,6 +40,7 @@ import mu.KLogger
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class AssetImporter(
+    client: AtlanClient,
     private val delta: DeltaProcessor?,
     private val filename: String,
     private val attrsToOverwrite: List<AtlanField>,
@@ -48,6 +51,7 @@ abstract class AssetImporter(
     trackBatches: Boolean,
     fieldSeparator: Char,
 ) : CSVImporter(
+        client,
         filename,
         logger,
         typeNameFilter,

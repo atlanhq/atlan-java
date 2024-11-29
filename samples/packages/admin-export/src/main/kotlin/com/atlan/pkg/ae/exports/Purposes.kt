@@ -2,12 +2,16 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.ae.exports
 
+import AdminExportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.Purpose
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class Purposes(
+    private val ctx: PackageContext<AdminExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
 ) {
@@ -26,7 +30,7 @@ class Purposes(
                 "Users" to "Users to which these policies are applied",
             ),
         )
-        Purpose.select()
+        Purpose.select(ctx.client)
             .includeOnResults(Purpose.NAME)
             .includeOnResults(Purpose.DESCRIPTION)
             .includeOnResults(Purpose.PURPOSE_ATLAN_TAGS)

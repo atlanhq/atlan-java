@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanIcon;
@@ -77,13 +76,14 @@ public class AtlanTagDef extends TypeDef {
     /**
      * Builds the minimal object necessary to create an Atlan tag definition.
      *
+     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
      * @param displayName the human-readable name for the Atlan tag
      * @param url URL to an image to use for the Atlan tag
      * @return the minimal request necessary to create the Atlan tag typedef, as a builder
      * @throws AtlanException on any issues uploading the image from the provided URL
      */
-    public static AtlanTagDefBuilder<?, ?> creator(String displayName, String url) throws AtlanException {
-        return AtlanTagDef.builder().name(displayName).displayName(displayName).options(AtlanTagOptions.withImage(url));
+    public static AtlanTagDefBuilder<?, ?> creator(AtlanClient client, String displayName, String url) throws AtlanException {
+        return AtlanTagDef.builder().name(displayName).displayName(displayName).options(AtlanTagOptions.withImage(client, url));
     }
 
     /**
@@ -111,17 +111,6 @@ public class AtlanTagDef extends TypeDef {
             return response.getAtlanTagDefs().get(0);
         }
         return null;
-    }
-
-    /**
-     * Hard-deletes (purges) an Atlan tag by its human-readable name. This operation is irreversible.
-     * If there are any existing Atlan tag instances, this operation will fail.
-     *
-     * @param displayName human-readable name of the Atlan tag
-     * @throws AtlanException on any error during the API invocation
-     */
-    public static synchronized void purge(String displayName) throws AtlanException {
-        purge(Atlan.getDefaultClient(), displayName);
     }
 
     /**

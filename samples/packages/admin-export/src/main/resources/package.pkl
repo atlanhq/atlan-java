@@ -49,11 +49,13 @@ uiConfig {
           helpText = "Select the objects you want to include in the exported Excel file."
           multiSelect = true
           required = true
+          fallback = List("users", "groups")
         }
         ["include_native_policies"] = new BooleanInput {
           title = "Include out-of-the-box policies?"
           helpText = "Whether to include out-of-the-box policies (Yes) or only those policies you can manage directly (No)."
           required = false
+          fallback = false
         }
       }
     }
@@ -70,6 +72,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["email_addresses"] = new TextInput {
           title = "Email address(es)"
@@ -82,12 +85,14 @@ uiConfig {
           helpText = "Enter the directory (path) within the object store into which to upload the exported file."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["target_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "admin-export.xlsx"
           width = 4
+          fallback = ""
         }
         ["cloud_target"] = new CredentialInput {
           title = "Upload export to"

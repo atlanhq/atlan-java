@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -43,33 +42,12 @@ public class WorkflowSearchResult extends AtlanObject {
     /**
      * Re-run this workflow.
      *
-     * @return details of the workflow run
-     * @throws AtlanException on any API communication issue
-     */
-    public WorkflowRunResponse rerun() throws AtlanException {
-        return rerun(false);
-    }
-
-    /**
-     * Re-run this workflow.
-     *
      * @param client connectivity to the Atlan tenant on which to rerun the workflow
      * @return details of the workflow run
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse rerun(AtlanClient client) throws AtlanException {
         return rerun(client, false);
-    }
-
-    /**
-     * Re-run this workflow.
-     *
-     * @param idempotent if true, the workflow will only be rerun if it is not already currently running
-     * @return details of the workflow run (if idempotent, will return details of the already-running workflow)
-     * @throws AtlanException on any API communication issue
-     */
-    public WorkflowRunResponse rerun(boolean idempotent) throws AtlanException {
-        return rerun(Atlan.getDefaultClient(), idempotent);
     }
 
     /**

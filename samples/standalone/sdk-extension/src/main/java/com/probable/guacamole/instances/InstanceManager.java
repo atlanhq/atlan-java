@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.probable.guacamole.instances;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -21,6 +20,8 @@ import com.probable.guacamole.ExtendedModelGenerator;
 import com.probable.guacamole.model.assets.GuacamoleColumn;
 import com.probable.guacamole.model.assets.GuacamoleTable;
 import com.probable.guacamole.model.enums.GuacamoleTemperature;
+
+import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,15 +30,23 @@ public class InstanceManager extends ExtendedModelGenerator {
 
     private static Connection connection = null;
 
+    InstanceManager(AtlanClient client) {
+        super(client);
+    }
+
     public static void main(String[] args) {
-        InstanceManager im = new InstanceManager();
-        im.createConnection();
-        im.createOOTBEntities();
-        im.createCustomEntities();
-        im.readEntities();
-        im.updateEntities();
-        im.searchEntities();
-        im.purgeEntities();
+        try (AtlanClient client = new AtlanClient()) {
+            InstanceManager im = new InstanceManager(client);
+            im.createConnection();
+            im.createOOTBEntities();
+            im.createCustomEntities();
+            im.readEntities();
+            im.updateEntities();
+            im.searchEntities();
+            im.purgeEntities();
+        } catch (IOException e) {
+            log.error("Failed to cleanup client.", e);
+        }
     }
 
     void createConnection() {
@@ -52,11 +61,11 @@ public class InstanceManager extends ExtendedModelGenerator {
                 Connection toCreate = Connection.creator(
                                 SERVICE_TYPE,
                                 AtlanConnectorType.MONGODB,
-                                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                                List.of(client.getRoleCache().getIdForName("$admin")),
                                 null,
                                 null)
                         .build();
-                AssetMutationResponse response = toCreate.save().block();
+                AssetMutationResponse response = toCreate.save(client).block();
                 connection = (Connection) response.getCreatedAssets().get(0);
             } catch (AtlanException e) {
                 log.error("Unable to create a new connection.", e);
@@ -69,7 +78,7 @@ public class InstanceManager extends ExtendedModelGenerator {
     void createOOTBEntities() {
         Database db = Database.creator("db", connection.getQualifiedName()).build();
         try {
-            AssetMutationResponse response = db.save();
+            AssetMutationResponse response = db.save(client);
             log.info("Created database entity: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create new database.", e);
@@ -77,7 +86,7 @@ public class InstanceManager extends ExtendedModelGenerator {
         Schema schema =
                 Schema.creator("schema", connection.getQualifiedName() + "/db").build();
         try {
-            AssetMutationResponse response = schema.save();
+            AssetMutationResponse response = schema.save(client);
             log.info("Created schema entity: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create new schema.", e);
@@ -91,14 +100,14 @@ public class InstanceManager extends ExtendedModelGenerator {
                 .guacamoleSize(123L)
                 .build();
         try {
-            AssetMutationResponse response = table.save();
+            AssetMutationResponse response = table.save(client);
             log.info("Created table entity: {}", response);
             table = (GuacamoleTable) response.getCreatedAssets().get(0);
         } catch (AtlanException e) {
             log.error("Failed to create new guacamole table.", e);
         }
         try {
-            AssetBatch batch = new AssetBatch(Atlan.getDefaultClient(), 20);
+            AssetBatch batch = new AssetBatch(client, 20);
             GuacamoleColumn child1 = GuacamoleColumn.creator("column1", table.getQualifiedName(), 1)
                     .guacamoleConceptualized(123456789L)
                     .guacamoleWidth(100L)
@@ -142,7 +151,7 @@ public class InstanceManager extends ExtendedModelGenerator {
                 .certificateStatus(CertificateStatus.DRAFT)
                 .build();
         try {
-            AssetMutationResponse response = toUpdate.save();
+            AssetMutationResponse response = toUpdate.save(client);
             log.info("Updated parent: {}", response);
         } catch (AtlanException e) {
             log.error("Unable to update entity.", e);
@@ -150,14 +159,13 @@ public class InstanceManager extends ExtendedModelGenerator {
     }
 
     void searchEntities() {
-        AtlanClient client = Atlan.getDefaultClient();
         IndexSearchRequest request = client.assets
                 .select()
                 .where(Asset.TYPE_NAME.in(List.of(GuacamoleTable.TYPE_NAME, GuacamoleColumn.TYPE_NAME)))
                 .toRequest();
 
         try {
-            IndexSearchResponse response = request.search();
+            IndexSearchResponse response = request.search(client);
             log.info("Found results: {}", response);
             assert response.getApproximateCount() == 3;
             assert response.getAssets().size() == 3;
@@ -168,7 +176,7 @@ public class InstanceManager extends ExtendedModelGenerator {
         request = GuacamoleColumn.select(client).where(Asset.NAME.eq("column1")).toRequest();
 
         try {
-            IndexSearchResponse response = request.search();
+            IndexSearchResponse response = request.search(client);
             log.info("Found results: {}", response);
             assert response.getApproximateCount() == 1;
             assert response.getAssets().size() == 1;
@@ -181,7 +189,7 @@ public class InstanceManager extends ExtendedModelGenerator {
                 .toRequest();
 
         try {
-            IndexSearchResponse response = request.search();
+            IndexSearchResponse response = request.search(client);
             log.info("Found results: {}", response);
             assert response.getApproximateCount() == 1;
             assert response.getAssets().size() == 1;
@@ -194,7 +202,7 @@ public class InstanceManager extends ExtendedModelGenerator {
                 .toRequest();
 
         try {
-            IndexSearchResponse response = request.search();
+            IndexSearchResponse response = request.search(client);
             log.info("Found results: {}", response);
             assert response.getApproximateCount() == 1;
             assert response.getAssets().size() == 1;
@@ -211,8 +219,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             GuacamoleTable parent = GuacamoleTable.get(parentQN);
             GuacamoleColumn one = GuacamoleColumn.get(child1QN);
             GuacamoleColumn two = GuacamoleColumn.get(child2QN);
-            Atlan.getDefaultClient()
-                    .assets
+            client.assets
                     .delete(List.of(parent.getGuid(), one.getGuid(), two.getGuid()), AtlanDeleteType.PURGE);
             log.info("Entities purged.");
         } catch (AtlanException e) {

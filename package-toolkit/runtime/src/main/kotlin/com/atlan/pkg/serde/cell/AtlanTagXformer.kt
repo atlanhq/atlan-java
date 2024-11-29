@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.cache.SourceTagCache.SourceTagName
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
@@ -28,11 +28,12 @@ object AtlanTagXformer {
     }
 
     fun encode(
+        client: AtlanClient,
         fromGuid: String,
         atlanTag: AtlanTag,
     ): String {
         val direct = fromGuid == atlanTag.entityGuid
-        val attributes = encodeAttributes(atlanTag)
+        val attributes = encodeAttributes(client, atlanTag)
         return if (direct) {
             return when (val propagation = encodePropagation(atlanTag)) {
                 PropagationType.FULL -> "${atlanTag.typeName}$attributes$SETTINGS_DELIMITER${propagation.name}"
@@ -45,11 +46,11 @@ object AtlanTagXformer {
         }
     }
 
-    fun decode(atlanTag: String): AtlanTag? {
+    fun decode(client: AtlanClient, atlanTag: String): AtlanTag? {
         return if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
             val builder = AtlanTag.builder()
-            val typeName = decodeAttributes(tokens[0], builder)
+            val typeName = decodeAttributes(client, tokens[0], builder)
             builder.typeName(typeName)
             decodePropagation(tokens, builder)
             builder.build()
@@ -103,13 +104,13 @@ object AtlanTagXformer {
         }
     }
 
-    private fun encodeAttributes(atlanTag: AtlanTag): String {
+    private fun encodeAttributes(client: AtlanClient, atlanTag: AtlanTag): String {
         return if (atlanTag.sourceTagAttachments.isNullOrEmpty()) {
             ""
         } else {
             val attachments = mutableListOf<String>()
             atlanTag.sourceTagAttachments.forEach { sta ->
-                val sourceTagIdentity = encodeSourceTagIdentity(sta.sourceTagQualifiedName)
+                val sourceTagIdentity = encodeSourceTagIdentity(client, sta.sourceTagQualifiedName)
                 if (sourceTagIdentity.isNotBlank()) {
                     val values = mutableListOf<String>()
                     sta.sourceTagValues.forEach { v ->
@@ -131,6 +132,7 @@ object AtlanTagXformer {
     }
 
     private fun decodeAttributes(
+        client: AtlanClient,
         atlanTag: String,
         builder: AtlanTagBuilder<*, *>,
     ): String {
@@ -142,7 +144,7 @@ object AtlanTagXformer {
                 val sta = SourceTagAttachment.builder()
                 val valueSplit = a.split(VALUE_SEPARATOR)
                 val sourceTagIdentity = valueSplit[0]
-                val sourceTag = decodeSourceTag(sourceTagIdentity)
+                val sourceTag = decodeSourceTag(client, sourceTagIdentity)
                 if (sourceTag != null) {
                     sta.sourceTagQualifiedName(sourceTag.qualifiedName)
                     sta.sourceTagName(sourceTag.name)
@@ -172,19 +174,19 @@ object AtlanTagXformer {
         }
     }
 
-    private fun encodeSourceTagIdentity(sourceTagQN: String): String {
+    private fun encodeSourceTagIdentity(client: AtlanClient, sourceTagQN: String): String {
         return try {
-            val tag = Atlan.getDefaultClient().sourceTagCache.getByQualifiedName(sourceTagQN) as ITag
-            return SourceTagName(Atlan.getDefaultClient(), tag).toString()
+            val tag = client.sourceTagCache.getByQualifiedName(sourceTagQN) as ITag
+            return SourceTagName(client, tag).toString()
         } catch (e: NotFoundException) {
             ""
         }
     }
 
-    private fun decodeSourceTag(sourceTagIdentity: String): ITag? {
+    private fun decodeSourceTag(client: AtlanClient, sourceTagIdentity: String): ITag? {
         val sourceTagId = SourceTagName(sourceTagIdentity)
         return try {
-            Atlan.getDefaultClient().sourceTagCache.getByName(sourceTagId) as ITag
+            client.sourceTagCache.getByName(sourceTagId) as ITag
         } catch (e: NotFoundException) {
             null
         }

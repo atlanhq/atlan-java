@@ -2,13 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.probable.guacamole.typedefs;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAttributeType;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.RelationshipCategory;
 import com.atlan.model.typedefs.*;
 import com.probable.guacamole.ExtendedModelGenerator;
+
+import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,13 +23,21 @@ public class TypeDefCreator extends ExtendedModelGenerator {
     static final String ENTITY_DEF_CHILD_NAME = TYPE_PREFIX + "Column";
     static final String RELATIONSHIP_DEF_NAME = TYPE_PREFIX + "TableColumns";
 
+    TypeDefCreator(AtlanClient client) {
+        super(client);
+    }
+
     public static void main(String[] args) {
-        TypeDefCreator tdc = new TypeDefCreator();
-        tdc.createEnumDef();
-        tdc.createStructDef();
-        tdc.createEntityDef();
-        tdc.createRelationshipDef();
-        tdc.updateEntityDef();
+        try (AtlanClient client = new AtlanClient()) {
+            TypeDefCreator tdc = new TypeDefCreator(client);
+            tdc.createEnumDef();
+            tdc.createStructDef();
+            tdc.createEntityDef();
+            tdc.createRelationshipDef();
+            tdc.updateEntityDef();
+        } catch (IOException e) {
+            log.error("Failed to cleanup client.", e);
+        }
     }
 
     void createStructDef() {
@@ -41,7 +51,7 @@ public class TypeDefCreator extends ExtendedModelGenerator {
                 .description("Complex embedded attributes for " + TYPE_PREFIX + " objects.")
                 .build();
         try {
-            TypeDefResponse response = Atlan.getDefaultClient().typeDefs._create(sd);
+            TypeDefResponse response = client.typeDefs._create(sd);
             log.info("Created structDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create StructDef.", e);
@@ -54,7 +64,7 @@ public class TypeDefCreator extends ExtendedModelGenerator {
                 .description("Valid values for the temperature of a " + TYPE_PREFIX + " table.")
                 .build();
         try {
-            EnumDef response = enumDef.create();
+            EnumDef response = enumDef.create(client);
             log.info("Created enumDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create EnumDef.", e);
@@ -80,7 +90,7 @@ public class TypeDefCreator extends ExtendedModelGenerator {
                 .superTypes(List.of("Table"))
                 .build();
         try {
-            TypeDefResponse response = Atlan.getDefaultClient().typeDefs._create(ed);
+            TypeDefResponse response = client.typeDefs._create(ed);
             log.info("Created entityDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create EntityDef.", e);
@@ -98,7 +108,7 @@ public class TypeDefCreator extends ExtendedModelGenerator {
                 .superTypes(List.of("Column"))
                 .build();
         try {
-            TypeDefResponse response = Atlan.getDefaultClient().typeDefs._create(ed);
+            TypeDefResponse response = client.typeDefs._create(ed);
             log.info("Created entityDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create EntityDef.", e);
@@ -123,7 +133,7 @@ public class TypeDefCreator extends ExtendedModelGenerator {
                 .description("Parent-child relationship between specialized table and its columns.")
                 .build();
         try {
-            TypeDefResponse response = Atlan.getDefaultClient().typeDefs._create(rd);
+            TypeDefResponse response = client.typeDefs._create(rd);
             log.info("Created relationshipDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to create RelationshipDef.", e);
@@ -132,14 +142,14 @@ public class TypeDefCreator extends ExtendedModelGenerator {
 
     void updateEntityDef() {
         try {
-            EntityDef parent = (EntityDef) Atlan.getDefaultClient().typeDefs.get(ENTITY_DEF_PARENT_NAME);
+            EntityDef parent = (EntityDef) client.typeDefs.get(ENTITY_DEF_PARENT_NAME);
             parent = parent.toBuilder()
                     .attributeDef(AttributeDef.creator(SERVICE_TYPE + "Archived", AtlanAttributeType.BOOLEAN)
                             .description("Whether this table is currently archived (true) or not (false).")
                             .build())
                     .typeVersion("1.1")
                     .build();
-            TypeDefResponse response = Atlan.getDefaultClient().typeDefs._update(parent);
+            TypeDefResponse response = client.typeDefs._update(parent);
             log.info("Updated entityDef: {}", response);
         } catch (AtlanException e) {
             log.error("Failed to update entityDef.", e);

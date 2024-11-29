@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.DataDomain
@@ -20,24 +20,26 @@ object CustomMetadataExtender {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<CustomMetadataExtenderCfg>()
+        Utils.initializeContext(config).use { client ->
 
-        val cmName = Utils.getOrDefault(config.customMetadata, "")
-        val connectionQNs = Utils.getOrDefault(config.connectionQualifiedName, listOf())
-        val glossaryNames = Utils.getAsList(config.glossaries)
-        val domains = Utils.getOrDefault(config.domains, "ALL")
-        val domainName = Utils.getOrDefault(config.domainsSpecific, "")
+            val cmName = Utils.getOrDefault(config.customMetadata, "")
+            val connectionQNs = Utils.getOrDefault(config.connectionQualifiedName, listOf())
+            val glossaryNames = Utils.getAsList(config.glossaries)
+            val domains = Utils.getOrDefault(config.domains, "ALL")
+            val domainName = Utils.getOrDefault(config.domainsSpecific, "")
 
-        if (cmName.isBlank()) {
-            logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
-            exitProcess(3)
+            if (cmName.isBlank()) {
+                logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
+                exitProcess(3)
+            }
+
+            if (connectionQNs.isEmpty() && glossaryNames.isEmpty() && (domains == "NONE" || (domains == "SOME" && domainName.isEmpty()))) {
+                logger.error { "Missing required parameter - you must provide AT LEAST some additional connections, additional glossaries, or an additional domain." }
+                exitProcess(4)
+            }
+
+            extendCM(client, cmName, connectionQNs, glossaryNames, domains, domainName)
         }
-
-        if (connectionQNs.isEmpty() && glossaryNames.isEmpty() && (domains == "NONE" || (domains == "SOME" && domainName.isEmpty()))) {
-            logger.error { "Missing required parameter - you must provide AT LEAST some additional connections, additional glossaries, or an additional domain." }
-            exitProcess(4)
-        }
-
-        extendCM(cmName, connectionQNs, glossaryNames, domains, domainName)
     }
 
     /**
@@ -65,6 +67,7 @@ object CustomMetadataExtender {
      * Actually add the token as a connection admin, appending it to any pre-existing
      * connection admins (rather than replacing).
      *
+     * @param client connectivity to the Atlan tenant
      * @param cmName human-readable name of the custom metadata to extend
      * @param connectionQNs list of qualifiedNames of connections to add to the custom metadata
      * @param glossaryNames list of names of glossaries to add to the custom metadata
@@ -72,6 +75,7 @@ object CustomMetadataExtender {
      * @param domainName name of a single domain to extend to (if domains is some)
      */
     fun extendCM(
+        client: AtlanClient,
         cmName: String,
         connectionQNs: List<String>,
         glossaryNames: List<String>,
@@ -102,7 +106,7 @@ object CustomMetadataExtender {
             }
             else -> logger.info { "Not extending custom metadata to any additional domains." }
         }
-        val cm = Atlan.getDefaultClient().customMetadataCache.getByName(cmName)
+        val cm = client.customMetadataCache.getByName(cmName)
         if (cm == null) {
             logger.error { "Unable to find custom metadata with name: $cmName" }
         } else {
@@ -126,7 +130,7 @@ object CustomMetadataExtender {
                     .attributeDefs(attrs)
                     .build()
             try {
-                revised.update()
+                revised.update(client)
             } catch (e: AtlanException) {
                 logger.error(e) { "Problem while updating $cmName" }
             }

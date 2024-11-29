@@ -9,7 +9,6 @@ import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import java.io.Closeable;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -23,7 +22,7 @@ import lombok.Setter;
 /**
  * Configuration for the SDK against a particular Atlan tenant.
  */
-public class AtlanClient implements Closeable {
+public class AtlanClient implements AutoCloseable {
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
@@ -191,10 +190,31 @@ public class AtlanClient implements Closeable {
     private final AtlanTagDeserializer atlanTagDeserializer;
 
     /**
-     * Instantiate a new client — this should only be called by the Atlan factory, hence package-private.
-     * @param baseURL of the tenant
+     * Instantiate a new client.
+     * This will take the URL of the tenant from the environment variable {@code ATLAN_BASE_URL}
+     * and the API token for accessing the tenant from the environment variable {@code ATLAN_API_KEY}.
      */
-    AtlanClient(final String baseURL) {
+    public AtlanClient() {
+        this(System.getenv("ATLAN_BASE_URL"));
+    }
+
+    /**
+     * Instantiate a new client.
+     * This will take the API token for accessing the tenant from the environment variable {@code ATLAN_API_KEY}.
+     *
+     * @param baseURL of the tenant, including {@code https://}
+     */
+    public AtlanClient(final String baseURL) {
+        this(baseURL, System.getenv("ATLAN_API_KEY"));
+    }
+
+    /**
+     * Instantiate a new client.
+     *
+     * @param baseURL of the tenant, including {@code https://}
+     * @param apiToken API token to use for accessing the tenant
+     */
+    public AtlanClient(final String baseURL, final String apiToken) {
         extraHeaders = new ConcurrentHashMap<>();
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);
         if (baseURL.equals("INTERNAL")) {
@@ -208,6 +228,7 @@ public class AtlanClient implements Closeable {
                 apiBase = baseURL;
             }
         }
+        this.apiToken = apiToken;
         mapper = Serde.createMapper(this);
         typeDefs = new TypeDefsEndpoint(this);
         roles = new RolesEndpoint(this);
@@ -367,7 +388,7 @@ public class AtlanClient implements Closeable {
      * @param name Name of your application (e.g. "MyAwesomeApp")
      */
     public void setAppInfo(String name) {
-        setAppInfo(name, null, null, null);
+        setAppInfo(name, null);
     }
 
     /**
@@ -377,7 +398,7 @@ public class AtlanClient implements Closeable {
      * @param version Version of your application (e.g. "1.2.34")
      */
     public void setAppInfo(String name, String version) {
-        setAppInfo(name, version, null, null);
+        setAppInfo(name, version, null);
     }
 
     /**

@@ -2,16 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
-import com.atlan.Atlan
+import AssetImportCfg
 import com.atlan.model.assets.GlossaryCategory
-import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.cache.CategoryCache
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer.CATEGORY_DELIMITER
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import mu.KotlinLogging
+import mu.KLogger
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.max
 
@@ -23,30 +22,25 @@ import kotlin.math.max
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to write log entries
  */
 class CategoryImporter(
+    ctx: PackageContext<AssetImportCfg>,
     filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
-    private val batchSize: Int,
-    private val failOnErrors: Boolean,
-    fieldSeparator: Char,
+    logger: KLogger,
 ) : GTCImporter(
+        ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
-        cache = CategoryCache,
+        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
+        updateOnly = ctx.config.glossariesUpsertSemantic == "update",
+        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
+        cache = ctx.categoryCache,
         typeNameFilter = GlossaryCategory.TYPE_NAME,
-        logger = KotlinLogging.logger {},
-        failOnErrors = failOnErrors,
-        fieldSeparator = fieldSeparator,
+        logger = logger,
+        failOnErrors = ctx.config.glossariesFailOnErrors!!,
+        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
     ) {
     private var levelToProcess = 0
 
@@ -68,7 +62,7 @@ class CategoryImporter(
             val results = super.import(colsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

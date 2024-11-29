@@ -3,6 +3,7 @@
 package com.atlan.pkg.cache
 
 import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.ApiException
 import com.atlan.exception.AtlanException
 import com.atlan.exception.ErrorCode
@@ -15,11 +16,12 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.net.RequestOptions
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
 import mu.KotlinLogging
 
-object ConnectionCache : AssetCache<Connection>("connection") {
+class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, "connection") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)

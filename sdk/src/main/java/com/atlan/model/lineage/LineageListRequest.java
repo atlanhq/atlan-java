@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -119,15 +118,6 @@ public class LineageListRequest extends AtlanObject {
     @Builder.Default
     @JsonProperty("immediateNeighbours")
     Boolean immediateNeighbors = false;
-
-    /**
-     * Fetch the lineage defined by this object.
-     *
-     * @return the results of the requested lineage
-     */
-    public LineageListResponse fetch() throws AtlanException {
-        return fetch(Atlan.getDefaultClient());
-    }
 
     /**
      * Fetch the lineage defined by this object.

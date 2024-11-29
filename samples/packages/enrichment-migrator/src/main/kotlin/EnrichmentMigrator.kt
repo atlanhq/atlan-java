@@ -26,121 +26,124 @@ object EnrichmentMigrator {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
-        val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-        val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
-        val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
-        val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
-        val includeArchived = Utils.getOrDefault(config.includeArchived, false)
-        val targetDatabasePattern = Utils.getOrDefault(config.targetDatabasePattern, "")
-        val sourceDatabaseName = getSourceDatabaseNames(targetDatabasePattern, sourceConnectionQN, sourcePrefix)
-        val sourceQN =
-            if (sourcePrefix.isBlank()) {
-                sourceConnectionQN
-            } else {
-                "$sourceConnectionQN/$sourcePrefix"
-            }
-        val caseSensitive = Utils.getOrDefault(config.caseSensitive, true)
-        val tableViewAgnostic = Utils.getOrDefault(config.tableViewAgnostic, false)
+        Utils.initializeContext(config).use { client ->
 
-        // 1. Extract the enriched metadata
-        val extractConfig =
-            AssetExportBasicCfg(
-                exportScope = "ENRICHED_ONLY",
-                qnPrefix = sourceQN,
-                includeGlossaries = false,
-                includeArchived = includeArchived,
-            )
-        Exporter.export(extractConfig, outputDirectory)
-        val extractFile = "$outputDirectory${File.separator}asset-export.csv"
-
-        // 2. Transform to the target metadata assets (limiting attributes as requested)
-        val attributeLimits = Utils.getOrDefault(config.attributesList, listOf())
-        val cmLimits = Utils.getOrDefault(config.customMetadata, "").split("|")
-        val includeOOTB = Utils.getOrDefault(config.limitType, "EXCLUDE") == "INCLUDE"
-        val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
-        val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
-        val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields())
-        if (includeArchived) {
-            start.add(Asset.STATUS.atlanFieldName)
-        }
-        if (includeOOTB) {
-            start.add(Asset.NAME.atlanFieldName)
-            attributeLimits.forEach {
-                start.add(it)
-            }
-        } else {
-            defaultAttrsToExtract.forEach {
-                if (it !is CustomMetadataField) {
-                    val fieldName = RowSerde.getHeaderForField(it)
-                    start.add(fieldName)
+            val batchSize = Utils.getOrDefault(config.batchSize, 20)
+            val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
+            val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
+            val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
+            val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
+            val includeArchived = Utils.getOrDefault(config.includeArchived, false)
+            val targetDatabasePattern = Utils.getOrDefault(config.targetDatabasePattern, "")
+            val sourceDatabaseName = getSourceDatabaseNames(targetDatabasePattern, sourceConnectionQN, sourcePrefix)
+            val sourceQN =
+                if (sourcePrefix.isBlank()) {
+                    sourceConnectionQN
+                } else {
+                    "$sourceConnectionQN/$sourcePrefix"
                 }
+            val caseSensitive = Utils.getOrDefault(config.caseSensitive, true)
+            val tableViewAgnostic = Utils.getOrDefault(config.tableViewAgnostic, false)
+
+            // 1. Extract the enriched metadata
+            val extractConfig =
+                AssetExportBasicCfg(
+                    exportScope = "ENRICHED_ONLY",
+                    qnPrefix = sourceQN,
+                    includeGlossaries = false,
+                    includeArchived = includeArchived,
+                )
+            Exporter.export(client, extractConfig, outputDirectory)
+            val extractFile = "$outputDirectory${File.separator}asset-export.csv"
+
+            // 2. Transform to the target metadata assets (limiting attributes as requested)
+            val attributeLimits = Utils.getOrDefault(config.attributesList, listOf())
+            val cmLimits = Utils.getOrDefault(config.customMetadata, "").split("|")
+            val includeOOTB = Utils.getOrDefault(config.limitType, "EXCLUDE") == "INCLUDE"
+            val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
+            val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
+            val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields(client))
+            if (includeArchived) {
+                start.add(Asset.STATUS.atlanFieldName)
             }
-            attributeLimits.forEach {
-                start.remove(it)
-            }
-        }
-        val header =
-            if (includeCM) {
-                cmLimits.forEach {
+            if (includeOOTB) {
+                start.add(Asset.NAME.atlanFieldName)
+                attributeLimits.forEach {
                     start.add(it)
                 }
-                start.toList()
             } else {
                 defaultAttrsToExtract.forEach {
-                    if (it is CustomMetadataField) {
+                    if (it !is CustomMetadataField) {
                         val fieldName = RowSerde.getHeaderForField(it)
                         start.add(fieldName)
                     }
                 }
-                cmLimits.forEach {
+                attributeLimits.forEach {
                     start.remove(it)
                 }
-                start.toList()
             }
-        val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        targetConnectionQNs.forEach { targetConnectionQN ->
-            val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
-            targetDatabaseNames.forEach { targetDatabaseName ->
-                val ctx =
-                    MigratorContext(
-                        sourceConnectionQN = sourceConnectionQN,
-                        targetConnectionQN = targetConnectionQN,
-                        targetConnectionName = getConnectionName(targetConnectionQN),
-                        includeArchived = includeArchived,
-                        sourceDatabaseName = sourceDatabaseName,
-                        targetDatabaseName = targetDatabaseName,
-                    )
-                val targetConnectionFilename =
-                    if (targetDatabaseName.isNotBlank()) {
-                        "${targetConnectionQN}_$targetDatabaseName".replace("/", "_")
-                    } else {
-                        targetConnectionQN.replace("/", "_")
+            val header =
+                if (includeCM) {
+                    cmLimits.forEach {
+                        start.add(it)
                     }
-                val transformedFile =
-                    "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
-                val transformer =
-                    Transformer(
-                        ctx,
-                        extractFile,
-                        header.toList(),
-                        logger,
-                        fieldSeparator,
-                    )
-                transformer.transform(transformedFile)
+                    start.toList()
+                } else {
+                    defaultAttrsToExtract.forEach {
+                        if (it is CustomMetadataField) {
+                            val fieldName = RowSerde.getHeaderForField(it)
+                            start.add(fieldName)
+                        }
+                    }
+                    cmLimits.forEach {
+                        start.remove(it)
+                    }
+                    start.toList()
+                }
+            val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
+            targetConnectionQNs.forEach { targetConnectionQN ->
+                val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
+                targetDatabaseNames.forEach { targetDatabaseName ->
+                    val ctx =
+                        MigratorContext(
+                            sourceConnectionQN = sourceConnectionQN,
+                            targetConnectionQN = targetConnectionQN,
+                            targetConnectionName = getConnectionName(targetConnectionQN),
+                            includeArchived = includeArchived,
+                            sourceDatabaseName = sourceDatabaseName,
+                            targetDatabaseName = targetDatabaseName,
+                        )
+                    val targetConnectionFilename =
+                        if (targetDatabaseName.isNotBlank()) {
+                            "${targetConnectionQN}_$targetDatabaseName".replace("/", "_")
+                        } else {
+                            targetConnectionQN.replace("/", "_")
+                        }
+                    val transformedFile =
+                        "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
+                    val transformer =
+                        Transformer(
+                            ctx,
+                            extractFile,
+                            header.toList(),
+                            logger,
+                            fieldSeparator,
+                        )
+                    transformer.transform(transformedFile)
 
-                // 3. Import the transformed file
-                val importConfig =
-                    AssetImportCfg(
-                        assetsFile = transformedFile,
-                        assetsUpsertSemantic = "update",
-                        assetsFailOnErrors = assetsFailOnErrors,
-                        assetsBatchSize = batchSize,
-                        assetsFieldSeparator = fieldSeparator.toString(),
-                        assetsCaseSensitive = caseSensitive,
-                        assetsTableViewAgnostic = tableViewAgnostic,
-                    )
-                Importer.import(importConfig, outputDirectory)
+                    // 3. Import the transformed file
+                    val importConfig =
+                        AssetImportCfg(
+                            assetsFile = transformedFile,
+                            assetsUpsertSemantic = "update",
+                            assetsFailOnErrors = assetsFailOnErrors,
+                            assetsBatchSize = batchSize,
+                            assetsFieldSeparator = fieldSeparator.toString(),
+                            assetsCaseSensitive = caseSensitive,
+                            assetsTableViewAgnostic = tableViewAgnostic,
+                        )
+                    Importer.import(client, importConfig, outputDirectory)
+                }
             }
         }
     }

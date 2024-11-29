@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import freemarker.template.Configuration;
 import java.io.File;
 import lombok.extern.slf4j.Slf4j;
@@ -9,15 +10,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractGenerator {
 
+    protected final AtlanClient client;
     protected final ModelCache cache;
 
     protected final GeneratorConfig cfg;
     protected final Configuration ftl;
 
-    protected AbstractGenerator(GeneratorConfig cfg) {
+    protected AbstractGenerator(AtlanClient client, GeneratorConfig cfg) {
+        this.client = client;
         this.cfg = cfg;
         this.ftl = cfg.getFreemarkerConfig();
-        this.cache = ModelCache.getInstance();
+        this.cache = ModelCache.getInstance(client);
     }
 
     public abstract void generate() throws Exception;

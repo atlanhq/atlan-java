@@ -1,11 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.fields.CustomMetadataField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
@@ -19,14 +22,16 @@ import java.util.stream.Stream
 /**
  * Export glossary assets from Atlan (including terms and categories).
  *
- * @param ctx context containing the resolved configuration
+ * @param ctx context in which the package is running
  * @param filename name of the file into which to export assets
  * @param batchSize maximum number of assets to request per API call
+ * @param cmFields list of all custom metadata fields
  */
 class GlossaryExporter(
-    private val ctx: Exporter.Context,
+    private val ctx: PackageContext<AssetExportBasicCfg>,
     private val filename: String,
     private val batchSize: Int,
+    private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
     private val logger = KotlinLogging.logger {}
 
@@ -47,7 +52,7 @@ class GlossaryExporter(
 
             // Retrieve all glossaries up-front
             val glossaries =
-                Glossary.select(ctx.includeArchived)
+                Glossary.select(ctx.config.includeArchived!!)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -59,7 +64,7 @@ class GlossaryExporter(
             // Then extract all categories, per glossary, up-front (caching them
             // as we go, for later reference)
             glossaries.parallelStream().forEach {
-                val categories = CategoryCache.traverseAndCacheHierarchy(it.name, getAttributesToExtract(), getRelatedAttributesToExtract())
+                val categories = ctx.categoryCache.traverseAndCacheHierarchy(it.name, getAttributesToExtract(), getRelatedAttributesToExtract())
                 if (categories.isNotEmpty()) {
                     logger.info { "Appending ${categories.size} categories from ${it.name}..." }
                     csv.appendAssets(
@@ -74,7 +79,7 @@ class GlossaryExporter(
 
             // And finally extract all the terms
             val assets =
-                GlossaryTerm.select(ctx.includeArchived)
+                GlossaryTerm.select(ctx.config.includeArchived!!)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -113,7 +118,7 @@ class GlossaryExporter(
                 GlossaryTerm.VALID_VALUES_FOR,
                 GlossaryTerm.CLASSIFIES,
             )
-        for (cmField in ctx.cmFields) {
+        for (cmField in cmFields) {
             attributeList.add(cmField)
         }
         return attributeList
@@ -139,18 +144,20 @@ class GlossaryExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return GlossaryRowSerializer(asset, getAttributesToExtract(), logger).getRow()
+        return GlossaryRowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
     }
 
     /**
      * Class to serialize glossary assets into a row of tabular data.
      * Note: this replaces the general asset row serializer to handle nuances of glossary objects.
      *
+     * @param ctx context in which the custom package is running
      * @param asset the asset to be serialized
      * @param fields the full list of fields to be serialized from the asset, in the order they should be serialized
      * @param logger through which to record any problems
      */
     class GlossaryRowSerializer(
+        private val ctx: PackageContext<AssetExportBasicCfg>,
         private val asset: Asset,
         private val fields: List<AtlanField>,
         private val logger: KLogger,
@@ -162,8 +169,8 @@ class GlossaryExporter(
          */
         fun getRow(): Iterable<String> {
             val row = mutableListOf<String>()
-            row.add(FieldSerde.getValueForField(asset, Asset.QUALIFIED_NAME, logger))
-            row.add(FieldSerde.getValueForField(asset, Asset.TYPE_NAME, logger))
+            row.add(FieldSerde.getValueForField(ctx, asset, Asset.QUALIFIED_NAME, logger))
+            row.add(FieldSerde.getValueForField(ctx, asset, Asset.TYPE_NAME, logger))
             for (field in fields) {
                 if (field != Asset.QUALIFIED_NAME && field != Asset.TYPE_NAME) {
                     if (asset !is GlossaryTerm && field == GlossaryTerm.CATEGORIES) {
@@ -171,7 +178,7 @@ class GlossaryExporter(
                         // glossary object types
                         row.add("")
                     } else {
-                        row.add(FieldSerde.getValueForField(asset, field, logger))
+                        row.add(FieldSerde.getValueForField(ctx, asset, field, logger))
                     }
                 }
             }

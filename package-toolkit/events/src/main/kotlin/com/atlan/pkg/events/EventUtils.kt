@@ -27,8 +27,8 @@ object EventUtils {
             logger.info("... no configuration found, will timeout pod and retry ...")
         } else {
             logger.info("Configuration found - synced to: /tmp/config.json")
-            Utils.setClient(config.runtime.userId ?: "")
-            Utils.setWorkflowOpts(config.runtime)
+            // TODO: needs to be replaced -- Utils.setClient(config.runtime.userId ?: "")
+            // TODO: needs to be replaced -- Utils.setWorkflowOpts(config.runtime)
         }
         return config
     }
@@ -44,7 +44,7 @@ object EventUtils {
                 Atlan.getDefaultClient().apiTokens.getByGuid(apiTokenId)
             if (token != null) {
                 logger.info("Setting pipeline to run with token: {}", token.displayName)
-                Utils.setClient("service-account-" + token.clientId)
+                // TODO: needs to be replaced -- Utils.setClient("service-account-" + token.clientId)
             }
         }
     }

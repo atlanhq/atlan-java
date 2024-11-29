@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Primary point of configuration for the SDK to one or more tenants.
  */
-public abstract class Atlan {
+abstract class Atlan {
     public static final int DEFAULT_CONNECT_TIMEOUT = 30 * 1000;
     public static final int DEFAULT_READ_TIMEOUT = 120 * 1000;
     public static final int DEFAULT_NETWORK_RETRIES = 5;

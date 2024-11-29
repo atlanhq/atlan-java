@@ -4,6 +4,7 @@ package com.atlan.pkg.lftag
 
 import AssetImportCfg
 import LakeFormationTagSyncCfg
+import com.atlan.AtlanClient
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.lftag.model.LFTagData
@@ -30,16 +31,19 @@ object LakeTagSynchronizer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
-        val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        val removeSchema = Utils.getOrDefault(config.removeSchema, false)
-        val results = sync(config, outputDirectory, failOnErrors, removeSchema)
-        if (!results && failOnErrors) {
-            logger.error { "Some errors detected, failing the workflow." }
-            exitProcess(1)
+        Utils.initializeContext(config).use { client ->
+            val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
+            val removeSchema = Utils.getOrDefault(config.removeSchema, false)
+            val results = sync(client, config, outputDirectory, failOnErrors, removeSchema)
+            if (!results && failOnErrors) {
+                logger.error { "Some errors detected, failing the workflow." }
+                exitProcess(1)
+            }
         }
     }
 
     private fun sync(
+        client: AtlanClient,
         config: LakeFormationTagSyncCfg,
         outputDirectory: String,
         failOnErrors: Boolean,
@@ -85,7 +89,7 @@ object LakeTagSynchronizer {
         val csvProducer = CSVProducer(connectionMap, metadataMap)
         tagFileNames.forEach { tagFileName ->
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
-            val lfTagData = createMissingEnums(tagFileName, mapper, metadataMap)
+            val lfTagData = createMissingEnums(client, tagFileName, mapper, metadataMap)
             csvProducer.transform(lfTagData, csvFileName, removeSchema)
             val importConfig =
                 AssetImportCfg(
@@ -95,7 +99,7 @@ object LakeTagSynchronizer {
                     assetsBatchSize = batchSize,
                     assetsFieldSeparator = ",",
                 )
-            val result = Importer.import(importConfig, outputDirectory)
+            val result = Importer.import(client, importConfig, outputDirectory)
             anyFailure = anyFailure || result?.anyFailures ?: false
             result?.close() // Clean up the results if we won't use them
         }
@@ -103,6 +107,7 @@ object LakeTagSynchronizer {
     }
 
     private fun createMissingEnums(
+        client: AtlanClient,
         tagFileName: String,
         mapper: ObjectMapper,
         metadataMap: MutableMap<String, String>,
@@ -110,7 +115,7 @@ object LakeTagSynchronizer {
         val jsonString: String = File(tagFileName).readText(Charsets.UTF_8)
         val tagData = mapper.readValue(jsonString, LFTagData::class.java)
         val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
-        val enumCreator = EnumCreator(tagToMetadataMapper)
+        val enumCreator = EnumCreator(client, tagToMetadataMapper)
         tagData.tagValuesByTagKey.forEach { entry ->
             enumCreator.createOptions(entry.key, entry.value)
         }

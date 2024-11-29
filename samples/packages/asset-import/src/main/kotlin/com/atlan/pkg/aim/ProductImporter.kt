@@ -2,10 +2,13 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
+import AssetImportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.cache.DataProductCache
 import com.atlan.pkg.cache.LinkCache
@@ -28,31 +31,27 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to write log entries
  */
 class ProductImporter(
-    private val filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
-    private val batchSize: Int,
-    private val failOnErrors: Boolean,
-    private val fieldSeparator: Char,
+    ctx: PackageContext<AssetImportCfg>,
+    filename: String,
+    logger: KLogger,
 ) : CSVImporter(
+        ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
+        logger = logger,
+        attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite!!.toMutableList(), "dataProducts", logger),
+        updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
+        batchSize = ctx.config.dataProductsBatchSize!!.toInt(),
+        failOnErrors = ctx.config.dataProductsFailOnErrors!!,
         typeNameFilter = DataProduct.TYPE_NAME,
-        logger = KotlinLogging.logger {},
-        failOnErrors = failOnErrors,
-        fieldSeparator = fieldSeparator,
+        fieldSeparator = ctx.config.dataProductsFieldSeparator!![0],
+        trackBatches = ctx.config.trackBatches!!,
     ) {
-    private val cache = DataProductCache
+    private val cache = ctx.dataProductCache
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
@@ -64,10 +63,10 @@ class ProductImporter(
         colsToSkip.add(DataDomain.ASSET_THEME_HEX.atlanFieldName)
         val includes = preprocess()
         if (includes.hasLinks) {
-            LinkCache.preload()
+            ctx.linkCache.preload()
         }
         if (includes.hasTermAssignments) {
-            TermCache.preload()
+            ctx.termCache.preload()
         }
         return super.import(colsToSkip)
     }
@@ -76,7 +75,7 @@ class ProductImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataProduct.NAME.atlanFieldName) as String
         val dataDomainMinimal = deserializer.getValue(DataProduct.DATA_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val dataDomain = if (dataDomainMinimal != null) DataDomainCache.getByGuid(dataDomainMinimal.guid) as DataDomain else null
+        val dataDomain = if (dataDomainMinimal != null) ctx.dataDomainCache.getByGuid(dataDomainMinimal.guid) as DataDomain else null
         val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String?
         val qualifiedName = generateQualifiedName(deserializer, dataDomain)
         val candidateDP = DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
@@ -121,7 +120,7 @@ class ProductImporter(
     ): String {
         val productName = deserializer.getValue(DataProduct.NAME.atlanFieldName)
         return if (dataDomain != null) {
-            "${productName}$DATA_PRODUCT_DELIMITER${DataDomainXformer.encode(dataDomain)}"
+            "${productName}$DATA_PRODUCT_DELIMITER${DataDomainXformer.encode(ctx, dataDomain)}"
         } else {
             "$productName"
         }

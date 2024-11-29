@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AtlanQuery
@@ -14,6 +13,8 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.model.fields.SearchableField
 import com.atlan.model.search.FluentSearch
+import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
 import com.atlan.pkg.serde.csv.CSVWriter
@@ -29,14 +30,16 @@ import mu.KotlinLogging
  * In both cases the overall scope of assets to include is restricted by the qualifiedName prefix
  * specified by the QN_PREFIX environment variable.
  *
- * @param ctx context containing the resolved configuration
+ * @param ctx context in which the package is running
  * @param filename name of the file into which to export assets
  * @param batchSize maximum number of assets to request per API call
+ * @param cmFields list of all custom metadata fields
  */
 class AssetExporter(
-    private val ctx: Exporter.Context,
+    private val ctx: PackageContext<AssetExportBasicCfg>,
     private val filename: String,
     private val batchSize: Int,
+    private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
     private val logger = KotlinLogging.logger {}
 
@@ -60,20 +63,21 @@ class AssetExporter(
 
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
         val builder =
-            Atlan.getDefaultClient().assets
-                .select(ctx.includeArchived)
+            ctx.client.assets
+                .select(ctx.config.includeArchived!!)
                 .whereNot(Asset.SUPER_TYPE_NAMES.`in`(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
                 .whereNot(Asset.TYPE_NAME.`in`(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
-        if (ctx.assetsQualifiedNamePrefixes.size > 1) {
+        val qnPrefixes = Utils.getAsList(ctx.config.qnPrefixes)
+        if (qnPrefixes.size > 1) {
             val assetsQueryBuilder = FluentSearch._internal()
-            ctx.assetsQualifiedNamePrefixes.forEach {
+            qnPrefixes.forEach {
                 assetsQueryBuilder.whereSome(Asset.QUALIFIED_NAME.startsWith(it))
             }
             builder.where(assetsQueryBuilder.build().toQuery())
         } else {
-            builder.where(Asset.QUALIFIED_NAME.startsWith(ctx.assetsQualifiedNamePrefixes.first()))
+            builder.where(Asset.QUALIFIED_NAME.startsWith(qnPrefixes.first()))
         }
-        if (ctx.assetsExportScope == "ENRICHED_ONLY") {
+        if (ctx.config.exportScope == "ENRICHED_ONLY") {
             builder
                 .whereSome(Asset.DISPLAY_NAME.hasAnyValue())
                 .whereSome(Asset.CERTIFICATE_STATUS.hasAnyValue())
@@ -85,23 +89,26 @@ class AssetExporter(
                 .whereSome(Asset.LINKS.hasAny())
                 .whereSome(Asset.STARRED_BY.hasAnyValue())
                 .minSomes(1)
-            if (ctx.includeDescription) {
+            if (ctx.config.includeDescription!!) {
                 builder.whereSome(Asset.DESCRIPTION.hasAnyValue())
             }
-            for (cmField in ctx.cmFields) {
+            for (cmField in cmFields) {
                 builder.whereSome(cmField.hasAnyValue())
             }
         }
-        if (ctx.limitToAssets.isNotEmpty()) {
-            builder.where(Asset.TYPE_NAME.`in`(ctx.limitToAssets))
+        val limitToAssets = Utils.getAsList(ctx.config.assetTypesToInclude)
+        if (limitToAssets.isNotEmpty()) {
+            builder.where(Asset.TYPE_NAME.`in`(limitToAssets))
         }
         return builder
     }
 
     private fun getFieldsToExtract(): List<AtlanField> {
-        return if (ctx.allAttributes) {
+        val limitToAttributes = Utils.getAsList(ctx.config.attributesToInclude)
+        return if (ctx.config.allAttributes!!) {
             val uniqueFieldNames = mutableSetOf<String>()
-            ctx.limitToAssets.forEach { assetType ->
+            val limitToAssets = Utils.getAsList(ctx.config.assetTypesToInclude)
+            limitToAssets.forEach { assetType ->
                 val clazz = Serde.getAssetClassForType(assetType)
                 val fields = ReflectionCache.getFieldNames(clazz)
                 val toInclude =
@@ -114,10 +121,10 @@ class AssetExporter(
             uniqueFieldNames
                 .filter { it != Asset.QUALIFIED_NAME.atlanFieldName }
                 .map { SearchableField(it, it) }
-        } else if (ctx.limitToAttributes.isNotEmpty()) {
-            ctx.limitToAttributes.map { SearchableField(it, it) }.toList()
+        } else if (limitToAttributes.isNotEmpty()) {
+            limitToAttributes.map { SearchableField(it, it) }.toList()
         } else {
-            getAttributesToExtract(ctx.includeDescription, ctx.cmFields)
+            getAttributesToExtract(ctx.config.includeDescription!!, cmFields)
         }
     }
 
@@ -205,6 +212,6 @@ class AssetExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, getFieldsToExtract(), logger).getRow()
+        return RowSerializer(ctx, asset, getFieldsToExtract(), logger).getRow()
     }
 }

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.EntityDef;
 import freemarker.template.Template;
 import java.io.*;
@@ -11,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestGenerator extends AbstractGenerator {
 
-    public TestGenerator(GeneratorConfig cfg) {
-        super(cfg);
+    public TestGenerator(AtlanClient client, GeneratorConfig cfg) {
+        super(client, cfg);
     }
 
     @Override

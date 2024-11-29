@@ -3,7 +3,7 @@
 package com.atlan.pkg.mdir
 
 import MetadataImpactReportCfg
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
@@ -89,70 +89,77 @@ object Reporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<MetadataImpactReportCfg>()
-        val batchSize = 300
-        val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
-        val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
-        val includeDetails = Utils.getOrDefault(config.includeDetails, false)
-        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
+        Utils.initializeContext(config).use { client ->
 
-        val ctx =
-            if (includeGlossary) {
-                val glossary = createGlossaryIdempotent(glossaryName)
-                Context(
-                    includeGlossary = true,
-                    glossaryName = glossaryName,
-                    includeDetails = includeDetails,
-                    glossary = glossary,
-                    categoryNameToGuid = createCategoriesIdempotent(glossary),
-                )
-            } else {
-                Context(
-                    includeGlossary = false,
-                    glossaryName = "",
-                    includeDetails = includeDetails,
-                )
-            }
-        val reportFile = runReports(ctx, outputDirectory, batchSize)
+            val batchSize = 300
+            val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
+            val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
+            val includeDetails = Utils.getOrDefault(config.includeDetails, false)
+            val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
-        when (deliveryType) {
-            "EMAIL" -> {
-                val emails = Utils.getAsList(config.emailAddresses)
-                if (emails.isNotEmpty()) {
-                    Utils.sendEmail(
-                        "[Atlan] Metadata Impact Report",
-                        emails,
-                        "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
-                        listOf(File(reportFile)),
+            val ctx =
+                if (includeGlossary) {
+                    val glossary = createGlossaryIdempotent(client, glossaryName)
+                    Context(
+                        client = client,
+                        includeGlossary = true,
+                        glossaryName = glossaryName,
+                        includeDetails = includeDetails,
+                        glossary = glossary,
+                        categoryNameToGuid = createCategoriesIdempotent(client, glossary),
+                    )
+                } else {
+                    Context(
+                        client = client,
+                        includeGlossary = false,
+                        glossaryName = "",
+                        includeDetails = includeDetails,
+                    )
+                }
+            val reportFile = runReports(ctx, outputDirectory, batchSize)
+
+            when (deliveryType) {
+                "EMAIL" -> {
+                    val emails = Utils.getAsList(config.emailAddresses)
+                    if (emails.isNotEmpty()) {
+                        Utils.sendEmail(
+                            "[Atlan] Metadata Impact Report",
+                            emails,
+                            "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
+                            listOf(File(reportFile)),
+                        )
+                    }
+                }
+
+                "CLOUD" -> {
+                    Utils.uploadOutputFile(
+                        reportFile,
+                        Utils.getOrDefault(config.targetPrefix, ""),
+                        Utils.getOrDefault(config.targetKey, ""),
                     )
                 }
             }
-            "CLOUD" -> {
-                Utils.uploadOutputFile(
-                    reportFile,
-                    Utils.getOrDefault(config.targetPrefix, ""),
-                    Utils.getOrDefault(config.targetKey, ""),
-                )
-            }
+
         }
     }
 
-    private fun createGlossaryIdempotent(glossaryName: String): Glossary {
+    private fun createGlossaryIdempotent(client: AtlanClient, glossaryName: String): Glossary {
         return try {
-            Glossary.findByName(glossaryName)
+            Glossary.findByName(client, glossaryName)
         } catch (e: NotFoundException) {
             val create =
                 Glossary.creator(glossaryName)
                     .assetIcon(AtlanIcon.PROJECTOR_SCREEN_CHART)
                     .build()
-            val response = create.save()
+            val response = create.save(client)
             response.getResult(create)
         }
     }
 
-    private fun createCategoriesIdempotent(glossary: Glossary): Map<String, String> {
+    private fun createCategoriesIdempotent(client: AtlanClient, glossary: Glossary): Map<String, String> {
         val nameToResolved = mutableMapOf<String, String>()
         val placeholderToName = mutableMapOf<String, String>()
-        val batch = AssetBatch(Atlan.getDefaultClient(), 20)
+        val batch = AssetBatch(client, 20)
         CATEGORIES.forEach { (name, description) ->
             val builder =
                 try {
@@ -193,22 +200,23 @@ object Reporter {
                 ),
             )
             reports.forEach { repClass ->
-                val metric = Metric.get(repClass, Atlan.getDefaultClient(), batchSize, logger)
+                val metric = Metric.get(repClass, ctx.client, batchSize, logger)
                 logger.info { "Quantifying metric: ${metric.name} ..." }
                 val quantified = metric.quantify()
                 val term =
                     if (ctx.includeGlossary) {
-                        writeMetricToGlossary(metric, quantified, ctx.glossary!!, ctx.categoryNameToGuid!!)
+                        writeMetricToGlossary(ctx.client, metric, quantified, ctx.glossary!!, ctx.categoryNameToGuid!!)
                     } else {
                         null
                     }
-                writeMetricToExcel(metric, quantified, xlsx, overview, ctx.includeDetails, term, batchSize)
+                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.includeDetails, term, batchSize)
             }
         }
         return outputFile
     }
 
     private fun writeMetricToGlossary(
+        client: AtlanClient,
         metric: Metric,
         quantified: Double,
         glossary: Glossary,
@@ -240,11 +248,12 @@ object Reporter {
                 .certificateStatusMessage(prettyQuantity)
                 .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))
                 .build()
-        val response = term.save()
+        val response = term.save(client)
         return response.getResult(term) ?: term.trimToRequired().guid(response.getAssignedGuid(term)).build()
     }
 
     private fun writeMetricToExcel(
+        client: AtlanClient,
         metric: Metric,
         quantified: Double,
         xlsx: ExcelWriter,
@@ -267,7 +276,7 @@ object Reporter {
             val batch =
                 if (term != null) {
                     AssetBatch(
-                        Atlan.getDefaultClient(),
+                        client,
                         batchSize,
                         false,
                         AssetBatch.CustomMetadataHandling.IGNORE,
@@ -287,6 +296,7 @@ object Reporter {
     }
 
     data class Context(
+        val client: AtlanClient,
         val includeGlossary: Boolean,
         val glossaryName: String,
         val includeDetails: Boolean,

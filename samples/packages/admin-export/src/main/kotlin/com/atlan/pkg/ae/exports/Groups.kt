@@ -2,12 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.ae.exports
 
-import com.atlan.Atlan
+import AdminExportCfg
+import com.atlan.AtlanClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class Groups(
+    private val ctx: PackageContext<AdminExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
 ) {
@@ -27,7 +30,7 @@ class Groups(
                 "Updated by" to "User who last updated the group",
             ),
         )
-        Atlan.getDefaultClient().groups.list().forEach { group ->
+        ctx.client.groups.list().forEach { group ->
             val createdAt = group.attributes?.createdAt?.get(0)?.toLong() ?: -1
             val updatedAt = group.attributes?.updatedAt?.get(0)?.toLong() ?: -1
             xlsx.appendRow(

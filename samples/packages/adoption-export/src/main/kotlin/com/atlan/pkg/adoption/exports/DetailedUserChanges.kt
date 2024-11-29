@@ -2,26 +2,26 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.adoption.exports
 
-import com.atlan.Atlan
+import AdoptionExportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.enums.AuditActionType
 import com.atlan.model.search.AuditSearch
 import com.atlan.model.search.AuditSearchRequest
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges.Companion.EXCLUDE_TYPES
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class DetailedUserChanges(
+    private val ctx: PackageContext<AdoptionExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
-    private val users: List<String>,
-    private val actions: List<String>,
-    private val start: Long,
-    private val end: Long,
-    private val includeAutomations: String,
 ) {
     fun export() {
-        logger.info { "Exporting details of all user-made changes between [${start * 1000}, ${end * 1000}]..." }
+        val start = ctx.config.changesFrom!!.toLong() * 1000
+        val end = ctx.config.changesTo!!.toLong() * 1000
+        logger.info { "Exporting details of all user-made changes between [$start, $end]..." }
         val sheet = xlsx.createSheet("User changes")
         xlsx.addHeader(
             sheet,
@@ -37,25 +37,25 @@ class DetailedUserChanges(
             ),
         )
         val builder =
-            AuditSearch.builder(Atlan.getDefaultClient())
+            AuditSearch.builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
-        if (users.isNotEmpty()) {
-            builder.where(AuditSearchRequest.USER.`in`(users))
+        if (ctx.config.changesByUser!!.isNotEmpty()) {
+            builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
         }
-        if (actions.isNotEmpty()) {
-            builder.where(AuditSearchRequest.ACTION.`in`(actions))
+        if (ctx.config.changesTypes!!.isNotEmpty()) {
+            builder.where(AuditSearchRequest.ACTION.`in`(ctx.config.changesTypes))
         }
-        when (includeAutomations) {
+        when (ctx.config.changesAutomations) {
             "NONE" -> builder.whereNot(AuditSearchRequest.AGENT.`in`(listOf("sdk", "workflow")))
             "WFL" -> builder.whereNot(AuditSearchRequest.AGENT.eq("sdk"))
             "SDK" -> builder.whereNot(AuditSearchRequest.AGENT.eq("workflow"))
             else -> logger.info { " ... including ALL automations -- this could be a large amount of data (and take a LONG time)." }
         }
         if (start > 0) {
-            builder.where(AuditSearchRequest.CREATED.gte(start * 1000))
+            builder.where(AuditSearchRequest.CREATED.gte(start))
         }
         if (end > 0) {
-            builder.where(AuditSearchRequest.CREATED.lt(end * 1000))
+            builder.where(AuditSearchRequest.CREATED.lt(end))
         }
         builder.stream()
             .forEach {
@@ -77,7 +77,7 @@ class DetailedUserChanges(
                         it.entityQualifiedName ?: "",
                         agent,
                         it.headers?.get("x-atlan-agent-id") ?: "",
-                        Utils.getAssetLink(it.entityId),
+                        Utils.getAssetLink(ctx.client, it.entityId),
                     ),
                 )
             }

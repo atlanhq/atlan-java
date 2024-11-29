@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.CategoryCache
 
 /**
@@ -16,44 +17,47 @@ object GlossaryCategoryXformer {
     /**
      * Encodes (serializes) a category reference into a string form.
      *
+     * @param ctx context in which the package is running
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(asset: Asset): String {
+    fun encode(ctx: PackageContext<*>, asset: Asset): String {
         return when (asset) {
             is GlossaryCategory -> {
-                val category = CategoryCache.getByGuid(asset.guid)
+                val category = ctx.categoryCache.getByGuid(asset.guid)
                 if (category is GlossaryCategory) {
-                    CategoryCache.getIdentity(category.guid) ?: ""
+                    ctx.categoryCache.getIdentity(category.guid) ?: ""
                 } else {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(asset)
+            else -> AssetRefXformer.encode(ctx, asset)
         }
     }
 
     /**
      * Decodes (deserializes) a string form into a category reference object.
      *
+     * @param ctx context in which the package is running
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the category reference represented by the string
      */
     fun decode(
+        ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName -> {
-                CategoryCache.getByIdentity(assetRef)?.trimToReference()
+                ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Parent category $assetRef not found.")
             }
             GlossaryTerm.CATEGORIES.atlanFieldName -> {
-                CategoryCache.getByIdentity(assetRef)?.trimToReference()
+                ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Category relationship $assetRef not found.")
             }
-            else -> AssetRefXformer.decode(assetRef, fieldName)
+            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }
 }

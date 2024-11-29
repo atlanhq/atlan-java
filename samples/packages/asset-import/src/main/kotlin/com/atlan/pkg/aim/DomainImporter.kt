@@ -2,11 +2,13 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
-import com.atlan.Atlan
+import AssetImportCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.DataDomainCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
@@ -31,30 +33,25 @@ import kotlin.math.max
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to write log entries
  */
 class DomainImporter(
-    private val filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
-    private val batchSize: Int,
-    private val failOnErrors: Boolean,
-    private val fieldSeparator: Char,
+    ctx: PackageContext<AssetImportCfg>,
+    filename: String,
+    logger: KLogger,
 ) : CSVImporter(
+        ctx,
         filename,
-        logger = KotlinLogging.logger {},
+        logger = logger,
         typeNameFilter = DataDomain.TYPE_NAME,
-        attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
-        failOnErrors = failOnErrors,
+        attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite!!.toMutableList(), "dataProducts", logger),
+        updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
+        batchSize = ctx.config.dataProductsBatchSize!!.toInt(),
+        failOnErrors = ctx.config.dataProductsFailOnErrors!!,
         trackBatches = true,
-        fieldSeparator = fieldSeparator,
+        fieldSeparator = ctx.config.dataProductsFieldSeparator!![0],
     ) {
     // Note: Always track batches (above) for domain importer, to ensure cache is managed
 
@@ -64,7 +61,7 @@ class DomainImporter(
     // file by includeRow() method
     private val maxDomainDepth = AtomicInteger(1)
 
-    private val cache = DataDomainCache
+    private val cache = ctx.dataDomainCache
 
     /** {@inheritDoc} */
     override fun cacheCreated(list: Stream<Asset>) {
@@ -86,10 +83,10 @@ class DomainImporter(
 
         val includes = preprocess()
         if (includes.hasLinks) {
-            LinkCache.preload()
+            ctx.linkCache.preload()
         }
         if (includes.hasTermAssignments) {
-            TermCache.preload()
+            ctx.termCache.preload()
         }
 
         logger.info { "Loading domains in multiple passes, by level..." }
@@ -100,7 +97,7 @@ class DomainImporter(
             val results = super.import(colsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(Atlan.getDefaultClient(), true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */
@@ -143,7 +140,7 @@ class DomainImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataDomain.NAME.atlanFieldName) as String
         val parentDomainMinimal = deserializer.getValue(DataDomain.PARENT_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val parentQualifiedName = if (parentDomainMinimal != null) DataDomainCache.getByGuid(parentDomainMinimal.guid)?.qualifiedName else null
+        val parentQualifiedName = if (parentDomainMinimal != null) ctx.dataDomainCache.getByGuid(parentDomainMinimal.guid)?.qualifiedName else null
         val qualifiedName = generateQualifiedName(deserializer)
         val candidateDD = DataDomain.creator(name, parentQualifiedName)
         return if (qualifiedName != getCacheId(deserializer)) {

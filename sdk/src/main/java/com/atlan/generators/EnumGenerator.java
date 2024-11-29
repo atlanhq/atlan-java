@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.EnumDef;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,8 @@ public class EnumGenerator extends TypeGenerator {
     private final EnumDef enumDef;
     private List<ValidValue> values;
 
-    public EnumGenerator(EnumDef enumDef, GeneratorConfig cfg) {
-        super(enumDef, cfg);
+    public EnumGenerator(AtlanClient client, EnumDef enumDef, GeneratorConfig cfg) {
+        super(client, enumDef, cfg);
         this.enumDef = enumDef;
         resolveClassName();
         super.description = cache.getTypeDescription(className);

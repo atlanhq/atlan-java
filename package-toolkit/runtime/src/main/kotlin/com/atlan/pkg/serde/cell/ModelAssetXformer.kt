@@ -12,6 +12,7 @@ import com.atlan.model.assets.ModelEntity
 import com.atlan.model.assets.ModelEntityAssociation
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.relations.Reference
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer.TYPE_QN_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer.getRefByQN
@@ -52,28 +53,31 @@ object ModelAssetXformer {
     /**
      * Encodes (serializes) a model asset reference into a string form.
      *
+     * @param ctx context in which the package is running
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(asset: Asset): String {
+    fun encode(ctx: PackageContext<*>, asset: Asset): String {
         // Use the version-agnostic qualifiedName for data model assets
         return when (asset) {
             is IModel -> {
                 val ma = asset as IModel
                 "${ma.typeName}$TYPE_QN_DELIMITER${ma.modelVersionAgnosticQualifiedName}"
             }
-            else -> AssetRefXformer.encode(asset)
+            else -> AssetRefXformer.encode(ctx, asset)
         }
     }
 
     /**
      * Decodes (deserializes) a string form into a model asset reference object.
      *
+     * @param ctx context in which the package is running
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the model asset reference represented by the string
      */
     fun decode(
+        ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
     ): Asset {
@@ -82,7 +86,7 @@ object ModelAssetXformer {
         return when (fieldName) {
             in MODEL_ASSET_MULTI_VERSIONED_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
-                    getModelRefByQN(typeName, qualifiedName)
+                    getModelRefByQN(ctx, typeName, qualifiedName)
                         .semantic(Reference.SaveSemantic.APPEND)
                         .build()
                 } else {
@@ -91,32 +95,34 @@ object ModelAssetXformer {
             }
             in MODEL_ASSET_REF_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
-                    getModelRefByQN(typeName, qualifiedName)
+                    getModelRefByQN(ctx, typeName, qualifiedName)
                         .semantic(Reference.SaveSemantic.REPLACE)
                         .build()
                 } else {
                     throw NoSuchElementException("Model asset $assetRef not found (via $fieldName).")
                 }
             }
-            else -> AssetRefXformer.decode(assetRef, fieldName)
+            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }
 
     /**
      * Create a reference by qualifiedName for the given asset.
      *
+     * @param ctx context in which the package is running
      * @param typeName of the asset
      * @param qualifiedName of the asset
      * @return the asset reference represented by the parameters
      */
     fun getModelRefByQN(
+        ctx: PackageContext<*>,
         typeName: String,
         qualifiedName: String,
     ): Asset.AssetBuilder<*, *> {
         val modelRef = getRefByQN(typeName, qualifiedName).toBuilder()
         val versionAgnostic = ReflectionCache.getSetter(modelRef.javaClass, "modelVersionAgnosticQualifiedName")
         if (versionAgnostic != null) {
-            FieldSerde.getValueFromCell(qualifiedName, versionAgnostic, logger)
+            FieldSerde.getValueFromCell(ctx, qualifiedName, versionAgnostic, logger)
         }
         return modelRef as Asset.AssetBuilder<*, *>
     }

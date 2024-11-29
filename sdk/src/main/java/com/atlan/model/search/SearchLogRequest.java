@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.util.NamedValue;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -257,32 +256,6 @@ public class SearchLogRequest extends AtlanObject {
     /**
      * Find the most recent viewers of the asset in Atlan.
      *
-     * @param guid of the asset
-     * @param maxUsers maximum number of recent users to consider
-     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public static List<UserViews> mostRecentViewers(String guid, int maxUsers) throws AtlanException {
-        return mostRecentViewers(guid, maxUsers, null);
-    }
-
-    /**
-     * Find the most recent viewers of the asset in Atlan.
-     *
-     * @param guid of the asset
-     * @param maxUsers maximum number of recent users to consider
-     * @param excludeUsers list of usernames to exclude from the results
-     * @return the list of users that most-recently viewed the asset, in descending order (most-recently viewed first)
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public static List<UserViews> mostRecentViewers(String guid, int maxUsers, List<String> excludeUsers)
-            throws AtlanException {
-        return mostRecentViewers(Atlan.getDefaultClient(), guid, maxUsers, excludeUsers);
-    }
-
-    /**
-     * Find the most recent viewers of the asset in Atlan.
-     *
      * @param client connectivity to the Atlan tenant on which to run the search
      * @param guid of the asset
      * @param maxUsers maximum number of recent users to consider
@@ -330,32 +303,6 @@ public class SearchLogRequest extends AtlanObject {
                     .build());
         }
         return list;
-    }
-
-    /**
-     * Find the most-viewed assets in Atlan.
-     *
-     * @param maxAssets maximum number of assets to consider
-     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
-     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public static List<AssetViews> mostViewedAssets(int maxAssets, boolean byDifferentUsers) throws AtlanException {
-        return mostViewedAssets(maxAssets, byDifferentUsers, null);
-    }
-
-    /**
-     * Find the most-viewed assets in Atlan.
-     *
-     * @param maxAssets maximum number of assets to consider
-     * @param byDifferentUsers when true, will consider assets viewed by more users as more important than total view count, otherwise will consider total view count most important
-     * @param excludeUsers list of usernames to exclude from the results
-     * @return the list of assets that are most-viewed, in descending order (most-viewed first)
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public static List<AssetViews> mostViewedAssets(int maxAssets, boolean byDifferentUsers, List<String> excludeUsers)
-            throws AtlanException {
-        return mostViewedAssets(Atlan.getDefaultClient(), maxAssets, byDifferentUsers, excludeUsers);
     }
 
     /**
@@ -416,33 +363,12 @@ public class SearchLogRequest extends AtlanObject {
     /**
      * Run the search.
      *
-     * @return the matching assets
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public SearchLogResponse search() throws AtlanException {
-        return search(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Run the search.
-     *
      * @param client connectivity to the Atlan tenant on which to run the search
      * @return the matching assets
      * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public SearchLogResponse search(AtlanClient client) throws AtlanException {
         return client.searchLog.search(this);
-    }
-
-    /**
-     * Return the total number of search log entries that will match the supplied criteria,
-     * using the most minimal query possible (retrieves minimal data).
-     *
-     * @return the count of search log entries that will match the supplied criteria
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public long count() throws AtlanException {
-        return count(Atlan.getDefaultClient());
     }
 
     /**
@@ -468,33 +394,12 @@ public class SearchLogRequest extends AtlanObject {
     /**
      * Run the search to retrieve entries that match the supplied criteria.
      *
-     * @return a stream of search log entries that match the specified criteria, lazily-fetched
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public Stream<SearchLogEntry> stream() throws AtlanException {
-        return stream(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Run the search to retrieve entries that match the supplied criteria.
-     *
      * @param client through which to run the request
      * @return a stream of search log entries that match the specified criteria, lazily-fetched
      * @throws AtlanException on any issues interacting with the Atlan APIs
      */
     public Stream<SearchLogEntry> stream(AtlanClient client) throws AtlanException {
         return stream(client, false);
-    }
-
-    /**
-     * Run the search to retrieve entries that match the supplied criteria.
-     *
-     * @param parallel if true, returns a parallel stream
-     * @return a stream of search log entries that match the specified criteria, lazily-fetched
-     * @throws AtlanException on any issues interacting with the Atlan APIs
-     */
-    public Stream<SearchLogEntry> stream(boolean parallel) throws AtlanException {
-        return stream(Atlan.getDefaultClient(), parallel);
     }
 
     /**
@@ -580,32 +485,35 @@ public class SearchLogRequest extends AtlanObject {
          * Return the total number of assets that will match the supplied criteria,
          * using the most minimal query possible (retrieves minimal data).
          *
+         * @param client through which to run the request
          * @return the count of assets that will match the supplied criteria
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
-        public long count() throws AtlanException {
-            return build().count();
+        public long count(AtlanClient client) throws AtlanException {
+            return build().count(client);
         }
 
         /**
          * Run the search to retrieve entries that match the supplied criteria.
          *
+         * @param client through which to run the request
          * @return a stream of search log entries that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
-        public Stream<SearchLogEntry> stream() throws AtlanException {
-            return build().stream();
+        public Stream<SearchLogEntry> stream(AtlanClient client) throws AtlanException {
+            return build().stream(client);
         }
 
         /**
          * Run the search to retrieve entries that match the supplied criteria.
          *
+         * @param client through which to run the request
          * @param parallel if true, returns a parallel stream
          * @return a stream of search log entries that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
-        public Stream<SearchLogEntry> stream(boolean parallel) throws AtlanException {
-            return build().stream(parallel);
+        public Stream<SearchLogEntry> stream(AtlanClient client, boolean parallel) throws AtlanException {
+            return build().stream(client, parallel);
         }
     }
 }

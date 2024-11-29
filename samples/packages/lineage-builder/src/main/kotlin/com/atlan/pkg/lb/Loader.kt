@@ -4,6 +4,7 @@ package com.atlan.pkg.lb
 
 import AssetImportCfg
 import LineageBuilderCfg
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
@@ -27,10 +28,13 @@ object Loader {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LineageBuilderCfg>()
-        import(config, outputDirectory)
+        Utils.initializeContext(config).use { client ->
+            import(client, config, outputDirectory)
+        }
     }
 
     fun import(
+        client: AtlanClient,
         config: LineageBuilderCfg,
         outputDirectory: String = "tmp",
     ) {
@@ -89,7 +93,7 @@ object Loader {
                     assetsBatchSize = batchSize,
                     assetsFieldSeparator = fieldSeparator.toString(),
                 )
-            val assetResults = Importer.import(importConfig, outputDirectory)
+            val assetResults = Importer.import(client, importConfig, outputDirectory)
 
             val qualifiedNameMap = assetResults?.primary?.qualifiedNames ?: mapOf()
 
@@ -134,7 +138,7 @@ object Loader {
                     assetsBatchSize = batchSize,
                     assetsFieldSeparator = fieldSeparator.toString(),
                 )
-            Importer.import(lineageConfig, outputDirectory)?.close()
+            Importer.import(client, lineageConfig, outputDirectory)?.close()
             assetResults?.close()
         }
     }

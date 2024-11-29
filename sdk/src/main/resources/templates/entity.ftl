@@ -6,7 +6,6 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
@@ -200,36 +199,11 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) ${className} assets will be included.
      *
-     * @return a fluent search that includes all ${className} assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all ${className} assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) ${className} assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all ${className} assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all ${className} assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) ${className}s will be included
-     * @return a fluent search that includes all ${className} assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -306,18 +280,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     /**
      * Retrieves a ${className} by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full ${className}, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
-     */
-    @JsonIgnore
-    public static ${className} get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a ${className} by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the ${className} to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ${className}, complete with all of its relationships
@@ -325,7 +287,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     @JsonIgnore
     public static ${className} get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -361,17 +323,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     }
 
 <#if className != "GlossaryCategory">
-    /**
-     * Restore the archived (soft-deleted) ${className} to active.
-     *
-     * @param qualifiedName for the ${className}
-     * @return true if the ${className} is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
-    }
-
     /**
      * Restore the archived (soft-deleted) ${className} to active.
      *
@@ -426,18 +377,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     /**
      * Remove the system description from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a ${className}.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -446,18 +385,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (${className}) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -477,18 +404,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     /**
      * Remove the owners from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a ${className}.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ${className}'s owners
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -497,20 +412,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (${className}) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated ${className}, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -531,18 +432,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     /**
      * Remove the certificate from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a ${className}.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ${className}'s certificate
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -551,21 +440,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (${className}) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -587,18 +461,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     /**
      * Remove the announcement from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a ${className}.
-     *
      * @param client connectivity to the Atlan client from which to remove the ${className}'s announcement
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -607,20 +469,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (${className}) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the ${className}.
-     *
-     * @param qualifiedName for the ${className}
-     * @param name human-readable name of the ${className}
-     * @param terms the list of terms to replace on the ${className}, or null to remove all terms from the ${className}
-     * @return the ${className} that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -643,20 +491,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the ${className}
-     * @param terms the list of terms to append to the ${className}
-     * @return the ${className} that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Link additional terms to the ${className}, without replacing existing terms linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
-     * and a second to append the new terms.
-     *
      * @param client connectivity to the Atlan tenant on which to append terms to the ${className}
      * @param qualifiedName for the ${className}
      * @param terms the list of terms to append to the ${className}
@@ -665,20 +499,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      */
     public static ${className} appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (${className}) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ${className}, without replacing all existing terms linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ${className}
-     * @param terms the list of terms to remove from the ${className}, which must be referenced by GUID
-     * @return the ${className} that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -704,21 +524,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * Note: this operation must make two API calls — one to retrieve the ${className}'s existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the ${className}
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated ${className}
-     */
-    public static ${className} appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ${className}, without replacing existing Atlan tags linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ${className}
      * @param qualifiedName of the ${className}
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -728,35 +533,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     public static ${className} appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (${className}) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ${className}, without replacing existing Atlan tags linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the ${className}
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated ${className}
-     */
-    public static ${className} appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-            Atlan.getDefaultClient(),
-            qualifiedName,
-            atlanTagNames,
-            propagate,
-            removePropagationsOnDelete,
-            restrictLineagePropagation);
     }
 
     /**
@@ -789,17 +565,6 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
             propagate,
             removePropagationsOnDelete,
             restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ${className}
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

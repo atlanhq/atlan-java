@@ -4,10 +4,9 @@ package com.atlan.model.events;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
+import com.atlan.mock.MockTenant;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
-import com.atlan.model.enums.*;
 import java.io.IOException;
 import org.testng.annotations.Test;
 
@@ -39,7 +38,7 @@ public class AssetCreateTest {
             dependsOnGroups = {"AssetCreate.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
@@ -49,7 +48,7 @@ public class AssetCreateTest {
             dependsOnGroups = {"AssetCreate.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanEvent.class);
+        frodo = MockTenant.client.readValue(serialized, AtlanEvent.class);
         assertNotNull(frodo);
     }
 
@@ -59,7 +58,7 @@ public class AssetCreateTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

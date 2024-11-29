@@ -3,16 +3,18 @@
 package com.atlan.pkg.cache
 
 import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object DataProductCache : AssetCache<DataProduct>("product") {
+class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx, "product") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
@@ -30,7 +32,7 @@ object DataProductCache : AssetCache<DataProduct>("product") {
         if (tokens?.size == 2) {
             val productName = tokens[0]
             val domainIdentity = tokens[1]
-            val domain = DataDomainCache.getByIdentity(domainIdentity)
+            val domain = ctx.dataDomainCache.getByIdentity(domainIdentity)
             if (domain != null) {
                 try {
                     val request =
@@ -41,11 +43,11 @@ object DataProductCache : AssetCache<DataProduct>("product") {
                             .includesOnRelations(includesOnRelations)
                             .pageSize(50)
                             .toRequest()
-                    var response = request.search()
+                    var response = request.search(ctx.client)
                     while (response != null && response.assets?.isNotEmpty() ?: false) {
                         for (candidate in response) {
                             val dp = candidate as DataProduct
-                            val domId = DataDomainXformer.encode(dp.dataDomain as DataDomain)
+                            val domId = DataDomainXformer.encode(ctx, dp.dataDomain as DataDomain)
                             if (domId == domainIdentity) {
                                 // Short-circuit as soon as we find a data product in the appropriate domain
                                 return dp
@@ -109,7 +111,7 @@ object DataProductCache : AssetCache<DataProduct>("product") {
 
     /** {@inheritDoc}  */
     override fun getIdentityForAsset(asset: DataProduct): String {
-        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(asset.dataDomain as DataDomain)}"
+        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(ctx, asset.dataDomain as DataDomain)}"
     }
 
     /** {@inheritDoc} */

@@ -3,6 +3,7 @@
 package com.atlan.pkg.cache
 
 import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary
@@ -10,11 +11,12 @@ import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 
-object CategoryCache : AssetCache<GlossaryCategory>("category") {
+class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(ctx, "category") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
@@ -93,7 +95,7 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
     ): List<GlossaryCategory> {
         val categories = mutableListOf<GlossaryCategory>()
         logger.info { "Caching entire hierarchy for $glossaryName, up-front..." }
-        val glossary = GlossaryCache.getByIdentity(glossaryName)
+        val glossary = ctx.glossaryCache.getByIdentity(glossaryName)
         if (glossary is Glossary) {
             // Initial hit may be high, but for any sizeable import will be faster
             // to retrieve the entire hierarchy than recursively look it up step-by-step

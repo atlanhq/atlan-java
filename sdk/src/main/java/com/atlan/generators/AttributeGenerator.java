@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.util.StringUtils;
 import lombok.AccessLevel;
@@ -17,12 +18,12 @@ public class AttributeGenerator extends TypeGenerator {
     private String snakeCaseRenamed;
     private boolean retyped = false;
 
-    protected AttributeGenerator(GeneratorConfig cfg) {
-        super(cfg);
+    protected AttributeGenerator(AtlanClient client, GeneratorConfig cfg) {
+        super(client, cfg);
     }
 
-    public AttributeGenerator(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
-        super(cfg);
+    public AttributeGenerator(AtlanClient client, String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+        super(client, cfg);
         super.className = className;
         this.originalName =
                 attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();

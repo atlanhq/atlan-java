@@ -65,34 +65,6 @@
     }
 
     /**
-     * Find a Persona by its human-readable name.
-     *
-     * @param name of the Persona
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Persona
-     * @return all Personas with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Persona does not exist
-     */
-    public static List<Persona> findByName(String name, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Persona by its human-readable name.
-     *
-     * @param name of the Persona
-     * @param attributes an optional collection of attributes (checked) to retrieve for the Persona
-     * @return all Personas with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Persona does not exist
-     */
-    public static List<Persona> findByName(String name, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
      * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the persona, if found.
      *
@@ -270,19 +242,6 @@
     /**
      * Remove the system description from a ${className}.
      *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeDescription(String qualifiedName, String name, boolean isEnabled) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
-    }
-
-    /**
-     * Remove the system description from a ${className}.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ${className}'s description
      * @param qualifiedName of the ${className}
      * @param name of the ${className}
@@ -292,19 +251,6 @@
      */
     public static ${className} removeDescription(AtlanClient client, String qualifiedName, String name, boolean isEnabled) throws AtlanException {
         return (${className}) Asset.removeDescription(client, updater(qualifiedName, name, isEnabled));
-    }
-
-    /**
-     * Remove the user's description from a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
-     * @return the updated ${className}, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeUserDescription(String qualifiedName, String name, boolean isEnabled) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
     }
 
     /**

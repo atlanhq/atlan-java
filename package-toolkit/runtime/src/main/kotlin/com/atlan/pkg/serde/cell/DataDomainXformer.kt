@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.DataDomainCache
 
 /**
@@ -17,40 +18,43 @@ object DataDomainXformer {
     /**
      * Encodes (serializes) a data domain reference into a string form.
      *
+     * @param ctx context in which the package is running
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(asset: Asset): String {
+    fun encode(ctx: PackageContext<*>, asset: Asset): String {
         return when (asset) {
             is DataDomain -> {
-                val dataDomain = DataDomainCache.getByGuid(asset.guid)
+                val dataDomain = ctx.dataDomainCache.getByGuid(asset.guid)
                 if (dataDomain is DataDomain) {
-                    DataDomainCache.getIdentity(dataDomain.guid) ?: ""
+                    ctx.dataDomainCache.getIdentity(dataDomain.guid) ?: ""
                 } else {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(asset)
+            else -> AssetRefXformer.encode(ctx, asset)
         }
     }
 
     /**
      * Decodes (deserializes) a string form into a data domain reference object.
      *
+     * @param ctx context in which the package is running
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the data domain reference represented by the string
      */
     fun decode(
+        ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> {
-                DataDomainCache.getByIdentity(assetRef)?.trimToReference()
+                ctx.dataDomainCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Domain $assetRef not found.")
             }
-            else -> AssetRefXformer.decode(assetRef, fieldName)
+            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }
 }
