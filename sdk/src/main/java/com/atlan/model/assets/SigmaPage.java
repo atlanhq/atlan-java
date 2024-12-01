@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -151,36 +150,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) SigmaPage assets will be included.
      *
-     * @return a fluent search that includes all SigmaPage assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all SigmaPage assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) SigmaPage assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all SigmaPage assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all SigmaPage assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) SigmaPages will be included
-     * @return a fluent search that includes all SigmaPage assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -257,18 +231,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /**
      * Retrieves a SigmaPage by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the SigmaPage to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full SigmaPage, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
-     */
-    @JsonIgnore
-    public static SigmaPage get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a SigmaPage by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the SigmaPage to retrieve, either its GUID or its full qualifiedName
      * @return the requested full SigmaPage, complete with all of its relationships
@@ -276,7 +238,7 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      */
     @JsonIgnore
     public static SigmaPage get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -309,17 +271,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) SigmaPage to active.
-     *
-     * @param qualifiedName for the SigmaPage
-     * @return true if the SigmaPage is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -367,18 +318,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /**
      * Remove the system description from a SigmaPage.
      *
-     * @param qualifiedName of the SigmaPage
-     * @param name of the SigmaPage
-     * @return the updated SigmaPage, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a SigmaPage.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the SigmaPage
      * @param name of the SigmaPage
@@ -388,18 +327,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (SigmaPage) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a SigmaPage.
-     *
-     * @param qualifiedName of the SigmaPage
-     * @param name of the SigmaPage
-     * @return the updated SigmaPage, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -419,18 +346,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /**
      * Remove the owners from a SigmaPage.
      *
-     * @param qualifiedName of the SigmaPage
-     * @param name of the SigmaPage
-     * @return the updated SigmaPage, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a SigmaPage.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the SigmaPage's owners
      * @param qualifiedName of the SigmaPage
      * @param name of the SigmaPage
@@ -439,20 +354,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      */
     public static SigmaPage removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SigmaPage) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a SigmaPage.
-     *
-     * @param qualifiedName of the SigmaPage
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated SigmaPage, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -474,18 +375,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /**
      * Remove the certificate from a SigmaPage.
      *
-     * @param qualifiedName of the SigmaPage
-     * @param name of the SigmaPage
-     * @return the updated SigmaPage, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a SigmaPage.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the SigmaPage's certificate
      * @param qualifiedName of the SigmaPage
      * @param name of the SigmaPage
@@ -495,21 +384,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (SigmaPage) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a SigmaPage.
-     *
-     * @param qualifiedName of the SigmaPage
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -533,18 +407,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /**
      * Remove the announcement from a SigmaPage.
      *
-     * @param qualifiedName of the SigmaPage
-     * @param name of the SigmaPage
-     * @return the updated SigmaPage, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a SigmaPage.
-     *
      * @param client connectivity to the Atlan client from which to remove the SigmaPage's announcement
      * @param qualifiedName of the SigmaPage
      * @param name of the SigmaPage
@@ -554,20 +416,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (SigmaPage) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the SigmaPage.
-     *
-     * @param qualifiedName for the SigmaPage
-     * @param name human-readable name of the SigmaPage
-     * @param terms the list of terms to replace on the SigmaPage, or null to remove all terms from the SigmaPage
-     * @return the SigmaPage that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -583,20 +431,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaPage) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the SigmaPage, without replacing existing terms linked to the SigmaPage.
-     * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the SigmaPage
-     * @param terms the list of terms to append to the SigmaPage
-     * @return the SigmaPage that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -620,20 +454,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the SigmaPage
-     * @param terms the list of terms to remove from the SigmaPage, which must be referenced by GUID
-     * @return the SigmaPage that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaPage removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a SigmaPage, without replacing all existing terms linked to the SigmaPage.
-     * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the SigmaPage
      * @param qualifiedName for the SigmaPage
      * @param terms the list of terms to remove from the SigmaPage, which must be referenced by GUID
@@ -650,20 +470,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the SigmaPage
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated SigmaPage
-     */
-    public static SigmaPage appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a SigmaPage, without replacing existing Atlan tags linked to the SigmaPage.
-     * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the SigmaPage
      * @param qualifiedName of the SigmaPage
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -673,35 +479,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (SigmaPage) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a SigmaPage, without replacing existing Atlan tags linked to the SigmaPage.
-     * Note: this operation must make two API calls — one to retrieve the SigmaPage's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the SigmaPage
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated SigmaPage
-     */
-    public static SigmaPage appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -734,17 +511,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a SigmaPage.
-     *
-     * @param qualifiedName of the SigmaPage
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the SigmaPage
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

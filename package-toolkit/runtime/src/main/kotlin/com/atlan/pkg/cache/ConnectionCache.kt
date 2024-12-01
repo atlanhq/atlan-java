@@ -38,7 +38,7 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
             val name = tokens[0]
             val type = tokens[1]
             try {
-                val found = Connection.findByName(name, AtlanConnectorType.fromValue(type), includesOnResults)
+                val found = Connection.findByName(client, name, AtlanConnectorType.fromValue(type), includesOnResults)
                 return found[0]
             } catch (e: NotFoundException) {
                 logger.warn { "Unable to find connection: $identity" }
@@ -68,7 +68,7 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     ): Connection? {
         try {
             val connection =
-                Connection.select()
+                Connection.select(client)
                     .where(Connection.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -133,9 +133,9 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = Connection.select().count()
+        val count = Connection.select(client).count()
         logger.info { "Caching all $count connections, up-front..." }
-        Connection.select()
+        Connection.select(client)
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { connection ->

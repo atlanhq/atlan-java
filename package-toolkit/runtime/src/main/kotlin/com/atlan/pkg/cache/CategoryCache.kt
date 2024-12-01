@@ -40,7 +40,7 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
     ): GlossaryCategory? {
         try {
             val category =
-                GlossaryCategory.select()
+                GlossaryCategory.select(client)
                     .where(GlossaryCategory.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includeOnResults(GlossaryTerm.STATUS)
@@ -99,7 +99,7 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
             // Initial hit may be high, but for any sizeable import will be faster
             // to retrieve the entire hierarchy than recursively look it up step-by-step
             try {
-                val hierarchy = glossary.getHierarchy(includesOnResults + attributes, relatedAttributes)
+                val hierarchy = glossary.getHierarchy(client, includesOnResults + attributes, relatedAttributes)
                 hierarchy.breadthFirst().forEach { category ->
                     val parent = category.parentCategory
                     category as GlossaryCategory
@@ -153,9 +153,9 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = GlossaryCategory.select().count()
+        val count = GlossaryCategory.select(client).count()
         logger.info { "Caching all $count categories, up-front..." }
-        Glossary.select()
+        Glossary.select(client)
             .includeOnResults(Glossary.NAME)
             .stream(true)
             .forEach { glossary ->

@@ -36,7 +36,7 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
     ): DataDomain? {
         try {
             val dataDomain =
-                DataDomain.select()
+                DataDomain.select(client)
                     .where(DataDomain.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -79,9 +79,9 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = DataDomain.select().count()
+        val count = DataDomain.select(client).count()
         logger.info { "Caching all $count data domains, up-front..." }
-        DataDomain.select()
+        DataDomain.select(client)
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))
             .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
@@ -90,7 +90,7 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
                 dataDomain as DataDomain
                 cache(dataDomain.guid, getIdentityForAsset(dataDomain), dataDomain)
             }
-        DataDomain.select()
+        DataDomain.select(client)
             .includesOnResults(includesOnResults)
             .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Asc))

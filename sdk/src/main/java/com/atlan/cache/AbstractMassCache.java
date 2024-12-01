@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractMassCache<T extends AtlanObject> implements Closeable {
 
-    private final AtlanClient client;
+    protected final AtlanClient client;
     private final String cacheName;
 
     private volatile Map<String, String> mapIdToName = new ConcurrentHashMap<>();

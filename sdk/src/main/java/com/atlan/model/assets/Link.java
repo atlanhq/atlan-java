@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -143,36 +142,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Link assets will be included.
      *
-     * @return a fluent search that includes all Link assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Link assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Link assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Link assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Link assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Links will be included
-     * @return a fluent search that includes all Link assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -249,18 +223,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     /**
      * Retrieves a Link by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Link to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Link, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
-     */
-    @JsonIgnore
-    public static Link get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Link by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Link to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Link, complete with all of its relationships
@@ -268,7 +230,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      */
     @JsonIgnore
     public static Link get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -301,17 +263,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Link to active.
-     *
-     * @param qualifiedName for the Link
-     * @return true if the Link is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -419,18 +370,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     /**
      * Remove the system description from a Link.
      *
-     * @param qualifiedName of the Link
-     * @param name of the Link
-     * @return the updated Link, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Link removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a Link.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the Link
      * @param name of the Link
@@ -439,18 +378,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      */
     public static Link removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Link) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a Link.
-     *
-     * @param qualifiedName of the Link
-     * @param name of the Link
-     * @return the updated Link, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Link removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**

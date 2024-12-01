@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -200,36 +199,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Connection assets will be included.
      *
-     * @return a fluent search that includes all Connection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Connection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Connection assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Connection assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Connection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Connections will be included
-     * @return a fluent search that includes all Connection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -306,18 +280,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Retrieves a Connection by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Connection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Connection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
-     */
-    @JsonIgnore
-    public static Connection get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Connection by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Connection to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Connection, complete with all of its relationships
@@ -325,7 +287,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      */
     @JsonIgnore
     public static Connection get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -358,17 +320,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Connection to active.
-     *
-     * @param qualifiedName for the Connection
-     * @return true if the Connection is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -410,40 +361,16 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * Builds the minimal object necessary to create a connection, using "All Admins" as the default
      * set of connection admins.
      *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
      * @param name of the connection
      * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
      * @return the minimal object necessary to create the connection, as a builder
      * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
      */
-    public static ConnectionBuilder<?, ?> creator(String name, AtlanConnectorType connectorType) throws AtlanException {
-        AtlanClient client = Atlan.getDefaultClient();
+    public static ConnectionBuilder<?, ?> creator(AtlanClient client, String name, AtlanConnectorType connectorType)
+            throws AtlanException {
         return creator(
                 client, name, connectorType, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
-    }
-
-    /**
-     * Builds the minimal object necessary to create a connection.
-     * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
-     * provided or an InvalidRequestException will be thrown.
-     *
-     * @param name of the connection
-     * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
-     * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the (internal) names of the groups that can administer this connection
-     * @param adminUsers the (internal) names of the users that can administer this connection
-     * @return the minimal object necessary to create the connection, as a builder
-     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
-     * @throws NotFoundException if a non-existent admin has been defined for the connection
-     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
-     */
-    public static ConnectionBuilder<?, ?> creator(
-            String name,
-            AtlanConnectorType connectorType,
-            List<String> adminRoles,
-            List<String> adminGroups,
-            List<String> adminUsers)
-            throws AtlanException {
-        return creator(Atlan.getDefaultClient(), name, connectorType, adminRoles, adminGroups, adminUsers);
     }
 
     /**
@@ -660,50 +587,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the connection, if found.
      *
-     * @param name of the connection
-     * @param type of the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
-        return findByName(name, type, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, type, attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, type, attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the connection, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the connection
      * @param name of the connection
      * @param type of the connection
@@ -775,16 +658,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Retrieve the qualifiedNames of all connections that exist in Atlan.
      *
-     * @return list of all connection qualifiedNames
-     * @throws AtlanException on any API problems
-     */
-    public static List<String> getAllQualifiedNames() throws AtlanException {
-        return getAllQualifiedNames(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Retrieve the qualifiedNames of all connections that exist in Atlan.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
      * @return list of all connection qualifiedNames
      * @throws AtlanException on any API problems
@@ -793,18 +666,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         return Connection.select(client).includeOnResults(Connection.QUALIFIED_NAME).pageSize(50).stream()
                 .map(Asset::getQualifiedName)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Remove the system description from a Connection.
-     *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the updated Connection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -824,18 +685,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Remove the user's description from a Connection.
      *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the updated Connection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the user's description from a Connection.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the Connection
      * @param name of the Connection
@@ -850,18 +699,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Remove the owners from a Connection.
      *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the updated Connection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a Connection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Connection's owners
      * @param qualifiedName of the Connection
      * @param name of the Connection
@@ -870,20 +707,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      */
     public static Connection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Connection) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a Connection.
-     *
-     * @param qualifiedName of the Connection
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Connection, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -906,18 +729,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Remove the certificate from a Connection.
      *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the updated Connection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a Connection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Connection's certificate
      * @param qualifiedName of the Connection
      * @param name of the Connection
@@ -927,21 +738,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Connection) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a Connection.
-     *
-     * @param qualifiedName of the Connection
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -965,18 +761,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /**
      * Remove the announcement from a Connection.
      *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the updated Connection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a Connection.
-     *
      * @param client connectivity to the Atlan client from which to remove the Connection's announcement
      * @param qualifiedName of the Connection
      * @param name of the Connection
@@ -986,20 +770,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Connection) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the Connection.
-     *
-     * @param qualifiedName for the Connection
-     * @param name human-readable name of the Connection
-     * @param terms the list of terms to replace on the Connection, or null to remove all terms from the Connection
-     * @return the Connection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -1015,20 +785,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Connection, without replacing existing terms linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Connection
-     * @param terms the list of terms to append to the Connection
-     * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -1052,20 +808,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the Connection
-     * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
-     * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Connection, without replacing all existing terms linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the Connection
      * @param qualifiedName for the Connection
      * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
@@ -1082,20 +824,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * Note: this operation must make two API calls — one to retrieve the Connection's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the Connection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated Connection
-     */
-    public static Connection appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Connection, without replacing existing Atlan tags linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Connection
      * @param qualifiedName of the Connection
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -1105,35 +833,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static Connection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Connection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Connection, without replacing existing Atlan tags linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the Connection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated Connection
-     */
-    public static Connection appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -1166,17 +865,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a Connection.
-     *
-     * @param qualifiedName of the Connection
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Connection
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

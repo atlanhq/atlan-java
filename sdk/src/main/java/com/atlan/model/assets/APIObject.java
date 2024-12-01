@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -157,36 +156,11 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) APIObject assets will be included.
      *
-     * @return a fluent search that includes all APIObject assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all APIObject assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) APIObject assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all APIObject assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all APIObject assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) APIObjects will be included
-     * @return a fluent search that includes all APIObject assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -263,18 +237,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /**
      * Retrieves a APIObject by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full APIObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
-     */
-    @JsonIgnore
-    public static APIObject get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a APIObject by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
      * @return the requested full APIObject, complete with all of its relationships
@@ -282,7 +244,7 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      */
     @JsonIgnore
     public static APIObject get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -315,17 +277,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) APIObject to active.
-     *
-     * @param qualifiedName for the APIObject
-     * @return true if the APIObject is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -373,18 +324,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /**
      * Remove the system description from a APIObject.
      *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a APIObject.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the APIObject
      * @param name of the APIObject
@@ -394,18 +333,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (APIObject) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a APIObject.
-     *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -425,18 +352,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /**
      * Remove the owners from a APIObject.
      *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a APIObject.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the APIObject's owners
      * @param qualifiedName of the APIObject
      * @param name of the APIObject
@@ -445,20 +360,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      */
     public static APIObject removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (APIObject) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a APIObject.
-     *
-     * @param qualifiedName of the APIObject
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated APIObject, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -480,18 +381,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /**
      * Remove the certificate from a APIObject.
      *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a APIObject.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the APIObject's certificate
      * @param qualifiedName of the APIObject
      * @param name of the APIObject
@@ -501,21 +390,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (APIObject) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a APIObject.
-     *
-     * @param qualifiedName of the APIObject
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -539,18 +413,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /**
      * Remove the announcement from a APIObject.
      *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a APIObject.
-     *
      * @param client connectivity to the Atlan client from which to remove the APIObject's announcement
      * @param qualifiedName of the APIObject
      * @param name of the APIObject
@@ -560,20 +422,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (APIObject) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the APIObject.
-     *
-     * @param qualifiedName for the APIObject
-     * @param name human-readable name of the APIObject
-     * @param terms the list of terms to replace on the APIObject, or null to remove all terms from the APIObject
-     * @return the APIObject that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -589,20 +437,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (APIObject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the APIObject, without replacing existing terms linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the APIObject
-     * @param terms the list of terms to append to the APIObject
-     * @return the APIObject that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -626,20 +460,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * Note: this operation must make two API calls — one to retrieve the APIObject's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the APIObject
-     * @param terms the list of terms to remove from the APIObject, which must be referenced by GUID
-     * @return the APIObject that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIObject removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a APIObject, without replacing all existing terms linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the APIObject
      * @param qualifiedName for the APIObject
      * @param terms the list of terms to remove from the APIObject, which must be referenced by GUID
@@ -656,20 +476,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * Note: this operation must make two API calls — one to retrieve the APIObject's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the APIObject
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated APIObject
-     */
-    public static APIObject appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a APIObject, without replacing existing Atlan tags linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIObject
      * @param qualifiedName of the APIObject
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -679,35 +485,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (APIObject) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a APIObject, without replacing existing Atlan tags linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the APIObject
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated APIObject
-     */
-    public static APIObject appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -740,17 +517,6 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a APIObject.
-     *
-     * @param qualifiedName of the APIObject
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the APIObject
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

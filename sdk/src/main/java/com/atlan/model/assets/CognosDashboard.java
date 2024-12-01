@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -154,36 +153,11 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) CognosDashboard assets will be included.
      *
-     * @return a fluent search that includes all CognosDashboard assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all CognosDashboard assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) CognosDashboard assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all CognosDashboard assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all CognosDashboard assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) CognosDashboards will be included
-     * @return a fluent search that includes all CognosDashboard assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -260,18 +234,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     /**
      * Retrieves a CognosDashboard by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the CognosDashboard to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full CognosDashboard, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosDashboard does not exist or the provided GUID is not a CognosDashboard
-     */
-    @JsonIgnore
-    public static CognosDashboard get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a CognosDashboard by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the CognosDashboard to retrieve, either its GUID or its full qualifiedName
      * @return the requested full CognosDashboard, complete with all of its relationships
@@ -279,7 +241,7 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
      */
     @JsonIgnore
     public static CognosDashboard get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -313,17 +275,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) CognosDashboard to active.
-     *
-     * @param qualifiedName for the CognosDashboard
-     * @return true if the CognosDashboard is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -371,18 +322,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     /**
      * Remove the system description from a CognosDashboard.
      *
-     * @param qualifiedName of the CognosDashboard
-     * @param name of the CognosDashboard
-     * @return the updated CognosDashboard, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a CognosDashboard.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the CognosDashboard
      * @param name of the CognosDashboard
@@ -392,18 +331,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CognosDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a CognosDashboard.
-     *
-     * @param qualifiedName of the CognosDashboard
-     * @param name of the CognosDashboard
-     * @return the updated CognosDashboard, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -423,18 +350,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     /**
      * Remove the owners from a CognosDashboard.
      *
-     * @param qualifiedName of the CognosDashboard
-     * @param name of the CognosDashboard
-     * @return the updated CognosDashboard, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a CognosDashboard.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CognosDashboard's owners
      * @param qualifiedName of the CognosDashboard
      * @param name of the CognosDashboard
@@ -444,20 +359,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CognosDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a CognosDashboard.
-     *
-     * @param qualifiedName of the CognosDashboard
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated CognosDashboard, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -480,18 +381,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     /**
      * Remove the certificate from a CognosDashboard.
      *
-     * @param qualifiedName of the CognosDashboard
-     * @param name of the CognosDashboard
-     * @return the updated CognosDashboard, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a CognosDashboard.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CognosDashboard's certificate
      * @param qualifiedName of the CognosDashboard
      * @param name of the CognosDashboard
@@ -501,21 +390,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CognosDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a CognosDashboard.
-     *
-     * @param qualifiedName of the CognosDashboard
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -539,18 +413,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     /**
      * Remove the announcement from a CognosDashboard.
      *
-     * @param qualifiedName of the CognosDashboard
-     * @param name of the CognosDashboard
-     * @return the updated CognosDashboard, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a CognosDashboard.
-     *
      * @param client connectivity to the Atlan client from which to remove the CognosDashboard's announcement
      * @param qualifiedName of the CognosDashboard
      * @param name of the CognosDashboard
@@ -560,20 +422,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CognosDashboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the CognosDashboard.
-     *
-     * @param qualifiedName for the CognosDashboard
-     * @param name human-readable name of the CognosDashboard
-     * @param terms the list of terms to replace on the CognosDashboard, or null to remove all terms from the CognosDashboard
-     * @return the CognosDashboard that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -589,20 +437,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CognosDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the CognosDashboard, without replacing existing terms linked to the CognosDashboard.
-     * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the CognosDashboard
-     * @param terms the list of terms to append to the CognosDashboard
-     * @return the CognosDashboard that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -626,20 +460,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
      * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the CognosDashboard
-     * @param terms the list of terms to remove from the CognosDashboard, which must be referenced by GUID
-     * @return the CognosDashboard that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CognosDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a CognosDashboard, without replacing all existing terms linked to the CognosDashboard.
-     * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the CognosDashboard
      * @param qualifiedName for the CognosDashboard
      * @param terms the list of terms to remove from the CognosDashboard, which must be referenced by GUID
@@ -656,21 +476,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
      * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the CognosDashboard
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated CognosDashboard
-     */
-    public static CognosDashboard appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CognosDashboard, without replacing existing Atlan tags linked to the CognosDashboard.
-     * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the CognosDashboard
      * @param qualifiedName of the CognosDashboard
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -680,35 +485,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     public static CognosDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (CognosDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CognosDashboard, without replacing existing Atlan tags linked to the CognosDashboard.
-     * Note: this operation must make two API calls — one to retrieve the CognosDashboard's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the CognosDashboard
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated CognosDashboard
-     */
-    public static CognosDashboard appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -741,17 +517,6 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a CognosDashboard.
-     *
-     * @param qualifiedName of the CognosDashboard
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the CognosDashboard
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

@@ -63,20 +63,6 @@
     /**
      * Find a DataDomain by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the domain, if found.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param name of the DataDomain
-     * @return the DataDomain, if found
-     * @throws AtlanException on any API problems, or if the DataDomain does not exist
-     */
-    public static List<DataDomain> findByName(String name)
-            throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a DataDomain by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the domain, if found.
      *
      * @param client connectivity to the Atlan tenant on which to search for the DataDomain
      * @param name of the DataDomain

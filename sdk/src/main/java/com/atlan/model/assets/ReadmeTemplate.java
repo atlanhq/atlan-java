@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -138,36 +137,11 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) ReadmeTemplate assets will be included.
      *
-     * @return a fluent search that includes all ReadmeTemplate assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all ReadmeTemplate assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) ReadmeTemplate assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all ReadmeTemplate assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all ReadmeTemplate assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) ReadmeTemplates will be included
-     * @return a fluent search that includes all ReadmeTemplate assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -244,18 +218,6 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     /**
      * Retrieves a ReadmeTemplate by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the ReadmeTemplate to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full ReadmeTemplate, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
-     */
-    @JsonIgnore
-    public static ReadmeTemplate get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a ReadmeTemplate by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the ReadmeTemplate to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ReadmeTemplate, complete with all of its relationships
@@ -263,7 +225,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      */
     @JsonIgnore
     public static ReadmeTemplate get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -297,17 +259,6 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ReadmeTemplate to active.
-     *
-     * @param qualifiedName for the ReadmeTemplate
-     * @return true if the ReadmeTemplate is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -355,18 +306,6 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     /**
      * Remove the system description from a ReadmeTemplate.
      *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the updated ReadmeTemplate, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a ReadmeTemplate.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the ReadmeTemplate
      * @param name of the ReadmeTemplate
@@ -376,18 +315,6 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     public static ReadmeTemplate removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ReadmeTemplate) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the updated ReadmeTemplate, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**

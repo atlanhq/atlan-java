@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -81,36 +80,11 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Badge assets will be included.
      *
-     * @return a fluent search that includes all Badge assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Badge assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Badge assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Badge assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Badge assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Badges will be included
-     * @return a fluent search that includes all Badge assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -187,18 +161,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     /**
      * Retrieves a Badge by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Badge, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Badge does not exist or the provided GUID is not a Badge
-     */
-    @JsonIgnore
-    public static Badge get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Badge by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Badge to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Badge, complete with all of its relationships
@@ -206,7 +168,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     @JsonIgnore
     public static Badge get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -244,17 +206,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     /**
      * Restore the archived (soft-deleted) Badge to active.
      *
-     * @param qualifiedName for the Badge
-     * @return true if the Badge is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Badge to active.
-     *
      * @param client connectivity to the Atlan tenant on which to restore the asset
      * @param qualifiedName for the Badge
      * @return true if the Badge is now active, and false otherwise
@@ -262,19 +213,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
-    }
-
-    /**
-     * Builds the minimal object necessary to create a Badge.
-     *
-     * @param name of the Badge
-     * @param cmName human-readable name of the custom metadata for which to create the badge
-     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
-     * @return the minimal request necessary to create the Badge, as a builder
-     * @throws AtlanException if the specified custom metadata for the badge cannot be found
-     */
-    public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
-        return creator(Atlan.getDefaultClient(), name, cmName, cmAttribute);
     }
 
     /**
@@ -296,18 +234,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
                 .qualifiedName(generateQualifiedName(client, cmName, cmAttribute))
                 .name(name)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
-    }
-
-    /**
-     * Generate a unique name for this badge.
-     *
-     * @param cmName human-readable name of the custom metadata for which to create the badge
-     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
-     * @return the unique qualifiedName of the badge
-     * @throws AtlanException if the specified custom metadata cannot be found
-     */
-    public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
-        return generateQualifiedName(Atlan.getDefaultClient(), cmName, cmAttribute);
     }
 
     /**
@@ -359,18 +285,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     /**
      * Remove the system description from a Badge.
      *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the updated Badge, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a Badge.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the Badge
      * @param name of the Badge
@@ -379,18 +293,6 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      */
     public static Badge removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Badge) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the updated Badge, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**

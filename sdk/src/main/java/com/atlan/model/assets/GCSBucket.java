@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -210,36 +209,11 @@ public class GCSBucket extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) GCSBucket assets will be included.
      *
-     * @return a fluent search that includes all GCSBucket assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all GCSBucket assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) GCSBucket assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all GCSBucket assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all GCSBucket assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) GCSBuckets will be included
-     * @return a fluent search that includes all GCSBucket assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -316,18 +290,6 @@ public class GCSBucket extends Asset
     /**
      * Retrieves a GCSBucket by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the GCSBucket to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full GCSBucket, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist or the provided GUID is not a GCSBucket
-     */
-    @JsonIgnore
-    public static GCSBucket get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a GCSBucket by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the GCSBucket to retrieve, either its GUID or its full qualifiedName
      * @return the requested full GCSBucket, complete with all of its relationships
@@ -335,7 +297,7 @@ public class GCSBucket extends Asset
      */
     @JsonIgnore
     public static GCSBucket get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -368,17 +330,6 @@ public class GCSBucket extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GCSBucket to active.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @return true if the GCSBucket is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -453,18 +404,6 @@ public class GCSBucket extends Asset
     /**
      * Remove the system description from a GCSBucket.
      *
-     * @param qualifiedName of the GCSBucket
-     * @param name of the GCSBucket
-     * @return the updated GCSBucket, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a GCSBucket.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the GCSBucket
      * @param name of the GCSBucket
@@ -474,18 +413,6 @@ public class GCSBucket extends Asset
     public static GCSBucket removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (GCSBucket) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a GCSBucket.
-     *
-     * @param qualifiedName of the GCSBucket
-     * @param name of the GCSBucket
-     * @return the updated GCSBucket, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -505,18 +432,6 @@ public class GCSBucket extends Asset
     /**
      * Remove the owners from a GCSBucket.
      *
-     * @param qualifiedName of the GCSBucket
-     * @param name of the GCSBucket
-     * @return the updated GCSBucket, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a GCSBucket.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GCSBucket's owners
      * @param qualifiedName of the GCSBucket
      * @param name of the GCSBucket
@@ -525,20 +440,6 @@ public class GCSBucket extends Asset
      */
     public static GCSBucket removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (GCSBucket) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a GCSBucket.
-     *
-     * @param qualifiedName of the GCSBucket
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated GCSBucket, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -560,18 +461,6 @@ public class GCSBucket extends Asset
     /**
      * Remove the certificate from a GCSBucket.
      *
-     * @param qualifiedName of the GCSBucket
-     * @param name of the GCSBucket
-     * @return the updated GCSBucket, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a GCSBucket.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GCSBucket's certificate
      * @param qualifiedName of the GCSBucket
      * @param name of the GCSBucket
@@ -581,21 +470,6 @@ public class GCSBucket extends Asset
     public static GCSBucket removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (GCSBucket) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a GCSBucket.
-     *
-     * @param qualifiedName of the GCSBucket
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -619,18 +493,6 @@ public class GCSBucket extends Asset
     /**
      * Remove the announcement from a GCSBucket.
      *
-     * @param qualifiedName of the GCSBucket
-     * @param name of the GCSBucket
-     * @return the updated GCSBucket, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a GCSBucket.
-     *
      * @param client connectivity to the Atlan client from which to remove the GCSBucket's announcement
      * @param qualifiedName of the GCSBucket
      * @param name of the GCSBucket
@@ -640,20 +502,6 @@ public class GCSBucket extends Asset
     public static GCSBucket removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (GCSBucket) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the GCSBucket.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @param name human-readable name of the GCSBucket
-     * @param terms the list of terms to replace on the GCSBucket, or null to remove all terms from the GCSBucket
-     * @return the GCSBucket that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -669,20 +517,6 @@ public class GCSBucket extends Asset
     public static GCSBucket replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (GCSBucket) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the GCSBucket, without replacing existing terms linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @param terms the list of terms to append to the GCSBucket
-     * @return the GCSBucket that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -706,20 +540,6 @@ public class GCSBucket extends Asset
      * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the GCSBucket
-     * @param terms the list of terms to remove from the GCSBucket, which must be referenced by GUID
-     * @return the GCSBucket that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a GCSBucket, without replacing all existing terms linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the GCSBucket
      * @param qualifiedName for the GCSBucket
      * @param terms the list of terms to remove from the GCSBucket, which must be referenced by GUID
@@ -736,20 +556,6 @@ public class GCSBucket extends Asset
      * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the GCSBucket
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated GCSBucket
-     */
-    public static GCSBucket appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a GCSBucket, without replacing existing Atlan tags linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the GCSBucket
      * @param qualifiedName of the GCSBucket
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -759,35 +565,6 @@ public class GCSBucket extends Asset
     public static GCSBucket appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (GCSBucket) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a GCSBucket, without replacing existing Atlan tags linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the GCSBucket
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated GCSBucket
-     */
-    public static GCSBucket appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -820,17 +597,6 @@ public class GCSBucket extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a GCSBucket.
-     *
-     * @param qualifiedName of the GCSBucket
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the GCSBucket
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

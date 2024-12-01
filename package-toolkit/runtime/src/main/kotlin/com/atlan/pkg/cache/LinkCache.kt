@@ -72,9 +72,9 @@ class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = Link.select().count()
+        val count = Link.select(client).count()
         logger.info { "Caching all $count links, up-front..." }
-        Link.select()
+        Link.select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

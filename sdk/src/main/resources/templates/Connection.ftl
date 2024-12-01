@@ -250,20 +250,6 @@
      * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the connection, if found.
      *
-     * @param name of the connection
-     * @param type of the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
-        return findByName(name, type, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the connection, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the connection
      * @param name of the connection
      * @param type of the connection

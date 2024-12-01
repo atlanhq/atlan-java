@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -185,36 +184,11 @@ public class MicroStrategyAttribute extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) MicroStrategyAttribute assets will be included.
      *
-     * @return a fluent search that includes all MicroStrategyAttribute assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all MicroStrategyAttribute assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MicroStrategyAttribute assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all MicroStrategyAttribute assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all MicroStrategyAttribute assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) MicroStrategyAttributes will be included
-     * @return a fluent search that includes all MicroStrategyAttribute assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -291,18 +265,6 @@ public class MicroStrategyAttribute extends Asset
     /**
      * Retrieves a MicroStrategyAttribute by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the MicroStrategyAttribute to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full MicroStrategyAttribute, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyAttribute does not exist or the provided GUID is not a MicroStrategyAttribute
-     */
-    @JsonIgnore
-    public static MicroStrategyAttribute get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a MicroStrategyAttribute by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the MicroStrategyAttribute to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MicroStrategyAttribute, complete with all of its relationships
@@ -310,7 +272,7 @@ public class MicroStrategyAttribute extends Asset
      */
     @JsonIgnore
     public static MicroStrategyAttribute get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -344,17 +306,6 @@ public class MicroStrategyAttribute extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) MicroStrategyAttribute to active.
-     *
-     * @param qualifiedName for the MicroStrategyAttribute
-     * @return true if the MicroStrategyAttribute is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -402,18 +353,6 @@ public class MicroStrategyAttribute extends Asset
     /**
      * Remove the system description from a MicroStrategyAttribute.
      *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param name of the MicroStrategyAttribute
-     * @return the updated MicroStrategyAttribute, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a MicroStrategyAttribute.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the MicroStrategyAttribute
      * @param name of the MicroStrategyAttribute
@@ -423,19 +362,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MicroStrategyAttribute) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a MicroStrategyAttribute.
-     *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param name of the MicroStrategyAttribute
-     * @return the updated MicroStrategyAttribute, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeUserDescription(String qualifiedName, String name)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -455,18 +381,6 @@ public class MicroStrategyAttribute extends Asset
     /**
      * Remove the owners from a MicroStrategyAttribute.
      *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param name of the MicroStrategyAttribute
-     * @return the updated MicroStrategyAttribute, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a MicroStrategyAttribute.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the MicroStrategyAttribute's owners
      * @param qualifiedName of the MicroStrategyAttribute
      * @param name of the MicroStrategyAttribute
@@ -476,20 +390,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MicroStrategyAttribute) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a MicroStrategyAttribute.
-     *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated MicroStrategyAttribute, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -512,18 +412,6 @@ public class MicroStrategyAttribute extends Asset
     /**
      * Remove the certificate from a MicroStrategyAttribute.
      *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param name of the MicroStrategyAttribute
-     * @return the updated MicroStrategyAttribute, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a MicroStrategyAttribute.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the MicroStrategyAttribute's certificate
      * @param qualifiedName of the MicroStrategyAttribute
      * @param name of the MicroStrategyAttribute
@@ -533,21 +421,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MicroStrategyAttribute) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a MicroStrategyAttribute.
-     *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -571,18 +444,6 @@ public class MicroStrategyAttribute extends Asset
     /**
      * Remove the announcement from a MicroStrategyAttribute.
      *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param name of the MicroStrategyAttribute
-     * @return the updated MicroStrategyAttribute, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a MicroStrategyAttribute.
-     *
      * @param client connectivity to the Atlan client from which to remove the MicroStrategyAttribute's announcement
      * @param qualifiedName of the MicroStrategyAttribute
      * @param name of the MicroStrategyAttribute
@@ -592,20 +453,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MicroStrategyAttribute) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the MicroStrategyAttribute.
-     *
-     * @param qualifiedName for the MicroStrategyAttribute
-     * @param name human-readable name of the MicroStrategyAttribute
-     * @param terms the list of terms to replace on the MicroStrategyAttribute, or null to remove all terms from the MicroStrategyAttribute
-     * @return the MicroStrategyAttribute that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -621,21 +468,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (MicroStrategyAttribute) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the MicroStrategyAttribute, without replacing existing terms linked to the MicroStrategyAttribute.
-     * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the MicroStrategyAttribute
-     * @param terms the list of terms to append to the MicroStrategyAttribute
-     * @return the MicroStrategyAttribute that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -659,21 +491,6 @@ public class MicroStrategyAttribute extends Asset
      * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the MicroStrategyAttribute
-     * @param terms the list of terms to remove from the MicroStrategyAttribute, which must be referenced by GUID
-     * @return the MicroStrategyAttribute that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MicroStrategyAttribute removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a MicroStrategyAttribute, without replacing all existing terms linked to the MicroStrategyAttribute.
-     * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the MicroStrategyAttribute
      * @param qualifiedName for the MicroStrategyAttribute
      * @param terms the list of terms to remove from the MicroStrategyAttribute, which must be referenced by GUID
@@ -690,21 +507,6 @@ public class MicroStrategyAttribute extends Asset
      * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated MicroStrategyAttribute
-     */
-    public static MicroStrategyAttribute appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a MicroStrategyAttribute, without replacing existing Atlan tags linked to the MicroStrategyAttribute.
-     * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the MicroStrategyAttribute
      * @param qualifiedName of the MicroStrategyAttribute
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -714,35 +516,6 @@ public class MicroStrategyAttribute extends Asset
     public static MicroStrategyAttribute appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (MicroStrategyAttribute) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a MicroStrategyAttribute, without replacing existing Atlan tags linked to the MicroStrategyAttribute.
-     * Note: this operation must make two API calls — one to retrieve the MicroStrategyAttribute's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated MicroStrategyAttribute
-     */
-    public static MicroStrategyAttribute appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -775,17 +548,6 @@ public class MicroStrategyAttribute extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a MicroStrategyAttribute.
-     *
-     * @param qualifiedName of the MicroStrategyAttribute
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the MicroStrategyAttribute
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

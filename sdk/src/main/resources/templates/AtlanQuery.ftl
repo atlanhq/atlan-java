@@ -144,19 +144,6 @@
      * Find a query by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the query, if found.
      *
-     * @param name of the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a query by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the query, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the query
      * @param name of the query
      * @return all queries with that name, if found

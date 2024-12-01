@@ -35,7 +35,7 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
             if (domain != null) {
                 try {
                     val request =
-                        DataProduct.select()
+                        DataProduct.select(client)
                             .where(DataProduct.NAME.eq(productName))
                             .includesOnResults(includesOnResults)
                             .includeOnResults(DataProduct.STATUS)
@@ -83,7 +83,7 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
     ): DataProduct? {
         try {
             val dp =
-                DataProduct.select()
+                DataProduct.select(client)
                     .where(DataProduct.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
@@ -115,9 +115,9 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = DataProduct.select().count()
+        val count = DataProduct.select(client).count()
         logger.info { "Caching all $count data products, up-front..." }
-        DataProduct.select()
+        DataProduct.select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

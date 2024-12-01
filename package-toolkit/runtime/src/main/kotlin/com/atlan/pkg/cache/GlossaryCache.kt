@@ -24,7 +24,7 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
     /** {@inheritDoc}  */
     private fun lookupByIdentity(identity: String?): Glossary? {
         try {
-            return Glossary.findByName(identity)
+            return Glossary.findByName(client, identity)
         } catch (e: AtlanException) {
             logger.warn { "Unable to find glossary: $identity" }
             logger.debug(e) { "Full details: " }
@@ -47,7 +47,7 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
     ): Glossary? {
         try {
             val glossary =
-                Glossary.select()
+                Glossary.select(client)
                     .where(Glossary.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -78,9 +78,9 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = Glossary.select().count()
+        val count = Glossary.select(client).count()
         logger.info { "Caching all $count glossaries, up-front..." }
-        Glossary.select()
+        Glossary.select(client)
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { glossary ->

@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -410,36 +409,11 @@ public class CosmosMongoDBCollection extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) CosmosMongoDBCollection assets will be included.
      *
-     * @return a fluent search that includes all CosmosMongoDBCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all CosmosMongoDBCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) CosmosMongoDBCollection assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all CosmosMongoDBCollection assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all CosmosMongoDBCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) CosmosMongoDBCollections will be included
-     * @return a fluent search that includes all CosmosMongoDBCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -516,18 +490,6 @@ public class CosmosMongoDBCollection extends Asset
     /**
      * Retrieves a CosmosMongoDBCollection by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the CosmosMongoDBCollection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full CosmosMongoDBCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CosmosMongoDBCollection does not exist or the provided GUID is not a CosmosMongoDBCollection
-     */
-    @JsonIgnore
-    public static CosmosMongoDBCollection get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a CosmosMongoDBCollection by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the CosmosMongoDBCollection to retrieve, either its GUID or its full qualifiedName
      * @return the requested full CosmosMongoDBCollection, complete with all of its relationships
@@ -535,7 +497,7 @@ public class CosmosMongoDBCollection extends Asset
      */
     @JsonIgnore
     public static CosmosMongoDBCollection get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -569,17 +531,6 @@ public class CosmosMongoDBCollection extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) CosmosMongoDBCollection to active.
-     *
-     * @param qualifiedName for the CosmosMongoDBCollection
-     * @return true if the CosmosMongoDBCollection is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -627,18 +578,6 @@ public class CosmosMongoDBCollection extends Asset
     /**
      * Remove the system description from a CosmosMongoDBCollection.
      *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param name of the CosmosMongoDBCollection
-     * @return the updated CosmosMongoDBCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a CosmosMongoDBCollection.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the CosmosMongoDBCollection
      * @param name of the CosmosMongoDBCollection
@@ -648,19 +587,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a CosmosMongoDBCollection.
-     *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param name of the CosmosMongoDBCollection
-     * @return the updated CosmosMongoDBCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeUserDescription(String qualifiedName, String name)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -680,18 +606,6 @@ public class CosmosMongoDBCollection extends Asset
     /**
      * Remove the owners from a CosmosMongoDBCollection.
      *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param name of the CosmosMongoDBCollection
-     * @return the updated CosmosMongoDBCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a CosmosMongoDBCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CosmosMongoDBCollection's owners
      * @param qualifiedName of the CosmosMongoDBCollection
      * @param name of the CosmosMongoDBCollection
@@ -701,20 +615,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a CosmosMongoDBCollection.
-     *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated CosmosMongoDBCollection, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -737,18 +637,6 @@ public class CosmosMongoDBCollection extends Asset
     /**
      * Remove the certificate from a CosmosMongoDBCollection.
      *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param name of the CosmosMongoDBCollection
-     * @return the updated CosmosMongoDBCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a CosmosMongoDBCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CosmosMongoDBCollection's certificate
      * @param qualifiedName of the CosmosMongoDBCollection
      * @param name of the CosmosMongoDBCollection
@@ -758,21 +646,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a CosmosMongoDBCollection.
-     *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -796,18 +669,6 @@ public class CosmosMongoDBCollection extends Asset
     /**
      * Remove the announcement from a CosmosMongoDBCollection.
      *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param name of the CosmosMongoDBCollection
-     * @return the updated CosmosMongoDBCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a CosmosMongoDBCollection.
-     *
      * @param client connectivity to the Atlan client from which to remove the CosmosMongoDBCollection's announcement
      * @param qualifiedName of the CosmosMongoDBCollection
      * @param name of the CosmosMongoDBCollection
@@ -817,20 +678,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the CosmosMongoDBCollection.
-     *
-     * @param qualifiedName for the CosmosMongoDBCollection
-     * @param name human-readable name of the CosmosMongoDBCollection
-     * @param terms the list of terms to replace on the CosmosMongoDBCollection, or null to remove all terms from the CosmosMongoDBCollection
-     * @return the CosmosMongoDBCollection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -846,21 +693,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CosmosMongoDBCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the CosmosMongoDBCollection, without replacing existing terms linked to the CosmosMongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the CosmosMongoDBCollection
-     * @param terms the list of terms to append to the CosmosMongoDBCollection
-     * @return the CosmosMongoDBCollection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -884,21 +716,6 @@ public class CosmosMongoDBCollection extends Asset
      * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the CosmosMongoDBCollection
-     * @param terms the list of terms to remove from the CosmosMongoDBCollection, which must be referenced by GUID
-     * @return the CosmosMongoDBCollection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CosmosMongoDBCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a CosmosMongoDBCollection, without replacing all existing terms linked to the CosmosMongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the CosmosMongoDBCollection
      * @param qualifiedName for the CosmosMongoDBCollection
      * @param terms the list of terms to remove from the CosmosMongoDBCollection, which must be referenced by GUID
@@ -915,21 +732,6 @@ public class CosmosMongoDBCollection extends Asset
      * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated CosmosMongoDBCollection
-     */
-    public static CosmosMongoDBCollection appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CosmosMongoDBCollection, without replacing existing Atlan tags linked to the CosmosMongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the CosmosMongoDBCollection
      * @param qualifiedName of the CosmosMongoDBCollection
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -939,35 +741,6 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (CosmosMongoDBCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CosmosMongoDBCollection, without replacing existing Atlan tags linked to the CosmosMongoDBCollection.
-     * Note: this operation must make two API calls — one to retrieve the CosmosMongoDBCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated CosmosMongoDBCollection
-     */
-    public static CosmosMongoDBCollection appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -1000,17 +773,6 @@ public class CosmosMongoDBCollection extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a CosmosMongoDBCollection.
-     *
-     * @param qualifiedName of the CosmosMongoDBCollection
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the CosmosMongoDBCollection
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

@@ -33,7 +33,7 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
             if (glossary != null) {
                 try {
                     val term =
-                        GlossaryTerm.select()
+                        GlossaryTerm.select(client)
                             .where(GlossaryTerm.NAME.eq(termName))
                             .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                             .includesOnResults(includesOnResults)
@@ -73,7 +73,7 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
     ): GlossaryTerm? {
         try {
             val term =
-                GlossaryTerm.select()
+                GlossaryTerm.select(client)
                     .where(GlossaryTerm.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
@@ -105,9 +105,9 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = GlossaryTerm.select().count()
+        val count = GlossaryTerm.select(client).count()
         logger.info { "Caching all $count terms, up-front..." }
-        GlossaryTerm.select()
+        GlossaryTerm.select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

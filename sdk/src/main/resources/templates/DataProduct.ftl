@@ -12,7 +12,7 @@
     public static DataProductBuilder<?, ?> creator(
             AtlanClient client, String name, String domainQualifiedName, FluentSearch assetSelection)
             throws InvalidRequestException {
-        return creator(client, name, domainQualifiedName, "").assetSelection(client, assetSelection);
+        return creator(name, domainQualifiedName, "").assetSelection(client, assetSelection);
     }
 
     /**
@@ -88,20 +88,6 @@
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the domain, if found.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param name of the DataProduct
-     * @return the DataProduct, if found
-     * @throws AtlanException on any API problems, or if the DataProduct does not exist
-     */
-    public static List<DataProduct> findByName(String name)
-            throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
     }
 
     /**

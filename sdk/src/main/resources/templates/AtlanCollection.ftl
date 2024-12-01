@@ -139,19 +139,6 @@
      * Find a collection by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the collection, if found.
      *
-     * @param name of the collection
-     * @return all collections with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the collection does not exist
-     */
-    public static List<AtlanCollection> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a collection by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the collection, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the collection
      * @param name of the collection
      * @return all collections with that name, if found

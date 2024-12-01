@@ -4,7 +4,6 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
@@ -456,7 +455,7 @@ public class QlikSpaceTest {
             dependsOnGroups = {"QlikSpace.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -466,7 +465,7 @@ public class QlikSpaceTest {
             dependsOnGroups = {"QlikSpace.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, QlikSpace.class);
+        frodo = MockTenant.client.readValue(serialized, QlikSpace.class);
         assertNotNull(frodo);
     }
 
@@ -476,7 +475,7 @@ public class QlikSpaceTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

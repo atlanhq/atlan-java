@@ -270,19 +270,6 @@
      * optimal retrieval. Only active (non-archived) assets will be included.
      * (To change the default direction of downstream, chain a .direction() call.)
      *
-     * @return a fluent lineage request that includes all active downstream assets
-     */
-    public FluentLineage.FluentLineageBuilder requestLineage() {
-        return Asset.lineage(getGuid());
-    }
-
-    /**
-     * Start a fluent lineage request that will return all active downstream assets.
-     * Additional conditions can be chained onto the returned builder before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) assets will be included.
-     * (To change the default direction of downstream, chain a .direction() call.)
-     *
      * @param client connectivity to Atlan tenant
      * @return a fluent lineage request that includes all active downstream assets
      */

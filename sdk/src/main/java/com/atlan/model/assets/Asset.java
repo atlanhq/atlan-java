@@ -2,6 +2,7 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
@@ -32,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1085,9 +1087,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     protected static AssetMutationResponse addApiTokenAsAdmin(
             AtlanClient client, final String assetGuid, final String impersonationToken) throws AtlanException {
-
         String username = client.users.getCurrentUser().getUsername();
-
         AssetMutationResponse response = null;
         try (AtlanClient tmp = new AtlanClient(client.getBaseUrl(), impersonationToken)) {
             // Look for the asset as the impersonated user, ensuring we include the admin users
@@ -1106,7 +1106,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
         return response;
@@ -1608,7 +1608,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             return false;
         } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
             // Already active, but this could be due to the async nature of the delete handlers
-            if (retryCount < client.getMaxNetworkRetries()) {
+            if (retryCount < Atlan.getMaxNetworkRetries()) {
                 // So continue to retry up to the maximum number of allowed retries
                 log.debug(
                         "Attempted to restore an active asset, retrying status check for async delete handling (attempt: {}).",

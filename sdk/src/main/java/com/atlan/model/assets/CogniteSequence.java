@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -119,36 +118,11 @@ public class CogniteSequence extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) CogniteSequence assets will be included.
      *
-     * @return a fluent search that includes all CogniteSequence assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all CogniteSequence assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) CogniteSequence assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all CogniteSequence assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all CogniteSequence assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) CogniteSequences will be included
-     * @return a fluent search that includes all CogniteSequence assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -225,18 +199,6 @@ public class CogniteSequence extends Asset
     /**
      * Retrieves a CogniteSequence by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the CogniteSequence to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full CogniteSequence, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteSequence does not exist or the provided GUID is not a CogniteSequence
-     */
-    @JsonIgnore
-    public static CogniteSequence get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a CogniteSequence by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the CogniteSequence to retrieve, either its GUID or its full qualifiedName
      * @return the requested full CogniteSequence, complete with all of its relationships
@@ -244,7 +206,7 @@ public class CogniteSequence extends Asset
      */
     @JsonIgnore
     public static CogniteSequence get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -278,17 +240,6 @@ public class CogniteSequence extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) CogniteSequence to active.
-     *
-     * @param qualifiedName for the CogniteSequence
-     * @return true if the CogniteSequence is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -336,18 +287,6 @@ public class CogniteSequence extends Asset
     /**
      * Remove the system description from a CogniteSequence.
      *
-     * @param qualifiedName of the CogniteSequence
-     * @param name of the CogniteSequence
-     * @return the updated CogniteSequence, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a CogniteSequence.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the CogniteSequence
      * @param name of the CogniteSequence
@@ -357,18 +296,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteSequence) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a CogniteSequence.
-     *
-     * @param qualifiedName of the CogniteSequence
-     * @param name of the CogniteSequence
-     * @return the updated CogniteSequence, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -388,18 +315,6 @@ public class CogniteSequence extends Asset
     /**
      * Remove the owners from a CogniteSequence.
      *
-     * @param qualifiedName of the CogniteSequence
-     * @param name of the CogniteSequence
-     * @return the updated CogniteSequence, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a CogniteSequence.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CogniteSequence's owners
      * @param qualifiedName of the CogniteSequence
      * @param name of the CogniteSequence
@@ -409,20 +324,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteSequence) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a CogniteSequence.
-     *
-     * @param qualifiedName of the CogniteSequence
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated CogniteSequence, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -445,18 +346,6 @@ public class CogniteSequence extends Asset
     /**
      * Remove the certificate from a CogniteSequence.
      *
-     * @param qualifiedName of the CogniteSequence
-     * @param name of the CogniteSequence
-     * @return the updated CogniteSequence, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a CogniteSequence.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CogniteSequence's certificate
      * @param qualifiedName of the CogniteSequence
      * @param name of the CogniteSequence
@@ -466,21 +355,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteSequence) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a CogniteSequence.
-     *
-     * @param qualifiedName of the CogniteSequence
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -504,18 +378,6 @@ public class CogniteSequence extends Asset
     /**
      * Remove the announcement from a CogniteSequence.
      *
-     * @param qualifiedName of the CogniteSequence
-     * @param name of the CogniteSequence
-     * @return the updated CogniteSequence, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a CogniteSequence.
-     *
      * @param client connectivity to the Atlan client from which to remove the CogniteSequence's announcement
      * @param qualifiedName of the CogniteSequence
      * @param name of the CogniteSequence
@@ -525,20 +387,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteSequence) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the CogniteSequence.
-     *
-     * @param qualifiedName for the CogniteSequence
-     * @param name human-readable name of the CogniteSequence
-     * @param terms the list of terms to replace on the CogniteSequence, or null to remove all terms from the CogniteSequence
-     * @return the CogniteSequence that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -554,20 +402,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CogniteSequence) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the CogniteSequence, without replacing existing terms linked to the CogniteSequence.
-     * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the CogniteSequence
-     * @param terms the list of terms to append to the CogniteSequence
-     * @return the CogniteSequence that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -591,20 +425,6 @@ public class CogniteSequence extends Asset
      * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the CogniteSequence
-     * @param terms the list of terms to remove from the CogniteSequence, which must be referenced by GUID
-     * @return the CogniteSequence that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteSequence removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a CogniteSequence, without replacing all existing terms linked to the CogniteSequence.
-     * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the CogniteSequence
      * @param qualifiedName for the CogniteSequence
      * @param terms the list of terms to remove from the CogniteSequence, which must be referenced by GUID
@@ -621,21 +441,6 @@ public class CogniteSequence extends Asset
      * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the CogniteSequence
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated CogniteSequence
-     */
-    public static CogniteSequence appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CogniteSequence, without replacing existing Atlan tags linked to the CogniteSequence.
-     * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the CogniteSequence
      * @param qualifiedName of the CogniteSequence
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -645,35 +450,6 @@ public class CogniteSequence extends Asset
     public static CogniteSequence appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (CogniteSequence) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CogniteSequence, without replacing existing Atlan tags linked to the CogniteSequence.
-     * Note: this operation must make two API calls — one to retrieve the CogniteSequence's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the CogniteSequence
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated CogniteSequence
-     */
-    public static CogniteSequence appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -706,17 +482,6 @@ public class CogniteSequence extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a CogniteSequence.
-     *
-     * @param qualifiedName of the CogniteSequence
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the CogniteSequence
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

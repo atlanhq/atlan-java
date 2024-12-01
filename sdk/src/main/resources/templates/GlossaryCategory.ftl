@@ -71,23 +71,6 @@
      * relationships will be retrieved for the category, if found. Note that this operation must run two
      * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
      * If you already have the qualifiedName of the glossary, use findByNameFast instead.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryName name of the Glossary in which the category exists
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByName(String name, String glossaryName)
-            throws AtlanException {
-        return findByName(name, glossaryName, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the category, if found. Note that this operation must run two
-     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
-     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
      *
      * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -136,20 +119,6 @@
             throws AtlanException {
         Glossary glossary = Glossary.findByName(client, glossaryName);
         return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the category, if found.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByNameFast(String name, String glossaryQualifiedName) throws AtlanException {
-        return findByNameFast(name, glossaryQualifiedName, (List<AtlanField>) null);
     }
 
     /**
