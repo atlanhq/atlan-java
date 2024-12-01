@@ -41,7 +41,7 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(groups = {"s3.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -463,6 +463,6 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

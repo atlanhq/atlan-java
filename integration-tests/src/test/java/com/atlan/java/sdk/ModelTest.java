@@ -74,7 +74,7 @@ public class ModelTest extends AtlanLiveTest {
 
     @Test(groups = {"model.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -768,6 +768,6 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.create.*", "model.read.*", "model.reread.*", "model.search.*", "model.update.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

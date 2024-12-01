@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
@@ -34,12 +33,12 @@ public class PersonaTest extends AtlanLiveTest {
 
     @Test(groups = {"persona.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(groups = {"persona.create.glossary"})
     void createGlossary() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(GLOSSARY_NAME);
+        glossary = GlossaryTest.createGlossary(client, GLOSSARY_NAME);
     }
 
     @Test(groups = {"persona.create.personas"})
@@ -88,7 +87,7 @@ public class PersonaTest extends AtlanLiveTest {
     void findPersonaByName() throws AtlanException, InterruptedException {
         List<Persona> list = null;
         int count = 0;
-        while (list == null && count < Atlan.getMaxNetworkRetries()) {
+        while (list == null && count < client.getMaxNetworkRetries()) {
             try {
                 list = Persona.findByName(client, PERSONA_NAME);
             } catch (NotFoundException e) {
@@ -215,6 +214,6 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.read.*", "persona.update.*", "persona.purge.personas"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

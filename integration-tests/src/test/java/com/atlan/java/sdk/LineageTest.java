@@ -51,18 +51,18 @@ public class LineageTest extends AtlanLiveTest {
 
     @Test(groups = {"lineage.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
-        Database database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
-        Schema schema = SQLAssetTest.createSchema(SCHEMA_NAME, database);
-        table = SQLAssetTest.createTable(TABLE_NAME, schema);
-        mview = SQLAssetTest.createMaterializedView(MVIEW_NAME, schema);
-        view = SQLAssetTest.createView(VIEW_NAME, schema);
-        SQLAssetTest.createColumn(COLUMN_NAME1, table, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME2, table, 2);
-        SQLAssetTest.createColumn(COLUMN_NAME3, mview, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME4, mview, 2);
-        SQLAssetTest.createColumn(COLUMN_NAME5, view, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME6, view, 2);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
+        Database database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
+        Schema schema = SQLAssetTest.createSchema(client, SCHEMA_NAME, database);
+        table = SQLAssetTest.createTable(client, TABLE_NAME, schema);
+        mview = SQLAssetTest.createMaterializedView(client, MVIEW_NAME, schema);
+        view = SQLAssetTest.createView(client, VIEW_NAME, schema);
+        SQLAssetTest.createColumn(client, COLUMN_NAME1, table, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME2, table, 2);
+        SQLAssetTest.createColumn(client, COLUMN_NAME3, mview, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME4, mview, 2);
+        SQLAssetTest.createColumn(client, COLUMN_NAME5, view, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME6, view, 2);
     }
 
     // TODO: column-level lineage
@@ -467,6 +467,6 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.create.*", "lineage.read.*", "lineage.search.*", "lineage.purge.lineage"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

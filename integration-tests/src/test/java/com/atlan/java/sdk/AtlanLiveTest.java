@@ -86,7 +86,7 @@ public abstract class AtlanLiveTest {
      * @param response the create response to validate
      * @return the single created asset from the response
      */
-    protected Asset validateSingleCreate(AssetMutationResponse response) {
+    protected static Asset validateSingleCreate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());

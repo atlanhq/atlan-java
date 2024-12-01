@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
@@ -45,19 +44,19 @@ public class InsightsTest extends AtlanLiveTest {
                 .build();
         AssetMutationResponse response = null;
         int retryCount = 0;
-        while (response == null && retryCount < Atlan.getMaxNetworkRetries()) {
+        while (response == null && retryCount < client.getMaxNetworkRetries()) {
             retryCount++;
             try {
                 response = col.save(client).block();
             } catch (InvalidRequestException e) {
-                if (retryCount < Atlan.getMaxNetworkRetries()) {
+                if (retryCount < client.getMaxNetworkRetries()) {
                     if (e.getCode() != null
                             && e.getCode().equals("ATLAN-JAVA-400-000")
                             && e.getMessage().equals("Server responded with ATLAS-400-00-029: Auth request failed")) {
                         Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
                     }
                 } else {
-                    log.error("Overran retry limit ({}), rethrowing exception.", Atlan.getMaxNetworkRetries());
+                    log.error("Overran retry limit ({}), rethrowing exception.", client.getMaxNetworkRetries());
                     throw e;
                 }
             }
@@ -379,7 +378,7 @@ public class InsightsTest extends AtlanLiveTest {
                 "insights.purge.query"
             },
             alwaysRun = true)
-    void purgeCollection() throws AtlanException, InterruptedException {
+    void purgeCollection() throws AtlanException {
         String qualifiedName = collection.getQualifiedName();
         List<String> guids =
                 client.assets.select().where(Asset.QUALIFIED_NAME.startsWith(qualifiedName)).pageSize(50).stream()

@@ -30,7 +30,7 @@ public class APIAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"api.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -227,6 +227,6 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"api.create.*", "api.read.*", "api.search.*", "api.update.*", "api.purge.path"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

@@ -17,7 +17,6 @@ import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.RequestOptions;
 import java.util.*;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -302,7 +301,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(updated.getElementDefs().size(), 7);
         List<String> values = updated.getElementDefs().stream()
                 .map(EnumDef.ElementDef::getValue)
-                .collect(Collectors.toList());
+                .toList();
         assertTrue(values.contains("Awesomeness"));
         assertTrue(values.contains("Accuracy"));
     }
@@ -407,14 +406,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(groups = {"cm.create.term"})
     void createTerm() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        term = GlossaryTest.createTerm(PREFIX, glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        term = GlossaryTest.createTerm(client, PREFIX, glossary);
     }
 
     @Test(groups = {"cm.create.groups"})
     void createGroups() throws AtlanException {
-        group1 = AdminTest.createGroup(GROUP_NAME1);
-        group2 = AdminTest.createGroup(GROUP_NAME2);
+        group1 = AdminTest.createGroup(client, GROUP_NAME1);
+        group2 = AdminTest.createGroup(client, GROUP_NAME2);
     }
 
     @Test(
@@ -910,8 +909,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.create.*", "cm.read.*", "cm.update.*", "cm.search.*"},
             alwaysRun = true)
     void purgeTerm() throws AtlanException {
-        GlossaryTest.deleteTerm(term.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 
     @Test(
@@ -919,8 +918,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.term"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        AdminTest.deleteGroup(group1.getId());
-        AdminTest.deleteGroup(group2.getId());
+        AdminTest.deleteGroup(client, group1.getId());
+        AdminTest.deleteGroup(client, group2.getId());
     }
 
     @Test(

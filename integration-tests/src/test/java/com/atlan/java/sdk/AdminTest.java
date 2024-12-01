@@ -4,6 +4,7 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import java.time.LocalDate;
@@ -38,11 +39,12 @@ public class AdminTest extends AtlanLiveTest {
     /**
      * Create a new group with a unique name.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name to make the group unique
      * @return the group that was created
      * @throws AtlanException on any error creating or reading-back the group
      */
-    static AtlanGroup createGroup(String name) throws AtlanException {
+    static AtlanGroup createGroup(AtlanClient client, String name) throws AtlanException {
         AtlanGroup toCreate = AtlanGroup.creator(name).build();
         String guid = toCreate.create(client);
         List<AtlanGroup> response = AtlanGroup.get(client, name);
@@ -57,10 +59,11 @@ public class AdminTest extends AtlanLiveTest {
     /**
      * Delete (purge) a group based on its GUID.
      *
+     * @param client connectivity to the Atlan tenant
      * @param guid of the group to purge
      * @throws AtlanException on any errors purging the group
      */
-    static void deleteGroup(String guid) throws AtlanException {
+    static void deleteGroup(AtlanClient client, String guid) throws AtlanException {
         AtlanGroup.delete(client, guid);
     }
 
@@ -257,6 +260,6 @@ public class AdminTest extends AtlanLiveTest {
             dependsOnGroups = {"admin.create.*", "admin.read.*", "admin.update.*"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        deleteGroup(group1.getId());
+        deleteGroup(client, group1.getId());
     }
 }

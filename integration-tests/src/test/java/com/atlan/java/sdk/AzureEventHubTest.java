@@ -37,7 +37,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
 
     @Test(groups = {"aeh.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -281,6 +281,6 @@ public class AzureEventHubTest extends AtlanLiveTest {
             dependsOnGroups = {"aeh.create.*", "aeh.read.*", "aeh.search.*", "aeh.update.*", "aeh.purge.consumergroup"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

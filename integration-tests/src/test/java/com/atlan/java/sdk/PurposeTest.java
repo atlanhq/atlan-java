@@ -78,7 +78,7 @@ public class PurposeTest extends AtlanLiveTest {
 
     @Test(groups = {"purpose.create.atlantag"})
     void createAtlanTag() throws AtlanException {
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME);
+        AtlanTagTest.createAtlanTag(client, ATLAN_TAG_NAME);
     }
 
     @Test(groups = {"purpose.create.token"})
@@ -327,7 +327,7 @@ public class PurposeTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
         Column.removeAtlanTag(client, columnQualifiedName, ATLAN_TAG_NAME);
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME);
     }
 
     @Test(

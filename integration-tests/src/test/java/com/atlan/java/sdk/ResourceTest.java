@@ -30,8 +30,8 @@ public class ResourceTest extends AtlanLiveTest {
 
     @Test(groups = {"resources.create.term"})
     void createTerm() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        term = GlossaryTest.createTerm(PREFIX, glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        term = GlossaryTest.createTerm(client, PREFIX, glossary);
     }
 
     @Test(
@@ -139,7 +139,7 @@ public class ResourceTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeTerm() throws AtlanException {
-        GlossaryTest.deleteTerm(term.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 }

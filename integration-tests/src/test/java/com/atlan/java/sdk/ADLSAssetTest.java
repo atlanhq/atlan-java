@@ -37,7 +37,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"adls.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -279,6 +279,6 @@ public class ADLSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"adls.create.*", "adls.read.*", "adls.search.*", "adls.update.*", "adls.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

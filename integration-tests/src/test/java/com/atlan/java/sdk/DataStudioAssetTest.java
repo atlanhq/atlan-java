@@ -35,7 +35,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"gds.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -231,6 +231,6 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gds.create.*", "gds.read.*", "gds.search.*", "gds.update.*", "gds.purge.source"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

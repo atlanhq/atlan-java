@@ -55,7 +55,7 @@ public class DataMeshTest extends AtlanLiveTest {
 
     @Test(groups = {"mesh.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -313,7 +313,7 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.purge.product"},
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*"},
             alwaysRun = true)
-    void purgeProduct() throws AtlanException, InterruptedException {
+    void purgeProduct() throws AtlanException {
         AssetMutationResponse response =
                 DataProduct.purge(client, product.getGuid()).block();
         assertNotNull(response);
@@ -330,7 +330,7 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.purge.domains"},
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.product"},
             alwaysRun = true)
-    void purgeDomains() throws AtlanException, InterruptedException {
+    void purgeDomains() throws AtlanException {
         AssetMutationResponse response =
                 DataDomain.purge(client, subDomain.getGuid()).block();
         assertNotNull(response);
@@ -355,6 +355,6 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.domains"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

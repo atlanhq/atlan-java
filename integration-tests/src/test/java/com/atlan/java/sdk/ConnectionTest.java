@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -33,20 +32,6 @@ public class ConnectionTest extends AtlanLiveTest {
     /**
      * Create a new connection with a unique name.
      *
-     * @param prefix to make the connection unique
-     * @param type of the connection to create
-     * @return the connection that was created
-     * @throws AtlanException on any error creating or reading-back the connection
-     * @throws InterruptedException if the creation retry loop was interrupted
-     */
-    public static Connection createConnection(String prefix, AtlanConnectorType type)
-            throws AtlanException, InterruptedException {
-        return createConnection(client, prefix, type);
-    }
-
-    /**
-     * Create a new connection with a unique name.
-     *
      * @param client connectivity to the Atlan tenant in which to create the connection
      * @param prefix to make the connection unique
      * @param type of the connection to create
@@ -61,19 +46,19 @@ public class ConnectionTest extends AtlanLiveTest {
                 .build();
         AssetMutationResponse response = null;
         int retryCount = 0;
-        while (response == null && retryCount < Atlan.getMaxNetworkRetries()) {
+        while (response == null && retryCount < client.getMaxNetworkRetries()) {
             retryCount++;
             try {
                 response = connection.save(client).block();
             } catch (InvalidRequestException e) {
-                if (retryCount < Atlan.getMaxNetworkRetries()) {
+                if (retryCount < client.getMaxNetworkRetries()) {
                     if (e.getCode() != null
                             && e.getCode().equals("ATLAN-JAVA-400-000")
                             && e.getMessage().equals("Server responded with ATLAS-400-00-029: Auth request failed")) {
                         Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
                     }
                 } else {
-                    log.error("Overran retry limit ({}), rethrowing exception.", Atlan.getMaxNetworkRetries());
+                    log.error("Overran retry limit ({}), rethrowing exception.", client.getMaxNetworkRetries());
                     throw e;
                 }
             }
@@ -89,19 +74,6 @@ public class ConnectionTest extends AtlanLiveTest {
         assertNotNull(connection.getQualifiedName());
         assertEquals(connection.getName(), prefix);
         return connection;
-    }
-
-    /**
-     * Run the connection delete package for the specified connection, and block until it
-     * completes successfully.
-     *
-     * @param qualifiedName of the connection to delete
-     * @param log into which to write status information
-     * @throws AtlanException on any errors deleting the connection
-     * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
-     */
-    public static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
-        deleteConnection(client, qualifiedName, log);
     }
 
     /**

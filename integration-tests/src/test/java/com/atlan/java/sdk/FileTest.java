@@ -31,7 +31,7 @@ public class FileTest extends AtlanLiveTest {
 
     @Test(groups = {"file.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -203,6 +203,6 @@ public class FileTest extends AtlanLiveTest {
             dependsOnGroups = {"file.create.*", "file.read.*", "file.search.*", "file.update.*", "file.purge.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

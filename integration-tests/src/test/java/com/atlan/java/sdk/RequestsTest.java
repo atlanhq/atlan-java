@@ -76,7 +76,7 @@ public class RequestsTest extends AtlanLiveTest {
     @Test(groups = {"request.create.glossary"})
     void createGlossary() throws AtlanException {
         glossary = GlossaryTest.createGlossary(client, GLOSSARY_NAME);
-        term = GlossaryTest.createTerm(TERM_NAME, glossary);
+        term = GlossaryTest.createTerm(client, TERM_NAME, glossary);
     }
 
     @Test(groups = {"request.create.atlantag"})
@@ -307,8 +307,8 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.*", "request.read.*", "request.update.*", "request.purge.connection"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        GlossaryTest.deleteTerm(term.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 
     @Test(
@@ -322,7 +322,7 @@ public class RequestsTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeAtlanTag() throws AtlanException {
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME);
     }
 
     @Test(

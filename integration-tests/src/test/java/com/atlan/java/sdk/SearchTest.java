@@ -20,7 +20,6 @@ import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.model.structs.SourceTagAttachmentValue;
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -86,21 +85,21 @@ public class SearchTest extends AtlanLiveTest {
 
     @Test(groups = {"search.create.terms"})
     void createAssets() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        category1 = GlossaryTest.createCategory(PREFIX + "1", glossary);
-        category2 = GlossaryTest.createCategory(PREFIX + "2", glossary);
-        category3 = GlossaryTest.createCategory(PREFIX + "3", glossary);
-        term1 = GlossaryTest.createTerm(PREFIX + "1", glossary);
-        term2 = GlossaryTest.createTerm(PREFIX + "2", glossary);
-        term3 = GlossaryTest.createTerm(PREFIX + "3", glossary);
-        term4 = GlossaryTest.createTerm(PREFIX + "4", glossary);
-        term5 = GlossaryTest.createTerm(PREFIX + "5", glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        category1 = GlossaryTest.createCategory(client, PREFIX + "1", glossary);
+        category2 = GlossaryTest.createCategory(client, PREFIX + "2", glossary);
+        category3 = GlossaryTest.createCategory(client, PREFIX + "3", glossary);
+        term1 = GlossaryTest.createTerm(client, PREFIX + "1", glossary);
+        term2 = GlossaryTest.createTerm(client, PREFIX + "2", glossary);
+        term3 = GlossaryTest.createTerm(client, PREFIX + "3", glossary);
+        term4 = GlossaryTest.createTerm(client, PREFIX + "4", glossary);
+        term5 = GlossaryTest.createTerm(client, PREFIX + "5", glossary);
     }
 
     @Test(
             groups = {"search.defaults"},
             dependsOnGroups = {"search.create.terms"})
-    void testDefaultSorting() throws AtlanException, IOException {
+    void testDefaultSorting() throws AtlanException {
         // Empty sorting
         IndexSearchRequest request = GlossaryTerm.select(client)
                 .where(Asset.QUALIFIED_NAME.eq(term1.getQualifiedName()))
@@ -110,7 +109,7 @@ public class SearchTest extends AtlanLiveTest {
         IndexSearchDSL dsl = response.getQuery();
         assertNotNull(dsl);
         assertNotNull(dsl.getSort());
-        assertEquals(1, dsl.getSort().size());
+        assertEquals(dsl.getSort().size(), 1);
         assertTrue(dsl.getSort().get(0).isField());
         assertEquals(
                 IReferenceable.GUID.getKeywordFieldName(),
@@ -126,7 +125,7 @@ public class SearchTest extends AtlanLiveTest {
         dsl = response.getQuery();
         assertNotNull(dsl);
         assertNotNull(dsl.getSort());
-        assertEquals(2, dsl.getSort().size());
+        assertEquals(dsl.getSort().size(), 2);
         assertTrue(dsl.getSort().get(0).isField());
         assertTrue(dsl.getSort().get(1).isField());
         assertEquals(
@@ -146,7 +145,7 @@ public class SearchTest extends AtlanLiveTest {
         dsl = response.getQuery();
         assertNotNull(dsl);
         assertNotNull(dsl.getSort());
-        assertEquals(1, dsl.getSort().size());
+        assertEquals(dsl.getSort().size(), 1);
         assertTrue(dsl.getSort().get(0).isField());
         assertEquals(
                 IReferenceable.GUID.getKeywordFieldName(),
@@ -163,7 +162,7 @@ public class SearchTest extends AtlanLiveTest {
         dsl = response.getQuery();
         assertNotNull(dsl);
         assertNotNull(dsl.getSort());
-        assertEquals(2, dsl.getSort().size());
+        assertEquals(dsl.getSort().size(), 2);
         assertTrue(dsl.getSort().get(0).isField());
         assertTrue(dsl.getSort().get(1).isField());
         assertEquals(
@@ -353,14 +352,14 @@ public class SearchTest extends AtlanLiveTest {
             dependsOnGroups = {"search.create.*", "search.search.*"},
             alwaysRun = true)
     void purgeAssets() throws AtlanException {
-        GlossaryTest.deleteTerm(term1.getGuid());
-        GlossaryTest.deleteTerm(term2.getGuid());
-        GlossaryTest.deleteTerm(term3.getGuid());
-        GlossaryTest.deleteTerm(term4.getGuid());
-        GlossaryTest.deleteTerm(term5.getGuid());
-        GlossaryTest.deleteCategory(category1.getGuid());
-        GlossaryTest.deleteCategory(category2.getGuid());
-        GlossaryTest.deleteCategory(category3.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term1.getGuid());
+        GlossaryTest.deleteTerm(client, term2.getGuid());
+        GlossaryTest.deleteTerm(client, term3.getGuid());
+        GlossaryTest.deleteTerm(client, term4.getGuid());
+        GlossaryTest.deleteTerm(client, term5.getGuid());
+        GlossaryTest.deleteCategory(client, category1.getGuid());
+        GlossaryTest.deleteCategory(client, category2.getGuid());
+        GlossaryTest.deleteCategory(client, category3.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 }

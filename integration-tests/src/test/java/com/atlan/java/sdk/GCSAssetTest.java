@@ -35,7 +35,7 @@ public class GCSAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"gcs.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -244,6 +244,6 @@ public class GCSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gcs.create.*", "gcs.read.*", "gcs.search.*", "gcs.update.*", "gcs.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }
