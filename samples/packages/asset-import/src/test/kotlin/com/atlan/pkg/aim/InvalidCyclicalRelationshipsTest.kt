@@ -47,7 +47,7 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
     }
 
     private fun createConnection(): Connection {
-        val c1 = Connection.creator(connectionName, connectorType).build()
+        val c1 = Connection.creator(client, connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -69,8 +69,6 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
                     AssetImportCfg(
                         assetsFile = Paths.get(testDirectory, testFile).toString(),
                         assetsUpsertSemantic = "upsert",
-                        assetsAttrToOverwrite = null,
-                        assetsFailOnErrors = true,
                     ),
                     Importer::main,
                 )
@@ -86,7 +84,7 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
 
     @Test
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
+        val c1 = Connection.findByName(client, connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
         assertNotNull(c1)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1.first().name)
@@ -95,7 +93,7 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
 
     @Test
     fun noAssetsCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val assets =
             client.assets.select()
                 .where(Asset.QUALIFIED_NAME.startsWith(c1.qualifiedName))

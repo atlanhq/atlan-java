@@ -5,8 +5,9 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.PackageTest
-import com.atlan.pkg.cache.CategoryCache
+import com.atlan.pkg.Utils
 import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -22,6 +23,7 @@ import kotlin.test.assertTrue
 class SameNameCategoriesTest : PackageTest("snc") {
     override val logger = KotlinLogging.logger {}
 
+    private lateinit var ctx: PackageContext<AssetImportCfg>
     private val glossaryName = makeUnique("g1")
 
     private val testFile = "same_name_categories.csv"
@@ -48,31 +50,35 @@ class SameNameCategoriesTest : PackageTest("snc") {
 
     override fun setup() {
         prepFile()
-        runCustomPackage(
+        val config =
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = false,
                 trackBatches = true,
-            ),
+            )
+        runCustomPackage(
+            config,
             Importer::main,
         )
+        ctx = Utils.initializeContext(config, client)
     }
 
     override fun teardown() {
         removeGlossary(glossaryName)
+        ctx.close()
     }
 
     @Test
     fun glossaryCreated() {
-        val g1 = Glossary.findByName(glossaryName)
+        val g1 = Glossary.findByName(client, glossaryName)
         assertEquals(glossaryName, g1.name)
     }
 
     @Test
     fun categoriesCreated() {
-        val g = Glossary.findByName(glossaryName)!!
-        val hierarchy = g.hierarchy
+        val g = Glossary.findByName(client, glossaryName)!!
+        val hierarchy = g.getHierarchy(client)
         assertEquals(1, hierarchy.rootCategories.size)
         val bfs = hierarchy.breadthFirst()
         assertEquals(5, bfs.size)
@@ -82,13 +88,13 @@ class SameNameCategoriesTest : PackageTest("snc") {
 
     @Test
     fun termsCreated() {
-        val g = Glossary.findByName(glossaryName)!!
-        val t1 = GlossaryTerm.findByNameFast("t1", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
+        val g = Glossary.findByName(client, glossaryName)!!
+        val t1 = GlossaryTerm.findByNameFast(client, "t1", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
         assertNotNull(t1)
         assertNotNull(t1.categories)
         assertEquals(1, t1.categories.size)
         val c1Guid = t1.categories.first().guid
-        val t2 = GlossaryTerm.findByNameFast("t2", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
+        val t2 = GlossaryTerm.findByNameFast(client, "t2", g.qualifiedName, listOf(GlossaryTerm.CATEGORIES))
         assertNotNull(t2)
         assertNotNull(t2.categories)
         assertEquals(1, t2.categories.size)
@@ -98,10 +104,10 @@ class SameNameCategoriesTest : PackageTest("snc") {
 
     @Test
     fun categoriesProperlyCached() {
-        CategoryCache.refresh() // Note: refresh to ensure that loading the cache from scratch it still resolves properly
-        val cat1 = CategoryCache.getByIdentity("root@c1@same@@@$glossaryName")
+        ctx.categoryCache.refresh() // Note: refresh to ensure that loading the cache from scratch it still resolves properly
+        val cat1 = ctx.categoryCache.getByIdentity("root@c1@same@@@$glossaryName")
         assertNotNull(cat1)
-        val cat2 = CategoryCache.getByIdentity("root@c2@same@@@$glossaryName")
+        val cat2 = ctx.categoryCache.getByIdentity("root@c2@same@@@$glossaryName")
         assertNotNull(cat2)
     }
 

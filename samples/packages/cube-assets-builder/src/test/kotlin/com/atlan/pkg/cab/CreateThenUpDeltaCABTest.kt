@@ -202,7 +202,7 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateConnection() {
-        val found = Connection.findByName(conn1, conn1Type, connectionAttrs)
+        val found = Connection.findByName(client, conn1, conn1Type, connectionAttrs)
         assertNotNull(found)
         assertEquals(1, found.size)
         val c1 = found[0]
@@ -221,9 +221,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateCube(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Cube.select()
+            Cube.select(client)
                 .where(Cube.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(cubeAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -250,9 +250,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
         displayName: String,
         expectedCount: Long = 2,
     ) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeDimension.select()
+            CubeDimension.select(client)
                 .where(CubeDimension.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(dimensionAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -283,9 +283,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateHierarchy(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeHierarchy.select()
+            CubeHierarchy.select(client)
                 .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY1"))
                 .includesOnResults(hierarchyAttrs)
@@ -348,9 +348,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
         displayCol2: String,
         displayCol3: String,
     ) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeField.select()
+            CubeField.select(client)
                 .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY1"))
                 .includesOnResults(fieldAttrs)
@@ -415,9 +415,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateHierarchy2() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeHierarchy.select()
+            CubeHierarchy.select(client)
                 .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
                 .includesOnResults(hierarchyAttrs)
@@ -456,9 +456,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateFieldsForHierarchy2() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeField.select()
+            CubeField.select(client)
                 .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
                 .includesOnResults(fieldAttrs)
@@ -512,7 +512,7 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
     }
 
     private fun validateConnectionCache(created: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         assertTrue(dbFile.isFile)
         assertTrue(dbFile.exists())
@@ -583,9 +583,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
 
     @Test(groups = ["cab.ctud.update"], dependsOnGroups = ["cab.ctud.runUpdate"])
     fun hierarchy2Gone() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeHierarchy.select()
+            CubeHierarchy.select(client)
                 .where(CubeHierarchy.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeHierarchy.NAME.eq("TEST_HIERARCHY2"))
                 .includesOnResults(hierarchyAttrs)
@@ -598,9 +598,9 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
 
     @Test(groups = ["cab.ctud.update"], dependsOnGroups = ["cab.ctud.runUpdate"])
     fun fieldsForHierarchy2Gone() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            CubeField.select()
+            CubeField.select(client)
                 .where(CubeField.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(CubeField.CUBE_HIERARCHY_NAME.eq("TEST_HIERARCHY2"))
                 .includesOnResults(fieldAttrs)
@@ -622,7 +622,7 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
 
     @Test(dependsOnGroups = ["cab.ctud.*"])
     fun previousRunFilesCreated() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
         assertNotNull(directory)
         assertTrue(directory.isDirectory)

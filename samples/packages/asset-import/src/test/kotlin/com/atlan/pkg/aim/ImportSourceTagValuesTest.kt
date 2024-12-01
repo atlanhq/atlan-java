@@ -49,7 +49,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
     }
 
     override fun setup() {
-        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         prepFile(snowflakeConnection.qualifiedName)
         runCustomPackage(
             AssetImportCfg(
@@ -62,7 +62,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
     }
 
     override fun teardown() {
-        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         Table.select(client)
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
             .where(Table.NAME.eq(table))
@@ -75,7 +75,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
 
     @Test
     fun tableWithTagValues() {
-        val snowflakeConnection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         val snowflakeQN = snowflakeConnection.qualifiedName
         // val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
         val request =
@@ -128,7 +128,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
 
     @Test
     fun connectionCacheCreated() {
-        val c1 = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val c1 = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         assertTrue(dbFile.isFile)
         assertTrue(dbFile.exists())

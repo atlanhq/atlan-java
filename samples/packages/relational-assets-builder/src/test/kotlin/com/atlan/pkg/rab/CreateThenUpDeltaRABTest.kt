@@ -214,7 +214,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateConnection() {
-        val found = Connection.findByName(conn1, conn1Type, connectionAttrs)
+        val found = Connection.findByName(client, conn1, conn1Type, connectionAttrs)
         assertNotNull(found)
         assertEquals(1, found.size)
         val c1 = found[0]
@@ -233,9 +233,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateDatabase(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Database.select()
+            Database.select(client)
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(databaseAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -259,9 +259,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateSchema(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Schema.select()
+            Schema.select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(schemaAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -294,7 +294,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateTable(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
             Table.select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -350,9 +350,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         displayCol1: String,
         displayCol2: String,
     ) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
@@ -398,10 +398,10 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateView(exists: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                View.select(true)
+                View.select(client, true)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(View.STATUS.eq(AtlanStatus.DELETED))
                     .includesOnResults(tableAttrs)
@@ -419,7 +419,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
             assertEquals(AtlanStatus.DELETED, view.status)
         } else {
             val request =
-                View.select()
+                View.select(client)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .includesOnResults(tableAttrs)
                     .includeOnRelations(Asset.NAME)
@@ -456,10 +456,10 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateColumnsForView(exists: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                Column.select(true)
+                Column.select(client, true)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .where(Column.STATUS.eq(AtlanStatus.DELETED))
@@ -477,7 +477,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
             assertEquals(AtlanStatus.DELETED, states.first())
         } else {
             val request =
-                Column.select()
+                Column.select(client)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .includesOnResults(columnAttrs)
@@ -526,7 +526,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     }
 
     private fun validateConnectionCache(created: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         assertTrue(dbFile.isFile)
         assertTrue(dbFile.exists())
@@ -564,9 +564,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         )
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .where(Column.DISPLAY_NAME.startsWith("Revised column"))
@@ -612,9 +612,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
     fun entirelyNewView() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -642,9 +642,9 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
     fun entirelyNewViewColumns() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.VIEW_NAME.eq("TEST_NEW_V"))
                 .includesOnResults(columnAttrs)
@@ -697,7 +697,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
 
     @Test(dependsOnGroups = ["rab.ctud.*"])
     fun previousRunFilesCreated() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
         assertNotNull(directory)
         assertTrue(directory.isDirectory)

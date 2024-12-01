@@ -31,14 +31,14 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
         )
 
     private fun createConnections() {
-        Connection.creator(c1, connectorType)
+        Connection.creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
     }
 
     private fun createAssets() {
-        val connection1 = Connection.findByName(c1, connectorType)[0]!!
+        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -53,7 +53,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     }
 
     private fun archiveTable() {
-        val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
+        val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         val request =
             Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(connection))
@@ -70,7 +70,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
         createConnections()
         createAssets()
         archiveTable()
-        val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
+        val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(connection),
@@ -89,7 +89,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
 
     @Test
     fun activeAssetMigrated() {
-        val targetConnection = Connection.findByName(c1, connectorType)[0]!!
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val request =
             Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
@@ -116,7 +116,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c1, connectorType)[0]!!
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val filename = targetConnection.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }

@@ -74,7 +74,7 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun createConnection(): Connection {
-        val c1 = Connection.creator(connectionName, connectorType).build()
+        val c1 = Connection.creator(client, connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -98,14 +98,14 @@ class PartialAssetsTest : PackageTest("pa") {
 
     @Test(groups = ["lb.pa.create"])
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)
+        val c1 = Connection.findByName(client, connectionName, connectorType)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1[0].name)
     }
 
     @Test(groups = ["lb.pa.create"])
     fun partialSourceCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
             Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
@@ -121,9 +121,9 @@ class PartialAssetsTest : PackageTest("pa") {
 
     @Test(groups = ["lb.pa.create"])
     fun partialTargetCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.IS_PARTIAL)
@@ -137,9 +137,9 @@ class PartialAssetsTest : PackageTest("pa") {
 
     @Test(groups = ["lb.pa.create"])
     fun lineageProcessCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            LineageProcess.select()
+            LineageProcess.select(client)
                 .where(LineageProcess.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(LineageProcess.NAME)
                 .includeOnResults(LineageProcess.IS_PARTIAL)
@@ -164,7 +164,7 @@ class PartialAssetsTest : PackageTest("pa") {
 
     @Test(groups = ["lb.pa.create"])
     fun downstreamLineageExists() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
             Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
@@ -192,7 +192,7 @@ class PartialAssetsTest : PackageTest("pa") {
 
     @Test(groups = ["lb.pa.create"])
     fun upstreamLineageExists() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
             View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
@@ -224,7 +224,7 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun validateConnectionCache() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         Assert.assertTrue(dbFile.isFile)
         Assert.assertTrue(dbFile.exists())
@@ -242,9 +242,9 @@ class PartialAssetsTest : PackageTest("pa") {
     @Test(groups = ["lb.pa.runUpdate"], dependsOnGroups = ["lb.pa.create"])
     fun upsertRevisions() {
         // Convert partial view into full view
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.IS_PARTIAL)
@@ -277,9 +277,9 @@ class PartialAssetsTest : PackageTest("pa") {
     @Test(groups = ["lb.pa.update"], dependsOnGroups = ["lb.pa.runUpdate"])
     fun testRevisions() {
         // Validate no portion of the full view has been clobbered by the update
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.IS_PARTIAL)

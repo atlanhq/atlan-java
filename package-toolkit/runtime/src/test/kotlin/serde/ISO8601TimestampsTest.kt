@@ -2,7 +2,10 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package serde
 
+import com.atlan.mock.MockAtlanTenant
+import com.atlan.mock.MockConfig
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.TimestampXformer
 import java.time.format.DateTimeParseException
@@ -15,6 +18,8 @@ import kotlin.test.assertTrue
 
 class ISO8601TimestampsTest {
     companion object {
+        private val config = Utils.parseConfig<MockConfig>("{}", "{}")
+        private val ctx = Utils.initializeContext(config, MockAtlanTenant.client)
         private val EMPTY = ""
         private val NULL = null
         private val STRING_VALUE = "2024-02-15T20:41:11.565Z"
@@ -24,26 +29,26 @@ class ISO8601TimestampsTest {
 
     @Test
     fun testEmptyDecode() {
-        val result = CellXformer.decode(Asset::class.java, EMPTY, Long::class.java, null, "createTime")
+        val result = CellXformer.decode(ctx, Asset::class.java, EMPTY, Long::class.java, null, "createTime")
         assertNull(result)
     }
 
     @Test
     fun testNullDecode() {
-        val result = CellXformer.decode(Asset::class.java, NULL, Long::class.java, null, "createTime")
+        val result = CellXformer.decode(ctx, Asset::class.java, NULL, Long::class.java, null, "createTime")
         assertNull(result)
     }
 
     @Test
     fun testStringValueDecode() {
-        val result = CellXformer.decode(Asset::class.java, STRING_VALUE, Long::class.java, null, "createTime")
+        val result = CellXformer.decode(ctx, Asset::class.java, STRING_VALUE, Long::class.java, null, "createTime")
         assertTrue(result is Long)
         assertTrue(result > 0)
     }
 
     @Test
     fun testLongValueDecode() {
-        val result = CellXformer.decode(Asset::class.java, LONG_VALUE.toString(), Long::class.java, null, "createTime")
+        val result = CellXformer.decode(ctx, Asset::class.java, LONG_VALUE.toString(), Long::class.java, null, "createTime")
         assertTrue(result is Long)
         assertTrue(result > 0)
     }
@@ -51,39 +56,39 @@ class ISO8601TimestampsTest {
     @Test
     fun testInvalidValueDecode() {
         assertFailsWith(DateTimeParseException::class, "Text '02/15/2024 20:41:11.565' could not be parsed at index 0") {
-            CellXformer.decode(Asset::class.java, INVALID_VALUE, Long::class.java, null, "createTime")
+            CellXformer.decode(ctx, Asset::class.java, INVALID_VALUE, Long::class.java, null, "createTime")
         }
     }
 
     @Test
     fun testEmptyEncode() {
-        val result = CellXformer.encode(EMPTY, "guid", true)
+        val result = CellXformer.encode(ctx, EMPTY, "guid", true)
         assertTrue(result.isBlank())
     }
 
     @Test
     fun testNullEncode() {
-        val result = CellXformer.encode(NULL, "guid", true)
+        val result = CellXformer.encode(ctx, NULL, "guid", true)
         assertTrue(result.isBlank())
     }
 
     @Test
     fun testStringValueEncode() {
-        val result = CellXformer.encode(STRING_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, STRING_VALUE, "guid", true)
         assertNotNull(result)
         assertEquals(STRING_VALUE, result)
     }
 
     @Test
     fun testLongValueEncode() {
-        val result = CellXformer.encode(LONG_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, LONG_VALUE, "guid", true)
         assertNotNull(result)
         assertEquals(TimestampXformer.encode(LONG_VALUE), result)
     }
 
     @Test
     fun testInvalidValueEncode() {
-        val result = CellXformer.encode(INVALID_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, INVALID_VALUE, "guid", true)
         assertEquals(INVALID_VALUE, result)
     }
 }

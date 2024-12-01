@@ -52,14 +52,14 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private val directoryPrefix = LakeTagSynchronizer.OUTPUT_SUBDIR
 
     private fun createConnections() {
-        Connection.creator(c1, connectorType)
+        Connection.creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
     }
 
     private fun createAssets() {
-        val connection1 = Connection.findByName(c1, connectorType)[0]!!
+        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
         connectionQualifiedName = connection1.qualifiedName
         val batch = AssetBatch(client, 20)
         val db = Database.creator(databaseName, connection1.qualifiedName).build()
@@ -145,7 +145,7 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     @Test
     fun validateSchemaTagged() {
-        val schema = Schema.get(schemaGuid)
+        val schema = Schema.get(client, schemaGuid)
         val attribute1 = schema.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)
         val attribute3 = schema.getCustomMetadata(cm1, attr2)
@@ -163,7 +163,7 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     @Test
     fun validateColumnTagged() {
-        val column = Column.get(columnGuid)
+        val column = Column.get(client, columnGuid)
         assertEquals("col1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)

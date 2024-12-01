@@ -32,16 +32,16 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
 
     private fun createConnections() {
         val batch = AssetBatch(client, 5)
-        batch.add(Connection.creator(c1, c1Type).build())
-        batch.add(Connection.creator(c2, c2Type).build())
-        batch.add(Connection.creator(c3, c3Type).build())
+        batch.add(Connection.creator(client, c1, c1Type).build())
+        batch.add(Connection.creator(client, c2, c2Type).build())
+        batch.add(Connection.creator(client, c3, c3Type).build())
         batch.flush()
     }
 
     private fun createAssets() {
-        val connection1 = Connection.findByName(c1, c1Type)[0]!!
-        val connection2 = Connection.findByName(c2, c2Type)[0]!!
-        val connection3 = Connection.findByName(c3, c3Type)[0]!!
+        val connection1 = Connection.findByName(client, c1, c1Type)[0]!!
+        val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
+        val connection3 = Connection.findByName(client, c3, c3Type)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -73,11 +73,11 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
         Thread.sleep(15000)
         runCustomPackage(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
                 targetConnection =
                     listOf(
-                        Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!,
-                        Connection.findByName(c3, c3Type)?.get(0)?.qualifiedName!!,
+                        Connection.findByName(client, c2, c2Type)?.get(0)?.qualifiedName!!,
+                        Connection.findByName(client, c3, c3Type)?.get(0)?.qualifiedName!!,
                     ),
                 failOnErrors = false,
                 limitType = "INCLUDE",
@@ -96,7 +96,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         Table.select(client)
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
             .includeOnResults(Table.DESCRIPTION)
@@ -109,8 +109,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val t1 = Connection.findByName(c2, c2Type)[0]!!
-        val t2 = Connection.findByName(c3, c3Type)[0]!!
+        val t1 = Connection.findByName(client, c2, c2Type)[0]!!
+        val t2 = Connection.findByName(client, c3, c3Type)[0]!!
         val f1 = t1.qualifiedName.replace("/", "_")
         val f2 = t2.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$f1.csv", "CSA_EM_transformed_$f2.csv"))

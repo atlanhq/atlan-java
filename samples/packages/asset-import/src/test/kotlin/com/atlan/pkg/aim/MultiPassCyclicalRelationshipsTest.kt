@@ -77,7 +77,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
     }
 
     private fun createConnection(): Connection {
-        val c1 = Connection.creator(connectionName, connectorType).build()
+        val c1 = Connection.creator(client, connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -89,8 +89,6 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
-                assetsAttrToOverwrite = null,
-                assetsFailOnErrors = true,
             ),
             Importer::main,
         )
@@ -102,7 +100,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
+        val c1 = Connection.findByName(client, connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
         assertNotNull(c1)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1.first().name)
@@ -111,9 +109,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun dataModelsCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelDataModel.select()
+            ModelDataModel.select(client)
                 .where(ModelDataModel.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(modelAttrs)
                 .toRequest()
@@ -127,9 +125,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun versionsCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelVersion.select()
+            ModelVersion.select(client)
                 .where(ModelVersion.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(versionAttrs)
                 .toRequest()
@@ -143,9 +141,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun entitiesCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelEntity.select()
+            ModelEntity.select(client)
                 .where(ModelEntity.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(entityAttrs)
                 .toRequest()
@@ -166,9 +164,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun entitiesRelated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelEntity.select()
+            ModelEntity.select(client)
                 .where(ModelEntity.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(entityAttrs)
                 .includeOnRelations(ModelEntity.NAME)

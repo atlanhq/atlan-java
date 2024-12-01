@@ -159,7 +159,7 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun validateConnection() {
-        val found = Connection.findByName(conn1, conn1Type, connectionAttrs)
+        val found = Connection.findByName(client, conn1, conn1Type, connectionAttrs)
         assertNotNull(found)
         assertEquals(1, found.size)
         val c1 = found[0]
@@ -176,9 +176,9 @@ class PartialAssetsTest : PackageTest("pa") {
     @Test
     fun database1Created() {
         val displayName = "Test DB"
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Database.select()
+            Database.select(client)
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(databaseAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -200,9 +200,9 @@ class PartialAssetsTest : PackageTest("pa") {
     @Test
     fun schema1Created() {
         val displayName = "Test schema"
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Schema.select()
+            Schema.select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(schemaAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -229,7 +229,7 @@ class PartialAssetsTest : PackageTest("pa") {
     @Test
     fun table1Created() {
         val displayName = "Test table"
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
             Table.select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
@@ -264,9 +264,9 @@ class PartialAssetsTest : PackageTest("pa") {
     fun columnsForTable1Created() {
         val displayCol1 = "Test column 1"
         val displayCol2 = "Test column 2"
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
@@ -311,9 +311,9 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun validateView() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -344,9 +344,9 @@ class PartialAssetsTest : PackageTest("pa") {
     }
 
     private fun validateColumnsForView() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                 .includesOnResults(columnAttrs)

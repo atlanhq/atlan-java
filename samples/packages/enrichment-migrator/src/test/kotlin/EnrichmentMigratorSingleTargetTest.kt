@@ -39,8 +39,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
 
     private fun createConnections() {
         val batch = AssetBatch(client, 5)
-        batch.add(Connection.creator(c1, c1Type).build())
-        batch.add(Connection.creator(c2, c2Type).build())
+        batch.add(Connection.creator(client, c1, c1Type).build())
+        batch.add(Connection.creator(client, c2, c2Type).build())
         batch.flush()
     }
 
@@ -52,8 +52,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     private fun createAssets() {
-        val connection1 = Connection.findByName(c1, c1Type)[0]!!
-        val connection2 = Connection.findByName(c2, c2Type)[0]!!
+        val connection1 = Connection.findByName(client, c1, c1Type)[0]!!
+        val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
         val batch = AssetBatch(client, 20)
         val db1 = Database.creator("db1", connection1.qualifiedName).build()
         batch.add(db1)
@@ -84,8 +84,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         createAssets()
         runCustomPackage(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(client, c2, c2Type)?.get(0)?.qualifiedName!!),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
@@ -103,7 +103,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request =
             Table.select(client)
@@ -126,7 +126,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val filename = targetConnection.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }

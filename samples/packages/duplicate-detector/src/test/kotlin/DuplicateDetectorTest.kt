@@ -44,16 +44,16 @@ class DuplicateDetectorTest : PackageTest("dd") {
 
     @Test
     fun glossaryCreated() {
-        val glossary = Glossary.findByName(glossaryName)
+        val glossary = Glossary.findByName(client, glossaryName)
         assertNotNull(glossary)
         assertEquals(testId, glossary.name)
     }
 
     @Test
     fun termsCreated() {
-        val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
+        val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val terms =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryTerm.DESCRIPTION)
                 .includeOnResults(GlossaryTerm.ASSIGNED_ENTITIES)
