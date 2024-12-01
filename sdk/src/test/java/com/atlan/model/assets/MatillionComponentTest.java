@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
@@ -455,7 +456,7 @@ public class MatillionComponentTest {
             dependsOnGroups = {"MatillionComponent.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
+        serialized = full.toJson(MockAtlanTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -465,7 +466,7 @@ public class MatillionComponentTest {
             dependsOnGroups = {"MatillionComponent.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, MatillionComponent.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, MatillionComponent.class);
         assertNotNull(frodo);
     }
 
@@ -475,7 +476,7 @@ public class MatillionComponentTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(MockTenant.client);
+        String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
