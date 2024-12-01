@@ -45,7 +45,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         REPORT_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.REPORT)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         report = (DataStudioAsset) one;
@@ -64,7 +64,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         SOURCE_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.DATA_SOURCE)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         source = (DataStudioAsset) one;
@@ -81,12 +81,12 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gds.create.report"})
     void updateReport() throws AtlanException {
         DataStudioAsset updated =
-                DataStudioAsset.updateCertificate(report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                DataStudioAsset.updateCertificate(client, report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = DataStudioAsset.updateAnnouncement(
-                report.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+            client, report.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -97,7 +97,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.read.report"},
             dependsOnGroups = {"gds.update.report"})
     void retrieveReport() throws AtlanException {
-        DataStudioAsset r = DataStudioAsset.get(report.getGuid());
+        DataStudioAsset r = DataStudioAsset.get(client, report.getGuid(), true);
         assertNotNull(r);
         assertTrue(r.isComplete());
         assertEquals(r.getGuid(), report.getGuid());
@@ -114,14 +114,14 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.update.report.again"},
             dependsOnGroups = {"gds.read.report"})
     void updateReportAgain() throws AtlanException {
-        DataStudioAsset updated = DataStudioAsset.removeCertificate(report.getQualifiedName(), REPORT_NAME);
+        DataStudioAsset updated = DataStudioAsset.removeCertificate(client, report.getQualifiedName(), REPORT_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = DataStudioAsset.removeAnnouncement(report.getQualifiedName(), REPORT_NAME);
+        updated = DataStudioAsset.removeAnnouncement(client, report.getQualifiedName(), REPORT_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -132,7 +132,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.search.assets"},
             dependsOnGroups = {"gds.update.report.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = DataStudioAsset.select()
+        IndexSearchRequest index = DataStudioAsset.select(client)
                 .where(DataStudioAsset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
                 .sort(DataStudioAsset.CREATE_TIME.order(SortOrder.Asc))
@@ -176,7 +176,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.delete.source"},
             dependsOnGroups = {"gds.update.*", "gds.search.*"})
     void deleteSource() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(source.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, source.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -201,8 +201,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.delete.source.restore"},
             dependsOnGroups = {"gds.delete.source.read"})
     void restoreSource() throws AtlanException {
-        assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
-        DataStudioAsset restored = DataStudioAsset.get(source.getQualifiedName());
+        assertTrue(DataStudioAsset.restore(client, source.getQualifiedName()));
+        DataStudioAsset restored = DataStudioAsset.get(client, source.getQualifiedName());
         assertEquals(restored.getGuid(), source.getGuid());
         assertEquals(restored.getQualifiedName(), source.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -212,7 +212,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.purge.source"},
             dependsOnGroups = {"gds.delete.source.restore"})
     void purgeSource() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(source.getGuid());
+        AssetMutationResponse response = Asset.purge(client, source.getGuid());
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());

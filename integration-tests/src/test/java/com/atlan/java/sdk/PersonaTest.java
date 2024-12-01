@@ -45,7 +45,7 @@ public class PersonaTest extends AtlanLiveTest {
     @Test(groups = {"persona.create.personas"})
     void createPersonas() throws AtlanException {
         Persona toCreate = Persona.creator(PERSONA_NAME).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -71,7 +71,7 @@ public class PersonaTest extends AtlanLiveTest {
                 .denyAssetTab(AssetSidebarTab.QUERIES)
                 .personaGroups(List.of(EXISTING_GROUP_NAME))
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -90,7 +90,7 @@ public class PersonaTest extends AtlanLiveTest {
         int count = 0;
         while (list == null && count < Atlan.getMaxNetworkRetries()) {
             try {
-                list = Persona.findByName(PERSONA_NAME);
+                list = Persona.findByName(client, PERSONA_NAME);
             } catch (NotFoundException e) {
                 Thread.sleep(HttpClient.waitTime(count).toMillis());
                 count++;
@@ -147,7 +147,7 @@ public class PersonaTest extends AtlanLiveTest {
             groups = {"persona.read.personas.2"},
             dependsOnGroups = {"persona.update.personas.*"})
     void retrievePersonas2() throws AtlanException {
-        Persona one = Persona.get(persona.getQualifiedName());
+        Persona one = Persona.get(client, persona.getQualifiedName(), true);
         assertNotNull(one);
         assertEquals(one.getGuid(), persona.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
@@ -161,7 +161,7 @@ public class PersonaTest extends AtlanLiveTest {
         for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Persona itself are just policy references)
-            AuthPolicy full = AuthPolicy.get(policy.getGuid());
+            AuthPolicy full = AuthPolicy.get(client, policy.getGuid(), true);
             assertNotNull(full);
             String subCat = full.getPolicySubCategory();
             assertNotNull(subCat);
@@ -199,7 +199,7 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.update.*", "persona.read.*"},
             alwaysRun = true)
     void purgePersonas() throws AtlanException {
-        Persona.purge(persona.getGuid());
+        Persona.purge(client, persona.getGuid());
     }
 
     @Test(
@@ -207,7 +207,7 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.read.*", "persona.update.*", "persona.purge.personas"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        Glossary.purge(glossary.getGuid());
+        Glossary.purge(client, glossary.getGuid());
     }
 
     @Test(

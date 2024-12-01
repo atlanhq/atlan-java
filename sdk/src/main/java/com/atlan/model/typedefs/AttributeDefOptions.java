@@ -275,7 +275,7 @@ public class AttributeDefOptions extends AtlanObject {
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
-     * @param mclient connectivity to the Atlan tenant
+     * @param client connectivity to the Atlan tenant
      * @param type primitive type of the attribute
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @param options starting point of options on which to extend
