@@ -35,7 +35,7 @@ class Policies(
                 "Resources" to "Resources the policy controls",
             ),
         )
-        AuthPolicy.select()
+        AuthPolicy.select(ctx.client)
             .includeOnResults(AuthPolicy.NAME)
             .includeOnResults(AuthPolicy.DESCRIPTION)
             .includeOnResults(AuthPolicy.ACCESS_CONTROL)

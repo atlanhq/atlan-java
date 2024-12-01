@@ -34,7 +34,7 @@ object LakeTagSynchronizer {
         val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
         Utils.initializeContext(config).use { ctx ->
             val results = sync(ctx, outputDirectory)
-            if (!results && ctx.config.failOnErrors!!) {
+            if (!results && ctx.config.failOnErrors) {
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
@@ -84,13 +84,13 @@ object LakeTagSynchronizer {
         tagFileNames.forEach { tagFileName ->
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             val lfTagData = createMissingEnums(ctx.client, tagFileName, mapper, metadataMap)
-            csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema!!)
+            csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema)
             val importConfig =
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = ctx.config.failOnErrors!!,
-                    assetsBatchSize = ctx.config.batchSize!!,
+                    assetsFailOnErrors = ctx.config.failOnErrors,
+                    assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ",",
                 )
             Utils.initializeContext(importConfig, ctx.client).use { iCtx ->

@@ -21,7 +21,7 @@ object OwnerPropagator {
         Utils.initializeContext(config).use { ctx ->
             val batchSize = 20
 
-            val tables = findTables(ctx.client, ctx.config.qnPrefix!!, batchSize)
+            val tables = findTables(ctx.client, ctx.config.qnPrefix, batchSize)
             propagateOwner(ctx.client, tables, batchSize)
         }
     }

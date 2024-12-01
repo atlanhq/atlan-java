@@ -31,9 +31,9 @@ object Importer {
         outputDirectory: String = "tmp",
     ): ImportResults? {
         val directUpload = ctx.config.importType == "DIRECT"
-        val assetsFileProvided = (directUpload && ctx.config.assetsFile!!.isNotBlank()) || (!directUpload && ctx.config.assetsKey!!.isNotBlank())
-        val glossariesFileProvided = (directUpload && ctx.config.glossariesFile!!.isNotBlank()) || (!directUpload && ctx.config.glossariesKey!!.isNotBlank())
-        val dataProductsFileProvided = (directUpload && ctx.config.dataProductsFile!!.isNotBlank()) || (!directUpload && ctx.config.dataProductsKey!!.isNotBlank())
+        val assetsFileProvided = (directUpload && ctx.config.assetsFile.isNotBlank()) || (!directUpload && ctx.config.assetsKey.isNotBlank())
+        val glossariesFileProvided = (directUpload && ctx.config.glossariesFile.isNotBlank()) || (!directUpload && ctx.config.glossariesKey.isNotBlank())
+        val dataProductsFileProvided = (directUpload && ctx.config.dataProductsFile.isNotBlank()) || (!directUpload && ctx.config.dataProductsKey.isNotBlank())
         if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)
@@ -44,13 +44,13 @@ object Importer {
             if (glossariesFileProvided) {
                 val glossariesInput =
                     Utils.getInputFile(
-                        ctx.config.glossariesFile!!,
+                        ctx.config.glossariesFile,
                         outputDirectory,
                         directUpload,
                         ctx.config.glossariesPrefix,
                         ctx.config.glossariesKey,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.glossariesFailOnErrors!!)
+                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.glossariesFailOnErrors)
                 logger.info { "=== Importing glossaries... ===" }
                 val glossaryImporter = GlossaryImporter(ctx, glossariesInput, logger)
                 val includes = glossaryImporter.preprocess()
@@ -73,13 +73,13 @@ object Importer {
             if (assetsFileProvided) {
                 val assetsInput =
                     Utils.getInputFile(
-                        ctx.config.assetsFile!!,
+                        ctx.config.assetsFile,
                         outputDirectory,
                         directUpload,
                         ctx.config.assetsPrefix,
                         ctx.config.assetsKey,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors!!)
+                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
                 logger.info { "=== Importing assets... ===" }
                 val assetImporter = AssetImporter(ctx, assetsInput, logger)
                 val includes = assetImporter.preprocess()
@@ -96,13 +96,13 @@ object Importer {
             if (dataProductsFileProvided) {
                 val dataProductsInput =
                     Utils.getInputFile(
-                        ctx.config.dataProductsFile!!,
+                        ctx.config.dataProductsFile,
                         outputDirectory,
                         directUpload,
                         ctx.config.dataProductsPrefix,
                         ctx.config.dataProductsKey,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors!!)
+                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors)
                 logger.info { "=== Importing domains... ===" }
                 val domainImporter = DomainImporter(ctx, dataProductsInput, logger)
                 if (domainImporter.preprocess().hasLinks) {

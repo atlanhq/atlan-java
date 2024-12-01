@@ -27,10 +27,10 @@ object OpenAPISpecLoader {
         val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
         Utils.initializeContext(config).use { ctx ->
             val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-            val importType = ctx.config.importType!!
-            val specUrl = ctx.config.specUrl!!
-            val specFilename = ctx.config.specFile!!
-            val specKey = ctx.config.specKey!!
+            val importType = ctx.config.importType
+            val specUrl = ctx.config.specUrl
+            val specFilename = ctx.config.specFile
+            val specKey = ctx.config.specKey
             val batchSize = 20
 
             val inputQN =

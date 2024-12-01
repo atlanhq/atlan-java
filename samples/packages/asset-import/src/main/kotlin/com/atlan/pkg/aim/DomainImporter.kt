@@ -40,12 +40,12 @@ class DomainImporter(
         filename,
         logger = logger,
         typeNameFilter = DataDomain.TYPE_NAME,
-        attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite!!.toMutableList(), "dataProducts", logger),
+        attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
-        batchSize = ctx.config.dataProductsBatchSize!!.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors!!,
+        batchSize = ctx.config.dataProductsBatchSize.toInt(),
+        failOnErrors = ctx.config.dataProductsFailOnErrors,
         trackBatches = true,
-        fieldSeparator = ctx.config.dataProductsFieldSeparator!![0],
+        fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
     ) {
     // Note: Always track batches (above) for domain importer, to ensure cache is managed
 

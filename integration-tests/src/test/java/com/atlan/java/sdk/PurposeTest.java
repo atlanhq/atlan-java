@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -25,6 +24,7 @@ import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.net.HttpClient;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import org.testng.annotations.Test;
@@ -83,7 +83,7 @@ public class PurposeTest extends AtlanLiveTest {
 
     @Test(groups = {"purpose.create.token"})
     void createToken() throws AtlanException {
-        token = RequestsTest.createToken(API_TOKEN_NAME);
+        token = RequestsTest.createToken(client, API_TOKEN_NAME);
         assertNotNull(token);
         assertNotNull(token.getAttributes());
         assertNotNull(token.getAttributes().getAccessToken());
@@ -143,7 +143,7 @@ public class PurposeTest extends AtlanLiveTest {
     void findPurposeByName() throws AtlanException, InterruptedException {
         List<Purpose> purposes = null;
         int count = 0;
-        while (count < Atlan.getMaxNetworkRetries()) {
+        while (count < client.getMaxNetworkRetries()) {
             try {
                 purposes = Purpose.findByName(client, PURPOSE_NAME);
                 break;
@@ -280,36 +280,37 @@ public class PurposeTest extends AtlanLiveTest {
                 "purpose.update.asset",
                 "purpose.read.token"
             })
-    void runQueryWithPolicy() throws AtlanException, InterruptedException {
-        AtlanClient redacted = Atlan.getClient(Atlan.getBaseUrl(), PREFIX);
-        redacted.setApiToken(token.getAttributes().getAccessToken());
-        // The policy will take some time to go into effect -- start by waiting a
-        // reasonable set amount of time (limit the same query re-running multiple times on data store)
-        Thread.sleep(60000);
-        // Then use a retry loop, just in case
-        QueryResponse response = null;
-        HekaFlow found = HekaFlow.BYPASS; // As long as Heka was bypassed, policy was not applied
-        int count = 0;
-        while (found == HekaFlow.BYPASS && count < 30) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = redacted.queries.stream(query);
-            assertNotNull(response);
-            assertNotNull(response.getDetails());
-            QueryStatus status = response.getDetails().getStatus();
-            if (status != QueryStatus.ERROR) {
-                // Only update the flow if there was no error, otherwise wait and retry
-                found = response.getDetails().getHekaFlow();
+    void runQueryWithPolicy() throws AtlanException, InterruptedException, IOException {
+        try (AtlanClient redacted =
+                new AtlanClient(client.getBaseUrl(), token.getAttributes().getAccessToken())) {
+            // The policy will take some time to go into effect -- start by waiting a
+            // reasonable set amount of time (limit the same query re-running multiple times on data store)
+            Thread.sleep(60000);
+            // Then use a retry loop, just in case
+            QueryResponse response = null;
+            HekaFlow found = HekaFlow.BYPASS; // As long as Heka was bypassed, policy was not applied
+            int count = 0;
+            while (found == HekaFlow.BYPASS && count < 30) {
+                Thread.sleep(HttpClient.waitTime(count).toMillis());
+                response = redacted.queries.stream(query);
+                assertNotNull(response);
+                assertNotNull(response.getDetails());
+                QueryStatus status = response.getDetails().getStatus();
+                if (status != QueryStatus.ERROR) {
+                    // Only update the flow if there was no error, otherwise wait and retry
+                    found = response.getDetails().getHekaFlow();
+                }
+                count++;
             }
-            count++;
+            assertNotNull(response);
+            assertNotNull(response.getRows());
+            assertTrue(response.getRows().size() > 1);
+            List<String> row = response.getRows().get(0);
+            assertFalse(row.isEmpty());
+            assertEquals(row.size(), 10);
+            assertFalse(row.get(6).isEmpty());
+            assertEquals(row.get(6), REDACTED_NUMBER); // Ensure it IS redacted
         }
-        assertNotNull(response);
-        assertNotNull(response.getRows());
-        assertTrue(response.getRows().size() > 1);
-        List<String> row = response.getRows().get(0);
-        assertFalse(row.isEmpty());
-        assertEquals(row.size(), 10);
-        assertFalse(row.get(6).isEmpty());
-        assertEquals(row.get(6), REDACTED_NUMBER); // Ensure it IS redacted
     }
 
     @Test(
@@ -335,10 +336,10 @@ public class PurposeTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeToken() throws AtlanException {
         if (token != null) {
-            RequestsTest.deleteToken(token.getId());
+            RequestsTest.deleteToken(client, token.getId());
         } else {
             ApiToken local = client.apiTokens.get(API_TOKEN_NAME);
-            RequestsTest.deleteToken(local.getId());
+            RequestsTest.deleteToken(client, local.getId());
         }
     }
 }

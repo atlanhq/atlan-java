@@ -15,8 +15,8 @@ class DetailedUserViews(
     private val logger: KLogger,
 ) {
     fun export() {
-        val from = ctx.config.viewsFrom!!.toLong() * 1000
-        val to = ctx.config.viewsTo!!.toLong() * 1000
+        val from = ctx.config.viewsFrom * 1000
+        val to = ctx.config.viewsTo * 1000
         logger.info { "Exporting details of all asset views between [$from, $to]..." }
         val sheet = xlsx.createSheet("User views")
         xlsx.addHeader(

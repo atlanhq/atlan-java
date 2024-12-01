@@ -224,15 +224,15 @@ class AssetImporter(
         ctx,
         filename,
         logger = logger,
-        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite!!.toMutableList(), "assets", logger),
+        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
         updateOnly = ctx.config.assetsUpsertSemantic == "update",
-        batchSize = ctx.config.assetsBatchSize!!.toInt(),
-        caseSensitive = ctx.config.assetsCaseSensitive!!,
+        batchSize = ctx.config.assetsBatchSize.toInt(),
+        caseSensitive = ctx.config.assetsCaseSensitive,
         creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
-        tableViewAgnostic = ctx.config.assetsTableViewAgnostic!!,
-        failOnErrors = ctx.config.assetsFailOnErrors!!,
-        trackBatches = ctx.config.trackBatches!!,
-        fieldSeparator = ctx.config.assetsFieldSeparator!![0],
+        tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
+        failOnErrors = ctx.config.assetsFailOnErrors,
+        trackBatches = ctx.config.trackBatches,
+        fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
@@ -242,8 +242,9 @@ class AssetImporter(
         setOf(
             Asset.QUALIFIED_NAME.atlanFieldName,
             Asset.NAME.atlanFieldName,
-            // TODO: other required fields, across ALL (non-GTC, non-mesh) types
-        )
+            Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
+            Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
+        ) // TODO: other required fields, across ALL (non-GTC, non-mesh) types
 
     /** {@inheritDoc} */
     override fun preprocess(

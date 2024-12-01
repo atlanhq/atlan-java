@@ -47,7 +47,7 @@ class MeshExporter(
 
             // Retrieve all domains up-front
             val domains =
-                DataDomain.select(ctx.config.includeArchived!!)
+                DataDomain.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -58,7 +58,7 @@ class MeshExporter(
 
             // And finally extract all the data products
             val products =
-                DataProduct.select(ctx.config.includeArchived!!)
+                DataProduct.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())

@@ -64,7 +64,7 @@ class AssetExporter(
     private fun getAssetsToExtract(): FluentSearch.FluentSearchBuilder<*, *> {
         val builder =
             ctx.client.assets
-                .select(ctx.config.includeArchived!!)
+                .select(ctx.config.includeArchived)
                 .whereNot(Asset.SUPER_TYPE_NAMES.`in`(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
                 .whereNot(Asset.TYPE_NAME.`in`(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
         val qnPrefixes = Utils.getAsList(ctx.config.qnPrefixes)
@@ -89,7 +89,7 @@ class AssetExporter(
                 .whereSome(Asset.LINKS.hasAny())
                 .whereSome(Asset.STARRED_BY.hasAnyValue())
                 .minSomes(1)
-            if (ctx.config.includeDescription!!) {
+            if (ctx.config.includeDescription) {
                 builder.whereSome(Asset.DESCRIPTION.hasAnyValue())
             }
             for (cmField in cmFields) {
@@ -105,7 +105,7 @@ class AssetExporter(
 
     private fun getFieldsToExtract(): List<AtlanField> {
         val limitToAttributes = Utils.getAsList(ctx.config.attributesToInclude)
-        return if (ctx.config.allAttributes!!) {
+        return if (ctx.config.allAttributes) {
             val uniqueFieldNames = mutableSetOf<String>()
             val limitToAssets = Utils.getAsList(ctx.config.assetTypesToInclude)
             limitToAssets.forEach { assetType ->
@@ -124,7 +124,7 @@ class AssetExporter(
         } else if (limitToAttributes.isNotEmpty()) {
             limitToAttributes.map { SearchableField(it, it) }.toList()
         } else {
-            getAttributesToExtract(ctx.config.includeDescription!!, cmFields)
+            getAttributesToExtract(ctx.config.includeDescription, cmFields)
         }
     }
 

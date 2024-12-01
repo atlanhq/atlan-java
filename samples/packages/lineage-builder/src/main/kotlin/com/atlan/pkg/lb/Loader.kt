@@ -37,8 +37,8 @@ object Loader {
         outputDirectory: String = "tmp",
     ) {
         val lineageUpload = ctx.config.lineageImportType == "DIRECT"
-        val lineageFilename = ctx.config.lineageFile!!
-        val lineageKey = ctx.config.lineageKey!!
+        val lineageFilename = ctx.config.lineageFile
+        val lineageKey = ctx.config.lineageKey
 
         val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageKey.isNotBlank())
         if (!lineageFileProvided) {
@@ -55,7 +55,7 @@ object Loader {
                 lineageKey,
             )
         if (lineageInput.isNotBlank()) {
-            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors!!)
+            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors)
             ctx.connectionCache.preload()
 
             // 1. Transform the assets, so we can load them prior to creating any lineage relationships
@@ -102,7 +102,7 @@ object Loader {
             // Determine any non-standard lineage fields in the header and append them to the end of
             // the list of standard header fields, so they're passed-through to be used as part of
             // defining the lineage process itself
-            val inputHeaders = getHeader(lineageInput, fieldSeparator = ctx.config.fieldSeparator!![0]).toMutableList()
+            val inputHeaders = getHeader(lineageInput, fieldSeparator = ctx.config.fieldSeparator[0]).toMutableList()
             inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
             inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
             inputHeaders.forEach { lineageHeaders.add(it) }

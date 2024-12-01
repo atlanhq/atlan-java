@@ -29,7 +29,7 @@ object Exporter {
 
         val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
-        if ("GLOSSARIES_ONLY" == ctx.config.exportScope || ctx.config.includeGlossaries!!) {
+        if ("GLOSSARIES_ONLY" == ctx.config.exportScope || ctx.config.includeGlossaries) {
             val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize, cmFields)
             glossaryExporter.export()
             exportedFiles.add(File(glossaryFile))
@@ -38,7 +38,7 @@ object Exporter {
             File(glossaryFile).createNewFile()
         }
         val meshFile = "$outputDirectory${File.separator}products-export.csv"
-        if ("PRODUCTS_ONLY" == ctx.config.exportScope || ctx.config.includeProducts!!) {
+        if ("PRODUCTS_ONLY" == ctx.config.exportScope || ctx.config.includeProducts) {
             val meshExporter = MeshExporter(ctx, meshFile, batchSize, cmFields)
             meshExporter.export()
             exportedFiles.add(File(meshFile))

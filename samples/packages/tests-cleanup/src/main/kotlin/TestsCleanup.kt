@@ -32,7 +32,7 @@ object TestsCleanup {
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<TestsCleanupCfg>()
         Utils.initializeContext(config).use { ctx ->
-            val prefix = ctx.config.prefix!!
+            val prefix = ctx.config.prefix
             if (prefix.isBlank()) {
                 logger.error { "Missing required parameter - you must specify a prefix for objects to be purged." }
                 exitProcess(1)
@@ -193,7 +193,7 @@ object TestsCleanup {
         list.forEach { cm ->
             val badgeQNPrefix = "badges/global/${cm.internalName}."
             val badges =
-                Badge.select(true)
+                Badge.select(client, true)
                     .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
                     .stream()
                     .map { it.guid }

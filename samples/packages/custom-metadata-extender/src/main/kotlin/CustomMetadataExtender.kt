@@ -22,11 +22,11 @@ object CustomMetadataExtender {
         val config = Utils.setPackageOps<CustomMetadataExtenderCfg>()
         Utils.initializeContext(config).use { ctx ->
 
-            val cmName = ctx.config.customMetadata!!
-            val connectionQNs = ctx.config.connectionQualifiedName!!
+            val cmName = ctx.config.customMetadata
+            val connectionQNs = ctx.config.connectionQualifiedName
             val glossaryNames = Utils.getAsList(ctx.config.glossaries)
-            val domains = ctx.config.domains!!
-            val domainName = ctx.config.domainsSpecific!!
+            val domains = ctx.config.domains
+            val domainName = ctx.config.domainsSpecific
 
             if (cmName.isBlank()) {
                 logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
@@ -45,14 +45,18 @@ object CustomMetadataExtender {
     /**
      * Look up the qualifiedNames of all glossary names provided.
      *
+     * @param client connectivity to the Atlan tenant
      * @param glossaryNames simple names of glossaries
      * @return list of corresponding qualifiedNames for the provided glossaries
      */
-    fun getGlossaryQualifiedNames(glossaryNames: List<String>): List<String> {
+    fun getGlossaryQualifiedNames(
+        client: AtlanClient,
+        glossaryNames: List<String>,
+    ): List<String> {
         val list = mutableListOf<String>()
         glossaryNames.forEach { gn ->
             try {
-                val glossary = Glossary.findByName(gn)
+                val glossary = Glossary.findByName(client, gn)
                 list.add(glossary.qualifiedName)
             } catch (e: NotFoundException) {
                 logger.warn { "Unable to find glossary '$gn' - skipping..." }
@@ -83,7 +87,7 @@ object CustomMetadataExtender {
         domainName: String,
     ) {
         logger.info { "Extending custom metadata $cmName with connections: $connectionQNs" }
-        val glossaryQNs = getGlossaryQualifiedNames(glossaryNames)
+        val glossaryQNs = getGlossaryQualifiedNames(client, glossaryNames)
         logger.info { "Extending custom metadata $cmName with glossaries: $glossaryQNs" }
         val domainQNs = mutableSetOf<String>()
         when (domains) {
@@ -93,7 +97,7 @@ object CustomMetadataExtender {
             }
             "SOME" -> {
                 try {
-                    val found = DataDomain.findByName(domainName)
+                    val found = DataDomain.findByName(client, domainName)
                     if (found.size > 1) {
                         logger.warn { "Found multiple domains with the name $domainName, taking only the first" }
                     }

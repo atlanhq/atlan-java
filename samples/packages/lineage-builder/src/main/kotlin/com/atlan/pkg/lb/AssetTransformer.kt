@@ -24,7 +24,7 @@ class AssetTransformer(
             Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
         ),
         logger,
-        ctx.config.fieldSeparator!![0],
+        ctx.config.fieldSeparator[0],
     ) {
     companion object {
         const val TYPE = "Type"

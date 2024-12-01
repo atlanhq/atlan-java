@@ -50,10 +50,10 @@ object Importer {
         ctx: PackageContext<CubeAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
     ): String? {
-        val fieldSeparator = ctx.config.assetsFieldSeparator!![0]
+        val fieldSeparator = ctx.config.assetsFieldSeparator[0]
         val assetsUpload = ctx.config.assetsImportType == "DIRECT"
-        val assetsKey = ctx.config.assetsKey!!
-        val assetsFilename = ctx.config.assetsFile!!
+        val assetsKey = ctx.config.assetsKey
+        val assetsFilename = ctx.config.assetsFile
 
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsKey.isNotBlank())
         if (!assetsFileProvided) {
@@ -84,7 +84,7 @@ object Importer {
 
         ctx.connectionCache.preload()
 
-        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors!!)
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
@@ -105,16 +105,16 @@ object Importer {
 
         DeltaProcessor(
             ctx = ctx,
-            semantic = ctx.config.deltaSemantic!!,
+            semantic = ctx.config.deltaSemantic,
             qualifiedNamePrefix = cubeQN,
-            removalType = ctx.config.deltaRemovalType!!,
+            removalType = ctx.config.deltaRemovalType,
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
             resolver = AssetImporter,
             preprocessedDetails = preprocessedDetails,
             typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
             logger = logger,
-            reloadSemantic = ctx.config.deltaReloadCalculation!!,
-            previousFilePreprocessor = Preprocessor(ctx.config.previousFileDirect!!, fieldSeparator),
+            reloadSemantic = ctx.config.deltaReloadCalculation,
+            previousFilePreprocessor = Preprocessor(ctx.config.previousFileDirect, fieldSeparator),
             outputDirectory = outputDirectory,
         ).use { delta ->
 

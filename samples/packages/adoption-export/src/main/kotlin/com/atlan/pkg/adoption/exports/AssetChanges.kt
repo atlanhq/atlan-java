@@ -43,18 +43,18 @@ class AssetChanges(
         val builder =
             AuditSearch.builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
-                .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(ctx.config.changesMax!!.toInt()))
-        if (ctx.config.changesByUser!!.isNotEmpty()) {
+                .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(ctx.config.changesMax.toInt()))
+        if (ctx.config.changesByUser.isNotEmpty()) {
             builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
         }
-        if (ctx.config.changesTypes!!.isNotEmpty()) {
+        if (ctx.config.changesTypes.isNotEmpty()) {
             builder.where(AuditSearchRequest.ACTION.`in`(ctx.config.changesTypes))
         }
-        if (ctx.config.changesFrom!! > 0) {
-            builder.where(AuditSearchRequest.CREATED.gte(ctx.config.changesFrom!!.toLong() * 1000))
+        if (ctx.config.changesFrom > 0) {
+            builder.where(AuditSearchRequest.CREATED.gte(ctx.config.changesFrom * 1000))
         }
-        if (ctx.config.changesTo!! > 0) {
-            builder.where(AuditSearchRequest.CREATED.lt(ctx.config.changesTo!!.toLong() * 1000))
+        if (ctx.config.changesTo > 0) {
+            builder.where(AuditSearchRequest.CREATED.lt(ctx.config.changesTo * 1000))
         }
         // First a request to get the aggregate details
         val request = builder.pageSize(1).toRequest()

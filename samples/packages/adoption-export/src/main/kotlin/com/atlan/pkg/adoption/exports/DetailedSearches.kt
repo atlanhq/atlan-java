@@ -14,8 +14,8 @@ class DetailedSearches(
     private val logger: KLogger,
 ) {
     fun export() {
-        val start = ctx.config.searchesFrom!!.toLong() * 1000
-        val end = ctx.config.searchesTo!!.toLong() * 1000
+        val start = ctx.config.searchesFrom * 1000
+        val end = ctx.config.searchesTo * 1000
         logger.info { "Exporting details of all UI-based searches between [$start, $end]..." }
         val sheet = xlsx.createSheet("User searches")
         xlsx.addHeader(

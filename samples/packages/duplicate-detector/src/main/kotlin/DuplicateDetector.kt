@@ -33,8 +33,8 @@ object DuplicateDetector {
         val config = Utils.setPackageOps<DuplicateDetectorCfg>()
         Utils.initializeContext(config).use { ctx ->
 
-            val qnPrefix = ctx.config.qnPrefix!!
-            val types = ctx.config.assetTypes!!
+            val qnPrefix = ctx.config.qnPrefix
+            val types = ctx.config.assetTypes
             val batchSize = 20
 
             logger.info {
@@ -42,7 +42,7 @@ object DuplicateDetector {
             }
             findAssets(ctx.client, qnPrefix, types, batchSize)
 
-            val glossaryQN = glossaryForDuplicates(ctx.client, ctx.config.glossaryName!!)
+            val glossaryQN = glossaryForDuplicates(ctx.client, ctx.config.glossaryName)
             termsForDuplicates(ctx.client, glossaryQN, batchSize)
         }
     }
@@ -111,7 +111,7 @@ object DuplicateDetector {
         glossaryName: String,
     ): String {
         return try {
-            Glossary.findByName(glossaryName).qualifiedName
+            Glossary.findByName(client, glossaryName).qualifiedName
         } catch (e: NotFoundException) {
             val glossary =
                 Glossary.creator(glossaryName)
@@ -159,7 +159,7 @@ object DuplicateDetector {
                 val termName = "Dup. ($hash)"
                 val term =
                     try {
-                        GlossaryTerm.findByNameFast(termName, glossaryQN)
+                        GlossaryTerm.findByNameFast(client, termName, glossaryQN)
                     } catch (e: NotFoundException) {
                         val toCreate =
                             GlossaryTerm.creator(termName, glossaryQN)

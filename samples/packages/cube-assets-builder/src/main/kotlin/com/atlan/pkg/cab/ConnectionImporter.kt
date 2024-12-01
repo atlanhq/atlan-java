@@ -60,9 +60,9 @@ class ConnectionImporter(
             val groups = deserializer.getValue(Connection.ADMIN_GROUPS.atlanFieldName)?.let { it as List<String> }
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
             if (users != null || groups != null || roles != null) {
-                Connection.creator(name, type, roles, groups, users)
+                Connection.creator(ctx.client, name, type, roles, groups, users)
             } else {
-                Connection.creator(name, type)
+                Connection.creator(ctx.client, name, type)
             }
         }
     }

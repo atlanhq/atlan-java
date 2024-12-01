@@ -50,7 +50,7 @@ class GlossaryExporter(
 
             // Retrieve all glossaries up-front
             val glossaries =
-                Glossary.select(ctx.config.includeArchived!!)
+                Glossary.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -77,7 +77,7 @@ class GlossaryExporter(
 
             // And finally extract all the terms
             val assets =
-                GlossaryTerm.select(ctx.config.includeArchived!!)
+                GlossaryTerm.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())

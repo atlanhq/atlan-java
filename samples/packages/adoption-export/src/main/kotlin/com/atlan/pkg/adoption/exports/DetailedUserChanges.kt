@@ -18,8 +18,8 @@ class DetailedUserChanges(
     private val logger: KLogger,
 ) {
     fun export() {
-        val start = ctx.config.changesFrom!!.toLong() * 1000
-        val end = ctx.config.changesTo!!.toLong() * 1000
+        val start = ctx.config.changesFrom * 1000
+        val end = ctx.config.changesTo * 1000
         logger.info { "Exporting details of all user-made changes between [$start, $end]..." }
         val sheet = xlsx.createSheet("User changes")
         xlsx.addHeader(
@@ -38,10 +38,10 @@ class DetailedUserChanges(
         val builder =
             AuditSearch.builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
-        if (ctx.config.changesByUser!!.isNotEmpty()) {
+        if (ctx.config.changesByUser.isNotEmpty()) {
             builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
         }
-        if (ctx.config.changesTypes!!.isNotEmpty()) {
+        if (ctx.config.changesTypes.isNotEmpty()) {
             builder.where(AuditSearchRequest.ACTION.`in`(ctx.config.changesTypes))
         }
         when (ctx.config.changesAutomations) {

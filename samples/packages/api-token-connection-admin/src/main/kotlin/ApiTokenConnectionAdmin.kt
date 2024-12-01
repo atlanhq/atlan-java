@@ -22,12 +22,12 @@ object ApiTokenConnectionAdmin {
         Utils.initializeContext(config).use { ctx ->
             val connectionQN = Utils.reuseConnection(ctx.client, ctx.config.connectionQualifiedName?.let { it[0] })
 
-            if (connectionQN.isBlank() || ctx.config.apiTokenGuid!!.isBlank()) {
+            if (connectionQN.isBlank() || ctx.config.apiTokenGuid.isBlank()) {
                 logger.error { "Missing required parameter - you must provide BOTH a connection and the name of an API token." }
                 exitProcess(4)
             }
 
-            val apiTokenId = getIdForToken(ctx.client, ctx.config.apiTokenGuid!!)
+            val apiTokenId = getIdForToken(ctx.client, ctx.config.apiTokenGuid)
             val connection = getConnectionWithAdmins(ctx.client, connectionQN)
             addTokenAsConnectionAdmin(ctx.client, connection, apiTokenId)
         }

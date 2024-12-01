@@ -39,11 +39,11 @@ abstract class GTCImporter(
         filename,
         logger,
         typeNameFilter,
-        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
+        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite.toMutableList(), "glossaries", logger),
         updateOnly = ctx.config.glossariesUpsertSemantic == "update",
-        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
-        failOnErrors = ctx.config.glossariesFailOnErrors!!,
-        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
+        batchSize = ctx.config.glossariesBatchSize.toInt(),
+        failOnErrors = ctx.config.glossariesFailOnErrors,
+        fieldSeparator = ctx.config.glossariesFieldSeparator[0],
         trackBatches = true,
     ) {
     // Note: Always track batches (above) for GTC importers, to ensure cache is managed

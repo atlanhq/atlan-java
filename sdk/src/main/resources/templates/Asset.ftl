@@ -805,7 +805,7 @@
             return false;
         } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
             // Already active, but this could be due to the async nature of the delete handlers
-            if (retryCount < Atlan.getMaxNetworkRetries()) {
+            if (retryCount < client.getMaxNetworkRetries()) {
                 // So continue to retry up to the maximum number of allowed retries
                 log.debug(
                         "Attempted to restore an active asset, retrying status check for async delete handling (attempt: {}).",

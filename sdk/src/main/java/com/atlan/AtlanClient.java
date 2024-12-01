@@ -217,16 +217,14 @@ public class AtlanClient implements AutoCloseable {
     public AtlanClient(final String baseURL, final String apiToken) {
         extraHeaders = new ConcurrentHashMap<>();
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);
-        if (baseURL.equals("INTERNAL")) {
+        if (baseURL == null) {
+            throw new IllegalStateException(Atlan.INVALID_CLIENT_MSG);
+        } else if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;
         } else {
             internalAccess = false;
-            if (baseURL.endsWith("/")) {
-                apiBase = baseURL.substring(0, baseURL.lastIndexOf("/"));
-            } else {
-                apiBase = baseURL;
-            }
+            apiBase = Atlan.prepURL(baseURL);
         }
         this.apiToken = apiToken;
         mapper = Serde.createMapper(this);

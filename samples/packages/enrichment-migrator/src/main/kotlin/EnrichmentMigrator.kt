@@ -1,8 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import EnrichmentMigratorXform.getSourceDatabaseNames
-import EnrichmentMigratorXform.getTargetDatabaseName
 import co.elastic.clients.elasticsearch._types.SortOrder
+import com.atlan.AtlanClient
 import com.atlan.exception.ErrorCode
 import com.atlan.exception.InvalidRequestException
 import com.atlan.exception.NotFoundException
@@ -14,7 +13,6 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
 import mu.KotlinLogging
-import sun.tools.jconsole.ProxyClient.getConnectionName
 import java.io.File
 import kotlin.jvm.optionals.getOrElse
 
@@ -31,9 +29,9 @@ object EnrichmentMigrator {
         val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
         Utils.initializeContext(config).use { ctx ->
 
-            val sourceConnectionQN = ctx.config.sourceConnection!![0]
-            val sourcePrefix = ctx.config.sourceQnPrefix!!
-            val sourceDatabaseName = getSourceDatabaseNames(ctx.config.targetDatabasePattern!!, sourceConnectionQN, sourcePrefix)
+            val sourceConnectionQN = ctx.config.sourceConnection[0]
+            val sourcePrefix = ctx.config.sourceQnPrefix
+            val sourceDatabaseName = getSourceDatabaseNames(ctx.client, ctx.config.targetDatabasePattern, sourceConnectionQN, sourcePrefix)
             val sourceQN =
                 if (sourcePrefix.isBlank()) {
                     sourceConnectionQN
@@ -47,7 +45,7 @@ object EnrichmentMigrator {
                     exportScope = "ENRICHED_ONLY",
                     qnPrefix = sourceQN,
                     includeGlossaries = false,
-                    includeArchived = ctx.config.includeArchived!!,
+                    includeArchived = ctx.config.includeArchived,
                 )
             Utils.initializeContext(extractConfig, ctx.client).use { eCtx ->
                 Exporter.export(eCtx, outputDirectory)
@@ -61,7 +59,7 @@ object EnrichmentMigrator {
             val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
             val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
             val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields(ctx.client))
-            if (ctx.config.includeArchived!!) {
+            if (ctx.config.includeArchived) {
                 start.add(Asset.STATUS.atlanFieldName)
             }
             if (includeOOTB) {
@@ -99,15 +97,15 @@ object EnrichmentMigrator {
                     start.toList()
                 }
             val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-            ctx.config.targetConnection!!.forEach { targetConnectionQN ->
-                val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, ctx.config.targetDatabasePattern!!)
+            ctx.config.targetConnection.forEach { targetConnectionQN ->
+                val targetDatabaseNames = getTargetDatabaseName(ctx.client, targetConnectionQN, ctx.config.targetDatabasePattern)
                 targetDatabaseNames.forEach { targetDatabaseName ->
                     val mCtx =
                         MigratorContext(
                             sourceConnectionQN = sourceConnectionQN,
                             targetConnectionQN = targetConnectionQN,
-                            targetConnectionName = getConnectionName(targetConnectionQN),
-                            includeArchived = ctx.config.includeArchived!!,
+                            targetConnectionName = getConnectionName(ctx.client, targetConnectionQN),
+                            includeArchived = ctx.config.includeArchived,
                             sourceDatabaseName = sourceDatabaseName,
                             targetDatabaseName = targetDatabaseName,
                         )
@@ -125,7 +123,7 @@ object EnrichmentMigrator {
                             extractFile,
                             header.toList(),
                             logger,
-                            ctx.config.fieldSeparator!![0],
+                            ctx.config.fieldSeparator[0],
                         )
                     transformer.transform(transformedFile)
 
@@ -135,10 +133,10 @@ object EnrichmentMigrator {
                             assetsFile = transformedFile,
                             assetsUpsertSemantic = "update",
                             assetsFailOnErrors = assetsFailOnErrors,
-                            assetsBatchSize = ctx.config.batchSize!!,
-                            assetsFieldSeparator = ctx.config.fieldSeparator!!,
-                            assetsCaseSensitive = ctx.config.caseSensitive!!,
-                            assetsTableViewAgnostic = ctx.config.tableViewAgnostic!!,
+                            assetsBatchSize = ctx.config.batchSize,
+                            assetsFieldSeparator = ctx.config.fieldSeparator,
+                            assetsCaseSensitive = ctx.config.caseSensitive,
+                            assetsTableViewAgnostic = ctx.config.tableViewAgnostic,
                         )
                     Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
                         Importer.import(iCtx, outputDirectory)?.close()
@@ -150,11 +148,12 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getDatabaseNames(
+        client: AtlanClient,
         connectionQN: String,
         sourcePrefix: String,
     ): List<String> {
         val databaseNames =
-            Database.select()
+            Database.select(client)
                 .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
                 .where(Asset.NAME.regex(sourcePrefix))
                 .sort(Asset.NAME.order(SortOrder.Asc))
@@ -165,9 +164,12 @@ object EnrichmentMigrator {
     }
 
     @JvmStatic
-    fun getConnectionName(connectionQN: String): String {
+    fun getConnectionName(
+        client: AtlanClient,
+        connectionQN: String,
+    ): String {
         val connection =
-            Connection.select()
+            Connection.select(client)
                 .where(Asset.QUALIFIED_NAME.eq(connectionQN))
                 .stream()
                 .findFirst()
@@ -179,13 +181,14 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getTargetDatabaseName(
+        client: AtlanClient,
         targetConnectionQN: String,
         targetDatabasePattern: String,
     ): List<String> {
         if (targetDatabasePattern.isBlank()) {
             return listOf("")
         }
-        val databaseNames = getDatabaseNames(targetConnectionQN, targetDatabasePattern)
+        val databaseNames = getDatabaseNames(client, targetConnectionQN, targetDatabasePattern)
         if (databaseNames.isEmpty()) {
             throw InvalidRequestException(
                 ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,
@@ -199,6 +202,7 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun getSourceDatabaseNames(
+        client: AtlanClient,
         targetDatabasePattern: String,
         sourceConnectionQN: String,
         sourcePrefix: String,
@@ -206,7 +210,7 @@ object EnrichmentMigrator {
         if (targetDatabasePattern.isBlank()) {
             return ""
         }
-        val sourceDatabaseNames = getDatabaseNames(sourceConnectionQN, sourcePrefix.split("/")[0])
+        val sourceDatabaseNames = getDatabaseNames(client, sourceConnectionQN, sourcePrefix.split("/")[0])
         if (sourceDatabaseNames.size != 1) {
             throw InvalidRequestException(
                 ErrorCode.UNEXPECTED_NUMBER_OF_DATABASES_FOUND,

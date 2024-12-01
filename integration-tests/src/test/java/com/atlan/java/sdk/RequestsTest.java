@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.AuthenticationException;
@@ -15,6 +14,7 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.net.HttpClient;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -48,11 +48,12 @@ public class RequestsTest extends AtlanLiveTest {
     /**
      * Create a new API token with a unique name.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name to make the token unique
      * @return the token that was created
      * @throws AtlanException on any error creating or reading-back the group
      */
-    static ApiToken createToken(String name) throws AtlanException {
+    static ApiToken createToken(AtlanClient client, String name) throws AtlanException {
         ApiToken created = ApiToken.create(client, name);
         assertNotNull(created);
         assertEquals(created.getDisplayName(), name);
@@ -64,10 +65,11 @@ public class RequestsTest extends AtlanLiveTest {
     /**
      * Delete (purge) an API token based on its GUID.
      *
+     * @param client connectivity to the Atlan tenant
      * @param guid of the token to purge
      * @throws AtlanException on any errors purging the group
      */
-    static void deleteToken(String guid) throws AtlanException {
+    static void deleteToken(AtlanClient client, String guid) throws AtlanException {
         ApiToken.delete(client, guid);
     }
 
@@ -97,11 +99,10 @@ public class RequestsTest extends AtlanLiveTest {
 
     @Test(groups = {"request.create.token"})
     void createToken() throws AtlanException {
-        token = createToken(API_TOKEN_NAME);
+        token = createToken(client, API_TOKEN_NAME);
         assertNotNull(token.getClientId());
         String requestsToken = token.getAttributes().getAccessToken();
-        requestsClient = Atlan.getClient(System.getenv("ATLAN_BASE_URL"), "requests");
-        requestsClient.setApiToken(requestsToken);
+        requestsClient = new AtlanClient(System.getenv("ATLAN_BASE_URL"), requestsToken);
     }
 
     @Test(
@@ -286,10 +287,10 @@ public class RequestsTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeToken() throws AtlanException {
         if (token != null) {
-            deleteToken(token.getId());
+            deleteToken(client, token.getId());
         } else {
             ApiToken local = client.apiTokens.get(API_TOKEN_NAME);
-            RequestsTest.deleteToken(local.getId());
+            RequestsTest.deleteToken(client, local.getId());
         }
     }
 
@@ -322,5 +323,21 @@ public class RequestsTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeAtlanTag() throws AtlanException {
         AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
+    }
+
+    @Test(
+            groups = {"request.purge.client"},
+            dependsOnGroups = {
+                "request.create.*",
+                "request.read.*",
+                "request.update.*",
+                "request.purge.glossary",
+                "request.purge.connection"
+            },
+            alwaysRun = true)
+    void closeTemporaryClient() throws IOException {
+        if (requestsClient != null) {
+            requestsClient.close();
+        }
     }
 }

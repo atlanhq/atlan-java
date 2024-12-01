@@ -50,7 +50,7 @@ public class InstanceManager extends ExtendedModelGenerator {
 
     void createConnection() {
         try {
-            List<Connection> results = Connection.findByName(SERVICE_TYPE, AtlanConnectorType.MONGODB);
+            List<Connection> results = Connection.findByName(client, SERVICE_TYPE, AtlanConnectorType.MONGODB);
             if (!results.isEmpty()) {
                 connection = results.get(0);
                 log.info("Connection already exists, reusing it: {}", connection.getQualifiedName());
@@ -58,6 +58,7 @@ public class InstanceManager extends ExtendedModelGenerator {
         } catch (NotFoundException err) {
             try {
                 Connection toCreate = Connection.creator(
+                                client,
                                 SERVICE_TYPE,
                                 AtlanConnectorType.MONGODB,
                                 List.of(client.getRoleCache().getIdForName("$admin")),
@@ -129,14 +130,14 @@ public class InstanceManager extends ExtendedModelGenerator {
         final String child1QN = parentQN + "/column1";
         final String child2QN = parentQN + "/column2";
         try {
-            GuacamoleTable table = GuacamoleTable.get(parentQN);
+            GuacamoleTable table = GuacamoleTable.get(client, parentQN, true);
             assert table.getQualifiedName().equals(parentQN);
             assert table.getGuacamoleColumns().size() == 2;
             String tableGuid = table.getGuid();
-            GuacamoleColumn one = GuacamoleColumn.get(child1QN);
+            GuacamoleColumn one = GuacamoleColumn.get(client, child1QN, true);
             assert one.getQualifiedName().equals(child1QN);
             assert one.getGuacamoleTable().getGuid().equals(tableGuid);
-            GuacamoleColumn two = GuacamoleColumn.get(child2QN);
+            GuacamoleColumn two = GuacamoleColumn.get(client, child2QN, true);
             assert two.getQualifiedName().equals(child2QN);
             assert two.getGuacamoleTable().getGuid().equals(tableGuid);
         } catch (AtlanException e) {
@@ -215,9 +216,9 @@ public class InstanceManager extends ExtendedModelGenerator {
         final String child1QN = parentQN + "/column1";
         final String child2QN = parentQN + "/column2";
         try {
-            GuacamoleTable parent = GuacamoleTable.get(parentQN);
-            GuacamoleColumn one = GuacamoleColumn.get(child1QN);
-            GuacamoleColumn two = GuacamoleColumn.get(child2QN);
+            GuacamoleTable parent = GuacamoleTable.get(client, parentQN);
+            GuacamoleColumn one = GuacamoleColumn.get(client, child1QN);
+            GuacamoleColumn two = GuacamoleColumn.get(client, child2QN);
             client.assets.delete(List.of(parent.getGuid(), one.getGuid(), two.getGuid()), AtlanDeleteType.PURGE);
             log.info("Entities purged.");
         } catch (AtlanException e) {

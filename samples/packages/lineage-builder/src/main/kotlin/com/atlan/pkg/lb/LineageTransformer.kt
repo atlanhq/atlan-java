@@ -23,7 +23,7 @@ class LineageTransformer(
         inputFile,
         lineageHeaders,
         logger,
-        ctx.config.fieldSeparator!![0],
+        ctx.config.fieldSeparator[0],
     ) {
     companion object {
         const val XFORM_PREFIX = "Transformation"

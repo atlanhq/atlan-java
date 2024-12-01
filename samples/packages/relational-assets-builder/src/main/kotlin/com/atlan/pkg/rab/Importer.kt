@@ -48,7 +48,6 @@ object Importer {
      * Actually run the import.
      *
      * @param ctx context in which this package is running
-     * @param config for the package
      * @param outputDirectory in which to do any data processing
      * @return the qualifiedName of the connection that was delta-processed, or null if no delta-processing enabled
      */
@@ -57,20 +56,9 @@ object Importer {
         outputDirectory: String = "tmp",
     ): String? {
         val assetsUpload = ctx.config.importType == "DIRECT"
-        val assetsFilename = ctx.config.assetsFile!!
-        val assetsKey = ctx.config.assetsKey!!
-        val fieldSeparator = ctx.config.assetsFieldSeparator!![0]
-        /*val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
-        val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
-        val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
-        val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
-        val assetsKey = Utils.getOrDefault(config.assetsKey, "")
-        val assetAttrsToOverwrite =
-            CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
-        val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
-        val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
-        val trackBatches = Utils.getOrDefault(config.trackBatches, true)
-        val deltaSemantic = Utils.getOrDefault(config.deltaSemantic, "incremental")*/
+        val assetsFilename = ctx.config.assetsFile
+        val assetsKey = ctx.config.assetsKey
+        val fieldSeparator = ctx.config.assetsFieldSeparator[0]
 
         val assetsFileProvided =
             (
@@ -116,7 +104,7 @@ object Importer {
 
         ctx.connectionCache.preload()
 
-        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors!!)
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
@@ -132,7 +120,7 @@ object Importer {
             if (ctx.config.assetsUpsertSemantic == "full") {
                 val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
                 try {
-                    val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
+                    val list = Connection.findByName(ctx.client, connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
                     list[0].qualifiedName
                 } catch (e: AtlanException) {
                     logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
@@ -142,18 +130,18 @@ object Importer {
                 null
             }
 
-        val previousFileDirect = ctx.config.previousFileDirect!!
+        val previousFileDirect = ctx.config.previousFileDirect
         DeltaProcessor(
             ctx = ctx,
-            semantic = ctx.config.assetsUpsertSemantic!!,
+            semantic = ctx.config.assetsUpsertSemantic,
             qualifiedNamePrefix = connectionQN,
-            removalType = ctx.config.deltaRemovalType!!,
+            removalType = ctx.config.deltaRemovalType,
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
             resolver = AssetImporter,
             preprocessedDetails = preprocessedDetails,
             typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
             logger = logger,
-            reloadSemantic = ctx.config.deltaReloadCalculation!!,
+            reloadSemantic = ctx.config.deltaReloadCalculation,
             previousFilePreprocessor =
                 Preprocessor(
                     previousFileDirect,

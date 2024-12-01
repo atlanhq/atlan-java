@@ -35,7 +35,7 @@ class AssetViews(
                             "Link" to "Link to the asset's profile page in Atlan",
                         ),
                     )
-                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax!!.toInt(), false).associateBy { it.guid }
+                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), false).associateBy { it.guid }
                 }
                 "BY_USERS" -> {
                     xlsx.addHeader(
@@ -49,7 +49,7 @@ class AssetViews(
                             "Link" to "Link to the asset's profile page in Atlan",
                         ),
                     )
-                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax!!.toInt(), true).associateBy { it.guid }
+                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), true).associateBy { it.guid }
                 }
                 else -> mapOf()
             }

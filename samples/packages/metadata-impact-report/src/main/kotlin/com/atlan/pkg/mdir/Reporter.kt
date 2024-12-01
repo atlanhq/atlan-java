@@ -95,7 +95,7 @@ object Reporter {
 
             val glossary =
                 if (ctx.config.includeGlossary == "TRUE") {
-                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName!!)
+                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName)
                 } else {
                     null
                 }
@@ -153,7 +153,7 @@ object Reporter {
         CATEGORIES.forEach { (name, description) ->
             val builder =
                 try {
-                    val found = GlossaryCategory.findByNameFast(name, glossary.qualifiedName)[0]
+                    val found = GlossaryCategory.findByNameFast(client, name, glossary.qualifiedName)[0]
                     found.trimToRequired().guid(found.guid)
                 } catch (e: NotFoundException) {
                     GlossaryCategory.creator(name, glossary)
@@ -201,7 +201,7 @@ object Reporter {
                     } else {
                         null
                     }
-                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.config.includeDetails!!, term, batchSize)
+                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.config.includeDetails, term, batchSize)
             }
         }
         return outputFile
@@ -216,7 +216,7 @@ object Reporter {
     ): GlossaryTerm {
         val builder =
             try {
-                GlossaryTerm.findByNameFast(metric.name, glossary.qualifiedName).trimToRequired()
+                GlossaryTerm.findByNameFast(client, metric.name, glossary.qualifiedName).trimToRequired()
             } catch (e: NotFoundException) {
                 GlossaryTerm.creator(metric.name, glossary)
             }

@@ -48,19 +48,19 @@ abstract class AssetImporter(
     typeNameFilter: String,
     logger: KLogger,
     creationHandling: AssetCreationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.FULL),
-    batchSize: Int = ctx.config.assetsBatchSize!!.toInt(),
-    trackBatches: Boolean = ctx.config.trackBatches!!,
+    batchSize: Int = ctx.config.assetsBatchSize.toInt(),
+    trackBatches: Boolean = ctx.config.trackBatches,
 ) : CSVImporter(
         ctx,
         filename,
         logger,
         typeNameFilter,
-        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite!!.toMutableList(), "assets", logger),
+        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
         creationHandling = creationHandling,
         batchSize = batchSize,
         trackBatches = trackBatches,
-        fieldSeparator = ctx.config.assetsFieldSeparator!![0],
-        failOnErrors = ctx.config.assetsFailOnErrors!!,
+        fieldSeparator = ctx.config.assetsFieldSeparator[0],
+        failOnErrors = ctx.config.assetsFailOnErrors,
     ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
