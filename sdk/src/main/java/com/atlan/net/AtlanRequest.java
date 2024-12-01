@@ -114,7 +114,8 @@ public class AtlanRequest {
         try {
             this.client = client;
             this.body = body;
-            this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.options =
+                    (options != null) ? options : RequestOptions.from(client).build();
             this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
@@ -153,7 +154,8 @@ public class AtlanRequest {
         try {
             this.client = client;
             this.body = null;
-            this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.options =
+                    (options != null) ? options : RequestOptions.from(client).build();
             this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
@@ -196,7 +198,8 @@ public class AtlanRequest {
         try {
             this.client = client;
             this.body = null;
-            this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.options =
+                    (options != null) ? options : RequestOptions.from(client).build();
             this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);

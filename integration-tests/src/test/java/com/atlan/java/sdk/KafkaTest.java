@@ -125,7 +125,7 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.read.consumergroup"},
             dependsOnGroups = {"kafka.create.consumergroup", "kafka.update.consumergroup"})
     void retrieveGroup() throws AtlanException {
-        KafkaConsumerGroup b = KafkaConsumerGroup.get(client, consumerGroup.getGuid());
+        KafkaConsumerGroup b = KafkaConsumerGroup.get(client, consumerGroup.getGuid(), true);
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), consumerGroup.getGuid());

@@ -1145,7 +1145,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 assertEquals(term.getGuid(), term1.getGuid());
             }
         }
-        Column updated = Column.get(client, column5.getQualifiedName());
+        Column updated = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(updated);
         validateHasTerms(updated, Collections.emptySet());
     }
@@ -1156,7 +1156,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnAppendTerms() throws AtlanException {
         Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term1, term2));
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1167,7 +1167,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTerm() throws AtlanException {
         Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1178,7 +1178,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnAppendTermsAgain() throws AtlanException {
         Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1189,7 +1189,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTermAgain() throws AtlanException {
         Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term2));
     }
@@ -1200,7 +1200,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnReplaceTerms() throws AtlanException {
         Column column = Column.replaceTerms(client, column5.getQualifiedName(), COLUMN_NAME5, List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1274,7 +1274,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveTerms() throws AtlanException {
         Column column = Column.replaceTerms(client, column5.getQualifiedName(), COLUMN_NAME5, null);
         validateUpdatedColumn(column);
-        column = Column.get(client, column5.getQualifiedName());
+        column = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Collections.emptySet());
     }

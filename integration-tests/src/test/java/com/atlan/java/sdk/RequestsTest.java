@@ -263,7 +263,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.approve.request"},
             alwaysRun = true)
     void readTerm() throws AtlanException {
-        GlossaryTerm revised = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm revised = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(revised);
         assertEquals(revised.getUserDescription(), ATTR_VALUE_DESCRIPTION);
         assertNotNull(revised.getAtlanTags());

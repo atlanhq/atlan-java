@@ -444,7 +444,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
                 .build();
         GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_RACI, cm);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
