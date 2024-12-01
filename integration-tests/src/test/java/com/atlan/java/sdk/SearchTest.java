@@ -50,8 +50,9 @@ public class SearchTest extends AtlanLiveTest {
 
     @Test(groups = {"search."})
     void findSourceSyncedAssets() throws AtlanException {
-        List<Asset> tables = Table.select().taggedWithValue(EXISTING_SOURCE_SYNCED_TAG, "Highly Restricted").stream()
-                .toList();
+        List<Asset> tables =
+                Table.select(client).taggedWithValue(EXISTING_SOURCE_SYNCED_TAG, "Highly Restricted").stream()
+                        .toList();
         assertNotNull(tables);
         assertFalse(tables.isEmpty());
         for (Asset one : tables) {
@@ -101,10 +102,10 @@ public class SearchTest extends AtlanLiveTest {
             dependsOnGroups = {"search.create.terms"})
     void testDefaultSorting() throws AtlanException, IOException {
         // Empty sorting
-        IndexSearchRequest request = GlossaryTerm.select()
+        IndexSearchRequest request = GlossaryTerm.select(client)
                 .where(Asset.QUALIFIED_NAME.eq(term1.getQualifiedName()))
                 .toRequest();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         assertNotNull(response);
         IndexSearchDSL dsl = response.getQuery();
         assertNotNull(dsl);
@@ -120,7 +121,7 @@ public class SearchTest extends AtlanLiveTest {
                 .where(Asset.QUALIFIED_NAME.eq("abc123"))
                 .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))
                 .toRequest();
-        response = request.search();
+        response = request.search(client);
         assertNotNull(response);
         dsl = response.getQuery();
         assertNotNull(dsl);
@@ -140,7 +141,7 @@ public class SearchTest extends AtlanLiveTest {
                 .where(Asset.QUALIFIED_NAME.eq("abc123"))
                 .sort(IReferenceable.GUID.order(SortOrder.Asc))
                 .toRequest();
-        response = request.search();
+        response = request.search(client);
         assertNotNull(response);
         dsl = response.getQuery();
         assertNotNull(dsl);
@@ -157,7 +158,7 @@ public class SearchTest extends AtlanLiveTest {
                 .sort(Asset.QUALIFIED_NAME.order(SortOrder.Asc))
                 .sort(IReferenceable.GUID.order(SortOrder.Desc))
                 .toRequest();
-        response = request.search();
+        response = request.search(client);
         assertNotNull(response);
         dsl = response.getQuery();
         assertNotNull(dsl);
@@ -180,7 +181,7 @@ public class SearchTest extends AtlanLiveTest {
         AssetMutationResponse response = term1.trimToRequired()
                 .category(category1.trimToReference())
                 .build()
-                .save();
+                .save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2);
         assertEquals(response.getUpdatedAssets(GlossaryTerm.class).size(), 1);
@@ -189,7 +190,7 @@ public class SearchTest extends AtlanLiveTest {
                 .category(category1.trimToReference())
                 .category(category2.trimToReference())
                 .build()
-                .save();
+                .save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 3);
         assertEquals(response.getUpdatedAssets(GlossaryTerm.class).size(), 1);
@@ -199,7 +200,7 @@ public class SearchTest extends AtlanLiveTest {
                 .category(category2.trimToReference())
                 .category(category3.trimToReference())
                 .build()
-                .save();
+                .save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 4);
         assertEquals(response.getUpdatedAssets(GlossaryTerm.class).size(), 1);
@@ -210,7 +211,7 @@ public class SearchTest extends AtlanLiveTest {
             groups = {"search.search.consistent"},
             dependsOnGroups = {"search.create.links"})
     void waitForConsistency() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = GlossaryTerm.select()
+        IndexSearchRequest index = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.UPDATE_TIME.gt(term5.getCreateTime()))
                 .toRequest();
@@ -222,7 +223,7 @@ public class SearchTest extends AtlanLiveTest {
             groups = {"search.search.terms_set"},
             dependsOnGroups = {"search.search.consistent"})
     void termsSet() throws AtlanException {
-        Set<String> guids = GlossaryTerm.select()
+        Set<String> guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.CATEGORIES.in(
                         List.of(category1.getQualifiedName(), category2.getQualifiedName()), 2))
@@ -241,7 +242,7 @@ public class SearchTest extends AtlanLiveTest {
     void wildcard() throws AtlanException {
         String orgTermName = term4.getName();
         String toSearch = orgTermName.substring(0, orgTermName.length() - 2) + "?4";
-        Set<String> guids = GlossaryTerm.select()
+        Set<String> guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.NAME.wildcard(toSearch))
                 .stream()
@@ -251,7 +252,7 @@ public class SearchTest extends AtlanLiveTest {
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(term4.getGuid()));
         toSearch = orgTermName.substring(0, orgTermName.length() - 4) + "*4";
-        guids = GlossaryTerm.select()
+        guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.NAME.wildcard(toSearch))
                 .stream()
@@ -267,7 +268,7 @@ public class SearchTest extends AtlanLiveTest {
             dependsOnGroups = {"search.search.consistent"})
     void regex() throws AtlanException {
         String toSearch = term3.getName() + "|" + term4.getName();
-        Set<String> guids = GlossaryTerm.select()
+        Set<String> guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.NAME.regex(toSearch))
                 .stream()
@@ -283,7 +284,7 @@ public class SearchTest extends AtlanLiveTest {
             groups = {"search.search.range"},
             dependsOnGroups = {"search.search.consistent"})
     void range() throws AtlanException {
-        Set<String> guids = GlossaryTerm.select()
+        Set<String> guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.UPDATE_TIME.gt(term5.getCreateTime()))
                 .stream()
@@ -291,7 +292,7 @@ public class SearchTest extends AtlanLiveTest {
                 .collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 3);
-        guids = GlossaryTerm.select()
+        guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.UPDATE_TIME.gte(term5.getCreateTime()))
                 .stream()
@@ -299,7 +300,7 @@ public class SearchTest extends AtlanLiveTest {
                 .collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 4);
-        guids = GlossaryTerm.select()
+        guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.CREATE_TIME.lt(term5.getCreateTime()))
                 .stream()
@@ -307,7 +308,7 @@ public class SearchTest extends AtlanLiveTest {
                 .collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 4);
-        guids = GlossaryTerm.select()
+        guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.CREATE_TIME.lte(term5.getCreateTime()))
                 .stream()
@@ -315,7 +316,7 @@ public class SearchTest extends AtlanLiveTest {
                 .collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 5);
-        guids = GlossaryTerm.select()
+        guids = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.CREATE_TIME.between(term2.getCreateTime(), term4.getCreateTime()))
                 .stream()
@@ -329,7 +330,7 @@ public class SearchTest extends AtlanLiveTest {
             groups = {"search.search.streams"},
             dependsOnGroups = {"search.search.consistent"})
     void streamVariations() throws AtlanException {
-        FluentSearch request = GlossaryTerm.select()
+        FluentSearch request = GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.getQualifiedName()))
                 .where(GlossaryTerm.CREATE_TIME.lte(term5.getCreateTime()))
                 .pageSize(2)

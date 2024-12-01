@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.probable.guacamole.typedefs;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.probable.guacamole.ExtendedModelGenerator;
@@ -35,7 +34,7 @@ public class TypeDefDestroyer extends ExtendedModelGenerator {
 
     private void purgeTypeDef(String name) {
         try {
-            Atlan.getDefaultClient().typeDefs.purge(name);
+            client.typeDefs.purge(name);
             log.info("Purged typedef: {}", name);
         } catch (AtlanException e) {
             log.error("Failed to purge typedef: {}", name, e);

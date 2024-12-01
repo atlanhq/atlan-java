@@ -3,7 +3,6 @@
 package com.atlan.pkg.cache
 
 import co.elastic.clients.elasticsearch._types.SortOrder
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.fields.AtlanField
@@ -24,7 +23,7 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 

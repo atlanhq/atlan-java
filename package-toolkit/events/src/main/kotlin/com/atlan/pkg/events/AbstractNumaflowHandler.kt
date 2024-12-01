@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.events
 
-import com.atlan.Atlan
 import com.atlan.events.AtlanEventHandler
 import com.atlan.exception.AtlanException
 import com.atlan.model.events.AtlanEvent
@@ -66,13 +65,13 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
         return try {
             val current =
                 handler.getCurrentState(
-                    Atlan.getDefaultClient(),
+                    handler.client,
                     event.payload.asset,
                     logger,
                 )
             val updated = handler.calculateChanges(current, logger)
             if (!updated.isEmpty()) {
-                handler.saveChanges(Atlan.getDefaultClient(), updated, logger)
+                handler.saveChanges(handler.client, updated, logger)
                 succeeded(keys, data)
             } else {
                 drop()
@@ -109,7 +108,7 @@ abstract class AbstractNumaflowHandler(private val handler: AtlanEventHandler) :
      */
     @Throws(IOException::class)
     protected fun getAtlanEvent(data: Datum): AtlanEvent {
-        return AtlanEventHandler.getAtlanEvent(Atlan.getDefaultClient(), data.value)
+        return AtlanEventHandler.getAtlanEvent(handler.client, data.value)
     }
 
     /**

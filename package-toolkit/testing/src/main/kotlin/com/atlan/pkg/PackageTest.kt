@@ -338,7 +338,7 @@ abstract class PackageTest(
         name: String,
         type: AtlanConnectorType,
     ) {
-        val results = Connection.findByName(name, type)
+        val results = Connection.findByName(client, name, type)
         if (!results.isNullOrEmpty()) {
             val deletionType = AtlanDeleteType.PURGE
             results.forEach {
@@ -413,15 +413,15 @@ abstract class PackageTest(
      * @param name of the glossary
      */
     fun removeGlossary(name: String) {
-        val glossary = Glossary.findByName(name)
+        val glossary = Glossary.findByName(client, name)
         val terms =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
                 .toList()
         val categories =
-            GlossaryCategory.select()
+            GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
@@ -450,7 +450,7 @@ abstract class PackageTest(
      */
     fun removeDomain(name: String) {
         val domainGuids =
-            DataDomain.select()
+            DataDomain.select(client)
                 .where(DataDomain.NAME.eq(name))
                 .stream()
                 .map { it.guid }
@@ -469,7 +469,7 @@ abstract class PackageTest(
      */
     fun removeProduct(name: String) {
         val domainGuids =
-            DataProduct.select()
+            DataProduct.select(client)
                 .where(DataProduct.NAME.eq(name))
                 .stream()
                 .map { it.guid }

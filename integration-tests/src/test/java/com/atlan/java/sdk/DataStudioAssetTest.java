@@ -80,13 +80,13 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.update.report"},
             dependsOnGroups = {"gds.create.report"})
     void updateReport() throws AtlanException {
-        DataStudioAsset updated =
-                DataStudioAsset.updateCertificate(client, report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        DataStudioAsset updated = DataStudioAsset.updateCertificate(
+                client, report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = DataStudioAsset.updateAnnouncement(
-            client, report.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, report.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -212,7 +212,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.purge.source"},
             dependsOnGroups = {"gds.delete.source.restore"})
     void purgeSource() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, source.getGuid());
+        AssetMutationResponse response = Asset.purge(client, source.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());

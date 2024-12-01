@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
@@ -35,7 +34,7 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 

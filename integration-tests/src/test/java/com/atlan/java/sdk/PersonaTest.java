@@ -199,7 +199,7 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.update.*", "persona.read.*"},
             alwaysRun = true)
     void purgePersonas() throws AtlanException {
-        Persona.purge(client, persona.getGuid());
+        Persona.purge(client, persona.getGuid()).block();
     }
 
     @Test(
@@ -207,7 +207,7 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.read.*", "persona.update.*", "persona.purge.personas"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        Glossary.purge(client, glossary.getGuid());
+        Glossary.purge(client, glossary.getGuid()).block();
     }
 
     @Test(

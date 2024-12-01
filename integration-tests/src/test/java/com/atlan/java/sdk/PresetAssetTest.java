@@ -146,12 +146,12 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.create.collection"})
     void updateCollection() throws AtlanException {
         PresetDashboard updated = PresetDashboard.updateCertificate(
-            client, collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = PresetDashboard.updateAnnouncement(
-            client, collection.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, collection.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -193,7 +193,8 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.update.collection.again"},
             dependsOnGroups = {"preset.read.collection"})
     void updateCollectionAgain() throws AtlanException {
-        PresetDashboard updated = PresetDashboard.removeCertificate(client, collection.getQualifiedName(), COLLECTION_NAME);
+        PresetDashboard updated =
+                PresetDashboard.removeCertificate(client, collection.getQualifiedName(), COLLECTION_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
@@ -311,7 +312,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.purge.chart"},
             dependsOnGroups = {"preset.delete.chart.restore"})
     void purgeChart() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, chart.getGuid());
+        AssetMutationResponse response = Asset.purge(client, chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());

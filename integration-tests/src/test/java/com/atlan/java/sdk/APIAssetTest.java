@@ -39,7 +39,7 @@ public class APIAssetTest extends AtlanLiveTest {
     void createSpec() throws AtlanException {
         APISpec toCreate =
                 APISpec.creator(SPEC_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof APISpec);
         spec = (APISpec) one;
@@ -55,7 +55,7 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"api.create.spec"})
     void createPath() throws AtlanException {
         APIPath toCreate = APIPath.creator(PATH_NAME, spec).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -82,12 +82,13 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.update.spec"},
             dependsOnGroups = {"api.create.spec"})
     void updateSpec() throws AtlanException {
-        APISpec updated = APISpec.updateCertificate(spec.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        APISpec updated =
+                APISpec.updateCertificate(client, spec.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = APISpec.updateAnnouncement(
-                spec.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, spec.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -98,7 +99,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.read.spec"},
             dependsOnGroups = {"api.create.path", "api.update.spec"})
     void retrieveSpec() throws AtlanException {
-        APISpec s = APISpec.get(spec.getGuid());
+        APISpec s = APISpec.get(client, spec.getGuid(), true);
         assertNotNull(s);
         assertTrue(s.isComplete());
         assertEquals(s.getGuid(), spec.getGuid());
@@ -115,14 +116,14 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.update.spec.again"},
             dependsOnGroups = {"api.read.spec"})
     void updateSpecAgain() throws AtlanException {
-        APISpec updated = APISpec.removeCertificate(spec.getQualifiedName(), SPEC_NAME);
+        APISpec updated = APISpec.removeCertificate(client, spec.getQualifiedName(), SPEC_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = APISpec.removeAnnouncement(spec.getQualifiedName(), SPEC_NAME);
+        updated = APISpec.removeAnnouncement(client, spec.getQualifiedName(), SPEC_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -133,7 +134,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.search.assets"},
             dependsOnGroups = {"api.update.spec.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = APIPath.select()
+        IndexSearchRequest index = APIPath.select(client)
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .pageSize(10)
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
@@ -171,7 +172,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.delete.path"},
             dependsOnGroups = {"api.update.*", "api.search.*"})
     void deletePath() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(path.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, path.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -196,8 +197,8 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.delete.path.restore"},
             dependsOnGroups = {"api.delete.path.read"})
     void restorePath() throws AtlanException {
-        assertTrue(APIPath.restore(path.getQualifiedName()));
-        APIPath restored = APIPath.get(path.getQualifiedName());
+        assertTrue(APIPath.restore(client, path.getQualifiedName()));
+        APIPath restored = APIPath.get(client, path.getQualifiedName());
         assertEquals(restored.getGuid(), path.getGuid());
         assertEquals(restored.getQualifiedName(), path.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -207,7 +208,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.purge.path"},
             dependsOnGroups = {"api.delete.path.restore"})
     void purgePath() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(path.getGuid());
+        AssetMutationResponse response = Asset.purge(client, path.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());

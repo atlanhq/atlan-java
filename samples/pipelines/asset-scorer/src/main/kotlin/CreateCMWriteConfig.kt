@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.ConflictException
@@ -55,7 +54,7 @@ object CreateCMWriteConfig {
         client: AtlanClient,
     ) {
         try {
-            Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING)
+            client.customMetadataCache.getSidForName(CM_SCORING)
         } catch (e: NotFoundException) {
             logger.info { "Creating scorecard custom metadata $CM_SCORING.$CM_ATTR_COMPOSITE_SCORE" }
             try {
@@ -90,7 +89,7 @@ object CreateCMWriteConfig {
                 customMetadataDef.create(client)
                 logger.info { "Created $CM_SCORING custom metadata structure." }
                 val badge =
-                    Badge.creator(CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
+                    Badge.creator(client, CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
                         .userDescription(
                             "Overall asset score. Indicates how enriched and ready for re-use this asset is, out of a total possible score of 10.",
                         )
@@ -108,7 +107,7 @@ object CreateCMWriteConfig {
             } catch (conflict: ConflictException) {
                 // Handle cross-thread race condition that the typedef has since been created
                 try {
-                    Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING)
+                    client.customMetadataCache.getSidForName(CM_SCORING)
                 } catch (eConflict: AtlanException) {
                     logger.error(
                         "Unable to look up {} custom metadata, even though it should already exist.",

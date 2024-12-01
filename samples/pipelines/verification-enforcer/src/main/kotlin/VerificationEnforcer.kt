@@ -25,7 +25,7 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
     fun main(args: Array<String>) {
         EventUtils.setEventOps<VerificationEnforcerCfg>()?.let {
             config = it
-            EventUtils.useApiToken(config.apiToken)
+            EventUtils.useApiToken(Handler.client, config.apiToken)
             EventUtils.startHandler(this)
         }
     }
@@ -34,6 +34,13 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
      * Logic for the event processing.
      */
     object Handler : AtlanEventHandler {
+        private val client = AtlanClient()
+
+        /** {@inheritDoc} */
+        override fun getClient(): AtlanClient {
+            return client
+        }
+
         private val REQUIRED_ATTRS =
             setOf(
                 Asset.CERTIFICATE_STATUS.atlanFieldName,

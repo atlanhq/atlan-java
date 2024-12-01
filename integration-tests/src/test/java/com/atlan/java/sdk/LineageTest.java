@@ -421,7 +421,7 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.delete.lineage"},
             dependsOnGroups = {"lineage.search.lineage"})
     void deleteLineage() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(client, start.getGuid());
+        AssetMutationResponse response = Asset.delete(client, start.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -449,7 +449,8 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.delete.lineage.restore"},
             alwaysRun = true)
     void purgeLineage() throws AtlanException {
-        AssetMutationResponse response = LineageProcess.purge(client, start.getGuid());
+        AssetMutationResponse response =
+                LineageProcess.purge(client, start.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);

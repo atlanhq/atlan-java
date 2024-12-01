@@ -52,18 +52,14 @@ public abstract class AtlanLiveTest {
 
     public static final String DESCRIPTION = TESTING_STRING;
 
-    public static final AtlanClient client;
-
-    static {
-        client = new AtlanClient();
-        client.setMaxNetworkRetries(10);
-    }
+    protected final AtlanClient client = new AtlanClient();
 
     @BeforeClass
     public void setLogName() {
         // TODO: this doesn't really work -- different tests' entries are showing up in others' log files
         //  when run in parallel (works fine for running tests individually)
         ThreadContext.put("className", this.getClass().getSimpleName());
+        client.setMaxNetworkRetries(10);
     }
 
     protected static String makeUnique(String input) {
@@ -76,7 +72,7 @@ public abstract class AtlanLiveTest {
      * @param response the update response to validate
      * @return the single updated asset from the response
      */
-    protected static Asset validateSingleUpdate(AssetMutationResponse response) {
+    protected Asset validateSingleUpdate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -90,7 +86,7 @@ public abstract class AtlanLiveTest {
      * @param response the create response to validate
      * @return the single created asset from the response
      */
-    protected static Asset validateSingleCreate(AssetMutationResponse response) {
+    protected Asset validateSingleCreate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -106,7 +102,7 @@ public abstract class AtlanLiveTest {
      * @param log into which to write full details if the asset was not deleted as expected
      * @throws AtlanException on any API communication issues
      */
-    protected static void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
+    protected void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
         Asset deleted = Asset.get(client, toValidate.getGuid(), true);
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), toValidate.getGuid());
@@ -137,7 +133,7 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
+    protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
             throws AtlanException, InterruptedException {
         return retrySearchUntil(request, expectedSize, false);
     }
@@ -152,8 +148,7 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static IndexSearchResponse retrySearchUntil(
-            IndexSearchRequest request, long expectedSize, boolean isDeleteQuery)
+    protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize, boolean isDeleteQuery)
             throws AtlanException, InterruptedException {
         int count = 1;
         IndexSearchResponse response = request.search(client);
@@ -194,7 +189,7 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
+    protected AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
             throws AtlanException, InterruptedException {
         int count = 1;
         AuditSearchResponse response = request.search(client);

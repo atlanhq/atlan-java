@@ -138,13 +138,13 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.update.bucket"},
             dependsOnGroups = {"s3.create.bucket"})
     void updateBucketARN() throws AtlanException {
-        S3Bucket updated =
-                S3Bucket.updateCertificate(client, bucketARN.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        S3Bucket updated = S3Bucket.updateCertificate(
+                client, bucketARN.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = S3Bucket.updateAnnouncement(
-            client, bucketARN.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, bucketARN.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -155,13 +155,13 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.update.bucket"},
             dependsOnGroups = {"s3.create.bucket"})
     void updateBucketByName() throws AtlanException {
-        S3Bucket updated =
-                S3Bucket.updateCertificate(client, bucketByName.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        S3Bucket updated = S3Bucket.updateCertificate(
+                client, bucketByName.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = S3Bucket.updateAnnouncement(
-            client, bucketByName.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, bucketByName.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -350,7 +350,8 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.delete.object"},
             dependsOnGroups = {"s3.update.*", "s3.search.*"})
     void deleteObjectARN() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(client, objectARN.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, objectARN.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -368,7 +369,8 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.delete.object"},
             dependsOnGroups = {"s3.update.*", "s3.search.*"})
     void deleteObjectByName() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(client, objectByName.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, objectByName.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -422,7 +424,8 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.purge.object"},
             dependsOnGroups = {"s3.delete.object.restore"})
     void purgeObjectARN() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, objectARN.getGuid());
+        AssetMutationResponse response =
+                Asset.purge(client, objectARN.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -440,7 +443,8 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.purge.object"},
             dependsOnGroups = {"s3.delete.object.restore"})
     void purgeObjectByName() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, objectByName.getGuid());
+        AssetMutationResponse response =
+                Asset.purge(client, objectByName.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());

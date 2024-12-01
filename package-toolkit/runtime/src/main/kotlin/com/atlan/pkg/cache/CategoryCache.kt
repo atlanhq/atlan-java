@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary
@@ -28,7 +27,7 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 

@@ -124,17 +124,17 @@ public class ConnectionTest extends AtlanLiveTest {
             int totalToDelete = guids.size();
             log.info(" --- Purging {} assets from {}... ---", totalToDelete, qualifiedName);
             if (totalToDelete < 20) {
-                client.assets.delete(guids, AtlanDeleteType.PURGE);
+                client.assets.delete(guids, AtlanDeleteType.PURGE).block();
             } else {
                 for (int i = 0; i < totalToDelete; i += 20) {
                     log.info(" ... next batch of 20 ({}%)", Math.round((i * 100.0) / totalToDelete));
                     List<String> sublist = guids.subList(i, Math.min(i + 20, totalToDelete));
-                    client.assets.delete(sublist, AtlanDeleteType.PURGE);
+                    client.assets.delete(sublist, AtlanDeleteType.PURGE).block();
                 }
             }
         }
         // Purge the connection itself, now that all assets are purged
-        Optional<Asset> found = Connection.select().where(Connection.QUALIFIED_NAME.eq(qualifiedName)).stream()
+        Optional<Asset> found = Connection.select(client).where(Connection.QUALIFIED_NAME.eq(qualifiedName)).stream()
                 .findFirst();
         if (found.isPresent()) {
             client.assets.delete(found.get().getGuid(), AtlanDeleteType.PURGE).block();
@@ -145,27 +145,29 @@ public class ConnectionTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.POSTGRES, null, null, null));
+                () -> Connection.creator(client, PREFIX, AtlanConnectorType.POSTGRES, null, null, null));
     }
 
     @Test(groups = {"invalid.connection.roles"})
     void invalidConnectionAdminRole() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, List.of("abc123"), null, null));
+                () -> Connection.creator(client, PREFIX, AtlanConnectorType.SAPHANA, List.of("abc123"), null, null));
     }
 
     @Test(groups = {"invalid.connection.groups"})
     void invalidConnectionAdminGroup() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, List.of("NONEXISTENT"), null));
+                () -> Connection.creator(
+                        client, PREFIX, AtlanConnectorType.SAPHANA, null, List.of("NONEXISTENT"), null));
     }
 
     @Test(groups = {"invalid.connection.users"})
     void invalidConnectionAdminUser() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, null, List.of("NONEXISTENT")));
+                () -> Connection.creator(
+                        client, PREFIX, AtlanConnectorType.SAPHANA, null, null, List.of("NONEXISTENT")));
     }
 }

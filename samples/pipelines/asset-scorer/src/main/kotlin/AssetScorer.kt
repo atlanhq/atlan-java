@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import AssetScorer.Handler.client
 import CreateCMWriteConfig.CM_ATTR_COMPOSITE_SCORE
 import CreateCMWriteConfig.CM_SCORING
-import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.events.AtlanEventHandler
 import com.atlan.exception.AtlanException
@@ -32,12 +32,19 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
     fun main(args: Array<String>) {
         EventUtils.setEventOps<AssetScorerCfg>()?.let {
             config = it
-            EventUtils.useApiToken(config.apiToken)
+            EventUtils.useApiToken(Handler.client, config.apiToken)
             EventUtils.startHandler(this)
         }
     }
 
     object Handler : AtlanEventHandler {
+        private val client = AtlanClient()
+
+        /** {@inheritDoc} */
+        override fun getClient(): AtlanClient {
+            return client
+        }
+
         private val SCORED_ATTRS =
             setOf(
                 Asset.DESCRIPTION.atlanFieldName,
@@ -66,7 +73,7 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
             event: AtlanEvent,
             logger: Logger,
         ): Boolean {
-            return Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING) != null && event.payload?.asset != null
+            return client.customMetadataCache.getSidForName(CM_SCORING) != null && event.payload?.asset != null
         }
 
         /** {@inheritDoc}  */

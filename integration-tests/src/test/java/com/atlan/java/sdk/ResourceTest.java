@@ -102,7 +102,7 @@ public class ResourceTest extends AtlanLiveTest {
             dependsOnGroups = {"resources.read.term"},
             alwaysRun = true)
     void purgeReadme() throws AtlanException {
-        AssetMutationResponse response = Readme.purge(client, readme.getGuid());
+        AssetMutationResponse response = Readme.purge(client, readme.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -118,7 +118,7 @@ public class ResourceTest extends AtlanLiveTest {
             dependsOnGroups = {"resources.read.term"},
             alwaysRun = true)
     void purgeLink() throws AtlanException {
-        AssetMutationResponse response = Link.purge(client, link.getGuid());
+        AssetMutationResponse response = Link.purge(client, link.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);

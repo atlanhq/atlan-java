@@ -53,7 +53,7 @@ public class RequestsTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the group
      */
     static ApiToken createToken(String name) throws AtlanException {
-        ApiToken created = ApiToken.create(name);
+        ApiToken created = ApiToken.create(client, name);
         assertNotNull(created);
         assertEquals(created.getDisplayName(), name);
         assertNotNull(created.getAttributes());
@@ -87,7 +87,7 @@ public class RequestsTest extends AtlanLiveTest {
         connection = ConnectionTest.createConnection(client, PREFIX, CONNECTOR_TYPE);
         Database toCreate =
                 Database.creator(PREFIX, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertNotNull(response.getCreatedAssets());
         assertEquals(response.getCreatedAssets().size(), 1);
@@ -125,7 +125,7 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.read.token"},
             dependsOnGroups = {"request.create.token"})
     void retrieveTokenByName() throws AtlanException {
-        ApiToken retrieved = ApiToken.retrieveByName(API_TOKEN_NAME);
+        ApiToken retrieved = ApiToken.retrieveByName(client, API_TOKEN_NAME);
         assertNotNull(retrieved);
         assertEquals(retrieved.getDisplayName(), API_TOKEN_NAME);
         assertNotNull(retrieved.getId());
@@ -142,7 +142,7 @@ public class RequestsTest extends AtlanLiveTest {
                         .description(description)
                         .build())
                 .build();
-        ApiToken updated = revised.update();
+        ApiToken updated = revised.update(client);
         assertNotNull(updated);
         assertNotNull(updated.getAttributes());
         assertEquals(updated.getAttributes().getDescription(), description);

@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -71,7 +70,7 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 

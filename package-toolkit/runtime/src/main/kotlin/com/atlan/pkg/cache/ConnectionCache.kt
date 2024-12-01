@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.ApiException
 import com.atlan.exception.AtlanException
 import com.atlan.exception.ErrorCode
@@ -56,7 +55,7 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
@@ -155,11 +154,11 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     private fun isAccessible(connection: Asset): Connection {
         try {
             val candidate =
-                Atlan.getDefaultClient().assets.get(
+                ctx.client.assets.get(
                     connection.guid,
                     false,
                     false,
-                    RequestOptions.from(Atlan.getDefaultClient())
+                    RequestOptions.from(ctx.client)
                         .maxNetworkRetries(MAX_ASYNC_RETRIES)
                         .build(),
                 )

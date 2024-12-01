@@ -64,7 +64,7 @@ public class PurposeTest extends AtlanLiveTest {
         // NOTE: This requires pre-existing assets:
         //  - Snowflake connection called "development" with a specific pre-existing table
         //  - Persona called "Data Assets" with a data policy granting query access to the Snowflake table
-        snowflake = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE)
+        snowflake = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)
                 .get(0);
         query = QueryRequest.creator("SELECT * FROM \"" + TABLE_NAME + "\" LIMIT 50;", snowflake.getQualifiedName())
                 .defaultSchema(DB_NAME + "." + SCHEMA_NAME)
@@ -73,7 +73,7 @@ public class PurposeTest extends AtlanLiveTest {
         String schemaQN = Schema.generateQualifiedName(SCHEMA_NAME, databaseQN);
         String tableQN = Table.generateQualifiedName(TABLE_NAME, schemaQN);
         columnQualifiedName = Column.generateQualifiedName(COLUMN_NAME, tableQN);
-        persona = Persona.findByName(PERSONA_NAME).get(0);
+        persona = Persona.findByName(client, PERSONA_NAME).get(0);
     }
 
     @Test(groups = {"purpose.create.atlantag"})
@@ -104,7 +104,7 @@ public class PurposeTest extends AtlanLiveTest {
         Purpose toCreate = Purpose.creator(PURPOSE_NAME, List.of(ATLAN_TAG_NAME))
                 .description("Example purpose for testing purposes.")
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -126,7 +126,7 @@ public class PurposeTest extends AtlanLiveTest {
                 .denyAssetTab(AssetSidebarTab.RELATIONS)
                 .denyAssetTab(AssetSidebarTab.QUERIES)
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -145,7 +145,7 @@ public class PurposeTest extends AtlanLiveTest {
         int count = 0;
         while (count < Atlan.getMaxNetworkRetries()) {
             try {
-                purposes = Purpose.findByName(PURPOSE_NAME);
+                purposes = Purpose.findByName(client, PURPOSE_NAME);
                 break;
             } catch (NotFoundException e) {
                 Thread.sleep(HttpClient.waitTime(count).toMillis());
@@ -162,6 +162,7 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.update.purposes", "purpose.create.token"})
     void addPoliciesToPurpose() throws AtlanException {
         AuthPolicy metadata = Purpose.createMetadataPolicy(
+                        client,
                         "Simple read access",
                         purpose.getGuid(),
                         AuthPolicyType.ALLOW,
@@ -171,6 +172,7 @@ public class PurposeTest extends AtlanLiveTest {
                         false)
                 .build();
         AuthPolicy data = Purpose.createDataPolicy(
+                        client,
                         "Mask the data",
                         purpose.getGuid(),
                         AuthPolicyType.DATA_MASK,
@@ -196,7 +198,7 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.read.purposes.2"},
             dependsOnGroups = {"purpose.update.purposes.policy"})
     void retrievePurposes2() throws AtlanException {
-        Purpose one = Purpose.get(purpose.getQualifiedName());
+        Purpose one = Purpose.get(client, purpose.getQualifiedName(), true);
         assertNotNull(one);
         assertEquals(one.getGuid(), purpose.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
@@ -210,7 +212,7 @@ public class PurposeTest extends AtlanLiveTest {
         for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Purpose itself are just policy references)
-            AuthPolicy full = AuthPolicy.get(policy.getGuid());
+            AuthPolicy full = AuthPolicy.get(client, policy.getGuid(), true);
             assertNotNull(full);
             String subCat = full.getPolicySubCategory();
             assertNotNull(subCat);
@@ -238,7 +240,8 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.update.asset"},
             dependsOnGroups = {"purpose.create.atlantag", "purpose.create.query"})
     void assignTagToAsset() throws AtlanException {
-        Column result = Column.appendAtlanTags(columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
+        Column result =
+                Column.appendAtlanTags(client, columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
         assertNotNull(result);
     }
 
@@ -261,7 +264,7 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.read.token"},
             dependsOnGroups = {"purpose.read.purposes.2", "purpose.create.token"})
     void confirmTokenPermissions() throws AtlanException {
-        ApiToken result = ApiToken.retrieveByName(API_TOKEN_NAME);
+        ApiToken result = ApiToken.retrieveByName(client, API_TOKEN_NAME);
         assertNotNull(result.getAttributes());
         assertNotNull(result.getAttributes().getPersonas());
         assertEquals(result.getAttributes().getPersonas().size(), 1);
@@ -314,7 +317,7 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*"},
             alwaysRun = true)
     void purgePurposes() throws AtlanException {
-        Purpose.purge(purpose.getGuid());
+        Purpose.purge(client, purpose.getGuid()).block();
     }
 
     @Test(
@@ -322,7 +325,7 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        Column.removeAtlanTag(columnQualifiedName, ATLAN_TAG_NAME);
+        Column.removeAtlanTag(client, columnQualifiedName, ATLAN_TAG_NAME);
         AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
     }
 

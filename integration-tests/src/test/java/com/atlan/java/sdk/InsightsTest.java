@@ -227,7 +227,7 @@ public class InsightsTest extends AtlanLiveTest {
             dependsOnGroups = {"insights.read.query", "insights.read.folder"})
     void updateQueryAgain() throws AtlanException {
         AtlanQuery updated = AtlanQuery.removeCertificate(
-            client,
+                client,
                 query.getQualifiedName(),
                 query.getName(),
                 query.getCollectionQualifiedName(),
@@ -239,7 +239,7 @@ public class InsightsTest extends AtlanLiveTest {
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         updated = AtlanQuery.removeAnnouncement(
-            client,
+                client,
                 query.getQualifiedName(),
                 QUERY_NAME,
                 query.getCollectionQualifiedName(),
@@ -355,7 +355,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.purge.query"},
             dependsOnGroups = {"insights.delete.query.restore"})
     void purgeQuery() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, query.getGuid());
+        AssetMutationResponse response = Asset.purge(client, query.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -389,12 +389,12 @@ public class InsightsTest extends AtlanLiveTest {
             int totalToDelete = guids.size();
             log.info(" --- Purging {} assets from {}... ---", totalToDelete, qualifiedName);
             if (totalToDelete < 20) {
-                client.assets.delete(guids, AtlanDeleteType.PURGE);
+                client.assets.delete(guids, AtlanDeleteType.PURGE).block();
             } else {
                 for (int i = 0; i < totalToDelete; i += 20) {
                     log.info(" ... next batch of 20 ({}%)", Math.round((i * 100.0) / totalToDelete));
                     List<String> sublist = guids.subList(i, Math.min(i + 20, totalToDelete));
-                    client.assets.delete(sublist, AtlanDeleteType.PURGE);
+                    client.assets.delete(sublist, AtlanDeleteType.PURGE).block();
                 }
             }
         }

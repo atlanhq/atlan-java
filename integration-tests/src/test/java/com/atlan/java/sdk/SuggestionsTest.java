@@ -76,7 +76,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.search.connection"},
             dependsOnGroups = {"suggestions.create.connection"})
     void findConnection() throws AtlanException {
-        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE);
+        List<Connection> results = Connection.findByName(client, CONNECTION_NAME, CONNECTOR_TYPE);
         assertNotNull(results);
         assertEquals(results.size(), 1);
         Connection one = results.get(0);
@@ -272,7 +272,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // table + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -305,7 +305,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // table + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -338,7 +338,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // column + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -367,7 +367,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                         .build())
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 2); // column + term
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -390,7 +390,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.t2c1"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findSuggestionsDefault() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(t2c1)
+        SuggestionResponse response = Suggestions.finder(client, t2c1)
                 .includes(Arrays.asList(Suggestions.TYPE.values()))
                 .get();
         assertNotNull(response);
@@ -428,7 +428,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.v1"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findSuggestionsAcrossTypes() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(view1)
+        SuggestionResponse response = Suggestions.finder(client, view1)
                 .includes(Arrays.asList(Suggestions.TYPE.values()))
                 .withOtherType(Table.TYPE_NAME)
                 .get();
@@ -471,7 +471,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.t2"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findLimitedSuggestions() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(table2)
+        SuggestionResponse response = Suggestions.finder(client, table2)
                 .include(Suggestions.TYPE.SystemDescription)
                 .include(Suggestions.TYPE.GroupOwners)
                 .get();
@@ -496,7 +496,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = "suggestions.apply.t2c1",
             dependsOnGroups = {"suggestions.find.*"})
     void applyT2C1() throws AtlanException {
-        AssetMutationResponse response = Suggestions.finder(t2c1)
+        AssetMutationResponse response = Suggestions.finder(client, t2c1)
                 .include(Suggestions.TYPE.UserDescription)
                 .include(Suggestions.TYPE.IndividualOwners)
                 .include(Suggestions.TYPE.GroupOwners)
@@ -525,7 +525,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = "suggestions.apply.v2c1",
             dependsOnGroups = {"suggestions.find.*"})
     void applyV2C1() throws AtlanException {
-        AssetMutationResponse response = Suggestions.finder(v2c1)
+        AssetMutationResponse response = Suggestions.finder(client, v2c1)
                 .include(Suggestions.TYPE.SystemDescription)
                 .include(Suggestions.TYPE.Tags)
                 .apply(true);
@@ -563,7 +563,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.purge.connection"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        AtlanGroup.delete(ownerGroup.getId());
+        AtlanGroup.delete(client, ownerGroup.getId());
     }
 
     @Test(

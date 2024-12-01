@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.events
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.pkg.CustomConfig
 import com.atlan.pkg.events.config.S3ConfigSync
 import io.numaproj.numaflow.mapper.Server
@@ -35,12 +35,16 @@ object EventUtils {
     /**
      * Update the configuration for the event-processing handler to run using the provided API token.
      *
+     * @param client connectivity to the Atlan tenant
      * @param apiTokenId unique identifier (GUID) of the API token
      */
-    fun useApiToken(apiTokenId: String?) {
+    fun useApiToken(
+        client: AtlanClient,
+        apiTokenId: String?,
+    ) {
         if (apiTokenId != null) {
             val token =
-                Atlan.getDefaultClient().apiTokens.getByGuid(apiTokenId)
+                client.apiTokens.getByGuid(apiTokenId)
             if (token != null) {
                 logger.info("Setting pipeline to run with token: {}", token.displayName)
                 // TODO: needs to be replaced -- Utils.setClient("service-account-" + token.clientId)
