@@ -38,8 +38,7 @@ public class ModelCache {
 
     private ModelCache(AtlanClient client) throws AtlanException {
         enumDefCache = new ConcurrentHashMap<>();
-        for (EnumDef enumDef :
-                client.typeDefs.list(AtlanTypeCategory.ENUM).getEnumDefs()) {
+        for (EnumDef enumDef : client.typeDefs.list(AtlanTypeCategory.ENUM).getEnumDefs()) {
             enumDefCache.put(enumDef.getName(), enumDef);
         }
         structDefCache = new ConcurrentHashMap<>();
@@ -53,10 +52,8 @@ public class ModelCache {
             entityDefCache.put(entityDef.getName(), entityDef);
         }
         relationshipDefCache = new ConcurrentHashMap<>();
-        for (RelationshipDef relationshipDef : client
-                .typeDefs
-                .list(AtlanTypeCategory.RELATIONSHIP)
-                .getRelationshipDefs()) {
+        for (RelationshipDef relationshipDef :
+                client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP).getRelationshipDefs()) {
             relationshipDefCache.put(relationshipDef.getName(), relationshipDef);
         }
     }

@@ -15,7 +15,6 @@ import com.probable.guacamole.ExtendedModelGenerator;
 import com.probable.guacamole.typedefs.TypeDefCreator;
 import java.io.File;
 import java.io.IOException;
-
 import lombok.extern.slf4j.Slf4j;
 
 // TODO: Won't work without multiple runs due to generated POJOs being something we introspect
@@ -31,9 +30,9 @@ public class POJOGenerator extends ExtendedModelGenerator {
         try (AtlanClient client = new AtlanClient("http://localhost:9876", "unused")) {
             String projectName = "samples" + File.separator + "standalone" + File.separator + "sdk-extension";
             GeneratorConfig cfg = GeneratorConfig.creator(
-                    POJOGenerator.class, new File("resources/templates"), PACKAGE_ROOT, projectName)
-                .serviceType(TypeDefCreator.SERVICE_TYPE)
-                .build();
+                            POJOGenerator.class, new File("resources/templates"), PACKAGE_ROOT, projectName)
+                    .serviceType(TypeDefCreator.SERVICE_TYPE)
+                    .build();
             startMockTenant(); // Not needed in a real setup (this simulates a running Atlan tenant)
             new ModelGenerator(client, cfg).generate();
             new TestGenerator(client, cfg).generate();

@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.GlossaryCache
 
 /**
  * Static object to transform glossary assignment references.
@@ -21,7 +20,10 @@ object GlossaryXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         return when (asset) {
             is Glossary -> {
                 val glossary = ctx.glossaryCache.getByGuid(asset.guid)

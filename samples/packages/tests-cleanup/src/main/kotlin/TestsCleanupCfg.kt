@@ -11,5 +11,5 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class TestsCleanupCfg(
-    @JsonProperty("prefix") val prefix: String? = null,
+    @JsonProperty("prefix") val prefix: String = "",
 ) : CustomConfig()

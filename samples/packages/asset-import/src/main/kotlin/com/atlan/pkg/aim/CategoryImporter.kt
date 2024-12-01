@@ -33,14 +33,9 @@ class CategoryImporter(
 ) : GTCImporter(
         ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
-        updateOnly = ctx.config.glossariesUpsertSemantic == "update",
-        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
         cache = ctx.categoryCache,
         typeNameFilter = GlossaryCategory.TYPE_NAME,
         logger = logger,
-        failOnErrors = ctx.config.glossariesFailOnErrors!!,
-        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
     ) {
     private var levelToProcess = 0
 

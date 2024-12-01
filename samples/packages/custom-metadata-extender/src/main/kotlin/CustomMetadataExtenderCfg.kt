@@ -14,11 +14,11 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class CustomMetadataExtenderCfg(
-    @JsonProperty("custom_metadata") val customMetadata: String? = null,
+    @JsonProperty("custom_metadata") val customMetadata: String = "",
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
+    @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String> = listOf(),
     @JsonProperty("glossaries") val glossaries: String? = null,
-    @JsonProperty("domains") val domains: String? = null,
-    @JsonProperty("domains_specific") val domainsSpecific: String? = null,
+    @JsonProperty("domains") val domains: String = "ALL",
+    @JsonProperty("domains_specific") val domainsSpecific: String = "",
 ) : CustomConfig()

@@ -1083,8 +1083,8 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param impersonationToken a bearer token for an actual user who is already an admin for the object, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    protected static AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String assetGuid, final String impersonationToken)
-            throws AtlanException {
+    protected static AssetMutationResponse addApiTokenAsAdmin(
+            AtlanClient client, final String assetGuid, final String impersonationToken) throws AtlanException {
 
         String username = client.users.getCurrentUser().getUsername();
 
@@ -1093,16 +1093,16 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             // Look for the asset as the impersonated user, ensuring we include the admin users
             // in the results (so we avoid clobbering any existing admin users)
             Optional<Asset> found =
-                tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).pageSize(1).stream()
-                    .findFirst();
+                    tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).pageSize(1).stream()
+                            .findFirst();
             if (found.isPresent()) {
                 Asset asset = found.get();
                 Set<String> existingAdmins = asset.getAdminUsers();
                 response = asset.trimToRequired()
-                    .adminUsers(existingAdmins)
-                    .adminUser(username)
-                    .build()
-                    .save(tmp);
+                        .adminUsers(existingAdmins)
+                        .adminUser(username)
+                        .build()
+                        .save(tmp);
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
             }

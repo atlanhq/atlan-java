@@ -43,6 +43,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["assets_file"] = new FileUploader {
           title = "Assets file"
@@ -50,18 +51,21 @@ uiConfig {
           required = false
           helpText = "Select the file containing the cube assets to import."
           placeholderText = "Select assets CSV file"
+          fallback = ""
         }
         ["assets_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the file containing cube assets."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["assets_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "cubes.csv"
           width = 4
+          fallback = ""
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
@@ -83,6 +87,7 @@ uiConfig {
           }
           default = "upsert"
           helpText = "Whether to allow the creation of new assets from the input CSV, or ensure assets are only updated if they already exist in Atlan."
+          fallback = default
         }
         ["delta_semantic"] = new Radio {
           title = "Delta handling"
@@ -93,6 +98,7 @@ uiConfig {
           }
           default = "full"
           helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
+          fallback = default
         }
         ["delta_removal_type"] = new Radio {
           title = "Removal type"
@@ -103,6 +109,7 @@ uiConfig {
           }
           default = "archive"
           helpText = "How to delete any assets not found in the latest file."
+          fallback = default
         }
         ["delta_reload_calculation"] = new Radio {
           title = "Reload which assets"
@@ -113,12 +120,14 @@ uiConfig {
           }
           default = "all"
           helpText = "Which assets to reload from the latest input CSV file. Changed assets only will calculate which assets have changed between the files and only attempt to reload those changes."
+          fallback = default
         }
         ["previous_file_direct"] = new TextInput {
           title = "Previous file"
           required = false
           hide = true
           helpText = "Path to a direct file (locally) to use for delta processing."
+          fallback = ""
         }
       }
     }
@@ -142,11 +151,13 @@ uiConfig {
           helpText = "Select attributes you want to clear (remove) from assets if their value is blank in the provided file."
           multiSelect = true
           width = 8
+          fallback = List()
         }
         ["assets_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
@@ -154,6 +165,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["assets_batch_size"] = new NumericInput {
           title = "Batch size"
@@ -161,6 +173,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details"
@@ -168,6 +181,7 @@ uiConfig {
           hide = true
           defaultSelection = true
           helpText = "Whether to track details about every asset across batches (Yes) or only counts (No)."
+          fallback = defaultSelection
         }
       }
     }

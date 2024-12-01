@@ -20,7 +20,6 @@ import com.probable.guacamole.ExtendedModelGenerator;
 import com.probable.guacamole.model.assets.GuacamoleColumn;
 import com.probable.guacamole.model.assets.GuacamoleTable;
 import com.probable.guacamole.model.enums.GuacamoleTemperature;
-
 import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -219,8 +218,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             GuacamoleTable parent = GuacamoleTable.get(parentQN);
             GuacamoleColumn one = GuacamoleColumn.get(child1QN);
             GuacamoleColumn two = GuacamoleColumn.get(child2QN);
-            client.assets
-                    .delete(List.of(parent.getGuid(), one.getGuid(), two.getGuid()), AtlanDeleteType.PURGE);
+            client.assets.delete(List.of(parent.getGuid(), one.getGuid(), two.getGuid()), AtlanDeleteType.PURGE);
             log.info("Entities purged.");
         } catch (AtlanException e) {
             log.error("Unable to purge entities.", e);

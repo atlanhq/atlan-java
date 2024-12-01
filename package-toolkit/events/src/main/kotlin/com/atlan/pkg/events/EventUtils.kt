@@ -4,7 +4,6 @@ package com.atlan.pkg.events
 
 import com.atlan.Atlan
 import com.atlan.pkg.CustomConfig
-import com.atlan.pkg.Utils
 import com.atlan.pkg.events.config.S3ConfigSync
 import io.numaproj.numaflow.mapper.Server
 import mu.KotlinLogging

@@ -3,7 +3,6 @@
 package com.atlan.pkg.adoption
 
 import AdoptionExportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
@@ -69,11 +68,13 @@ object AdoptionExporter {
                     )
                 }
             }
-
         }
     }
 
-    fun getAssetDetails(ctx: PackageContext<AdoptionExportCfg>, keyMap: Map<String, Any>): Map<String, Asset> {
+    fun getAssetDetails(
+        ctx: PackageContext<AdoptionExportCfg>,
+        keyMap: Map<String, Any>,
+    ): Map<String, Asset> {
         val fullList = keyMap.keys.toList()
         val totalCount = fullList.size
         val idxBatchSize = 300

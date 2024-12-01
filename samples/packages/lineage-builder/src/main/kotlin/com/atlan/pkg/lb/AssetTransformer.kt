@@ -2,16 +2,18 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lb
 
+import LineageBuilderCfg
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.csv.CSVXformer
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 
 class AssetTransformer(
-    private val ctx: Loader.Context,
+    private val ctx: PackageContext<LineageBuilderCfg>,
     private val inputFile: String,
     private val logger: KLogger,
-    private val fieldSeparator: Char,
 ) : CSVXformer(
         inputFile,
         listOf(
@@ -22,7 +24,7 @@ class AssetTransformer(
             Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
         ),
         logger,
-        fieldSeparator,
+        ctx.config.fieldSeparator!![0],
     ) {
     companion object {
         const val TYPE = "Type"
@@ -49,18 +51,18 @@ class AssetTransformer(
             )
 
         fun getConnectionQN(
-            ctx: Loader.Context,
+            ctx: PackageContext<LineageBuilderCfg>,
             inputRow: Map<String, String>,
             prefix: String,
         ): String {
             val connectorType = inputRow["$prefix $CONNECTOR"] ?: ""
             val connectionName = inputRow["$prefix $CONNECTION"] ?: ""
-            val connectionId = Loader.ConnectionId(connectorType, connectionName)
-            return ctx.connectionMap.getOrDefault(connectionId, "")
+            val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
+            return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
         }
 
         fun getAssetQN(
-            ctx: Loader.Context,
+            ctx: PackageContext<LineageBuilderCfg>,
             inputRow: Map<String, String>,
             prefix: String,
             qnMap: Map<AssetIdentity, String> = mapOf(),

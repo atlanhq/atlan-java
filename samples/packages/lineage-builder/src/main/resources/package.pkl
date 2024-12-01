@@ -43,6 +43,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["lineage_file"] = new FileUploader {
           title = "Lineage file"
@@ -50,18 +51,21 @@ uiConfig {
           required = true
           helpText = "Select the file containing lineage to import."
           placeholderText = "Select lineage CSV file"
+          fallback = ""
         }
         ["lineage_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the file containing lineage details."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["lineage_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "lineage.csv"
           width = 4
+          fallback = ""
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import lineage from"
@@ -84,16 +88,19 @@ uiConfig {
           }
           default = "partial"
           helpText = "How to handle assets that do not yet exist in Atlan."
+          fallback = default
         }
         ["lineage_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["lineage_case_sensitive"] = new BooleanInput {
           title = "Case-sensitive match for assets"
           required = false
           helpText = "Whether to use case-sensitive matching for assets (Yes) or try case-insensitive matching (No)."
+          fallback = true
         }
         ["field_separator"] = new TextInput {
           title = "Field separator"
@@ -101,6 +108,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["batch_size"] = new NumericInput {
           title = "Batch size"
@@ -108,6 +116,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
       }
     }

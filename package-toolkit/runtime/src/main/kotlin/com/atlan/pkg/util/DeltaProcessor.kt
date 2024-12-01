@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
-import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
@@ -129,10 +128,10 @@ class DeltaProcessor(
      *
      * @param client connectivity to the Atlan tenant
      */
-    fun processDeletions(client: AtlanClient) {
+    fun processDeletions() {
         if (!initialLoad && delta!!.hasAnythingToDelete()) {
             // Note: this will update the persistent connection cache for both adds and deletes
-            deletedAssets = delta!!.deleteAssets(client)
+            deletedAssets = delta!!.deleteAssets(ctx.client)
         }
     }
 
@@ -149,13 +148,12 @@ class DeltaProcessor(
     /**
      * Update the persistent connection cache with details of any assets that were added or removed.
      *
-     * @param client connectivity to the Atlan tenant
      * @param modifiedAssets cache of assets that were created or modified (whether by initial processing or reloading)
      */
-    fun updateConnectionCache(client: AtlanClient, modifiedAssets: OffHeapAssetCache? = null) {
+    fun updateConnectionCache(modifiedAssets: OffHeapAssetCache? = null) {
         // Update the connection cache with any changes (added and / or removed assets)
         Utils.updateConnectionCache(
-            client = client,
+            client = ctx.client,
             added = modifiedAssets,
             removed = deletedAssets,
             fallback = outputDirectory,

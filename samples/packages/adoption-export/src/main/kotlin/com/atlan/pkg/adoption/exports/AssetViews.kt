@@ -3,7 +3,6 @@
 package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.search.SearchLogRequest
 import com.atlan.model.search.aggregates.AssetViews

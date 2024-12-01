@@ -219,7 +219,10 @@ class FileBasedDelta(
      * @param client connectivity to the Atlan tenant
      * @param qualifiedNamesToDelete the list of qualifiedNames to query all at the same time
      */
-    private fun translate(client: AtlanClient, qualifiedNamesToDelete: List<String>) {
+    private fun translate(
+        client: AtlanClient,
+        qualifiedNamesToDelete: List<String>,
+    ) {
         val builder =
             client.assets.select()
                 .pageSize(QUERY_BATCH)

@@ -3,19 +3,15 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
-import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
-import mu.KotlinLogging
 
 /**
  * Import glossaries (only) into Atlan from a provided CSV file.
@@ -36,14 +32,9 @@ class TermImporter(
 ) : GTCImporter(
         ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
-        updateOnly = ctx.config.glossariesUpsertSemantic == "update",
-        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
         cache = ctx.termCache,
         typeNameFilter = GlossaryTerm.TYPE_NAME,
         logger = logger,
-        failOnErrors = ctx.config.glossariesFailOnErrors!!,
-        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
     ) {
     private val secondPassIgnore =
         setOf(

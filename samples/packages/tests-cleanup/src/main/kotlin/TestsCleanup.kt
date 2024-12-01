@@ -31,25 +31,28 @@ object TestsCleanup {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<TestsCleanupCfg>()
-        Utils.initializeContext(config).use { client ->
-            val prefix = Utils.getOrDefault(config.prefix, "")
+        Utils.initializeContext(config).use { ctx ->
+            val prefix = ctx.config.prefix!!
             if (prefix.isBlank()) {
                 logger.error { "Missing required parameter - you must specify a prefix for objects to be purged." }
                 exitProcess(1)
             }
 
-            purgeGlossaries(client, prefix)
-            purgeProducts(client, prefix)
-            purgeDomains(client, prefix)
-            purgeAssets(client, prefix)
-            purgePurposes(client, prefix)
-            purgePersonas(client, prefix)
-            purgeCustomMetadata(client, prefix)
-            purgeTags(client, prefix)
+            purgeGlossaries(ctx.client, prefix)
+            purgeProducts(ctx.client, prefix)
+            purgeDomains(ctx.client, prefix)
+            purgeAssets(ctx.client, prefix)
+            purgePurposes(ctx.client, prefix)
+            purgePersonas(ctx.client, prefix)
+            purgeCustomMetadata(ctx.client, prefix)
+            purgeTags(ctx.client, prefix)
         }
     }
 
-    private fun purgeGlossaries(client: AtlanClient, prefix: String) {
+    private fun purgeGlossaries(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val glossaries =
             Glossary.select(client, true)
                 .where(Glossary.NAME.startsWith(prefix))
@@ -83,7 +86,10 @@ object TestsCleanup {
 
     data class AssetDetails(val name: String, val qualifiedName: String, val guid: String)
 
-    private fun purgeProducts(client: AtlanClient, prefix: String) {
+    private fun purgeProducts(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             DataProduct.select(client, true)
                 .where(DataProduct.NAME.startsWith(prefix))
@@ -94,7 +100,10 @@ object TestsCleanup {
         purgeByGuids(client, list)
     }
 
-    private fun purgeDomains(client: AtlanClient, prefix: String) {
+    private fun purgeDomains(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             DataDomain.select(client, true)
                 .where(DataDomain.NAME.startsWith(prefix))
@@ -105,7 +114,10 @@ object TestsCleanup {
         purgeByGuids(client, list)
     }
 
-    private fun purgeAssets(client: AtlanClient, prefix: String) {
+    private fun purgeAssets(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             Connection.select(client, true)
                 .where(Connection.NAME.startsWith(prefix))
@@ -128,7 +140,10 @@ object TestsCleanup {
         }
     }
 
-    private fun purgePurposes(client: AtlanClient, prefix: String) {
+    private fun purgePurposes(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             Purpose.select(client, true)
                 .where(Purpose.NAME.startsWith(prefix))
@@ -139,7 +154,10 @@ object TestsCleanup {
         purgeByGuids(client, list)
     }
 
-    private fun purgePersonas(client: AtlanClient, prefix: String) {
+    private fun purgePersonas(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             Persona.select(client, true)
                 .where(Persona.NAME.startsWith(prefix))
@@ -150,7 +168,10 @@ object TestsCleanup {
         purgeByGuids(client, list)
     }
 
-    private fun purgeCustomMetadata(client: AtlanClient, prefix: String) {
+    private fun purgeCustomMetadata(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val enums =
             client.typeDefs.list(AtlanTypeCategory.ENUM)
                 .enumDefs
@@ -190,7 +211,10 @@ object TestsCleanup {
 
     data class TypeDefDetails(val name: String, val internalName: String)
 
-    private fun purgeTags(client: AtlanClient, prefix: String) {
+    private fun purgeTags(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             client.typeDefs.list(AtlanTypeCategory.ATLAN_TAG)
                 .atlanTagDefs
@@ -208,7 +232,10 @@ object TestsCleanup {
         }
     }
 
-    private fun purgeByGuids(client: AtlanClient, guidList: List<String>) {
+    private fun purgeByGuids(
+        client: AtlanClient,
+        guidList: List<String>,
+    ) {
         if (guidList.isNotEmpty()) {
             val deletionType = AtlanDeleteType.PURGE
             val totalToDelete = guidList.size

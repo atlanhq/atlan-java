@@ -40,6 +40,7 @@ uiConfig {
           helpText = "Provide the starting name for schemas from which to propagate ownership."
           placeholderText = "default/snowflake/1234567890"
           width = 4
+          fallback = "default"
         }
       }
     }

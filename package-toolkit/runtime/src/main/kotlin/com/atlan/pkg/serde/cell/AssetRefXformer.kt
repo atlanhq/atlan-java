@@ -33,7 +33,10 @@ object AssetRefXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         // Handle some assets as direct embeds
         return when (asset) {
             is Readme -> asset.description ?: ""

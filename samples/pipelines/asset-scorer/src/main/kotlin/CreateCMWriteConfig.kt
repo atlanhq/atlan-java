@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.ConflictException
 import com.atlan.exception.NotFoundException
@@ -38,9 +39,10 @@ object CreateCMWriteConfig {
                 Utils.getEnvVar("NESTED_CONFIG", ""),
                 Utils.buildRuntimeConfig(),
             )
-        Utils.setClient()
-        Utils.setWorkflowOpts(config.runtime)
-        createCMIfNotExists(config)
+        val client = AtlanClient()
+        // TODO: replace -- Utils.setClient()
+        // TODO: replace -- Utils.setWorkflowOpts(config.runtime)
+        createCMIfNotExists(config, client)
         WriteConfig.main(args)
     }
 
@@ -48,7 +50,10 @@ object CreateCMWriteConfig {
      * Check if the custom metadata already exists, and if so simply return.
      * If not, go ahead and create the custom metadata structure and an associated badge.
      */
-    private fun createCMIfNotExists(config: AssetScorerCfg) {
+    private fun createCMIfNotExists(
+        config: AssetScorerCfg,
+        client: AtlanClient,
+    ) {
         try {
             Atlan.getDefaultClient().customMetadataCache.getSidForName(CM_SCORING)
         } catch (e: NotFoundException) {
@@ -56,6 +61,7 @@ object CreateCMWriteConfig {
             try {
                 val initialScore =
                     AttributeDef.of(
+                        client,
                         CM_ATTR_COMPOSITE_SCORE,
                         AtlanCustomAttributePrimitiveType.DECIMAL,
                         null,
@@ -81,7 +87,7 @@ object CreateCMWriteConfig {
                         .description("Scoring for this asset based on how much of its context is populated.")
                         .options(CustomMetadataOptions.withIcon(AtlanIcon.GAUGE, AtlanTagColor.GRAY, true))
                         .build()
-                customMetadataDef.create()
+                customMetadataDef.create(client)
                 logger.info { "Created $CM_SCORING custom metadata structure." }
                 val badge =
                     Badge.creator(CM_ATTR_COMPOSITE_SCORE, CM_SCORING, CM_ATTR_COMPOSITE_SCORE)
@@ -93,7 +99,7 @@ object CreateCMWriteConfig {
                         .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, "2.5", BadgeConditionColor.RED))
                         .build()
                 try {
-                    badge.save()
+                    badge.save(client)
                     logger.info { "Created $CM_SCORING badge." }
                 } catch (eBadge: AtlanException) {
                     logger.error("Unable to create badge over {}.{}.", CM_SCORING, CM_ATTR_COMPOSITE_SCORE, eBadge)

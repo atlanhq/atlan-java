@@ -28,14 +28,9 @@ class GlossaryImporter(
 ) : GTCImporter(
         ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
-        updateOnly = ctx.config.glossariesUpsertSemantic == "update",
-        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
         cache = ctx.glossaryCache,
         typeNameFilter = Glossary.TYPE_NAME,
         logger = logger,
-        failOnErrors = ctx.config.glossariesFailOnErrors!!,
-        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
     ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {

@@ -26,7 +26,6 @@ import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
 import mu.KotlinLogging
-import org.apache.poi.ss.formula.functions.T
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
 import java.io.Closeable
@@ -107,15 +106,18 @@ object Utils {
      * to impersonate a user if ATLAN_API_KEY is empty.
      *
      * @param config configuration for the custom package, which has already been initialized through {@code parseConfigFromEnv()}
+     * @param reuseClient (optional) existing connectivity to the Atlan tenant to reuse
      * @return connectivity to the Atlan tenant
      */
-    fun <T : CustomConfig> initializeContext(config: T): PackageContext<T> {
-    // fun <T : CustomConfig> initializeContext(config: T): AtlanClient {
+    fun <T : CustomConfig> initializeContext(
+        config: T,
+        reuseClient: AtlanClient? = null,
+    ): PackageContext<T> {
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        val client = AtlanClient(baseUrl, apiToken)
+        val client = reuseClient ?: AtlanClient(baseUrl, apiToken)
         when {
             apiToken.isNotEmpty() -> {
                 logger.info { "Using provided API token for authentication." }
@@ -133,7 +135,6 @@ object Utils {
             }
         }
         setWorkflowOpts(client, config.runtime)
-        // return client
         return PackageContext(config, client)
     }
 
@@ -189,7 +190,10 @@ object Utils {
      * @param client connectivity to the Atlan tenant
      * @param config parameters received through means other than environment variables to use as a fallback
      */
-    fun setWorkflowOpts(client: AtlanClient, config: RuntimeConfig? = null) {
+    fun setWorkflowOpts(
+        client: AtlanClient,
+        config: RuntimeConfig? = null,
+    ) {
         val atlanAgent = getEnvVar("X_ATLAN_AGENT", config?.agent ?: "")
         if (atlanAgent == "workflow") {
             val headers = client.extraHeaders
@@ -232,7 +236,10 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
         logger.info { "Constructing configuration from environment variables..." }
+        val envVar = getEnvVar("NESTED_CONFIG")
+        logger.debug { "Raw config from environment variable: $envVar" }
         val runtime = buildRuntimeConfig()
+        logger.debug { "Raw runtime config: $runtime" }
         return parseConfig(getEnvVar("NESTED_CONFIG"), runtime)
     }
 
@@ -251,6 +258,7 @@ object Utils {
         val type = MAPPER.typeFactory.constructType(T::class.java)
         val cfg = MAPPER.readValue<T>(config, type)
         cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
+        logger.debug { "Parsed configuration: ${MAPPER.writeValueAsString(cfg)}" }
         return cfg
     }
 
@@ -404,7 +412,10 @@ object Utils {
      * @param connection a connection object, defining the connection to be created
      * @return the qualifiedName of the connection that is created, or an empty string if no connection details were provided
      */
-    fun createConnection(client: AtlanClient, connection: Connection?): String {
+    fun createConnection(
+        client: AtlanClient,
+        connection: Connection?,
+    ): String {
         return if (connection != null) {
             logger.info { "Attempting to create new connection..." }
             try {
@@ -449,7 +460,10 @@ object Utils {
      * @param providedConnectionQN qualifiedName of connection to reuse
      * @return the qualifiedName of the connection, so long as it exists, otherwise an empty string
      */
-    fun reuseConnection(client: AtlanClient, providedConnectionQN: String?): String {
+    fun reuseConnection(
+        client: AtlanClient,
+        providedConnectionQN: String?,
+    ): String {
         return providedConnectionQN?.let {
             try {
                 logger.info { "Attempting to reuse connection: $providedConnectionQN" }
@@ -505,7 +519,10 @@ object Utils {
      * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
      */
-    fun getAssetLink(client: AtlanClient, guid: String): String {
+    fun getAssetLink(
+        client: AtlanClient,
+        guid: String,
+    ): String {
         return getLink(client, guid, "assets")
     }
 
@@ -515,7 +532,10 @@ object Utils {
      * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
      */
-    fun getProductLink(client: AtlanClient, guid: String): String {
+    fun getProductLink(
+        client: AtlanClient,
+        guid: String,
+    ): String {
         return getLink(client, guid, "products")
     }
 

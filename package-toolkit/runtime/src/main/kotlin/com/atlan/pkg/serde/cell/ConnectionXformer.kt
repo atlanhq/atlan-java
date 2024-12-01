@@ -19,7 +19,10 @@ object ConnectionXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>,  asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         return when (asset) {
             is Connection -> {
                 val connection = ctx.connectionCache.getByGuid(asset.guid)

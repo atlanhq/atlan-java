@@ -3,19 +3,14 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
-import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
-import com.atlan.pkg.cache.ConnectionCache
-import com.atlan.pkg.cache.LinkCache
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
@@ -39,34 +34,26 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<CubeAssetsBuilderCfg>()
-        Utils.initializeContext(config).use { client ->
-            import(client, config, outputDirectory)
+        Utils.initializeContext(config).use { ctx ->
+            import(ctx, outputDirectory)
         }
     }
 
     /**
      * Actually import the cube assets.
      *
-     * @param client connectivity to the Atlan tenant
-     * @param config the configuration for the import
+     * @param ctx context in which this package is running
      * @param outputDirectory (optional) into which to write any logs or preprocessing information
      * @return the qualifiedName of the cube that was imported, or null if no cube was loaded
      */
     fun import(
-        client: AtlanClient,
-        config: CubeAssetsBuilderCfg,
+        ctx: PackageContext<CubeAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
     ): String? {
-        val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
-        val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
-        val assetsUpload = Utils.getOrDefault(config.assetsImportType, "DIRECT") == "DIRECT"
-        val assetsKey = Utils.getOrDefault(config.assetsKey, "")
-        val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
-        val assetAttrsToOverwrite =
-            CSVImporter.attributesToClear(Utils.getOrDefault(config.assetsAttrToOverwrite, listOf()).toMutableList(), "assets", logger)
-        val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
-        val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
-        val trackBatches = Utils.getOrDefault(config.trackBatches, true)
+        val fieldSeparator = ctx.config.assetsFieldSeparator!![0]
+        val assetsUpload = ctx.config.assetsImportType == "DIRECT"
+        val assetsKey = ctx.config.assetsKey!!
+        val assetsFilename = ctx.config.assetsFile!!
 
         val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsKey.isNotBlank())
         if (!assetsFileProvided) {
@@ -81,7 +68,7 @@ object Importer {
                 assetsFilename,
                 outputDirectory,
                 assetsUpload,
-                Utils.getOrDefault(config.assetsPrefix, ""),
+                ctx.config.assetsPrefix,
                 assetsKey,
             )
         val preprocessedDetails = Preprocessor(assetsInput, fieldSeparator).preprocess<Results>()
@@ -89,15 +76,15 @@ object Importer {
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
         if (preprocessedDetails.hasLinks) {
-            LinkCache.preload()
+            ctx.linkCache.preload()
         }
         if (preprocessedDetails.hasTermAssignments) {
-            TermCache.preload()
+            ctx.termCache.preload()
         }
 
-        ConnectionCache.preload()
+        ctx.connectionCache.preload()
 
-        FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors!!)
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
@@ -106,19 +93,10 @@ object Importer {
         // with the subsequent processing steps.)
         // We also need to load these connections first, irrespective of any delta calculation, so that
         // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
-        val connectionImporter =
-            ConnectionImporter(
-                client,
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                1,
-                true,
-                fieldSeparator,
-            )
+        val connectionImporter = ConnectionImporter(ctx, preprocessedDetails, logger)
         connectionImporter.import()?.close()
 
-        val connectionQN = ConnectionCache.getIdentityMap().getOrDefault(preprocessedDetails.connectionIdentity, null)
+        val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(preprocessedDetails.connectionIdentity, null)
         if (connectionQN == null) {
             logger.error { "Unable to determine the qualifiedName of the connection that is being loaded -- exiting." }
             exitProcess(105)
@@ -126,86 +104,43 @@ object Importer {
         val cubeQN = "$connectionQN/${preprocessedDetails.assetRootName}"
 
         DeltaProcessor(
-            semantic = Utils.getOrDefault(config.deltaSemantic, "full"),
+            ctx = ctx,
+            semantic = ctx.config.deltaSemantic!!,
             qualifiedNamePrefix = cubeQN,
-            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+            removalType = ctx.config.deltaRemovalType!!,
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
             resolver = AssetImporter,
             preprocessedDetails = preprocessedDetails,
             typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
             logger = logger,
-            reloadSemantic = Utils.getOrDefault(config.deltaReloadCalculation, "all"),
-            previousFilePreprocessor = Preprocessor(Utils.getOrDefault(config.previousFileDirect, ""), fieldSeparator),
+            reloadSemantic = ctx.config.deltaReloadCalculation!!,
+            previousFilePreprocessor = Preprocessor(ctx.config.previousFileDirect!!, fieldSeparator),
             outputDirectory = outputDirectory,
         ).use { delta ->
 
             delta.calculate()
 
             logger.info { " --- Importing cubes... ---" }
-            val cubeImporter =
-                CubeImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    true,
-                    fieldSeparator,
-                )
+            val cubeImporter = CubeImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val cubeImporterResults = cubeImporter.import()
 
             logger.info { " --- Importing dimensions... ---" }
-            val dimensionImporter =
-                DimensionImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                )
+            val dimensionImporter = DimensionImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val dimResults = dimensionImporter.import()
 
             logger.info { " --- Importing hierarchies... ---" }
-            val hierarchyImporter =
-                HierarchyImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                )
+            val hierarchyImporter = HierarchyImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val hierResults = hierarchyImporter.import()
 
             logger.info { " --- Importing fields... ---" }
-            val fieldImporter =
-                FieldImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                )
+            val fieldImporter = FieldImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             fieldImporter.preprocess()
             val fieldResults = fieldImporter.import()
 
-            delta.processDeletions(client)
+            delta.processDeletions()
 
-            ImportResults.getAllModifiedAssets(client, true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
-                delta.updateConnectionCache(client, modifiedAssets)
+            ImportResults.getAllModifiedAssets(ctx.client, true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
+                delta.updateConnectionCache(modifiedAssets)
             }
         }
         return cubeQN

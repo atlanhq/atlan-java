@@ -40,7 +40,10 @@ object ApiTokenConnectionAdmin {
      * @param apiTokenGuid name of the API token for which to fetch the pseudo-username
      * @return the pseudo-username of the API token
      */
-    fun getIdForToken(client: AtlanClient, apiTokenGuid: String): String {
+    fun getIdForToken(
+        client: AtlanClient,
+        apiTokenGuid: String,
+    ): String {
         logger.info { "Looking up API token: $apiTokenGuid" }
         val token = client.apiTokens.getByGuid(apiTokenGuid)
         if (token == null) {
@@ -57,7 +60,10 @@ object ApiTokenConnectionAdmin {
      * @param connectionQN qualifiedName of the connection
      * @return the connection with its existing admins
      */
-    fun getConnectionWithAdmins(client: AtlanClient, connectionQN: String): Asset {
+    fun getConnectionWithAdmins(
+        client: AtlanClient,
+        connectionQN: String,
+    ): Asset {
         logger.info { "Looking up connection details: $connectionQN" }
         val found =
             Connection.select(client)

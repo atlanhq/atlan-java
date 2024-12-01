@@ -39,18 +39,21 @@ uiConfig {
           required = true
           helpText = "Connection from which to extract the enriched metadata."
           width = 4
+          fallback = List("")
         }
         ["source_qn_prefix"] = new TextInput {
           title = "Limit to (prefix)"
           required = false
           helpText = "Further limit the assets in the source connection by this qualifiedName (not including the connection portion of the qualifiedName)."
           width = 4
+          fallback = ""
         }
         ["target_database_pattern"] = new TextInput {
           title = "Target database pattern"
           required = false
           helpText = "Regular expression to be used as a pattern for matching target database(s)."
           width = 4
+          fallback = ""
         }
         ["target_connection"] = new ConnectionSelector {
           title = "Target"
@@ -58,12 +61,14 @@ uiConfig {
           helpText = "Connection into which to load the enriched metadata."
           width = 4
           multiSelect = true
+          fallback = List("")
         }
         ["include_archived"] = new BooleanInput {
           title = "Include archived?"
           required = false
           helpText = "Whether to include archived assets from the source (Yes) or only active assets (No)."
           width = 4
+          fallback = false
         }
         ["config_type"] = new Radio {
           title = "Options"
@@ -79,16 +84,19 @@ uiConfig {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["case_sensitive"] = new BooleanInput {
           title = "Case-sensitive match for updates"
           required = false
           helpText = "Whether to use case-sensitive matching on the target assets (Yes) or try case-insensitive matching (No)."
+          fallback = true
         }
         ["table_view_agnostic"] = new BooleanInput {
           title = "Table/view agnostic?"
           required = false
           helpText = "Whether to attempt to migrate source metadata from a table, view or materialized view to any corresponding table, view or materialized view in the target (Yes) or strictly adhere to identical types from the source (No)."
+          fallback = false
         }
         ["field_separator"] = new TextInput {
           title = "Field separator"
@@ -96,6 +104,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["batch_size"] = new NumericInput {
           title = "Batch size"
@@ -103,6 +112,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
       }
     }
@@ -118,6 +128,7 @@ uiConfig {
             ["EXCLUDE"] = "All enrichment except"
           }
           default = "EXCLUDE"
+          fallback = default
         }
         ["attributes_list"] = new DropDown {
           title = "Attributes"
@@ -141,6 +152,7 @@ uiConfig {
           helpText = "Attributes to include or exclude (based on option selected above)."
           multiSelect = true
           width = 8
+          fallback = List("")
         }
         ["cm_limit_type"] = new Radio {
           title = "Limit custom metadata to"
@@ -151,6 +163,7 @@ uiConfig {
             ["EXCLUDE"] = "All custom metadata except"
           }
           default = "EXCLUDE"
+          fallback = default
         }
         ["custom_metadata"] = new TextInput {
           title = "Custom metadata"
@@ -158,6 +171,7 @@ uiConfig {
           helpText = "Custom metadata to include or exclude (based on option selected above), pipe-separated attributes with each in the form of 'Custom Metadata Set::Attribute Name'."
           placeholderText = "Data Quality::Completeness|Data Quality::Accuracy"
           width = 8
+          fallback = ""
         }
       }
     }

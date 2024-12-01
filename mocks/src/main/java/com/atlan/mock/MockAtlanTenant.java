@@ -8,9 +8,8 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.atlan.AtlanClient;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MockAtlanTenant {

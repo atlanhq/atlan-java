@@ -25,7 +25,7 @@ object Exporter {
         outputDirectory: String,
     ) {
         val batchSize = 300
-        val cmFields = getAllCustomMetadataFields(ctx)
+        val cmFields = getAllCustomMetadataFields(ctx.client)
 
         val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
@@ -80,14 +80,14 @@ object Exporter {
         }
     }
 
-    fun getAllCustomMetadataFields(ctx: PackageContext<AssetExportBasicCfg>): List<CustomMetadataField> {
+    fun getAllCustomMetadataFields(client: AtlanClient): List<CustomMetadataField> {
         val customMetadataDefs =
-            ctx.client.customMetadataCache
+            client.customMetadataCache
                 .getAllCustomAttributes(false, true)
         val cmFields = mutableListOf<CustomMetadataField>()
         for ((setName, attributes) in customMetadataDefs) {
             for (attribute in attributes) {
-                cmFields.add(CustomMetadataField(ctx.client, setName, attribute.displayName))
+                cmFields.add(CustomMetadataField(client, setName, attribute.displayName))
             }
         }
         return cmFields

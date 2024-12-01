@@ -3,7 +3,6 @@
 package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.AuthService
 import com.atlan.model.search.AggregationBucketResult

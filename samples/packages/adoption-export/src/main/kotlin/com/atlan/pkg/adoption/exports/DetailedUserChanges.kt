@@ -3,7 +3,6 @@
 package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.enums.AuditActionType
 import com.atlan.model.search.AuditSearch
 import com.atlan.model.search.AuditSearchRequest

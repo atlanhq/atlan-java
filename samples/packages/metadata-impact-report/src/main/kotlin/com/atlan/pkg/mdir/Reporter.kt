@@ -12,6 +12,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.mdir.metrics.AUM
 import com.atlan.pkg.mdir.metrics.AwD
@@ -89,36 +90,19 @@ object Reporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<MetadataImpactReportCfg>()
-        Utils.initializeContext(config).use { client ->
-
+        Utils.initializeContext(config).use { ctx ->
             val batchSize = 300
-            val includeGlossary = Utils.getOrDefault(config.includeGlossary, "TRUE") == "TRUE"
-            val glossaryName = Utils.getOrDefault(config.glossaryName, "Metadata metrics")
-            val includeDetails = Utils.getOrDefault(config.includeDetails, false)
-            val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
 
-            val ctx =
-                if (includeGlossary) {
-                    val glossary = createGlossaryIdempotent(client, glossaryName)
-                    Context(
-                        client = client,
-                        includeGlossary = true,
-                        glossaryName = glossaryName,
-                        includeDetails = includeDetails,
-                        glossary = glossary,
-                        categoryNameToGuid = createCategoriesIdempotent(client, glossary),
-                    )
+            val glossary =
+                if (ctx.config.includeGlossary == "TRUE") {
+                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName!!)
                 } else {
-                    Context(
-                        client = client,
-                        includeGlossary = false,
-                        glossaryName = "",
-                        includeDetails = includeDetails,
-                    )
+                    null
                 }
-            val reportFile = runReports(ctx, outputDirectory, batchSize)
+            val categoryNameToGuid = createCategoriesIdempotent(ctx.client, glossary)
+            val reportFile = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
 
-            when (deliveryType) {
+            when (ctx.config.deliveryType) {
                 "EMAIL" -> {
                     val emails = Utils.getAsList(config.emailAddresses)
                     if (emails.isNotEmpty()) {
@@ -139,11 +123,13 @@ object Reporter {
                     )
                 }
             }
-
         }
     }
 
-    private fun createGlossaryIdempotent(client: AtlanClient, glossaryName: String): Glossary {
+    private fun createGlossaryIdempotent(
+        client: AtlanClient,
+        glossaryName: String,
+    ): Glossary {
         return try {
             Glossary.findByName(client, glossaryName)
         } catch (e: NotFoundException) {
@@ -156,7 +142,11 @@ object Reporter {
         }
     }
 
-    private fun createCategoriesIdempotent(client: AtlanClient, glossary: Glossary): Map<String, String> {
+    private fun createCategoriesIdempotent(
+        client: AtlanClient,
+        glossary: Glossary?,
+    ): Map<String, String> {
+        if (glossary == null) return emptyMap()
         val nameToResolved = mutableMapOf<String, String>()
         val placeholderToName = mutableMapOf<String, String>()
         val batch = AssetBatch(client, 20)
@@ -181,9 +171,11 @@ object Reporter {
     }
 
     private fun runReports(
-        ctx: Context,
+        ctx: PackageContext<MetadataImpactReportCfg>,
         outputDirectory: String,
-        batchSize: Int,
+        batchSize: Int = 300,
+        glossary: Glossary? = null,
+        categoryNameToGuid: Map<String, String>? = null,
     ): String {
         val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
         ExcelWriter(outputFile).use { xlsx ->
@@ -204,12 +196,12 @@ object Reporter {
                 logger.info { "Quantifying metric: ${metric.name} ..." }
                 val quantified = metric.quantify()
                 val term =
-                    if (ctx.includeGlossary) {
-                        writeMetricToGlossary(ctx.client, metric, quantified, ctx.glossary!!, ctx.categoryNameToGuid!!)
+                    if (ctx.config.includeGlossary == "TRUE") {
+                        writeMetricToGlossary(ctx.client, metric, quantified, glossary!!, categoryNameToGuid!!)
                     } else {
                         null
                     }
-                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.includeDetails, term, batchSize)
+                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.config.includeDetails!!, term, batchSize)
             }
         }
         return outputFile

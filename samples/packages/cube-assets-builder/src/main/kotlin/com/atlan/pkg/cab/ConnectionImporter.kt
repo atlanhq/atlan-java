@@ -2,15 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
-import com.atlan.AtlanClient
+import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.cache.ConnectionCache
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
-import mu.KotlinLogging
+import mu.KLogger
 import java.util.stream.Stream
 
 /**
@@ -21,33 +20,25 @@ import java.util.stream.Stream
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
- * @param client connectivity to the Atlan tenant
+ * @param ctx context in which this package is running
  * @param preprocessed details of the preprocessed CSV file
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
- * @param batchSize maximum number of records to save per API request
- * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to record any logging
  */
 class ConnectionImporter(
-    client: AtlanClient,
+    ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val preprocessed: Importer.Results,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val creationHandling: AssetCreationHandling,
-    private val batchSize: Int,
-    trackBatches: Boolean,
-    fieldSeparator: Char,
+    logger: KLogger,
 ) : AssetImporter(
-        client,
+        ctx,
         null,
         preprocessed.preprocessedFile,
-        attrsToOverwrite,
-        creationHandling,
-        batchSize,
+        // Only allow full or updates to connections, as partial connections would be hidden
+        // and impossible to delete via utilities like the Connection Delete workflow
         Connection.TYPE_NAME,
-        KotlinLogging.logger {},
-        trackBatches,
-        fieldSeparator,
+        logger,
+        creationHandling = if (ctx.config.assetsUpsertSemantic == "update") AssetCreationHandling.NONE else AssetCreationHandling.FULL,
+        batchSize = 1,
+        trackBatches = true,
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
@@ -60,8 +51,8 @@ class ConnectionImporter(
         val type =
             deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
                 ?: throw NoSuchElementException("No typeName provided for the connection, cannot be processed.")
-        val identity = ConnectionCache.getIdentityForAsset(name, type)
-        val existing = ConnectionCache.getByIdentity(identity)
+        val identity = ctx.connectionCache.getIdentityForAsset(name, type)
+        val existing = ctx.connectionCache.getByIdentity(identity)
         return if (existing != null) {
             existing.trimToRequired()
         } else {
@@ -82,7 +73,7 @@ class ConnectionImporter(
         list.forEach { asset ->
             // We must look up the asset and then cache to ensure we have the necessary identity
             // characteristics and status
-            ConnectionCache.cacheById(asset.guid)
+            ctx.connectionCache.cacheById(asset.guid)
         }
     }
 }

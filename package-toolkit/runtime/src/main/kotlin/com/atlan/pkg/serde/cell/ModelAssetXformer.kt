@@ -57,7 +57,10 @@ object ModelAssetXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         // Use the version-agnostic qualifiedName for data model assets
         return when (asset) {
             is IModel -> {

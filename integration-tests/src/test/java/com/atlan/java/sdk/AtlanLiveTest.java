@@ -117,8 +117,9 @@ public abstract class AtlanLiveTest {
                     "Failed deletion test, activity log for {} {}:",
                     toValidate.getTypeName(),
                     toValidate.getQualifiedName());
-            AuditSearchResponse response =
-                    AuditSearchRequest.byGuid(client, toValidate.getGuid(), 100).build().search(client);
+            AuditSearchResponse response = AuditSearchRequest.byGuid(client, toValidate.getGuid(), 100)
+                    .build()
+                    .search(client);
             for (EntityAudit result : response) {
                 log.debug("  ... {}", result.toJson(client));
             }

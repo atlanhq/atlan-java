@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
@@ -9,7 +8,6 @@ import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.csv.CSVWriter

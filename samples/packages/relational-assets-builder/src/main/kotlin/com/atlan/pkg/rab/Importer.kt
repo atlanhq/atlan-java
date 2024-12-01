@@ -3,7 +3,6 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -13,15 +12,11 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
-import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cache.ConnectionCache
-import com.atlan.pkg.cache.LinkCache
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.rab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.serde.FieldSerde
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
@@ -44,25 +39,28 @@ object Importer {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<RelationalAssetsBuilderCfg>()
-        Utils.initializeContext(config).use { client ->
-            import(client, config, outputDirectory)
+        Utils.initializeContext(config).use { ctx ->
+            import(ctx, outputDirectory)
         }
     }
 
     /**
      * Actually run the import.
      *
-     * @param client connectivity to the Atlan tenant
+     * @param ctx context in which this package is running
      * @param config for the package
      * @param outputDirectory in which to do any data processing
      * @return the qualifiedName of the connection that was delta-processed, or null if no delta-processing enabled
      */
     fun import(
-        client: AtlanClient,
-        config: RelationalAssetsBuilderCfg,
+        ctx: PackageContext<RelationalAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
     ): String? {
-        val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
+        val assetsUpload = ctx.config.importType == "DIRECT"
+        val assetsFilename = ctx.config.assetsFile!!
+        val assetsKey = ctx.config.assetsKey!!
+        val fieldSeparator = ctx.config.assetsFieldSeparator!![0]
+        /*val batchSize = Utils.getOrDefault(config.assetsBatchSize, 20).toInt()
         val fieldSeparator = Utils.getOrDefault(config.assetsFieldSeparator, ",")[0]
         val assetsUpload = Utils.getOrDefault(config.importType, "DIRECT") == "DIRECT"
         val assetsFilename = Utils.getOrDefault(config.assetsFile, "")
@@ -72,7 +70,7 @@ object Importer {
         val assetsFailOnErrors = Utils.getOrDefault(config.assetsFailOnErrors, true)
         val assetsSemantic = Utils.getCreationHandling(config.assetsUpsertSemantic, AssetCreationHandling.FULL)
         val trackBatches = Utils.getOrDefault(config.trackBatches, true)
-        val deltaSemantic = Utils.getOrDefault(config.deltaSemantic, "incremental")
+        val deltaSemantic = Utils.getOrDefault(config.deltaSemantic, "incremental")*/
 
         val assetsFileProvided =
             (
@@ -92,7 +90,7 @@ object Importer {
                 assetsFilename,
                 outputDirectory,
                 assetsUpload,
-                Utils.getOrDefault(config.assetsPrefix, ""),
+                ctx.config.assetsPrefix,
                 assetsKey,
             )
         val targetHeaders = CSVXformer.getHeader(assetsInput, fieldSeparator).toMutableList()
@@ -101,7 +99,7 @@ object Importer {
         targetHeaders.add(ColumnImporter.COLUMN_PARENT_QN)
         val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
         val preprocessedDetails =
-            Preprocessor(assetsInput, fieldSeparator, deltaSemantic == "full")
+            Preprocessor(assetsInput, fieldSeparator, ctx.config.deltaSemantic == "full")
                 .preprocess<Results>(
                     outputFile = revisedFile.toString(),
                     outputHeaders = targetHeaders,
@@ -110,15 +108,15 @@ object Importer {
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
         if (preprocessedDetails.hasLinks) {
-            LinkCache.preload()
+            ctx.linkCache.preload()
         }
         if (preprocessedDetails.hasTermAssignments) {
-            TermCache.preload()
+            ctx.termCache.preload()
         }
 
-        ConnectionCache.preload()
+        ctx.connectionCache.preload()
 
-        FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors!!)
         logger.info { "=== Importing assets... ===" }
 
         logger.info { " --- Importing connections... ---" }
@@ -127,21 +125,11 @@ object Importer {
         // with the subsequent processing steps.)
         // We also need to load these connections first, irrespective of any delta calculation, so that
         // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
-        val connectionImporter =
-            ConnectionImporter(
-                client,
-                preprocessedDetails,
-                assetAttrsToOverwrite,
-                assetsSemantic,
-                1,
-                true,
-                fieldSeparator,
-                assetsFailOnErrors,
-            )
+        val connectionImporter = ConnectionImporter(ctx, preprocessedDetails, logger)
         connectionImporter.import()?.close()
 
         val connectionQN =
-            if (deltaSemantic == "full") {
+            if (ctx.config.assetsUpsertSemantic == "full") {
                 val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
                 try {
                     val list = Connection.findByName(connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
@@ -154,17 +142,18 @@ object Importer {
                 null
             }
 
-        val previousFileDirect = Utils.getOrDefault(config.previousFileDirect, "")
+        val previousFileDirect = ctx.config.previousFileDirect!!
         DeltaProcessor(
-            semantic = deltaSemantic,
+            ctx = ctx,
+            semantic = ctx.config.assetsUpsertSemantic!!,
             qualifiedNamePrefix = connectionQN,
-            removalType = Utils.getOrDefault(config.deltaRemovalType, "archive"),
+            removalType = ctx.config.deltaRemovalType!!,
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
             resolver = AssetImporter,
             preprocessedDetails = preprocessedDetails,
             typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
             logger = logger,
-            reloadSemantic = Utils.getOrDefault(config.deltaReloadCalculation, "all"),
+            reloadSemantic = ctx.config.deltaReloadCalculation!!,
             previousFilePreprocessor =
                 Preprocessor(
                     previousFileDirect,
@@ -179,105 +168,33 @@ object Importer {
             delta.calculate()
 
             logger.info { " --- Importing databases... ---" }
-            val databaseImporter =
-                DatabaseImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val databaseImporter = DatabaseImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val dbResults = databaseImporter.import()
 
             logger.info { " --- Importing schemas... ---" }
-            val schemaImporter =
-                SchemaImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val schemaImporter = SchemaImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val schResults = schemaImporter.import()
 
             logger.info { " --- Importing tables... ---" }
-            val tableImporter =
-                TableImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val tableImporter = TableImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val tblResults = tableImporter.import()
 
             logger.info { " --- Importing views... ---" }
-            val viewImporter =
-                ViewImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val viewImporter = ViewImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val viewResults = viewImporter.import()
 
             logger.info { " --- Importing materialized views... ---" }
-            val materializedViewImporter =
-                MaterializedViewImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val materializedViewImporter = MaterializedViewImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val mviewResults = materializedViewImporter.import()
 
             logger.info { " --- Importing columns... ---" }
-            val columnImporter =
-                ColumnImporter(
-                    client,
-                    delta,
-                    preprocessedDetails,
-                    assetAttrsToOverwrite,
-                    assetsSemantic,
-                    batchSize,
-                    connectionImporter,
-                    trackBatches,
-                    fieldSeparator,
-                    assetsFailOnErrors,
-                )
+            val columnImporter = ColumnImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val colResults = columnImporter.import()
 
-            delta.processDeletions(client)
+            delta.processDeletions()
 
-            ImportResults.getAllModifiedAssets(client, true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
-                delta.updateConnectionCache(client, modifiedAssets)
+            ImportResults.getAllModifiedAssets(ctx.client, true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
+                delta.updateConnectionCache(modifiedAssets)
             }
         }
         return connectionQN

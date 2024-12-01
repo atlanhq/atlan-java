@@ -3,7 +3,6 @@
 package com.atlan.pkg.ae.exports
 
 import AdminExportCfg
-import com.atlan.AtlanClient
 import com.atlan.api.UsersEndpoint
 import com.atlan.model.admin.UserRequest
 import com.atlan.pkg.PackageContext

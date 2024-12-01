@@ -3,7 +3,6 @@
 package com.atlan.pkg.ae
 
 import AdminExportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.model.enums.AtlanConnectorType
@@ -70,7 +69,6 @@ object AdminExporter {
                     )
                 }
             }
-
         }
     }
 

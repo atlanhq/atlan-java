@@ -6,7 +6,10 @@ import com.atlan.AtlanClient
 import com.atlan.model.structs.AtlanStruct
 
 object StructXformer {
-    fun encode(client: AtlanClient, struct: AtlanStruct): String {
+    fun encode(
+        client: AtlanClient,
+        struct: AtlanStruct,
+    ): String {
         return struct.toJson(client)
     }
 

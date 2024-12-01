@@ -4,10 +4,9 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockTenant;
 import java.io.IOException;
 import java.util.List;
-
-import com.atlan.mock.MockTenant;
 import org.testng.annotations.Test;
 
 public class AtlanGroupTest {

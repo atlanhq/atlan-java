@@ -4,15 +4,14 @@ package com.atlan.pkg.lb
 
 import AssetImportCfg
 import LineageBuilderCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.Connection
 import com.atlan.model.assets.LineageProcess
-import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
+import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
@@ -28,24 +27,18 @@ object Loader {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<LineageBuilderCfg>()
-        Utils.initializeContext(config).use { client ->
-            import(client, config, outputDirectory)
+        Utils.initializeContext(config).use { ctx ->
+            import(ctx, outputDirectory)
         }
     }
 
     fun import(
-        client: AtlanClient,
-        config: LineageBuilderCfg,
+        ctx: PackageContext<LineageBuilderCfg>,
         outputDirectory: String = "tmp",
     ) {
-        val batchSize = Utils.getOrDefault(config.batchSize, 20)
-        val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-        val lineageUpload = Utils.getOrDefault(config.lineageImportType, "DIRECT") == "DIRECT"
-        val lineageFilename = Utils.getOrDefault(config.lineageFile, "")
-        val lineageKey = Utils.getOrDefault(config.lineageKey, "")
-        val lineageFailOnErrors = Utils.getOrDefault(config.lineageFailOnErrors, true)
-        val lineageAssetSemantic = Utils.getCreationHandling(config.lineageUpsertSemantic, AssetCreationHandling.PARTIAL)
-        val lineageCaseSensitive = Utils.getOrDefault(config.lineageCaseSensitive, true)
+        val lineageUpload = ctx.config.lineageImportType == "DIRECT"
+        val lineageFilename = ctx.config.lineageFile!!
+        val lineageKey = ctx.config.lineageKey!!
 
         val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageKey.isNotBlank())
         if (!lineageFileProvided) {
@@ -58,18 +51,12 @@ object Loader {
                 lineageFilename,
                 outputDirectory,
                 lineageUpload,
-                Utils.getOrDefault(config.lineagePrefix, ""),
+                ctx.config.lineagePrefix,
                 lineageKey,
             )
         if (lineageInput.isNotBlank()) {
-            FieldSerde.FAIL_ON_ERRORS.set(lineageFailOnErrors)
-            val connectionMap = preloadConnectionMap()
-
-            val ctx =
-                Context(
-                    connectionMap = connectionMap,
-                    assetSemantic = lineageAssetSemantic,
-                )
+            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors!!)
+            ctx.connectionCache.preload()
 
             // 1. Transform the assets, so we can load them prior to creating any lineage relationships
             logger.info { "=== Processing assets... ===" }
@@ -79,7 +66,6 @@ object Loader {
                     ctx,
                     lineageInput,
                     logger,
-                    fieldSeparator,
                 )
             assetXform.transform(assetsFile)
 
@@ -87,15 +73,18 @@ object Loader {
             val importConfig =
                 AssetImportCfg(
                     assetsFile = assetsFile,
-                    assetsUpsertSemantic = lineageAssetSemantic.value,
-                    assetsFailOnErrors = lineageFailOnErrors,
-                    assetsCaseSensitive = lineageCaseSensitive,
-                    assetsBatchSize = batchSize,
-                    assetsFieldSeparator = fieldSeparator.toString(),
+                    assetsUpsertSemantic = ctx.config.lineageUpsertSemantic,
+                    assetsFailOnErrors = ctx.config.lineageFailOnErrors,
+                    assetsCaseSensitive = ctx.config.lineageCaseSensitive,
+                    assetsBatchSize = ctx.config.batchSize,
+                    assetsFieldSeparator = ctx.config.fieldSeparator,
                 )
-            val assetResults = Importer.import(client, importConfig, outputDirectory)
-
-            val qualifiedNameMap = assetResults?.primary?.qualifiedNames ?: mapOf()
+            lateinit var qualifiedNameMap: Map<AssetIdentity, String>
+            Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
+                val results = Importer.import(iCtx, outputDirectory)
+                qualifiedNameMap = results?.primary?.qualifiedNames?.toMap() ?: mapOf()
+                results?.close()
+            }
 
             // 3. Transform the lineage, only keeping any rows that have both input and output assets in Atlan
             logger.info { "=== Processing lineage... ===" }
@@ -113,7 +102,7 @@ object Loader {
             // Determine any non-standard lineage fields in the header and append them to the end of
             // the list of standard header fields, so they're passed-through to be used as part of
             // defining the lineage process itself
-            val inputHeaders = getHeader(lineageInput, fieldSeparator = fieldSeparator).toMutableList()
+            val inputHeaders = getHeader(lineageInput, fieldSeparator = ctx.config.fieldSeparator!![0]).toMutableList()
             inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
             inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
             inputHeaders.forEach { lineageHeaders.add(it) }
@@ -124,7 +113,6 @@ object Loader {
                     lineageHeaders,
                     qualifiedNameMap,
                     logger,
-                    fieldSeparator,
                 )
             lineageXform.transform(lineageFile)
 
@@ -133,37 +121,14 @@ object Loader {
                 AssetImportCfg(
                     assetsFile = lineageFile,
                     assetsUpsertSemantic = "upsert",
-                    assetsFailOnErrors = lineageFailOnErrors,
-                    assetsCaseSensitive = lineageCaseSensitive,
-                    assetsBatchSize = batchSize,
-                    assetsFieldSeparator = fieldSeparator.toString(),
+                    assetsFailOnErrors = ctx.config.lineageFailOnErrors,
+                    assetsCaseSensitive = ctx.config.lineageCaseSensitive,
+                    assetsBatchSize = ctx.config.batchSize,
+                    assetsFieldSeparator = ctx.config.fieldSeparator.toString(),
                 )
-            Importer.import(client, lineageConfig, outputDirectory)?.close()
-            assetResults?.close()
-        }
-    }
-
-    data class Context(
-        val connectionMap: Map<ConnectionId, String>,
-        val assetSemantic: AssetCreationHandling,
-    )
-
-    data class ConnectionId(
-        val type: String,
-        val name: String,
-    )
-
-    private fun preloadConnectionMap(): Map<ConnectionId, String> {
-        val map = mutableMapOf<ConnectionId, String>()
-        Connection.select()
-            .pageSize(50)
-            .includeOnResults(Connection.CONNECTOR_TYPE)
-            .stream()
-            .forEach {
-                if (it.connectorType != null) {
-                    map[ConnectionId(it.connectorType.value, it.name)] = it.qualifiedName
-                }
+            Utils.initializeContext(lineageConfig, ctx.client).use { iCtx ->
+                Importer.import(iCtx, outputDirectory)?.close()
             }
-        return map.toMap()
+        }
     }
 }

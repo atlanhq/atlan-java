@@ -31,21 +31,19 @@ object DuplicateDetector {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<DuplicateDetectorCfg>()
-        Utils.initializeContext(config).use { client ->
+        Utils.initializeContext(config).use { ctx ->
 
-            val glossaryName = Utils.getOrDefault(config.glossaryName, "Duplicate assets")
-            val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
-            val types =
-                Utils.getOrDefault(config.assetTypes, listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
+            val qnPrefix = ctx.config.qnPrefix!!
+            val types = ctx.config.assetTypes!!
             val batchSize = 20
 
             logger.info {
-                "Detecting duplicates across $types (for prefix $qnPrefix) on: ${client.baseUrl}"
+                "Detecting duplicates across $types (for prefix $qnPrefix) on: ${ctx.client.baseUrl}"
             }
-            findAssets(client, qnPrefix, types, batchSize)
+            findAssets(ctx.client, qnPrefix, types, batchSize)
 
-            val glossaryQN = glossaryForDuplicates(client, glossaryName)
-            termsForDuplicates(client, glossaryQN, batchSize)
+            val glossaryQN = glossaryForDuplicates(ctx.client, ctx.config.glossaryName!!)
+            termsForDuplicates(ctx.client, glossaryQN, batchSize)
         }
     }
 
@@ -108,7 +106,10 @@ object DuplicateDetector {
      * @param glossaryName name of the glossary
      * @return the qualifiedName of the glossary
      */
-    fun glossaryForDuplicates(client: AtlanClient, glossaryName: String): String {
+    fun glossaryForDuplicates(
+        client: AtlanClient,
+        glossaryName: String,
+    ): String {
         return try {
             Glossary.findByName(glossaryName).qualifiedName
         } catch (e: NotFoundException) {

@@ -46,7 +46,10 @@ object AtlanTagXformer {
         }
     }
 
-    fun decode(client: AtlanClient, atlanTag: String): AtlanTag? {
+    fun decode(
+        client: AtlanClient,
+        atlanTag: String,
+    ): AtlanTag? {
         return if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
             val builder = AtlanTag.builder()
@@ -104,7 +107,10 @@ object AtlanTagXformer {
         }
     }
 
-    private fun encodeAttributes(client: AtlanClient, atlanTag: AtlanTag): String {
+    private fun encodeAttributes(
+        client: AtlanClient,
+        atlanTag: AtlanTag,
+    ): String {
         return if (atlanTag.sourceTagAttachments.isNullOrEmpty()) {
             ""
         } else {
@@ -174,7 +180,10 @@ object AtlanTagXformer {
         }
     }
 
-    private fun encodeSourceTagIdentity(client: AtlanClient, sourceTagQN: String): String {
+    private fun encodeSourceTagIdentity(
+        client: AtlanClient,
+        sourceTagQN: String,
+    ): String {
         return try {
             val tag = client.sourceTagCache.getByQualifiedName(sourceTagQN) as ITag
             return SourceTagName(client, tag).toString()
@@ -183,7 +192,10 @@ object AtlanTagXformer {
         }
     }
 
-    private fun decodeSourceTag(client: AtlanClient, sourceTagIdentity: String): ITag? {
+    private fun decodeSourceTag(
+        client: AtlanClient,
+        sourceTagIdentity: String,
+    ): ITag? {
         val sourceTagId = SourceTagName(sourceTagIdentity)
         return try {
             client.sourceTagCache.getByName(sourceTagId) as ITag

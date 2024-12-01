@@ -40,6 +40,7 @@ uiConfig {
           helpText = "Enter the starting characters for all objects that should be removed."
           width = 4
           placeholderText = "jsdk_"
+          fallback = ""
         }
       }
     }

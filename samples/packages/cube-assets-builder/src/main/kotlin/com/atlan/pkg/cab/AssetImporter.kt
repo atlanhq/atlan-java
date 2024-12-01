@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
-import com.atlan.AtlanClient
+import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Cube
@@ -11,7 +11,8 @@ import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.assets.IMultiDimensionalDataset
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.Importer.QN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -30,35 +31,35 @@ import mu.KLogger
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
- * @param client connectivity to the Atlan tenant
+ * @param ctx context in which this package is running
  * @param delta the processor containing any details about file deltas
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
+ * @param typeNameFilter asset types to which to restrict loading
+ * @param logger through which to record logging
  * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
  * @param batchSize maximum number of records to save per API request
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class AssetImporter(
-    client: AtlanClient,
+    ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor?,
-    private val filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val creationHandling: AssetCreationHandling,
-    private val batchSize: Int,
+    filename: String,
     typeNameFilter: String,
     logger: KLogger,
-    trackBatches: Boolean,
-    fieldSeparator: Char,
+    creationHandling: AssetCreationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.FULL),
+    batchSize: Int = ctx.config.assetsBatchSize!!.toInt(),
+    trackBatches: Boolean = ctx.config.trackBatches!!,
 ) : CSVImporter(
-        client,
+        ctx,
         filename,
         logger,
         typeNameFilter,
-        attrsToOverwrite,
+        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite!!.toMutableList(), "assets", logger),
+        creationHandling = creationHandling,
         batchSize = batchSize,
         trackBatches = trackBatches,
-        fieldSeparator = fieldSeparator,
+        fieldSeparator = ctx.config.assetsFieldSeparator!![0],
+        failOnErrors = ctx.config.assetsFailOnErrors!!,
     ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {

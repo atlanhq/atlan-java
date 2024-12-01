@@ -65,7 +65,9 @@ object Importer {
                 val termImporter = TermImporter(ctx, glossariesInput, logger)
                 val resultsTerm = termImporter.import()
                 ImportResults.combineAll(ctx.client, true, resultsGlossary, resultsCategory, resultsTerm)
-            } else null
+            } else {
+                null
+            }
 
         val resultsAssets =
             if (assetsFileProvided) {
@@ -85,7 +87,9 @@ object Importer {
                     ctx.linkCache.preload()
                 }
                 assetImporter.import()
-            } else null
+            } else {
+                null
+            }
 
         // Data products...
         val resultsDDP =
@@ -112,7 +116,9 @@ object Importer {
                 }
                 val resultsProduct = productImporter.import()
                 ImportResults.combineAll(ctx.client, true, resultsDomain, resultsProduct)
-            } else null
+            } else {
+                null
+            }
 
         ImportResults.getAllModifiedAssets(ctx.client, false, resultsAssets).use { allModified ->
             Utils.updateConnectionCache(

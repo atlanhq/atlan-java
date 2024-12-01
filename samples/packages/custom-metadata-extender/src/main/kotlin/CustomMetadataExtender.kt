@@ -20,13 +20,13 @@ object CustomMetadataExtender {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<CustomMetadataExtenderCfg>()
-        Utils.initializeContext(config).use { client ->
+        Utils.initializeContext(config).use { ctx ->
 
-            val cmName = Utils.getOrDefault(config.customMetadata, "")
-            val connectionQNs = Utils.getOrDefault(config.connectionQualifiedName, listOf())
-            val glossaryNames = Utils.getAsList(config.glossaries)
-            val domains = Utils.getOrDefault(config.domains, "ALL")
-            val domainName = Utils.getOrDefault(config.domainsSpecific, "")
+            val cmName = ctx.config.customMetadata!!
+            val connectionQNs = ctx.config.connectionQualifiedName!!
+            val glossaryNames = Utils.getAsList(ctx.config.glossaries)
+            val domains = ctx.config.domains!!
+            val domainName = ctx.config.domainsSpecific!!
 
             if (cmName.isBlank()) {
                 logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
@@ -38,7 +38,7 @@ object CustomMetadataExtender {
                 exitProcess(4)
             }
 
-            extendCM(client, cmName, connectionQNs, glossaryNames, domains, domainName)
+            extendCM(ctx.client, cmName, connectionQNs, glossaryNames, domains, domainName)
         }
     }
 

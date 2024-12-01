@@ -184,7 +184,8 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         for (RelationshipAttributeDef relationshipAttributeDef :
                 cache.getEntityDefCache().get(getOriginalName()).getRelationshipAttributeDefs()) {
             if (uniqueRelationships.contains(relationshipAttributeDef.getName())) {
-                SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
+                SearchableAttribute<?> attribute =
+                        new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
                 if (!attribute.getType().getName().equals("Internal")) {
                     nonInheritedAttributes.add(attribute);
                     checkAndAddMapContainer(attribute);
@@ -192,14 +193,16 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : allRelationships) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
+            SearchableAttribute<?> attribute =
+                    new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 classAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : cache.getAllRelationshipsForType(getOriginalName())) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
+            SearchableAttribute<?> attribute =
+                    new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);

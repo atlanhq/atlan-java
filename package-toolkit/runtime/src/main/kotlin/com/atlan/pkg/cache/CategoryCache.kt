@@ -3,7 +3,6 @@
 package com.atlan.pkg.cache
 
 import com.atlan.Atlan
-import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary

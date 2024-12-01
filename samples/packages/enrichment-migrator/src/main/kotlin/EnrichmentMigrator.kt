@@ -1,5 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
+import EnrichmentMigratorXform.getSourceDatabaseNames
+import EnrichmentMigratorXform.getTargetDatabaseName
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.exception.ErrorCode
 import com.atlan.exception.InvalidRequestException
@@ -12,6 +14,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
 import mu.KotlinLogging
+import sun.tools.jconsole.ProxyClient.getConnectionName
 import java.io.File
 import kotlin.jvm.optionals.getOrElse
 
@@ -26,24 +29,17 @@ object EnrichmentMigrator {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
-        Utils.initializeContext(config).use { client ->
+        Utils.initializeContext(config).use { ctx ->
 
-            val batchSize = Utils.getOrDefault(config.batchSize, 20)
-            val fieldSeparator = Utils.getOrDefault(config.fieldSeparator, ",")[0]
-            val sourceConnectionQN = Utils.getOrDefault(config.sourceConnection, listOf(""))[0]
-            val targetConnectionQNs = Utils.getOrDefault(config.targetConnection, listOf(""))
-            val sourcePrefix = Utils.getOrDefault(config.sourceQnPrefix, "")
-            val includeArchived = Utils.getOrDefault(config.includeArchived, false)
-            val targetDatabasePattern = Utils.getOrDefault(config.targetDatabasePattern, "")
-            val sourceDatabaseName = getSourceDatabaseNames(targetDatabasePattern, sourceConnectionQN, sourcePrefix)
+            val sourceConnectionQN = ctx.config.sourceConnection!![0]
+            val sourcePrefix = ctx.config.sourceQnPrefix!!
+            val sourceDatabaseName = getSourceDatabaseNames(ctx.config.targetDatabasePattern!!, sourceConnectionQN, sourcePrefix)
             val sourceQN =
                 if (sourcePrefix.isBlank()) {
                     sourceConnectionQN
                 } else {
                     "$sourceConnectionQN/$sourcePrefix"
                 }
-            val caseSensitive = Utils.getOrDefault(config.caseSensitive, true)
-            val tableViewAgnostic = Utils.getOrDefault(config.tableViewAgnostic, false)
 
             // 1. Extract the enriched metadata
             val extractConfig =
@@ -51,9 +47,11 @@ object EnrichmentMigrator {
                     exportScope = "ENRICHED_ONLY",
                     qnPrefix = sourceQN,
                     includeGlossaries = false,
-                    includeArchived = includeArchived,
+                    includeArchived = ctx.config.includeArchived!!,
                 )
-            Exporter.export(client, extractConfig, outputDirectory)
+            Utils.initializeContext(extractConfig, ctx.client).use { eCtx ->
+                Exporter.export(eCtx, outputDirectory)
+            }
             val extractFile = "$outputDirectory${File.separator}asset-export.csv"
 
             // 2. Transform to the target metadata assets (limiting attributes as requested)
@@ -62,8 +60,8 @@ object EnrichmentMigrator {
             val includeOOTB = Utils.getOrDefault(config.limitType, "EXCLUDE") == "INCLUDE"
             val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
             val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
-            val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields(client))
-            if (includeArchived) {
+            val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields(ctx.client))
+            if (ctx.config.includeArchived!!) {
                 start.add(Asset.STATUS.atlanFieldName)
             }
             if (includeOOTB) {
@@ -101,15 +99,15 @@ object EnrichmentMigrator {
                     start.toList()
                 }
             val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-            targetConnectionQNs.forEach { targetConnectionQN ->
-                val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, targetDatabasePattern)
+            ctx.config.targetConnection!!.forEach { targetConnectionQN ->
+                val targetDatabaseNames = getTargetDatabaseName(targetConnectionQN, ctx.config.targetDatabasePattern!!)
                 targetDatabaseNames.forEach { targetDatabaseName ->
-                    val ctx =
+                    val mCtx =
                         MigratorContext(
                             sourceConnectionQN = sourceConnectionQN,
                             targetConnectionQN = targetConnectionQN,
                             targetConnectionName = getConnectionName(targetConnectionQN),
-                            includeArchived = includeArchived,
+                            includeArchived = ctx.config.includeArchived!!,
                             sourceDatabaseName = sourceDatabaseName,
                             targetDatabaseName = targetDatabaseName,
                         )
@@ -123,11 +121,11 @@ object EnrichmentMigrator {
                         "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
                     val transformer =
                         Transformer(
-                            ctx,
+                            mCtx,
                             extractFile,
                             header.toList(),
                             logger,
-                            fieldSeparator,
+                            ctx.config.fieldSeparator!![0],
                         )
                     transformer.transform(transformedFile)
 
@@ -137,12 +135,14 @@ object EnrichmentMigrator {
                             assetsFile = transformedFile,
                             assetsUpsertSemantic = "update",
                             assetsFailOnErrors = assetsFailOnErrors,
-                            assetsBatchSize = batchSize,
-                            assetsFieldSeparator = fieldSeparator.toString(),
-                            assetsCaseSensitive = caseSensitive,
-                            assetsTableViewAgnostic = tableViewAgnostic,
+                            assetsBatchSize = ctx.config.batchSize!!,
+                            assetsFieldSeparator = ctx.config.fieldSeparator!!,
+                            assetsCaseSensitive = ctx.config.caseSensitive!!,
+                            assetsTableViewAgnostic = ctx.config.tableViewAgnostic!!,
                         )
-                    Importer.import(client, importConfig, outputDirectory)
+                    Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
+                        Importer.import(iCtx, outputDirectory)?.close()
+                    }
                 }
             }
         }

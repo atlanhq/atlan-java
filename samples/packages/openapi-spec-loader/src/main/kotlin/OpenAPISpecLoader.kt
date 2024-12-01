@@ -25,12 +25,12 @@ object OpenAPISpecLoader {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
-        Utils.initializeContext(config).use { client ->
+        Utils.initializeContext(config).use { ctx ->
             val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-            val importType = Utils.getOrDefault(config.importType, "URL")
-            val specUrl = Utils.getOrDefault(config.specUrl, "")
-            val specFilename = Utils.getOrDefault(config.specFile, "")
-            val specKey = Utils.getOrDefault(config.specKey, "")
+            val importType = ctx.config.importType!!
+            val specUrl = ctx.config.specUrl!!
+            val specFilename = ctx.config.specFile!!
+            val specKey = ctx.config.specKey!!
             val batchSize = 20
 
             val inputQN =
@@ -38,7 +38,7 @@ object OpenAPISpecLoader {
                     if (it.isNotEmpty()) it[0] else null
                 }
             val connectionQN =
-                Utils.createOrReuseConnection(client, config.connectionUsage, inputQN, config.connection)
+                Utils.createOrReuseConnection(ctx.client, config.connectionUsage, inputQN, config.connection)
 
             val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
             if (!specFileProvided) {
@@ -68,7 +68,7 @@ object OpenAPISpecLoader {
                 }
 
             logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
-            loadOpenAPISpec(client, connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
+            loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
         }
     }
 

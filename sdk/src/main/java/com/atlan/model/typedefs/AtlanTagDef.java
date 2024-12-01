@@ -82,8 +82,12 @@ public class AtlanTagDef extends TypeDef {
      * @return the minimal request necessary to create the Atlan tag typedef, as a builder
      * @throws AtlanException on any issues uploading the image from the provided URL
      */
-    public static AtlanTagDefBuilder<?, ?> creator(AtlanClient client, String displayName, String url) throws AtlanException {
-        return AtlanTagDef.builder().name(displayName).displayName(displayName).options(AtlanTagOptions.withImage(client, url));
+    public static AtlanTagDefBuilder<?, ?> creator(AtlanClient client, String displayName, String url)
+            throws AtlanException {
+        return AtlanTagDef.builder()
+                .name(displayName)
+                .displayName(displayName)
+                .options(AtlanTagOptions.withImage(client, url));
     }
 
     /**

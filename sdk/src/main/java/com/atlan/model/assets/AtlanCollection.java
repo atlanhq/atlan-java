@@ -19,7 +19,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -296,7 +295,8 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken) throws AtlanException {
+    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken)
+            throws AtlanException {
         return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
     }
 
@@ -309,23 +309,25 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsViewer(AtlanClient client, final String impersonationToken) throws AtlanException {
+    public AssetMutationResponse addApiTokenAsViewer(AtlanClient client, final String impersonationToken)
+            throws AtlanException {
         String username = client.users.getCurrentUser().getUsername();
         AssetMutationResponse response = null;
         try (AtlanClient tmp = new AtlanClient(client.getBaseUrl(), impersonationToken)) {
             // Look for the asset as the impersonated user, ensuring we include the viewer users
             // in the results (so we avoid clobbering any existing viewer users)
-            Optional<Asset> found = tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
-                .findFirst();
+            Optional<Asset> found =
+                    tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
+                            .findFirst();
             response = null;
             if (found.isPresent()) {
                 Asset asset = found.get();
                 Set<String> existingViewers = asset.getViewerUsers();
                 response = asset.trimToRequired()
-                    .viewerUsers(existingViewers)
-                    .viewerUser(username)
-                    .build()
-                    .save(tmp);
+                        .viewerUsers(existingViewers)
+                        .viewerUser(username)
+                        .build()
+                        .save(tmp);
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
             }

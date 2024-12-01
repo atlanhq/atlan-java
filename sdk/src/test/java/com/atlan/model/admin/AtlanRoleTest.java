@@ -4,9 +4,8 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import java.io.IOException;
-
 import com.atlan.mock.MockTenant;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class AtlanRoleTest {

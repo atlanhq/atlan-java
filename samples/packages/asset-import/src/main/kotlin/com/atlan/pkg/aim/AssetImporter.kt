@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
@@ -194,11 +193,8 @@ import com.atlan.model.assets.ThoughtspotWorksheet
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTypeCategory
-import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cache.LinkCache
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -207,7 +203,6 @@ import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
-import mu.KotlinLogging
 
 /**
  * Import assets into Atlan from a provided CSV file.

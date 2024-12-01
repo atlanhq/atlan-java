@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.DataDomainCache
 
 /**
  * Static object to transform data domain references.
@@ -22,7 +21,10 @@ object DataDomainXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         return when (asset) {
             is DataDomain -> {
                 val dataDomain = ctx.dataDomainCache.getByGuid(asset.guid)

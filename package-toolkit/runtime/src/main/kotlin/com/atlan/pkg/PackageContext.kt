@@ -55,7 +55,10 @@ class PackageContext<T : CustomConfig>(
         }
     }
 
-    private fun closeCache(cache: AssetCache<*>, previous: IOException?): IOException? {
+    private fun closeCache(
+        cache: AssetCache<*>,
+        previous: IOException?,
+    ): IOException? {
         var running = previous
         try {
             cache.close()

@@ -2,26 +2,28 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lb
 
+import LineageBuilderCfg
 import com.atlan.model.assets.ICatalog
 import com.atlan.model.assets.LineageProcess
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.pkg.serde.csv.CSVXformer
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 
 class LineageTransformer(
-    private val ctx: Loader.Context,
+    private val ctx: PackageContext<LineageBuilderCfg>,
     private val inputFile: String,
     private val lineageHeaders: List<String>,
     private val qnMap: Map<AssetIdentity, String>,
     private val logger: KLogger,
-    private val fieldSeparator: Char,
 ) : CSVXformer(
         inputFile,
         lineageHeaders,
         logger,
-        fieldSeparator,
+        ctx.config.fieldSeparator!![0],
     ) {
     companion object {
         const val XFORM_PREFIX = "Transformation"
@@ -65,8 +67,8 @@ class LineageTransformer(
             } else {
                 val xformConnector = inputRow[XFORM_CONNECTOR] ?: ""
                 val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
-                val connectionId = Loader.ConnectionId(xformConnector, xformConnection)
-                val connectionQN = ctx.connectionMap.getOrDefault(connectionId, "")
+                val connectionId = AssetResolver.ConnectionIdentity(xformConnection, xformConnector)
+                val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
                 if (connectionQN.isBlank()) {
                     logger.warn { "Unable to find transformation connection, and therefore cannot create lineage process within it: $xformConnector/$xformConnection" }
                 } else {
@@ -86,8 +88,8 @@ class LineageTransformer(
                             name,
                             connectionQN,
                             xformConnector,
-                            AssetRefXformer.encode(source),
-                            AssetRefXformer.encode(target),
+                            AssetRefXformer.encode(ctx, source),
+                            AssetRefXformer.encode(ctx, target),
                         )
                     for (i in row.size until lineageHeaders.size) {
                         // Append other attributes onto the row

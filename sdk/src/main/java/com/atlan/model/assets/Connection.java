@@ -584,7 +584,8 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param impersonationToken a bearer token for an actual user who is already an admin for the Connection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken) throws AtlanException {
+    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken)
+            throws AtlanException {
         return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
     }
 

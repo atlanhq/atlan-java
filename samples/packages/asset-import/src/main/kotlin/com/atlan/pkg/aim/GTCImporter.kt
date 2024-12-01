@@ -3,9 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
@@ -26,37 +24,27 @@ import java.util.stream.Stream
  *
  * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
  * @param cache of existing glossaries, terms or categories (will be preloaded by import)
  * @param typeNameFilter name of the specific type that should be handled by this importer
  * @param logger through which to log any problems
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class GTCImporter(
     ctx: PackageContext<AssetImportCfg>,
-    protected val filename: String,
-    attrsToOverwrite: List<AtlanField>,
-    updateOnly: Boolean,
-    batchSize: Int,
+    filename: String,
     protected val cache: AssetCache<*>,
     typeNameFilter: String,
     logger: KLogger,
-    failOnErrors: Boolean,
-    protected val fieldSeparator: Char,
 ) : CSVImporter(
         ctx,
         filename,
         logger,
         typeNameFilter,
-        attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
-        failOnErrors = failOnErrors,
+        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite!!.toMutableList(), "glossaries", logger),
+        updateOnly = ctx.config.glossariesUpsertSemantic == "update",
+        batchSize = ctx.config.glossariesBatchSize!!.toInt(),
+        failOnErrors = ctx.config.glossariesFailOnErrors!!,
+        fieldSeparator = ctx.config.glossariesFieldSeparator!![0],
         trackBatches = true,
-        fieldSeparator = fieldSeparator,
     ) {
     // Note: Always track batches (above) for GTC importers, to ensure cache is managed
 

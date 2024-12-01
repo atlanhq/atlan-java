@@ -6,7 +6,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.CategoryCache
 
 /**
  * Static object to transform category references.
@@ -21,7 +20,10 @@ object GlossaryCategoryXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         return when (asset) {
             is GlossaryCategory -> {
                 val category = ctx.categoryCache.getByGuid(asset.guid)

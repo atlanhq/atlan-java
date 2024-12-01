@@ -6,9 +6,8 @@ import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.probable.guacamole.ExtendedModelGenerator;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class TypeDefDestroyer extends ExtendedModelGenerator {

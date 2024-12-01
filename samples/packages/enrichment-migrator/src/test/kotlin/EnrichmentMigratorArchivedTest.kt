@@ -33,7 +33,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private fun createConnections() {
         Connection.creator(c1, connectorType)
             .build()
-            .save()
+            .save(client)
             .block()
     }
 

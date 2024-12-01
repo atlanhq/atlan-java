@@ -5,7 +5,6 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 
 /**
@@ -36,7 +35,10 @@ object GlossaryTermXformer {
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(ctx: PackageContext<*>, asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         // Handle some assets as direct embeds
         return when (asset) {
             is GlossaryTerm -> {

@@ -4,7 +4,6 @@ package com.atlan.pkg.cache
 
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.Atlan
-import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.fields.AtlanField

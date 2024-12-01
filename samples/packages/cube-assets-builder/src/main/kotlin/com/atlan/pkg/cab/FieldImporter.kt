@@ -2,16 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
-import com.atlan.AtlanClient
+import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
-import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.DeltaProcessor
 import com.atlan.util.StringUtils
-import mu.KotlinLogging
+import mu.KLogger
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
 
@@ -23,37 +22,24 @@ import kotlin.math.max
  * particular cube field's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that cube field's field to getAttributesToOverwrite.
  *
- * @param client connectivity to the Atlan tenant
+ * @param ctx context in which this package is running
  * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
- * @param batchSize maximum number of records to save per API request
  * @param connectionImporter that was used to import connections
- * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to record any logging
  */
 class FieldImporter(
-    client: AtlanClient,
+    ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val creationHandling: AssetCreationHandling,
-    private val batchSize: Int,
     private val connectionImporter: ConnectionImporter,
-    trackBatches: Boolean,
-    fieldSeparator: Char,
+    logger: KLogger,
 ) : AssetImporter(
-        client,
+        ctx,
         delta,
         preprocessed.preprocessedFile,
-        attrsToOverwrite,
-        creationHandling,
-        batchSize,
         CubeField.TYPE_NAME,
-        KotlinLogging.logger {},
-        trackBatches,
-        fieldSeparator,
+        logger,
     ) {
     private val leafNodeLevel = 1L
     private var generationToProcess = 0L
@@ -138,7 +124,7 @@ class FieldImporter(
             val results = super.import(columnsToSkip)
             individualResults.add(results)
         }
-        return ImportResults.combineAll(client, true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
     }
 
     /** {@inheritDoc} */

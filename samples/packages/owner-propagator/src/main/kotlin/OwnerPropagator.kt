@@ -18,12 +18,11 @@ object OwnerPropagator {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<OwnerPropagatorCfg>()
-        Utils.initializeContext(config).use { client ->
-            val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
+        Utils.initializeContext(config).use { ctx ->
             val batchSize = 20
 
-            val tables = findTables(client, qnPrefix, batchSize)
-            propagateOwner(client, tables, batchSize)
+            val tables = findTables(ctx.client, ctx.config.qnPrefix!!, batchSize)
+            propagateOwner(ctx.client, tables, batchSize)
         }
     }
 
