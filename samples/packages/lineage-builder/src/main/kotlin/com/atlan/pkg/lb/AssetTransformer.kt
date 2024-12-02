@@ -15,16 +15,17 @@ class AssetTransformer(
     private val inputFile: String,
     private val logger: KLogger,
 ) : CSVXformer(
-        inputFile,
-        listOf(
-            Asset.QUALIFIED_NAME.atlanFieldName,
-            Asset.TYPE_NAME.atlanFieldName,
-            Asset.NAME.atlanFieldName,
-            "connectorType",
-            Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
-        ),
-        logger,
-        ctx.config.fieldSeparator[0],
+        inputFile = inputFile,
+        targetHeader =
+            listOf(
+                Asset.QUALIFIED_NAME.atlanFieldName,
+                Asset.TYPE_NAME.atlanFieldName,
+                Asset.NAME.atlanFieldName,
+                "connectorType",
+                Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
+            ),
+        logger = logger,
+        fieldSeparator = ctx.config.fieldSeparator[0],
     ) {
     companion object {
         const val TYPE = "Type"

@@ -47,16 +47,16 @@ object EnrichmentMigrator {
                     includeGlossaries = false,
                     includeArchived = ctx.config.includeArchived,
                 )
-            Utils.initializeContext(extractConfig, ctx.client).use { eCtx ->
+            Utils.initializeContext(extractConfig, ctx).use { eCtx ->
                 Exporter.export(eCtx, outputDirectory)
             }
             val extractFile = "$outputDirectory${File.separator}asset-export.csv"
 
             // 2. Transform to the target metadata assets (limiting attributes as requested)
-            val attributeLimits = Utils.getOrDefault(config.attributesList, listOf())
-            val cmLimits = Utils.getOrDefault(config.customMetadata, "").split("|")
-            val includeOOTB = Utils.getOrDefault(config.limitType, "EXCLUDE") == "INCLUDE"
-            val includeCM = Utils.getOrDefault(config.cmLimitType, "EXCLUDE") == "INCLUDE"
+            val attributeLimits = ctx.config.attributesList
+            val cmLimits = ctx.config.customMetadata.split("|")
+            val includeOOTB = ctx.config.limitType == "INCLUDE"
+            val includeCM = ctx.config.cmLimitType == "INCLUDE"
             val start = mutableListOf(Asset.QUALIFIED_NAME.atlanFieldName, Asset.TYPE_NAME.atlanFieldName)
             val defaultAttrsToExtract = AssetExporter.getAttributesToExtract(true, Exporter.getAllCustomMetadataFields(ctx.client))
             if (ctx.config.includeArchived) {
@@ -138,7 +138,7 @@ object EnrichmentMigrator {
                             assetsCaseSensitive = ctx.config.caseSensitive,
                             assetsTableViewAgnostic = ctx.config.tableViewAgnostic,
                         )
-                    Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
+                    Utils.initializeContext(importConfig, ctx).use { iCtx ->
                         Importer.import(iCtx, outputDirectory)?.close()
                     }
                 }

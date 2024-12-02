@@ -80,7 +80,7 @@ object Loader {
                     assetsFieldSeparator = ctx.config.fieldSeparator,
                 )
             lateinit var qualifiedNameMap: Map<AssetIdentity, String>
-            Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
+            Utils.initializeContext(importConfig, ctx).use { iCtx ->
                 val results = Importer.import(iCtx, outputDirectory)
                 qualifiedNameMap = results?.primary?.qualifiedNames?.toMap() ?: mapOf()
                 results?.close()
@@ -124,9 +124,9 @@ object Loader {
                     assetsFailOnErrors = ctx.config.lineageFailOnErrors,
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
-                    assetsFieldSeparator = ctx.config.fieldSeparator.toString(),
+                    assetsFieldSeparator = ctx.config.fieldSeparator,
                 )
-            Utils.initializeContext(lineageConfig, ctx.client).use { iCtx ->
+            Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()
             }
         }

@@ -106,18 +106,19 @@ object Utils {
      * to impersonate a user if ATLAN_API_KEY is empty.
      *
      * @param config configuration for the custom package, which has already been initialized through {@code parseConfigFromEnv()}
-     * @param reuseClient (optional) existing connectivity to the Atlan tenant to reuse
+     * @param reuseCtx (optional) existing context of a running package to reuse
      * @return connectivity to the Atlan tenant
      */
     fun <T : CustomConfig> initializeContext(
         config: T,
-        reuseClient: AtlanClient? = null,
+        reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
+        if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        val client = reuseClient ?: AtlanClient(baseUrl, apiToken)
+        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
         when {
             apiToken.isNotEmpty() -> {
                 logger.info { "Using provided API token for authentication." }
@@ -135,7 +136,7 @@ object Utils {
             }
         }
         setWorkflowOpts(client, config.runtime)
-        return PackageContext(config, client)
+        return PackageContext(config, client, reuseCtx?.client != null)
     }
 
     /**

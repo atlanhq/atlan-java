@@ -93,7 +93,7 @@ object LakeTagSynchronizer {
                     assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ",",
                 )
-            Utils.initializeContext(importConfig, ctx.client).use { iCtx ->
+            Utils.initializeContext(importConfig, ctx).use { iCtx ->
                 val result = Importer.import(iCtx, outputDirectory)
                 anyFailure = anyFailure || result?.anyFailures ?: false
                 result?.close() // Clean up the results if we won't use them

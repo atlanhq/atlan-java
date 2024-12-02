@@ -20,10 +20,10 @@ class LineageTransformer(
     private val qnMap: Map<AssetIdentity, String>,
     private val logger: KLogger,
 ) : CSVXformer(
-        inputFile,
-        lineageHeaders,
-        logger,
-        ctx.config.fieldSeparator[0],
+        inputFile = inputFile,
+        targetHeader = lineageHeaders,
+        logger = logger,
+        fieldSeparator = ctx.config.fieldSeparator[0],
     ) {
     companion object {
         const val XFORM_PREFIX = "Transformation"

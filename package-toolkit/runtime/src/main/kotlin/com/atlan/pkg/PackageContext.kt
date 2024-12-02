@@ -19,10 +19,12 @@ import java.io.IOException
  *
  * @param config package-specific configuration
  * @param client connectivity to the Atlan tenant
+ * @param reusedClient whether the client in this context is reused (if so, will not be automatically closed)
  */
 class PackageContext<T : CustomConfig>(
     val config: T,
     val client: AtlanClient,
+    private val reusedClient: Boolean = false,
 ) : AutoCloseable {
     val glossaryCache = GlossaryCache(this)
     val termCache = TermCache(this)
@@ -41,13 +43,15 @@ class PackageContext<T : CustomConfig>(
         err = closeCache(dataDomainCache, err)
         err = closeCache(dataProductCache, err)
         err = closeCache(linkCache, err)
-        try {
-            client.close()
-        } catch (e: IOException) {
-            if (err != null) {
-                err.addSuppressed(e)
-            } else {
-                err = e
+        if (!reusedClient) {
+            try {
+                client.close()
+            } catch (e: IOException) {
+                if (err != null) {
+                    err.addSuppressed(e)
+                } else {
+                    err = e
+                }
             }
         }
         if (err != null) {

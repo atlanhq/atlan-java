@@ -18,10 +18,8 @@ import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.HttpClient
-import com.atlan.serde.Serde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
@@ -192,13 +190,13 @@ abstract class PackageTest(
         var response = request.search(client)
         var remainingActive = false
         if (isDeleteQuery) {
-            remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+            remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
         }
         while ((response.approximateCount < expectedSize || remainingActive) && count < (client.maxNetworkRetries * 2)) {
             Thread.sleep(HttpClient.waitTime(count).toMillis())
             response = request.search(client)
             if (isDeleteQuery) {
-                remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+                remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
             }
             count++
         }
@@ -288,14 +286,14 @@ abstract class PackageTest(
 
         // Necessary combination to both (de)serialize Atlan objects (like connections)
         // and use the JsonProperty annotations inherent in the configuration data classes
-        private val mapper: ObjectMapper
+        private val mapper = jacksonObjectMapper() // : ObjectMapper
 
-        init {
+        /*init {
             AtlanClient().use { client ->
                 mapper = Serde.createMapper(client).registerKotlinModule()
                 // TODO: will this stay open or immediately close (?)
             }
-        }
+        }*/
     }
 
     /**
@@ -515,6 +513,7 @@ abstract class PackageTest(
         try {
             logger.info { "Tearing down..." }
             teardown()
+            client.close()
             val keepLogs = context.failedTests.size() > 0 || context.passedTests.size() == 0
             if (!keepLogs) {
                 removeDirectory(testDirectory)
@@ -523,6 +522,5 @@ abstract class PackageTest(
             logger.error(e) { "Failed to teardown." }
         }
         sysExit.teardown()
-        client.close()
     }
 }
