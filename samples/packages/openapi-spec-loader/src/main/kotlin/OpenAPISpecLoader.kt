@@ -120,39 +120,39 @@ object OpenAPISpecLoader {
             logger.error("Unable to save the APISpec.", e)
             exitProcess(5)
         }
-        val batch =
-            AssetBatch(client, batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true)
         val totalCount = spec.paths?.size!!.toLong()
         if (totalCount > 0) {
             logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
-            try {
-                val assetCount = AtomicLong(0)
-                for (apiPath in spec.paths.entries) {
-                    val pathUrl = apiPath.key
-                    val pathDetails = apiPath.value
-                    val operations = mutableListOf<String>()
-                    val desc = StringBuilder()
-                    desc.append("| Method | Summary|\n|---|---|\n")
-                    addOperationDetails(pathDetails.get, "GET", operations, desc)
-                    addOperationDetails(pathDetails.post, "POST", operations, desc)
-                    addOperationDetails(pathDetails.put, "PUT", operations, desc)
-                    addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
-                    addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
-                    val path =
-                        APIPath.creator(pathUrl, specQN)
-                            .description(desc.toString())
-                            .apiPathRawURI(pathUrl)
-                            .apiPathSummary(pathDetails.summary)
-                            .apiPathAvailableOperations(operations)
-                            .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
-                            .build()
-                    batch.add(path)
+            AssetBatch(client, batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true).use { batch ->
+                try {
+                    val assetCount = AtomicLong(0)
+                    for (apiPath in spec.paths.entries) {
+                        val pathUrl = apiPath.key
+                        val pathDetails = apiPath.value
+                        val operations = mutableListOf<String>()
+                        val desc = StringBuilder()
+                        desc.append("| Method | Summary|\n|---|---|\n")
+                        addOperationDetails(pathDetails.get, "GET", operations, desc)
+                        addOperationDetails(pathDetails.post, "POST", operations, desc)
+                        addOperationDetails(pathDetails.put, "PUT", operations, desc)
+                        addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
+                        addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
+                        val path =
+                            APIPath.creator(pathUrl, specQN)
+                                .description(desc.toString())
+                                .apiPathRawURI(pathUrl)
+                                .apiPathSummary(pathDetails.summary)
+                                .apiPathAvailableOperations(operations)
+                                .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
+                                .build()
+                        batch.add(path)
+                        Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                    }
+                    batch.flush()
                     Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                } catch (e: AtlanException) {
+                    logger.error("Unable to bulk-save API paths.", e)
                 }
-                batch.flush()
-                Utils.logProgress(assetCount, totalCount, logger, batchSize)
-            } catch (e: AtlanException) {
-                logger.error("Unable to bulk-save API paths.", e)
             }
         }
     }
