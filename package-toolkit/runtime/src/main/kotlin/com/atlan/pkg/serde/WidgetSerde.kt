@@ -21,8 +21,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 
 object WidgetSerde {
     // Creates a single static mapper to use across calls
-    private val mapper = jacksonObjectMapper()
-    private val client = AtlanClient("INTERNAL")
+    val mapper = jacksonObjectMapper()
 
     class MultiSelectDeserializer : StdDeserializer<List<String>>(
         TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
@@ -133,7 +132,9 @@ object WidgetSerde {
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
                 if (!value.isNullOrEmpty()) {
-                    return client.readValue(value, Connection::class.java)
+                    AtlanClient("INTERNAL").use { client ->
+                        return client.readValue(value, Connection::class.java)
+                    }
                 }
             }
             return null
@@ -171,7 +172,11 @@ object WidgetSerde {
                 gen?.writeNull()
             } else {
                 when (value) {
-                    is AtlanObject -> gen?.writeString(value.toJson(client))
+                    is AtlanObject -> {
+                        AtlanClient("INTERNAL").use { client ->
+                            gen?.writeString(value.toJson(client))
+                        }
+                    }
                     else -> gen?.writeString(mapper.writeValueAsString(value))
                 }
             }

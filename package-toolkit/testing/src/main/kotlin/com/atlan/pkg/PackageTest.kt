@@ -18,8 +18,8 @@ import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.HttpClient
+import com.atlan.pkg.serde.WidgetSerde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KLogger
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
@@ -283,17 +283,6 @@ abstract class PackageTest(
             )
         private const val PREFIX = "jpkg"
         private const val TAG_REMOVAL_RETRIES = 30
-
-        // Necessary combination to both (de)serialize Atlan objects (like connections)
-        // and use the JsonProperty annotations inherent in the configuration data classes
-        private val mapper = jacksonObjectMapper() // : ObjectMapper
-
-        /*init {
-            AtlanClient().use { client ->
-                mapper = Serde.createMapper(client).registerKotlinModule()
-                // TODO: will this stay open or immediately close (?)
-            }
-        }*/
     }
 
     /**
@@ -385,9 +374,8 @@ abstract class PackageTest(
      * Remove the specified tag.
      *
      * @param displayName human-readable display name of the tag to remove
-     * @throws ConflictException if the tag cannot be removed because there are still references to it
+     * @param retryCount number of retries attempted so far
      */
-    @Throws(ConflictException::class)
     fun removeTag(
         displayName: String,
         retryCount: Int = 0,
@@ -399,7 +387,7 @@ abstract class PackageTest(
                 Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
                 removeTag(displayName, retryCount + 1)
             } else {
-                logger.error { "Unable to remove tag: $displayName" }
+                logger.error { "Unable to remove tag after $retryCount attempts: $displayName" }
                 logger.debug(e) { "Full details:" }
             }
         }
@@ -496,7 +484,7 @@ abstract class PackageTest(
                 agentPackageName = null,
                 agentWorkflowId = null,
             )
-        withEnvironmentVariable("NESTED_CONFIG", mapper.writeValueAsString(cfg)).execute {
+        withEnvironmentVariable("NESTED_CONFIG", WidgetSerde.mapper.writeValueAsString(cfg)).execute {
             SystemProperties("logDirectory", testDirectory).execute {
                 mainMethod(arrayOf(testDirectory))
             }
