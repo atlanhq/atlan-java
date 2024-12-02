@@ -6,6 +6,8 @@ import static org.testng.Assert.*;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -13,7 +15,6 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.search.AuditSearchRequest;
 import com.atlan.model.search.AuditSearchResponse;
-import com.atlan.model.search.EntityAudit;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
@@ -110,22 +111,25 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      */
     protected void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
-        Asset deleted = Asset.get(client, toValidate.getGuid(), true);
+        Asset deleted = Asset.get(client, toValidate.getGuid(), false);
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), toValidate.getGuid());
         assertEquals(deleted.getQualifiedName(), toValidate.getQualifiedName());
         assertEquals(deleted.getTypeName(), toValidate.getTypeName());
-        if (deleted.getStatus() != AtlanStatus.DELETED) {
-            log.warn(
-                    "Failed deletion test, activity log for {} {}:",
-                    toValidate.getTypeName(),
-                    toValidate.getQualifiedName());
-            AuditSearchResponse response = AuditSearchRequest.byGuid(client, toValidate.getGuid(), 100)
-                    .build()
-                    .search(client);
-            for (EntityAudit result : response) {
-                log.debug("  ... {}", result.toJson(client));
+        int count = 0;
+        try {
+            while (deleted.getStatus() != AtlanStatus.DELETED && count < client.getMaxNetworkRetries()) {
+                log.debug(
+                        "Asset that should be deleted is not -- retrying (#{}): {}::{}",
+                        count,
+                        deleted.getTypeName(),
+                        deleted.getQualifiedName());
+                Thread.sleep(HttpClient.waitTime(count).toMillis());
+                deleted = Asset.get(client, toValidate.getGuid(), false);
+                count++;
             }
+        } catch (InterruptedException e) {
+            throw new LogicException(ErrorCode.ERROR_PASSTHROUGH, e);
         }
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
     }

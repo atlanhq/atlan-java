@@ -431,12 +431,11 @@ public class AtlanClient implements AutoCloseable {
     /** {@inheritDoc} */
     @Override
     public void close() throws IOException {
-        IOException e = null;
-        if (atlanTagCache != null) e = closeCache(atlanTagCache, null);
-        if (customMetadataCache != null) e = closeCache(customMetadataCache, e);
-        if (userCache != null) e = closeCache(userCache, e);
-        if (groupCache != null) e = closeCache(groupCache, e);
-        if (roleCache != null) e = closeCache(roleCache, e);
+        IOException e = closeCache(atlanTagCache, null);
+        e = closeCache(customMetadataCache, e);
+        e = closeCache(userCache, e);
+        e = closeCache(groupCache, e);
+        e = closeCache(roleCache, e);
         if (e != null) throw e;
     }
 

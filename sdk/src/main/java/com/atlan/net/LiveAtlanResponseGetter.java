@@ -380,8 +380,6 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
                         new ConflictException(ErrorCode.CONFLICT_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
             case 429:
-                // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
-                //  header value of a response (if it is 0 then we are being rate-limited)
                 exception =
                         new RateLimitException(ErrorCode.RATE_LIMIT_PASSTHROUGH, error.findCode(), error.findMessage());
                 break;
