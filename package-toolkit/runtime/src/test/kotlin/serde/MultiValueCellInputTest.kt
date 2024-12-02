@@ -14,7 +14,6 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
-import serde.ISO8601TimestampsTest.Companion
 import java.util.SortedSet
 import kotlin.test.Test
 import kotlin.test.assertEquals
