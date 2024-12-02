@@ -7,7 +7,6 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.PackageTest
-import com.atlan.pkg.Utils
 import mu.KotlinLogging
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -61,7 +60,7 @@ class SameNameCategoriesTest : PackageTest("snc") {
             config,
             Importer::main,
         )
-        ctx = Utils.initializeContext(config, client)
+        ctx = PackageContext(config, client, true)
     }
 
     override fun teardown() {
