@@ -61,19 +61,20 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private fun createAssets() {
         val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
         connectionQualifiedName = connection1.qualifiedName
-        val batch = AssetBatch(client, 20)
-        val db = Database.creator(databaseName, connection1.qualifiedName).build()
-        batch.add(db)
-        val sch = Schema.creator("sch", db).build()
-        batch.add(sch)
-        val tbl = Table.creator("tbl1", sch).build()
-        batch.add(tbl)
-        val column = Column.creator("col1", tbl, 1).build()
-        batch.add(column)
-        val response = batch.flush()
-        schemaGuid = response.getResult(sch).guid
-        tableGuid = response.getResult(tbl).guid
-        columnGuid = response.getResult(column).guid
+        AssetBatch(client, 20).use { batch ->
+            val db = Database.creator(databaseName, connection1.qualifiedName).build()
+            batch.add(db)
+            val sch = Schema.creator("sch", db).build()
+            batch.add(sch)
+            val tbl = Table.creator("tbl1", sch).build()
+            batch.add(tbl)
+            val column = Column.creator("col1", tbl, 1).build()
+            batch.add(column)
+            val response = batch.flush()
+            schemaGuid = response.getResult(sch).guid
+            tableGuid = response.getResult(tbl).guid
+            columnGuid = response.getResult(column).guid
+        }
     }
 
     private fun createConnectionMap() {

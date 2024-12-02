@@ -149,23 +149,24 @@ object Reporter {
         if (glossary == null) return emptyMap()
         val nameToResolved = mutableMapOf<String, String>()
         val placeholderToName = mutableMapOf<String, String>()
-        val batch = AssetBatch(client, 20)
-        CATEGORIES.forEach { (name, description) ->
-            val builder =
-                try {
-                    val found = GlossaryCategory.findByNameFast(client, name, glossary.qualifiedName)[0]
-                    found.trimToRequired().guid(found.guid)
-                } catch (e: NotFoundException) {
-                    GlossaryCategory.creator(name, glossary)
-                }
-            val category = builder.description(description).build()
-            placeholderToName[category.guid] = name
-            batch.add(category)
-        }
-        batch.flush()
-        placeholderToName.forEach { (guid, name) ->
-            val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
-            nameToResolved[name] = resolved
+        AssetBatch(client, 20).use { batch ->
+            CATEGORIES.forEach { (name, description) ->
+                val builder =
+                    try {
+                        val found = GlossaryCategory.findByNameFast(client, name, glossary.qualifiedName)[0]
+                        found.trimToRequired().guid(found.guid)
+                    } catch (e: NotFoundException) {
+                        GlossaryCategory.creator(name, glossary)
+                    }
+                val category = builder.description(description).build()
+                placeholderToName[category.guid] = name
+                batch.add(category)
+            }
+            batch.flush()
+            placeholderToName.forEach { (guid, name) ->
+                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+                nameToResolved[name] = resolved
+            }
         }
         return nameToResolved
     }
@@ -284,15 +285,7 @@ object Reporter {
                 }
             metric.outputDetailedRecords(xlsx, term, batch)
             batch?.flush()
+            batch?.close()
         }
     }
-
-    data class Context(
-        val client: AtlanClient,
-        val includeGlossary: Boolean,
-        val glossaryName: String,
-        val includeDetails: Boolean,
-        val glossary: Glossary? = null,
-        val categoryNameToGuid: Map<String, String>? = null,
-    )
 }

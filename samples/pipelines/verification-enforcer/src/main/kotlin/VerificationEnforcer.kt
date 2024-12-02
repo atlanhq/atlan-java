@@ -7,6 +7,7 @@ import com.atlan.exception.ErrorCode
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.ICatalog
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.Utils
 import com.atlan.pkg.events.AbstractNumaflowHandler
@@ -33,7 +34,7 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
     /**
      * Logic for the event processing.
      */
-    object Handler : AtlanEventHandler, AutoCloseable {
+    object Handler : AtlanEventHandler, AtlanCloseable {
         private val client = AtlanClient()
 
         /** {@inheritDoc} */

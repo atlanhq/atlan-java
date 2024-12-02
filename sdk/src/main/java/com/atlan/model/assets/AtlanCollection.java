@@ -18,7 +18,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -282,7 +281,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
         return response;

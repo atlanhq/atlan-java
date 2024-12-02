@@ -5,6 +5,7 @@ package com.atlan.pkg.util
 import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.model.assets.Asset
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.cache.ChecksumCache
 import com.atlan.pkg.cache.PersistentConnectionCache
@@ -52,7 +53,7 @@ class FileBasedDelta(
     private val purge: Boolean = false,
     private val compareChecksums: Boolean = false,
     private val fallback: String = Paths.get(separator, "tmp").toString(),
-) : AutoCloseable {
+) : AtlanCloseable {
     val assetsToReload = ChecksumCache("changes")
     val assetsToDelete = ChecksumCache("deletes")
     private lateinit var guidsToDeleteToDetails: OffHeapAssetCache
@@ -296,32 +297,8 @@ class FileBasedDelta(
 
     /** {@inheritDoc} */
     override fun close() {
-        var exception: Exception? = null
-        try {
-            assetsToReload.close()
-        } catch (e: Exception) {
-            exception = e
-        }
-        try {
-            assetsToDelete.close()
-        } catch (e: Exception) {
-            if (exception != null) {
-                exception.addSuppressed(e)
-            } else {
-                exception = e
-            }
-        }
-        try {
-            guidsToDeleteToDetails.close()
-        } catch (e: Exception) {
-            if (exception != null) {
-                exception.addSuppressed(e)
-            } else {
-                exception = e
-            }
-        }
-        if (exception != null) {
-            throw exception
-        }
+        AtlanCloseable.close(assetsToReload)
+        AtlanCloseable.close(assetsToDelete)
+        AtlanCloseable.close(guidsToDeleteToDetails)
     }
 }

@@ -4,9 +4,8 @@ package com.atlan.pkg.serde.csv
 
 import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.util.AssetBatch.AssetIdentity
-import java.io.Closeable
-import java.io.IOException
 
 /**
  * Class to capture details about the results of an import.
@@ -19,7 +18,7 @@ data class ImportResults(
     val anyFailures: Boolean,
     val primary: Details,
     val related: Details,
-) : Closeable {
+) : AtlanCloseable {
     /**
      * Details about the import results.
      *
@@ -43,7 +42,7 @@ data class ImportResults(
         val numCreated: Long,
         val numUpdated: Long,
         val numRestored: Long,
-    ) : Closeable {
+    ) : AtlanCloseable {
         companion object {
             /**
              * Combine multiple sets of details with another.
@@ -103,28 +102,10 @@ data class ImportResults(
 
         /** {@inheritDoc} */
         override fun close() {
-            var exception: IOException? = null
-            try {
-                created?.close()
-            } catch (e: IOException) {
-                exception = e
-            }
-            try {
-                updated?.close()
-            } catch (e: IOException) {
-                if (exception != null) exception.addSuppressed(e) else exception = e
-            }
-            try {
-                restored?.close()
-            } catch (e: IOException) {
-                if (exception != null) exception.addSuppressed(e) else exception = e
-            }
-            try {
-                skipped?.close()
-            } catch (e: IOException) {
-                if (exception != null) exception.addSuppressed(e) else exception = e
-            }
-            if (exception != null) throw exception
+            AtlanCloseable.close(created)
+            AtlanCloseable.close(updated)
+            AtlanCloseable.close(restored)
+            AtlanCloseable.close(skipped)
         }
     }
 
@@ -195,36 +176,28 @@ data class ImportResults(
                     primaries.add(result.primary)
                     related.add(result.related)
                 }
-            if (primaries.isEmpty()) return null
+            if (primaries.isEmpty()) {
+                if (closeOriginal) {
+                    results.filterNotNull().forEach { it.close() }
+                }
+                return null
+            }
             val ir =
                 ImportResults(
                     anyFailures,
                     Details.combineAll(client, closeOriginal, *primaries.toTypedArray()),
                     Details.combineAll(client, closeOriginal, *related.toTypedArray()),
                 )
-            results.filterNotNull()
-                .forEach { result ->
-                    if (closeOriginal) {
-                        result.close()
-                    }
-                }
+            if (closeOriginal) {
+                results.filterNotNull().forEach { it.close() }
+            }
             return ir
         }
     }
 
     /** {@inheritDoc} */
     override fun close() {
-        var exception: IOException? = null
-        try {
-            primary.close()
-        } catch (e: IOException) {
-            exception = e
-        }
-        try {
-            related.close()
-        } catch (e: IOException) {
-            if (exception != null) exception.addSuppressed(e) else exception = e
-        }
-        if (exception != null) throw exception
+        AtlanCloseable.close(primary)
+        AtlanCloseable.close(related)
     }
 }

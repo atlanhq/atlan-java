@@ -40,7 +40,7 @@
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
         return response;

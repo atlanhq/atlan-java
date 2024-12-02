@@ -38,10 +38,11 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(client, 5)
-        batch.add(Connection.creator(client, c1, c1Type).build())
-        batch.add(Connection.creator(client, c2, c2Type).build())
-        batch.flush()
+        AssetBatch(client, 5).use { batch ->
+            batch.add(Connection.creator(client, c1, c1Type).build())
+            batch.add(Connection.creator(client, c2, c2Type).build())
+            batch.flush()
+        }
     }
 
     private fun createAssets() {
@@ -49,31 +50,32 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         this.sourceConnectionQualifiedName = connection1.qualifiedName
         val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
         this.targetConnectionQualifiedName = connection2.qualifiedName
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator(sourceDbName, connection1.qualifiedName).build()
-        batch.add(db1)
-        val db2 = Database.creator(targetDbName1, connection2.qualifiedName).build()
-        batch.add(db2)
-        val db3 = Database.creator(targetDbName2, connection2.qualifiedName).build()
-        batch.add(db3)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val sch2 = Schema.creator("sch1", db2).build()
-        batch.add(sch2)
-        val sch3 = Schema.creator("sch1", db3).build()
-        batch.add(sch3)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .userDescription(userDescription)
-                .build()
-        batch.add(tbl1)
-        val tbl2 = Table.creator("tbl1", sch2).build()
-        batch.add(tbl2)
-        val tbl3 = Table.creator("tbl1", sch3).build()
-        batch.add(tbl3)
-        val response = batch.flush()
-        response.getCreatedAssets(Table::class.java).forEach { table ->
-            this.targetTableQualifiedNamesByName[table.name] = table.qualifiedName
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator(sourceDbName, connection1.qualifiedName).build()
+            batch.add(db1)
+            val db2 = Database.creator(targetDbName1, connection2.qualifiedName).build()
+            batch.add(db2)
+            val db3 = Database.creator(targetDbName2, connection2.qualifiedName).build()
+            batch.add(db3)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val sch2 = Schema.creator("sch1", db2).build()
+            batch.add(sch2)
+            val sch3 = Schema.creator("sch1", db3).build()
+            batch.add(sch3)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .userDescription(userDescription)
+                    .build()
+            batch.add(tbl1)
+            val tbl2 = Table.creator("tbl1", sch2).build()
+            batch.add(tbl2)
+            val tbl3 = Table.creator("tbl1", sch3).build()
+            batch.add(tbl3)
+            val response = batch.flush()
+            response.getCreatedAssets(Table::class.java).forEach { table ->
+                this.targetTableQualifiedNamesByName[table.name] = table.qualifiedName
+            }
         }
     }
 

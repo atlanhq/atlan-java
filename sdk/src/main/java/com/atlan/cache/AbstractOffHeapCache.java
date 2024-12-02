@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
+import com.atlan.model.core.AtlanCloseable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -31,7 +32,7 @@ import org.rocksdb.WriteOptions;
  * risking extreme memory usage.
  */
 @Slf4j
-public abstract class AbstractOffHeapCache<K, V> implements AutoCloseable {
+public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
 
     private final Path backingStore;
     private volatile RocksDB internal;
@@ -226,13 +227,9 @@ public abstract class AbstractOffHeapCache<K, V> implements AutoCloseable {
         return !internal.isClosed();
     }
 
-    /**
-     * Clean up the cache, once it is no longer needed.
-     *
-     * @throws IOException if unable to remove the temporary file holding the cache
-     */
+    /** Clean up the cache, once it is no longer needed. */
     @Override
-    public void close() throws IOException {
+    public void close() {
         log.debug("Closing off-heap cache ({}): {}", getName(), backingStore);
         lock.writeLock().lock();
         try {
@@ -244,6 +241,9 @@ public abstract class AbstractOffHeapCache<K, V> implements AutoCloseable {
             } else {
                 log.debug(" ... cache already deleted.");
             }
+        } catch (IOException e) {
+            log.info("Unable to remove backing store for off-heap cache -- leaving it behind.");
+            log.debug("Full details: ", e);
         } finally {
             lock.writeLock().unlock();
         }
@@ -271,7 +271,7 @@ public abstract class AbstractOffHeapCache<K, V> implements AutoCloseable {
      * @param <K> type of the keys in the cache
      * @param <V> type of the values in the cache
      */
-    private static final class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>>, AutoCloseable {
+    private static final class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>>, AtlanCloseable {
         private final AbstractOffHeapCache<K, V> cache;
         private final RocksIterator iterator;
 

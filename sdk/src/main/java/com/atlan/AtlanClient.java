@@ -5,6 +5,7 @@ package com.atlan;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.api.*;
 import com.atlan.cache.*;
+import com.atlan.model.core.AtlanCloseable;
 import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,7 +23,7 @@ import lombok.Setter;
 /**
  * Configuration for the SDK against a particular Atlan tenant.
  */
-public class AtlanClient implements AutoCloseable {
+public class AtlanClient implements AtlanCloseable {
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
@@ -430,25 +431,11 @@ public class AtlanClient implements AutoCloseable {
 
     /** {@inheritDoc} */
     @Override
-    public void close() throws IOException {
-        IOException e = closeCache(atlanTagCache, null);
-        e = closeCache(customMetadataCache, e);
-        e = closeCache(userCache, e);
-        e = closeCache(groupCache, e);
-        e = closeCache(roleCache, e);
-        if (e != null) throw e;
-    }
-
-    private IOException closeCache(AbstractMassCache<?> cache, IOException previous) {
-        try {
-            cache.close();
-        } catch (IOException e) {
-            if (previous != null) {
-                previous.addSuppressed(e);
-            } else {
-                previous = e;
-            }
-        }
-        return previous;
+    public void close() {
+        AtlanCloseable.close(atlanTagCache);
+        AtlanCloseable.close(customMetadataCache);
+        AtlanCloseable.close(userCache);
+        AtlanCloseable.close(groupCache);
+        AtlanCloseable.close(roleCache);
     }
 }

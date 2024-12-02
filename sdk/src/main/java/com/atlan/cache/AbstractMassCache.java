@@ -58,13 +58,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      * This will be automatically called either when an entry is first added or the cache as a whole is refreshed.
      */
     private void resetOffHeap() {
-        if (mapIdToObject != null) {
-            try {
-                mapIdToObject.close();
-            } catch (IOException e) {
-                throw new IllegalStateException("Unable to close existing off-heap cache.", e);
-            }
-        }
+        if (mapIdToObject != null) mapIdToObject.close();
         mapIdToObject = new OffHeapObjectCache<>(client, cacheName);
     }
 

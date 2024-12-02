@@ -3,6 +3,7 @@
 package com.atlan.pkg.util
 
 import com.atlan.cache.OffHeapAssetCache
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
@@ -49,7 +50,7 @@ class DeltaProcessor(
     val previousFilePreprocessor: CSVPreprocessor? = null,
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
-) : AutoCloseable {
+) : AtlanCloseable {
     private val objectStore = Utils.getBackingStore(outputDirectory)
     private var initialLoad: Boolean = true
     private var delta: FileBasedDelta? = null
@@ -163,28 +164,8 @@ class DeltaProcessor(
     /** {@inheritDoc} */
     override fun close() {
         uploadStateToBackingStore()
-        var exception: Exception? = null
-        if (delta != null) {
-            try {
-                delta!!.close()
-            } catch (e: Exception) {
-                exception = e
-            }
-        }
-        if (deletedAssets != null) {
-            try {
-                deletedAssets!!.close()
-            } catch (e: Exception) {
-                if (exception != null) {
-                    exception.addSuppressed(e)
-                } else {
-                    exception = e
-                }
-            }
-        }
-        if (exception != null) {
-            throw exception
-        }
+        AtlanCloseable.close(delta)
+        AtlanCloseable.close(deletedAssets)
     }
 
     /**

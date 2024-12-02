@@ -148,53 +148,53 @@ object DuplicateDetector {
             val keys = hashToAssetKeys[hash]
             if (keys?.size!! > 1) {
                 val columns = hashToColumns[hash]
-                val batch =
-                    ParallelBatch(
-                        client,
-                        batchSize,
-                        false,
-                        AssetBatch.CustomMetadataHandling.MERGE,
-                        true,
-                    )
-                val termName = "Dup. ($hash)"
-                val term =
-                    try {
-                        GlossaryTerm.findByNameFast(client, termName, glossaryQN)
-                    } catch (e: NotFoundException) {
-                        val toCreate =
-                            GlossaryTerm.creator(termName, glossaryQN)
-                                .description(
-                                    "Assets with the same set of ${columns?.size} columns:\n" +
-                                        columns?.joinToString(
-                                            separator = "\n",
-                                        ) { "- $it" },
-                                )
-                                .certificateStatus(CertificateStatus.DRAFT)
-                                .build()
-                        toCreate.save(client).getResult(toCreate)
-                    }
-                val guids =
-                    keys.stream()
-                        .map(AssetKey::guid)
-                        .toList()
-                client.assets.select()
-                    .where(Asset.GUID.`in`(guids))
-                    .includeOnResults(Asset.ASSIGNED_TERMS)
-                    .includeOnRelations(Asset.QUALIFIED_NAME)
-                    .pageSize(batchSize)
-                    .stream(true)
-                    .forEach { asset ->
-                        assetCount.getAndIncrement()
-                        val existingTerms = asset.assignedTerms
-                        batch.add(
-                            asset.trimToRequired()
-                                .assignedTerms(existingTerms)
-                                .assignedTerm(term)
-                                .build(),
-                        )
-                    }
-                batch.flush()
-                Utils.logProgress(termCount, totalSets, logger)
+                ParallelBatch(
+                    client,
+                    batchSize,
+                    false,
+                    AssetBatch.CustomMetadataHandling.MERGE,
+                    true,
+                ).use { batch ->
+                    val termName = "Dup. ($hash)"
+                    val term =
+                        try {
+                            GlossaryTerm.findByNameFast(client, termName, glossaryQN)
+                        } catch (e: NotFoundException) {
+                            val toCreate =
+                                GlossaryTerm.creator(termName, glossaryQN)
+                                    .description(
+                                        "Assets with the same set of ${columns?.size} columns:\n" +
+                                            columns?.joinToString(
+                                                separator = "\n",
+                                            ) { "- $it" },
+                                    )
+                                    .certificateStatus(CertificateStatus.DRAFT)
+                                    .build()
+                            toCreate.save(client).getResult(toCreate)
+                        }
+                    val guids =
+                        keys.stream()
+                            .map(AssetKey::guid)
+                            .toList()
+                    client.assets.select()
+                        .where(Asset.GUID.`in`(guids))
+                        .includeOnResults(Asset.ASSIGNED_TERMS)
+                        .includeOnRelations(Asset.QUALIFIED_NAME)
+                        .pageSize(batchSize)
+                        .stream(true)
+                        .forEach { asset ->
+                            assetCount.getAndIncrement()
+                            val existingTerms = asset.assignedTerms
+                            batch.add(
+                                asset.trimToRequired()
+                                    .assignedTerms(existingTerms)
+                                    .assignedTerm(term)
+                                    .build(),
+                            )
+                        }
+                    batch.flush()
+                    Utils.logProgress(termCount, totalSets, logger)
+                }
             }
         }
         logger.info { "Detected a total of $assetCount assets that could be de-duplicated across $totalSets unique sets of duplicates." }

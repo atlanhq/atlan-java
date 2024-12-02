@@ -38,10 +38,11 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(client, 5)
-        batch.add(Connection.creator(client, c1, c1Type).build())
-        batch.add(Connection.creator(client, c2, c2Type).build())
-        batch.flush()
+        AssetBatch(client, 5).use { batch ->
+            batch.add(Connection.creator(client, c1, c1Type).build())
+            batch.add(Connection.creator(client, c2, c2Type).build())
+            batch.flush()
+        }
     }
 
     private fun createCustomMetadata() {
@@ -54,28 +55,29 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     private fun createAssets() {
         val connection1 = Connection.findByName(client, c1, c1Type)[0]!!
         val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator("db1", connection1.qualifiedName).build()
-        batch.add(db1)
-        val db2 = Database.creator("db1", connection2.qualifiedName).build()
-        batch.add(db2)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val sch2 = Schema.creator("sch1", db2).build()
-        batch.add(sch2)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .customMetadata(
-                    cm1,
-                    CustomMetadataAttributes.builder()
-                        .attribute("dateSingle", now)
-                        .build(),
-                )
-                .build()
-        batch.add(tbl1)
-        val tbl2 = Table.creator("tbl1", sch2).build()
-        batch.add(tbl2)
-        batch.flush()
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator("db1", connection1.qualifiedName).build()
+            batch.add(db1)
+            val db2 = Database.creator("db1", connection2.qualifiedName).build()
+            batch.add(db2)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val sch2 = Schema.creator("sch1", db2).build()
+            batch.add(sch2)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .customMetadata(
+                        cm1,
+                        CustomMetadataAttributes.builder()
+                            .attribute("dateSingle", now)
+                            .build(),
+                    )
+                    .build()
+            batch.add(tbl1)
+            val tbl2 = Table.creator("tbl1", sch2).build()
+            batch.add(tbl2)
+            batch.flush()
+        }
     }
 
     override fun setup() {

@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1105,7 +1104,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
         return response;

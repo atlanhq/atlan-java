@@ -10,6 +10,7 @@ import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.ICatalog
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.events.AtlanEvent
@@ -36,7 +37,7 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
         }
     }
 
-    object Handler : AtlanEventHandler, AutoCloseable {
+    object Handler : AtlanEventHandler, AtlanCloseable {
         private val client = AtlanClient()
 
         /** {@inheritDoc} */

@@ -20,7 +20,6 @@ import com.probable.guacamole.ExtendedModelGenerator;
 import com.probable.guacamole.model.assets.GuacamoleColumn;
 import com.probable.guacamole.model.assets.GuacamoleTable;
 import com.probable.guacamole.model.enums.GuacamoleTemperature;
-import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +42,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             im.updateEntities();
             im.searchEntities();
             im.purgeEntities();
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Failed to cleanup client.", e);
         }
     }
@@ -106,8 +105,7 @@ public class InstanceManager extends ExtendedModelGenerator {
         } catch (AtlanException e) {
             log.error("Failed to create new guacamole table.", e);
         }
-        try {
-            AssetBatch batch = new AssetBatch(client, 20);
+        try (AssetBatch batch = new AssetBatch(client, 20)) {
             GuacamoleColumn child1 = GuacamoleColumn.creator("column1", table.getQualifiedName(), 1)
                     .guacamoleConceptualized(123456789L)
                     .guacamoleWidth(100L)
@@ -120,7 +118,7 @@ public class InstanceManager extends ExtendedModelGenerator {
             batch.add(child2);
             AssetMutationResponse response = batch.flush();
             log.info("Created child entities: {}", response);
-        } catch (AtlanException e) {
+        } catch (Exception e) {
             log.error("Unable to bulk-upsert Guacamole columns.", e);
         }
     }

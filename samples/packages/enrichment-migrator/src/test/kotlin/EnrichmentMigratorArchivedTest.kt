@@ -39,17 +39,18 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
 
     private fun createAssets() {
         val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator("db1", connection1.qualifiedName).build()
-        batch.add(db1)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .userDescription("Must have some enrichment to be included!")
-                .build()
-        batch.add(tbl1)
-        batch.flush()
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator("db1", connection1.qualifiedName).build()
+            batch.add(db1)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .userDescription("Must have some enrichment to be included!")
+                    .build()
+            batch.add(tbl1)
+            batch.flush()
+        }
     }
 
     private fun archiveTable() {
