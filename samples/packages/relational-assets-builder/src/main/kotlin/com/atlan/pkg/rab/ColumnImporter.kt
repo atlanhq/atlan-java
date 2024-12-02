@@ -32,11 +32,11 @@ class ColumnImporter(
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        delta,
-        preprocessed.preprocessedFile,
-        Column.TYPE_NAME,
-        logger,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = Column.TYPE_NAME,
+        logger = logger,
     ) {
     companion object {
         const val COLUMN_PARENT_QN = "columnParentQualifiedName"

@@ -29,13 +29,13 @@ class ConnectionImporter(
     private val preprocessed: Importer.Results,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        null,
-        preprocessed.preprocessedFile,
+        ctx = ctx,
+        delta = null,
+        filename = preprocessed.preprocessedFile,
         // Only allow full or updates to connections, as partial connections would be hidden
         // and impossible to delete via utilities like the Connection Delete workflow
-        Connection.TYPE_NAME,
-        logger,
+        typeNameFilter = Connection.TYPE_NAME,
+        logger = logger,
         creationHandling = if (ctx.config.assetsUpsertSemantic == "update") AssetCreationHandling.NONE else AssetCreationHandling.FULL,
         batchSize = 1,
         trackBatches = true,

@@ -31,11 +31,11 @@ class SchemaImporter(
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        delta,
-        preprocessed.preprocessedFile,
-        Schema.TYPE_NAME,
-        logger,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = Schema.TYPE_NAME,
+        logger = logger,
     ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

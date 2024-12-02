@@ -31,11 +31,11 @@ class MaterializedViewImporter(
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        delta,
-        preprocessed.preprocessedFile,
-        MaterializedView.TYPE_NAME,
-        logger,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = MaterializedView.TYPE_NAME,
+        logger = logger,
     ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
