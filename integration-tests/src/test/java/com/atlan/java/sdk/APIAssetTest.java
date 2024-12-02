@@ -199,6 +199,7 @@ public class APIAssetTest extends AtlanLiveTest {
     void restorePath() throws AtlanException {
         assertTrue(APIPath.restore(client, path.getQualifiedName()));
         APIPath restored = APIPath.get(client, path.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), path.getGuid());
         assertEquals(restored.getQualifiedName(), path.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

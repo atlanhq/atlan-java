@@ -322,6 +322,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.update.cube"})
     void readCube() throws AtlanException {
         Cube read = Cube.get(client, cube.getQualifiedName());
+        assertFalse(read.isComplete());
         assertNotNull(read);
         assertEquals(read.getGuid(), cube.getGuid());
         assertEquals(read.getQualifiedName(), cube.getQualifiedName());

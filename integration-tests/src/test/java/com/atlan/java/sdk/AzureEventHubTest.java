@@ -252,6 +252,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
     void restoreGroup() throws AtlanException {
         assertTrue(AzureEventHubConsumerGroup.restore(client, consumerGroup.getQualifiedName()));
         AzureEventHubConsumerGroup restored = AzureEventHubConsumerGroup.get(client, consumerGroup.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), consumerGroup.getGuid());
         assertEquals(restored.getQualifiedName(), consumerGroup.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

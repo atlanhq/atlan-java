@@ -439,6 +439,7 @@ public class LineageTest extends AtlanLiveTest {
     void restoreLineage() throws AtlanException {
         assertTrue(LineageProcess.restore(client, start.getQualifiedName()));
         LineageProcess restored = LineageProcess.get(client, start.getGuid());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), start.getGuid());
         assertEquals(restored.getQualifiedName(), start.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

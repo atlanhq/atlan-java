@@ -224,7 +224,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.model"},
             dependsOnGroups = {"model.create.*"})
     void readModel() throws AtlanException {
-        ModelDataModel read = ModelDataModel.get(client, model.getQualifiedName());
+        ModelDataModel read = ModelDataModel.get(client, model.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), model.getGuid());
         assertEquals(read.getQualifiedName(), model.getQualifiedName());
@@ -242,7 +242,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.version"},
             dependsOnGroups = {"model.create.*"})
     void readVersion1() throws AtlanException {
-        ModelVersion read = ModelVersion.get(client, version1.getQualifiedName());
+        ModelVersion read = ModelVersion.get(client, version1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), version1.getGuid());
         assertEquals(read.getQualifiedName(), version1.getQualifiedName());
@@ -262,7 +262,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.version"},
             dependsOnGroups = {"model.create.*"})
     void readVersion2() throws AtlanException {
-        ModelVersion read = ModelVersion.get(client, version2.getQualifiedName());
+        ModelVersion read = ModelVersion.get(client, version2.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), version2.getGuid());
         assertEquals(read.getQualifiedName(), version2.getQualifiedName());
@@ -287,7 +287,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.entity"},
             dependsOnGroups = {"model.create.*"})
     void readEntity() throws AtlanException {
-        ModelEntity read = ModelEntity.get(client, entity1.getQualifiedName());
+        ModelEntity read = ModelEntity.get(client, entity1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), entity1.getGuid());
         assertEquals(read.getQualifiedName(), entity1.getQualifiedName());
@@ -420,6 +420,7 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.update.model"})
     void readUpdatedModel() throws AtlanException {
         ModelDataModel read = ModelDataModel.get(client, model.getQualifiedName());
+        assertFalse(read.isComplete());
         assertNotNull(read);
         assertEquals(read.getGuid(), model.getGuid());
         assertEquals(read.getQualifiedName(), model.getQualifiedName());

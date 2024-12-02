@@ -18,9 +18,11 @@ import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import java.io.IOException;
 import java.util.Random;
 import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -60,6 +62,11 @@ public abstract class AtlanLiveTest {
         //  when run in parallel (works fine for running tests individually)
         ThreadContext.put("className", this.getClass().getSimpleName());
         client.setMaxNetworkRetries(10);
+    }
+
+    @AfterClass
+    public void teardown() throws IOException {
+        client.close();
     }
 
     protected static String makeUnique(String input) {

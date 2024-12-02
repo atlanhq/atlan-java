@@ -175,6 +175,7 @@ public class FileTest extends AtlanLiveTest {
     void restoreFile() throws AtlanException {
         assertTrue(File.restore(client, file.getQualifiedName()));
         File restored = File.get(client, file.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), file.getGuid());
         assertEquals(restored.getQualifiedName(), file.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

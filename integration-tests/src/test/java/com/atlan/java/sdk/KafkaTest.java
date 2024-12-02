@@ -253,6 +253,7 @@ public class KafkaTest extends AtlanLiveTest {
     void restoreGroup() throws AtlanException {
         assertTrue(KafkaConsumerGroup.restore(client, consumerGroup.getQualifiedName()));
         KafkaConsumerGroup restored = KafkaConsumerGroup.get(client, consumerGroup.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), consumerGroup.getGuid());
         assertEquals(restored.getQualifiedName(), consumerGroup.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

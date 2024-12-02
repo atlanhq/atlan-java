@@ -268,6 +268,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
     void restoreChart() throws AtlanException {
         assertTrue(SupersetChart.restore(client, chart.getQualifiedName()));
         SupersetChart restored = SupersetChart.get(client, chart.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), chart.getGuid());
         assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

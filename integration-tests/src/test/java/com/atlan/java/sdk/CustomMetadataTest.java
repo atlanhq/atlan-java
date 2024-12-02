@@ -466,7 +466,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_IPR_URL, "https://creativecommons.org/licenses/by/2.0/")
                 .build();
         GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_IPR, cm);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -488,7 +488,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_QUALITY_TYPE, "Completeness")
                 .build();
         GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_QUALITY, cm);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -510,7 +510,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_IPR_MANDATORY, false)
                 .build();
         GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_IPR, cm);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -534,7 +534,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
                 .build();
         GlossaryTerm.replaceCustomMetadata(client, term.getGuid(), CM_RACI, cm);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -550,7 +550,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.replace.raci"})
     void replaceTermCMIPR() throws AtlanException {
         GlossaryTerm.replaceCustomMetadata(client, term.getGuid(), CM_IPR, null);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -626,7 +626,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.search.term.cm"})
     void removeTermCMRACI() throws AtlanException {
         GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_RACI);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -641,7 +641,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.raci"})
     void removeTermCMIPR() throws AtlanException {
         GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_IPR);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -655,7 +655,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.ipr"})
     void removeObjectCMDQ() throws AtlanException {
         GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_QUALITY);
-        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid());
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -850,7 +850,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        t = GlossaryTerm.get(client, term.getQualifiedName());
+        t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
@@ -876,7 +876,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        t = GlossaryTerm.get(client, term.getQualifiedName());
+        t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());

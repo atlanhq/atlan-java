@@ -404,6 +404,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void restoreObjectARN() throws AtlanException {
         assertTrue(S3Object.restore(client, objectARN.getQualifiedName()));
         S3Object restored = S3Object.get(client, objectARN.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), objectARN.getGuid());
         assertEquals(restored.getQualifiedName(), objectARN.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -415,6 +416,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void restoreObjectByName() throws AtlanException {
         assertTrue(S3Object.restore(client, objectByName.getQualifiedName()));
         S3Object restored = S3Object.get(client, objectByName.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), objectByName.getGuid());
         assertEquals(restored.getQualifiedName(), objectByName.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

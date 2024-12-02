@@ -345,6 +345,7 @@ public class InsightsTest extends AtlanLiveTest {
     void restoreQuery() throws AtlanException {
         assertTrue(AtlanQuery.restore(client, query.getQualifiedName()));
         AtlanQuery restored = AtlanQuery.get(client, query.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), query.getGuid());
         assertEquals(restored.getQualifiedName(), query.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

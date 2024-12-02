@@ -216,6 +216,7 @@ public class GCSAssetTest extends AtlanLiveTest {
     void restoreObject() throws AtlanException {
         assertTrue(GCSObject.restore(client, object.getQualifiedName()));
         GCSObject restored = GCSObject.get(client, object.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), object.getGuid());
         assertEquals(restored.getQualifiedName(), object.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

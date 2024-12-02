@@ -251,6 +251,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void restoreObject() throws AtlanException {
         assertTrue(ADLSObject.restore(client, object.getQualifiedName()));
         ADLSObject restored = ADLSObject.get(client, object.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), object.getGuid());
         assertEquals(restored.getQualifiedName(), object.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

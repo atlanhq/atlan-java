@@ -219,6 +219,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
     void restoreTask() throws AtlanException {
         assertTrue(AirflowTask.restore(client, task.getQualifiedName()));
         AirflowTask restored = AirflowTask.get(client, task.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), task.getGuid());
         assertEquals(restored.getQualifiedName(), task.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

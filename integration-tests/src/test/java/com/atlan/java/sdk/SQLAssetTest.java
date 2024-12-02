@@ -1750,6 +1750,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     void restoreColumn() throws AtlanException {
         assertTrue(Column.restore(client, column5.getQualifiedName()));
         Column restored = Column.get(client, column5.getGuid());
+        assertFalse(restored.isComplete());
         validateUpdatedColumn(restored);
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
     }

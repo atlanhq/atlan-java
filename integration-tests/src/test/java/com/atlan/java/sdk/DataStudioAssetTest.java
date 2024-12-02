@@ -203,6 +203,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     void restoreSource() throws AtlanException {
         assertTrue(DataStudioAsset.restore(client, source.getQualifiedName()));
         DataStudioAsset restored = DataStudioAsset.get(client, source.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), source.getGuid());
         assertEquals(restored.getQualifiedName(), source.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

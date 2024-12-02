@@ -303,6 +303,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void restoreChart() throws AtlanException {
         assertTrue(PresetChart.restore(client, chart.getQualifiedName()));
         PresetChart restored = PresetChart.get(client, chart.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), chart.getGuid());
         assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);

@@ -764,6 +764,7 @@ public class GlossaryTest extends AtlanLiveTest {
     void restoreTerm1() throws AtlanException {
         assertTrue(GlossaryTerm.restore(client, term1.getQualifiedName()));
         GlossaryTerm term = GlossaryTerm.get(client, term1.getQualifiedName());
+        assertFalse(term.isComplete());
         assertNotNull(term);
         assertEquals(term.getGuid(), term1.getGuid());
         assertEquals(term.getQualifiedName(), term1.getQualifiedName());
