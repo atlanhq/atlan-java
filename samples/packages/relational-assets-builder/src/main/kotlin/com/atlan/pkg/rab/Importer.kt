@@ -117,7 +117,7 @@ object Importer {
         connectionImporter.import()?.close()
 
         val connectionQN =
-            if (ctx.config.assetsUpsertSemantic == "full") {
+            if (ctx.config.deltaSemantic == "full") {
                 val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
                 try {
                     val list = Connection.findByName(ctx.client, connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
@@ -133,7 +133,7 @@ object Importer {
         val previousFileDirect = ctx.config.previousFileDirect
         DeltaProcessor(
             ctx = ctx,
-            semantic = ctx.config.assetsUpsertSemantic,
+            semantic = ctx.config.deltaSemantic,
             qualifiedNamePrefix = connectionQN,
             removalType = ctx.config.deltaRemovalType,
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
