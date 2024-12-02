@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
@@ -110,7 +109,6 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     private fun createTags() {
         val maxNetworkRetries = 30
-        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.AIRPLANE, AtlanTagColor.GREEN).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROBOT, AtlanTagColor.RED).build()
         client.typeDefs.create(
@@ -187,7 +185,7 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun glossary1Created() {
-        val g1 = Glossary.findByName(glossary1, glossaryAttrs)
+        val g1 = Glossary.findByName(client, glossary1, glossaryAttrs)
         assertNotNull(g1)
         assertEquals(glossary1, g1.name)
         assertEquals("Test glossary for asset import package.", g1.userDescription)
@@ -198,7 +196,7 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun glossary2Created() {
-        val g2 = Glossary.findByName(glossary2, glossaryAttrs)
+        val g2 = Glossary.findByName(client, glossary2, glossaryAttrs)
         assertNotNull(g2)
         assertEquals(glossary2, g2.name)
         assertEquals("Test glossary for asset import package.", g2.userDescription)
@@ -210,9 +208,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun categoriesCreatedG1() {
-        val g1 = Glossary.findByName(glossary1)!!
+        val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryCategory.select()
+            GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(categoryAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -251,9 +249,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun categoriesCreatedG2() {
-        val g2 = Glossary.findByName(glossary2)!!
+        val g2 = Glossary.findByName(client, glossary2)!!
         val request =
-            GlossaryCategory.select()
+            GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(g2.qualifiedName))
                 .includesOnResults(categoryAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -286,9 +284,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun termsCreatedG1() {
-        val g1 = Glossary.findByName(glossary1)!!
+        val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -312,9 +310,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.create"])
     fun termsCreatedG2() {
-        val g2 = Glossary.findByName(glossary2)!!
+        val g2 = Glossary.findByName(client, glossary2)!!
         val request =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g2.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -423,9 +421,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.update"], dependsOnGroups = ["aim.ig.runUpdate"])
     fun tagsUnchanged() {
-        val g1 = Glossary.findByName(glossary1)!!
+        val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -449,9 +447,9 @@ class ImportGlossariesTest : PackageTest("ig") {
 
     @Test(groups = ["aim.ig.update"], dependsOnGroups = ["aim.ig.runUpdate"])
     fun descriptionsAdded() {
-        val g1 = Glossary.findByName(glossary1)!!
+        val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .where(GlossaryTerm.DESCRIPTION.hasAnyValue())
                 .includesOnResults(termAttrs)

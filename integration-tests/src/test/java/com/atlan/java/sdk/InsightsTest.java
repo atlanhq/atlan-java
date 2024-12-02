@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
@@ -45,19 +44,19 @@ public class InsightsTest extends AtlanLiveTest {
                 .build();
         AssetMutationResponse response = null;
         int retryCount = 0;
-        while (response == null && retryCount < Atlan.getMaxNetworkRetries()) {
+        while (response == null && retryCount < client.getMaxNetworkRetries()) {
             retryCount++;
             try {
                 response = col.save(client).block();
             } catch (InvalidRequestException e) {
-                if (retryCount < Atlan.getMaxNetworkRetries()) {
+                if (retryCount < client.getMaxNetworkRetries()) {
                     if (e.getCode() != null
                             && e.getCode().equals("ATLAN-JAVA-400-000")
                             && e.getMessage().equals("Server responded with ATLAS-400-00-029: Auth request failed")) {
                         Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
                     }
                 } else {
-                    log.error("Overran retry limit ({}), rethrowing exception.", Atlan.getMaxNetworkRetries());
+                    log.error("Overran retry limit ({}), rethrowing exception.", client.getMaxNetworkRetries());
                     throw e;
                 }
             }
@@ -75,7 +74,7 @@ public class InsightsTest extends AtlanLiveTest {
             dependsOnGroups = {"insights.create.collection"})
     void createFolder() throws AtlanException {
         Folder toCreate = Folder.creator(FOLDER_NAME, collection).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -99,7 +98,7 @@ public class InsightsTest extends AtlanLiveTest {
             dependsOnGroups = {"insights.create.folder"})
     void createSubFolder() throws AtlanException {
         Folder toCreate = Folder.creator(SUB_FOLDER_NAME, folder).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -123,10 +122,10 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.create.query"},
             dependsOnGroups = {"insights.create.subfolder"})
     void createQuery() throws AtlanException {
-        List<Connection> connection = Connection.findByName("development", AtlanConnectorType.SNOWFLAKE);
+        List<Connection> connection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE);
         assertNotNull(connection);
         assertEquals(connection.size(), 1);
-        Optional<Asset> schema = Schema.select()
+        Optional<Asset> schema = Schema.select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(connection.get(0).getQualifiedName()))
                 .where(Schema.DATABASE_NAME.eq("ANALYTICS"))
                 .where(Schema.NAME.eq("WIDE_WORLD_IMPORTERS"))
@@ -136,7 +135,7 @@ public class InsightsTest extends AtlanLiveTest {
         AtlanQuery toCreate = AtlanQuery.creator(QUERY_NAME, folder)
                 .withRawQuery(schema.get().getQualifiedName(), "SELECT * FROM DIM_CUSTOMERS;")
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -161,6 +160,7 @@ public class InsightsTest extends AtlanLiveTest {
             dependsOnGroups = {"insights.create.query"})
     void updateQuery() throws AtlanException {
         AtlanQuery updated = AtlanQuery.updateCertificate(
+                client,
                 query.getQualifiedName(),
                 query.getName(),
                 query.getCollectionQualifiedName(),
@@ -171,6 +171,7 @@ public class InsightsTest extends AtlanLiveTest {
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = AtlanQuery.updateAnnouncement(
+                client,
                 query.getQualifiedName(),
                 query.getName(),
                 query.getCollectionQualifiedName(),
@@ -188,7 +189,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.read.query"},
             dependsOnGroups = {"insights.create.query", "insights.update.query"})
     void retrieveQuery() throws AtlanException {
-        AtlanQuery q = AtlanQuery.get(query.getGuid());
+        AtlanQuery q = AtlanQuery.get(client, query.getGuid(), true);
         assertNotNull(q);
         assertTrue(q.isComplete());
         assertEquals(q.getGuid(), query.getGuid());
@@ -206,7 +207,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.read.folder"},
             dependsOnGroups = {"insights.create.query", "insights.update.query"})
     void retrieveFolder() throws AtlanException {
-        Folder f = Folder.get(folder.getGuid());
+        Folder f = Folder.get(client, folder.getGuid(), true);
         assertNotNull(f);
         assertTrue(f.isComplete());
         assertEquals(f.getGuid(), folder.getGuid());
@@ -225,6 +226,7 @@ public class InsightsTest extends AtlanLiveTest {
             dependsOnGroups = {"insights.read.query", "insights.read.folder"})
     void updateQueryAgain() throws AtlanException {
         AtlanQuery updated = AtlanQuery.removeCertificate(
+                client,
                 query.getQualifiedName(),
                 query.getName(),
                 query.getCollectionQualifiedName(),
@@ -236,6 +238,7 @@ public class InsightsTest extends AtlanLiveTest {
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         updated = AtlanQuery.removeAnnouncement(
+                client,
                 query.getQualifiedName(),
                 QUERY_NAME,
                 query.getCollectionQualifiedName(),
@@ -315,7 +318,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.delete.query"},
             dependsOnGroups = {"insights.update.*", "insights.search.*"})
     void deleteQuery() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(query.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, query.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -340,8 +343,9 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.delete.query.restore"},
             dependsOnGroups = {"insights.delete.query.read"})
     void restoreQuery() throws AtlanException {
-        assertTrue(AtlanQuery.restore(query.getQualifiedName()));
-        AtlanQuery restored = AtlanQuery.get(query.getQualifiedName());
+        assertTrue(AtlanQuery.restore(client, query.getQualifiedName()));
+        AtlanQuery restored = AtlanQuery.get(client, query.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), query.getGuid());
         assertEquals(restored.getQualifiedName(), query.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -351,7 +355,7 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.purge.query"},
             dependsOnGroups = {"insights.delete.query.restore"})
     void purgeQuery() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(query.getGuid());
+        AssetMutationResponse response = Asset.purge(client, query.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -375,7 +379,7 @@ public class InsightsTest extends AtlanLiveTest {
                 "insights.purge.query"
             },
             alwaysRun = true)
-    void purgeCollection() throws AtlanException, InterruptedException {
+    void purgeCollection() throws AtlanException {
         String qualifiedName = collection.getQualifiedName();
         List<String> guids =
                 client.assets.select().where(Asset.QUALIFIED_NAME.startsWith(qualifiedName)).pageSize(50).stream()
@@ -385,18 +389,18 @@ public class InsightsTest extends AtlanLiveTest {
             int totalToDelete = guids.size();
             log.info(" --- Purging {} assets from {}... ---", totalToDelete, qualifiedName);
             if (totalToDelete < 20) {
-                client.assets.delete(guids, AtlanDeleteType.PURGE);
+                client.assets.delete(guids, AtlanDeleteType.PURGE).block();
             } else {
                 for (int i = 0; i < totalToDelete; i += 20) {
                     log.info(" ... next batch of 20 ({}%)", Math.round((i * 100.0) / totalToDelete));
                     List<String> sublist = guids.subList(i, Math.min(i + 20, totalToDelete));
-                    client.assets.delete(sublist, AtlanDeleteType.PURGE);
+                    client.assets.delete(sublist, AtlanDeleteType.PURGE).block();
                 }
             }
         }
         // Purge the collection itself, now that all assets are purged
         Optional<Asset> found =
-                AtlanCollection.select().where(AtlanCollection.QUALIFIED_NAME.eq(qualifiedName)).stream()
+                AtlanCollection.select(client).where(AtlanCollection.QUALIFIED_NAME.eq(qualifiedName)).stream()
                         .findFirst();
         if (found.isPresent()) {
             client.assets.delete(found.get().getGuid(), AtlanDeleteType.PURGE).block();

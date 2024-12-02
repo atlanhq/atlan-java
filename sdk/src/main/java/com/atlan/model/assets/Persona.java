@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -146,36 +145,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Persona assets will be included.
      *
-     * @return a fluent search that includes all Persona assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Persona assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Persona assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Persona assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Persona assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Personas will be included
-     * @return a fluent search that includes all Persona assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -252,18 +226,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /**
      * Retrieves a Persona by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Persona to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Persona, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Persona does not exist or the provided GUID is not a Persona
-     */
-    @JsonIgnore
-    public static Persona get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Persona by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Persona to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Persona, complete with all of its relationships
@@ -271,7 +233,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      */
     @JsonIgnore
     public static Persona get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -304,17 +266,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Persona to active.
-     *
-     * @param qualifiedName for the Persona
-     * @return true if the Persona is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -379,45 +330,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, TYPE_NAME, "isAccessControlEnabled");
         }
         return updater(this.getQualifiedName(), this.getName(), this.getIsAccessControlEnabled());
-    }
-
-    /**
-     * Find a Persona by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the persona, if found.
-     *
-     * @param name of the Persona
-     * @return all Personas with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Persona does not exist
-     */
-    public static List<Persona> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a Persona by its human-readable name.
-     *
-     * @param name of the Persona
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Persona
-     * @return all Personas with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Persona does not exist
-     */
-    public static List<Persona> findByName(String name, Collection<String> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Persona by its human-readable name.
-     *
-     * @param name of the Persona
-     * @param attributes an optional collection of attributes (checked) to retrieve for the Persona
-     * @return all Personas with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Persona does not exist
-     */
-    public static List<Persona> findByName(String name, List<AtlanField> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
     /**
@@ -595,20 +507,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /**
      * Remove the system description from a Persona.
      *
-     * @param qualifiedName of the Persona
-     * @param name of the Persona
-     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
-     * @return the updated Persona, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeDescription(String qualifiedName, String name, boolean isEnabled)
-            throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
-    }
-
-    /**
-     * Remove the system description from a Persona.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Persona's description
      * @param qualifiedName of the Persona
      * @param name of the Persona
@@ -619,20 +517,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     public static Persona removeDescription(AtlanClient client, String qualifiedName, String name, boolean isEnabled)
             throws AtlanException {
         return (Persona) Asset.removeDescription(client, updater(qualifiedName, name, isEnabled));
-    }
-
-    /**
-     * Remove the user's description from a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param name of the Persona
-     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
-     * @return the updated Persona, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeUserDescription(String qualifiedName, String name, boolean isEnabled)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
     }
 
     /**
@@ -655,20 +539,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * Note: this operation must make two API calls — one to retrieve the Persona's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the Persona
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated Persona
-     */
-    public static Persona appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Persona, without replacing existing Atlan tags linked to the Persona.
-     * Note: this operation must make two API calls — one to retrieve the Persona's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Persona
      * @param qualifiedName of the Persona
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -678,35 +548,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     public static Persona appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Persona) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Persona, without replacing existing Atlan tags linked to the Persona.
-     * Note: this operation must make two API calls — one to retrieve the Persona's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the Persona
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated Persona
-     */
-    public static Persona appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -739,17 +580,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Persona
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

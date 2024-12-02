@@ -3,8 +3,9 @@
 package com.atlan.pkg.util
 
 import com.atlan.cache.OffHeapAssetCache
+import com.atlan.model.core.AtlanCloseable
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cache.ConnectionCache
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.RowPreprocessor
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter
  * Automate the delta detection and asset removal from imports that use a full CSV file of all
  * assets each time.
  *
+ * @param ctx context of the running custom package
  * @param semantic the type of calculation (only {@code full} will cause any calculation and asset removal)
  * @param qualifiedNamePrefix prefix for all assets' qualifiedNames that should be considered for the delta calculation
  * @param removalType how to remove assets ({@code purge} will hard-delete, anything else will soft-delete)
@@ -35,6 +37,7 @@ import java.time.format.DateTimeFormatter
  * @param previousFileProcessedExtension extension to use in the object store for files that have been processed
  */
 class DeltaProcessor(
+    val ctx: PackageContext<*>,
     val semantic: String,
     val qualifiedNamePrefix: String?,
     val removalType: String,
@@ -47,7 +50,7 @@ class DeltaProcessor(
     val previousFilePreprocessor: CSVPreprocessor? = null,
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
-) : AutoCloseable {
+) : AtlanCloseable {
     private val objectStore = Utils.getBackingStore(outputDirectory)
     private var initialLoad: Boolean = true
     private var delta: FileBasedDelta? = null
@@ -76,7 +79,7 @@ class DeltaProcessor(
                     initialLoad = false
                     delta =
                         FileBasedDelta(
-                            ConnectionCache.getIdentityMap(),
+                            ctx.connectionCache.getIdentityMap(),
                             resolver,
                             logger,
                             typesToRemove.toList(),
@@ -123,11 +126,13 @@ class DeltaProcessor(
 
     /**
      * Delete any assets that were detected by the delta to be deleted.
+     *
+     * @param client connectivity to the Atlan tenant
      */
     fun processDeletions() {
         if (!initialLoad && delta!!.hasAnythingToDelete()) {
             // Note: this will update the persistent connection cache for both adds and deletes
-            deletedAssets = delta!!.deleteAssets()
+            deletedAssets = delta!!.deleteAssets(ctx.client)
         }
     }
 
@@ -149,6 +154,7 @@ class DeltaProcessor(
     fun updateConnectionCache(modifiedAssets: OffHeapAssetCache? = null) {
         // Update the connection cache with any changes (added and / or removed assets)
         Utils.updateConnectionCache(
+            client = ctx.client,
             added = modifiedAssets,
             removed = deletedAssets,
             fallback = outputDirectory,
@@ -158,28 +164,8 @@ class DeltaProcessor(
     /** {@inheritDoc} */
     override fun close() {
         uploadStateToBackingStore()
-        var exception: Exception? = null
-        if (delta != null) {
-            try {
-                delta!!.close()
-            } catch (e: Exception) {
-                exception = e
-            }
-        }
-        if (deletedAssets != null) {
-            try {
-                deletedAssets!!.close()
-            } catch (e: Exception) {
-                if (exception != null) {
-                    exception.addSuppressed(e)
-                } else {
-                    exception = e
-                }
-            }
-        }
-        if (exception != null) {
-            throw exception
-        }
+        AtlanCloseable.close(delta)
+        AtlanCloseable.close(deletedAssets)
     }
 
     /**

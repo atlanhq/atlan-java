@@ -3,15 +3,15 @@
 package com.atlan.pkg.cache
 
 import co.elastic.clients.elasticsearch._types.SortOrder
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import mu.KotlinLogging
 
-object DataDomainCache : AssetCache<DataDomain>("domain") {
+class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, "domain") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
@@ -23,7 +23,7 @@ object DataDomainCache : AssetCache<DataDomain>("domain") {
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
@@ -35,7 +35,7 @@ object DataDomainCache : AssetCache<DataDomain>("domain") {
     ): DataDomain? {
         try {
             val dataDomain =
-                DataDomain.select()
+                DataDomain.select(client)
                     .where(DataDomain.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -78,9 +78,9 @@ object DataDomainCache : AssetCache<DataDomain>("domain") {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = DataDomain.select().count()
+        val count = DataDomain.select(client).count()
         logger.info { "Caching all $count data domains, up-front..." }
-        DataDomain.select()
+        DataDomain.select(client)
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))
             .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
@@ -89,7 +89,7 @@ object DataDomainCache : AssetCache<DataDomain>("domain") {
                 dataDomain as DataDomain
                 cache(dataDomain.guid, getIdentityForAsset(dataDomain), dataDomain)
             }
-        DataDomain.select()
+        DataDomain.select(client)
             .includesOnResults(includesOnResults)
             .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Asc))

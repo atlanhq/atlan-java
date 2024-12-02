@@ -4,8 +4,7 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
-import com.atlan.model.enums.*;
+import com.atlan.mock.MockTenant;
 import java.io.IOException;
 import org.testng.annotations.Test;
 
@@ -36,7 +35,7 @@ public class ApiTokenTest {
     @Test(groups = {"ApiToken.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
     }
 
@@ -45,7 +44,7 @@ public class ApiTokenTest {
             dependsOnGroups = {"ApiToken.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, ApiToken.class);
+        frodo = MockTenant.client.readValue(serialized, ApiToken.class);
         assertNotNull(frodo);
     }
 
@@ -55,7 +54,7 @@ public class ApiTokenTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

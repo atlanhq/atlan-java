@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
@@ -54,17 +53,6 @@ public class AtlanTagOptions extends AtlanObject {
                 .iconType(TagIconType.ICON)
                 .imageID("")
                 .build();
-    }
-
-    /**
-     * Provide Atlan tag options that set the image for the tag, using an uploaded image.
-     *
-     * @param url URL to the image to use for the Atlan tag
-     * @return the necessary options for setting this image for the Atlan tag
-     * @throws AtlanException on any API communication issues trying to upload the image
-     */
-    public static AtlanTagOptions withImage(String url) throws AtlanException {
-        return withImage(Atlan.getDefaultClient(), url);
     }
 
     /**

@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -149,36 +148,11 @@ public class MetabaseCollection extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) MetabaseCollection assets will be included.
      *
-     * @return a fluent search that includes all MetabaseCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all MetabaseCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) MetabaseCollection assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all MetabaseCollection assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all MetabaseCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) MetabaseCollections will be included
-     * @return a fluent search that includes all MetabaseCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -255,18 +229,6 @@ public class MetabaseCollection extends Asset
     /**
      * Retrieves a MetabaseCollection by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the MetabaseCollection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full MetabaseCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseCollection does not exist or the provided GUID is not a MetabaseCollection
-     */
-    @JsonIgnore
-    public static MetabaseCollection get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a MetabaseCollection by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the MetabaseCollection to retrieve, either its GUID or its full qualifiedName
      * @return the requested full MetabaseCollection, complete with all of its relationships
@@ -274,7 +236,7 @@ public class MetabaseCollection extends Asset
      */
     @JsonIgnore
     public static MetabaseCollection get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -308,17 +270,6 @@ public class MetabaseCollection extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) MetabaseCollection to active.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @return true if the MetabaseCollection is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -366,18 +317,6 @@ public class MetabaseCollection extends Asset
     /**
      * Remove the system description from a MetabaseCollection.
      *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the updated MetabaseCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a MetabaseCollection.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the MetabaseCollection
      * @param name of the MetabaseCollection
@@ -387,18 +326,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MetabaseCollection) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a MetabaseCollection.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the updated MetabaseCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -418,18 +345,6 @@ public class MetabaseCollection extends Asset
     /**
      * Remove the owners from a MetabaseCollection.
      *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the updated MetabaseCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a MetabaseCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the MetabaseCollection's owners
      * @param qualifiedName of the MetabaseCollection
      * @param name of the MetabaseCollection
@@ -439,20 +354,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MetabaseCollection) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a MetabaseCollection.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated MetabaseCollection, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -475,18 +376,6 @@ public class MetabaseCollection extends Asset
     /**
      * Remove the certificate from a MetabaseCollection.
      *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the updated MetabaseCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a MetabaseCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the MetabaseCollection's certificate
      * @param qualifiedName of the MetabaseCollection
      * @param name of the MetabaseCollection
@@ -496,21 +385,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MetabaseCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a MetabaseCollection.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -534,18 +408,6 @@ public class MetabaseCollection extends Asset
     /**
      * Remove the announcement from a MetabaseCollection.
      *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the updated MetabaseCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a MetabaseCollection.
-     *
      * @param client connectivity to the Atlan client from which to remove the MetabaseCollection's announcement
      * @param qualifiedName of the MetabaseCollection
      * @param name of the MetabaseCollection
@@ -555,20 +417,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (MetabaseCollection) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the MetabaseCollection.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @param name human-readable name of the MetabaseCollection
-     * @param terms the list of terms to replace on the MetabaseCollection, or null to remove all terms from the MetabaseCollection
-     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -584,21 +432,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (MetabaseCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the MetabaseCollection, without replacing existing terms linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @param terms the list of terms to append to the MetabaseCollection
-     * @return the MetabaseCollection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -622,21 +455,6 @@ public class MetabaseCollection extends Asset
      * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the MetabaseCollection
-     * @param terms the list of terms to remove from the MetabaseCollection, which must be referenced by GUID
-     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a MetabaseCollection, without replacing all existing terms linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the MetabaseCollection
      * @param qualifiedName for the MetabaseCollection
      * @param terms the list of terms to remove from the MetabaseCollection, which must be referenced by GUID
@@ -653,21 +471,6 @@ public class MetabaseCollection extends Asset
      * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the MetabaseCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated MetabaseCollection
-     */
-    public static MetabaseCollection appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a MetabaseCollection, without replacing existing Atlan tags linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the MetabaseCollection
      * @param qualifiedName of the MetabaseCollection
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -677,35 +480,6 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (MetabaseCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a MetabaseCollection, without replacing existing Atlan tags linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated MetabaseCollection
-     */
-    public static MetabaseCollection appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -738,17 +512,6 @@ public class MetabaseCollection extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a MetabaseCollection.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the MetabaseCollection
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

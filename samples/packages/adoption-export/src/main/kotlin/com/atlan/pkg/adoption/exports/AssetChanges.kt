@@ -2,25 +2,22 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.adoption.exports
 
-import com.atlan.Atlan
+import AdoptionExportCfg
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.AuthService
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.AuditSearch
 import com.atlan.model.search.AuditSearchRequest
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.AdoptionExporter.getAssetDetails
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class AssetChanges(
+    private val ctx: PackageContext<AdoptionExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
-    private val users: List<String>,
-    private val actions: List<String>,
-    private val start: Long,
-    private val end: Long,
-    private val maxAssets: Int,
 ) {
     companion object {
         val EXCLUDE_TYPES =
@@ -43,26 +40,25 @@ class AssetChanges(
                 "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
-        val client = Atlan.getDefaultClient()
         val builder =
-            AuditSearch.builder(client)
+            AuditSearch.builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
-                .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(maxAssets))
-        if (users.isNotEmpty()) {
-            builder.where(AuditSearchRequest.USER.`in`(users))
+                .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(ctx.config.changesMax.toInt()))
+        if (ctx.config.changesByUser.isNotEmpty()) {
+            builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
         }
-        if (actions.isNotEmpty()) {
-            builder.where(AuditSearchRequest.ACTION.`in`(actions))
+        if (ctx.config.changesTypes.isNotEmpty()) {
+            builder.where(AuditSearchRequest.ACTION.`in`(ctx.config.changesTypes))
         }
-        if (start > 0) {
-            builder.where(AuditSearchRequest.CREATED.gte(start * 1000))
+        if (ctx.config.changesFrom > 0) {
+            builder.where(AuditSearchRequest.CREATED.gte(ctx.config.changesFrom * 1000))
         }
-        if (end > 0) {
-            builder.where(AuditSearchRequest.CREATED.lt(end * 1000))
+        if (ctx.config.changesTo > 0) {
+            builder.where(AuditSearchRequest.CREATED.lt(ctx.config.changesTo * 1000))
         }
         // First a request to get the aggregate details
         val request = builder.pageSize(1).toRequest()
-        val response = request.search()
+        val response = request.search(ctx.client)
         val changes = response.aggregations["changes"] as AggregationBucketResult
         val changeCountMap = mutableMapOf<String, Long>()
         changes.buckets.forEach {
@@ -71,7 +67,7 @@ class AssetChanges(
         }
 
         // Then bulk-request details about the assets themselves
-        val assetMap = getAssetDetails(changeCountMap)
+        val assetMap = getAssetDetails(ctx, changeCountMap)
         changeCountMap.forEach { (guid, changeCount) ->
             val asset = assetMap[guid]
             xlsx.appendRow(
@@ -81,7 +77,7 @@ class AssetChanges(
                     asset?.qualifiedName ?: guid,
                     asset?.name ?: "(deleted)",
                     changeCount,
-                    Utils.getAssetLink(guid),
+                    Utils.getAssetLink(ctx.client, guid),
                 ),
             )
         }

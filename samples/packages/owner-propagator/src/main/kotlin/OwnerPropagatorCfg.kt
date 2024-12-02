@@ -11,5 +11,5 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class OwnerPropagatorCfg(
-    @JsonProperty("qn_prefix") val qnPrefix: String? = null,
+    @JsonProperty("qn_prefix") val qnPrefix: String = "default",
 ) : CustomConfig()

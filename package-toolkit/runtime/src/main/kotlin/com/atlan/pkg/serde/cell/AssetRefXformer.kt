@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -12,8 +11,8 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.IModel
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cache.LinkCache
 import com.atlan.serde.Serde
 import com.atlan.util.ParallelBatch
 import mu.KLogger
@@ -30,10 +29,14 @@ object AssetRefXformer {
     /**
      * Encodes (serializes) an asset reference into a string form.
      *
+     * @param ctx context of the running custom package
      * @param asset to be encoded
      * @return the string-encoded form for that asset
      */
-    fun encode(asset: Asset): String {
+    fun encode(
+        ctx: PackageContext<*>,
+        asset: Asset,
+    ): String {
         // Handle some assets as direct embeds
         return when (asset) {
             is Readme -> asset.description ?: ""
@@ -43,13 +46,13 @@ object AssetRefXformer {
                     .name(asset.name)
                     .link(asset.link)
                     .build()
-                    .toJson(Atlan.getDefaultClient())
+                    .toJson(ctx.client)
             }
-            is Glossary -> GlossaryXformer.encode(asset)
-            is GlossaryCategory -> GlossaryCategoryXformer.encode(asset)
-            is GlossaryTerm -> GlossaryTermXformer.encode(asset)
-            is DataDomain -> DataDomainXformer.encode(asset)
-            is IModel -> ModelAssetXformer.encode(asset)
+            is Glossary -> GlossaryXformer.encode(ctx, asset)
+            is GlossaryCategory -> GlossaryCategoryXformer.encode(ctx, asset)
+            is GlossaryTerm -> GlossaryTermXformer.encode(ctx, asset)
+            is DataDomain -> DataDomainXformer.encode(ctx, asset)
+            is IModel -> ModelAssetXformer.encode(ctx, asset)
             else -> {
                 var qualifiedName = asset.qualifiedName
                 if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
@@ -63,24 +66,26 @@ object AssetRefXformer {
     /**
      * Decodes (deserializes) a string form into an asset reference object.
      *
+     * @param ctx context of the running custom package
      * @param assetRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the asset reference represented by the string
      */
     fun decode(
+        ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
     ): Asset {
         return when (fieldName) {
             Asset.README.atlanFieldName -> Readme._internal().description(assetRef).build()
-            Asset.LINKS.atlanFieldName -> Atlan.getDefaultClient().readValue(assetRef, Link::class.java)
+            Asset.LINKS.atlanFieldName -> ctx.client.readValue(assetRef, Link::class.java)
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
             GlossaryTerm.CATEGORIES.atlanFieldName,
-            -> GlossaryCategoryXformer.decode(assetRef, fieldName)
-            GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(assetRef, fieldName)
-            "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(assetRef, fieldName)
-            DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(assetRef, fieldName)
-            in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(assetRef, fieldName)
+            -> GlossaryCategoryXformer.decode(ctx, assetRef, fieldName)
+            GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(ctx, assetRef, fieldName)
+            "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(ctx, assetRef, fieldName)
+            DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, assetRef, fieldName)
+            in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, assetRef, fieldName)
             else -> {
                 val typeName = assetRef.substringBefore(TYPE_QN_DELIMITER)
                 val qualifiedName = assetRef.substringAfter(TYPE_QN_DELIMITER)
@@ -108,6 +113,7 @@ object AssetRefXformer {
     /**
      * Batch up a complete related asset object from the provided asset and (partial) related asset details.
      *
+     * @param ctx context of the running custom package
      * @param from the asset to which another asset is to be related (should have at least its GUID and name)
      * @param relatedAssets the (partial) asset(s) that should be related to the asset, which needs to be completed
      * @param batch the batch through which to create the asset(s) / relationships
@@ -117,6 +123,7 @@ object AssetRefXformer {
      * @param batchSize maximum number of relationships / assets to create per API call
      */
     fun buildRelated(
+        ctx: PackageContext<*>,
         from: Asset,
         relatedAssets: Map<String, Collection<Asset>>,
         batch: ParallelBatch,
@@ -139,7 +146,7 @@ object AssetRefXformer {
                     is Link -> {
                         // Will be a performance hit, but probably not much other optimal way to do this
                         // other than preloading all links into a cache?
-                        val existingLinks = LinkCache.getByAssetGuid(from.guid)
+                        val existingLinks = ctx.linkCache.getByAssetGuid(from.guid)
                         var found = false
                         var update: Link? = null
                         for (link in existingLinks) {
@@ -166,7 +173,7 @@ object AssetRefXformer {
                         if (update != null) {
                             // Only batch it if it won't be a noop, and update the cache with this new link
                             batch.add(update)
-                            LinkCache.add(update)
+                            ctx.linkCache.add(update)
                         }
                         Utils.logProgress(count, totalCount, logger, batchSize)
                     }

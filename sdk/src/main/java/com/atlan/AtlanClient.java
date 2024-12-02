@@ -5,11 +5,11 @@ package com.atlan;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.api.*;
 import com.atlan.cache.*;
+import com.atlan.model.core.AtlanCloseable;
 import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import java.io.Closeable;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -23,7 +23,7 @@ import lombok.Setter;
 /**
  * Configuration for the SDK against a particular Atlan tenant.
  */
-public class AtlanClient implements Closeable {
+public class AtlanClient implements AtlanCloseable {
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
@@ -191,23 +191,43 @@ public class AtlanClient implements Closeable {
     private final AtlanTagDeserializer atlanTagDeserializer;
 
     /**
-     * Instantiate a new client — this should only be called by the Atlan factory, hence package-private.
-     * @param baseURL of the tenant
+     * Instantiate a new client.
+     * This will take the URL of the tenant from the environment variable {@code ATLAN_BASE_URL}
+     * and the API token for accessing the tenant from the environment variable {@code ATLAN_API_KEY}.
      */
-    AtlanClient(final String baseURL) {
+    public AtlanClient() {
+        this(System.getenv("ATLAN_BASE_URL"));
+    }
+
+    /**
+     * Instantiate a new client.
+     * This will take the API token for accessing the tenant from the environment variable {@code ATLAN_API_KEY}.
+     *
+     * @param baseURL of the tenant, including {@code https://}
+     */
+    public AtlanClient(final String baseURL) {
+        this(baseURL, System.getenv("ATLAN_API_KEY"));
+    }
+
+    /**
+     * Instantiate a new client.
+     *
+     * @param baseURL of the tenant, including {@code https://}
+     * @param apiToken API token to use for accessing the tenant
+     */
+    public AtlanClient(final String baseURL, final String apiToken) {
         extraHeaders = new ConcurrentHashMap<>();
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);
-        if (baseURL.equals("INTERNAL")) {
+        if (baseURL == null) {
+            throw new IllegalStateException(Atlan.INVALID_CLIENT_MSG);
+        } else if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;
         } else {
             internalAccess = false;
-            if (baseURL.endsWith("/")) {
-                apiBase = baseURL.substring(0, baseURL.lastIndexOf("/"));
-            } else {
-                apiBase = baseURL;
-            }
+            apiBase = Atlan.prepURL(baseURL);
         }
+        this.apiToken = apiToken;
         mapper = Serde.createMapper(this);
         typeDefs = new TypeDefsEndpoint(this);
         roles = new RolesEndpoint(this);
@@ -367,7 +387,7 @@ public class AtlanClient implements Closeable {
      * @param name Name of your application (e.g. "MyAwesomeApp")
      */
     public void setAppInfo(String name) {
-        setAppInfo(name, null, null, null);
+        setAppInfo(name, null);
     }
 
     /**
@@ -377,7 +397,7 @@ public class AtlanClient implements Closeable {
      * @param version Version of your application (e.g. "1.2.34")
      */
     public void setAppInfo(String name, String version) {
-        setAppInfo(name, version, null, null);
+        setAppInfo(name, version, null);
     }
 
     /**
@@ -411,26 +431,11 @@ public class AtlanClient implements Closeable {
 
     /** {@inheritDoc} */
     @Override
-    public void close() throws IOException {
-        IOException e = null;
-        if (atlanTagCache != null) e = closeCache(atlanTagCache, null);
-        if (customMetadataCache != null) e = closeCache(customMetadataCache, e);
-        if (userCache != null) e = closeCache(userCache, e);
-        if (groupCache != null) e = closeCache(groupCache, e);
-        if (roleCache != null) e = closeCache(roleCache, e);
-        if (e != null) throw e;
-    }
-
-    private IOException closeCache(AbstractMassCache<?> cache, IOException previous) {
-        try {
-            cache.close();
-        } catch (IOException e) {
-            if (previous != null) {
-                previous.addSuppressed(e);
-            } else {
-                previous = e;
-            }
-        }
-        return previous;
+    public void close() {
+        AtlanCloseable.close(atlanTagCache);
+        AtlanCloseable.close(customMetadataCache);
+        AtlanCloseable.close(userCache);
+        AtlanCloseable.close(groupCache);
+        AtlanCloseable.close(roleCache);
     }
 }

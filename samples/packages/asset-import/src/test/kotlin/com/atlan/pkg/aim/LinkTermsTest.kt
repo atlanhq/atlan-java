@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
@@ -69,7 +68,6 @@ class LinkTermsTest : PackageTest("lt") {
 
     private fun createTags() {
         val maxNetworkRetries = 30
-        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.ROCKET_LAUNCH, AtlanTagColor.YELLOW).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.ROCKET_LAUNCH, AtlanTagColor.YELLOW).build()
         client.typeDefs.create(
@@ -98,7 +96,6 @@ class LinkTermsTest : PackageTest("lt") {
     }
 
     private fun createGlossary() {
-        val client = Atlan.getDefaultClient()
         val g1 = Glossary.creator(glossaryName).build()
         val response = g1.save(client)
         val result = response.getResult(g1)
@@ -107,8 +104,7 @@ class LinkTermsTest : PackageTest("lt") {
     }
 
     private fun createConnection(): Connection {
-        val client = Atlan.getDefaultClient()
-        val c1 = Connection.creator(connectionName, connectorType).build()
+        val c1 = Connection.creator(client, connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -138,16 +134,16 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.create"])
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)
+        val c1 = Connection.findByName(client, connectionName, connectorType)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1[0].name)
     }
 
     @Test(groups = ["aim.lt.create"])
     fun tableCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.SOURCE_READ_COUNT)
@@ -167,9 +163,9 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.create"])
     fun viewCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.SOURCE_READ_COUNT)
@@ -189,9 +185,9 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.create"])
     fun columnCreated() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Column.NAME)
                 .includeOnResults(Column.ATLAN_TAGS)
@@ -205,9 +201,9 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.create"])
     fun termAssigned() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Atlan.getDefaultClient().assets.select()
+            client.assets.select()
                 .where(Asset.TYPE_NAME.`in`(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
                 .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Asset.NAME)
@@ -231,7 +227,7 @@ class LinkTermsTest : PackageTest("lt") {
     }
 
     private fun validateConnectionCache() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         Assert.assertTrue(dbFile.isFile)
         Assert.assertTrue(dbFile.exists())
@@ -266,9 +262,9 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedTable() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.ASSIGNED_TERMS)
@@ -288,9 +284,9 @@ class LinkTermsTest : PackageTest("lt") {
 
     @Test(groups = ["aim.lt.update"], dependsOnGroups = ["aim.lt.runUpdate"])
     fun testRevisedView() {
-        val c = Connection.findByName(connectionName, connectorType)[0]!!
+        val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select()
+            View.select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.ASSIGNED_TERMS)

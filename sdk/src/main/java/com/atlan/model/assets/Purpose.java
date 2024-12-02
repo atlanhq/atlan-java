@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -137,36 +136,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Purpose assets will be included.
      *
-     * @return a fluent search that includes all Purpose assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Purpose assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Purpose assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Purpose assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Purpose assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Purposes will be included
-     * @return a fluent search that includes all Purpose assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -243,18 +217,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /**
      * Retrieves a Purpose by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Purpose, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
-     */
-    @JsonIgnore
-    public static Purpose get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Purpose by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Purpose, complete with all of its relationships
@@ -262,7 +224,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      */
     @JsonIgnore
     public static Purpose get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -295,17 +257,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Purpose to active.
-     *
-     * @param qualifiedName for the Purpose
-     * @return true if the Purpose is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -383,45 +334,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the purpose, if found.
      *
-     * @param name of the Purpose
-     * @return all Purposes with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Purpose does not exist
-     */
-    public static List<Purpose> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a Purpose by its human-readable name.
-     *
-     * @param name of the Purpose
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Purpose
-     * @return all Purposes with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Purpose does not exist
-     */
-    public static List<Purpose> findByName(String name, Collection<String> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Purpose by its human-readable name.
-     *
-     * @param name of the Purpose
-     * @param attributes an optional collection of attributes (checked) to retrieve for the Purpose
-     * @return all Purposes with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the Purpose does not exist
-     */
-    public static List<Purpose> findByName(String name, List<AtlanField> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Purpose by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the purpose, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the purpose
      * @param name of the Purpose
      * @return all Purposes with that name, if found
@@ -480,32 +392,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
         }
         return results;
-    }
-
-    /**
-     * Builds the minimal object necessary to create a metadata policy for a Purpose.
-     *
-     * @param name of the policy
-     * @param purposeId unique identifier (GUID) of the purpose for which to create this metadata policy
-     * @param policyType type of policy (for example allow vs deny)
-     * @param actions to include in the policy
-     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
-     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
-     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
-     * @return the minimal request necessary to create the metadata policy for the Purpose, as a builder
-     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
-     */
-    public static AuthPolicy.AuthPolicyBuilder<?, ?> createMetadataPolicy(
-            String name,
-            String purposeId,
-            AuthPolicyType policyType,
-            Collection<PurposeMetadataAction> actions,
-            Collection<String> policyGroups,
-            Collection<String> policyUsers,
-            boolean allUsers)
-            throws AtlanException {
-        return createMetadataPolicy(
-                Atlan.getDefaultClient(), name, purposeId, policyType, actions, policyGroups, policyUsers, allUsers);
     }
 
     /**
@@ -574,30 +460,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /**
      * Builds the minimal object necessary to create a data policy for a Purpose.
      *
-     * @param name of the policy
-     * @param purposeId unique identifier (GUID) of the purpose for which to create this data policy
-     * @param policyType type of policy (for example allow vs deny)
-     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
-     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
-     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
-     * @return the minimal request necessary to create the data policy for the Purpose, as a builder
-     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
-     */
-    public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
-            String name,
-            String purposeId,
-            AuthPolicyType policyType,
-            Collection<String> policyGroups,
-            Collection<String> policyUsers,
-            boolean allUsers)
-            throws AtlanException {
-        return createDataPolicy(
-                Atlan.getDefaultClient(), name, purposeId, policyType, policyGroups, policyUsers, allUsers);
-    }
-
-    /**
-     * Builds the minimal object necessary to create a data policy for a Purpose.
-     *
      * @param client connectivity to the Atlan tenant on which the policy is intended to be created
      * @param name of the policy
      * @param purposeId unique identifier (GUID) of the purpose for which to create this data policy
@@ -659,20 +521,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /**
      * Remove the system description from a Purpose.
      *
-     * @param qualifiedName of the Purpose
-     * @param name of the Purpose
-     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
-     * @return the updated Purpose, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeDescription(String qualifiedName, String name, boolean isEnabled)
-            throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
-    }
-
-    /**
-     * Remove the system description from a Purpose.
-     *
      * @param client connectivity to the Atlan tenant from which to remove this Purpose's description
      * @param qualifiedName of the Purpose
      * @param name of the Purpose
@@ -683,20 +531,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     public static Purpose removeDescription(AtlanClient client, String qualifiedName, String name, boolean isEnabled)
             throws AtlanException {
         return (Purpose) Asset.removeDescription(client, updater(qualifiedName, name, isEnabled));
-    }
-
-    /**
-     * Remove the user's description from a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param name of the Purpose
-     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
-     * @return the updated Purpose, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeUserDescription(String qualifiedName, String name, boolean isEnabled)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, isEnabled);
     }
 
     /**
@@ -719,20 +553,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      * Note: this operation must make two API calls — one to retrieve the Purpose's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the Purpose
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated Purpose
-     */
-    public static Purpose appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Purpose, without replacing existing Atlan tags linked to the Purpose.
-     * Note: this operation must make two API calls — one to retrieve the Purpose's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Purpose
      * @param qualifiedName of the Purpose
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -742,35 +562,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     public static Purpose appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Purpose) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Purpose, without replacing existing Atlan tags linked to the Purpose.
-     * Note: this operation must make two API calls — one to retrieve the Purpose's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the Purpose
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated Purpose
-     */
-    public static Purpose appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -803,17 +594,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Purpose
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

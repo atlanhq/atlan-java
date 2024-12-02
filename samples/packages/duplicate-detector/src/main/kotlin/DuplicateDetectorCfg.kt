@@ -14,10 +14,10 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class DuplicateDetectorCfg(
-    @JsonProperty("glossary_name") val glossaryName: String? = null,
-    @JsonProperty("qn_prefix") val qnPrefix: String? = null,
+    @JsonProperty("glossary_name") val glossaryName: String = "Duplicate assets",
+    @JsonProperty("qn_prefix") val qnPrefix: String = "default",
     @JsonProperty("control_config_strategy") val controlConfigStrategy: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-    @JsonProperty("asset_types") val assetTypes: List<String>? = null,
+    @JsonProperty("asset_types") val assetTypes: List<String> = listOf("Table", "View", "MaterialisedView"),
 ) : CustomConfig()

@@ -2,15 +2,14 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.typedefs.EnumDef
 import mu.KotlinLogging
 
-class EnumCreator(val tagToMetadataMapper: TagToMetadataMapper) {
+class EnumCreator(private val client: AtlanClient, val tagToMetadataMapper: TagToMetadataMapper) {
     private val logger = KotlinLogging.logger {}
-    private val defaultClient = Atlan.getDefaultClient()
-    private val customMetadataCache = defaultClient.customMetadataCache
-    private val enumCache = defaultClient.enumCache
+    private val customMetadataCache = client.customMetadataCache
+    private val enumCache = client.enumCache
 
     fun createOptions(
         tagKey: String,
@@ -28,9 +27,9 @@ class EnumCreator(val tagToMetadataMapper: TagToMetadataMapper) {
                 val missingValues = values.minus(currentValues)
                 if (currentValues.isNotEmpty()) {
                     val response =
-                        EnumDef.updater(enumName, missingValues.toList(), false)
+                        EnumDef.updater(client, enumName, missingValues.toList(), false)
                             .build()
-                            .update()
+                            .update(client)
                     println(response)
                 }
             } else {

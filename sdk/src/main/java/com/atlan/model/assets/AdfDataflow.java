@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -156,36 +155,11 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) AdfDataflow assets will be included.
      *
-     * @return a fluent search that includes all AdfDataflow assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all AdfDataflow assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) AdfDataflow assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all AdfDataflow assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all AdfDataflow assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) AdfDataflows will be included
-     * @return a fluent search that includes all AdfDataflow assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -262,18 +236,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     /**
      * Retrieves a AdfDataflow by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the AdfDataflow to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full AdfDataflow, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfDataflow does not exist or the provided GUID is not a AdfDataflow
-     */
-    @JsonIgnore
-    public static AdfDataflow get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a AdfDataflow by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the AdfDataflow to retrieve, either its GUID or its full qualifiedName
      * @return the requested full AdfDataflow, complete with all of its relationships
@@ -281,7 +243,7 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
      */
     @JsonIgnore
     public static AdfDataflow get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -314,17 +276,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) AdfDataflow to active.
-     *
-     * @param qualifiedName for the AdfDataflow
-     * @return true if the AdfDataflow is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -372,18 +323,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     /**
      * Remove the system description from a AdfDataflow.
      *
-     * @param qualifiedName of the AdfDataflow
-     * @param name of the AdfDataflow
-     * @return the updated AdfDataflow, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a AdfDataflow.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the AdfDataflow
      * @param name of the AdfDataflow
@@ -393,18 +332,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AdfDataflow) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a AdfDataflow.
-     *
-     * @param qualifiedName of the AdfDataflow
-     * @param name of the AdfDataflow
-     * @return the updated AdfDataflow, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -424,18 +351,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     /**
      * Remove the owners from a AdfDataflow.
      *
-     * @param qualifiedName of the AdfDataflow
-     * @param name of the AdfDataflow
-     * @return the updated AdfDataflow, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a AdfDataflow.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AdfDataflow's owners
      * @param qualifiedName of the AdfDataflow
      * @param name of the AdfDataflow
@@ -445,20 +360,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AdfDataflow) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a AdfDataflow.
-     *
-     * @param qualifiedName of the AdfDataflow
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated AdfDataflow, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -481,18 +382,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     /**
      * Remove the certificate from a AdfDataflow.
      *
-     * @param qualifiedName of the AdfDataflow
-     * @param name of the AdfDataflow
-     * @return the updated AdfDataflow, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a AdfDataflow.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AdfDataflow's certificate
      * @param qualifiedName of the AdfDataflow
      * @param name of the AdfDataflow
@@ -502,21 +391,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AdfDataflow) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a AdfDataflow.
-     *
-     * @param qualifiedName of the AdfDataflow
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -540,18 +414,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     /**
      * Remove the announcement from a AdfDataflow.
      *
-     * @param qualifiedName of the AdfDataflow
-     * @param name of the AdfDataflow
-     * @return the updated AdfDataflow, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a AdfDataflow.
-     *
      * @param client connectivity to the Atlan client from which to remove the AdfDataflow's announcement
      * @param qualifiedName of the AdfDataflow
      * @param name of the AdfDataflow
@@ -561,20 +423,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AdfDataflow) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the AdfDataflow.
-     *
-     * @param qualifiedName for the AdfDataflow
-     * @param name human-readable name of the AdfDataflow
-     * @param terms the list of terms to replace on the AdfDataflow, or null to remove all terms from the AdfDataflow
-     * @return the AdfDataflow that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -590,20 +438,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AdfDataflow) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the AdfDataflow, without replacing existing terms linked to the AdfDataflow.
-     * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the AdfDataflow
-     * @param terms the list of terms to append to the AdfDataflow
-     * @return the AdfDataflow that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -627,20 +461,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
      * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the AdfDataflow
-     * @param terms the list of terms to remove from the AdfDataflow, which must be referenced by GUID
-     * @return the AdfDataflow that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AdfDataflow removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a AdfDataflow, without replacing all existing terms linked to the AdfDataflow.
-     * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the AdfDataflow
      * @param qualifiedName for the AdfDataflow
      * @param terms the list of terms to remove from the AdfDataflow, which must be referenced by GUID
@@ -657,20 +477,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
      * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the AdfDataflow
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated AdfDataflow
-     */
-    public static AdfDataflow appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a AdfDataflow, without replacing existing Atlan tags linked to the AdfDataflow.
-     * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the AdfDataflow
      * @param qualifiedName of the AdfDataflow
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -680,35 +486,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     public static AdfDataflow appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (AdfDataflow) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a AdfDataflow, without replacing existing Atlan tags linked to the AdfDataflow.
-     * Note: this operation must make two API calls — one to retrieve the AdfDataflow's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the AdfDataflow
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated AdfDataflow
-     */
-    public static AdfDataflow appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -741,17 +518,6 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a AdfDataflow.
-     *
-     * @param qualifiedName of the AdfDataflow
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the AdfDataflow
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

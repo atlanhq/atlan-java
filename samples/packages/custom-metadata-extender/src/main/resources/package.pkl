@@ -40,6 +40,7 @@ uiConfig {
           helpText = "Enter the name of the custom metadata that should be extended to other connections or glossaries."
           width = 8
           placeholderText = "Data Quality"
+          fallback = ""
         }
         ["connection_qualified_name"] = new ConnectionSelector {
           title = "Connection"
@@ -47,6 +48,7 @@ uiConfig {
           helpText = "Select the additional connection(s) whose assets should be able to use the custom metadata."
           width = 8
           multiSelect = true
+          fallback = List()
         }
         ["glossaries"] = new TextInput {
           title = "Glossaries"
@@ -63,6 +65,7 @@ uiConfig {
             ["NONE"] = "No domains"
           }
           default = "ALL"
+          fallback = default
         }
         ["domains_specific"] = new TextInput {
           title = "Specific domain"
@@ -70,6 +73,7 @@ uiConfig {
           helpText = "Enter the name of the domain whose assets should be able to use the custom metadata."
           width = 8
           placeholderText = "Finance"
+          fallback = ""
         }
       }
     }

@@ -3,9 +3,7 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import mu.KotlinLogging
 import org.testng.annotations.Test
@@ -24,12 +22,6 @@ class InvalidParentTest : PackageTest("ip") {
 
     private val testFile = "input.csv"
 
-    private val files =
-        listOf(
-            testFile,
-            "debug.log",
-        )
-
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
         val input = Paths.get("src", "test", "resources", "invalid_parent.csv").toFile()
@@ -43,15 +35,6 @@ class InvalidParentTest : PackageTest("ip") {
             }
         }
     }
-
-    private val connectionAttrs: List<AtlanField> =
-        listOf(
-            Connection.NAME,
-            Connection.CONNECTOR_TYPE,
-            Connection.ADMIN_ROLES,
-            Connection.ADMIN_GROUPS,
-            Connection.ADMIN_USERS,
-        )
 
     override fun setup() {
         prepFile()

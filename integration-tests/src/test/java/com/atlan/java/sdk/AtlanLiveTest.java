@@ -4,9 +4,10 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -14,14 +15,15 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.search.AuditSearchRequest;
 import com.atlan.model.search.AuditSearchResponse;
-import com.atlan.model.search.EntityAudit;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import java.io.IOException;
 import java.util.Random;
 import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -53,20 +55,19 @@ public abstract class AtlanLiveTest {
 
     public static final String DESCRIPTION = TESTING_STRING;
 
-    public static final AtlanClient client;
-
-    static {
-        Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
-        Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
-        Atlan.setMaxNetworkRetries(10);
-        client = Atlan.getDefaultClient();
-    }
+    protected final AtlanClient client = new AtlanClient();
 
     @BeforeClass
     public void setLogName() {
         // TODO: this doesn't really work -- different tests' entries are showing up in others' log files
         //  when run in parallel (works fine for running tests individually)
         ThreadContext.put("className", this.getClass().getSimpleName());
+        client.setMaxNetworkRetries(10);
+    }
+
+    @AfterClass
+    public void teardown() throws IOException {
+        client.close();
     }
 
     protected static String makeUnique(String input) {
@@ -79,7 +80,7 @@ public abstract class AtlanLiveTest {
      * @param response the update response to validate
      * @return the single updated asset from the response
      */
-    protected static Asset validateSingleUpdate(AssetMutationResponse response) {
+    protected Asset validateSingleUpdate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -109,23 +110,26 @@ public abstract class AtlanLiveTest {
      * @param log into which to write full details if the asset was not deleted as expected
      * @throws AtlanException on any API communication issues
      */
-    protected static void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
-        AtlanClient client = Atlan.getDefaultClient();
-        Asset deleted = Asset.get(client, toValidate.getGuid(), true);
+    protected void validateDeletedAsset(Asset toValidate, Logger log) throws AtlanException {
+        Asset deleted = Asset.get(client, toValidate.getGuid(), false);
         assertNotNull(deleted);
         assertEquals(deleted.getGuid(), toValidate.getGuid());
         assertEquals(deleted.getQualifiedName(), toValidate.getQualifiedName());
         assertEquals(deleted.getTypeName(), toValidate.getTypeName());
-        if (deleted.getStatus() != AtlanStatus.DELETED) {
-            log.warn(
-                    "Failed deletion test, activity log for {} {}:",
-                    toValidate.getTypeName(),
-                    toValidate.getQualifiedName());
-            AuditSearchResponse response =
-                    AuditSearchRequest.byGuid(toValidate.getGuid(), 100).build().search();
-            for (EntityAudit result : response) {
-                log.debug("  ... {}", result.toJson(client));
+        int count = 0;
+        try {
+            while (deleted.getStatus() != AtlanStatus.DELETED && count < client.getMaxNetworkRetries()) {
+                log.debug(
+                        "Asset that should be deleted is not -- retrying (#{}): {}::{}",
+                        count,
+                        deleted.getTypeName(),
+                        deleted.getQualifiedName());
+                Thread.sleep(HttpClient.waitTime(count).toMillis());
+                deleted = Asset.get(client, toValidate.getGuid(), false);
+                count++;
             }
+        } catch (InterruptedException e) {
+            throw new LogicException(ErrorCode.ERROR_PASSTHROUGH, e);
         }
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
     }
@@ -140,7 +144,7 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
+    protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize)
             throws AtlanException, InterruptedException {
         return retrySearchUntil(request, expectedSize, false);
     }
@@ -155,11 +159,10 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static IndexSearchResponse retrySearchUntil(
-            IndexSearchRequest request, long expectedSize, boolean isDeleteQuery)
+    protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize, boolean isDeleteQuery)
             throws AtlanException, InterruptedException {
         int count = 1;
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         boolean remainingActive = true;
         if (isDeleteQuery) {
             remainingActive = !response.getAssets().stream()
@@ -168,9 +171,9 @@ public abstract class AtlanLiveTest {
                     .isEmpty();
         }
         while ((response.getApproximateCount() < expectedSize || remainingActive)
-                && count < Atlan.getMaxNetworkRetries()) {
+                && count < client.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
+            response = request.search(client);
             if (isDeleteQuery) {
                 remainingActive = !response.getAssets().stream()
                         .filter(it -> it.getStatus() != AtlanStatus.DELETED)
@@ -197,13 +200,13 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected static AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
+    protected AuditSearchResponse retrySearchUntil(AuditSearchRequest request, long expectedSize)
             throws AtlanException, InterruptedException {
         int count = 1;
-        AuditSearchResponse response = request.search();
-        while (response.getCount() < expectedSize && count < Atlan.getMaxNetworkRetries()) {
+        AuditSearchResponse response = request.search(client);
+        while (response.getCount() < expectedSize && count < client.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
-            response = request.search();
+            response = request.search(client);
             count++;
         }
         assertNotNull(response);

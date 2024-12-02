@@ -4,7 +4,7 @@ package com.atlan.model.workflow;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
+import com.atlan.mock.MockTenant;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.PlaybookActionOperator;
@@ -51,7 +51,7 @@ public class PlaybookRuleTest {
             dependsOnGroups = {"PlaybookRule.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
     }
 
@@ -60,7 +60,7 @@ public class PlaybookRuleTest {
             dependsOnGroups = {"PlaybookRule.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, PlaybookRule.class);
+        frodo = MockTenant.client.readValue(serialized, PlaybookRule.class);
         assertNotNull(frodo);
     }
 
@@ -70,7 +70,7 @@ public class PlaybookRuleTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

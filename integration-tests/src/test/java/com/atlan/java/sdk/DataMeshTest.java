@@ -55,7 +55,7 @@ public class DataMeshTest extends AtlanLiveTest {
 
     @Test(groups = {"mesh.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -64,7 +64,7 @@ public class DataMeshTest extends AtlanLiveTest {
     void createDatabase() throws AtlanException {
         Database toCreate =
                 Database.creator(DB_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
         database = (Database) one;
@@ -80,7 +80,7 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.db"})
     void createSchema() throws AtlanException {
         Schema toCreate = Schema.creator(SCH_NAME, database).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -103,7 +103,7 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.schema"})
     void createTable() throws AtlanException {
         Table toCreate = Table.creator(TBL_NAME, schema).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -128,7 +128,7 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.schema"})
     void createView() throws AtlanException {
         View toCreate = View.creator(VIEW_NAME, schema).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -153,7 +153,7 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.table"})
     void createCol1() throws AtlanException {
         Column toCreate = Column.creator(COL_NAME, table, 1).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -180,7 +180,7 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.connection"})
     void createDomain() throws AtlanException {
         DataDomain toCreate = DataDomain.creator(DOMAIN_NAME).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         Asset one = response.getCreatedAssets().get(0);
@@ -197,7 +197,7 @@ public class DataMeshTest extends AtlanLiveTest {
     void createSubDomain() throws AtlanException {
         DataDomain toCreate =
                 DataDomain.creator(SUB_DOMAIN_NAME, domain.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -216,12 +216,12 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.create.product"},
             dependsOnGroups = {"mesh.create.subdomain", "mesh.create.table"})
     void createProduct() throws AtlanException {
-        FluentSearch query = Table.select()
+        FluentSearch query = Table.select(client)
                 .where(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
                 .build();
-        DataProduct toCreate = DataProduct.creator(PROD_NAME, subDomain.getQualifiedName(), query)
+        DataProduct toCreate = DataProduct.creator(client, PROD_NAME, subDomain.getQualifiedName(), query)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -242,7 +242,7 @@ public class DataMeshTest extends AtlanLiveTest {
     void createContract() throws AtlanException {
         String contractJson = getContractJson("Automated testing of the Java SDK.");
         DataContract toCreate = DataContract.creator(contractJson, table).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset related = response.getUpdatedAssets().get(0);
@@ -261,7 +261,7 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.read.contract"},
             dependsOnGroups = {"mesh.create.contract"})
     void readContractFromAsset() throws AtlanException {
-        Table tbl = Table.get(table.getGuid());
+        Table tbl = Table.get(client, table.getGuid(), true);
         assertNotNull(tbl.getDataContractLatest());
         assertEquals(tbl.getDataContractLatest().getGuid(), contract.getGuid());
     }
@@ -272,7 +272,7 @@ public class DataMeshTest extends AtlanLiveTest {
     void updateContract() throws AtlanException {
         String contractJson = getContractJson("Automated testing of the Java SDK (UPDATED).");
         DataContract toCreate = DataContract.creator(contractJson, table).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         // TODO: leaving out any further validation until next stage of Data Contract changes
     }
@@ -301,7 +301,7 @@ public class DataMeshTest extends AtlanLiveTest {
         DataProduct toUpdate = DataProduct.updater(product.getQualifiedName(), PROD_NAME)
                 .assetSelection(client, query)
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -313,8 +313,9 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.purge.product"},
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*"},
             alwaysRun = true)
-    void purgeProduct() throws AtlanException, InterruptedException {
-        AssetMutationResponse response = DataProduct.purge(product.getGuid());
+    void purgeProduct() throws AtlanException {
+        AssetMutationResponse response =
+                DataProduct.purge(client, product.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -329,8 +330,9 @@ public class DataMeshTest extends AtlanLiveTest {
             groups = {"mesh.purge.domains"},
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.product"},
             alwaysRun = true)
-    void purgeDomains() throws AtlanException, InterruptedException {
-        AssetMutationResponse response = DataDomain.purge(subDomain.getGuid());
+    void purgeDomains() throws AtlanException {
+        AssetMutationResponse response =
+                DataDomain.purge(client, subDomain.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -338,7 +340,7 @@ public class DataMeshTest extends AtlanLiveTest {
         DataDomain deletedDomain = response.getDeletedAssets(DataDomain.class).get(0);
         assertEquals(deletedDomain.getGuid(), subDomain.getGuid());
         assertEquals(deletedDomain.getStatus(), AtlanStatus.DELETED);
-        response = DataDomain.purge(domain.getGuid());
+        response = DataDomain.purge(client, domain.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         one = response.getDeletedAssets().get(0);
@@ -353,6 +355,6 @@ public class DataMeshTest extends AtlanLiveTest {
             dependsOnGroups = {"mesh.create.*", "mesh.read.*", "mesh.update.*", "mesh.purge.domains"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

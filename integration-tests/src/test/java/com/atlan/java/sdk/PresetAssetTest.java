@@ -40,7 +40,7 @@ public class PresetAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"preset.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -49,7 +49,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createWorkspace() throws AtlanException {
         PresetWorkspace toCreate = PresetWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof PresetWorkspace);
         workspace = (PresetWorkspace) one;
@@ -66,7 +66,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createCollection() throws AtlanException {
         PresetDashboard toCreate =
                 PresetDashboard.creator(COLLECTION_NAME, workspace).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -92,7 +92,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.create.collection"})
     void createChart() throws AtlanException {
         PresetChart toCreate = PresetChart.creator(CHART_NAME, collection).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -119,7 +119,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.create.collection"})
     void createDataset() throws AtlanException {
         PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -146,12 +146,12 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.create.collection"})
     void updateCollection() throws AtlanException {
         PresetDashboard updated = PresetDashboard.updateCertificate(
-                collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = PresetDashboard.updateAnnouncement(
-                collection.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, collection.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -162,7 +162,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.read.collection"},
             dependsOnGroups = {"preset.create.*", "preset.update.collection"})
     void retrieveCollection() throws AtlanException {
-        PresetDashboard c = PresetDashboard.get(collection.getGuid());
+        PresetDashboard c = PresetDashboard.get(client, collection.getGuid(), true);
         assertNotNull(c);
         assertTrue(c.isComplete());
         assertEquals(c.getGuid(), collection.getGuid());
@@ -193,14 +193,15 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.update.collection.again"},
             dependsOnGroups = {"preset.read.collection"})
     void updateCollectionAgain() throws AtlanException {
-        PresetDashboard updated = PresetDashboard.removeCertificate(collection.getQualifiedName(), COLLECTION_NAME);
+        PresetDashboard updated =
+                PresetDashboard.removeCertificate(client, collection.getQualifiedName(), COLLECTION_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = PresetDashboard.removeAnnouncement(collection.getQualifiedName(), COLLECTION_NAME);
+        updated = PresetDashboard.removeAnnouncement(client, collection.getQualifiedName(), COLLECTION_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -275,7 +276,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart"},
             dependsOnGroups = {"preset.update.*", "preset.search.*"})
     void deleteChart() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(chart.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -300,8 +301,9 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart.restore"},
             dependsOnGroups = {"preset.delete.chart.read"})
     void restoreChart() throws AtlanException {
-        assertTrue(PresetChart.restore(chart.getQualifiedName()));
-        PresetChart restored = PresetChart.get(chart.getQualifiedName());
+        assertTrue(PresetChart.restore(client, chart.getQualifiedName()));
+        PresetChart restored = PresetChart.get(client, chart.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), chart.getGuid());
         assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -311,7 +313,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.purge.chart"},
             dependsOnGroups = {"preset.delete.chart.restore"})
     void purgeChart() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(chart.getGuid());
+        AssetMutationResponse response = Asset.purge(client, chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -336,6 +338,6 @@ public class PresetAssetTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -102,36 +101,11 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) AtlanCollection assets will be included.
      *
-     * @return a fluent search that includes all AtlanCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all AtlanCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) AtlanCollection assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all AtlanCollection assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all AtlanCollection assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) AtlanCollections will be included
-     * @return a fluent search that includes all AtlanCollection assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -208,18 +182,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Retrieves a AtlanCollection by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the AtlanCollection to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full AtlanCollection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanCollection does not exist or the provided GUID is not a AtlanCollection
-     */
-    @JsonIgnore
-    public static AtlanCollection get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a AtlanCollection by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the AtlanCollection to retrieve, either its GUID or its full qualifiedName
      * @return the requested full AtlanCollection, complete with all of its relationships
@@ -227,7 +189,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      */
     @JsonIgnore
     public static AtlanCollection get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -266,17 +228,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Restore the archived (soft-deleted) AtlanCollection to active.
      *
-     * @param qualifiedName for the AtlanCollection
-     * @return true if the AtlanCollection is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
-    }
-
-    /**
-     * Restore the archived (soft-deleted) AtlanCollection to active.
-     *
      * @param client connectivity to the Atlan tenant on which to restore the asset
      * @param qualifiedName for the AtlanCollection
      * @return true if the AtlanCollection is now active, and false otherwise
@@ -290,11 +241,13 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * Add the API token configured for the default client as an admin for this AtlanCollection.
      * This is necessary to allow the API token to manage the collection itself or any queries within it.
      *
+     * @param client connectivity to the Atlan tenant
      * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
-        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
+    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken)
+            throws AtlanException {
+        return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
     }
 
     /**
@@ -302,37 +255,35 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * This is necessary to allow the API token to view or run queries within the collection, but not make any
      * changes to them.
      *
+     * @param client connectivity to Atlan tenant
      * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsViewer(final String impersonationToken) throws AtlanException {
-
-        AtlanClient client = Atlan.getDefaultClient();
-        String token = client.users.getCurrentUser().getUsername();
-
-        String clientGuid = UUID.randomUUID().toString();
-        AtlanClient tmp = Atlan.getClient(client.getBaseUrl(), clientGuid);
-        tmp.setApiToken(impersonationToken);
-
-        // Look for the asset as the impersonated user, ensuring we include the viewer users
-        // in the results (so we avoid clobbering any existing viewer users)
-        Optional<Asset> found = tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
-                .findFirst();
+    public AssetMutationResponse addApiTokenAsViewer(AtlanClient client, final String impersonationToken)
+            throws AtlanException {
+        String username = client.users.getCurrentUser().getUsername();
         AssetMutationResponse response = null;
-        if (found.isPresent()) {
-            Asset asset = found.get();
-            Set<String> existingViewers = asset.getViewerUsers();
-            response = asset.trimToRequired()
-                    .viewerUsers(existingViewers)
-                    .viewerUser(token)
-                    .build()
-                    .save(tmp);
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
+        try (AtlanClient tmp = new AtlanClient(client.getBaseUrl(), impersonationToken)) {
+            // Look for the asset as the impersonated user, ensuring we include the viewer users
+            // in the results (so we avoid clobbering any existing viewer users)
+            Optional<Asset> found =
+                    tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
+                            .findFirst();
+            response = null;
+            if (found.isPresent()) {
+                Asset asset = found.get();
+                Set<String> existingViewers = asset.getViewerUsers();
+                response = asset.trimToRequired()
+                        .viewerUsers(existingViewers)
+                        .viewerUser(username)
+                        .build()
+                        .save(tmp);
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
+            }
+        } catch (Exception e) {
+            log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
-
-        Atlan.removeClient(client.getBaseUrl(), clientGuid);
-
         return response;
     }
 
@@ -371,19 +322,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    @Override
-    public AsyncCreationResponse save() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
      * @param client connectivity to the Atlan tenant where this collection should be saved
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
@@ -391,20 +329,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Override
     public AsyncCreationResponse save(AtlanClient client) throws AtlanException {
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    @Override
-    public AsyncCreationResponse save(boolean replaceAtlanTags) throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -450,45 +374,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Find a collection by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the collection, if found.
-     *
-     * @param name of the collection
-     * @return all collections with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the collection does not exist
-     */
-    public static List<AtlanCollection> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a collection by its human-readable name.
-     *
-     * @param name of the collection
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the collection
-     * @return all collections with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the collection does not exist
-     */
-    public static List<AtlanCollection> findByName(String name, Collection<String> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a collection by its human-readable name.
-     *
-     * @param name of the collection
-     * @param attributes an optional collection of attributes (checked) to retrieve for the collection
-     * @return all collections with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the collection does not exist
-     */
-    public static List<AtlanCollection> findByName(String name, List<AtlanField> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
     /**
@@ -558,18 +443,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Remove the system description from a AtlanCollection.
      *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the updated AtlanCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a AtlanCollection.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the AtlanCollection
      * @param name of the AtlanCollection
@@ -579,18 +452,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AtlanCollection) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the updated AtlanCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -610,18 +471,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Remove the owners from a AtlanCollection.
      *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the updated AtlanCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a AtlanCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AtlanCollection's owners
      * @param qualifiedName of the AtlanCollection
      * @param name of the AtlanCollection
@@ -631,20 +480,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AtlanCollection) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated AtlanCollection, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -667,18 +502,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Remove the certificate from a AtlanCollection.
      *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the updated AtlanCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a AtlanCollection.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AtlanCollection's certificate
      * @param qualifiedName of the AtlanCollection
      * @param name of the AtlanCollection
@@ -688,21 +511,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AtlanCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -726,18 +534,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     /**
      * Remove the announcement from a AtlanCollection.
      *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the updated AtlanCollection, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a AtlanCollection.
-     *
      * @param client connectivity to the Atlan client from which to remove the AtlanCollection's announcement
      * @param qualifiedName of the AtlanCollection
      * @param name of the AtlanCollection
@@ -747,20 +543,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (AtlanCollection) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the AtlanCollection.
-     *
-     * @param qualifiedName for the AtlanCollection
-     * @param name human-readable name of the AtlanCollection
-     * @param terms the list of terms to replace on the AtlanCollection, or null to remove all terms from the AtlanCollection
-     * @return the AtlanCollection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -776,20 +558,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AtlanCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the AtlanCollection, without replacing existing terms linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the AtlanCollection
-     * @param terms the list of terms to append to the AtlanCollection
-     * @return the AtlanCollection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -813,20 +581,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the AtlanCollection
-     * @param terms the list of terms to remove from the AtlanCollection, which must be referenced by GUID
-     * @return the AtlanCollection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a AtlanCollection, without replacing all existing terms linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the AtlanCollection
      * @param qualifiedName for the AtlanCollection
      * @param terms the list of terms to remove from the AtlanCollection, which must be referenced by GUID
@@ -843,21 +597,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the AtlanCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated AtlanCollection
-     */
-    public static AtlanCollection appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a AtlanCollection, without replacing existing Atlan tags linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the AtlanCollection
      * @param qualifiedName of the AtlanCollection
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -867,35 +606,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (AtlanCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a AtlanCollection, without replacing existing Atlan tags linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated AtlanCollection
-     */
-    public static AtlanCollection appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -928,17 +638,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the AtlanCollection
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

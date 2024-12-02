@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanEnum
 import com.atlan.model.structs.AtlanStruct
+import com.atlan.pkg.PackageContext
 import java.io.IOException
 import java.util.SortedSet
 import java.util.TreeSet
@@ -16,6 +17,7 @@ object CellXformer {
     private const val NEWLINE_SENTINEL = "§LF±"
 
     fun encode(
+        ctx: PackageContext<*>,
         value: Any?,
         guid: String? = null,
         dates: Boolean = false,
@@ -25,7 +27,7 @@ object CellXformer {
             is Collection<*> -> {
                 val list = mutableListOf<String>()
                 for (element in value) {
-                    val encoded = encode(element, guid, dates)
+                    val encoded = encode(ctx, element, guid, dates)
                     list.add(encoded)
                 }
                 return getDelimitedList(list)
@@ -33,14 +35,14 @@ object CellXformer {
             is Map<*, *> -> {
                 val list = mutableListOf<String>()
                 for ((key, embeddedValue) in value) {
-                    list.add(key.toString() + "=" + encode(embeddedValue, guid, dates))
+                    list.add(key.toString() + "=" + encode(ctx, embeddedValue, guid, dates))
                 }
                 return getDelimitedList(list)
             }
-            is Asset -> AssetRefXformer.encode(value)
+            is Asset -> AssetRefXformer.encode(ctx, value)
             is AtlanEnum -> EnumXformer.encode(value)
-            is AtlanStruct -> StructXformer.encode(value)
-            is AtlanTag -> AtlanTagXformer.encode(guid!!, value)
+            is AtlanStruct -> StructXformer.encode(ctx.client, value)
+            is AtlanTag -> AtlanTagXformer.encode(ctx.client, guid!!, value)
             is Long -> {
                 if (dates) {
                     TimestampXformer.encode(value)
@@ -55,6 +57,7 @@ object CellXformer {
 
     @Suppress("UNCHECKED_CAST")
     fun decode(
+        ctx: PackageContext<*>,
         assetClass: Class<*>?,
         value: String?,
         type: Class<*>,
@@ -65,9 +68,9 @@ object CellXformer {
             null
         } else if (String::class.java.isAssignableFrom(type)) {
             when (fieldName) {
-                in UserXformer.FIELDS -> UserXformer.decode(value, fieldName)
-                in GroupXformer.FIELDS -> GroupXformer.decode(value, fieldName)
-                in RoleXformer.FIELDS -> RoleXformer.decode(value, fieldName)
+                in UserXformer.FIELDS -> UserXformer.decode(ctx.client, value, fieldName)
+                in GroupXformer.FIELDS -> GroupXformer.decode(ctx.client, value, fieldName)
+                in RoleXformer.FIELDS -> RoleXformer.decode(ctx.client, value, fieldName)
                 in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
                 else -> decodeString(value)
             }
@@ -89,7 +92,7 @@ object CellXformer {
             val list = mutableListOf<Any>()
             if (innerType != null) {
                 for (element in values) {
-                    val decoded = decode(assetClass, element, innerType, null, fieldName)
+                    val decoded = decode(ctx, assetClass, element, innerType, null, fieldName)
                     if (decoded != null) {
                         list.add(decoded)
                     }
@@ -103,17 +106,17 @@ object CellXformer {
         } else if (Map::class.java.isAssignableFrom(type)) {
             TODO("Not yet implemented for import")
         } else if (Asset::class.java.isAssignableFrom(type)) {
-            AssetRefXformer.decode(value, fieldName)
+            AssetRefXformer.decode(ctx, value, fieldName)
         } else if (AtlanEnum::class.java.isAssignableFrom(type)) {
             EnumXformer.decode(value, type as Class<AtlanEnum>)
         } else if (AtlanStruct::class.java.isAssignableFrom(type)) {
-            StructXformer.decode(value, type as Class<AtlanStruct>)
+            StructXformer.decode(ctx.client, value, type as Class<AtlanStruct>)
         } else if (AtlanTag::class.java.isAssignableFrom(type)) {
-            AtlanTagXformer.decode(value)
+            AtlanTagXformer.decode(ctx.client, value)
         } else if (type.isInterface) {
             // Relationships between assets are defined via interfaces, so this would mean
             // there should be asset references
-            AssetRefXformer.decode(value, fieldName)
+            AssetRefXformer.decode(ctx, value, fieldName)
         } else {
             throw IOException("Unhandled data type for $fieldName: $type")
         }

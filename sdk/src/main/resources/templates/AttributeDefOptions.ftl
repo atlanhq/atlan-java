@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.assets.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -54,25 +55,27 @@ public class AttributeDefOptions extends AtlanObject {
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
+     * @param client connectivity to the Atlan tenant
      * @param type primitive type of the attribute
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @return the attribute options
      * @throws AtlanException on any API issues looking up existing connections and glossaries
      */
-    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName)
+    public static AttributeDefOptions of(AtlanClient client, AtlanCustomAttributePrimitiveType type, String optionsName)
             throws AtlanException {
-        return of(type, optionsName, null);
+        return of(client, type, optionsName, null);
     }
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
+     * @param client connectivity to the Atlan tenant
      * @param type primitive type of the attribute
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @param options starting point of options on which to extend
      * @return the attribute options
      * @throws AtlanException on any API issues looking up existing connections and glossaries
      */
-    public static AttributeDefOptions of(AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options) throws AtlanException {
+    public static AttributeDefOptions of(AtlanClient client, AtlanCustomAttributePrimitiveType type, String optionsName, AttributeDefOptions options) throws AtlanException {
         AttributeDefOptionsBuilder<?, ?> builder;
         if (options != null) {
             // If we are provided options, use those as the starting point
@@ -80,9 +83,9 @@ public class AttributeDefOptions extends AtlanObject {
         } else {
             // Otherwise set defaults to allow the attribute to be available on all assets
             builder = AttributeDefOptions.builder()
-                    .applicableConnections(Connection.getAllQualifiedNames())
+                    .applicableConnections(Connection.getAllQualifiedNames(client))
                     .applicableAssetTypes(ALL_ASSET_TYPES)
-                    .applicableGlossaries(Glossary.getAllQualifiedNames())
+                    .applicableGlossaries(Glossary.getAllQualifiedNames(client))
                     .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
                     .applicableDomains(ALL_DOMAINS)
                     .applicableDomainTypes(ALL_DOMAIN_TYPES)

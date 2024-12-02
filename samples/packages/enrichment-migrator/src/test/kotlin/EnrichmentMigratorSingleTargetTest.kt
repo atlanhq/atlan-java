@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -39,45 +38,46 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
-        batch.add(Connection.creator(c1, c1Type).build())
-        batch.add(Connection.creator(c2, c2Type).build())
-        batch.flush()
+        AssetBatch(client, 5).use { batch ->
+            batch.add(Connection.creator(client, c1, c1Type).build())
+            batch.add(Connection.creator(client, c2, c2Type).build())
+            batch.flush()
+        }
     }
 
     private fun createCustomMetadata() {
         CustomMetadataDef.creator(cm1)
-            .attributeDef(AttributeDef.of("dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
+            .attributeDef(AttributeDef.of(client, "dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
             .build()
-            .create()
+            .create(client)
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, c1Type)[0]!!
-        val connection2 = Connection.findByName(c2, c2Type)[0]!!
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator("db1", connection1.qualifiedName).build()
-        batch.add(db1)
-        val db2 = Database.creator("db1", connection2.qualifiedName).build()
-        batch.add(db2)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val sch2 = Schema.creator("sch1", db2).build()
-        batch.add(sch2)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .customMetadata(
-                    cm1,
-                    CustomMetadataAttributes.builder()
-                        .attribute("dateSingle", now)
-                        .build(),
-                )
-                .build()
-        batch.add(tbl1)
-        val tbl2 = Table.creator("tbl1", sch2).build()
-        batch.add(tbl2)
-        batch.flush()
+        val connection1 = Connection.findByName(client, c1, c1Type)[0]!!
+        val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator("db1", connection1.qualifiedName).build()
+            batch.add(db1)
+            val db2 = Database.creator("db1", connection2.qualifiedName).build()
+            batch.add(db2)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val sch2 = Schema.creator("sch1", db2).build()
+            batch.add(sch2)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .customMetadata(
+                        cm1,
+                        CustomMetadataAttributes.builder()
+                            .attribute("dateSingle", now)
+                            .build(),
+                    )
+                    .build()
+            batch.add(tbl1)
+            val tbl2 = Table.creator("tbl1", sch2).build()
+            batch.add(tbl2)
+            batch.flush()
+        }
     }
 
     override fun setup() {
@@ -86,8 +86,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         createAssets()
         runCustomPackage(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(client, c2, c2Type)?.get(0)?.qualifiedName!!),
                 failOnErrors = false,
                 cmLimitType = "INCLUDE",
                 customMetadata = "$cm1::dateSingle",
@@ -98,7 +98,6 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     override fun teardown() {
-        val client = Atlan.getDefaultClient()
         removeConnection(c1, c1Type)
         removeConnection(c2, c2Type)
         client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
@@ -106,11 +105,10 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
 
     @Test
     fun datesOnTarget() {
-        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
-        val client = Atlan.getDefaultClient()
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .where(cmField.hasAnyValue())
                 .includeOnResults(cmField)
@@ -130,7 +128,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c2, c2Type)[0]!!
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val filename = targetConnection.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }

@@ -16,6 +16,9 @@ import org.slf4j.Logger;
 
 public interface AtlanEventHandler {
 
+    /** Retrieve connectivity to the Atlan client for this handler. */
+    AtlanClient getClient();
+
     /**
      * Validate the prerequisites expected by the event handler. These should generally run before
      * trying to do any other actions.

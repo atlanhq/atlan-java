@@ -48,10 +48,6 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
         prepFile()
         runCustomPackage(
             AssetImportCfg(
-                assetsFile = null,
-                assetsUpsertSemantic = null,
-                assetsAttrToOverwrite = null,
-                assetsFailOnErrors = true,
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesAttrToOverwrite = listOf(),
@@ -62,13 +58,13 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
     }
 
     override fun teardown() {
-        Glossary.purge(Glossary.findByName(glossary1).guid)
-        Glossary.purge(Glossary.findByName(glossary2).guid)
+        Glossary.purge(client, Glossary.findByName(client, glossary1).guid)
+        Glossary.purge(client, Glossary.findByName(client, glossary2).guid)
     }
 
     @Test
     fun glossaryCreatedWithoutOwnerUser() {
-        val g1 = Glossary.findByName(glossary1)
+        val g1 = Glossary.findByName(client, glossary1)
         assertNotNull(g1)
         assertEquals(glossary1, g1.name)
         assertTrue(g1.ownerUsers.isNullOrEmpty())
@@ -77,7 +73,7 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
 
     @Test
     fun glossaryCreatedWithoutOwnerGroup() {
-        val g2 = Glossary.findByName(glossary2)
+        val g2 = Glossary.findByName(client, glossary2)
         assertNotNull(g2)
         assertEquals(glossary2, g2.name)
         assertTrue(g2.ownerUsers.isNullOrEmpty())
@@ -86,8 +82,8 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
 
     @Test
     fun warningsInLog() {
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
     }
 
     @Test

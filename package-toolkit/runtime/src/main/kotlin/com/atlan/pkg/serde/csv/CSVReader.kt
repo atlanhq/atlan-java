@@ -2,13 +2,13 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
-import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.util.AssetBatch.CustomMetadataHandling
@@ -118,6 +118,7 @@ class CSVReader
          * conflicts. That means: every row is a unique asset, no two rows update any relationship
          * attribute that points at the same related asset (such as an assigned term).
          *
+         * @param ctx context in which the custom package is running
          * @param rowToAsset translator from a row of CSV values to an asset object
          * @param batchSize maximum number of Assets to bulk-save in Atlan per API request
          * @param logger through which to report the overall progress
@@ -125,12 +126,12 @@ class CSVReader
          * @return details of the results of the import
          */
         fun streamRows(
+            ctx: PackageContext<*>,
             rowToAsset: AssetGenerator,
             batchSize: Int,
             logger: KLogger,
             skipColumns: Set<String> = setOf(),
         ): ImportResults {
-            val client = Atlan.getDefaultClient()
             val relatedHolds: MutableMap<String, RelatedAssetHold> = ConcurrentHashMap()
             val deferDeletes: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
             var someFailure = false
@@ -145,7 +146,7 @@ class CSVReader
             counter.close()
             val totalRowCount = filteredRowCount.get()
             ParallelBatch(
-                client,
+                ctx.client,
                 batchSize,
                 includesTags,
                 customMetadataHandling,
@@ -157,7 +158,7 @@ class CSVReader
                 tableViewAgnostic,
             ).use { primaryBatch ->
                 ParallelBatch(
-                    client,
+                    ctx.client,
                     batchSize,
                     false,
                     CustomMetadataHandling.IGNORE,
@@ -255,6 +256,7 @@ class CSVReader
                         if (!resolvedGuid.isNullOrBlank()) {
                             val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
                             AssetRefXformer.buildRelated(
+                                ctx,
                                 resolvedAsset,
                                 relatedAssetHold.relatedMap,
                                 relatedBatch,
@@ -295,7 +297,7 @@ class CSVReader
                     searchAndDelete.entries.parallelStream().forEach { entry ->
                         val guid = entry.key
                         val fields = entry.value
-                        client.assets.select()
+                        ctx.client.assets.select()
                             .where(Asset.GUID.eq(guid))
                             .includesOnResults(fields)
                             .stream()
@@ -315,7 +317,7 @@ class CSVReader
                                     }
                                 }
                                 if (guids.isNotEmpty()) {
-                                    val response = client.assets.delete(guids, AtlanDeleteType.SOFT)
+                                    val response = ctx.client.assets.delete(guids, AtlanDeleteType.SOFT)
                                     totalDeleted.getAndAdd(response.deletedAssets.size.toLong())
                                 }
                             }
@@ -328,7 +330,7 @@ class CSVReader
                         ImportResults(
                             someFailure,
                             ImportResults.Details.combineAll(
-                                client,
+                                ctx.client,
                                 true,
                                 ImportResults.Details(
                                     primaryBatch.resolvedGuids.toMap(),
@@ -343,7 +345,7 @@ class CSVReader
                                 ),
                             ),
                             ImportResults.Details.combineAll(
-                                client,
+                                ctx.client,
                                 true,
                                 ImportResults.Details(
                                     relatedBatch.resolvedGuids.toMap(),

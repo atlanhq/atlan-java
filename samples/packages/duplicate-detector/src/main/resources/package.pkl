@@ -40,6 +40,7 @@ uiConfig {
           helpText = "Name for the glossary where the duplicate sets of assets will be recorded and tracked."
           placeholderText = "Duplicate assets"
           width = 4
+          fallback = placeholderText
         }
         ["qn_prefix"] = new TextInput {
           title = "Qualified name prefix"
@@ -47,6 +48,7 @@ uiConfig {
           helpText = "Starting value for a qualifiedName that will determine which assets to check for duplicates."
           placeholderText = "default"
           width = 4
+          fallback = placeholderText
         }
         ["control_config_strategy"] = new Radio {
           title = "Options"
@@ -69,6 +71,7 @@ uiConfig {
           helpText = "Select asset types to check for duplicates."
           multiSelect = true
           width = 4
+          fallback = possibleValues.keys.toList()
         }
       }
     }

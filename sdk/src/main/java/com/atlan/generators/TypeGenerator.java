@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
@@ -36,18 +37,21 @@ public abstract class TypeGenerator {
     protected String description;
     protected GeneratorConfig cfg;
     protected ModelCache cache;
+    protected AtlanClient client;
 
-    protected TypeGenerator(GeneratorConfig cfg) {
+    protected TypeGenerator(AtlanClient client, GeneratorConfig cfg) {
+        this.client = client;
         this.cfg = cfg;
-        this.cache = ModelCache.getInstance();
+        this.cache = ModelCache.getInstance(client);
         this.packageRoot = cfg.getPackageRoot();
         this.generatorName = cfg.getGeneratorName();
     }
 
-    protected TypeGenerator(TypeDef typeDef, GeneratorConfig cfg) {
+    protected TypeGenerator(AtlanClient client, TypeDef typeDef, GeneratorConfig cfg) {
+        this.client = client;
         this.originalName = typeDef.getDisplayName() == null ? typeDef.getName() : typeDef.getDisplayName();
         this.cfg = cfg;
-        this.cache = ModelCache.getInstance();
+        this.cache = ModelCache.getInstance(client);
         this.packageRoot = cfg.getPackageRoot();
         this.generatorName = cfg.getGeneratorName();
     }

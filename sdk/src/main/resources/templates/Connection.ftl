@@ -26,39 +26,14 @@
      * Builds the minimal object necessary to create a connection, using "All Admins" as the default
      * set of connection admins.
      *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
      * @param name of the connection
      * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
      * @return the minimal object necessary to create the connection, as a builder
      * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
      */
-    public static ConnectionBuilder<?, ?> creator(String name, AtlanConnectorType connectorType) throws AtlanException {
-        AtlanClient client = Atlan.getDefaultClient();
+    public static ConnectionBuilder<?, ?> creator(AtlanClient client, String name, AtlanConnectorType connectorType) throws AtlanException {
         return creator(client, name, connectorType, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
-    }
-
-    /**
-     * Builds the minimal object necessary to create a connection.
-     * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
-     * provided or an InvalidRequestException will be thrown.
-     *
-     * @param name of the connection
-     * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
-     * @param adminRoles the GUIDs of the roles that can administer this connection
-     * @param adminGroups the (internal) names of the groups that can administer this connection
-     * @param adminUsers the (internal) names of the users that can administer this connection
-     * @return the minimal object necessary to create the connection, as a builder
-     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
-     * @throws NotFoundException if a non-existent admin has been defined for the connection
-     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
-     */
-    public static ConnectionBuilder<?, ?> creator(
-            String name,
-            AtlanConnectorType connectorType,
-            List<String> adminRoles,
-            List<String> adminGroups,
-            List<String> adminUsers)
-            throws AtlanException {
-        return creator(Atlan.getDefaultClient(), name, connectorType, adminRoles, adminGroups, adminUsers);
     }
 
     /**
@@ -131,20 +106,6 @@
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
-     */
-    @Override
-    public AsyncCreationResponse save() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
      * @param client connectivity to the Atlan tenant where this connection should be saved
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
@@ -170,22 +131,6 @@
             }
         }
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws NotFoundException if any of the provided connection admins do not actually exist
-     */
-    @Override
-    public AsyncCreationResponse save(boolean replaceAtlanTags)
-            throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -226,11 +171,12 @@
      * Add the API token configured for the default client as an admin for this Connection.
      * This is necessary to allow the API token to manage policies for the connection.
      *
+     * @param client connectivity to the Atlan tenant
      * @param impersonationToken a bearer token for an actual user who is already an admin for the Connection, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    public AssetMutationResponse addApiTokenAsAdmin(final String impersonationToken) throws AtlanException {
-        return Asset.addApiTokenAsAdmin(getGuid(), impersonationToken);
+    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken) throws AtlanException {
+        return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
     }
 
     /**
@@ -304,50 +250,6 @@
      * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the connection, if found.
      *
-     * @param name of the connection
-     * @param type of the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type) throws AtlanException {
-        return findByName(name, type, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, type, attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(String name, AtlanConnectorType type, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, type, attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the connection, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the connection
      * @param name of the connection
      * @param type of the connection
@@ -411,16 +313,6 @@
             throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
         }
         return results;
-    }
-
-    /**
-     * Retrieve the qualifiedNames of all connections that exist in Atlan.
-     *
-     * @return list of all connection qualifiedNames
-     * @throws AtlanException on any API problems
-     */
-    public static List<String> getAllQualifiedNames() throws AtlanException {
-        return getAllQualifiedNames(Atlan.getDefaultClient());
     }
 
     /**

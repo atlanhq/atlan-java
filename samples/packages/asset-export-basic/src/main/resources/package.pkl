@@ -48,6 +48,7 @@ uiConfig {
           }
           default = "ENRICHED_ONLY"
           helpText = "Whether to export only those assets that were enriched by users, or all assets with the qualified name prefix."
+          fallback = default
         }
         ["qn_prefix"] = new TextInput {
           title = "Qualified name prefix (for assets)"
@@ -55,54 +56,63 @@ uiConfig {
           helpText = "Starting value for a qualifiedName that will determine which assets to export."
           placeholderText = "default"
           width = 4
+          fallback = "default"
         }
         ["include_description"] = new BooleanInput {
           title = "Include description?"
           required = false
           helpText = "Whether to extract only user-entered description (No), or to also include system-level description (Yes)."
           width = 4
+          fallback = true
         }
         ["include_glossaries"] = new BooleanInput {
           title = "Include glossaries?"
           required = false
           helpText = "Whether glossaries (and their terms and categories) should be exported, too."
           width = 4
+          fallback = false
         }
         ["include_products"] = new BooleanInput {
           title = "Include data products?"
           required = false
           helpText = "Whether data products (and their domains) should be exported, too."
           width = 4
+          fallback = false
         }
         ["include_archived"] = new BooleanInput {
           title = "Include archived?"
           required = false
           helpText = "Whether to include archived assets in the export (Yes) or only active assets (No)."
           width = 4
+          fallback = false
         }
         ["asset_types_to_include"] = new TextInput {
           title = "Asset types to include"
           required = false
           hide = true
           helpText = "Comma-separated list of asset types to include in the export."
+          fallback = ""
         }
         ["attributes_to_include"] = new TextInput {
           title = "Attributes to include"
           required = false
           hide = true
           helpText = "Comma-separated list of attributes to include in the export."
+          fallback = ""
         }
         ["qn_prefixes"] = new TextInput {
           title = "Multiple qualified name prefixes (for assets)"
           required = false
           helpText = "Comma-separated starting values for qualifiedName that will determine which assets to export."
           hide = true
+          fallback = ""
         }
         ["all_attributes"] = new BooleanInput {
           title = "Include ALL available attributes"
           required = false
           hide = true
           helpText = "If true, ALL attributes for the matching assets will be extracted"
+          fallback = false
         }
       }
     }
@@ -119,6 +129,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["email_addresses"] = new TextInput {
           title = "Email address(es)"

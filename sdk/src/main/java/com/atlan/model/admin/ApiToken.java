@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -87,17 +86,6 @@ public class ApiToken extends AtlanObject {
     /**
      * Create a new API token that never expires and is not assigned to any personas.
      *
-     * @param displayName readable name for the API token
-     * @return the API token details
-     * @throws AtlanException on any API communication issues
-     */
-    public static ApiToken create(String displayName) throws AtlanException {
-        return create(Atlan.getDefaultClient(), displayName);
-    }
-
-    /**
-     * Create a new API token that never expires and is not assigned to any personas.
-     *
      * @param client connectivity to the Atlan tenant on which to create the new API token
      * @param displayName readable name for the API token
      * @return the API token details
@@ -105,21 +93,6 @@ public class ApiToken extends AtlanObject {
      */
     public static ApiToken create(AtlanClient client, String displayName) throws AtlanException {
         return create(client, displayName, null, null, -1L);
-    }
-
-    /**
-     * Create a new API token with the provided details.
-     *
-     * @param displayName readable name for the API token
-     * @param description explanation of the API token
-     * @param personas unique names (qualifiedNames) of personas that should be linked to the token
-     * @param validity time in seconds after which the token should expire (negative numbers are treated as a token should never expire)
-     * @return the API token details
-     * @throws AtlanException on any API communication issues
-     */
-    public static ApiToken create(String displayName, String description, Set<String> personas, Long validity)
-            throws AtlanException {
-        return create(Atlan.getDefaultClient(), displayName, description, personas, validity);
     }
 
     /**
@@ -142,17 +115,6 @@ public class ApiToken extends AtlanObject {
     /**
      * Retrieves the API token with a name that exactly matches the provided string.
      *
-     * @param displayName name (as it appears in the UI) by which to retrieve the API token
-     * @return the API token whose name (in the UI) contains the provided string, or null if there is none
-     * @throws AtlanException on any error during API invocation
-     */
-    public static ApiToken retrieveByName(String displayName) throws AtlanException {
-        return retrieveByName(Atlan.getDefaultClient(), displayName);
-    }
-
-    /**
-     * Retrieves the API token with a name that exactly matches the provided string.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the API token
      * @param displayName name (as it appears in the UI) by which to retrieve the API token
      * @return the API token whose name (in the UI) contains the provided string, or null if there is none
@@ -160,16 +122,6 @@ public class ApiToken extends AtlanObject {
      */
     public static ApiToken retrieveByName(AtlanClient client, String displayName) throws AtlanException {
         return client.apiTokens.get(displayName);
-    }
-
-    /**
-     * Sends this API token to Atlan to update it in Atlan.
-     *
-     * @return the updated API token
-     * @throws AtlanException on any error during API invocation
-     */
-    public ApiToken update() throws AtlanException {
-        return update(Atlan.getDefaultClient());
     }
 
     /**
@@ -198,16 +150,6 @@ public class ApiToken extends AtlanObject {
             }
         }
         return client.apiTokens.update(this.id, this.displayName, description, personas);
-    }
-
-    /**
-     * Delete (purge) the API token with the provided GUID.
-     *
-     * @param guid unique identifier (GUID) of the API token to hard-delete
-     * @throws AtlanException on any API communication issues
-     */
-    public static void delete(String guid) throws AtlanException {
-        delete(Atlan.getDefaultClient(), guid);
     }
 
     /**

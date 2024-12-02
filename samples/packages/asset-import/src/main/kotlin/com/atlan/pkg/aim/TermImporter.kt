@@ -2,17 +2,16 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.aim
 
-import com.atlan.Atlan
+import AssetImportCfg
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
-import com.atlan.model.fields.AtlanField
-import com.atlan.pkg.cache.TermCache
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import mu.KotlinLogging
+import mu.KLogger
 
 /**
  * Import glossaries (only) into Atlan from a provided CSV file.
@@ -22,30 +21,20 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param updateOnly if true, only update an asset (first check it exists), if false allow upserts (create if it does not exist)
- * @param batchSize maximum number of records to save per API request
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to write log entries
  */
 class TermImporter(
+    ctx: PackageContext<AssetImportCfg>,
     filename: String,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val updateOnly: Boolean,
-    private val batchSize: Int,
-    private val failOnErrors: Boolean,
-    fieldSeparator: Char,
+    logger: KLogger,
 ) : GTCImporter(
+        ctx = ctx,
         filename = filename,
-        attrsToOverwrite = attrsToOverwrite,
-        updateOnly = updateOnly,
-        batchSize = batchSize,
-        cache = TermCache,
+        cache = ctx.termCache,
         typeNameFilter = GlossaryTerm.TYPE_NAME,
-        logger = KotlinLogging.logger {},
-        failOnErrors = failOnErrors,
-        fieldSeparator = fieldSeparator,
+        logger = logger,
     ) {
     private val secondPassIgnore =
         setOf(
@@ -71,7 +60,7 @@ class TermImporter(
             // or we will end up with duplicates (links) or extra audit log messages (tags, README)
             logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
             val secondPassResults = super.import(secondPassSkip)
-            return ImportResults.combineAll(Atlan.getDefaultClient(), true, firstPassResults, secondPassResults)
+            return ImportResults.combineAll(ctx.client, true, firstPassResults, secondPassResults)
         } else {
             null
         }

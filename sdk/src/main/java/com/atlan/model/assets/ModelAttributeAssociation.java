@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -196,36 +195,11 @@ public class ModelAttributeAssociation extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) ModelAttributeAssociation assets will be included.
      *
-     * @return a fluent search that includes all ModelAttributeAssociation assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all ModelAttributeAssociation assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) ModelAttributeAssociation assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all ModelAttributeAssociation assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all ModelAttributeAssociation assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) ModelAttributeAssociations will be included
-     * @return a fluent search that includes all ModelAttributeAssociation assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -305,18 +279,6 @@ public class ModelAttributeAssociation extends Asset
     /**
      * Retrieves a ModelAttributeAssociation by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the ModelAttributeAssociation to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full ModelAttributeAssociation, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelAttributeAssociation does not exist or the provided GUID is not a ModelAttributeAssociation
-     */
-    @JsonIgnore
-    public static ModelAttributeAssociation get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a ModelAttributeAssociation by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the ModelAttributeAssociation to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ModelAttributeAssociation, complete with all of its relationships
@@ -324,7 +286,7 @@ public class ModelAttributeAssociation extends Asset
      */
     @JsonIgnore
     public static ModelAttributeAssociation get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -358,17 +320,6 @@ public class ModelAttributeAssociation extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ModelAttributeAssociation to active.
-     *
-     * @param qualifiedName for the ModelAttributeAssociation
-     * @return true if the ModelAttributeAssociation is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -515,18 +466,6 @@ public class ModelAttributeAssociation extends Asset
     /**
      * Remove the system description from a ModelAttributeAssociation.
      *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param name of the ModelAttributeAssociation
-     * @return the updated ModelAttributeAssociation, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a ModelAttributeAssociation.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the ModelAttributeAssociation
      * @param name of the ModelAttributeAssociation
@@ -536,19 +475,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a ModelAttributeAssociation.
-     *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param name of the ModelAttributeAssociation
-     * @return the updated ModelAttributeAssociation, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeUserDescription(String qualifiedName, String name)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -568,18 +494,6 @@ public class ModelAttributeAssociation extends Asset
     /**
      * Remove the owners from a ModelAttributeAssociation.
      *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param name of the ModelAttributeAssociation
-     * @return the updated ModelAttributeAssociation, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a ModelAttributeAssociation.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ModelAttributeAssociation's owners
      * @param qualifiedName of the ModelAttributeAssociation
      * @param name of the ModelAttributeAssociation
@@ -589,20 +503,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a ModelAttributeAssociation.
-     *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated ModelAttributeAssociation, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -625,18 +525,6 @@ public class ModelAttributeAssociation extends Asset
     /**
      * Remove the certificate from a ModelAttributeAssociation.
      *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param name of the ModelAttributeAssociation
-     * @return the updated ModelAttributeAssociation, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a ModelAttributeAssociation.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ModelAttributeAssociation's certificate
      * @param qualifiedName of the ModelAttributeAssociation
      * @param name of the ModelAttributeAssociation
@@ -646,21 +534,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a ModelAttributeAssociation.
-     *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -684,19 +557,6 @@ public class ModelAttributeAssociation extends Asset
     /**
      * Remove the announcement from a ModelAttributeAssociation.
      *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param name of the ModelAttributeAssociation
-     * @return the updated ModelAttributeAssociation, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeAnnouncement(String qualifiedName, String name)
-            throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a ModelAttributeAssociation.
-     *
      * @param client connectivity to the Atlan client from which to remove the ModelAttributeAssociation's announcement
      * @param qualifiedName of the ModelAttributeAssociation
      * @param name of the ModelAttributeAssociation
@@ -706,20 +566,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the ModelAttributeAssociation.
-     *
-     * @param qualifiedName for the ModelAttributeAssociation
-     * @param name human-readable name of the ModelAttributeAssociation
-     * @param terms the list of terms to replace on the ModelAttributeAssociation, or null to remove all terms from the ModelAttributeAssociation
-     * @return the ModelAttributeAssociation that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -735,21 +581,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModelAttributeAssociation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ModelAttributeAssociation, without replacing existing terms linked to the ModelAttributeAssociation.
-     * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ModelAttributeAssociation
-     * @param terms the list of terms to append to the ModelAttributeAssociation
-     * @return the ModelAttributeAssociation that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -773,21 +604,6 @@ public class ModelAttributeAssociation extends Asset
      * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the ModelAttributeAssociation
-     * @param terms the list of terms to remove from the ModelAttributeAssociation, which must be referenced by GUID
-     * @return the ModelAttributeAssociation that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ModelAttributeAssociation removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ModelAttributeAssociation, without replacing all existing terms linked to the ModelAttributeAssociation.
-     * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the ModelAttributeAssociation
      * @param qualifiedName for the ModelAttributeAssociation
      * @param terms the list of terms to remove from the ModelAttributeAssociation, which must be referenced by GUID
@@ -804,21 +620,6 @@ public class ModelAttributeAssociation extends Asset
      * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated ModelAttributeAssociation
-     */
-    public static ModelAttributeAssociation appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ModelAttributeAssociation, without replacing existing Atlan tags linked to the ModelAttributeAssociation.
-     * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ModelAttributeAssociation
      * @param qualifiedName of the ModelAttributeAssociation
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -828,35 +629,6 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (ModelAttributeAssociation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ModelAttributeAssociation, without replacing existing Atlan tags linked to the ModelAttributeAssociation.
-     * Note: this operation must make two API calls — one to retrieve the ModelAttributeAssociation's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated ModelAttributeAssociation
-     */
-    public static ModelAttributeAssociation appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -889,17 +661,6 @@ public class ModelAttributeAssociation extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a ModelAttributeAssociation.
-     *
-     * @param qualifiedName of the ModelAttributeAssociation
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ModelAttributeAssociation
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

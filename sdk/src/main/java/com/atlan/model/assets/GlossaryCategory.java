@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -116,36 +115,11 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) GlossaryCategory assets will be included.
      *
-     * @return a fluent search that includes all GlossaryCategory assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all GlossaryCategory assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) GlossaryCategory assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all GlossaryCategory assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all GlossaryCategory assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) GlossaryCategorys will be included
-     * @return a fluent search that includes all GlossaryCategory assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -222,18 +196,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /**
      * Retrieves a GlossaryCategory by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the GlossaryCategory to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full GlossaryCategory, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
-     */
-    @JsonIgnore
-    public static GlossaryCategory get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a GlossaryCategory by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the GlossaryCategory to retrieve, either its GUID or its full qualifiedName
      * @return the requested full GlossaryCategory, complete with all of its relationships
@@ -241,7 +203,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      */
     @JsonIgnore
     public static GlossaryCategory get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -349,56 +311,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * relationships will be retrieved for the category, if found. Note that this operation must run two
      * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
      * If you already have the qualifiedName of the glossary, use findByNameFast instead.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryName name of the Glossary in which the category exists
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByName(String name, String glossaryName) throws AtlanException {
-        return findByName(name, glossaryName, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
-     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
-     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryName name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByName(String name, String glossaryName, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
-     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
-     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryName name of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByName(String name, String glossaryName, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the category, if found. Note that this operation must run two
-     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
-     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
      *
      * @param client connectivity to the Atlan tenant on which to search for the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -447,51 +359,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
             AtlanClient client, String name, String glossaryName, List<AtlanField> attributes) throws AtlanException {
         Glossary glossary = Glossary.findByName(client, glossaryName);
         return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the category, if found.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByNameFast(String name, String glossaryQualifiedName)
-            throws AtlanException {
-        return findByNameFast(name, glossaryQualifiedName, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the GlossaryCategory
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByNameFast(
-            String name, String glossaryQualifiedName, Collection<String> attributes) throws AtlanException {
-        return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
-    }
-
-    /**
-     * Find a GlossaryCategory by its human-readable name.
-     * Note that categories are not unique by name, so there may be multiple results.
-     *
-     * @param name of the GlossaryCategory
-     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
-     * @param attributes an optional collection of attributes (checked) to retrieve for the GlossaryCategory
-     * @return the GlossaryCategory, if found
-     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
-     */
-    public static List<GlossaryCategory> findByNameFast(
-            String name, String glossaryQualifiedName, List<AtlanField> attributes) throws AtlanException {
-        return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
     }
 
     /**
@@ -573,20 +440,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /**
      * Remove the system description from a GlossaryCategory.
      *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @return the updated GlossaryCategory, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory removeDescription(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
-    }
-
-    /**
-     * Remove the system description from a GlossaryCategory.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's description
      * @param qualifiedName of the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -597,20 +450,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public static GlossaryCategory removeDescription(
             AtlanClient client, String qualifiedName, String name, String glossaryGuid) throws AtlanException {
         return (GlossaryCategory) Asset.removeDescription(client, updater(qualifiedName, name, glossaryGuid));
-    }
-
-    /**
-     * Remove the user's description from a GlossaryCategory.
-     *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @return the updated GlossaryCategory, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory removeUserDescription(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
     }
 
     /**
@@ -631,20 +470,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /**
      * Remove the owners from a GlossaryCategory.
      *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @return the updated GlossaryCategory, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory removeOwners(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
-    }
-
-    /**
-     * Remove the owners from a GlossaryCategory.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's owners
      * @param qualifiedName of the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -655,21 +480,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public static GlossaryCategory removeOwners(
             AtlanClient client, String qualifiedName, String name, String glossaryGuid) throws AtlanException {
         return (GlossaryCategory) Asset.removeOwners(client, updater(qualifiedName, name, glossaryGuid));
-    }
-
-    /**
-     * Update the certificate on a GlossaryCategory.
-     *
-     * @param qualifiedName of the GlossaryCategory
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated GlossaryCategory, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory updateCertificate(
-            String qualifiedName, String name, String glossaryGuid, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid, certificate, message);
     }
 
     /**
@@ -697,20 +507,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /**
      * Remove the certificate from a GlossaryCategory.
      *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @return the updated GlossaryCategory, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory removeCertificate(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
-    }
-
-    /**
-     * Remove the certificate from a GlossaryCategory.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's certificate
      * @param qualifiedName of the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -721,29 +517,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public static GlossaryCategory removeCertificate(
             AtlanClient client, String qualifiedName, String name, String glossaryGuid) throws AtlanException {
         return (GlossaryCategory) Asset.removeCertificate(client, updater(qualifiedName, name, glossaryGuid));
-    }
-
-    /**
-     * Update the announcement on a GlossaryCategory.
-     *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the updated GlossaryCategory, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory updateAnnouncement(
-            String qualifiedName,
-            String name,
-            String glossaryGuid,
-            AtlanAnnouncementType type,
-            String title,
-            String message)
-            throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid, type, title, message);
     }
 
     /**
@@ -775,20 +548,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /**
      * Remove the announcement from a GlossaryCategory.
      *
-     * @param qualifiedName of the GlossaryCategory
-     * @param name of the GlossaryCategory
-     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
-     * @return the updated GlossaryCategory, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryCategory removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
-    }
-
-    /**
-     * Remove the announcement from a GlossaryCategory.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's announcement
      * @param qualifiedName of the GlossaryCategory
      * @param name of the GlossaryCategory
@@ -806,21 +565,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * Note: this operation must make two API calls — one to retrieve the GlossaryCategory's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the GlossaryCategory
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated GlossaryCategory
-     */
-    public static GlossaryCategory appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a GlossaryCategory, without replacing existing Atlan tags linked to the GlossaryCategory.
-     * Note: this operation must make two API calls — one to retrieve the GlossaryCategory's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the GlossaryCategory
      * @param qualifiedName of the GlossaryCategory
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -830,35 +574,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public static GlossaryCategory appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (GlossaryCategory) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a GlossaryCategory, without replacing existing Atlan tags linked to the GlossaryCategory.
-     * Note: this operation must make two API calls — one to retrieve the GlossaryCategory's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the GlossaryCategory
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated GlossaryCategory
-     */
-    public static GlossaryCategory appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -891,17 +606,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a GlossaryCategory.
-     *
-     * @param qualifiedName of the GlossaryCategory
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the GlossaryCategory
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

@@ -45,16 +45,16 @@ class ImpactReportTest : PackageTest("ir") {
 
     @Test(groups = ["mdir.create"])
     fun glossaryCreated() {
-        val glossary = Glossary.findByName(glossaryName)
+        val glossary = Glossary.findByName(client, glossaryName)
         assertNotNull(glossary)
         assertEquals(glossaryName, glossary.name)
     }
 
     @Test(groups = ["mdir.create"])
     fun categoriesCreated() {
-        val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
+        val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryCategory.select()
+            GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryCategory.NAME)
                 .includeOnResults(GlossaryCategory.DESCRIPTION)
@@ -73,9 +73,9 @@ class ImpactReportTest : PackageTest("ir") {
 
     @Test(groups = ["mdir.create"])
     fun termsCreated() {
-        val glossaryQN = Glossary.findByName(glossaryName).qualifiedName!!
+        val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryTerm.DISPLAY_NAME)
                 .includeOnResults(GlossaryTerm.DESCRIPTION)

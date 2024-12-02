@@ -3,7 +3,6 @@
 package com.atlan.model.tasks;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -45,15 +44,6 @@ public class TaskSearchRequest extends AtlanObject {
 
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;
-
-    /**
-     * Run the search.
-     *
-     * @return the matching task queue records
-     */
-    public TaskSearchResponse search() throws AtlanException {
-        return search(Atlan.getDefaultClient());
-    }
 
     /**
      * Run the search.

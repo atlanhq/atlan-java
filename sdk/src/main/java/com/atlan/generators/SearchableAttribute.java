@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.RelationshipAttributeDef;
 import com.atlan.util.StringUtils;
@@ -38,12 +39,12 @@ public class SearchableAttribute<T extends SearchableAttribute<?>> extends Attri
     private String searchType;
     private String searchTypeArgs;
 
-    protected SearchableAttribute(GeneratorConfig cfg) {
-        super(cfg);
+    protected SearchableAttribute(AtlanClient client, GeneratorConfig cfg) {
+        super(client, cfg);
     }
 
-    public SearchableAttribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
-        super(className, attributeDef, cfg);
+    public SearchableAttribute(AtlanClient client, String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+        super(client, className, attributeDef, cfg);
     }
 
     @Override

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.StructDef;
 import com.atlan.util.StringUtils;
@@ -20,8 +21,8 @@ public class StructGenerator extends TypeGenerator {
     private List<Attribute> attributes;
     private List<String> mapContainers = null;
 
-    public StructGenerator(StructDef structDef, GeneratorConfig cfg) {
-        super(structDef, cfg);
+    public StructGenerator(AtlanClient client, StructDef structDef, GeneratorConfig cfg) {
+        super(client, structDef, cfg);
         this.structDef = structDef;
         resolveClassName();
         super.description = cache.getTypeDescription(originalName);
@@ -36,7 +37,7 @@ public class StructGenerator extends TypeGenerator {
     private void resolveAttributes() {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : structDef.getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            Attribute attribute = new Attribute(client, className, attributeDef, cfg);
             if (className.equals("BadgeCondition") && attribute.getRenamed().equals("badgeConditionOperator")) {
                 attribute.setType(MappedType.builder()
                         .type(MappedType.Type.ENUM)
@@ -61,8 +62,8 @@ public class StructGenerator extends TypeGenerator {
     @Getter
     public static final class Attribute extends AttributeGenerator {
 
-        public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
-            super(className, attributeDef, cfg);
+        public Attribute(AtlanClient client, String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+            super(client, className, attributeDef, cfg);
         }
 
         @Override

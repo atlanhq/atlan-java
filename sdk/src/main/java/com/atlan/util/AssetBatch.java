@@ -17,13 +17,12 @@ import com.atlan.model.assets.Table;
 import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AsyncCreationResponse;
+import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.serde.Serde;
-import java.io.Closeable;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -36,7 +35,7 @@ import lombok.Getter;
 /**
  * Utility class for managing bulk updates in batches.
  */
-public class AssetBatch implements Closeable {
+public class AssetBatch implements AtlanCloseable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
             Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME);
@@ -396,47 +395,13 @@ public class AssetBatch implements Closeable {
     /**
      * Close the batch by freeing up any resources it has used.
      * Note: this will clear any internal caches of results, so only call this after you have processed those!
-     *
-     * @throws IOException on any problems freeing up resources
      */
     @Override
-    public void close() throws IOException {
-        IOException exception = null;
-        try {
-            if (created != null) created.close();
-        } catch (IOException e) {
-            exception = e;
-        }
-        try {
-            if (updated != null) updated.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        try {
-            if (restored != null) restored.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        try {
-            if (skipped != null) skipped.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        if (exception != null) {
-            throw exception;
-        }
+    public void close() {
+        AtlanCloseable.close(created);
+        AtlanCloseable.close(updated);
+        AtlanCloseable.close(restored);
+        AtlanCloseable.close(skipped);
     }
 
     /**

@@ -11,14 +11,14 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class LineageBuilderCfg(
-    @JsonProperty("lineage_import_type") val lineageImportType: String? = null,
-    @JsonProperty("lineage_file") val lineageFile: String? = null,
-    @JsonProperty("lineage_prefix") val lineagePrefix: String? = null,
-    @JsonProperty("lineage_key") val lineageKey: String? = null,
+    @JsonProperty("lineage_import_type") val lineageImportType: String = "DIRECT",
+    @JsonProperty("lineage_file") val lineageFile: String = "",
+    @JsonProperty("lineage_prefix") val lineagePrefix: String = "",
+    @JsonProperty("lineage_key") val lineageKey: String = "",
     @JsonProperty("cloud_source") val cloudSource: String? = null,
-    @JsonProperty("lineage_upsert_semantic") val lineageUpsertSemantic: String? = null,
-    @JsonProperty("lineage_fail_on_errors") val lineageFailOnErrors: Boolean? = null,
-    @JsonProperty("lineage_case_sensitive") val lineageCaseSensitive: Boolean? = null,
-    @JsonProperty("field_separator") val fieldSeparator: String? = null,
-    @JsonProperty("batch_size") val batchSize: Number? = null,
+    @JsonProperty("lineage_upsert_semantic") val lineageUpsertSemantic: String = "partial",
+    @JsonProperty("lineage_fail_on_errors") val lineageFailOnErrors: Boolean = true,
+    @JsonProperty("lineage_case_sensitive") val lineageCaseSensitive: Boolean = true,
+    @JsonProperty("field_separator") val fieldSeparator: String = ",",
+    @JsonProperty("batch_size") val batchSize: Number = 20,
 ) : CustomConfig()

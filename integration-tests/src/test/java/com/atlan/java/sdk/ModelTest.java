@@ -74,7 +74,7 @@ public class ModelTest extends AtlanLiveTest {
 
     @Test(groups = {"model.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -85,7 +85,7 @@ public class ModelTest extends AtlanLiveTest {
                         MODEL_NAME, connection.getQualifiedName(), DataModelType.LOGICAL)
                 .modelBusinessDate(past)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof ModelDataModel);
         model = (ModelDataModel) one;
@@ -102,7 +102,7 @@ public class ModelTest extends AtlanLiveTest {
     void createEntity() throws AtlanException {
         ModelEntity toCreate =
                 ModelEntity.creator(ENT1_NAME, model).modelBusinessDate(present).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -224,7 +224,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.model"},
             dependsOnGroups = {"model.create.*"})
     void readModel() throws AtlanException {
-        ModelDataModel read = ModelDataModel.get(model.getQualifiedName());
+        ModelDataModel read = ModelDataModel.get(client, model.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), model.getGuid());
         assertEquals(read.getQualifiedName(), model.getQualifiedName());
@@ -242,7 +242,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.version"},
             dependsOnGroups = {"model.create.*"})
     void readVersion1() throws AtlanException {
-        ModelVersion read = ModelVersion.get(version1.getQualifiedName());
+        ModelVersion read = ModelVersion.get(client, version1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), version1.getGuid());
         assertEquals(read.getQualifiedName(), version1.getQualifiedName());
@@ -262,7 +262,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.version"},
             dependsOnGroups = {"model.create.*"})
     void readVersion2() throws AtlanException {
-        ModelVersion read = ModelVersion.get(version2.getQualifiedName());
+        ModelVersion read = ModelVersion.get(client, version2.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), version2.getGuid());
         assertEquals(read.getQualifiedName(), version2.getQualifiedName());
@@ -287,7 +287,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.entity"},
             dependsOnGroups = {"model.create.*"})
     void readEntity() throws AtlanException {
-        ModelEntity read = ModelEntity.get(entity1.getQualifiedName());
+        ModelEntity read = ModelEntity.get(client, entity1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), entity1.getGuid());
         assertEquals(read.getQualifiedName(), entity1.getQualifiedName());
@@ -309,7 +309,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.entityassociation"},
             dependsOnGroups = {"model.create.*"})
     void readEntityAssociation() throws AtlanException {
-        ModelEntityAssociation read = ModelEntityAssociation.get(ea1.getQualifiedName());
+        ModelEntityAssociation read = ModelEntityAssociation.get(client, ea1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), ea1.getGuid());
         assertEquals(read.getQualifiedName(), ea1.getQualifiedName());
@@ -326,7 +326,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.attribute"},
             dependsOnGroups = {"model.create.*"})
     void readAttribute1() throws AtlanException {
-        ModelAttribute read = ModelAttribute.get(attr1.getQualifiedName());
+        ModelAttribute read = ModelAttribute.get(client, attr1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), attr1.getGuid());
         assertEquals(read.getQualifiedName(), attr1.getQualifiedName());
@@ -347,7 +347,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.attribute"},
             dependsOnGroups = {"model.create.*"})
     void readAttribute2() throws AtlanException {
-        ModelAttribute read = ModelAttribute.get(attr2.getQualifiedName());
+        ModelAttribute read = ModelAttribute.get(client, attr2.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), attr2.getGuid());
         assertEquals(read.getQualifiedName(), attr2.getQualifiedName());
@@ -368,7 +368,7 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.read.attributeassociation"},
             dependsOnGroups = {"model.create.*"})
     void readAttributeAssociation() throws AtlanException {
-        ModelAttributeAssociation read = ModelAttributeAssociation.get(aa1.getQualifiedName());
+        ModelAttributeAssociation read = ModelAttributeAssociation.get(client, aa1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), aa1.getGuid());
         assertEquals(read.getQualifiedName(), aa1.getQualifiedName());
@@ -391,7 +391,7 @@ public class ModelTest extends AtlanLiveTest {
                 .certificateStatus(CERTIFICATE_STATUS)
                 .certificateStatusMessage(CERTIFICATE_MESSAGE)
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -404,7 +404,7 @@ public class ModelTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        response = toUpdate.save();
+        response = toUpdate.save(client);
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -419,7 +419,8 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.reread.model"},
             dependsOnGroups = {"model.update.model"})
     void readUpdatedModel() throws AtlanException {
-        ModelDataModel read = ModelDataModel.get(model.getQualifiedName());
+        ModelDataModel read = ModelDataModel.get(client, model.getQualifiedName());
+        assertFalse(read.isComplete());
         assertNotNull(read);
         assertEquals(read.getGuid(), model.getGuid());
         assertEquals(read.getQualifiedName(), model.getQualifiedName());
@@ -437,14 +438,14 @@ public class ModelTest extends AtlanLiveTest {
             groups = {"model.update.model.again"},
             dependsOnGroups = {"model.reread.model"})
     void updateModelAgain() throws AtlanException {
-        ModelDataModel updated = ModelDataModel.removeCertificate(model.getQualifiedName(), MODEL_NAME);
+        ModelDataModel updated = ModelDataModel.removeCertificate(client, model.getQualifiedName(), MODEL_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = ModelDataModel.removeAnnouncement(model.getQualifiedName(), MODEL_NAME);
+        updated = ModelDataModel.removeAnnouncement(client, model.getQualifiedName(), MODEL_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -768,6 +769,6 @@ public class ModelTest extends AtlanLiveTest {
             dependsOnGroups = {"model.create.*", "model.read.*", "model.reread.*", "model.search.*", "model.update.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

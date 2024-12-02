@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -66,20 +65,6 @@ public class EnumDef extends TypeDef {
     /**
      * Builds the minimal object necessary to update an enumeration definition.
      *
-     * @param displayName the human-readable name for the enumeration
-     * @param values the list of additional valid values (as strings) to add to the existing enumeration
-     * @param replaceExisting if true, will replace all existing values in the enumeration with the new ones; or if false the new ones will be appended to the existing set
-     * @return the minimal request necessary to update the enumeration typedef, as a builder
-     * @throws AtlanException on any API issues related to retrieving the existing enumeration
-     */
-    public static EnumDefBuilder<?, ?> updater(String displayName, List<String> values, boolean replaceExisting)
-            throws AtlanException {
-        return updater(Atlan.getDefaultClient(), displayName, values, replaceExisting);
-    }
-
-    /**
-     * Builds the minimal object necessary to update an enumeration definition.
-     *
      * @param client connectivity to the Atlan tenant on which to update the enumeration
      * @param displayName the human-readable name for the enumeration
      * @param values the list of additional valid values (as strings) to add to the existing enumeration
@@ -108,15 +93,6 @@ public class EnumDef extends TypeDef {
 
     /**
      * Create this enumeration definition in Atlan.
-     * @return the result of the creation, or null if the creation failed
-     * @throws AtlanException on any API communication issues
-     */
-    public synchronized EnumDef create() throws AtlanException {
-        return create(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Create this enumeration definition in Atlan.
      *
      * @param client connectivity to the Atlan tenant on which to create the enumeration
      * @return the result of the creation, or null if the creation failed
@@ -133,16 +109,6 @@ public class EnumDef extends TypeDef {
     /**
      * Update this enumeration definition in Atlan.
      *
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API communication issues
-     */
-    public synchronized EnumDef update() throws AtlanException {
-        return update(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Update this enumeration definition in Atlan.
-     *
      * @param client connectivity to the Atlan tenant on which to update the enumeration
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API communication issues
@@ -153,17 +119,6 @@ public class EnumDef extends TypeDef {
             return response.getEnumDefs().get(0);
         }
         return null;
-    }
-
-    /**
-     * Hard-deletes (purges) an enumeration by its human-readable name. This operation is irreversible.
-     * If there are any existing enumeration instances, this operation will fail.
-     *
-     * @param displayName human-readable name of the enumeration
-     * @throws AtlanException on any error during the API invocation
-     */
-    public static synchronized void purge(String displayName) throws AtlanException {
-        purge(Atlan.getDefaultClient(), displayName);
     }
 
     /**

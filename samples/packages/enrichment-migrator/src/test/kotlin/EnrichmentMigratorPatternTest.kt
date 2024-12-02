@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
@@ -39,43 +38,44 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         )
 
     private fun createConnections() {
-        val batch = AssetBatch(Atlan.getDefaultClient(), 5)
-        batch.add(Connection.creator(c1, c1Type).build())
-        batch.add(Connection.creator(c2, c2Type).build())
-        batch.flush()
+        AssetBatch(client, 5).use { batch ->
+            batch.add(Connection.creator(client, c1, c1Type).build())
+            batch.add(Connection.creator(client, c2, c2Type).build())
+            batch.flush()
+        }
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, c1Type)[0]!!
+        val connection1 = Connection.findByName(client, c1, c1Type)[0]!!
         this.sourceConnectionQualifiedName = connection1.qualifiedName
-        val connection2 = Connection.findByName(c2, c2Type)[0]!!
+        val connection2 = Connection.findByName(client, c2, c2Type)[0]!!
         this.targetConnectionQualifiedName = connection2.qualifiedName
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator(sourceDbName, connection1.qualifiedName).build()
-        batch.add(db1)
-        val db2 = Database.creator(targetDbName1, connection2.qualifiedName).build()
-        batch.add(db2)
-        val db3 = Database.creator(targetDbName2, connection2.qualifiedName).build()
-        batch.add(db3)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val sch2 = Schema.creator("sch1", db2).build()
-        batch.add(sch2)
-        val sch3 = Schema.creator("sch1", db3).build()
-        batch.add(sch3)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .userDescription(userDescription)
-                .build()
-        batch.add(tbl1)
-        val tbl2 = Table.creator("tbl1", sch2).build()
-        batch.add(tbl2)
-        val tbl3 = Table.creator("tbl1", sch3).build()
-        batch.add(tbl3)
-        val response = batch.flush()
-        response.getCreatedAssets(Table::class.java).forEach { table ->
-            this.targetTableQualifiedNamesByName[table.name] = table.qualifiedName
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator(sourceDbName, connection1.qualifiedName).build()
+            batch.add(db1)
+            val db2 = Database.creator(targetDbName1, connection2.qualifiedName).build()
+            batch.add(db2)
+            val db3 = Database.creator(targetDbName2, connection2.qualifiedName).build()
+            batch.add(db3)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val sch2 = Schema.creator("sch1", db2).build()
+            batch.add(sch2)
+            val sch3 = Schema.creator("sch1", db3).build()
+            batch.add(sch3)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .userDescription(userDescription)
+                    .build()
+            batch.add(tbl1)
+            val tbl2 = Table.creator("tbl1", sch2).build()
+            batch.add(tbl2)
+            val tbl3 = Table.creator("tbl1", sch3).build()
+            batch.add(tbl3)
+            val response = batch.flush()
+            response.getCreatedAssets(Table::class.java).forEach { table ->
+                this.targetTableQualifiedNamesByName[table.name] = table.qualifiedName
+            }
         }
     }
 
@@ -84,8 +84,8 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         createAssets()
         runCustomPackage(
             EnrichmentMigratorCfg(
-                sourceConnection = listOf(Connection.findByName(c1, c1Type)?.get(0)?.qualifiedName!!),
-                targetConnection = listOf(Connection.findByName(c2, c2Type)?.get(0)?.qualifiedName!!),
+                sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
+                targetConnection = listOf(Connection.findByName(client, c2, c2Type)?.get(0)?.qualifiedName!!),
                 sourceQnPrefix = sourceDbName,
                 targetDatabasePattern = dbNamePattern,
                 failOnErrors = false,
@@ -103,24 +103,24 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
 
     @Test
     fun getDatabaseNamesWhenOnlyOneMatchThenReturnsOneName() {
-        val connection = Connection.findByName(c1, c1Type)[0]!!
-        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, dbNamePattern)
+        val connection = Connection.findByName(client, c1, c1Type)[0]!!
+        val databaseNames = EnrichmentMigrator.getDatabaseNames(client, connection.qualifiedName, dbNamePattern)
         assertEquals(1, databaseNames.size)
         assertEquals(listOf(sourceDbName), databaseNames)
     }
 
     @Test
     fun getDatabaseNamesWhenMultipleMatchesThenReturnsMultipleName() {
-        val connection = Connection.findByName(c2, c2Type)[0]!!
-        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, dbNamePattern)
+        val connection = Connection.findByName(client, c2, c2Type)[0]!!
+        val databaseNames = EnrichmentMigrator.getDatabaseNames(client, connection.qualifiedName, dbNamePattern)
         assertEquals(2, databaseNames.size)
         assertEquals(listOf(targetDbName1, targetDbName2), databaseNames)
     }
 
     @Test
     fun getDatabaseNamesWhenNoMatchesThenReturnsEmptyList() {
-        val connection = Connection.findByName(c2, c2Type)[0]!!
-        val databaseNames = EnrichmentMigrator.getDatabaseNames(connection.qualifiedName, "")
+        val connection = Connection.findByName(client, c2, c2Type)[0]!!
+        val databaseNames = EnrichmentMigrator.getDatabaseNames(client, connection.qualifiedName, "")
         assertEquals(0, databaseNames.size)
     }
 
@@ -129,6 +129,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         assertEquals(
             sourceDbName,
             EnrichmentMigrator.getSourceDatabaseNames(
+                client,
                 dbNamePattern,
                 this.sourceConnectionQualifiedName,
                 sourceDbName,
@@ -142,6 +143,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             assertFailsWith<InvalidRequestException>(
                 block = {
                     EnrichmentMigrator.getSourceDatabaseNames(
+                        client,
                         dbNamePattern,
                         this.targetConnectionQualifiedName,
                         ".*",
@@ -161,6 +163,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             assertFailsWith<InvalidRequestException>(
                 block = {
                     EnrichmentMigrator.getSourceDatabaseNames(
+                        client,
                         dbNamePattern,
                         this.sourceConnectionQualifiedName,
                         ".",
@@ -179,6 +182,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         assertEquals(
             "",
             EnrichmentMigrator.getSourceDatabaseNames(
+                client,
                 "",
                 this.sourceConnectionQualifiedName,
                 sourceDbName,
@@ -191,6 +195,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
         assertEquals(
             listOf(targetDbName1, targetDbName2),
             EnrichmentMigrator.getTargetDatabaseName(
+                client,
                 this.targetConnectionQualifiedName,
                 dbNamePattern,
             ),
@@ -203,6 +208,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             assertFailsWith<InvalidRequestException>(
                 block = {
                     EnrichmentMigrator.getTargetDatabaseName(
+                        client,
                         this.targetConnectionQualifiedName,
                         ".",
                     )
@@ -228,10 +234,9 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
 
     @Test
     fun userDescriptionOnTarget() {
-        val client = Atlan.getDefaultClient()
         this.targetTableQualifiedNamesByName.forEach { entry ->
             val request =
-                Table.select()
+                Table.select(client)
                     .where(Table.QUALIFIED_NAME.eq(entry.value))
                     .includeOnResults(Asset.USER_DESCRIPTION)
                     .toRequest()

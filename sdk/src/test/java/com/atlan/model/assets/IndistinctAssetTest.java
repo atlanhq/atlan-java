@@ -4,7 +4,7 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
+import com.atlan.mock.MockTenant;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
@@ -124,7 +124,7 @@ public class IndistinctAssetTest {
             dependsOnGroups = {"IndistinctAsset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
     }
 
@@ -133,7 +133,7 @@ public class IndistinctAssetTest {
             dependsOnGroups = {"IndistinctAsset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, IndistinctAsset.class);
+        frodo = MockTenant.client.readValue(serialized, IndistinctAsset.class);
         assertNotNull(frodo);
     }
 
@@ -143,7 +143,7 @@ public class IndistinctAssetTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

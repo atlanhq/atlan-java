@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -31,36 +31,38 @@ object DuplicateDetector {
     @JvmStatic
     fun main(args: Array<String>) {
         val config = Utils.setPackageOps<DuplicateDetectorCfg>()
+        Utils.initializeContext(config).use { ctx ->
 
-        val glossaryName = Utils.getOrDefault(config.glossaryName, "Duplicate assets")
-        val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
-        val types =
-            Utils.getOrDefault(config.assetTypes, listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME))
-        val batchSize = 20
+            val qnPrefix = ctx.config.qnPrefix
+            val types = ctx.config.assetTypes
+            val batchSize = 20
 
-        logger.info {
-            "Detecting duplicates across $types (for prefix $qnPrefix) on: ${Atlan.getDefaultClient().baseUrl}"
+            logger.info {
+                "Detecting duplicates across $types (for prefix $qnPrefix) on: ${ctx.client.baseUrl}"
+            }
+            findAssets(ctx.client, qnPrefix, types, batchSize)
+
+            val glossaryQN = glossaryForDuplicates(ctx.client, ctx.config.glossaryName)
+            termsForDuplicates(ctx.client, glossaryQN, batchSize)
         }
-        findAssets(qnPrefix, types, batchSize)
-
-        val glossaryQN = glossaryForDuplicates(glossaryName)
-        termsForDuplicates(glossaryQN, batchSize)
     }
 
     /**
      * Find the assets to compare with each other for deduplication.
      *
+     * @param client connectivity to the Atlan tenant
      * @param qnPrefix a partial qualifiedName that every matching asset must start with
      * @param types collection of asset types to include
      * @param batchSize: maximum number of assets to look for per API request (page of results)
      */
     fun findAssets(
+        client: AtlanClient,
         qnPrefix: String,
         types: Collection<String>,
         batchSize: Int,
     ) {
         val request =
-            Atlan.getDefaultClient().assets.select()
+            client.assets.select()
                 .where(Asset.TYPE_NAME.`in`(types))
                 .where(Asset.QUALIFIED_NAME.startsWith(qnPrefix))
                 .pageSize(batchSize)
@@ -100,12 +102,16 @@ object DuplicateDetector {
     /**
      * Idempotently create (or fetch) a glossary to capture the duplicate assets.
      *
+     * @param client connectivity to the Atlan tenant
      * @param glossaryName name of the glossary
      * @return the qualifiedName of the glossary
      */
-    fun glossaryForDuplicates(glossaryName: String): String {
+    fun glossaryForDuplicates(
+        client: AtlanClient,
+        glossaryName: String,
+    ): String {
         return try {
-            Glossary.findByName(glossaryName).qualifiedName
+            Glossary.findByName(client, glossaryName).qualifiedName
         } catch (e: NotFoundException) {
             val glossary =
                 Glossary.creator(glossaryName)
@@ -113,7 +119,7 @@ object DuplicateDetector {
                     .userDescription("Each term represents a set of potential duplicate assets, based on assets that have the same set of columns (case-insensitive, in any order). The assets that are potential duplicates of each other are all linked to the same term.")
                     .build()
             logger.info { "Creating glossary to hold duplicates." }
-            glossary.save().getResult(glossary).qualifiedName
+            glossary.save(client).getResult(glossary).qualifiedName
         }
     }
 
@@ -121,10 +127,12 @@ object DuplicateDetector {
      * Idempotently create (or update) a term for each set of 2 or more potential duplicate assets,
      * and link those potential duplicate assets to the term.
      *
+     * @param client connectivity to the Atlan tenant
      * @param glossaryQN qualifiedName of the glossary in which to manage the terms
      * @param batchSize maximum number of assets to update at a time
      */
     fun termsForDuplicates(
+        client: AtlanClient,
         glossaryQN: String,
         batchSize: Int,
     ) {
@@ -140,53 +148,53 @@ object DuplicateDetector {
             val keys = hashToAssetKeys[hash]
             if (keys?.size!! > 1) {
                 val columns = hashToColumns[hash]
-                val batch =
-                    ParallelBatch(
-                        Atlan.getDefaultClient(),
-                        batchSize,
-                        false,
-                        AssetBatch.CustomMetadataHandling.MERGE,
-                        true,
-                    )
-                val termName = "Dup. ($hash)"
-                val term =
-                    try {
-                        GlossaryTerm.findByNameFast(termName, glossaryQN)
-                    } catch (e: NotFoundException) {
-                        val toCreate =
-                            GlossaryTerm.creator(termName, glossaryQN)
-                                .description(
-                                    "Assets with the same set of ${columns?.size} columns:\n" +
-                                        columns?.joinToString(
-                                            separator = "\n",
-                                        ) { "- $it" },
-                                )
-                                .certificateStatus(CertificateStatus.DRAFT)
-                                .build()
-                        toCreate.save().getResult(toCreate)
-                    }
-                val guids =
-                    keys.stream()
-                        .map(AssetKey::guid)
-                        .toList()
-                Atlan.getDefaultClient().assets.select()
-                    .where(Asset.GUID.`in`(guids))
-                    .includeOnResults(Asset.ASSIGNED_TERMS)
-                    .includeOnRelations(Asset.QUALIFIED_NAME)
-                    .pageSize(batchSize)
-                    .stream(true)
-                    .forEach { asset ->
-                        assetCount.getAndIncrement()
-                        val existingTerms = asset.assignedTerms
-                        batch.add(
-                            asset.trimToRequired()
-                                .assignedTerms(existingTerms)
-                                .assignedTerm(term)
-                                .build(),
-                        )
-                    }
-                batch.flush()
-                Utils.logProgress(termCount, totalSets, logger)
+                ParallelBatch(
+                    client,
+                    batchSize,
+                    false,
+                    AssetBatch.CustomMetadataHandling.MERGE,
+                    true,
+                ).use { batch ->
+                    val termName = "Dup. ($hash)"
+                    val term =
+                        try {
+                            GlossaryTerm.findByNameFast(client, termName, glossaryQN)
+                        } catch (e: NotFoundException) {
+                            val toCreate =
+                                GlossaryTerm.creator(termName, glossaryQN)
+                                    .description(
+                                        "Assets with the same set of ${columns?.size} columns:\n" +
+                                            columns?.joinToString(
+                                                separator = "\n",
+                                            ) { "- $it" },
+                                    )
+                                    .certificateStatus(CertificateStatus.DRAFT)
+                                    .build()
+                            toCreate.save(client).getResult(toCreate)
+                        }
+                    val guids =
+                        keys.stream()
+                            .map(AssetKey::guid)
+                            .toList()
+                    client.assets.select()
+                        .where(Asset.GUID.`in`(guids))
+                        .includeOnResults(Asset.ASSIGNED_TERMS)
+                        .includeOnRelations(Asset.QUALIFIED_NAME)
+                        .pageSize(batchSize)
+                        .stream(true)
+                        .forEach { asset ->
+                            assetCount.getAndIncrement()
+                            val existingTerms = asset.assignedTerms
+                            batch.add(
+                                asset.trimToRequired()
+                                    .assignedTerms(existingTerms)
+                                    .assignedTerm(term)
+                                    .build(),
+                            )
+                        }
+                    batch.flush()
+                    Utils.logProgress(termCount, totalSets, logger)
+                }
             }
         }
         logger.info { "Detected a total of $assetCount assets that could be de-duplicated across $totalSets unique sets of duplicates." }

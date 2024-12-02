@@ -30,7 +30,7 @@ public class SSOTest extends AtlanLiveTest {
 
     @Test(groups = {"sso.create.group"})
     void createGroup() throws AtlanException {
-        group1 = AdminTest.createGroup(GROUP_NAME);
+        group1 = AdminTest.createGroup(client, GROUP_NAME);
     }
 
     @Test(
@@ -120,6 +120,6 @@ public class SSOTest extends AtlanLiveTest {
             dependsOnGroups = {"sso.create.*", "sso.read.*", "sso.update.*", "sso.delete.*"},
             alwaysRun = true)
     void purgeMappings() throws AtlanException {
-        AdminTest.deleteGroup(group1.getId());
+        AdminTest.deleteGroup(client, group1.getId());
     }
 }

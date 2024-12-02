@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
-import java.io.Closeable;
+import com.atlan.model.core.AtlanCloseable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -32,7 +32,7 @@ import org.rocksdb.WriteOptions;
  * risking extreme memory usage.
  */
 @Slf4j
-public abstract class AbstractOffHeapCache<K, V> implements Closeable {
+public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
 
     private final Path backingStore;
     private volatile RocksDB internal;
@@ -74,6 +74,7 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @return the value with that key, or null if it is not in the cache
      */
     public V get(K key) {
+        if (internal.isClosed()) return null;
         byte[] kb = serializeKey(key);
         byte[] value;
         lock.readLock().lock();
@@ -102,6 +103,8 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @param value to put into the cache
      */
     public void put(K key, V value) {
+        if (internal.isClosed())
+            throw new IllegalStateException("Off-heap cache is closed -- cannot add a key/value to it: " + key);
         byte[] kb = serializeKey(key);
         byte[] vb = serializeValue(value);
         if (vb == null || vb.length == 0)
@@ -122,6 +125,8 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @param other cache of entries to add to the cache
      */
     public void putAll(AbstractOffHeapCache<K, V> other) {
+        if (internal.isClosed())
+            throw new IllegalStateException("Off-heap cache is closed -- cannot bulk-add keys and values to it.");
         try (WriteBatch batch = new WriteBatch();
                 WriteOptions options = new WriteOptions()) {
             try (RocksIterator iterator = other.internal.newIterator()) {
@@ -147,6 +152,7 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @return true if and only if the cache has a value with this key in it
      */
     public boolean containsKey(K key) {
+        if (internal.isClosed()) return false;
         byte[] kb = serializeKey(key);
         lock.readLock().lock();
         try {
@@ -198,6 +204,7 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @return a stream of all values held in the cache
      */
     public Stream<V> values() {
+        if (internal.isClosed()) return Stream.empty();
         return new EntryIterator<>(this, internal.newIterator()).stream().map(Map.Entry::getValue);
     }
 
@@ -207,6 +214,7 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @return an entry set of all keys (and their values) held in the cache
      */
     public Stream<Map.Entry<K, V>> entrySet() {
+        if (internal.isClosed()) return Stream.empty();
         return new EntryIterator<>(this, internal.newIterator()).stream();
     }
 
@@ -219,13 +227,9 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
         return !internal.isClosed();
     }
 
-    /**
-     * Clean up the cache, once it is no longer needed.
-     *
-     * @throws IOException if unable to remove the temporary file holding the cache
-     */
+    /** Clean up the cache, once it is no longer needed. */
     @Override
-    public void close() throws IOException {
+    public void close() {
         log.debug("Closing off-heap cache ({}): {}", getName(), backingStore);
         lock.writeLock().lock();
         try {
@@ -237,6 +241,9 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
             } else {
                 log.debug(" ... cache already deleted.");
             }
+        } catch (IOException e) {
+            log.info("Unable to remove backing store for off-heap cache -- leaving it behind.");
+            log.debug("Full details: ", e);
         } finally {
             lock.writeLock().unlock();
         }
@@ -264,7 +271,7 @@ public abstract class AbstractOffHeapCache<K, V> implements Closeable {
      * @param <K> type of the keys in the cache
      * @param <V> type of the values in the cache
      */
-    private static final class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>>, AutoCloseable {
+    private static final class EntryIterator<K, V> implements Iterator<Map.Entry<K, V>>, AtlanCloseable {
         private final AbstractOffHeapCache<K, V> cache;
         private final RocksIterator iterator;
 

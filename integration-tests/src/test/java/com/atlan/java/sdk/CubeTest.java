@@ -54,7 +54,7 @@ public class CubeTest extends AtlanLiveTest {
 
     @Test(groups = {"mdd.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -62,7 +62,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.connection"})
     void createCube() throws AtlanException {
         Cube toCreate = Cube.creator(CUBE_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Cube);
         cube = (Cube) one;
@@ -78,7 +78,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.cube"})
     void createDimension() throws AtlanException {
         dimension = CubeDimension.creator(DIMENSION_NAME, cube).build();
-        AssetMutationResponse response = dimension.save();
+        AssetMutationResponse response = dimension.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -101,7 +101,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.dimension"})
     void createHierarchy() throws AtlanException {
         hierarchy = CubeHierarchy.creator(HIERARCHY_NAME, dimension).build();
-        AssetMutationResponse response = hierarchy.save();
+        AssetMutationResponse response = hierarchy.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -126,7 +126,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.hierarchy"})
     void createLevel1() throws AtlanException {
         level1 = CubeField.creator(LEVEL1_NAME, hierarchy).build();
-        AssetMutationResponse response = level1.save();
+        AssetMutationResponse response = level1.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);
@@ -153,7 +153,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.level1"})
     void createLevel2() throws AtlanException {
         level2 = CubeField.creator(LEVEL2_NAME, level1).build();
-        AssetMutationResponse response = level2.save();
+        AssetMutationResponse response = level2.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2);
         Set<String> parentTypes =
@@ -187,7 +187,7 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.level2"})
     void createLevel3() throws AtlanException {
         level3 = CubeField.creator(LEVEL3_NAME, level2).build();
-        AssetMutationResponse response = level3.save();
+        AssetMutationResponse response = level3.save(client);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 2);
         Set<String> parentTypes =
@@ -220,7 +220,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.dimension"},
             dependsOnGroups = {"mdd.create.*"})
     void readDimension() throws AtlanException {
-        CubeDimension read = CubeDimension.get(dimension.getQualifiedName());
+        CubeDimension read = CubeDimension.get(client, dimension.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), dimension.getGuid());
         assertEquals(read.getQualifiedName(), dimension.getQualifiedName());
@@ -236,7 +236,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.hierarchy"},
             dependsOnGroups = {"mdd.create.*"})
     void readHierarchy() throws AtlanException {
-        CubeHierarchy read = CubeHierarchy.get(hierarchy.getQualifiedName());
+        CubeHierarchy read = CubeHierarchy.get(client, hierarchy.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), hierarchy.getGuid());
         assertEquals(read.getQualifiedName(), hierarchy.getQualifiedName());
@@ -252,7 +252,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.level1"},
             dependsOnGroups = {"mdd.create.*"})
     void readLevel1() throws AtlanException {
-        CubeField read = CubeField.get(level1.getQualifiedName());
+        CubeField read = CubeField.get(client, level1.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), level1.getGuid());
         assertEquals(read.getQualifiedName(), level1.getQualifiedName());
@@ -269,7 +269,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.level2"},
             dependsOnGroups = {"mdd.create.*"})
     void readLevel2() throws AtlanException {
-        CubeField read = CubeField.get(level2.getQualifiedName());
+        CubeField read = CubeField.get(client, level2.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), level2.getGuid());
         assertEquals(read.getQualifiedName(), level2.getQualifiedName());
@@ -287,7 +287,7 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.level3"},
             dependsOnGroups = {"mdd.create.*"})
     void readLevel3() throws AtlanException {
-        CubeField read = CubeField.get(level3.getQualifiedName());
+        CubeField read = CubeField.get(client, level3.getQualifiedName(), true);
         assertNotNull(read);
         assertEquals(read.getGuid(), level3.getGuid());
         assertEquals(read.getQualifiedName(), level3.getQualifiedName());
@@ -305,12 +305,12 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.update.cube"},
             dependsOnGroups = {"mdd.create.*"})
     void updateCube() throws AtlanException {
-        Cube updated = Cube.updateCertificate(cube.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        Cube updated = Cube.updateCertificate(client, cube.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = Cube.updateAnnouncement(
-                cube.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, cube.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -321,7 +321,8 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.read.cube"},
             dependsOnGroups = {"mdd.update.cube"})
     void readCube() throws AtlanException {
-        Cube read = Cube.get(cube.getQualifiedName());
+        Cube read = Cube.get(client, cube.getQualifiedName());
+        assertFalse(read.isComplete());
         assertNotNull(read);
         assertEquals(read.getGuid(), cube.getGuid());
         assertEquals(read.getQualifiedName(), cube.getQualifiedName());
@@ -339,14 +340,14 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.update.cube.again"},
             dependsOnGroups = {"mdd.read.cube"})
     void updateCubeAgain() throws AtlanException {
-        Cube updated = Cube.removeCertificate(cube.getQualifiedName(), CUBE_NAME);
+        Cube updated = Cube.removeCertificate(client, cube.getQualifiedName(), CUBE_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = Cube.removeAnnouncement(cube.getQualifiedName(), CUBE_NAME);
+        updated = Cube.removeAnnouncement(client, cube.getQualifiedName(), CUBE_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -437,6 +438,6 @@ public class CubeTest extends AtlanLiveTest {
             dependsOnGroups = {"mdd.create.*", "mdd.read.*", "mdd.search.*", "mdd.update.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

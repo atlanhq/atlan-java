@@ -144,47 +144,6 @@
      * Find a query by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the query, if found.
      *
-     * @param name of the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param name of the query
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(String name, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param name of the query
-     * @param attributes an optional collection of attributes (checked) to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(String name, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a query by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the query, if found.
-     *
      * @param client connectivity to the Atlan tenant in which to search for the query
      * @param name of the query
      * @return all queries with that name, if found
@@ -251,21 +210,6 @@
     /**
      * Remove the system description from a AtlanQuery.
      *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeDescription(String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
-            throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName);
-    }
-
-    /**
-     * Remove the system description from a AtlanQuery.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's description
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
@@ -277,21 +221,6 @@
     public static AtlanQuery removeDescription(AtlanClient client, String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
             throws AtlanException {
         return (AtlanQuery) Asset.removeDescription(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
-    /**
-     * Remove the user's description from a AtlanQuery.
-     *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeUserDescription(String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName);
     }
 
     /**
@@ -313,21 +242,6 @@
     /**
      * Remove the owners from a AtlanQuery.
      *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeOwners(String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
-            throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName);
-    }
-
-    /**
-     * Remove the owners from a AtlanQuery.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's owners
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
@@ -339,24 +253,6 @@
     public static AtlanQuery removeOwners(AtlanClient client, String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
             throws AtlanException {
         return (AtlanQuery) Asset.removeOwners(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
-    /**
-     * Update the certificate on a AtlanQuery.
-     *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated AtlanQuery, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery updateCertificate(
-            String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName, certificate, message);
     }
 
     /**
@@ -381,21 +277,6 @@
     /**
      * Remove the certificate from a AtlanQuery.
      *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeCertificate(String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
-            throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName);
-    }
-
-    /**
-     * Remove the certificate from a AtlanQuery.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's certificate
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
@@ -407,31 +288,6 @@
     public static AtlanQuery removeCertificate(AtlanClient client, String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
             throws AtlanException {
         return (AtlanQuery) Asset.removeCertificate(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
-    /**
-     * Update the announcement on a AtlanQuery.
-     *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the updated AtlanQuery, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery updateAnnouncement(
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName,
-            AtlanAnnouncementType type,
-            String title,
-            String message)
-            throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName, type, title, message);
     }
 
     /**
@@ -460,21 +316,6 @@
             throws AtlanException {
         return (AtlanQuery)
                 Asset.updateAnnouncement(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName), type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a AtlanQuery.
-     *
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeAnnouncement(String qualifiedName, String name, String collectionQualifiedName, String parentQualifiedName)
-            throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, collectionQualifiedName, parentQualifiedName);
     }
 
     /**

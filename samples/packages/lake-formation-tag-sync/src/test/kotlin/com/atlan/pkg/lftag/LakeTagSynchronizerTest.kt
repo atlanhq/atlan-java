@@ -3,7 +3,6 @@
 package com.atlan.pkg.lftag
 
 import LakeFormationTagSyncCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
@@ -53,29 +52,29 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private val directoryPrefix = LakeTagSynchronizer.OUTPUT_SUBDIR
 
     private fun createConnections() {
-        Connection.creator(c1, connectorType)
+        Connection.creator(client, c1, connectorType)
             .build()
-            .save()
+            .save(client)
             .block()
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, connectorType)[0]!!
+        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
         connectionQualifiedName = connection1.qualifiedName
-        val batch = AssetBatch(client, 20)
-        val db = Database.creator(databaseName, connection1.qualifiedName).build()
-        batch.add(db)
-        val sch = Schema.creator("sch", db).build()
-        batch.add(sch)
-        val tbl = Table.creator("tbl1", sch).build()
-        batch.add(tbl)
-        val column = Column.creator("col1", tbl, 1).build()
-        batch.add(column)
-        val response = batch.flush()
-        schemaGuid = response.getResult(sch).guid
-        tableGuid = response.getResult(tbl).guid
-        columnGuid = response.getResult(column).guid
+        AssetBatch(client, 20).use { batch ->
+            val db = Database.creator(databaseName, connection1.qualifiedName).build()
+            batch.add(db)
+            val sch = Schema.creator("sch", db).build()
+            batch.add(sch)
+            val tbl = Table.creator("tbl1", sch).build()
+            batch.add(tbl)
+            val column = Column.creator("col1", tbl, 1).build()
+            batch.add(column)
+            val response = batch.flush()
+            schemaGuid = response.getResult(sch).guid
+            tableGuid = response.getResult(tbl).guid
+            columnGuid = response.getResult(column).guid
+        }
     }
 
     private fun createConnectionMap() {
@@ -96,17 +95,17 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
                 listOf(PUBLIC, NON_PI, FULL_HISTORY),
             )
                 .build()
-        enumDef.create()
+        enumDef.create(client)
     }
 
     private fun createCustomMetadata() {
         createEnums()
         CustomMetadataDef.creator(cm1)
-            .attributeDef(AttributeDef.of(attr1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
-            .attributeDef(AttributeDef.of(attr2, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
-            .attributeDef(AttributeDef.of(attr3, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
+            .attributeDef(AttributeDef.of(client, attr1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
+            .attributeDef(AttributeDef.of(client, attr2, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
+            .attributeDef(AttributeDef.of(client, attr3, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .build()
-            .create()
+            .create(client)
     }
 
     private fun createMetadataMap() {
@@ -140,15 +139,14 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     }
 
     override fun teardown() {
-        val client = Atlan.getDefaultClient()
         removeConnection(c1, connectorType)
         client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
-        EnumDef.purge(enum1)
+        EnumDef.purge(client, enum1)
     }
 
     @Test
     fun validateSchemaTagged() {
-        val schema = Schema.get(schemaGuid)
+        val schema = Schema.get(client, schemaGuid)
         val attribute1 = schema.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)
         val attribute3 = schema.getCustomMetadata(cm1, attr2)
@@ -157,7 +155,7 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     @Test
     fun validateTableTagged() {
-        val table = Table.get(tableGuid)
+        val table = Table.get(client, tableGuid)
         val attribute1 = table.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)
         val attribute3 = table.getCustomMetadata(cm1, attr3)
@@ -166,7 +164,7 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     @Test
     fun validateColumnTagged() {
-        val column = Column.get(columnGuid)
+        val column = Column.get(client, columnGuid)
         assertEquals("col1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)

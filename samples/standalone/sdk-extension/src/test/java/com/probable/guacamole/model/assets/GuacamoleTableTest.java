@@ -4,12 +4,12 @@ package com.probable.guacamole.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.model.assets.Meaning;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
+import com.probable.guacamole.MockTenant;
 import com.probable.guacamole.model.enums.*;
 import com.probable.guacamole.model.structs.*;
 import java.io.IOException;
@@ -83,7 +83,7 @@ public class GuacamoleTableTest {
             dependsOnGroups = {"GuacamoleTable.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -93,7 +93,7 @@ public class GuacamoleTableTest {
             dependsOnGroups = {"GuacamoleTable.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, GuacamoleTable.class);
+        frodo = MockTenant.client.readValue(serialized, GuacamoleTable.class);
         assertNotNull(frodo);
     }
 
@@ -103,7 +103,7 @@ public class GuacamoleTableTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

@@ -2,16 +2,16 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.GlossaryXformer
 import mu.KotlinLogging
 
-object TermCache : AssetCache<GlossaryTerm>("term") {
+class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "term") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
@@ -29,11 +29,11 @@ object TermCache : AssetCache<GlossaryTerm>("term") {
         if (tokens?.size == 2) {
             val termName = tokens[0]
             val glossaryName = tokens[1]
-            val glossary = GlossaryCache.getByIdentity(glossaryName)
+            val glossary = ctx.glossaryCache.getByIdentity(glossaryName)
             if (glossary != null) {
                 try {
                     val term =
-                        GlossaryTerm.select()
+                        GlossaryTerm.select(client)
                             .where(GlossaryTerm.NAME.eq(termName))
                             .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                             .includesOnResults(includesOnResults)
@@ -61,7 +61,7 @@ object TermCache : AssetCache<GlossaryTerm>("term") {
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
@@ -73,7 +73,7 @@ object TermCache : AssetCache<GlossaryTerm>("term") {
     ): GlossaryTerm? {
         try {
             val term =
-                GlossaryTerm.select()
+                GlossaryTerm.select(client)
                     .where(GlossaryTerm.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
@@ -105,9 +105,9 @@ object TermCache : AssetCache<GlossaryTerm>("term") {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = GlossaryTerm.select().count()
+        val count = GlossaryTerm.select(client).count()
         logger.info { "Caching all $count terms, up-front..." }
-        GlossaryTerm.select()
+        GlossaryTerm.select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

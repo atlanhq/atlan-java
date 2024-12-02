@@ -374,6 +374,9 @@ abstract class UIElement {
   /// Sizing of the input on the UI (8 is full-width, 4 is half-width).
   hidden width: Int = 8
 
+  /// Default fallback value to use for the element if nothing is selected or entered in the UI.
+  hidden fallback: Any? = null
+
   /// (Generated) UI configuration for the element.
   fixed ui: Widget = new Widget {
     label = title

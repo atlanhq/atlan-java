@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.EnumDef;
 import com.atlan.model.typedefs.RelationshipDef;
@@ -14,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ModelGenerator extends AbstractGenerator {
 
-    public ModelGenerator(GeneratorConfig cfg) {
-        super(cfg);
+    public ModelGenerator(AtlanClient client, GeneratorConfig cfg) {
+        super(client, cfg);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class ModelGenerator extends AbstractGenerator {
     private void generateEnums() throws Exception {
         Template enumTemplate = ftl.getTemplate("enum.ftl");
         for (EnumDef enumDef : cache.getEnumDefCache().values()) {
-            EnumGenerator generator = new EnumGenerator(enumDef, cfg);
+            EnumGenerator generator = new EnumGenerator(client, enumDef, cfg);
             if (cfg.includeTypedef(enumDef)) {
                 createDirectoryIdempotent(cfg.getPackagePath() + File.separator + EnumGenerator.DIRECTORY);
                 String filename = cfg.getPackagePath() + File.separator + EnumGenerator.DIRECTORY + File.separator
@@ -50,7 +51,7 @@ public class ModelGenerator extends AbstractGenerator {
     private void generateStructs() throws Exception {
         Template structTemplate = ftl.getTemplate("struct.ftl");
         for (StructDef structDef : cache.getStructDefCache().values()) {
-            StructGenerator generator = new StructGenerator(structDef, cfg);
+            StructGenerator generator = new StructGenerator(client, structDef, cfg);
             createDirectoryIdempotent(cfg.getPackagePath() + File.separator + StructGenerator.DIRECTORY);
             if (cfg.includeTypedef(structDef)) {
                 String filename = cfg.getPackagePath() + File.separator + StructGenerator.DIRECTORY + File.separator
@@ -86,7 +87,7 @@ public class ModelGenerator extends AbstractGenerator {
         // (need all class names resolved first, since they may all reference each other
         // in their resolved details)
         for (EntityDef entityDef : cache.getEntityDefCache().values()) {
-            AssetGenerator generator = new AssetGenerator(entityDef, cfg);
+            AssetGenerator generator = new AssetGenerator(client, entityDef, cfg);
             cache.addAssetGenerator(entityDef.getName(), generator);
         }
         // Then create an interface and class for every asset type
@@ -147,7 +148,7 @@ public class ModelGenerator extends AbstractGenerator {
     private void generateRelationships() throws Exception {
         Template relationshipTemplate = ftl.getTemplate("relationship.ftl");
         for (RelationshipDef relationshipDef : cache.getRelationshipDefCache().values()) {
-            RelationshipGenerator generator = new RelationshipGenerator(relationshipDef, cfg);
+            RelationshipGenerator generator = new RelationshipGenerator(client, relationshipDef, cfg);
             createDirectoryIdempotent(cfg.getPackagePath() + File.separator + RelationshipGenerator.DIRECTORY);
             // Only generate relationships model if there are any attributes on the relationship
             if (cfg.includeTypedef(relationshipDef)

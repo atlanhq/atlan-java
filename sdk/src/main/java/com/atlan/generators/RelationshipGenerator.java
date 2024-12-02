@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.generators.lombok.Singulars;
 import com.atlan.model.typedefs.*;
 import java.util.*;
@@ -29,8 +30,8 @@ public class RelationshipGenerator extends TypeGenerator implements Comparable<R
     private String endDef1AttrName;
     private String endDef2AttrName = null;
 
-    public RelationshipGenerator(RelationshipDef relationshipDef, GeneratorConfig cfg) {
-        super(relationshipDef, cfg);
+    public RelationshipGenerator(AtlanClient client, RelationshipDef relationshipDef, GeneratorConfig cfg) {
+        super(client, relationshipDef, cfg);
         this.relationshipDef = relationshipDef;
         resolveClassName();
         super.description = cache.getTypeDescription(originalName);
@@ -46,7 +47,7 @@ public class RelationshipGenerator extends TypeGenerator implements Comparable<R
         nonInheritedAttributes = new TreeSet<>();
         for (AttributeDef attributeDef :
                 cache.getRelationshipDefCache().get(getOriginalName()).getAttributeDefs()) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, attributeDef, cfg);
+            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 nonInheritedAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);

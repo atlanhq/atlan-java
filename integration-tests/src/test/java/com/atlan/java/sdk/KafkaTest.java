@@ -37,7 +37,7 @@ public class KafkaTest extends AtlanLiveTest {
 
     @Test(groups = {"kafka.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -46,7 +46,7 @@ public class KafkaTest extends AtlanLiveTest {
     void createTopic1() throws AtlanException {
         KafkaTopic kafkaTopic =
                 KafkaTopic.creator(TOPIC_NAME1, connection.getQualifiedName()).build();
-        AssetMutationResponse response = kafkaTopic.save();
+        AssetMutationResponse response = kafkaTopic.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof KafkaTopic);
         topic1 = (KafkaTopic) one;
@@ -62,7 +62,7 @@ public class KafkaTest extends AtlanLiveTest {
     void createTopic2() throws AtlanException {
         KafkaTopic kafkaTopic =
                 KafkaTopic.creator(TOPIC_NAME2, connection.getQualifiedName()).build();
-        AssetMutationResponse response = kafkaTopic.save();
+        AssetMutationResponse response = kafkaTopic.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof KafkaTopic);
         topic2 = (KafkaTopic) one;
@@ -78,7 +78,7 @@ public class KafkaTest extends AtlanLiveTest {
     void createConsumerGroup() throws AtlanException {
         KafkaConsumerGroup cg =
                 KafkaConsumerGroup.creatorObj(CG_NAME, List.of(topic1, topic2)).build();
-        AssetMutationResponse response = cg.save();
+        AssetMutationResponse response = cg.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 2);
@@ -110,11 +110,11 @@ public class KafkaTest extends AtlanLiveTest {
             dependsOnGroups = {"kafka.create.consumergroup"})
     void updateGroup() throws AtlanException {
         KafkaConsumerGroup updated = KafkaConsumerGroup.updateCertificate(
-                consumerGroup.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, consumerGroup.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         updated = KafkaConsumerGroup.updateAnnouncement(
-                consumerGroup.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, consumerGroup.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -125,7 +125,7 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.read.consumergroup"},
             dependsOnGroups = {"kafka.create.consumergroup", "kafka.update.consumergroup"})
     void retrieveGroup() throws AtlanException {
-        KafkaConsumerGroup b = KafkaConsumerGroup.get(consumerGroup.getGuid());
+        KafkaConsumerGroup b = KafkaConsumerGroup.get(client, consumerGroup.getGuid(), true);
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), consumerGroup.getGuid());
@@ -150,14 +150,15 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.update.consumergroup.again"},
             dependsOnGroups = {"kafka.read.consumergroup"})
     void updateGroupAgain() throws AtlanException {
-        KafkaConsumerGroup updated = KafkaConsumerGroup.removeCertificate(consumerGroup.getQualifiedName(), CG_NAME);
+        KafkaConsumerGroup updated =
+                KafkaConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = KafkaConsumerGroup.removeAnnouncement(consumerGroup.getQualifiedName(), CG_NAME);
+        updated = KafkaConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -224,7 +225,8 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.delete.consumergroup"},
             dependsOnGroups = {"kafka.update.*", "kafka.search.*"})
     void deleteGroup() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(consumerGroup.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -249,8 +251,9 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.delete.consumergroup.restore"},
             dependsOnGroups = {"kafka.delete.consumergroup.read"})
     void restoreGroup() throws AtlanException {
-        assertTrue(KafkaConsumerGroup.restore(consumerGroup.getQualifiedName()));
-        KafkaConsumerGroup restored = KafkaConsumerGroup.get(consumerGroup.getQualifiedName());
+        assertTrue(KafkaConsumerGroup.restore(client, consumerGroup.getQualifiedName()));
+        KafkaConsumerGroup restored = KafkaConsumerGroup.get(client, consumerGroup.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), consumerGroup.getGuid());
         assertEquals(restored.getQualifiedName(), consumerGroup.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -260,7 +263,8 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.purge.consumergroup"},
             dependsOnGroups = {"kafka.delete.consumergroup.restore"})
     void purgeGroup() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(consumerGroup.getGuid());
+        AssetMutationResponse response =
+                Asset.purge(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -285,6 +289,6 @@ public class KafkaTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

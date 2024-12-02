@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
-import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
@@ -19,16 +18,8 @@ import com.atlan.model.search.IndexSearchRequest
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.HttpClient
-import com.atlan.pkg.cache.CategoryCache
-import com.atlan.pkg.cache.ConnectionCache
-import com.atlan.pkg.cache.DataDomainCache
-import com.atlan.pkg.cache.DataProductCache
-import com.atlan.pkg.cache.GlossaryCache
-import com.atlan.pkg.cache.LinkCache
-import com.atlan.pkg.cache.TermCache
-import com.atlan.serde.Serde
+import com.atlan.pkg.serde.WidgetSerde
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import mu.KLogger
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertFalse
@@ -56,6 +47,7 @@ abstract class PackageTest(
 
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
     private val sysExit = SystemExit()
+    protected val client = AtlanClient()
     protected val testDirectory = makeUnique("")
 
     /** Implement any logic necessary for setting up the test to be run. */
@@ -195,16 +187,16 @@ abstract class PackageTest(
         isDeleteQuery: Boolean = false,
     ): IndexSearchResponse {
         var count = 1
-        var response = request.search()
+        var response = request.search(client)
         var remainingActive = false
         if (isDeleteQuery) {
-            remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+            remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
         }
-        while ((response.approximateCount < expectedSize || remainingActive) && count < (Atlan.getMaxNetworkRetries() * 2)) {
+        while ((response.approximateCount < expectedSize || remainingActive) && count < (client.maxNetworkRetries * 2)) {
             Thread.sleep(HttpClient.waitTime(count).toMillis())
-            response = request.search()
+            response = request.search(client)
             if (isDeleteQuery) {
-                remainingActive = response.assets.filter { it.status != AtlanStatus.DELETED }.toList().isNotEmpty()
+                remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
             }
             count++
         }
@@ -224,15 +216,6 @@ abstract class PackageTest(
     }
 
     companion object {
-        init {
-            // Note that this must be set here to allow us to do any
-            // initial env retrieval before setting the config for a particular test
-            Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"))
-            Atlan.setApiToken(System.getenv("ATLAN_API_KEY"))
-        }
-
-        @JvmStatic
-        protected val client: AtlanClient = Atlan.getDefaultClient()
         private val ALPHABET =
             charArrayOf(
                 '1',
@@ -300,27 +283,6 @@ abstract class PackageTest(
             )
         private const val PREFIX = "jpkg"
         private const val TAG_REMOVAL_RETRIES = 30
-
-        // Necessary combination to both (de)serialize Atlan objects (like connections)
-        // and use the JsonProperty annotations inherent in the configuration data classes
-        private val mapper = Serde.createMapper(client).registerKotlinModule()
-
-        /**
-         *  Close all package runtime-managed caches, static client, etc.
-         *  Note: this can ONLY be called at the very end of ALL tests -- not just the end of a suite.
-         *  (Which means it would ultimately need to be orchestrated by Gradle, most likely.)
-         */
-        fun cleanupAll() {
-            println("Cleaning up shared objects...")
-            LinkCache.close()
-            GlossaryCache.close()
-            CategoryCache.close()
-            TermCache.close()
-            DataDomainCache.close()
-            DataProductCache.close()
-            ConnectionCache.close()
-            client.close()
-        }
     }
 
     /**
@@ -363,7 +325,7 @@ abstract class PackageTest(
         name: String,
         type: AtlanConnectorType,
     ) {
-        val results = Connection.findByName(name, type)
+        val results = Connection.findByName(client, name, type)
         if (!results.isNullOrEmpty()) {
             val deletionType = AtlanDeleteType.PURGE
             results.forEach {
@@ -412,21 +374,20 @@ abstract class PackageTest(
      * Remove the specified tag.
      *
      * @param displayName human-readable display name of the tag to remove
-     * @throws ConflictException if the tag cannot be removed because there are still references to it
+     * @param retryCount number of retries attempted so far
      */
-    @Throws(ConflictException::class)
     fun removeTag(
         displayName: String,
         retryCount: Int = 0,
     ) {
         try {
-            AtlanTagDef.purge(displayName)
+            AtlanTagDef.purge(client, displayName)
         } catch (e: ConflictException) {
             if (retryCount < TAG_REMOVAL_RETRIES) {
                 Thread.sleep(HttpClient.waitTime(retryCount).toMillis())
                 removeTag(displayName, retryCount + 1)
             } else {
-                logger.error { "Unable to remove tag: $displayName" }
+                logger.error { "Unable to remove tag after $retryCount attempts: $displayName" }
                 logger.debug(e) { "Full details:" }
             }
         }
@@ -438,15 +399,15 @@ abstract class PackageTest(
      * @param name of the glossary
      */
     fun removeGlossary(name: String) {
-        val glossary = Glossary.findByName(name)
+        val glossary = Glossary.findByName(client, name)
         val terms =
-            GlossaryTerm.select()
+            GlossaryTerm.select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
                 .toList()
         val categories =
-            GlossaryCategory.select()
+            GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
@@ -455,7 +416,7 @@ abstract class PackageTest(
         try {
             if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
             if (categories.isNotEmpty()) client.assets.delete(categories, AtlanDeleteType.HARD)
-            Glossary.purge(glossary.guid)
+            Glossary.purge(client, glossary.guid)
         } catch (e: Exception) {
             logger.error(e) { "Unable to purge glossary or its contents: $name" }
         }
@@ -475,7 +436,7 @@ abstract class PackageTest(
      */
     fun removeDomain(name: String) {
         val domainGuids =
-            DataDomain.select()
+            DataDomain.select(client)
                 .where(DataDomain.NAME.eq(name))
                 .stream()
                 .map { it.guid }
@@ -494,7 +455,7 @@ abstract class PackageTest(
      */
     fun removeProduct(name: String) {
         val domainGuids =
-            DataProduct.select()
+            DataProduct.select(client)
                 .where(DataProduct.NAME.eq(name))
                 .stream()
                 .map { it.guid }
@@ -523,7 +484,7 @@ abstract class PackageTest(
                 agentPackageName = null,
                 agentWorkflowId = null,
             )
-        withEnvironmentVariable("NESTED_CONFIG", mapper.writeValueAsString(cfg)).execute {
+        withEnvironmentVariable("NESTED_CONFIG", WidgetSerde.mapper.writeValueAsString(cfg)).execute {
             SystemProperties("logDirectory", testDirectory).execute {
                 mainMethod(arrayOf(testDirectory))
             }
@@ -533,13 +494,14 @@ abstract class PackageTest(
     /**
      * Teardown the custom package.
      *
-     * @param keepLogs (optional) whether to retain the logs generated by the test (true) or automatically remove them (default, false)
+     * @param context details of the test results, where if any have failed logs will be retained
      */
     @AfterClass(alwaysRun = true)
     fun testsTeardown(context: ITestContext) {
         try {
             logger.info { "Tearing down..." }
             teardown()
+            client.close()
             val keepLogs = context.failedTests.size() > 0 || context.passedTests.size() == 0
             if (!keepLogs) {
                 removeDirectory(testDirectory)

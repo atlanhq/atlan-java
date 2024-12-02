@@ -26,7 +26,7 @@ public class WorkflowTest extends AtlanLiveTest {
 
     @Test(groups = {"pkg.search.type"})
     void findByType() throws AtlanException {
-        List<WorkflowSearchResult> results = WorkflowSearchRequest.findByType(AtlanPackageType.SNOWFLAKE, 5);
+        List<WorkflowSearchResult> results = WorkflowSearchRequest.findByType(client, AtlanPackageType.SNOWFLAKE, 5);
         assertNotNull(results);
         assertFalse(results.isEmpty());
         wfl = results.get(0).get_source();
@@ -37,7 +37,7 @@ public class WorkflowTest extends AtlanLiveTest {
             groups = {"pkg.search.latest"},
             dependsOnGroups = {"pkg.search.type"})
     void findLatestRun() throws AtlanException {
-        run = WorkflowSearchRequest.findLatestRun(workflowName);
+        run = WorkflowSearchRequest.findLatestRun(client, workflowName);
         assertNotNull(run);
         workflowRun = run.get_id();
     }
@@ -46,7 +46,7 @@ public class WorkflowTest extends AtlanLiveTest {
             groups = {"pkg.search.run"},
             dependsOnGroups = {"pkg.search.latest"})
     void findRunByName() throws AtlanException {
-        WorkflowSearchResult result = WorkflowSearchRequest.findRunByName(workflowRun);
+        WorkflowSearchResult result = WorkflowSearchRequest.findRunByName(client, workflowRun);
         assertNotNull(result);
         assertEquals(result, run);
     }
@@ -55,7 +55,7 @@ public class WorkflowTest extends AtlanLiveTest {
             groups = {"pkg.search.id"},
             dependsOnGroups = {"pkg.search.run"})
     void findById() throws AtlanException {
-        WorkflowSearchResult result = WorkflowSearchRequest.findById(workflowName);
+        WorkflowSearchResult result = WorkflowSearchRequest.findById(client, workflowName);
         assertNotNull(result);
         assertEquals(result.get_source(), wfl);
     }

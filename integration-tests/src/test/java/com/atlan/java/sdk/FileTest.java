@@ -31,7 +31,7 @@ public class FileTest extends AtlanLiveTest {
 
     @Test(groups = {"file.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -41,7 +41,7 @@ public class FileTest extends AtlanLiveTest {
         File toCreate = File.creator(FILE_NAME, connection.getQualifiedName(), FileType.PDF)
                 .filePath("https://www.example.com")
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof File);
         file = (File) one;
@@ -59,12 +59,12 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.update.file"},
             dependsOnGroups = {"file.create.file"})
     void updateFile() throws AtlanException {
-        File updated = File.updateCertificate(file.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        File updated = File.updateCertificate(client, file.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = File.updateAnnouncement(
-                file.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, file.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -75,7 +75,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.read.file"},
             dependsOnGroups = {"file.update.file"})
     void retrieveFile() throws AtlanException {
-        File r = File.get(file.getGuid());
+        File r = File.get(client, file.getGuid(), true);
         assertNotNull(r);
         assertTrue(r.isComplete());
         assertEquals(r.getGuid(), file.getGuid());
@@ -92,14 +92,14 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.update.file.again"},
             dependsOnGroups = {"file.read.file"})
     void updateFileAgain() throws AtlanException {
-        File updated = File.removeCertificate(file.getQualifiedName(), FILE_NAME);
+        File updated = File.removeCertificate(client, file.getQualifiedName(), FILE_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = File.removeAnnouncement(file.getQualifiedName(), FILE_NAME);
+        updated = File.removeAnnouncement(client, file.getQualifiedName(), FILE_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -110,7 +110,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.search.files"},
             dependsOnGroups = {"file.update.file.again"})
     void searchFiles() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = File.select()
+        IndexSearchRequest index = File.select(client)
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .pageSize(10)
                 .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
@@ -148,7 +148,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.delete.file"},
             dependsOnGroups = {"file.update.*", "file.search.*"})
     void deleteFile() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(file.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, file.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -173,8 +173,9 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.delete.file.restore"},
             dependsOnGroups = {"file.delete.file.read"})
     void restoreFile() throws AtlanException {
-        assertTrue(File.restore(file.getQualifiedName()));
-        File restored = File.get(file.getQualifiedName());
+        assertTrue(File.restore(client, file.getQualifiedName()));
+        File restored = File.get(client, file.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), file.getGuid());
         assertEquals(restored.getQualifiedName(), file.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -184,7 +185,7 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.purge.file"},
             dependsOnGroups = {"file.delete.file.restore"})
     void purgeFile() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(file.getGuid());
+        AssetMutationResponse response = Asset.purge(client, file.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -203,6 +204,6 @@ public class FileTest extends AtlanLiveTest {
             dependsOnGroups = {"file.create.*", "file.read.*", "file.search.*", "file.update.*", "file.purge.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

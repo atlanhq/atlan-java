@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -148,36 +147,11 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) DomoDataset assets will be included.
      *
-     * @return a fluent search that includes all DomoDataset assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all DomoDataset assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) DomoDataset assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all DomoDataset assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all DomoDataset assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) DomoDatasets will be included
-     * @return a fluent search that includes all DomoDataset assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -254,18 +228,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     /**
      * Retrieves a DomoDataset by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the DomoDataset to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full DomoDataset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DomoDataset does not exist or the provided GUID is not a DomoDataset
-     */
-    @JsonIgnore
-    public static DomoDataset get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a DomoDataset by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the DomoDataset to retrieve, either its GUID or its full qualifiedName
      * @return the requested full DomoDataset, complete with all of its relationships
@@ -273,7 +235,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      */
     @JsonIgnore
     public static DomoDataset get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -306,17 +268,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) DomoDataset to active.
-     *
-     * @param qualifiedName for the DomoDataset
-     * @return true if the DomoDataset is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -364,18 +315,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     /**
      * Remove the system description from a DomoDataset.
      *
-     * @param qualifiedName of the DomoDataset
-     * @param name of the DomoDataset
-     * @return the updated DomoDataset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a DomoDataset.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the DomoDataset
      * @param name of the DomoDataset
@@ -385,18 +324,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DomoDataset) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a DomoDataset.
-     *
-     * @param qualifiedName of the DomoDataset
-     * @param name of the DomoDataset
-     * @return the updated DomoDataset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -416,18 +343,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     /**
      * Remove the owners from a DomoDataset.
      *
-     * @param qualifiedName of the DomoDataset
-     * @param name of the DomoDataset
-     * @return the updated DomoDataset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a DomoDataset.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the DomoDataset's owners
      * @param qualifiedName of the DomoDataset
      * @param name of the DomoDataset
@@ -437,20 +352,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DomoDataset) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a DomoDataset.
-     *
-     * @param qualifiedName of the DomoDataset
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated DomoDataset, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -473,18 +374,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     /**
      * Remove the certificate from a DomoDataset.
      *
-     * @param qualifiedName of the DomoDataset
-     * @param name of the DomoDataset
-     * @return the updated DomoDataset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a DomoDataset.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the DomoDataset's certificate
      * @param qualifiedName of the DomoDataset
      * @param name of the DomoDataset
@@ -494,21 +383,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DomoDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a DomoDataset.
-     *
-     * @param qualifiedName of the DomoDataset
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -532,18 +406,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     /**
      * Remove the announcement from a DomoDataset.
      *
-     * @param qualifiedName of the DomoDataset
-     * @param name of the DomoDataset
-     * @return the updated DomoDataset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a DomoDataset.
-     *
      * @param client connectivity to the Atlan client from which to remove the DomoDataset's announcement
      * @param qualifiedName of the DomoDataset
      * @param name of the DomoDataset
@@ -553,20 +415,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DomoDataset) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the DomoDataset.
-     *
-     * @param qualifiedName for the DomoDataset
-     * @param name human-readable name of the DomoDataset
-     * @param terms the list of terms to replace on the DomoDataset, or null to remove all terms from the DomoDataset
-     * @return the DomoDataset that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -582,20 +430,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DomoDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the DomoDataset, without replacing existing terms linked to the DomoDataset.
-     * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the DomoDataset
-     * @param terms the list of terms to append to the DomoDataset
-     * @return the DomoDataset that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -619,20 +453,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the DomoDataset
-     * @param terms the list of terms to remove from the DomoDataset, which must be referenced by GUID
-     * @return the DomoDataset that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DomoDataset removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a DomoDataset, without replacing all existing terms linked to the DomoDataset.
-     * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the DomoDataset
      * @param qualifiedName for the DomoDataset
      * @param terms the list of terms to remove from the DomoDataset, which must be referenced by GUID
@@ -649,20 +469,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the DomoDataset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated DomoDataset
-     */
-    public static DomoDataset appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a DomoDataset, without replacing existing Atlan tags linked to the DomoDataset.
-     * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DomoDataset
      * @param qualifiedName of the DomoDataset
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -672,35 +478,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DomoDataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a DomoDataset, without replacing existing Atlan tags linked to the DomoDataset.
-     * Note: this operation must make two API calls — one to retrieve the DomoDataset's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the DomoDataset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated DomoDataset
-     */
-    public static DomoDataset appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -733,17 +510,6 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a DomoDataset.
-     *
-     * @param qualifiedName of the DomoDataset
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DomoDataset
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

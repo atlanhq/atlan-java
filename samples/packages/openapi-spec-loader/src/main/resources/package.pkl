@@ -46,12 +46,14 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "URL"
+          fallback = default
         }
         ["spec_url"] = new TextInput {
           title = "Specification URL"
           required = true
           helpText = "Full URL to the JSON form of the OpenAPI specification."
           placeholderText = "https://petstore3.swagger.io/api/v3/openapi.json"
+          fallback = ""
         }
         ["spec_file"] = new FileUploader {
           title = "Spec file"
@@ -60,18 +62,21 @@ uiConfig {
           helpText = "Select the OpenAPI spec file containing metadata to import."
           placeholderText = "Select OpenAPI JSON file"
           hide = true
+          fallback = ""
         }
         ["spec_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the OpenAPI spec file."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["spec_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "openapi.json"
           width = 4
+          fallback = ""
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import spec from"

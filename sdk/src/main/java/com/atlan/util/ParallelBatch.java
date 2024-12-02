@@ -7,8 +7,8 @@ import com.atlan.cache.OffHeapAssetCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * Utility class for managing bulk updates across multiple parallel-running batches.
  */
-public class ParallelBatch implements Closeable {
+public class ParallelBatch implements AtlanCloseable {
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -603,57 +603,20 @@ public class ParallelBatch implements Closeable {
     /**
      * Close the batch by freeing up any resources it has used.
      * Note: this will clear any internal caches of results, so only call this after you have processed those!
-     *
-     * @throws IOException on any problems freeing up resources
      */
     @Override
-    public void close() throws IOException {
-        IOException exception = null;
-        for (AssetBatch batch : batchMap.values()) {
-            try {
-                batch.close();
-            } catch (IOException e) {
-                if (exception == null) {
-                    exception = e;
-                } else {
-                    exception.addSuppressed(e);
-                }
-            }
-        }
+    public void close() {
+        lock.writeLock().lock();
         try {
-            if (created != null) created.close();
-        } catch (IOException e) {
-            exception = e;
-        }
-        try {
-            if (updated != null) updated.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
+            for (AssetBatch batch : batchMap.values()) {
+                AtlanCloseable.close(batch);
             }
+        } finally {
+            lock.writeLock().unlock();
         }
-        try {
-            if (restored != null) restored.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        try {
-            if (skipped != null) skipped.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        if (exception != null) {
-            throw exception;
-        }
+        AtlanCloseable.close(created);
+        AtlanCloseable.close(updated);
+        AtlanCloseable.close(restored);
+        AtlanCloseable.close(skipped);
     }
 }

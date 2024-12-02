@@ -3,7 +3,6 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
@@ -64,7 +63,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
                         .replace("{{CONNECTION1}}", conn1)
                         .replace("{{TAG1}}", tag1)
                         .replace("{{TAG2}}", tag2)
-                        .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                        .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                 output.appendText("$revised\n")
             }
         }
@@ -80,7 +79,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
                     val revised =
                         line
                             .replace("Test ", "Revised ")
-                            .replace("{{API_TOKEN_USER}}", Atlan.getDefaultClient().users.currentUser.username)
+                            .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                     output.appendText("$revised\n")
                 }
             }
@@ -89,7 +88,6 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
 
     private fun createTags() {
         val maxNetworkRetries = 30
-        val client = Atlan.getDefaultClient()
         val t1 = AtlanTagDef.creator(tag1, AtlanIcon.DATABASE, AtlanTagColor.GREEN).build()
         val t2 = AtlanTagDef.creator(tag2, AtlanIcon.COLUMNS, AtlanTagColor.RED).build()
         client.typeDefs.create(
@@ -203,15 +201,15 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateConnection() {
-        val found = Connection.findByName(conn1, conn1Type, connectionAttrs)
+        val found = Connection.findByName(client, conn1, conn1Type, connectionAttrs)
         assertNotNull(found)
         assertEquals(1, found.size)
         val c1 = found[0]
         assertEquals(conn1, c1.name)
         assertEquals(conn1Type, c1.connectorType)
-        val adminRoleId = Atlan.getDefaultClient().roleCache.getIdForName("\$admin")
+        val adminRoleId = client.roleCache.getIdForName("\$admin")
         assertEquals(setOf(adminRoleId), c1.adminRoles)
-        val apiToken = Atlan.getDefaultClient().users.currentUser.username
+        val apiToken = client.users.currentUser.username
         assertEquals(setOf("chris", apiToken), c1.adminUsers)
         assertEquals(setOf("admins"), c1.adminGroups)
     }
@@ -222,9 +220,9 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateDatabase(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Database.select()
+            Database.select(client)
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(databaseAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -248,9 +246,9 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateSchema(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Schema.select()
+            Schema.select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(schemaAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -283,9 +281,9 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateTable(displayName: String) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -339,9 +337,9 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         displayCol1: String,
         displayCol2: String,
     ) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
@@ -387,10 +385,10 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateView(exists: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                View.select(true)
+                View.select(client, true)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(View.STATUS.eq(AtlanStatus.DELETED))
                     .includesOnResults(tableAttrs)
@@ -408,7 +406,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             assertEquals(AtlanStatus.DELETED, view.status)
         } else {
             val request =
-                View.select()
+                View.select(client)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .includesOnResults(tableAttrs)
                     .includeOnRelations(Asset.NAME)
@@ -445,10 +443,10 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateColumnsForView(exists: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                Column.select(true)
+                Column.select(client, true)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .where(Column.STATUS.eq(AtlanStatus.DELETED))
@@ -466,7 +464,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             assertEquals(AtlanStatus.DELETED, states.first())
         } else {
             val request =
-                Column.select()
+                Column.select(client)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .includesOnResults(columnAttrs)
@@ -515,7 +513,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     }
 
     private fun validateConnectionCache(created: Boolean = true) {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val dbFile = Paths.get(testDirectory, "connection-cache", "${c1.qualifiedName}.sqlite").toFile()
         assertTrue(dbFile.isFile)
         assertTrue(dbFile.exists())
@@ -552,9 +550,9 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         )
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select()
+            Column.select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .where(Column.DISPLAY_NAME.startsWith("Revised column"))
@@ -610,7 +608,7 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
 
     @Test(dependsOnGroups = ["rab.ctu.*"])
     fun previousRunFilesCreated() {
-        val c1 = Connection.findByName(conn1, conn1Type, connectionAttrs)[0]!!
+        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
         assertNotNull(directory)
         assertTrue(directory.isDirectory)

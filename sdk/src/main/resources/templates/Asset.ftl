@@ -170,38 +170,12 @@
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public AssetMutationResponse save() throws AtlanException {
-        return save(Atlan.getDefaultClient());
-    }
-
-    /**
-     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
-     * is included in the asset itself when the method is called.
-     *
      * @param client connectivity to the Atlan tenant on which to save the asset
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse save(AtlanClient client) throws AtlanException {
         return client.assets.save(this, false);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
-     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
-     * be entirely ignored using this method.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public AssetMutationResponse save(boolean replaceAtlanTags)
-            throws AtlanException {
-        return save(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -217,21 +191,6 @@
     public AssetMutationResponse save(AtlanClient client, boolean replaceAtlanTags)
             throws AtlanException {
         return client.assets.save(this, replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
-     * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
-     *
-     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public AssetMutationResponse saveMergingCM(boolean replaceAtlanTags)
-            throws AtlanException {
-        return saveMergingCM(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -257,22 +216,6 @@
      * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
      * (wiping out any other custom metadata on an existing asset that is not provided in the request).
      *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the created or updated asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public AssetMutationResponse saveReplacingCM(boolean replaceAtlanTags)
-            throws AtlanException {
-        return saveReplacingCM(Atlan.getDefaultClient(), replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
-     * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
-     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
-     *
      * @param client connectivity to the Atlan tenant where this asset should be saved
      * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
@@ -281,20 +224,6 @@
     public AssetMutationResponse saveReplacingCM(AtlanClient client, boolean replaceAtlanTags)
             throws AtlanException {
         return client.assets.saveReplacingCM(List.of(this), replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, fails with a NotFoundException.
-     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     *
-     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
-     * @return details of the updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
-     */
-    public AssetMutationResponse updateMergingCM(boolean replaceAtlanTags) throws AtlanException {
-        return updateMergingCM(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -313,21 +242,6 @@
         get(client, this.getTypeName(), this.getQualifiedName(), false);
         // Otherwise, attempt the update
         return saveReplacingCM(client, replaceAtlanTags);
-    }
-
-    /**
-     * If no asset exists, fails with a NotFoundException.
-     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
-     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
-     * If an asset does exist, optionally overwrites any Atlan tags.
-     *
-     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
-     * @return details of the updated asset
-     * @throws AtlanException on any error during the API invocation
-     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
-     */
-    public AssetMutationResponse updateReplacingCM(boolean replaceAtlanTags) throws AtlanException {
-        return updateReplacingCM(Atlan.getDefaultClient(), replaceAtlanTags);
     }
 
     /**
@@ -356,19 +270,6 @@
      * optimal retrieval. Only active (non-archived) assets will be included.
      * (To change the default direction of downstream, chain a .direction() call.)
      *
-     * @return a fluent lineage request that includes all active downstream assets
-     */
-    public FluentLineage.FluentLineageBuilder requestLineage() {
-        return Asset.lineage(getGuid());
-    }
-
-    /**
-     * Start a fluent lineage request that will return all active downstream assets.
-     * Additional conditions can be chained onto the returned builder before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) assets will be included.
-     * (To change the default direction of downstream, chain a .direction() call.)
-     *
      * @param client connectivity to Atlan tenant
      * @return a fluent lineage request that includes all active downstream assets
      */
@@ -379,42 +280,36 @@
     /**
      * Add the API token configured for the default client as an admin to this object.
      *
+     * @param client connectivity to Atlan tenant
      * @param assetGuid unique identifier (GUID) of the asset to which we should add this API token as an admin
      * @param impersonationToken a bearer token for an actual user who is already an admin for the object, NOT an API token
      * @throws AtlanException on any error during API invocation
      */
-    protected static AssetMutationResponse addApiTokenAsAdmin(final String assetGuid, final String impersonationToken)
+    protected static AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String assetGuid, final String impersonationToken)
             throws AtlanException {
-
-        AtlanClient client = Atlan.getDefaultClient();
-        String token = client.users.getCurrentUser().getUsername();
-
-        String clientGuid = UUID.randomUUID().toString();
-        AtlanClient tmp = Atlan.getClient(client.getBaseUrl(), clientGuid);
-        tmp.setApiToken(impersonationToken);
-
-        // Look for the asset as the impersonated user, ensuring we include the admin users
-        // in the results (so we avoid clobbering any existing admin users)
-        Optional<Asset> found = tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).pageSize(1).stream()
-                .findFirst();
+        String username = client.users.getCurrentUser().getUsername();
         AssetMutationResponse response = null;
-        if (found.isPresent()) {
-            Asset asset = found.get();
-            Set<String> existingAdmins = asset.getAdminUsers();
-            response = asset.trimToRequired()
+        try (AtlanClient tmp = new AtlanClient(client.getBaseUrl(), impersonationToken)) {
+            // Look for the asset as the impersonated user, ensuring we include the admin users
+            // in the results (so we avoid clobbering any existing admin users)
+            Optional<Asset> found =
+                tmp.assets.select().where(GUID.eq(assetGuid)).includeOnResults(ADMIN_USERS).pageSize(1).stream()
+                    .findFirst();
+            if (found.isPresent()) {
+                Asset asset = found.get();
+                Set<String> existingAdmins = asset.getAdminUsers();
+                response = asset.trimToRequired()
                     .adminUsers(existingAdmins)
-                    .adminUser(token)
+                    .adminUser(username)
                     .build()
                     .save(tmp);
-        } else {
-            Atlan.removeClient(client.getBaseUrl(), clientGuid);
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, assetGuid);
+            }
+        } catch (Exception e) {
+            log.warn("Unable to remove temporary client using impersonationToken.", e);
         }
-
-        Atlan.removeClient(client.getBaseUrl(), clientGuid);
-
         return response;
-
     }
 
     /**
@@ -462,18 +357,6 @@
      * Soft-deletes an asset by its GUID. This operation can be reversed by updating the asset and changing
      * its {@link #status} to {@code ACTIVE}.
      *
-     * @param guid of the asset to soft-delete
-     * @return details of the soft-deleted asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public static AssetDeletionResponse delete(String guid) throws AtlanException {
-        return delete(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Soft-deletes an asset by its GUID. This operation can be reversed by updating the asset and changing
-     * its {@link #status} to {@code ACTIVE}.
-     *
      * @param client connectivity to the Atlan tenant from which to delete the asset
      * @param guid of the asset to soft-delete
      * @return details of the soft-deleted asset
@@ -481,17 +364,6 @@
      */
     public static AssetDeletionResponse delete(AtlanClient client, String guid) throws AtlanException {
         return client.assets.delete(guid, AtlanDeleteType.SOFT);
-    }
-
-    /**
-     * Hard-deletes (purges) an asset by its GUID. This operation is irreversible.
-     *
-     * @param guid of the asset to hard-delete
-     * @return details of the hard-deleted asset
-     * @throws AtlanException on any error during the API invocation
-     */
-    public static AssetDeletionResponse purge(String guid) throws AtlanException {
-        return purge(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -513,41 +385,12 @@
      * optimal retrieval. Only active (non-archived) assets will be included.
      * (To change the default direction of downstream, chain a .direction() call.)
      *
-     * @param guid unique identifier (GUID) for the starting point of lineage
-     * @return a fluent lineage request that includes all active downstream assets
-     */
-    public static FluentLineage.FluentLineageBuilder lineage(String guid) {
-        return lineage(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Start a fluent lineage request that will return all active downstream assets.
-     * Additional conditions can be chained onto the returned builder before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) assets will be included.
-     * (To change the default direction of downstream, chain a .direction() call.)
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @param guid unique identifier (GUID) for the starting point of lineage
      * @return a fluent lineage request that includes all active downstream assets
      */
     public static FluentLineage.FluentLineageBuilder lineage(AtlanClient client, String guid) {
         return lineage(client, guid, false);
-    }
-
-    /**
-     * Start a fluent lineage request that will return all downstream assets.
-     * Additional conditions can be chained onto the returned builder before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. (To change the default direction of downstream, chain a
-     * .direction() call.)
-     *
-     * @param guid unique identifier (GUID) for the starting point of lineage
-     * @param includeArchived when true, archived (soft-deleted) assets in lineage will be included
-     * @return a fluent lineage request that includes all downstream assets
-     */
-    public static FluentLineage.FluentLineageBuilder lineage(String guid, boolean includeArchived) {
-        return lineage(Atlan.getDefaultClient(), guid, includeArchived);
     }
 
     /**
@@ -577,20 +420,6 @@
      * Update only the provided custom metadata attributes on the asset. This will leave all other custom metadata
      * attributes, even within the same named custom metadata, unchanged.
      *
-     * @param guid unique identifier of the asset
-     * @param cmName human-readable name of the custom metadata to update
-     * @param attributes the values of the custom metadata attributes to change
-     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
-     */
-    public static void updateCustomMetadataAttributes(String guid, String cmName, CustomMetadataAttributes attributes)
-            throws AtlanException {
-        updateCustomMetadataAttributes(Atlan.getDefaultClient(), guid, cmName, attributes);
-    }
-
-    /**
-     * Update only the provided custom metadata attributes on the asset. This will leave all other custom metadata
-     * attributes, even within the same named custom metadata, unchanged.
-     *
      * @param client connectivity to the Atlan tenant on which to update the asset's custom metadata attributes
      * @param guid unique identifier of the asset
      * @param cmName human-readable name of the custom metadata to update
@@ -606,20 +435,6 @@
      * Replace specific custom metadata on the asset. This will replace everything within the named custom metadata,
      * but will not change any of the other named custom metadata on the asset.
      *
-     * @param guid unique identifier of the asset
-     * @param cmName human-readable name of the custom metadata to replace
-     * @param attributes the values of the attributes to replace for the custom metadata
-     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
-     */
-    public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes attributes)
-            throws AtlanException {
-        replaceCustomMetadata(Atlan.getDefaultClient(), guid, cmName, attributes);
-    }
-
-    /**
-     * Replace specific custom metadata on the asset. This will replace everything within the named custom metadata,
-     * but will not change any of the other named custom metadata on the asset.
-     *
      * @param client connectivity to the Atlan tenant on which to replace the asset's custom metadata
      * @param guid unique identifier of the asset
      * @param cmName human-readable name of the custom metadata to replace
@@ -629,17 +444,6 @@
     public static void replaceCustomMetadata(AtlanClient client, String guid, String cmName, CustomMetadataAttributes attributes)
             throws AtlanException {
         client.assets.replaceCustomMetadata(guid, cmName, attributes);
-    }
-
-    /**
-     * Remove specific custom metadata from an asset.
-     *
-     * @param guid unique identifier of the asset
-     * @param cmName human-readable name of the custom metadata to remove
-     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
-     */
-    public static void removeCustomMetadata(String guid, String cmName) throws AtlanException {
-        removeCustomMetadata(Atlan.getDefaultClient(), guid, cmName);
     }
 
     /**
@@ -1001,7 +805,7 @@
             return false;
         } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
             // Already active, but this could be due to the async nature of the delete handlers
-            if (retryCount < Atlan.getMaxNetworkRetries()) {
+            if (retryCount < client.getMaxNetworkRetries()) {
                 // So continue to retry up to the maximum number of allowed retries
                 log.debug(
                         "Attempted to restore an active asset, retrying status check for async delete handling (attempt: {}).",

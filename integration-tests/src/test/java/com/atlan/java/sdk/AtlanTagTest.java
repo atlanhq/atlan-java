@@ -27,16 +27,6 @@ public class AtlanTagTest extends AtlanLiveTest {
     /**
      * Create a new Atlan tag with a unique name.
      *
-     * @param name to make the Atlan tag unique
-     * @throws AtlanException on any error creating or reading-back the Atlan tag
-     */
-    static void createAtlanTag(String name) throws AtlanException {
-        createAtlanTag(client, name);
-    }
-
-    /**
-     * Create a new Atlan tag with a unique name.
-     *
      * @param client connectivity to the Atlan tenant in which to create the tag
      * @param name to make the Atlan tag unique
      * @throws AtlanException on any error creating or reading-back the Atlan tag
@@ -62,10 +52,11 @@ public class AtlanTagTest extends AtlanLiveTest {
     /**
      * Delete the Atlan tag with the provided name.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name of the Atlan tag to delete
      * @throws AtlanException on any error deleting the Atlan tag
      */
-    static void deleteAtlanTag(String name) throws AtlanException {
+    static void deleteAtlanTag(AtlanClient client, String name) throws AtlanException {
         String internalName = client.getAtlanTagCache().getSidForName(name);
         client.typeDefs.purge(
                 internalName,
@@ -75,6 +66,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(groups = {"tag.create.image"})
     void createTagWithImage() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(
+                        client,
                         TAG_WITH_IMAGE,
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png")
                 .build();
@@ -126,8 +118,8 @@ public class AtlanTagTest extends AtlanLiveTest {
             dependsOnGroups = {"tag.create.*"},
             alwaysRun = true)
     void purgeTags() throws AtlanException {
-        deleteAtlanTag(TAG_WITH_ICON);
-        deleteAtlanTag(TAG_WITH_EMOJI);
-        deleteAtlanTag(TAG_WITH_IMAGE);
+        deleteAtlanTag(client, TAG_WITH_ICON);
+        deleteAtlanTag(client, TAG_WITH_EMOJI);
+        deleteAtlanTag(client, TAG_WITH_IMAGE);
     }
 }

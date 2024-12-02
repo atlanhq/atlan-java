@@ -2,13 +2,13 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
+import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeDimension
-import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.model.fields.AtlanField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.util.DeltaProcessor
-import mu.KotlinLogging
+import mu.KLogger
 
 /**
  * Import cube dimensions into Atlan from a provided CSV file.
@@ -18,34 +18,24 @@ import mu.KotlinLogging
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which this package is running
  * @param delta the processor containing any details about file deltas
  * @param preprocessed details of the preprocessed CSV file
- * @param attrsToOverwrite list of fields that should be overwritten in Atlan, if their value is empty in the CSV
- * @param creationHandling what to do with assets that do not exist (create full, partial, or ignore)
- * @param batchSize maximum number of records to save per API request
  * @param connectionImporter that was used to import connections
- * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param logger through which to record any logging
  */
 class DimensionImporter(
+    ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
     private val preprocessed: Importer.Results,
-    private val attrsToOverwrite: List<AtlanField>,
-    private val creationHandling: AssetCreationHandling,
-    private val batchSize: Int,
     private val connectionImporter: ConnectionImporter,
-    trackBatches: Boolean,
-    fieldSeparator: Char,
+    logger: KLogger,
 ) : AssetImporter(
-        delta,
-        preprocessed.preprocessedFile,
-        attrsToOverwrite,
-        creationHandling,
-        batchSize,
-        CubeDimension.TYPE_NAME,
-        KotlinLogging.logger {},
-        trackBatches,
-        fieldSeparator,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = CubeDimension.TYPE_NAME,
+        logger = logger,
     ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
