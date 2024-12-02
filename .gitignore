@@ -13,12 +13,16 @@
 build/
 jars/**
 
+# Kotlin
+.kotlin/
+
 # Generated markdown
 generate/src/main/resources/markdown/**
 
 # Generated logs
 /integration-tests/*.log
 **/debug.log
+tmp/**
 
 ### Generated packages ###
 generated-packages/**

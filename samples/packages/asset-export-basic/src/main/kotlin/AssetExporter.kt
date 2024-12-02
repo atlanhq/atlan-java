@@ -67,7 +67,7 @@ class AssetExporter(
                 .select(ctx.config.includeArchived)
                 .whereNot(Asset.SUPER_TYPE_NAMES.`in`(listOf(IAccessControl.TYPE_NAME, INamespace.TYPE_NAME)))
                 .whereNot(Asset.TYPE_NAME.`in`(listOf(AuthPolicy.TYPE_NAME, Procedure.TYPE_NAME, AtlanQuery.TYPE_NAME)))
-        val qnPrefixes = Utils.getAsList(ctx.config.qnPrefixes)
+        val qnPrefixes = Utils.getAsList(ctx.config.qnPrefixes).ifEmpty { listOf(ctx.config.qnPrefix) }
         if (qnPrefixes.size > 1) {
             val assetsQueryBuilder = FluentSearch._internal()
             qnPrefixes.forEach {

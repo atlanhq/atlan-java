@@ -82,8 +82,8 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
 
     @Test
     fun warningsInLog() {
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.GlossaryImporter - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
     }
 
     @Test
