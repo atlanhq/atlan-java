@@ -31,11 +31,11 @@ class DimensionImporter(
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        delta,
-        preprocessed.preprocessedFile,
-        CubeDimension.TYPE_NAME,
-        logger,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = CubeDimension.TYPE_NAME,
+        logger = logger,
     ) {
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {

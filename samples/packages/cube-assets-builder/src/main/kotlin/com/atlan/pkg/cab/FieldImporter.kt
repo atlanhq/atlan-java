@@ -35,11 +35,11 @@ class FieldImporter(
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
-        ctx,
-        delta,
-        preprocessed.preprocessedFile,
-        CubeField.TYPE_NAME,
-        logger,
+        ctx = ctx,
+        delta = delta,
+        filename = preprocessed.preprocessedFile,
+        typeNameFilter = CubeField.TYPE_NAME,
+        logger = logger,
     ) {
     private val leafNodeLevel = 1L
     private var generationToProcess = 0L
