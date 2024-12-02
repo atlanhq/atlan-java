@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package serde
 
-import com.atlan.AtlanClient
 import com.atlan.mock.MockAtlanTenant
 import com.atlan.mock.MockConfig
 import com.atlan.model.assets.Asset
@@ -76,8 +75,7 @@ class MultiValueCellInputTest {
 
     @Test
     fun testMultiValueNewlineCustomMetadata() {
-        val mockClient = AtlanClient("https://example.com")
-        val attrDef = AttributeDef.of(mockClient, "Test", AtlanCustomAttributePrimitiveType.STRING, null, true, AttributeDefOptions.builder().build())
+        val attrDef = AttributeDef.of(ctx.client, "Test", AtlanCustomAttributePrimitiveType.STRING, null, true, AttributeDefOptions.builder().build())
         val result = FieldSerde.getCustomMetadataValueFromString(attrDef, MULTI_VALUE_WITH_NEWLINES)
         assertTrue(result is List<*>)
         assertTrue(result.isNotEmpty())
