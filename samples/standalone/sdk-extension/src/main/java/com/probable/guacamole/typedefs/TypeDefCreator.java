@@ -9,7 +9,6 @@ import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.RelationshipCategory;
 import com.atlan.model.typedefs.*;
 import com.probable.guacamole.ExtendedModelGenerator;
-import java.io.IOException;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,8 +33,6 @@ public class TypeDefCreator extends ExtendedModelGenerator {
             tdc.createEntityDef();
             tdc.createRelationshipDef();
             tdc.updateEntityDef();
-        } catch (IOException e) {
-            log.error("Failed to cleanup client.", e);
         }
     }
 
