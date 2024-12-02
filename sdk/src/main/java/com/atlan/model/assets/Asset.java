@@ -980,7 +980,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method.
      * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
@@ -994,7 +994,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method, while also setting
      * any custom metadata provided.
      * If an asset does exist, optionally overwrites any Atlan tags.
      * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
@@ -1009,7 +1009,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     /**
-     * If no asset exists, has the same behavior as the {@link #save()} method, while also setting
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method, while also setting
      * any custom metadata provided.
      * If an asset does exist, optionally overwrites any Atlan tags.
      * Will overwrite all custom metadata on any existing asset with only the custom metadata provided

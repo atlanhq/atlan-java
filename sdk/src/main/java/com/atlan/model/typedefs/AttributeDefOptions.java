@@ -477,7 +477,7 @@ public class AttributeDefOptions extends AtlanObject {
      * Append the provided set of attribute definition options onto this attribute definition.
      * Note that certain options are ignored by the append, specifically: primitiveType, isEnum,
      * enumType, customType, multiValueSelect, isArchived, archivedAt, archivedBy. These should only be set
-     * by the appropriate initial setup {@link #of(AtlanCustomAttributePrimitiveType, String)} or archival
+     * by the appropriate initial setup {@link #of(AtlanClient, AtlanCustomAttributePrimitiveType, String)} or archival
      * of an attribute definition.
      *
      * @param options to append to this set of attribute definition options

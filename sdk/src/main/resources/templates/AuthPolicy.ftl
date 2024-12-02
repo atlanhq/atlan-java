@@ -9,8 +9,8 @@
      * @see Persona#createMetadataPolicy(String, String, AuthPolicyType, Collection, String, Collection)
      * @see Persona#createDataPolicy(String, String, AuthPolicyType, String, Collection)
      * @see Persona#createGlossaryPolicy(String, String, AuthPolicyType, Collection, Collection)
-     * @see Purpose#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection, Collection, boolean)
-     * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
+     * @see Purpose#createMetadataPolicy(AtlanClient, String, String, AuthPolicyType, Collection, Collection, Collection, boolean)
+     * @see Purpose#createDataPolicy(AtlanClient, String, String, AuthPolicyType, Collection, Collection, boolean)
      */
     public static AuthPolicyBuilder<?, ?> creator(String name) {
         return AuthPolicy._internal()

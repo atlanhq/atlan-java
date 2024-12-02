@@ -471,7 +471,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
-     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method.
      * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
