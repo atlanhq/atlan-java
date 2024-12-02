@@ -5,7 +5,6 @@ package com.probable.guacamole.typedefs;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.probable.guacamole.ExtendedModelGenerator;
-import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,8 +18,6 @@ public class TypeDefDestroyer extends ExtendedModelGenerator {
         try (AtlanClient client = new AtlanClient()) {
             TypeDefDestroyer tdd = new TypeDefDestroyer(client);
             tdd.purgeTypeDefs();
-        } catch (IOException e) {
-            log.error("Failed to cleanup client.", e);
         }
     }
 
