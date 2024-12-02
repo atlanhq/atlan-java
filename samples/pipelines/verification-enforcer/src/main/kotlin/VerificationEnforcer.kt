@@ -33,8 +33,13 @@ object VerificationEnforcer : AbstractNumaflowHandler(Handler) {
     /**
      * Logic for the event processing.
      */
-    object Handler : AtlanEventHandler {
+    object Handler : AtlanEventHandler, AutoCloseable {
         private val client = AtlanClient()
+
+        /** {@inheritDoc} */
+        override fun close() {
+            client.close()
+        }
 
         /** {@inheritDoc} */
         override fun getClient(): AtlanClient {

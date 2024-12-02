@@ -38,11 +38,12 @@ object CreateCMWriteConfig {
                 Utils.getEnvVar("NESTED_CONFIG", ""),
                 Utils.buildRuntimeConfig(),
             )
-        val client = AtlanClient()
-        // TODO: replace -- Utils.setClient()
-        // TODO: replace -- Utils.setWorkflowOpts(config.runtime)
-        createCMIfNotExists(config, client)
-        WriteConfig.main(args)
+        AtlanClient().use { client ->
+            // TODO: replace -- Utils.setClient()
+            // TODO: replace -- Utils.setWorkflowOpts(config.runtime)
+            createCMIfNotExists(config, client)
+            WriteConfig.main(args)
+        }
     }
 
     /**

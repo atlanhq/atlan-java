@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import AssetScorer.Handler.client
 import CreateCMWriteConfig.CM_ATTR_COMPOSITE_SCORE
 import CreateCMWriteConfig.CM_SCORING
 import com.atlan.AtlanClient
@@ -37,8 +36,13 @@ object AssetScorer : AbstractNumaflowHandler(Handler) {
         }
     }
 
-    object Handler : AtlanEventHandler {
+    object Handler : AtlanEventHandler, AutoCloseable {
         private val client = AtlanClient()
+
+        /** {@inheritDoc} */
+        override fun close() {
+            client.close()
+        }
 
         /** {@inheritDoc} */
         override fun getClient(): AtlanClient {
