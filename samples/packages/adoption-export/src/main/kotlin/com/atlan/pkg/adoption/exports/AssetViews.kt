@@ -4,7 +4,7 @@ package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
 import com.atlan.model.assets.Asset
-import com.atlan.model.search.SearchLogRequest
+import com.atlan.model.search.SearchLog
 import com.atlan.model.search.aggregates.AssetViews
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
@@ -35,7 +35,7 @@ class AssetViews(
                             "Link" to "Link to the asset's profile page in Atlan",
                         ),
                     )
-                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), false).associateBy { it.guid }
+                    SearchLog.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), false).associateBy { it.guid }
                 }
                 "BY_USERS" -> {
                     xlsx.addHeader(
@@ -49,7 +49,7 @@ class AssetViews(
                             "Link" to "Link to the asset's profile page in Atlan",
                         ),
                     )
-                    SearchLogRequest.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), true).associateBy { it.guid }
+                    SearchLog.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), true).associateBy { it.guid }
                 }
                 else -> mapOf()
             }

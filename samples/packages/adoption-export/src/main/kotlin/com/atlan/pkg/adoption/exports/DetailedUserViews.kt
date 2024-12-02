@@ -3,7 +3,7 @@
 package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
-import com.atlan.model.search.SearchLogRequest
+import com.atlan.model.search.SearchLog
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.xls.ExcelWriter
@@ -30,8 +30,8 @@ class DetailedUserViews(
                 "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
-        SearchLogRequest.views(from, to)
-            .stream(ctx.client)
+        SearchLog.views(ctx.client, from, to)
+            .stream()
             .forEach {
                 val guid = it.resultGuidsAllowed?.get(0) ?: ""
                 xlsx.appendRow(

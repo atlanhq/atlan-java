@@ -3,7 +3,7 @@
 package com.atlan.pkg.adoption.exports
 
 import AdoptionExportCfg
-import com.atlan.model.search.SearchLogRequest
+import com.atlan.model.search.SearchLog
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
@@ -29,8 +29,8 @@ class DetailedSearches(
                 "Qualified names" to "Unique name(s) of the first 20 assets that were found",
             ),
         )
-        SearchLogRequest.searches(start, end)
-            .stream(ctx.client)
+        SearchLog.searches(ctx.client, start, end)
+            .stream()
             .forEach {
                 xlsx.appendRow(
                     sheet,
