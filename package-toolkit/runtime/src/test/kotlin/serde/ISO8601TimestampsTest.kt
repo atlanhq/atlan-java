@@ -5,6 +5,7 @@ package serde
 import com.atlan.mock.MockAtlanTenant
 import com.atlan.mock.MockConfig
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.TimestampXformer
@@ -19,7 +20,7 @@ import kotlin.test.assertTrue
 class ISO8601TimestampsTest {
     companion object {
         private val config = Utils.parseConfig<MockConfig>("{}", "{}")
-        private val ctx = Utils.initializeContext(config, MockAtlanTenant.client)
+        private val ctx = PackageContext(config, MockAtlanTenant.client, true)
         private val EMPTY = ""
         private val NULL = null
         private val STRING_VALUE = "2024-02-15T20:41:11.565Z"

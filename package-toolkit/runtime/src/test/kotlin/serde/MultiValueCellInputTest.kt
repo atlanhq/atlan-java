@@ -10,9 +10,11 @@ import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
 import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.AttributeDefOptions
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
+import serde.ISO8601TimestampsTest.Companion
 import java.util.SortedSet
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,7 +24,7 @@ import kotlin.test.assertTrue
 class MultiValueCellInputTest {
     companion object {
         private val config = Utils.parseConfig<MockConfig>("{}", "{}")
-        private val ctx = Utils.initializeContext(config, MockAtlanTenant.client)
+        private val ctx = PackageContext(config, MockAtlanTenant.client, true)
         private val EMPTY = ""
         private val NULL = null
         private val ONE_VALUE = "Test<<PROPAGATED"
