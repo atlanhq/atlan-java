@@ -176,10 +176,10 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
         var response: IndexSearchResponse
         var count = 0
         do {
-            response = retrySearchUntil(request, 2)
             Thread.sleep(HttpClient.waitTime(count).toMillis())
-            val to = response.assets.map { (it as ModelEntity).modelEntityMappedToEntities }.toSet()
-            val from = response.assets.map { (it as ModelEntity).modelEntityMappedFromEntities }.toSet()
+            response = retrySearchUntil(request, 2)
+            val to = response.assets.flatMap { (it as ModelEntity).modelEntityMappedToEntities }.filterNotNull().toSet()
+            val from = response.assets.flatMap { (it as ModelEntity).modelEntityMappedFromEntities }.filterNotNull().toSet()
             count++
         } while ((to.isEmpty() || from.isEmpty()) && count < client.maxNetworkRetries)
         assertNotNull(response)
