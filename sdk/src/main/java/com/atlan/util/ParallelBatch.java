@@ -291,7 +291,7 @@ public class ParallelBatch implements AtlanCloseable {
     public void flush() throws AtlanException {
         lock.writeLock().lock();
         try {
-            batchMap.values().parallelStream().forEach(batch -> {
+            batchMap.values().forEach(batch -> {
                 try {
                     batch.flush();
                 } catch (AtlanException e) {
