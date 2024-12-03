@@ -181,7 +181,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
             val to = response.assets.map { (it as ModelEntity).modelEntityMappedToEntities }.toSet()
             val from = response.assets.map { (it as ModelEntity).modelEntityMappedFromEntities }.toSet()
             count++
-        } while (to.isEmpty() || from.isEmpty() && count < client.maxNetworkRetries)
+        } while ((to.isEmpty() || from.isEmpty()) && count < client.maxNetworkRetries)
         assertNotNull(response)
         assertEquals(2, response.assets.size)
         assertEquals(setOf(ModelEntity.TYPE_NAME), response.assets.map { it.typeName }.toSet())
