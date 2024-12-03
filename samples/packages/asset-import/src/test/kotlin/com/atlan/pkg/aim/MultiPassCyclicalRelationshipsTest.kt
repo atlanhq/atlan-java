@@ -8,6 +8,8 @@ import com.atlan.model.assets.ModelDataModel
 import com.atlan.model.assets.ModelEntity
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.search.IndexSearchResponse
+import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageTest
 import mu.KotlinLogging
 import org.testng.Assert.assertTrue
@@ -171,7 +173,15 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
                 .includesOnResults(entityAttrs)
                 .includeOnRelations(ModelEntity.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 2)
+        var response: IndexSearchResponse
+        var count = 0
+        do {
+            response = retrySearchUntil(request, 2)
+            Thread.sleep(HttpClient.waitTime(count).toMillis())
+            val to = response.assets.map { (it as ModelEntity).modelEntityMappedToEntities }.toSet()
+            val from = response.assets.map { (it as ModelEntity).modelEntityMappedFromEntities }.toSet()
+            count++
+        } while (to.isEmpty() || from.isEmpty() && count < client.maxNetworkRetries)
         assertNotNull(response)
         assertEquals(2, response.assets.size)
         assertEquals(setOf(ModelEntity.TYPE_NAME), response.assets.map { it.typeName }.toSet())
