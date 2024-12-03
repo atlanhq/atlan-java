@@ -181,7 +181,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
             response = retrySearchUntil(request, 2)
             val to = response.assets.flatMap { (it as ModelEntity).modelEntityMappedToEntities }.filterNotNull().toSet()
             val from = response.assets.flatMap { (it as ModelEntity).modelEntityMappedFromEntities }.filterNotNull().toSet()
-            logger.info { " ... to  : ${to.size}\n ... from: ${from.size}\"" }
+            logger.info { " ... from: ${from.size} / to: ${to.size}" }
             count++
         } while (to.isEmpty() || from.isEmpty()) // && count < client.maxNetworkRetries)
         assertNotNull(response)
