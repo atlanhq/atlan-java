@@ -24,8 +24,7 @@ object OpenAPISpecLoader {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<OpenAPISpecLoaderCfg>().use { ctx ->
             val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
             val importType = ctx.config.importType
             val specUrl = ctx.config.specUrl
@@ -34,11 +33,11 @@ object OpenAPISpecLoader {
             val batchSize = 20
 
             val inputQN =
-                config.connectionQualifiedName?.let {
+                ctx.config.connectionQualifiedName?.let {
                     if (it.isNotEmpty()) it[0] else null
                 }
             val connectionQN =
-                Utils.createOrReuseConnection(ctx.client, config.connectionUsage, inputQN, config.connection)
+                Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
 
             val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
             if (!specFileProvided) {
@@ -58,7 +57,7 @@ object OpenAPISpecLoader {
                             specFilename,
                             outputDirectory,
                             false,
-                            Utils.getOrDefault(config.specPrefix, ""),
+                            ctx.config.specPrefix,
                             specKey,
                         )
                     }

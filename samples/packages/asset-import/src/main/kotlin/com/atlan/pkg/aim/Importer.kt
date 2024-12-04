@@ -20,8 +20,7 @@ object Importer {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<AssetImportCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<AssetImportCfg>().use { ctx ->
             import(ctx, outputDirectory)?.close()
         }
     }
