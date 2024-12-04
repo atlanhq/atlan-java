@@ -246,7 +246,7 @@ class CSVReader
                     // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
                     val totalRelated = AtomicLong(0)
                     val relatedCount = AtomicLong(0)
-                    val searchAndDelete = mutableMapOf<String, Set<AtlanField>>()
+                    val searchAndDelete: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
                     relatedHolds.values.forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
                     logger.info { "Processing $totalRelated total related assets in a second pass." }
                     relatedHolds.entries.parallelStream().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
