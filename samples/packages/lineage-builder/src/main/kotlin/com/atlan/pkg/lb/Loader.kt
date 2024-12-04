@@ -26,8 +26,7 @@ object Loader {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<LineageBuilderCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<LineageBuilderCfg>().use { ctx ->
             import(ctx, outputDirectory)
         }
     }

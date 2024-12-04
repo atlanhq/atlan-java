@@ -31,8 +31,7 @@ object LakeTagSynchronizer {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<LakeFormationTagSyncCfg>().use { ctx ->
             val results = sync(ctx, outputDirectory)
             if (!results && ctx.config.failOnErrors) {
                 logger.error { "Some errors detected, failing the workflow." }

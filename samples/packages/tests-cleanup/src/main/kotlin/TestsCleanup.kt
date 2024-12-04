@@ -30,8 +30,7 @@ object TestsCleanup {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<TestsCleanupCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<TestsCleanupCfg>().use { ctx ->
             val prefix = ctx.config.prefix
             if (prefix.isBlank()) {
                 logger.error { "Missing required parameter - you must specify a prefix for objects to be purged." }

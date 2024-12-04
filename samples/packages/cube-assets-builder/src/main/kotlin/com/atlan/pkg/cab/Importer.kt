@@ -33,8 +33,7 @@ object Importer {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<CubeAssetsBuilderCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<CubeAssetsBuilderCfg>().use { ctx ->
             import(ctx, outputDirectory)
         }
     }

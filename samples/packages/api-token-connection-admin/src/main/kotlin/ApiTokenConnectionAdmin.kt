@@ -18,8 +18,7 @@ object ApiTokenConnectionAdmin {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<APITokenConnectionAdminCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<APITokenConnectionAdminCfg>().use { ctx ->
             val connectionQN = Utils.reuseConnection(ctx.client, ctx.config.connectionQualifiedName?.let { it[0] })
 
             if (connectionQN.isBlank() || ctx.config.apiTokenGuid.isBlank()) {
