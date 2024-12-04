@@ -19,8 +19,7 @@ object CustomMetadataExtender {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<CustomMetadataExtenderCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<CustomMetadataExtenderCfg>().use { ctx ->
 
             val cmName = ctx.config.customMetadata
             val connectionQNs = ctx.config.connectionQualifiedName

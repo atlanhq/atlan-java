@@ -26,8 +26,7 @@ object EnrichmentMigrator {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<EnrichmentMigratorCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<EnrichmentMigratorCfg>().use { ctx ->
 
             val sourceConnectionQN = ctx.config.sourceConnection[0]
             val sourcePrefix = ctx.config.sourceQnPrefix
@@ -96,7 +95,6 @@ object EnrichmentMigrator {
                     }
                     start.toList()
                 }
-            val assetsFailOnErrors = Utils.getOrDefault(config.failOnErrors, true)
             ctx.config.targetConnection.forEach { targetConnectionQN ->
                 val targetDatabaseNames = getTargetDatabaseName(ctx.client, targetConnectionQN, ctx.config.targetDatabasePattern)
                 targetDatabaseNames.forEach { targetDatabaseName ->
@@ -132,7 +130,7 @@ object EnrichmentMigrator {
                         AssetImportCfg(
                             assetsFile = transformedFile,
                             assetsUpsertSemantic = "update",
-                            assetsFailOnErrors = assetsFailOnErrors,
+                            assetsFailOnErrors = ctx.config.failOnErrors,
                             assetsBatchSize = ctx.config.batchSize,
                             assetsFieldSeparator = ctx.config.fieldSeparator,
                             assetsCaseSensitive = ctx.config.caseSensitive,

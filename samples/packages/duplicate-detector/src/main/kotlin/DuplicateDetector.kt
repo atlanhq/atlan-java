@@ -30,9 +30,7 @@ object DuplicateDetector {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<DuplicateDetectorCfg>()
-        Utils.initializeContext(config).use { ctx ->
-
+        Utils.initializeContext<DuplicateDetectorCfg>().use { ctx ->
             val qnPrefix = ctx.config.qnPrefix
             val types = ctx.config.assetTypes
             val batchSize = 20

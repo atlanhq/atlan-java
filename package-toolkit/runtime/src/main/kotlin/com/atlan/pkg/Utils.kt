@@ -105,12 +105,12 @@ object Utils {
      * This will use an API token if found in ATLAN_API_KEY, and will fallback to attempting
      * to impersonate a user if ATLAN_API_KEY is empty.
      *
-     * @param config configuration for the custom package, which has already been initialized through {@code parseConfigFromEnv()}
+     * @param config (optional) configuration for the custom package (will be pulled through {@code setPackageOps} if not provided)
      * @param reuseCtx (optional) existing context of a running package to reuse
      * @return connectivity to the Atlan tenant
      */
-    fun <T : CustomConfig> initializeContext(
-        config: T,
+    inline fun <reified T : CustomConfig> initializeContext(
+        config: T = setPackageOps<T>(),
         reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
         if (reuseCtx != null) config.runtime = reuseCtx.config.runtime

@@ -27,8 +27,7 @@ object AdminExporter {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<AdminExportCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<AdminExportCfg>().use { ctx ->
 
             // Before we start processing, will pre-cache all glossaries,
             // so we can resolve them to meaningful names
@@ -50,7 +49,7 @@ object AdminExporter {
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
-                    val emails = Utils.getAsList(config.emailAddresses)
+                    val emails = Utils.getAsList(ctx.config.emailAddresses)
                     if (emails.isNotEmpty()) {
                         Utils.sendEmail(
                             "[Atlan] Admin Export results",
@@ -64,8 +63,8 @@ object AdminExporter {
                 "CLOUD" -> {
                     Utils.uploadOutputFile(
                         exportFile,
-                        Utils.getOrDefault(config.targetPrefix, ""),
-                        Utils.getOrDefault(config.targetKey, ""),
+                        ctx.config.targetPrefix,
+                        ctx.config.targetKey,
                     )
                 }
             }

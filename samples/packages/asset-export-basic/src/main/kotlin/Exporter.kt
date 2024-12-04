@@ -14,8 +14,7 @@ object Exporter {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<AssetExportBasicCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<AssetExportBasicCfg>().use { ctx ->
             export(ctx, outputDirectory)
         }
     }

@@ -17,10 +17,8 @@ object OwnerPropagator {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<OwnerPropagatorCfg>()
-        Utils.initializeContext(config).use { ctx ->
+        Utils.initializeContext<OwnerPropagatorCfg>().use { ctx ->
             val batchSize = 20
-
             val tables = findTables(ctx.client, ctx.config.qnPrefix, batchSize)
             propagateOwner(ctx.client, tables, batchSize)
         }
