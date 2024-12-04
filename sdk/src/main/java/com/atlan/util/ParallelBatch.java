@@ -9,7 +9,6 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -389,11 +388,7 @@ public class ParallelBatch implements AtlanCloseable {
                 created = new OffHeapAssetCache(client, "p-created");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getCreated().isNotClosed()) {
-                        try {
-                            created.extendedWith(batch.getCreated(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        created.extendedWith(batch.getCreated(), true);
                     }
                 }
             } finally {
@@ -421,11 +416,7 @@ public class ParallelBatch implements AtlanCloseable {
                 updated = new OffHeapAssetCache(client, "p-updated");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getUpdated().isNotClosed()) {
-                        try {
-                            updated.extendedWith(batch.getUpdated(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        updated.extendedWith(batch.getUpdated(), true);
                     }
                 }
             } finally {
@@ -454,11 +445,7 @@ public class ParallelBatch implements AtlanCloseable {
                 restored = new OffHeapAssetCache(client, "p-restored");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getRestored().isNotClosed()) {
-                        try {
-                            restored.extendedWith(batch.getRestored(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        restored.extendedWith(batch.getRestored(), true);
                     }
                 }
             } finally {
@@ -517,11 +504,7 @@ public class ParallelBatch implements AtlanCloseable {
                 skipped = new OffHeapAssetCache(client, "p-skipped");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getSkipped().isNotClosed()) {
-                        try {
-                            skipped.extendedWith(batch.getSkipped(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        skipped.extendedWith(batch.getSkipped(), true);
                     }
                 }
             } finally {

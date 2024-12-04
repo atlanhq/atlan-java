@@ -4,7 +4,6 @@ package com.atlan.cache;
 
 import com.atlan.AtlanClient;
 import com.atlan.model.assets.Asset;
-import java.io.IOException;
 import java.util.function.Predicate;
 
 /**
@@ -38,9 +37,8 @@ public class OffHeapAssetCache extends OffHeapObjectCache<Asset> {
      *
      * @param closeOriginal if true, close the provided cache after the extension is complete
      * @param other other cache with which to extend this one
-     * @throws IOException on any error closing the provided cache
      */
-    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal) throws IOException {
+    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal) {
         if (other != null) {
             this.putAll(other);
             if (closeOriginal) {
@@ -56,10 +54,8 @@ public class OffHeapAssetCache extends OffHeapObjectCache<Asset> {
      * @param closeOriginal if true, close the provided cache after the extension is complete
      * @param isValid boolean method that takes a single asset as an argument, and only when evaluated to true for
      *                an asset in the other cache will that entry from the other cache be included in this one
-     * @throws IOException on any error closing the provided cache
      */
-    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal, Predicate<Asset> isValid)
-            throws IOException {
+    public void extendedWith(OffHeapAssetCache other, boolean closeOriginal, Predicate<Asset> isValid) {
         if (other != null) {
             other.values().forEach(one -> {
                 if (isValid.test(one)) {
