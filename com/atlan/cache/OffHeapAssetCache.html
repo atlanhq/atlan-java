@@ -203,15 +203,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="extendedWith(com.atlan.cache.OffHeapAssetCache,boolean)">
 <h3>extendedWith</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">extendedWith</span><wbr><span class="parameters">(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
- boolean&nbsp;closeOriginal)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+ boolean&nbsp;closeOriginal)</span></div>
 <div class="block">Extend this cache with all the entries from the provided cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>closeOriginal</code> - if true, close the provided cache after the extension is complete</dd>
 <dd><code>other</code> - other cache with which to extend this one</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - on any error closing the provided cache</dd>
 </dl>
 </section>
 </li>
@@ -220,8 +217,7 @@ loadScripts(document, 'script');</script>
 <h3>extendedWith</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">extendedWith</span><wbr><span class="parameters">(<a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;other,
  boolean&nbsp;closeOriginal,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;isValid)</span></div>
 <div class="block">Extend this cache with all the entries from the provided cache.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -229,8 +225,6 @@ loadScripts(document, 'script');</script>
 <dd><code>closeOriginal</code> - if true, close the provided cache after the extension is complete</dd>
 <dd><code>isValid</code> - boolean method that takes a single asset as an argument, and only when evaluated to true for
                 an asset in the other cache will that entry from the other cache be included in this one</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - on any error closing the provided cache</dd>
 </dl>
 </section>
 </li>
