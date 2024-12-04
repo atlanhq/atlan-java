@@ -14,7 +14,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             -1,
             "ATLAN-JAVA--1-002",
             "No base URL is configured in the SDK.",
-            "You must call Atlan.setBaseUrl() FIRST, before making any API call or calling Atlan.setApiToken()."),
+            "You must specify a URL for your tenant, before running any operation that makes an underlying API call."),
 
     INTERNAL_ONLY(
             -1,
@@ -287,7 +287,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             401,
             "ATLAN-JAVA-401-001",
             "No API token provided.",
-            "Set your API token using `Atlan.setApiToken(\"<API-TOKEN>\");`. You can generate API tokens from the Atlan Admin Center. See "
+            "Set your API token using `client.setApiToken(\"<API-TOKEN>\");`. You can generate API tokens from the Atlan Admin Center. See "
                     + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
                     + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
     EMPTY_API_TOKEN(
@@ -548,7 +548,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             500,
             "ATLAN-JAVA-500-006",
             "Loop for retrying a failed action hit the maximum number of retries.",
-            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached."),
+            "Increase the maximum number of retries through client.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached."),
     ASSET_MODIFICATION_ERROR(
             500,
             "ATLAN-JAVA-500-007",
