@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -145,36 +144,11 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) PresetChart assets will be included.
      *
-     * @return a fluent search that includes all PresetChart assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all PresetChart assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) PresetChart assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all PresetChart assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all PresetChart assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) PresetCharts will be included
-     * @return a fluent search that includes all PresetChart assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -251,18 +225,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /**
      * Retrieves a PresetChart by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the PresetChart to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full PresetChart, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist or the provided GUID is not a PresetChart
-     */
-    @JsonIgnore
-    public static PresetChart get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a PresetChart by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the PresetChart to retrieve, either its GUID or its full qualifiedName
      * @return the requested full PresetChart, complete with all of its relationships
@@ -270,7 +232,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      */
     @JsonIgnore
     public static PresetChart get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -303,17 +265,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) PresetChart to active.
-     *
-     * @param qualifiedName for the PresetChart
-     * @return true if the PresetChart is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -424,18 +375,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /**
      * Remove the system description from a PresetChart.
      *
-     * @param qualifiedName of the PresetChart
-     * @param name of the PresetChart
-     * @return the updated PresetChart, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a PresetChart.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the PresetChart
      * @param name of the PresetChart
@@ -445,18 +384,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (PresetChart) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a PresetChart.
-     *
-     * @param qualifiedName of the PresetChart
-     * @param name of the PresetChart
-     * @return the updated PresetChart, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -476,18 +403,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /**
      * Remove the owners from a PresetChart.
      *
-     * @param qualifiedName of the PresetChart
-     * @param name of the PresetChart
-     * @return the updated PresetChart, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a PresetChart.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the PresetChart's owners
      * @param qualifiedName of the PresetChart
      * @param name of the PresetChart
@@ -497,20 +412,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (PresetChart) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a PresetChart.
-     *
-     * @param qualifiedName of the PresetChart
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated PresetChart, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -533,18 +434,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /**
      * Remove the certificate from a PresetChart.
      *
-     * @param qualifiedName of the PresetChart
-     * @param name of the PresetChart
-     * @return the updated PresetChart, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a PresetChart.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the PresetChart's certificate
      * @param qualifiedName of the PresetChart
      * @param name of the PresetChart
@@ -554,21 +443,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (PresetChart) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a PresetChart.
-     *
-     * @param qualifiedName of the PresetChart
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -592,18 +466,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /**
      * Remove the announcement from a PresetChart.
      *
-     * @param qualifiedName of the PresetChart
-     * @param name of the PresetChart
-     * @return the updated PresetChart, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a PresetChart.
-     *
      * @param client connectivity to the Atlan client from which to remove the PresetChart's announcement
      * @param qualifiedName of the PresetChart
      * @param name of the PresetChart
@@ -613,20 +475,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (PresetChart) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the PresetChart.
-     *
-     * @param qualifiedName for the PresetChart
-     * @param name human-readable name of the PresetChart
-     * @param terms the list of terms to replace on the PresetChart, or null to remove all terms from the PresetChart
-     * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -642,20 +490,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PresetChart
-     * @param terms the list of terms to append to the PresetChart
-     * @return the PresetChart that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -679,20 +513,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the PresetChart
-     * @param terms the list of terms to remove from the PresetChart, which must be referenced by GUID
-     * @return the PresetChart that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the PresetChart
      * @param qualifiedName for the PresetChart
      * @param terms the list of terms to remove from the PresetChart, which must be referenced by GUID
@@ -709,20 +529,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * Note: this operation must make two API calls — one to retrieve the PresetChart's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the PresetChart
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated PresetChart
-     */
-    public static PresetChart appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a PresetChart, without replacing existing Atlan tags linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the PresetChart
      * @param qualifiedName of the PresetChart
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -732,35 +538,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (PresetChart) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a PresetChart, without replacing existing Atlan tags linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the PresetChart
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated PresetChart
-     */
-    public static PresetChart appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -793,17 +570,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a PresetChart.
-     *
-     * @param qualifiedName of the PresetChart
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PresetChart
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

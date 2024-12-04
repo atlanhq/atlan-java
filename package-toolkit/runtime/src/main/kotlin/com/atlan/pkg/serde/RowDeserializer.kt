@@ -2,11 +2,11 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
-import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Asset.AssetBuilder
 import com.atlan.model.core.CustomMetadataAttributes
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom
  * Class to generally deserialize an asset object from a row of tabular data.
  * Note: at least the qualifiedName and type of the asset must be present in every row.
  *
+ * @param ctx context in which the package is running
  * @param heading the list of field names, in the order they appear as columns in the tabular data
  * @param row values for each field in a single row, representing a single asset
  * @param typeIdx the numeric index for the type in the list of columns
@@ -29,6 +30,7 @@ import java.util.concurrent.ThreadLocalRandom
  * @param skipColumns columns to skip, i.e. that need to be processed in a later pass
  */
 class RowDeserializer(
+    private val ctx: PackageContext<*>,
     val heading: List<String>,
     val row: List<String>,
     private val typeIdx: Int = -1,
@@ -127,7 +129,7 @@ class RowDeserializer(
         val rValue = getRawValue(fieldName)
         return if (fieldName.contains(CM_HEADING_DELIMITER)) {
             // Custom metadata field...
-            val cache = Atlan.getDefaultClient().customMetadataCache
+            val cache = ctx.client.customMetadataCache
             val tokens = fieldName.split(CM_HEADING_DELIMITER)
             val setName = tokens[0]
             val attrName = tokens[1]
@@ -143,7 +145,7 @@ class RowDeserializer(
             // "Normal" field...
             val setter = ReflectionCache.getSetter(Serde.getBuilderClassForType(typeName), fieldName)
             if (setter != null) {
-                FieldSerde.getValueFromCell(rValue, setter, logger)
+                FieldSerde.getValueFromCell(ctx, rValue, setter, logger)
             } else {
                 // If this isn't a "real" field, return it as a simple string
                 rValue

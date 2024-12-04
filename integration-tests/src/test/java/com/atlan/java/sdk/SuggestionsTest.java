@@ -69,14 +69,14 @@ public class SuggestionsTest extends AtlanLiveTest {
 
     @Test(groups = {"suggestions.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
             groups = {"suggestions.search.connection"},
             dependsOnGroups = {"suggestions.create.connection"})
     void findConnection() throws AtlanException {
-        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE);
+        List<Connection> results = Connection.findByName(client, CONNECTION_NAME, CONNECTOR_TYPE);
         assertNotNull(results);
         assertEquals(results.size(), 1);
         Connection one = results.get(0);
@@ -88,7 +88,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.create.database"},
             dependsOnGroups = {"suggestions.create.connection"})
     void createDatabase() throws AtlanException {
-        database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
+        database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
         assertEquals(database.getConnectorType(), CONNECTOR_TYPE);
     }
 
@@ -96,13 +96,13 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.create.schema"},
             dependsOnGroups = {"suggestions.create.database"})
     void createSchemas() throws AtlanException {
-        schema1 = SQLAssetTest.createSchema(SCHEMA_NAME1, database);
+        schema1 = SQLAssetTest.createSchema(client, SCHEMA_NAME1, database);
         assertEquals(schema1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema1.getDatabaseName(), DATABASE_NAME);
-        schema2 = SQLAssetTest.createSchema(SCHEMA_NAME2, database);
+        schema2 = SQLAssetTest.createSchema(client, SCHEMA_NAME2, database);
         assertEquals(schema2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema2.getDatabaseName(), DATABASE_NAME);
-        schema3 = SQLAssetTest.createSchema(SCHEMA_NAME3, database);
+        schema3 = SQLAssetTest.createSchema(client, SCHEMA_NAME3, database);
         assertEquals(schema3.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema3.getDatabaseName(), DATABASE_NAME);
     }
@@ -111,19 +111,19 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.create.table"},
             dependsOnGroups = {"suggestions.create.schema"})
     void createTables() throws AtlanException {
-        table1 = SQLAssetTest.createTable(TABLE_NAME, schema1);
+        table1 = SQLAssetTest.createTable(client, TABLE_NAME, schema1);
         assertEquals(table1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(table1.getSchemaName(), SCHEMA_NAME1);
         assertEquals(table1.getDatabaseName(), DATABASE_NAME);
         assertEquals(table1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(table1.getConnectionQualifiedName(), connection.getQualifiedName());
-        table2 = SQLAssetTest.createTable(TABLE_NAME, schema2);
+        table2 = SQLAssetTest.createTable(client, TABLE_NAME, schema2);
         assertEquals(table2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(table2.getSchemaName(), SCHEMA_NAME2);
         assertEquals(table2.getDatabaseName(), DATABASE_NAME);
         assertEquals(table2.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(table2.getConnectionQualifiedName(), connection.getQualifiedName());
-        table3 = SQLAssetTest.createTable(VIEW_NAME, schema3);
+        table3 = SQLAssetTest.createTable(client, VIEW_NAME, schema3);
         assertEquals(table3.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(table3.getSchemaName(), SCHEMA_NAME3);
         assertEquals(table3.getDatabaseName(), DATABASE_NAME);
@@ -135,13 +135,13 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.create.view"},
             dependsOnGroups = {"suggestions.create.table"})
     void createViews() throws AtlanException {
-        view1 = SQLAssetTest.createView(VIEW_NAME, schema1);
+        view1 = SQLAssetTest.createView(client, VIEW_NAME, schema1);
         assertEquals(view1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(view1.getSchemaName(), SCHEMA_NAME1);
         assertEquals(view1.getDatabaseName(), DATABASE_NAME);
         assertEquals(view1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(view1.getConnectionQualifiedName(), connection.getQualifiedName());
-        view2 = SQLAssetTest.createView(VIEW_NAME, schema2);
+        view2 = SQLAssetTest.createView(client, VIEW_NAME, schema2);
         assertEquals(view2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(view2.getSchemaName(), SCHEMA_NAME2);
         assertEquals(view2.getDatabaseName(), DATABASE_NAME);
@@ -153,7 +153,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.create.column.1"},
             dependsOnGroups = {"suggestions.create.table", "suggestions.create.view"})
     void createColumn1() throws AtlanException {
-        t1c1 = SQLAssetTest.createColumn(COLUMN_NAME1, table1, 1);
+        t1c1 = SQLAssetTest.createColumn(client, COLUMN_NAME1, table1, 1);
         assertNotNull(t1c1);
         assertEquals(t1c1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(t1c1.getTableName(), TABLE_NAME);
@@ -162,7 +162,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(t1c1.getDatabaseName(), DATABASE_NAME);
         assertEquals(t1c1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(t1c1.getConnectionQualifiedName(), connection.getQualifiedName());
-        t2c1 = SQLAssetTest.createColumn(COLUMN_NAME1, table2, 1);
+        t2c1 = SQLAssetTest.createColumn(client, COLUMN_NAME1, table2, 1);
         assertNotNull(t2c1);
         assertEquals(t2c1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(t2c1.getTableName(), TABLE_NAME);
@@ -171,7 +171,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(t2c1.getDatabaseName(), DATABASE_NAME);
         assertEquals(t2c1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(t2c1.getConnectionQualifiedName(), connection.getQualifiedName());
-        v1c1 = SQLAssetTest.createColumn(COLUMN_NAME1, view1, 1);
+        v1c1 = SQLAssetTest.createColumn(client, COLUMN_NAME1, view1, 1);
         assertNotNull(v1c1);
         assertEquals(v1c1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(v1c1.getViewName(), VIEW_NAME);
@@ -180,7 +180,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(v1c1.getDatabaseName(), DATABASE_NAME);
         assertEquals(v1c1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(v1c1.getConnectionQualifiedName(), connection.getQualifiedName());
-        v2c1 = SQLAssetTest.createColumn(COLUMN_NAME1, view2, 1);
+        v2c1 = SQLAssetTest.createColumn(client, COLUMN_NAME1, view2, 1);
         assertNotNull(v2c1);
         assertEquals(v2c1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(v2c1.getViewName(), VIEW_NAME);
@@ -235,20 +235,20 @@ public class SuggestionsTest extends AtlanLiveTest {
 
     @Test(groups = {"suggestions.create.group.owners"})
     void createGroupOwners() throws AtlanException {
-        ownerGroup = AdminTest.createGroup(PREFIX);
+        ownerGroup = AdminTest.createGroup(client, PREFIX);
     }
 
     @Test(groups = {"suggestions.create.atlantags"})
     void createAtlanTags() throws AtlanException {
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME1);
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME2);
+        AtlanTagTest.createAtlanTag(client, ATLAN_TAG_NAME1);
+        AtlanTagTest.createAtlanTag(client, ATLAN_TAG_NAME2);
     }
 
     @Test(groups = {"suggestions.create.glossary"})
     void createGlossary() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        term1 = GlossaryTest.createTerm(TERM_NAME1, glossary);
-        term2 = GlossaryTest.createTerm(TERM_NAME2, glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        term1 = GlossaryTest.createTerm(client, TERM_NAME1, glossary);
+        term2 = GlossaryTest.createTerm(client, TERM_NAME2, glossary);
     }
 
     @Test(
@@ -272,7 +272,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // table + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -305,7 +305,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // table + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -338,7 +338,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 3); // column + 2x terms
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -367,7 +367,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                         .build())
                 .assignedTerm(GlossaryTerm.refByGuid(term2.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         assertEquals(response.getUpdatedAssets().size(), 2); // column + term
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
@@ -390,7 +390,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.t2c1"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findSuggestionsDefault() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(t2c1)
+        SuggestionResponse response = Suggestions.finder(client, t2c1)
                 .includes(Arrays.asList(Suggestions.TYPE.values()))
                 .get();
         assertNotNull(response);
@@ -428,7 +428,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.v1"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findSuggestionsAcrossTypes() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(view1)
+        SuggestionResponse response = Suggestions.finder(client, view1)
                 .includes(Arrays.asList(Suggestions.TYPE.values()))
                 .withOtherType(Table.TYPE_NAME)
                 .get();
@@ -471,7 +471,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = {"suggestions.find.t2"},
             dependsOnGroups = {"suggestions.find.wait"})
     void findLimitedSuggestions() throws AtlanException {
-        SuggestionResponse response = Suggestions.finder(table2)
+        SuggestionResponse response = Suggestions.finder(client, table2)
                 .include(Suggestions.TYPE.SystemDescription)
                 .include(Suggestions.TYPE.GroupOwners)
                 .get();
@@ -496,7 +496,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = "suggestions.apply.t2c1",
             dependsOnGroups = {"suggestions.find.*"})
     void applyT2C1() throws AtlanException {
-        AssetMutationResponse response = Suggestions.finder(t2c1)
+        AssetMutationResponse response = Suggestions.finder(client, t2c1)
                 .include(Suggestions.TYPE.UserDescription)
                 .include(Suggestions.TYPE.IndividualOwners)
                 .include(Suggestions.TYPE.GroupOwners)
@@ -525,7 +525,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             groups = "suggestions.apply.v2c1",
             dependsOnGroups = {"suggestions.find.*"})
     void applyV2C1() throws AtlanException {
-        AssetMutationResponse response = Suggestions.finder(v2c1)
+        AssetMutationResponse response = Suggestions.finder(client, v2c1)
                 .include(Suggestions.TYPE.SystemDescription)
                 .include(Suggestions.TYPE.Tags)
                 .apply(true);
@@ -555,7 +555,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 
     @Test(
@@ -563,7 +563,7 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.purge.connection"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        AtlanGroup.delete(ownerGroup.getId());
+        AtlanGroup.delete(client, ownerGroup.getId());
     }
 
     @Test(
@@ -571,8 +571,8 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.purge.connection"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME1);
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME2);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME1);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME2);
     }
 
     @Test(
@@ -580,8 +580,8 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.purge.connection"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        GlossaryTest.deleteTerm(term1.getGuid());
-        GlossaryTest.deleteTerm(term2.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term1.getGuid());
+        GlossaryTest.deleteTerm(client, term2.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 }

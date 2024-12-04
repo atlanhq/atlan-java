@@ -3,7 +3,6 @@
 package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -52,16 +51,6 @@ public class Suggestions {
         Tags,
         /** Suggestions for terms to assign to the asset. */
         Terms,
-    }
-
-    /**
-     * Build a suggestion finder for the provided asset.
-     *
-     * @param asset for which to find suggestions
-     * @return the start of a suggestion finder for the provided asset, against the default tenant
-     */
-    public static SuggestionsBuilder finder(Asset asset) {
-        return finder(Atlan.getDefaultClient(), asset);
     }
 
     /**
@@ -239,7 +228,7 @@ public class Suggestions {
          */
         public AssetMutationResponse apply(boolean allowMultiple) throws AtlanException {
             Apply result = _apply(allowMultiple);
-            return result.getAsset().save(result.getIncludesTags());
+            return result.getAsset().save(client, result.getIncludesTags());
         }
 
         /**

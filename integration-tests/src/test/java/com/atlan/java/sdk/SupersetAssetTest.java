@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -39,7 +38,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"superset.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -48,7 +47,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
     void createDashboard() throws AtlanException {
         SupersetDashboard toCreate = SupersetDashboard.creator(DASHBOARD_NAME, connection.getQualifiedName())
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof SupersetDashboard);
         dashboard = (SupersetDashboard) one;
@@ -65,7 +64,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"superset.create.dashboard"})
     void createChart() throws AtlanException {
         SupersetChart toCreate = SupersetChart.creator(CHART_NAME, dashboard).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -92,7 +91,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
     void createDataset() throws AtlanException {
         SupersetDataset toCreate =
                 SupersetDataset.creator(DATASET_NAME, dashboard).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -118,12 +117,12 @@ public class SupersetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"superset.create.dashboard"})
     void updateDashboard() throws AtlanException {
         SupersetDashboard updated = SupersetDashboard.updateCertificate(
-                dashboard.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, dashboard.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = SupersetDashboard.updateAnnouncement(
-                dashboard.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, dashboard.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -134,7 +133,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.read.dashboard"},
             dependsOnGroups = {"superset.create.*", "superset.update.dashboard"})
     void retrieveDashboard() throws AtlanException {
-        SupersetDashboard c = SupersetDashboard.get(dashboard.getGuid());
+        SupersetDashboard c = SupersetDashboard.get(client, dashboard.getGuid(), true);
         assertNotNull(c);
         assertTrue(c.isComplete());
         assertEquals(c.getGuid(), dashboard.getGuid());
@@ -167,14 +166,15 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.update.dashboard.again"},
             dependsOnGroups = {"superset.read.dashboard"})
     void updateDashboardAgain() throws AtlanException {
-        SupersetDashboard updated = SupersetDashboard.removeCertificate(dashboard.getQualifiedName(), DASHBOARD_NAME);
+        SupersetDashboard updated =
+                SupersetDashboard.removeCertificate(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = SupersetDashboard.removeAnnouncement(dashboard.getQualifiedName(), DASHBOARD_NAME);
+        updated = SupersetDashboard.removeAnnouncement(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -185,8 +185,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.search.assets"},
             dependsOnGroups = {"superset.update.dashboard.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.SUPER_TYPE_NAMES.eq(ISuperset.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -242,7 +241,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.delete.chart"},
             dependsOnGroups = {"superset.update.*", "superset.search.*"})
     void deleteChart() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(chart.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -267,8 +266,9 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.delete.chart.restore"},
             dependsOnGroups = {"superset.delete.chart.read"})
     void restoreChart() throws AtlanException {
-        assertTrue(SupersetChart.restore(chart.getQualifiedName()));
-        SupersetChart restored = SupersetChart.get(chart.getQualifiedName());
+        assertTrue(SupersetChart.restore(client, chart.getQualifiedName()));
+        SupersetChart restored = SupersetChart.get(client, chart.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), chart.getGuid());
         assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -278,7 +278,7 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.purge.chart"},
             dependsOnGroups = {"superset.delete.chart.restore"})
     void purgeChart() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(chart.getGuid());
+        AssetMutationResponse response = Asset.purge(client, chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -303,6 +303,6 @@ public class SupersetAssetTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

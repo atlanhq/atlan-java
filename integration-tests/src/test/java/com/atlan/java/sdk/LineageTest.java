@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -52,18 +51,18 @@ public class LineageTest extends AtlanLiveTest {
 
     @Test(groups = {"lineage.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
-        Database database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
-        Schema schema = SQLAssetTest.createSchema(SCHEMA_NAME, database);
-        table = SQLAssetTest.createTable(TABLE_NAME, schema);
-        mview = SQLAssetTest.createMaterializedView(MVIEW_NAME, schema);
-        view = SQLAssetTest.createView(VIEW_NAME, schema);
-        SQLAssetTest.createColumn(COLUMN_NAME1, table, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME2, table, 2);
-        SQLAssetTest.createColumn(COLUMN_NAME3, mview, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME4, mview, 2);
-        SQLAssetTest.createColumn(COLUMN_NAME5, view, 1);
-        SQLAssetTest.createColumn(COLUMN_NAME6, view, 2);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
+        Database database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
+        Schema schema = SQLAssetTest.createSchema(client, SCHEMA_NAME, database);
+        table = SQLAssetTest.createTable(client, TABLE_NAME, schema);
+        mview = SQLAssetTest.createMaterializedView(client, MVIEW_NAME, schema);
+        view = SQLAssetTest.createView(client, VIEW_NAME, schema);
+        SQLAssetTest.createColumn(client, COLUMN_NAME1, table, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME2, table, 2);
+        SQLAssetTest.createColumn(client, COLUMN_NAME3, mview, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME4, mview, 2);
+        SQLAssetTest.createColumn(client, COLUMN_NAME5, view, 1);
+        SQLAssetTest.createColumn(client, COLUMN_NAME6, view, 2);
     }
 
     // TODO: column-level lineage
@@ -85,7 +84,7 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(MaterializedView.refByGuid(mview.getGuid())),
                         null)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         Asset one = response.getCreatedAssets().get(0);
@@ -134,7 +133,7 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(View.refByGuid(view.getGuid())),
                         null)
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         Asset one = response.getCreatedAssets().get(0);
@@ -174,9 +173,8 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListStart() throws AtlanException {
-        LineageListResponse response = FluentLineage.builder(Atlan.getDefaultClient(), table)
-                .toRequest()
-                .fetch();
+        LineageListResponse response =
+                FluentLineage.builder(client, table).toRequest().fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 4);
@@ -195,10 +193,10 @@ public class LineageTest extends AtlanLiveTest {
         assertTrue(one instanceof View);
         assertEquals(one.getDepth(), 2);
         assertEquals(one.getGuid(), view.getGuid());
-        response = FluentLineage.builder(Atlan.getDefaultClient(), table)
+        response = FluentLineage.builder(client, table)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .toRequest()
-                .fetch();
+                .fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertTrue(response.getAssets().isEmpty());
@@ -209,11 +207,11 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListStartDetailed() throws AtlanException {
-        LineageListResponse response = FluentLineage.builder(Atlan.getDefaultClient(), table)
+        LineageListResponse response = FluentLineage.builder(client, table)
                 .toRequestBuilder()
                 .immediateNeighbors(true)
                 .build()
-                .fetch();
+                .fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 5);
@@ -262,12 +260,12 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(one.getImmediateUpstream().size(), 1);
         assertEquals(one.getImmediateUpstream().get(0).getGuid(), mview.getGuid());
         assertNull(one.getImmediateDownstream());
-        response = FluentLineage.builder(Atlan.getDefaultClient(), table)
+        response = FluentLineage.builder(client, table)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .toRequestBuilder()
                 .immediateNeighbors(true)
                 .build()
-                .fetch();
+                .fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 1);
@@ -285,8 +283,8 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.create.lineage.*"})
     void testLineageListIterators() throws AtlanException {
         LineageListRequest lineage =
-                table.requestLineage().includeOnResults(Asset.NAME).toRequest();
-        LineageListResponse response = lineage.fetch();
+                table.requestLineage(client).includeOnResults(Asset.NAME).toRequest();
+        LineageListResponse response = lineage.fetch(client);
         int count = 0;
         for (Asset a : response) {
             assertTrue(a instanceof LineageProcess || a instanceof MaterializedView || a instanceof View);
@@ -319,8 +317,8 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListMiddle() throws AtlanException {
         LineageListRequest lineage =
-                mview.requestLineage().includeOnResults(Asset.NAME).toRequest();
-        LineageListResponse response = lineage.fetch();
+                mview.requestLineage(client).includeOnResults(Asset.NAME).toRequest();
+        LineageListResponse response = lineage.fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 2);
@@ -330,10 +328,10 @@ public class LineageTest extends AtlanLiveTest {
         one = response.getAssets().get(1);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
-        lineage = FluentLineage.builder(Atlan.getDefaultClient(), mview)
+        lineage = FluentLineage.builder(client, mview)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .toRequest();
-        response = lineage.fetch();
+        response = lineage.fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 2);
@@ -351,19 +349,19 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage.end"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListEnd() throws AtlanException {
-        LineageListRequest lineage = view.requestLineage()
+        LineageListRequest lineage = view.requestLineage(client)
                 .direction(AtlanLineageDirection.DOWNSTREAM)
                 .includeOnResults(Asset.NAME)
                 .toRequest();
-        LineageListResponse response = lineage.fetch();
+        LineageListResponse response = lineage.fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertTrue(response.getAssets().isEmpty());
         assertFalse(response.getHasMore());
-        lineage = FluentLineage.builder(Atlan.getDefaultClient(), view)
+        lineage = FluentLineage.builder(client, view)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .toRequest();
-        response = lineage.fetch();
+        response = lineage.fetch(client);
         assertNotNull(response);
         assertNotNull(response.getAssets());
         assertEquals(response.getAssets().size(), 4);
@@ -388,8 +386,7 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.search.lineage"},
             dependsOnGroups = {"lineage.read.lineage.*"})
     void searchByLineage() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .withLineage()
                 .where(Asset.SUPER_TYPE_NAMES.eq(ISQL.TYPE_NAME))
@@ -424,7 +421,7 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.delete.lineage"},
             dependsOnGroups = {"lineage.search.lineage"})
     void deleteLineage() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(start.getGuid());
+        AssetMutationResponse response = Asset.delete(client, start.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -440,8 +437,9 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.delete.lineage.restore"},
             dependsOnGroups = {"lineage.delete.lineage"})
     void restoreLineage() throws AtlanException {
-        assertTrue(LineageProcess.restore(start.getQualifiedName()));
-        LineageProcess restored = LineageProcess.get(start.getGuid());
+        assertTrue(LineageProcess.restore(client, start.getQualifiedName()));
+        LineageProcess restored = LineageProcess.get(client, start.getGuid());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), start.getGuid());
         assertEquals(restored.getQualifiedName(), start.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -452,7 +450,8 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.delete.lineage.restore"},
             alwaysRun = true)
     void purgeLineage() throws AtlanException {
-        AssetMutationResponse response = LineageProcess.purge(start.getGuid());
+        AssetMutationResponse response =
+                LineageProcess.purge(client, start.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
@@ -469,6 +468,6 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"lineage.create.*", "lineage.read.*", "lineage.search.*", "lineage.purge.lineage"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

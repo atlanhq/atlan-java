@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Glossary
@@ -10,11 +9,12 @@ import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 import mu.KotlinLogging
 
-object CategoryCache : AssetCache<GlossaryCategory>("category") {
+class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(ctx, "category") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
@@ -27,7 +27,7 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
@@ -39,7 +39,7 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
     ): GlossaryCategory? {
         try {
             val category =
-                GlossaryCategory.select()
+                GlossaryCategory.select(client)
                     .where(GlossaryCategory.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includeOnResults(GlossaryTerm.STATUS)
@@ -93,12 +93,12 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
     ): List<GlossaryCategory> {
         val categories = mutableListOf<GlossaryCategory>()
         logger.info { "Caching entire hierarchy for $glossaryName, up-front..." }
-        val glossary = GlossaryCache.getByIdentity(glossaryName)
+        val glossary = ctx.glossaryCache.getByIdentity(glossaryName)
         if (glossary is Glossary) {
             // Initial hit may be high, but for any sizeable import will be faster
             // to retrieve the entire hierarchy than recursively look it up step-by-step
             try {
-                val hierarchy = glossary.getHierarchy(includesOnResults + attributes, relatedAttributes)
+                val hierarchy = glossary.getHierarchy(client, includesOnResults + attributes, relatedAttributes)
                 hierarchy.breadthFirst().forEach { category ->
                     val parent = category.parentCategory
                     category as GlossaryCategory
@@ -152,9 +152,9 @@ object CategoryCache : AssetCache<GlossaryCategory>("category") {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = GlossaryCategory.select().count()
+        val count = GlossaryCategory.select(client).count()
         logger.info { "Caching all $count categories, up-front..." }
-        Glossary.select()
+        Glossary.select(client)
             .includeOnResults(Glossary.NAME)
             .stream(true)
             .forEach { glossary ->

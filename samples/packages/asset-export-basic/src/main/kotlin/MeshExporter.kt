@@ -5,6 +5,8 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.fields.CustomMetadataField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
 import com.atlan.pkg.serde.csv.CSVWriter
@@ -16,14 +18,16 @@ import java.util.stream.Stream
 /**
  * Export data mesh assets (domains and products) from Atlan.
  *
- * @param ctx context containing the resolved configuration
+ * @param ctx context in which the package is running
  * @param filename name of the file into which to export assets
  * @param batchSize maximum number of assets to request per API call
+ * @param cmFields list of all custom metadata fields
  */
 class MeshExporter(
-    private val ctx: Exporter.Context,
+    private val ctx: PackageContext<AssetExportBasicCfg>,
     private val filename: String,
     private val batchSize: Int,
+    private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
     private val logger = KotlinLogging.logger {}
 
@@ -43,7 +47,7 @@ class MeshExporter(
 
             // Retrieve all domains up-front
             val domains =
-                DataDomain.select(ctx.includeArchived)
+                DataDomain.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -54,7 +58,7 @@ class MeshExporter(
 
             // And finally extract all the data products
             val products =
-                DataProduct.select(ctx.includeArchived)
+                DataProduct.select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -95,7 +99,7 @@ class MeshExporter(
                 DataProduct.DAAP_VISIBILITY_USERS,
                 DataProduct.DAAP_VISIBILITY_GROUPS,
             )
-        for (cmField in ctx.cmFields) {
+        for (cmField in cmFields) {
             attributeList.add(cmField)
         }
         return attributeList
@@ -121,6 +125,6 @@ class MeshExporter(
      * @return the values, as an iterable set of strings
      */
     override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(asset, getAttributesToExtract(), logger).getRow()
+        return RowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
     }
 }

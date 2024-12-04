@@ -6,10 +6,9 @@ freemarker = "2.3.33"
 classgraph = "4.8.179"
 testng = "7.10.2"
 log4j = "2.24.2"
-wiremock = "3.9.2"
+wiremock = "3.10.0"
 jnanoid = "2.0.0"
-numaflow = "0.9.0"
-awssdk = "2.29.23"
+awssdk = "2.29.24"
 gcs = "26.50.0"
 system-stubs = "2.1.7"
 fastcsv = "3.4.0"
@@ -28,8 +27,6 @@ adls = "12.22.0"
 azure = "1.14.2"
 guava = "33.3.1-jre"
 openlineage = "1.25.0"
-protobuf = "4.29.0"
-akka = "2.8.8"
 kotlin = "2.1.0"
 kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
@@ -49,7 +46,6 @@ log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "lo
 log4j-slf4j2 = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
 wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
-numaflow-java = { module = "io.numaproj.numaflow:numaflow-java", version.ref = "numaflow" }
 awssdk-s3 = { module = "software.amazon.awssdk:s3", version.ref = "awssdk" }
 awssdk-sts = { module = "software.amazon.awssdk:sts", version.ref = "awssdk" }
 gcs-bom = { module = "com.google.cloud:libraries-bom", version.ref = "gcs" }
@@ -74,9 +70,6 @@ angus-mail = { module = "org.eclipse.angus:angus-mail", version.ref = "angus-mai
 pkl-config = { module = "org.pkl-lang:pkl-config-kotlin", version.ref = "pkl" }
 pkl-codegen = { module = "org.pkl-lang:pkl-codegen-kotlin", version.ref = "pkl" }
 openlineage = { module = "io.openlineage:openlineage-java", version.ref = "openlineage" }
-protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
-protobuf-java-util = { module = "com.google.protobuf:protobuf-java-util", version.ref = "protobuf" }
-akka-actor = { module = "com.typesafe.akka:akka-actor_3", version.ref = "akka" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-mu" }
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }

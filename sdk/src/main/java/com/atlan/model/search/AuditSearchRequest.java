@@ -4,7 +4,6 @@ package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -69,31 +68,11 @@ public class AuditSearchRequest extends AtlanObject {
     /**
      * Run the search.
      *
-     * @return the matching audit log records
-     */
-    public AuditSearchResponse search() throws AtlanException {
-        return search(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Run the search.
-     *
      * @param client connectivity to the Atlan tenant on which to search the audit logs
      * @return the matching audit log records
      */
     public AuditSearchResponse search(AtlanClient client) throws AtlanException {
         return client.assets.auditLogs(this);
-    }
-
-    /**
-     * Start building an audit search request for the last changes to an asset, by its GUID.
-     *
-     * @param guid unique identifier of the asset for which to retrieve the audit history
-     * @param size number of changes to retrieve
-     * @return a request builder pre-configured with these criteria
-     */
-    public static AuditSearchRequestBuilder<?, ?> byGuid(String guid, int size) {
-        return byGuid(Atlan.getDefaultClient(), guid, size);
     }
 
     /**
@@ -110,18 +89,6 @@ public class AuditSearchRequest extends AtlanObject {
                 .pageSize(size)
                 .sort(LATEST_FIRST)
                 .toRequestBuilder();
-    }
-
-    /**
-     * Start building an audit search request for the last changes to an asset, by its qualifiedName.
-     *
-     * @param typeName the type of asset for which to retrieve the audit history
-     * @param qualifiedName unique name of the asset for which to retrieve the audit history
-     * @param size number of changes to retrieve
-     * @return a request builder pre-configured with these criteria
-     */
-    public static AuditSearchRequestBuilder<?, ?> byQualifiedName(String typeName, String qualifiedName, int size) {
-        return byQualifiedName(Atlan.getDefaultClient(), typeName, qualifiedName, size);
     }
 
     /**
@@ -146,17 +113,6 @@ public class AuditSearchRequest extends AtlanObject {
     /**
      * Start building an audit search request for the last changes made to any assets, by a given user.
      *
-     * @param userName the name of the user for which to look for any changes
-     * @param size number of changes to retrieve
-     * @return a request builder pre-configured with these criteria
-     */
-    public static AuditSearchRequestBuilder<?, ?> byUser(String userName, int size) {
-        return byUser(Atlan.getDefaultClient(), userName, size);
-    }
-
-    /**
-     * Start building an audit search request for the last changes made to any assets, by a given user.
-     *
      * @param client connectivity to the Atlan tenant on which to search the audit logs
      * @param userName the name of the user for which to look for any changes
      * @param size number of changes to retrieve
@@ -168,17 +124,6 @@ public class AuditSearchRequest extends AtlanObject {
                 .pageSize(size)
                 .sort(LATEST_FIRST)
                 .toRequestBuilder();
-    }
-
-    /**
-     * Start building an audit search request for the last common action made to any assets.
-     *
-     * @param action type of action (e.g. {@code ENTITY_CREATE})
-     * @param size number of changes to retrieve
-     * @return a request builder pre-configured with these criteria
-     */
-    public static AuditSearchRequestBuilder<?, ?> byAction(String action, int size) {
-        return byAction(Atlan.getDefaultClient(), action, size);
     }
 
     /**

@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -194,36 +193,11 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) LookerField assets will be included.
      *
-     * @return a fluent search that includes all LookerField assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all LookerField assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) LookerField assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all LookerField assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all LookerField assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) LookerFields will be included
-     * @return a fluent search that includes all LookerField assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -300,18 +274,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /**
      * Retrieves a LookerField by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the LookerField to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full LookerField, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerField does not exist or the provided GUID is not a LookerField
-     */
-    @JsonIgnore
-    public static LookerField get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a LookerField by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the LookerField to retrieve, either its GUID or its full qualifiedName
      * @return the requested full LookerField, complete with all of its relationships
@@ -319,7 +281,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      */
     @JsonIgnore
     public static LookerField get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -352,17 +314,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) LookerField to active.
-     *
-     * @param qualifiedName for the LookerField
-     * @return true if the LookerField is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -410,18 +361,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /**
      * Remove the system description from a LookerField.
      *
-     * @param qualifiedName of the LookerField
-     * @param name of the LookerField
-     * @return the updated LookerField, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a LookerField.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the LookerField
      * @param name of the LookerField
@@ -431,18 +370,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (LookerField) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a LookerField.
-     *
-     * @param qualifiedName of the LookerField
-     * @param name of the LookerField
-     * @return the updated LookerField, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -462,18 +389,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /**
      * Remove the owners from a LookerField.
      *
-     * @param qualifiedName of the LookerField
-     * @param name of the LookerField
-     * @return the updated LookerField, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a LookerField.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the LookerField's owners
      * @param qualifiedName of the LookerField
      * @param name of the LookerField
@@ -483,20 +398,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (LookerField) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a LookerField.
-     *
-     * @param qualifiedName of the LookerField
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated LookerField, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -519,18 +420,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /**
      * Remove the certificate from a LookerField.
      *
-     * @param qualifiedName of the LookerField
-     * @param name of the LookerField
-     * @return the updated LookerField, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a LookerField.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the LookerField's certificate
      * @param qualifiedName of the LookerField
      * @param name of the LookerField
@@ -540,21 +429,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (LookerField) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a LookerField.
-     *
-     * @param qualifiedName of the LookerField
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -578,18 +452,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /**
      * Remove the announcement from a LookerField.
      *
-     * @param qualifiedName of the LookerField
-     * @param name of the LookerField
-     * @return the updated LookerField, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a LookerField.
-     *
      * @param client connectivity to the Atlan client from which to remove the LookerField's announcement
      * @param qualifiedName of the LookerField
      * @param name of the LookerField
@@ -599,20 +461,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (LookerField) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the LookerField.
-     *
-     * @param qualifiedName for the LookerField
-     * @param name human-readable name of the LookerField
-     * @param terms the list of terms to replace on the LookerField, or null to remove all terms from the LookerField
-     * @return the LookerField that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -628,20 +476,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the LookerField, without replacing existing terms linked to the LookerField.
-     * Note: this operation must make two API calls — one to retrieve the LookerField's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the LookerField
-     * @param terms the list of terms to append to the LookerField
-     * @return the LookerField that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -665,20 +499,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * Note: this operation must make two API calls — one to retrieve the LookerField's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the LookerField
-     * @param terms the list of terms to remove from the LookerField, which must be referenced by GUID
-     * @return the LookerField that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerField removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a LookerField, without replacing all existing terms linked to the LookerField.
-     * Note: this operation must make two API calls — one to retrieve the LookerField's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the LookerField
      * @param qualifiedName for the LookerField
      * @param terms the list of terms to remove from the LookerField, which must be referenced by GUID
@@ -695,20 +515,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * Note: this operation must make two API calls — one to retrieve the LookerField's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the LookerField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated LookerField
-     */
-    public static LookerField appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a LookerField, without replacing existing Atlan tags linked to the LookerField.
-     * Note: this operation must make two API calls — one to retrieve the LookerField's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the LookerField
      * @param qualifiedName of the LookerField
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -718,35 +524,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (LookerField) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a LookerField, without replacing existing Atlan tags linked to the LookerField.
-     * Note: this operation must make two API calls — one to retrieve the LookerField's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the LookerField
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated LookerField
-     */
-    public static LookerField appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -779,17 +556,6 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a LookerField.
-     *
-     * @param qualifiedName of the LookerField
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the LookerField
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

@@ -4,6 +4,8 @@ package com.atlan.pkg.lftag
 
 import AssetImportCfg
 import LakeFormationTagSyncCfg
+import com.atlan.AtlanClient
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.lftag.model.LFTagData
@@ -29,24 +31,19 @@ object LakeTagSynchronizer {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<LakeFormationTagSyncCfg>()
-        val failOnErrors = Utils.getOrDefault(config.failOnErrors, true)
-        val removeSchema = Utils.getOrDefault(config.removeSchema, false)
-        val results = sync(config, outputDirectory, failOnErrors, removeSchema)
-        if (!results && failOnErrors) {
-            logger.error { "Some errors detected, failing the workflow." }
-            exitProcess(1)
+        Utils.initializeContext<LakeFormationTagSyncCfg>().use { ctx ->
+            val results = sync(ctx, outputDirectory)
+            if (!results && ctx.config.failOnErrors) {
+                logger.error { "Some errors detected, failing the workflow." }
+                exitProcess(1)
+            }
         }
     }
 
     private fun sync(
-        config: LakeFormationTagSyncCfg,
+        ctx: PackageContext<LakeFormationTagSyncCfg>,
         outputDirectory: String,
-        failOnErrors: Boolean,
-        removeSchema: Boolean,
     ): Boolean {
-        val skipObjectStore = Utils.getOrDefault(config.importType, "CLOUD") == "DIRECT"
-        val batchSize = Utils.getOrDefault(config.batchSize, 20)
         var anyFailure = false
 
         val mapper = jacksonObjectMapper()
@@ -55,7 +52,7 @@ object LakeTagSynchronizer {
             Utils.getInputFiles(
                 "$outputDirectory/$OUTPUT_SUBDIR",
                 outputDirectory,
-                skipObjectStore,
+                ctx.config.importType == "DIRECT",
                 "",
             )
         val tagFileNames = mutableListOf<String>()
@@ -85,24 +82,27 @@ object LakeTagSynchronizer {
         val csvProducer = CSVProducer(connectionMap, metadataMap)
         tagFileNames.forEach { tagFileName ->
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
-            val lfTagData = createMissingEnums(tagFileName, mapper, metadataMap)
-            csvProducer.transform(lfTagData, csvFileName, removeSchema)
+            val lfTagData = createMissingEnums(ctx.client, tagFileName, mapper, metadataMap)
+            csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema)
             val importConfig =
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = failOnErrors,
-                    assetsBatchSize = batchSize,
+                    assetsFailOnErrors = ctx.config.failOnErrors,
+                    assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ",",
                 )
-            val result = Importer.import(importConfig, outputDirectory)
-            anyFailure = anyFailure || result?.anyFailures ?: false
-            result?.close() // Clean up the results if we won't use them
+            Utils.initializeContext(importConfig, ctx).use { iCtx ->
+                val result = Importer.import(iCtx, outputDirectory)
+                anyFailure = anyFailure || result?.anyFailures ?: false
+                result?.close() // Clean up the results if we won't use them
+            }
         }
         return !anyFailure
     }
 
     private fun createMissingEnums(
+        client: AtlanClient,
         tagFileName: String,
         mapper: ObjectMapper,
         metadataMap: MutableMap<String, String>,
@@ -110,7 +110,7 @@ object LakeTagSynchronizer {
         val jsonString: String = File(tagFileName).readText(Charsets.UTF_8)
         val tagData = mapper.readValue(jsonString, LFTagData::class.java)
         val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
-        val enumCreator = EnumCreator(tagToMetadataMapper)
+        val enumCreator = EnumCreator(client, tagToMetadataMapper)
         tagData.tagValuesByTagKey.forEach { entry ->
             enumCreator.createOptions(entry.key, entry.value)
         }

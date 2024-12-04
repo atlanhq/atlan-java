@@ -2,14 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
+import com.atlan.pkg.PackageContext
 import mu.KotlinLogging
 
-object GlossaryCache : AssetCache<Glossary>("glossary") {
+class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glossary") {
     private val logger = KotlinLogging.logger {}
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
@@ -23,7 +23,7 @@ object GlossaryCache : AssetCache<Glossary>("glossary") {
     /** {@inheritDoc}  */
     private fun lookupByIdentity(identity: String?): Glossary? {
         try {
-            return Glossary.findByName(identity)
+            return Glossary.findByName(client, identity)
         } catch (e: AtlanException) {
             logger.warn { "Unable to find glossary: $identity" }
             logger.debug(e) { "Full details: " }
@@ -34,7 +34,7 @@ object GlossaryCache : AssetCache<Glossary>("glossary") {
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, Atlan.getDefaultClient().maxNetworkRetries)
+        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
@@ -46,7 +46,7 @@ object GlossaryCache : AssetCache<Glossary>("glossary") {
     ): Glossary? {
         try {
             val glossary =
-                Glossary.select()
+                Glossary.select(client)
                     .where(Glossary.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -77,9 +77,9 @@ object GlossaryCache : AssetCache<Glossary>("glossary") {
 
     /** {@inheritDoc} */
     override fun refreshCache() {
-        val count = Glossary.select().count()
+        val count = Glossary.select(client).count()
         logger.info { "Caching all $count glossaries, up-front..." }
-        Glossary.select()
+        Glossary.select(client)
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { glossary ->

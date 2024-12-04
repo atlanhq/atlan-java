@@ -47,6 +47,7 @@ uiConfig {
           default = "BY_VIEWS"
           helpText = "If including most-viewed assets, whether to include number of distinct users or raw view count as more important."
           required = true
+          fallback = default
         }
         ["views_max"] = new NumericInput {
           title = "Maximum assets"
@@ -54,6 +55,7 @@ uiConfig {
           required = false
           placeholderValue = 100
           width = 4
+          fallback = placeholderValue
         }
         ["views_details"] = new Radio {
           title = "Include details"
@@ -64,6 +66,7 @@ uiConfig {
           default = "NO"
           helpText = "Include detailed results for every single user view of an asset?"
           required = true
+          fallback = default
         }
         ["views_from"] = new DateInput {
           title = "From date"
@@ -73,6 +76,7 @@ uiConfig {
           future = -1 // maximum from would be yesterday
           defaultDay = -90
           width = 4
+          fallback = defaultDay
         }
         ["views_to"] = new DateInput {
           title = "To date"
@@ -81,6 +85,7 @@ uiConfig {
           past = -89 // maximum to would be 89 days ago
           defaultDay = 0 // start with today
           width = 4
+          fallback = defaultDay
         }
       }
     }
@@ -96,12 +101,14 @@ uiConfig {
           default = "NO"
           helpText = "Whether to include changes to assets (Yes) or not (No)."
           required = true
+          fallback = default
         }
         ["changes_by_user"] = new MultipleUsers {
           title = "Limit to user"
           helpText = "Only extract changes by the selected users (leave empty for all users)."
           required = false
           width = 4
+          fallback = List()
         }
         ["changes_types"] = new DropDown {
           title = "Limit by action"
@@ -123,6 +130,7 @@ uiConfig {
           multiSelect = true
           required = false
           width = 4
+          fallback = List()
         }
         ["changes_from"] = new DateInput {
           title = "From date"
@@ -132,6 +140,7 @@ uiConfig {
           future = -1 // maximum from would be yesterday
           defaultDay = -90
           width = 4
+          fallback = defaultDay
         }
         ["changes_to"] = new DateInput {
           title = "To date"
@@ -140,6 +149,7 @@ uiConfig {
           past = -89 // maximum to would be 89 days ago
           defaultDay = 0 // start with today
           width = 4
+          fallback = defaultDay
         }
         ["changes_max"] = new NumericInput {
           title = "Maximum assets"
@@ -147,6 +157,7 @@ uiConfig {
           required = false
           placeholderValue = 100
           width = 4
+          fallback = placeholderValue
         }
         ["changes_details"] = new Radio {
           title = "Include details"
@@ -157,6 +168,7 @@ uiConfig {
           default = "NO"
           helpText = "Include detailed results for every single asset change?"
           required = true
+          fallback = default
         }
         ["changes_automations"] = new Radio {
           title = "Include automations"
@@ -169,6 +181,7 @@ uiConfig {
           default = "NONE"
           helpText = "Include detailed results for assets changed through the selected automation mechanisms."
           required = false
+          fallback = default
         }
       }
     }
@@ -184,6 +197,7 @@ uiConfig {
             ["NO"] = "No"
           }
           default = "NO"
+          fallback = default
         }
         ["searches_from"] = new DateInput {
           title = "From date"
@@ -193,6 +207,7 @@ uiConfig {
           future = -1 // maximum from would be yesterday
           defaultDay = -90
           width = 4
+          fallback = defaultDay
         }
         ["searches_to"] = new DateInput {
           title = "To date"
@@ -201,6 +216,7 @@ uiConfig {
           past = -89 // maximum to would be 89 days ago
           defaultDay = 0 // start with today
           width = 4
+          fallback = defaultDay
         }
       }
     }
@@ -217,6 +233,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["email_addresses"] = new TextInput {
           title = "Email address(es)"

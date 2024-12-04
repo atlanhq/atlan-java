@@ -43,42 +43,6 @@
      * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the glossary, if found.
      *
-     * @param name of the Glossary
-     * @return the Glossary, if found
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public static Glossary findByName(String name) throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a Glossary by its human-readable name.
-     *
-     * @param name of the Glossary
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the Glossary
-     * @return the Glossary, if found
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Glossary by its human-readable name.
-     *
-     * @param name of the Glossary
-     * @param attributes an optional collection of attributes (checked) to retrieve for the Glossary
-     * @return the Glossary, if found
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public static Glossary findByName(String name, List<AtlanField> attributes) throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a Glossary by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the glossary, if found.
-     *
      * @param client connectivity to the Atlan tenant on which to search for the Glossary
      * @param name of the Glossary
      * @return the Glossary, if found
@@ -147,16 +111,6 @@
     /**
      * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
      *
-     * @return list of all glossary qualifiedNames
-     * @throws AtlanException on any API problems
-     */
-    public static List<String> getAllQualifiedNames() throws AtlanException {
-        return getAllQualifiedNames(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Retrieve the qualifiedNames of all glossaries that exist in Atlan.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
      * @return list of all glossary qualifiedNames
      * @throws AtlanException on any API problems
@@ -175,73 +129,12 @@
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.
      *
-     * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public CategoryHierarchy getHierarchy() throws AtlanException {
-        return getHierarchy(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
-     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
-     * order. Both return an ordered list of {@link GlossaryCategory} objects.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
      * @return a traversable category hierarchy
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(AtlanClient client) throws AtlanException {
         return getHierarchy(client, (List<AtlanField>) null);
-    }
-
-    /**
-     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
-     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
-     * order. Both return an ordered list of {@link GlossaryCategory} objects.
-     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
-     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
-     * to this method.
-     *
-     * @param attributes (unchecked) to retrieve for each category in the hierarchy
-     * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public CategoryHierarchy getHierarchy(Collection<String> attributes) throws AtlanException {
-        return getHierarchy(Atlan.getDefaultClient(), attributes);
-    }
-
-    /**
-     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
-     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
-     * order. Both return an ordered list of {@link GlossaryCategory} objects.
-     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
-     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
-     * to this method.
-     *
-     * @param attributes (checked) to retrieve for each category in the hierarchy
-     * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public CategoryHierarchy getHierarchy(List<AtlanField> attributes) throws AtlanException {
-        return getHierarchy(Atlan.getDefaultClient(), attributes);
-    }
-
-    /**
-     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
-     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
-     * order. Both return an ordered list of {@link GlossaryCategory} objects.
-     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
-     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
-     * to this method.
-     *
-     * @param attributes (checked) to retrieve for each category in the hierarchy
-     * @param relatedAttributes (checked) to retrieve for each relationship attribute retrieved for each category in the hierarchy
-     * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the Glossary does not exist
-     */
-    public CategoryHierarchy getHierarchy(List<AtlanField> attributes, List<AtlanField> relatedAttributes) throws AtlanException {
-        return getHierarchy(Atlan.getDefaultClient(), attributes, relatedAttributes);
     }
 
     /**
@@ -442,18 +335,6 @@
     /**
      * Remove the system description from a Glossary.
      *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @return the updated Glossary, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a Glossary.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Glossary's description
      * @param qualifiedName of the Glossary
      * @param name of the Glossary
@@ -463,18 +344,6 @@
     public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
                 Asset.removeDescription(client, _internal().qualifiedName(qualifiedName).name(name));
-    }
-
-    /**
-     * Remove the user's description from a Glossary.
-     *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @return the updated Glossary, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -494,18 +363,6 @@
     /**
      * Remove the owners from a Glossary.
      *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @return the updated Glossary, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a Glossary.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Glossary's owners
      * @param qualifiedName of the Glossary
      * @param name of the Glossary
@@ -515,22 +372,6 @@
     public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
                 Asset.removeOwners(client, _internal().qualifiedName(qualifiedName).name(name));
-    }
-
-    /**
-     * Update the certificate on a Glossary.
-     *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Glossary, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary updateCertificate(
-            String qualifiedName, String name, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, name, certificate, message);
     }
 
     /**
@@ -553,18 +394,6 @@
     /**
      * Remove the certificate from a Glossary.
      *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @return the updated Glossary, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a Glossary.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Glossary's certificate
      * @param qualifiedName of the Glossary
      * @param name of the Glossary
@@ -574,23 +403,6 @@
     public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Glossary)
                 Asset.removeCertificate(client, _internal().qualifiedName(qualifiedName).name(name));
-    }
-
-    /**
-     * Update the announcement on a Glossary.
-     *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary updateAnnouncement(
-            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
-            throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, type, title, message);
     }
 
     /**
@@ -610,18 +422,6 @@
             throws AtlanException {
         return (Glossary)
                 Asset.updateAnnouncement(client, _internal().name(name), TYPE_NAME, qualifiedName, type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a Glossary.
-     *
-     * @param qualifiedName of the Glossary
-     * @param name of the Glossary
-     * @return the updated Glossary, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Glossary removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**

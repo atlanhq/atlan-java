@@ -2,7 +2,6 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag
 
-import com.atlan.Atlan
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
 import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
@@ -34,8 +33,8 @@ class EnumCreatorTest : PackageTest("en") {
                 TAG_KEY_STRING to "$cm1::$ATTR2",
             ),
         )
-    private val enumCreator = EnumCreator(tagToMetadataMapper)
-    private val enumCache = Atlan.getDefaultClient().enumCache
+    private val enumCreator = EnumCreator(client, tagToMetadataMapper)
+    private val enumCache = client.enumCache
 
     private fun createEnum() {
         val enumDef =
@@ -44,15 +43,15 @@ class EnumCreatorTest : PackageTest("en") {
                 listOf(ONE, FOUR),
             )
                 .build()
-        enumDef.create()
+        enumDef.create(client)
     }
 
     private fun createCustomMetadata() {
         CustomMetadataDef.creator(cm1)
-            .attributeDef(AttributeDef.of(ATTR1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
-            .attributeDef(AttributeDef.of(ATTR2, AtlanCustomAttributePrimitiveType.STRING, enum1, false))
+            .attributeDef(AttributeDef.of(client, ATTR1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
+            .attributeDef(AttributeDef.of(client, ATTR2, AtlanCustomAttributePrimitiveType.STRING, enum1, false))
             .build()
-            .create()
+            .create(client)
     }
 
     override fun setup() {
@@ -92,8 +91,7 @@ class EnumCreatorTest : PackageTest("en") {
     }
 
     override fun teardown() {
-        val client = Atlan.getDefaultClient()
         client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
-        EnumDef.purge(enum1)
+        EnumDef.purge(client, enum1)
     }
 }

@@ -2,7 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
+import com.atlan.BuildInfo
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
@@ -65,8 +66,6 @@ object Utils {
         logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
-        setClient(config.runtime.userId ?: "")
-        setWorkflowOpts(config.runtime)
         return config
     }
 
@@ -75,7 +74,7 @@ object Utils {
      * assist in case any deeper troubleshooting needs to be done.
      */
     fun logDiagnostics() {
-        logger.debug { "SDK version: ${Atlan.VERSION}" }
+        logger.debug { "SDK version: ${BuildInfo.VERSION}" }
         logger.debug { "Java properties:" }
         System.getProperties().forEach { (k, v) ->
             logger.debug { " ... $k = $v" }
@@ -102,34 +101,42 @@ object Utils {
     }
 
     /**
-     * Set up the default Atlan client, based on environment variables.
+     * Set up the custom package's context.
      * This will use an API token if found in ATLAN_API_KEY, and will fallback to attempting
      * to impersonate a user if ATLAN_API_KEY is empty.
      *
-     * @param impersonateUserId unique identifier (GUID) of a user or API token to impersonate
+     * @param config (optional) configuration for the custom package (will be pulled through {@code setPackageOps} if not provided)
+     * @param reuseCtx (optional) existing context of a running package to reuse
+     * @return connectivity to the Atlan tenant
      */
-    fun setClient(impersonateUserId: String = "") {
+    inline fun <reified T : CustomConfig> initializeContext(
+        config: T = setPackageOps<T>(),
+        reuseCtx: PackageContext<*>? = null,
+    ): PackageContext<T> {
+        if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
+        val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        Atlan.setBaseUrl(baseUrl)
-        val tokenToUse =
-            when {
-                apiToken.isNotEmpty() -> {
-                    logger.info { "Using provided API token for authentication." }
-                    apiToken
-                }
-                userId.isNotEmpty() -> {
-                    logger.info { "No API token found, attempting to impersonate user: $userId" }
-                    Atlan.getDefaultClient().userId = userId
-                    Atlan.getDefaultClient().impersonate.user(userId)
-                }
-                else -> {
-                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                    Atlan.getDefaultClient().impersonate.escalate()
-                }
+        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
+        when {
+            apiToken.isNotEmpty() -> {
+                logger.info { "Using provided API token for authentication." }
             }
-        Atlan.setApiToken(tokenToUse)
+
+            userId.isNotEmpty() -> {
+                logger.info { "No API token found, attempting to impersonate user: $userId" }
+                client.userId = userId
+                client.impersonate.user(userId)
+            }
+
+            else -> {
+                logger.info { "No API token or impersonation user, attempting short-lived escalation." }
+                client.impersonate.escalate()
+            }
+        }
+        setWorkflowOpts(client, config.runtime)
+        return PackageContext(config, client, reuseCtx?.client != null)
     }
 
     /**
@@ -181,17 +188,21 @@ object Utils {
      * Check if the utility is being run through a workflow, and if it is set up the various
      * workflow headers from the relevant environment variables against the default client.
      *
+     * @param client connectivity to the Atlan tenant
      * @param config parameters received through means other than environment variables to use as a fallback
      */
-    fun setWorkflowOpts(config: RuntimeConfig? = null) {
+    fun setWorkflowOpts(
+        client: AtlanClient,
+        config: RuntimeConfig? = null,
+    ) {
         val atlanAgent = getEnvVar("X_ATLAN_AGENT", config?.agent ?: "")
         if (atlanAgent == "workflow") {
-            val headers = Atlan.getDefaultClient().extraHeaders
+            val headers = client.extraHeaders
             headers["x-atlan-agent"] = listOf("workflow")
             headers["x-atlan-agent-package-name"] = listOf(getEnvVar("X_ATLAN_AGENT_PACKAGE_NAME", config?.agentPackageName ?: ""))
             headers["x-atlan-agent-workflow-id"] = listOf(getEnvVar("X_ATLAN_AGENT_WORKFLOW_ID", config?.agentWorkflowId ?: ""))
             headers["x-atlan-agent-id"] = listOf(getEnvVar("X_ATLAN_AGENT_ID", config?.agentId ?: ""))
-            Atlan.getDefaultClient().extraHeaders = headers
+            client.extraHeaders = headers
         }
     }
 
@@ -226,7 +237,10 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
         logger.info { "Constructing configuration from environment variables..." }
+        val envVar = getEnvVar("NESTED_CONFIG")
+        logger.debug { "Raw config from environment variable: $envVar" }
         val runtime = buildRuntimeConfig()
+        logger.debug { "Raw runtime config: $runtime" }
         return parseConfig(getEnvVar("NESTED_CONFIG"), runtime)
     }
 
@@ -245,6 +259,7 @@ object Utils {
         val type = MAPPER.typeFactory.constructType(T::class.java)
         val cfg = MAPPER.readValue<T>(config, type)
         cfg.runtime = MAPPER.readValue(runtime, RuntimeConfig::class.java)
+        logger.debug { "Parsed configuration: ${MAPPER.writeValueAsString(cfg)}" }
         return cfg
     }
 
@@ -372,30 +387,36 @@ object Utils {
      * - it is unable to even parse the specified connection details (rc = 2)
      * - it is unable to create a new connection with the specified details (rc = 3)
      *
+     * @param client connectivity to the Atlan tenant
      * @param action to take: CREATE to create a new connection, or REUSE to reuse an existing connection (default if empty)
      * @param connectionQN qualifiedName of the connection to reuse (only applies when action is REUSE)
      * @param connection connection object to use to create a new connection (only applies when action is CREATE)
      * @return the qualifiedName of the connection to use, whether reusing or creating, or an empty string if neither variable has any data in it
      */
     fun createOrReuseConnection(
+        client: AtlanClient,
         action: String?,
         connectionQN: String?,
         connection: Connection?,
     ): String {
         return if (getOrDefault(action, "REUSE") == "REUSE") {
-            reuseConnection(connectionQN)
+            reuseConnection(client, connectionQN)
         } else {
-            createConnection(connection)
+            createConnection(client, connection)
         }
     }
 
     /**
      * Create a connection using the details provided.
      *
+     * @param client connectivity to the Atlan tenant
      * @param connection a connection object, defining the connection to be created
      * @return the qualifiedName of the connection that is created, or an empty string if no connection details were provided
      */
-    fun createConnection(connection: Connection?): String {
+    fun createConnection(
+        client: AtlanClient,
+        connection: Connection?,
+    ): String {
         return if (connection != null) {
             logger.info { "Attempting to create new connection..." }
             try {
@@ -404,7 +425,7 @@ object Utils {
                         .toBuilder()
                         .guid("-${ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1)}")
                         .build()
-                val response = toCreate.save().block()
+                val response = toCreate.save(client).block()
                 response?.getResult(toCreate)?.qualifiedName ?: toCreate.qualifiedName
             } catch (e: AtlanException) {
                 logger.error("Unable to create connection: {}", connection, e)
@@ -436,14 +457,18 @@ object Utils {
     /**
      * Validate the provided connection exists, and if so return its qualifiedName.
      *
+     * @param client connectivity to the Atlan tenant
      * @param providedConnectionQN qualifiedName of connection to reuse
      * @return the qualifiedName of the connection, so long as it exists, otherwise an empty string
      */
-    fun reuseConnection(providedConnectionQN: String?): String {
+    fun reuseConnection(
+        client: AtlanClient,
+        providedConnectionQN: String?,
+    ): String {
         return providedConnectionQN?.let {
             try {
                 logger.info { "Attempting to reuse connection: $providedConnectionQN" }
-                Connection.get(Atlan.getDefaultClient(), providedConnectionQN, false)
+                Connection.get(client, providedConnectionQN, false)
                 providedConnectionQN
             } catch (e: NotFoundException) {
                 logger.error("Unable to find connection with the provided qualifiedName: {}", providedConnectionQN, e)
@@ -492,30 +517,39 @@ object Utils {
     /**
      * Return a URL that will link directly to an asset in Atlan.
      *
+     * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
      */
-    fun getAssetLink(guid: String): String {
-        return getLink(guid, "assets")
+    fun getAssetLink(
+        client: AtlanClient,
+        guid: String,
+    ): String {
+        return getLink(client, guid, "assets")
     }
 
     /**
      * Return a URL that will link directly to a data product or data domain in Atlan.
      *
+     * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
      */
-    fun getProductLink(guid: String): String {
-        return getLink(guid, "products")
+    fun getProductLink(
+        client: AtlanClient,
+        guid: String,
+    ): String {
+        return getLink(client, guid, "products")
     }
 
     private fun getLink(
+        client: AtlanClient,
         guid: String,
         prefix: String,
     ): String {
         val base =
-            if (Atlan.getDefaultClient().isInternal || Atlan.getBaseUrl() == null) {
+            if (client.isInternal || client.baseUrl == null) {
                 "https://${getEnvVar("DOMAIN", "atlan.com")}"
             } else {
-                Atlan.getBaseUrl()
+                client.baseUrl
             }
         return "$base/$prefix/$guid/overview"
     }
@@ -808,16 +842,18 @@ object Utils {
     /**
      * Update the connection cache for the provided assets.
      *
+     * @param client connectivity to the Atlan tenant
      * @param added assets that were added
      * @param removed assets that were deleted
      * @param fallback directory to use for a fallback backing store for the cache
      */
     fun updateConnectionCache(
+        client: AtlanClient,
         added: OffHeapAssetCache? = null,
         removed: OffHeapAssetCache? = null,
         fallback: String = Paths.get(separator, "tmp").toString(),
     ) {
-        val map = CacheUpdates.build(added, removed)
+        val map = CacheUpdates.build(client, added, removed)
         logger.info { "Updating connection caches for ${map.size} connections..." }
         val sync = getBackingStore(fallback)
         for ((connectionQN, cacheUpdates) in map) {
@@ -856,10 +892,10 @@ object Utils {
     ) : Closeable {
         companion object {
             fun build(
+                client: AtlanClient,
                 add: OffHeapAssetCache?,
                 remove: OffHeapAssetCache?,
             ): Map<String, CacheUpdates> {
-                val client = Atlan.getDefaultClient()
                 val map = mutableMapOf<String, CacheUpdates>()
                 add?.values()?.forEach { asset ->
                     val connectionQN = asset.connectionQualifiedName

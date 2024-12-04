@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -38,7 +37,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
 
     @Test(groups = {"aeh.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -47,7 +46,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
     void createHub1() throws AtlanException {
         AzureEventHub azureEventHub =
                 AzureEventHub.creator(HUB_NAME1, connection.getQualifiedName()).build();
-        AssetMutationResponse response = azureEventHub.save();
+        AssetMutationResponse response = azureEventHub.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AzureEventHub);
         hub1 = (AzureEventHub) one;
@@ -63,7 +62,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
     void createHub2() throws AtlanException {
         AzureEventHub azureEventHub =
                 AzureEventHub.creator(HUB_NAME2, connection.getQualifiedName()).build();
-        AssetMutationResponse response = azureEventHub.save();
+        AssetMutationResponse response = azureEventHub.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AzureEventHub);
         hub2 = (AzureEventHub) one;
@@ -79,7 +78,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
     void createConsumerGroup() throws AtlanException {
         AzureEventHubConsumerGroup cg = AzureEventHubConsumerGroup.creatorObj(CG_NAME, List.of(hub1, hub2))
                 .build();
-        AssetMutationResponse response = cg.save();
+        AssetMutationResponse response = cg.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 2);
@@ -110,11 +109,11 @@ public class AzureEventHubTest extends AtlanLiveTest {
             dependsOnGroups = {"aeh.create.consumergroup"})
     void updateGroup() throws AtlanException {
         AzureEventHubConsumerGroup updated = AzureEventHubConsumerGroup.updateCertificate(
-                consumerGroup.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, consumerGroup.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         updated = AzureEventHubConsumerGroup.updateAnnouncement(
-                consumerGroup.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, consumerGroup.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -125,7 +124,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.read.consumergroup"},
             dependsOnGroups = {"aeh.create.consumergroup", "aeh.update.consumergroup"})
     void retrieveGroup() throws AtlanException {
-        AzureEventHubConsumerGroup b = AzureEventHubConsumerGroup.get(consumerGroup.getGuid());
+        AzureEventHubConsumerGroup b = AzureEventHubConsumerGroup.get(client, consumerGroup.getGuid(), true);
         assertNotNull(b);
         assertTrue(b.isComplete());
         assertEquals(b.getGuid(), consumerGroup.getGuid());
@@ -151,14 +150,14 @@ public class AzureEventHubTest extends AtlanLiveTest {
             dependsOnGroups = {"aeh.read.consumergroup"})
     void updateGroupAgain() throws AtlanException {
         AzureEventHubConsumerGroup updated =
-                AzureEventHubConsumerGroup.removeCertificate(consumerGroup.getQualifiedName(), CG_NAME);
+                AzureEventHubConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AzureEventHubConsumerGroup.removeAnnouncement(consumerGroup.getQualifiedName(), CG_NAME);
+        updated = AzureEventHubConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -169,8 +168,7 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.search.assets"},
             dependsOnGroups = {"aeh.update.consumergroup.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.SUPER_TYPE_NAMES.eq(IKafka.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -226,7 +224,8 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.delete.consumergroup"},
             dependsOnGroups = {"aeh.update.*", "aeh.search.*"})
     void deleteGroup() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(consumerGroup.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -251,8 +250,9 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.delete.consumergroup.restore"},
             dependsOnGroups = {"aeh.delete.consumergroup.read"})
     void restoreGroup() throws AtlanException {
-        assertTrue(AzureEventHubConsumerGroup.restore(consumerGroup.getQualifiedName()));
-        AzureEventHubConsumerGroup restored = AzureEventHubConsumerGroup.get(consumerGroup.getQualifiedName());
+        assertTrue(AzureEventHubConsumerGroup.restore(client, consumerGroup.getQualifiedName()));
+        AzureEventHubConsumerGroup restored = AzureEventHubConsumerGroup.get(client, consumerGroup.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), consumerGroup.getGuid());
         assertEquals(restored.getQualifiedName(), consumerGroup.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -262,7 +262,8 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.purge.consumergroup"},
             dependsOnGroups = {"aeh.delete.consumergroup.restore"})
     void purgeGroup() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(consumerGroup.getGuid());
+        AssetMutationResponse response =
+                Asset.purge(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -281,6 +282,6 @@ public class AzureEventHubTest extends AtlanLiveTest {
             dependsOnGroups = {"aeh.create.*", "aeh.read.*", "aeh.search.*", "aeh.update.*", "aeh.purge.consumergroup"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

@@ -92,9 +92,6 @@ configurations.all {
             versionCatalogs.named("libs").findLibrary("parsson").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("json-path").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("guava").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("protobuf-java").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("protobuf-java-util").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("akka-actor").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-compress").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
         )

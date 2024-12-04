@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -119,36 +118,11 @@ public class Cognite3DModel extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) Cognite3DModel assets will be included.
      *
-     * @return a fluent search that includes all Cognite3DModel assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all Cognite3DModel assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) Cognite3DModel assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all Cognite3DModel assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all Cognite3DModel assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) Cognite3DModels will be included
-     * @return a fluent search that includes all Cognite3DModel assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -225,18 +199,6 @@ public class Cognite3DModel extends Asset
     /**
      * Retrieves a Cognite3DModel by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the Cognite3DModel to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full Cognite3DModel, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Cognite3DModel does not exist or the provided GUID is not a Cognite3DModel
-     */
-    @JsonIgnore
-    public static Cognite3DModel get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a Cognite3DModel by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Cognite3DModel to retrieve, either its GUID or its full qualifiedName
      * @return the requested full Cognite3DModel, complete with all of its relationships
@@ -244,7 +206,7 @@ public class Cognite3DModel extends Asset
      */
     @JsonIgnore
     public static Cognite3DModel get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -278,17 +240,6 @@ public class Cognite3DModel extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Cognite3DModel to active.
-     *
-     * @param qualifiedName for the Cognite3DModel
-     * @return true if the Cognite3DModel is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -336,18 +287,6 @@ public class Cognite3DModel extends Asset
     /**
      * Remove the system description from a Cognite3DModel.
      *
-     * @param qualifiedName of the Cognite3DModel
-     * @param name of the Cognite3DModel
-     * @return the updated Cognite3DModel, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a Cognite3DModel.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the Cognite3DModel
      * @param name of the Cognite3DModel
@@ -357,18 +296,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Cognite3DModel) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a Cognite3DModel.
-     *
-     * @param qualifiedName of the Cognite3DModel
-     * @param name of the Cognite3DModel
-     * @return the updated Cognite3DModel, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -388,18 +315,6 @@ public class Cognite3DModel extends Asset
     /**
      * Remove the owners from a Cognite3DModel.
      *
-     * @param qualifiedName of the Cognite3DModel
-     * @param name of the Cognite3DModel
-     * @return the updated Cognite3DModel, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a Cognite3DModel.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Cognite3DModel's owners
      * @param qualifiedName of the Cognite3DModel
      * @param name of the Cognite3DModel
@@ -409,20 +324,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Cognite3DModel) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a Cognite3DModel.
-     *
-     * @param qualifiedName of the Cognite3DModel
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Cognite3DModel, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -445,18 +346,6 @@ public class Cognite3DModel extends Asset
     /**
      * Remove the certificate from a Cognite3DModel.
      *
-     * @param qualifiedName of the Cognite3DModel
-     * @param name of the Cognite3DModel
-     * @return the updated Cognite3DModel, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a Cognite3DModel.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the Cognite3DModel's certificate
      * @param qualifiedName of the Cognite3DModel
      * @param name of the Cognite3DModel
@@ -466,21 +355,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Cognite3DModel) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a Cognite3DModel.
-     *
-     * @param qualifiedName of the Cognite3DModel
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -504,18 +378,6 @@ public class Cognite3DModel extends Asset
     /**
      * Remove the announcement from a Cognite3DModel.
      *
-     * @param qualifiedName of the Cognite3DModel
-     * @param name of the Cognite3DModel
-     * @return the updated Cognite3DModel, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a Cognite3DModel.
-     *
      * @param client connectivity to the Atlan client from which to remove the Cognite3DModel's announcement
      * @param qualifiedName of the Cognite3DModel
      * @param name of the Cognite3DModel
@@ -525,20 +387,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (Cognite3DModel) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the Cognite3DModel.
-     *
-     * @param qualifiedName for the Cognite3DModel
-     * @param name human-readable name of the Cognite3DModel
-     * @param terms the list of terms to replace on the Cognite3DModel, or null to remove all terms from the Cognite3DModel
-     * @return the Cognite3DModel that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -554,20 +402,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Cognite3DModel) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Cognite3DModel, without replacing existing terms linked to the Cognite3DModel.
-     * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Cognite3DModel
-     * @param terms the list of terms to append to the Cognite3DModel
-     * @return the Cognite3DModel that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -591,20 +425,6 @@ public class Cognite3DModel extends Asset
      * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the Cognite3DModel
-     * @param terms the list of terms to remove from the Cognite3DModel, which must be referenced by GUID
-     * @return the Cognite3DModel that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Cognite3DModel removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Cognite3DModel, without replacing all existing terms linked to the Cognite3DModel.
-     * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the Cognite3DModel
      * @param qualifiedName for the Cognite3DModel
      * @param terms the list of terms to remove from the Cognite3DModel, which must be referenced by GUID
@@ -621,21 +441,6 @@ public class Cognite3DModel extends Asset
      * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the Cognite3DModel
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated Cognite3DModel
-     */
-    public static Cognite3DModel appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Cognite3DModel, without replacing existing Atlan tags linked to the Cognite3DModel.
-     * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Cognite3DModel
      * @param qualifiedName of the Cognite3DModel
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -645,35 +450,6 @@ public class Cognite3DModel extends Asset
     public static Cognite3DModel appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Cognite3DModel) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a Cognite3DModel, without replacing existing Atlan tags linked to the Cognite3DModel.
-     * Note: this operation must make two API calls — one to retrieve the Cognite3DModel's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the Cognite3DModel
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated Cognite3DModel
-     */
-    public static Cognite3DModel appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -706,17 +482,6 @@ public class Cognite3DModel extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a Cognite3DModel.
-     *
-     * @param qualifiedName of the Cognite3DModel
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Cognite3DModel
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

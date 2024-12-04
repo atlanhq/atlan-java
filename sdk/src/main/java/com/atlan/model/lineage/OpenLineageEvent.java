@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -79,15 +78,6 @@ public class OpenLineageEvent extends AtlanObject {
                 .run(run.get_run())
                 .job(run.getJob().get_job());
         return _internal().run(run)._builder(b);
-    }
-
-    /**
-     * Send the OpenLineage event to Atlan to be processed.
-     *
-     * @throws AtlanException on any API communication issues
-     */
-    public void emit() throws AtlanException {
-        emit(Atlan.getDefaultClient());
     }
 
     /**

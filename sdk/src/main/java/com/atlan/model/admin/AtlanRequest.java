@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
@@ -181,30 +180,11 @@ public abstract class AtlanRequest extends AtlanObject {
     /**
      * Create the request in Atlan that is represented by this object.
      *
-     * @throws AtlanException on any API interaction issues
-     */
-    public void create() throws AtlanException {
-        create(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Create the request in Atlan that is represented by this object.
-     *
      * @param client connectivity to the Atlan tenant in which to create the request
      * @throws AtlanException on any API interaction issues
      */
     public void create(AtlanClient client) throws AtlanException {
         client.requests.create(this);
-    }
-
-    /**
-     * Retrieve the list of requests defined in Atlan as you would via the Admin UI.
-     *
-     * @return a list of all the requests in Atlan
-     * @throws AtlanException on any API communication issue
-     */
-    public static AtlanRequestResponse list() throws AtlanException {
-        return list(Atlan.getDefaultClient());
     }
 
     /**
@@ -216,17 +196,6 @@ public abstract class AtlanRequest extends AtlanObject {
      */
     public static AtlanRequestResponse list(AtlanClient client) throws AtlanException {
         return client.requests.list();
-    }
-
-    /**
-     * Fetch a single request by its unique identifier (GUID).
-     *
-     * @param guid unique identifier (GUID) of the request to fetch.
-     * @return the single request, or null if none was found
-     * @throws AtlanException on any API communication issue
-     */
-    public static AtlanRequest retrieveByGuid(String guid) throws AtlanException {
-        return retrieveByGuid(Atlan.getDefaultClient(), guid);
     }
 
     /**
@@ -244,18 +213,6 @@ public abstract class AtlanRequest extends AtlanObject {
     /**
      * Approve the specified request in Atlan.
      *
-     * @param guid unique identifier (GUID) of the request to approve
-     * @param message (optional) message to include with the approval
-     * @return true if the approval succeeded, otherwise false
-     * @throws AtlanException on any API interaction issues
-     */
-    public static boolean approve(String guid, String message) throws AtlanException {
-        return approve(Atlan.getDefaultClient(), guid, message);
-    }
-
-    /**
-     * Approve the specified request in Atlan.
-     *
      * @param client connectivity to the Atlan tenant in which to approve the request
      * @param guid unique identifier (GUID) of the request to approve
      * @param message (optional) message to include with the approval
@@ -264,18 +221,6 @@ public abstract class AtlanRequest extends AtlanObject {
      */
     public static boolean approve(AtlanClient client, String guid, String message) throws AtlanException {
         return client.requests.approve(guid, message);
-    }
-
-    /**
-     * Reject the specified request in Atlan.
-     *
-     * @param guid unique identifier (GUID) of the request to reject
-     * @param message (optional) message to include with the rejection
-     * @return true if the rejection succeeded, otherwise false
-     * @throws AtlanException on any API interaction issues
-     */
-    public static boolean reject(String guid, String message) throws AtlanException {
-        return reject(Atlan.getDefaultClient(), guid, message);
     }
 
     /**

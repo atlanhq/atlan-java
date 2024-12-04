@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -33,20 +32,6 @@ public class ConnectionTest extends AtlanLiveTest {
     /**
      * Create a new connection with a unique name.
      *
-     * @param prefix to make the connection unique
-     * @param type of the connection to create
-     * @return the connection that was created
-     * @throws AtlanException on any error creating or reading-back the connection
-     * @throws InterruptedException if the creation retry loop was interrupted
-     */
-    public static Connection createConnection(String prefix, AtlanConnectorType type)
-            throws AtlanException, InterruptedException {
-        return createConnection(Atlan.getDefaultClient(), prefix, type);
-    }
-
-    /**
-     * Create a new connection with a unique name.
-     *
      * @param client connectivity to the Atlan tenant in which to create the connection
      * @param prefix to make the connection unique
      * @param type of the connection to create
@@ -61,19 +46,19 @@ public class ConnectionTest extends AtlanLiveTest {
                 .build();
         AssetMutationResponse response = null;
         int retryCount = 0;
-        while (response == null && retryCount < Atlan.getMaxNetworkRetries()) {
+        while (response == null && retryCount < client.getMaxNetworkRetries()) {
             retryCount++;
             try {
                 response = connection.save(client).block();
             } catch (InvalidRequestException e) {
-                if (retryCount < Atlan.getMaxNetworkRetries()) {
+                if (retryCount < client.getMaxNetworkRetries()) {
                     if (e.getCode() != null
                             && e.getCode().equals("ATLAN-JAVA-400-000")
                             && e.getMessage().equals("Server responded with ATLAS-400-00-029: Auth request failed")) {
                         Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
                     }
                 } else {
-                    log.error("Overran retry limit ({}), rethrowing exception.", Atlan.getMaxNetworkRetries());
+                    log.error("Overran retry limit ({}), rethrowing exception.", client.getMaxNetworkRetries());
                     throw e;
                 }
             }
@@ -89,19 +74,6 @@ public class ConnectionTest extends AtlanLiveTest {
         assertNotNull(connection.getQualifiedName());
         assertEquals(connection.getName(), prefix);
         return connection;
-    }
-
-    /**
-     * Run the connection delete package for the specified connection, and block until it
-     * completes successfully.
-     *
-     * @param qualifiedName of the connection to delete
-     * @param log into which to write status information
-     * @throws AtlanException on any errors deleting the connection
-     * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
-     */
-    public static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
-        deleteConnection(Atlan.getDefaultClient(), qualifiedName, log);
     }
 
     /**
@@ -124,17 +96,17 @@ public class ConnectionTest extends AtlanLiveTest {
             int totalToDelete = guids.size();
             log.info(" --- Purging {} assets from {}... ---", totalToDelete, qualifiedName);
             if (totalToDelete < 20) {
-                client.assets.delete(guids, AtlanDeleteType.PURGE);
+                client.assets.delete(guids, AtlanDeleteType.PURGE).block();
             } else {
                 for (int i = 0; i < totalToDelete; i += 20) {
                     log.info(" ... next batch of 20 ({}%)", Math.round((i * 100.0) / totalToDelete));
                     List<String> sublist = guids.subList(i, Math.min(i + 20, totalToDelete));
-                    client.assets.delete(sublist, AtlanDeleteType.PURGE);
+                    client.assets.delete(sublist, AtlanDeleteType.PURGE).block();
                 }
             }
         }
         // Purge the connection itself, now that all assets are purged
-        Optional<Asset> found = Connection.select().where(Connection.QUALIFIED_NAME.eq(qualifiedName)).stream()
+        Optional<Asset> found = Connection.select(client).where(Connection.QUALIFIED_NAME.eq(qualifiedName)).stream()
                 .findFirst();
         if (found.isPresent()) {
             client.assets.delete(found.get().getGuid(), AtlanDeleteType.PURGE).block();
@@ -145,27 +117,29 @@ public class ConnectionTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.POSTGRES, null, null, null));
+                () -> Connection.creator(client, PREFIX, AtlanConnectorType.POSTGRES, null, null, null));
     }
 
     @Test(groups = {"invalid.connection.roles"})
     void invalidConnectionAdminRole() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, List.of("abc123"), null, null));
+                () -> Connection.creator(client, PREFIX, AtlanConnectorType.SAPHANA, List.of("abc123"), null, null));
     }
 
     @Test(groups = {"invalid.connection.groups"})
     void invalidConnectionAdminGroup() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, List.of("NONEXISTENT"), null));
+                () -> Connection.creator(
+                        client, PREFIX, AtlanConnectorType.SAPHANA, null, List.of("NONEXISTENT"), null));
     }
 
     @Test(groups = {"invalid.connection.users"})
     void invalidConnectionAdminUser() {
         assertThrows(
                 NotFoundException.class,
-                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, null, List.of("NONEXISTENT")));
+                () -> Connection.creator(
+                        client, PREFIX, AtlanConnectorType.SAPHANA, null, null, List.of("NONEXISTENT")));
     }
 }

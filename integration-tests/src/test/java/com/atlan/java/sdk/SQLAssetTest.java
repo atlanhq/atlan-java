@@ -5,7 +5,7 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
@@ -76,14 +76,16 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a database with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the database
      * @param connectionQualifiedName qualifiedName of the connection in which to create the database
      * @return the created database
      * @throws AtlanException on any errors creating the database
      */
-    static Database createDatabase(String name, String connectionQualifiedName) throws AtlanException {
+    static Database createDatabase(AtlanClient client, String name, String connectionQualifiedName)
+            throws AtlanException {
         Database database = Database.creator(name, connectionQualifiedName).build();
-        AssetMutationResponse response = database.save();
+        AssetMutationResponse response = database.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
         database = (Database) one;
@@ -96,14 +98,15 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a schema with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the schema
      * @param database in which to create the schema
      * @return the created schema
      * @throws AtlanException on any errors creating the schema
      */
-    static Schema createSchema(String name, Database database) throws AtlanException {
+    static Schema createSchema(AtlanClient client, String name, Database database) throws AtlanException {
         Schema schema = Schema.creator(name, database).build();
-        AssetMutationResponse response = schema.save();
+        AssetMutationResponse response = schema.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -125,14 +128,15 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a table with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the table
      * @param schema in which to create the table
      * @return the created table
      * @throws AtlanException on any errors creating the table
      */
-    static Table createTable(String name, Schema schema) throws AtlanException {
+    static Table createTable(AtlanClient client, String name, Schema schema) throws AtlanException {
         Table table = Table.creator(name, schema).columnCount(2L).build();
-        AssetMutationResponse response = table.save();
+        AssetMutationResponse response = table.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -154,14 +158,15 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a view with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the view
      * @param schema in which to create the view
      * @return the created view
      * @throws AtlanException on any errors creating the view
      */
-    static View createView(String name, Schema schema) throws AtlanException {
+    static View createView(AtlanClient client, String name, Schema schema) throws AtlanException {
         View view = View.creator(name, schema).columnCount(2L).build();
-        AssetMutationResponse response = view.save();
+        AssetMutationResponse response = view.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -183,15 +188,17 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a materialized view with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the materialized view
      * @param schema in which to create the materialized view
      * @return the created materialized view
      * @throws AtlanException on any errors creating the materialized view
      */
-    static MaterializedView createMaterializedView(String name, Schema schema) throws AtlanException {
+    static MaterializedView createMaterializedView(AtlanClient client, String name, Schema schema)
+            throws AtlanException {
         MaterializedView mview =
                 MaterializedView.creator(name, schema).columnCount(2L).build();
-        AssetMutationResponse response = mview.save();
+        AssetMutationResponse response = mview.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -213,15 +220,16 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a table partition with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the table partition
      * @param table in which to create the table partition
      * @return the created table partition
      * @throws AtlanException on any errors creating the table partition
      */
-    static TablePartition createTablePartition(String name, Table table) throws AtlanException {
+    static TablePartition createTablePartition(AtlanClient client, String name, Table table) throws AtlanException {
         TablePartition partition =
                 TablePartition.creator(name, table).columnCount(2L).build();
-        AssetMutationResponse response = partition.save();
+        AssetMutationResponse response = partition.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -243,13 +251,14 @@ public class SQLAssetTest extends AtlanLiveTest {
     /**
      * Create a column with the provided characteristics.
      *
+     * @param client connectivity to the Atlan tenant
      * @param name unique name for the column
      * @param parent container of the column
      * @param order position of the column within the container
      * @return the created column
      * @throws AtlanException on any errors creating the column
      */
-    static Column createColumn(String name, ISQL parent, int order) throws AtlanException {
+    static Column createColumn(AtlanClient client, String name, ISQL parent, int order) throws AtlanException {
         Column column = null;
         if (parent instanceof Table) {
             column = Column.creator(name, (Table) parent, order).build();
@@ -262,7 +271,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
         if (column != null) {
             String parentType = parent.getTypeName();
-            AssetMutationResponse response = column.save();
+            AssetMutationResponse response = column.save(client);
             assertNotNull(response);
             assertTrue(response.getDeletedAssets().isEmpty());
             assertEquals(response.getUpdatedAssets().size(), 1);
@@ -289,14 +298,14 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"asset.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
             groups = {"asset.search.connection"},
             dependsOnGroups = {"asset.create.connection"})
     void findConnection() throws AtlanException {
-        List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE);
+        List<Connection> results = Connection.findByName(client, CONNECTION_NAME, CONNECTOR_TYPE);
         assertNotNull(results);
         assertEquals(results.size(), 1);
         Connection one = results.get(0);
@@ -308,7 +317,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.database"},
             dependsOnGroups = {"asset.create.connection"})
     void createDatabase() throws AtlanException {
-        database = createDatabase(DATABASE_NAME, connection.getQualifiedName());
+        database = createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
         assertEquals(database.getConnectorType(), CONNECTOR_TYPE);
     }
 
@@ -316,7 +325,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.schema"},
             dependsOnGroups = {"asset.create.database"})
     void createSchema() throws AtlanException {
-        schema = createSchema(SCHEMA_NAME, database);
+        schema = createSchema(client, SCHEMA_NAME, database);
         assertEquals(schema.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema.getDatabaseName(), DATABASE_NAME);
     }
@@ -325,7 +334,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.table"},
             dependsOnGroups = {"asset.create.schema"})
     void createTable() throws AtlanException {
-        table = createTable(TABLE_NAME, schema);
+        table = createTable(client, TABLE_NAME, schema);
         assertEquals(table.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(table.getSchemaName(), SCHEMA_NAME);
         assertEquals(table.getDatabaseName(), DATABASE_NAME);
@@ -337,7 +346,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.view"},
             dependsOnGroups = {"asset.create.table"})
     void createView() throws AtlanException {
-        view = createView(VIEW_NAME, schema);
+        view = createView(client, VIEW_NAME, schema);
         assertEquals(view.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(view.getSchemaName(), SCHEMA_NAME);
         assertEquals(view.getDatabaseName(), DATABASE_NAME);
@@ -349,7 +358,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.mview"},
             dependsOnGroups = {"asset.create.view"})
     void createMView() throws AtlanException {
-        mview = createMaterializedView(MVIEW_NAME, schema);
+        mview = createMaterializedView(client, MVIEW_NAME, schema);
         assertEquals(mview.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(mview.getSchemaName(), SCHEMA_NAME);
         assertEquals(mview.getDatabaseName(), DATABASE_NAME);
@@ -366,7 +375,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .isPartitioned(true)
                 .partitionCount(1L)
                 .build();
-        AssetMutationResponse response = table.save();
+        AssetMutationResponse response = table.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -382,7 +391,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(table2.getQualifiedName());
         assertEquals(table2.getName(), TABLE_NAME2);
         assertEquals(table2.getSchemaQualifiedName(), schema.getQualifiedName());
-        partition = createTablePartition(PARTITION_NAME, table2);
+        partition = createTablePartition(client, PARTITION_NAME, table2);
         assertEquals(partition.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(partition.getTableName(), TABLE_NAME2);
         assertEquals(partition.getSchemaName(), SCHEMA_NAME);
@@ -395,7 +404,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.1"},
             dependsOnGroups = {"asset.create.partition"})
     void createColumn1() throws AtlanException {
-        column1 = createColumn(COLUMN_NAME1, table, 1);
+        column1 = createColumn(client, COLUMN_NAME1, table, 1);
         assertNotNull(column1);
         assertEquals(column1.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column1.getTableName(), TABLE_NAME);
@@ -410,7 +419,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.2"},
             dependsOnGroups = {"asset.create.column.1"})
     void createColumn2() throws AtlanException {
-        column2 = createColumn(COLUMN_NAME2, table, 2);
+        column2 = createColumn(client, COLUMN_NAME2, table, 2);
         assertNotNull(column2);
         assertEquals(column2.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column2.getTableName(), TABLE_NAME);
@@ -425,7 +434,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.3"},
             dependsOnGroups = {"asset.create.column.2"})
     void createColumn3() throws AtlanException {
-        column3 = createColumn(COLUMN_NAME3, view, 1);
+        column3 = createColumn(client, COLUMN_NAME3, view, 1);
         assertNotNull(column3);
         assertEquals(column3.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column3.getViewName(), VIEW_NAME);
@@ -440,7 +449,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.4"},
             dependsOnGroups = {"asset.create.column.3"})
     void createColumn4() throws AtlanException {
-        column4 = createColumn(COLUMN_NAME4, view, 2);
+        column4 = createColumn(client, COLUMN_NAME4, view, 2);
         assertNotNull(column4);
         assertEquals(column4.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column4.getViewName(), VIEW_NAME);
@@ -455,7 +464,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.5"},
             dependsOnGroups = {"asset.create.column.4"})
     void createColumn5() throws AtlanException {
-        column5 = createColumn(COLUMN_NAME5, mview, 1);
+        column5 = createColumn(client, COLUMN_NAME5, mview, 1);
         assertNotNull(column5);
         assertEquals(column5.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column5.getViewName(), MVIEW_NAME);
@@ -470,7 +479,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.6"},
             dependsOnGroups = {"asset.create.column.5"})
     void createColumn6() throws AtlanException {
-        column6 = createColumn(COLUMN_NAME6, mview, 2);
+        column6 = createColumn(client, COLUMN_NAME6, mview, 2);
         assertNotNull(column6);
         assertEquals(column6.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(column6.getViewName(), MVIEW_NAME);
@@ -489,7 +498,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .partitionOrder(1)
                 .isPartition(true)
                 .build();
-        AssetMutationResponse response = column.save();
+        AssetMutationResponse response = column.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -519,7 +528,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .partitionOrder(2)
                 .isPartition(true)
                 .build();
-        AssetMutationResponse response = column.save();
+        AssetMutationResponse response = column.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -545,7 +554,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.contract"},
             dependsOnGroups = {"asset.create.column.*"})
     void generateContract() throws AtlanException {
-        String tableContract = Atlan.getDefaultClient().contracts.generateInitialSpec(table);
+        String tableContract = client.contracts.generateInitialSpec(table);
         assertNotNull(tableContract);
         assertTrue(tableContract.startsWith("---"));
         assertTrue(tableContract.contains("columns:"));
@@ -558,7 +567,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.read.column.5"},
             dependsOnGroups = {"asset.create.column.5"})
     void readColumn5() throws AtlanException {
-        Column byGuid = Column.get(column5.getGuid());
+        Column byGuid = Column.get(client, column5.getGuid(), true);
         assertNotNull(byGuid);
         assertTrue(byGuid.isComplete());
         assertEquals(byGuid.getGuid(), column5.getGuid());
@@ -568,7 +577,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getTypeName(), MaterializedView.TYPE_NAME);
         assertEquals(one.getGuid(), mview.getGuid());
-        Column byQN = Column.get(column5.getQualifiedName());
+        Column byQN = Column.get(client, column5.getQualifiedName(), true);
         assertNotNull(byQN);
         assertTrue(byQN.isComplete());
         assertEquals(byQN.getGuid(), column5.getGuid());
@@ -585,7 +594,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.read.column.7"},
             dependsOnGroups = {"asset.create.column.7"})
     void readColumn7() throws AtlanException {
-        Column byGuid = Column.get(column7.getGuid());
+        Column byGuid = Column.get(client, column7.getGuid(), true);
         assertNotNull(byGuid);
         assertTrue(byGuid.isComplete());
         assertEquals(byGuid.getGuid(), column7.getGuid());
@@ -595,7 +604,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getTypeName(), TablePartition.TYPE_NAME);
         assertEquals(one.getGuid(), partition.getGuid());
-        Column byQN = Column.get(column7.getQualifiedName());
+        Column byQN = Column.get(client, column7.getQualifiedName(), true);
         assertNotNull(byQN);
         assertTrue(byQN.isComplete());
         assertEquals(byQN.getGuid(), column7.getGuid());
@@ -612,8 +621,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void searchByParentQN() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .active()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -630,7 +638,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         response.forEach(a -> guids.add(a.getGuid()));
 
         // Test sequential streaming
-        List<String> guidsSeq = Atlan.getDefaultClient()
+        List<String> guidsSeq = client
                 .assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -642,7 +650,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .collect(Collectors.toList());
 
         // Test parallel streaming
-        List<String> guidsPar = Atlan.getDefaultClient()
+        List<String> guidsPar = client
                 .assets
                 .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -788,8 +796,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byParentQN"},
             dependsOnGroups = {"asset.create.*"})
     void testSearchIterators() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .active()
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -810,16 +817,14 @@ public class SQLAssetTest extends AtlanLiveTest {
                     || a instanceof Column);
         }
 
-        response.forEach(a -> {
-            assertTrue(a instanceof Connection
-                    || a instanceof Database
-                    || a instanceof Schema
-                    || a instanceof Table
-                    || a instanceof View
-                    || a instanceof MaterializedView
-                    || a instanceof TablePartition
-                    || a instanceof Column);
-        });
+        response.forEach(a -> assertTrue(a instanceof Connection
+                || a instanceof Database
+                || a instanceof Schema
+                || a instanceof Table
+                || a instanceof View
+                || a instanceof MaterializedView
+                || a instanceof TablePartition
+                || a instanceof Column));
 
         List<Asset> results = response.stream().toList();
         assertEquals(results.size(), 16);
@@ -827,7 +832,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"asset.create.group.owners"})
     void createGroupOwners() throws AtlanException {
-        ownerGroup = AdminTest.createGroup(PREFIX);
+        ownerGroup = AdminTest.createGroup(client, PREFIX);
     }
 
     @Test(
@@ -837,7 +842,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .ownerGroup(ownerGroup.getName())
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
@@ -852,7 +857,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.owners.x"},
             dependsOnGroups = {"asset.update.column.owners"})
     void updateColumnOwnersX() throws AtlanException {
-        Column cleared = Column.removeOwners(column5.getQualifiedName(), COLUMN_NAME5);
+        Column cleared = Column.removeOwners(client, column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
         assertTrue(cleared.getOwnerGroups() == null || cleared.getOwnerGroups().isEmpty());
     }
@@ -861,7 +866,8 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.certificate"},
             dependsOnGroups = {"asset.update.column.owners.x"})
     void updateColumnCertificate() throws AtlanException {
-        Column column = Column.updateCertificate(column5.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        Column column =
+                Column.updateCertificate(client, column5.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         validateUpdatedColumn(column);
         assertEquals(column.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(column.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
@@ -871,7 +877,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.certificate.x"},
             dependsOnGroups = {"asset.update.column.certificate"})
     void updateColumnCertificateX() throws AtlanException {
-        Column cleared = Column.removeCertificate(column5.getQualifiedName(), COLUMN_NAME5);
+        Column cleared = Column.removeCertificate(client, column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
         assertNull(cleared.getCertificateStatus());
         assertNull(cleared.getCertificateStatusMessage());
@@ -882,7 +888,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.certificate.x"})
     void updateColumnAnnouncement() throws AtlanException {
         Column column = Column.updateAnnouncement(
-                column5.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, column5.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         validateUpdatedColumn(column);
         assertEquals(column.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(column.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -893,7 +899,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.announcement.x"},
             dependsOnGroups = {"asset.update.column.announcement"})
     void updateColumnAnnouncementX() throws AtlanException {
-        Column column = Column.removeAnnouncement(column5.getQualifiedName(), COLUMN_NAME5);
+        Column column = Column.removeAnnouncement(client, column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(column);
         assertNull(column.getAnnouncementType());
         assertNull(column.getAnnouncementTitle());
@@ -908,7 +914,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .description(DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
@@ -921,7 +927,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.description.x"},
             dependsOnGroups = {"asset.update.column.descriptions"})
     void updateColumnDescriptionX() throws AtlanException {
-        Column cleared = Column.removeDescription(column5.getQualifiedName(), COLUMN_NAME5);
+        Column cleared = Column.removeDescription(client, column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
         assertNull(cleared.getDescription());
     }
@@ -930,15 +936,15 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.userDescription.x"},
             dependsOnGroups = {"asset.update.column.description.x"})
     void updateColumnUserDescriptionX() throws AtlanException {
-        Column cleared = Column.removeUserDescription(column5.getQualifiedName(), COLUMN_NAME5);
+        Column cleared = Column.removeUserDescription(client, column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
         assertNull(cleared.getUserDescription());
     }
 
     @Test(groups = {"asset.create.atlantags"})
     void createAtlanTags() throws AtlanException {
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME1);
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME2);
+        AtlanTagTest.createAtlanTag(client, ATLAN_TAG_NAME1);
+        AtlanTagTest.createAtlanTag(client, ATLAN_TAG_NAME2);
     }
 
     @Test(
@@ -950,7 +956,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                         .propagate(false)
                         .build())
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -965,7 +971,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAtlanTags()
                 .build();
-        AssetMutationResponse response = toUpdate.save(true);
+        AssetMutationResponse response = toUpdate.save(client, true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -977,8 +983,8 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.addAtlanTags"},
             dependsOnGroups = {"asset.update.column.atlantag.x"})
     void updateColumnAddAtlanTags() throws AtlanException {
-        Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
-        Column column = Column.get(column5.getGuid());
+        Column.appendAtlanTags(client, column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
+        Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
@@ -987,8 +993,8 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.removeAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags"})
     void updateColumnRemoveAtlanTag() throws AtlanException {
-        Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2);
-        Column column = Column.get(column5.getGuid());
+        Column.removeAtlanTag(client, column5.getQualifiedName(), ATLAN_TAG_NAME2);
+        Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1));
     }
@@ -999,15 +1005,15 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveAtlanTagNonexistent() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2));
+                () -> Column.removeAtlanTag(client, column5.getQualifiedName(), ATLAN_TAG_NAME2));
     }
 
     @Test(
             groups = {"asset.update.column.addAtlanTags.again"},
             dependsOnGroups = {"asset.update.column.removeAtlanTagNonexistent"})
     void updateColumnAddAtlanTagsAgain() throws AtlanException {
-        Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME2));
-        Column column = Column.get(column5.getGuid());
+        Column.appendAtlanTags(client, column5.getQualifiedName(), List.of(ATLAN_TAG_NAME2));
+        Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
@@ -1016,7 +1022,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchByAnyAtlanTag() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Column.select()
+        IndexSearchRequest index = Column.select(client)
                 .where(Column.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .tagged(true)
                 .includeOnResults(Column.NAME)
@@ -1042,7 +1048,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchBySpecificAtlanTag() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Column.select()
+        IndexSearchRequest index = Column.select(client)
                 .tagged(List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2))
                 .includeOnResults(Column.NAME)
                 .toRequest();
@@ -1068,7 +1074,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column column = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAtlanTags()
                 .build();
-        AssetMutationResponse response = column.save(true);
+        AssetMutationResponse response = column.save(client, true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         column = (Column) one;
@@ -1087,9 +1093,9 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"asset.create.glossary"})
     void createGlossary() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        term1 = GlossaryTest.createTerm(TERM_NAME1, glossary);
-        term2 = GlossaryTest.createTerm(TERM_NAME2, glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        term1 = GlossaryTest.createTerm(client, TERM_NAME1, glossary);
+        term2 = GlossaryTest.createTerm(client, TERM_NAME2, glossary);
     }
 
     @Test(
@@ -1099,7 +1105,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -1113,7 +1119,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 assertEquals(term.getGuid(), term1.getGuid());
             }
         }
-        Column updated = Column.get(column5.getQualifiedName());
+        Column updated = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(updated);
         validateHasTerms(updated, Set.of(term1));
     }
@@ -1125,7 +1131,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAssignedTerms()
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -1139,7 +1145,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 assertEquals(term.getGuid(), term1.getGuid());
             }
         }
-        Column updated = Column.get(column5.getQualifiedName());
+        Column updated = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(updated);
         validateHasTerms(updated, Collections.emptySet());
     }
@@ -1148,9 +1154,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.appendTerms"},
             dependsOnGroups = {"asset.update.column.assignedTerms.x"})
     void updateColumnAppendTerms() throws AtlanException {
-        Column column = Column.appendTerms(column5.getQualifiedName(), List.of(term1, term2));
+        Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term1, term2));
         validateUpdatedColumn(column);
-        column = Column.get(column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1159,9 +1165,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.removeTerm"},
             dependsOnGroups = {"asset.update.column.appendTerms"})
     void updateColumnRemoveTerm() throws AtlanException {
-        Column column = Column.removeTerms(column5.getQualifiedName(), List.of(term2));
+        Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.get(column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1170,9 +1176,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.appendTerms.again"},
             dependsOnGroups = {"asset.update.column.removeTerm"})
     void updateColumnAppendTermsAgain() throws AtlanException {
-        Column column = Column.appendTerms(column5.getQualifiedName(), List.of(term2));
+        Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
-        column = Column.get(column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1, term2));
     }
@@ -1181,9 +1187,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.removeTermAgain"},
             dependsOnGroups = {"asset.update.column.appendTerms.again"})
     void updateColumnRemoveTermAgain() throws AtlanException {
-        Column column = Column.removeTerms(column5.getQualifiedName(), List.of(term1));
+        Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.get(column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term2));
     }
@@ -1192,9 +1198,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.replaceTerms"},
             dependsOnGroups = {"asset.update.column.removeTermAgain"})
     void updateColumnReplaceTerms() throws AtlanException {
-        Column column = Column.replaceTerms(column5.getQualifiedName(), COLUMN_NAME5, List.of(term1));
+        Column column = Column.replaceTerms(client, column5.getQualifiedName(), COLUMN_NAME5, List.of(term1));
         validateUpdatedColumn(column);
-        column = Column.get(column5.getGuid());
+        column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Set.of(term1));
     }
@@ -1203,7 +1209,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byTerm"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
     void searchByAnyTerm() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Column.select()
+        IndexSearchRequest index = Column.select(client)
                 .where(Column.ASSIGNED_TERMS.hasAnyValue())
                 .where(Column.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .includeOnResults(Column.NAME)
@@ -1235,7 +1241,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byTerm"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
     void searchBySpecificTerm() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Column.select()
+        IndexSearchRequest index = Column.select(client)
                 .where(Column.ASSIGNED_TERMS.in(List.of(term1.getQualifiedName(), term2.getQualifiedName())))
                 .includeOnResults(Column.NAME)
                 .includeOnResults(Column.ASSIGNED_TERMS)
@@ -1266,9 +1272,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.removeTerms"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
     void updateColumnRemoveTerms() throws AtlanException {
-        Column column = Column.replaceTerms(column5.getQualifiedName(), COLUMN_NAME5, null);
+        Column column = Column.replaceTerms(client, column5.getQualifiedName(), COLUMN_NAME5, null);
         validateUpdatedColumn(column);
-        column = Column.get(column5.getQualifiedName());
+        column = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Collections.emptySet());
     }
@@ -1315,13 +1321,13 @@ public class SQLAssetTest extends AtlanLiveTest {
     void searchAuditLogByGuid() throws AtlanException, InterruptedException {
 
         AuditSearchRequest request =
-                AuditSearchRequest.byGuid(column5.getGuid(), 50).build();
+                AuditSearchRequest.byGuid(client, column5.getGuid(), 50).build();
 
         AuditSearchResponse response = retrySearchUntil(request, 33L);
 
         validateAudits(response.getEntityAudits());
 
-        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(Atlan.getDefaultClient())
+        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(client)
                 .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
                 .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
                 .pageSize(10);
@@ -1334,7 +1340,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByQN() throws AtlanException, InterruptedException {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
-                        Column.TYPE_NAME, column5.getQualifiedName(), 50)
+                        client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
                 .build();
         AuditSearchResponse response = retrySearchUntil(request, 33L);
         validateAudits(response.getEntityAudits());
@@ -1718,7 +1724,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.delete.column"},
             dependsOnGroups = {"asset.update.*", "asset.search.*"})
     void deleteColumn() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(column5.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, column5.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -1742,8 +1748,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.delete.column.restore"},
             dependsOnGroups = {"asset.delete.column.read"})
     void restoreColumn() throws AtlanException {
-        assertTrue(Column.restore(column5.getQualifiedName()));
-        Column restored = Column.get(column5.getGuid());
+        assertTrue(Column.restore(client, column5.getQualifiedName()));
+        Column restored = Column.get(client, column5.getGuid());
+        assertFalse(restored.isComplete());
         validateUpdatedColumn(restored);
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
     }
@@ -1752,7 +1759,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.purge.column"},
             dependsOnGroups = {"asset.delete.column.restore"})
     void purgeColumn() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(column5.getGuid());
+        AssetMutationResponse response = Asset.purge(client, column5.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -1769,7 +1776,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.purge.column.read"},
             dependsOnGroups = {"asset.purge.column"})
     void readPurgedColumn() {
-        assertThrows(NotFoundException.class, () -> Column.get(column5.getGuid()));
+        assertThrows(NotFoundException.class, () -> Column.get(client, column5.getGuid()));
     }
 
     @Test(
@@ -1783,7 +1790,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 
     @Test(
@@ -1791,7 +1798,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.purge.connection"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        AtlanGroup.delete(ownerGroup.getId());
+        AtlanGroup.delete(client, ownerGroup.getId());
     }
 
     @Test(
@@ -1799,8 +1806,8 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.purge.connection"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME1);
-        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME2);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME1);
+        AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME2);
     }
 
     @Test(
@@ -1808,9 +1815,9 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.purge.connection"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        GlossaryTest.deleteTerm(term1.getGuid());
-        GlossaryTest.deleteTerm(term2.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term1.getGuid());
+        GlossaryTest.deleteTerm(client, term2.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 
     private void validateUpdatedColumn(Column column) {

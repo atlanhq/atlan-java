@@ -161,7 +161,7 @@ const function getConfigClassKt(m: Config, className: String): FileOutput = new 
         """
             @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
             @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): List<String>? = null,
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): List<String>\(getFallback(u)),
         """
       else if (u is Config.ConnectorTypeSelector)
         """
@@ -177,19 +177,19 @@ const function getConfigClassKt(m: Config, className: String): FileOutput = new 
         """
       else if (u is Config.BooleanInput)
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean? = null,
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean\(getFallback(u)),
         """
       else if (u is Config.NumericInput)
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Number? = null,
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Number\(getFallback(u)),
         """
       else if (u is Config.DateInput)
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Long? = null,
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Long\(getFallback(u)),
         """
       else
         """
-            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): String? = null,
+            @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): String\(getFallback(u)),
         """
     )}
     """
@@ -205,6 +205,18 @@ const function getLowerCamelCase(s: String): String =
     else
       "\(acc)\(word.capitalize())"
   )
+
+const function getFallback(u: Config.UIElement): String =
+  if (u.fallback == null)
+    "? = null"
+  else if (u.fallback is List)
+    " = listOf(\((u.fallback as List).fold(List(), (acc: List<String>, value) ->
+      acc.add("\"\(value)\"")
+    ).join(", ")))"
+  else if (u.fallback is String)
+    " = \"\(u.fallback)\""
+  else
+    " = \(u.fallback)"
 
 /// Render an empty file.
 const function getBlankFile(): FileOutput = new FileOutput {
@@ -269,6 +281,7 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 
     [handler_consoleHandler]
     class=StreamHandler
+    level=INFO
     formatter=simpleFormatter
     args=(sys.stdout,)
 

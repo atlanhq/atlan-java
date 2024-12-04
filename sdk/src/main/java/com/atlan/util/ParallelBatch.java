@@ -7,9 +7,8 @@ import com.atlan.cache.OffHeapAssetCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
-import java.io.Closeable;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * Utility class for managing bulk updates across multiple parallel-running batches.
  */
-public class ParallelBatch implements Closeable {
+public class ParallelBatch implements AtlanCloseable {
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -291,7 +290,7 @@ public class ParallelBatch implements Closeable {
     public void flush() throws AtlanException {
         lock.writeLock().lock();
         try {
-            batchMap.values().parallelStream().forEach(batch -> {
+            batchMap.values().forEach(batch -> {
                 try {
                     batch.flush();
                 } catch (AtlanException e) {
@@ -389,11 +388,7 @@ public class ParallelBatch implements Closeable {
                 created = new OffHeapAssetCache(client, "p-created");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getCreated().isNotClosed()) {
-                        try {
-                            created.extendedWith(batch.getCreated(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        created.extendedWith(batch.getCreated(), true);
                     }
                 }
             } finally {
@@ -421,11 +416,7 @@ public class ParallelBatch implements Closeable {
                 updated = new OffHeapAssetCache(client, "p-updated");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getUpdated().isNotClosed()) {
-                        try {
-                            updated.extendedWith(batch.getUpdated(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        updated.extendedWith(batch.getUpdated(), true);
                     }
                 }
             } finally {
@@ -454,11 +445,7 @@ public class ParallelBatch implements Closeable {
                 restored = new OffHeapAssetCache(client, "p-restored");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getRestored().isNotClosed()) {
-                        try {
-                            restored.extendedWith(batch.getRestored(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        restored.extendedWith(batch.getRestored(), true);
                     }
                 }
             } finally {
@@ -517,11 +504,7 @@ public class ParallelBatch implements Closeable {
                 skipped = new OffHeapAssetCache(client, "p-skipped");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getSkipped().isNotClosed()) {
-                        try {
-                            skipped.extendedWith(batch.getSkipped(), true);
-                        } catch (IOException e) {
-                            throw new IllegalStateException("Unable to close underlying off-heap cache.", e);
-                        }
+                        skipped.extendedWith(batch.getSkipped(), true);
                     }
                 }
             } finally {
@@ -603,57 +586,20 @@ public class ParallelBatch implements Closeable {
     /**
      * Close the batch by freeing up any resources it has used.
      * Note: this will clear any internal caches of results, so only call this after you have processed those!
-     *
-     * @throws IOException on any problems freeing up resources
      */
     @Override
-    public void close() throws IOException {
-        IOException exception = null;
-        for (AssetBatch batch : batchMap.values()) {
-            try {
-                batch.close();
-            } catch (IOException e) {
-                if (exception == null) {
-                    exception = e;
-                } else {
-                    exception.addSuppressed(e);
-                }
-            }
-        }
+    public void close() {
+        lock.writeLock().lock();
         try {
-            if (created != null) created.close();
-        } catch (IOException e) {
-            exception = e;
-        }
-        try {
-            if (updated != null) updated.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
+            for (AssetBatch batch : batchMap.values()) {
+                AtlanCloseable.close(batch);
             }
+        } finally {
+            lock.writeLock().unlock();
         }
-        try {
-            if (restored != null) restored.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        try {
-            if (skipped != null) skipped.close();
-        } catch (IOException e) {
-            if (exception == null) {
-                exception = e;
-            } else {
-                exception.addSuppressed(e);
-            }
-        }
-        if (exception != null) {
-            throw exception;
-        }
+        AtlanCloseable.close(created);
+        AtlanCloseable.close(updated);
+        AtlanCloseable.close(restored);
+        AtlanCloseable.close(skipped);
     }
 }

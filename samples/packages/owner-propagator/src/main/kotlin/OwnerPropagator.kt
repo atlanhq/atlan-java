@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
@@ -17,28 +17,28 @@ object OwnerPropagator {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<OwnerPropagatorCfg>()
-
-        val qnPrefix = Utils.getOrDefault(config.qnPrefix, "default")
-        val batchSize = 20
-
-        val tables = findTables(qnPrefix, batchSize)
-        propagateOwner(tables, batchSize)
+        Utils.initializeContext<OwnerPropagatorCfg>().use { ctx ->
+            val batchSize = 20
+            val tables = findTables(ctx.client, ctx.config.qnPrefix, batchSize)
+            propagateOwner(ctx.client, tables, batchSize)
+        }
     }
 
     /**
      * Find all the tables within a schema.
      *
+     * @param client connectivity to the Atlan tenant
      * @param qnPrefix qualifiedName of the schema (or higher level, to apply across multiple schemas)
      * @param batchSize maximum number of results to retrieve per page (API request)
      * @return list of tables that were found
      */
     fun findTables(
+        client: AtlanClient,
         qnPrefix: String,
         batchSize: Int,
     ): List<Asset> {
         val assets = mutableListOf<Asset>()
-        Table.select()
+        Table.select(client)
             .where(Table.QUALIFIED_NAME.startsWith(qnPrefix))
             .includeOnResults(Table.SCHEMA)
             .includeOnResults(Table.OWNER_USERS)
@@ -54,30 +54,33 @@ object OwnerPropagator {
     /**
      * Propagate the owner from each table's parent schema to the table.
      *
+     * @param client connectivity to the Atlan tenant
      * @param tables list of tables to which to propagate owners
      * @param batchSize maximum number of tables to update per batch (API request)
      */
     fun propagateOwner(
+        client: AtlanClient,
         tables: List<Asset>,
         batchSize: Int,
     ) {
         val totalCount = tables.size.toLong()
-        val batch = AssetBatch(Atlan.getDefaultClient(), batchSize)
-        val count = AtomicLong(0)
-        tables.forEach {
-            val table = it as Table
-            val schemaOwners = table.schema.ownerUsers
-            batch.add(
-                table.trimToRequired()
-                    .ownerUsers(table.ownerUsers)
-                    .ownerUsers(schemaOwners)
-                    .build(),
-            )
-            Utils.logProgress(count, totalCount, logger, batchSize)
+        AssetBatch(client, batchSize).use { batch ->
+            val count = AtomicLong(0)
+            tables.forEach {
+                val table = it as Table
+                val schemaOwners = table.schema.ownerUsers
+                batch.add(
+                    table.trimToRequired()
+                        .ownerUsers(table.ownerUsers)
+                        .ownerUsers(schemaOwners)
+                        .build(),
+                )
+                Utils.logProgress(count, totalCount, logger, batchSize)
+            }
+            batch.flush()
+            logger.info { "Total assets created: ${batch.created.size}" }
+            logger.info { "Total assets updated: ${batch.updated.size}" }
+            logger.info { "Total batches that failed: ${batch.failures.size}" }
         }
-        batch.flush()
-        logger.info { "Total assets created: ${batch.created.size}" }
-        logger.info { "Total assets updated: ${batch.updated.size}" }
-        logger.info { "Total batches that failed: ${batch.failures.size}" }
     }
 }

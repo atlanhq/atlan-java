@@ -4,7 +4,7 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
+import com.atlan.mock.MockTenant;
 import com.atlan.model.enums.AdminOperationType;
 import com.atlan.model.enums.AdminResourceType;
 import com.atlan.model.enums.KeycloakEventType;
@@ -95,7 +95,7 @@ public class AtlanUserTest {
     @Test(groups = {"AtlanUser.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(Atlan.getDefaultClient());
+        serialized = full.toJson(MockTenant.client);
         assertNotNull(serialized);
     }
 
@@ -104,7 +104,7 @@ public class AtlanUserTest {
             dependsOnGroups = {"AtlanUser.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanUser.class);
+        frodo = MockTenant.client.readValue(serialized, AtlanUser.class);
         assertNotNull(frodo);
     }
 
@@ -114,7 +114,7 @@ public class AtlanUserTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(Atlan.getDefaultClient());
+        String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

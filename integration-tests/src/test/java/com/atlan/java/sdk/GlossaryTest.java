@@ -4,7 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -57,17 +56,6 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Create a new glossary with a unique name.
      *
-     * @param name to make the glossary unique
-     * @return the glossary that was created
-     * @throws AtlanException on any error creating or reading-back the glossary
-     */
-    static Glossary createGlossary(String name) throws AtlanException {
-        return createGlossary(Atlan.getDefaultClient(), name);
-    }
-
-    /**
-     * Create a new glossary with a unique name.
-     *
      * @param client connectivity to the Atlan tenant in which to create the glossary
      * @param name to make the glossary unique
      * @return the glossary that was created
@@ -98,18 +86,6 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Create a new glossary term with a unique name.
      *
-     * @param name to make the glossary term unique
-     * @param glossary in which to create the term
-     * @return the glossary term that was created
-     * @throws AtlanException on any error creating or reading-back the glossary term
-     */
-    static GlossaryTerm createTerm(String name, Glossary glossary) throws AtlanException {
-        return createTerm(Atlan.getDefaultClient(), name, glossary);
-    }
-
-    /**
-     * Create a new glossary term with a unique name.
-     *
      * @param client connectivity to the Atlan tenant in which to create the term
      * @param name to make the glossary term unique
      * @param glossary in which to create the term
@@ -119,7 +95,7 @@ public class GlossaryTest extends AtlanLiveTest {
     static GlossaryTerm createTerm(AtlanClient client, String name, Glossary glossary) throws AtlanException {
         assertThrows(
                 NotFoundException.class,
-                () -> GlossaryTerm.creator(name, glossary).build().updateMergingCM(false));
+                () -> GlossaryTerm.creator(name, glossary).build().updateMergingCM(client, false));
         GlossaryTerm term = GlossaryTerm.creator(name, glossary).build();
         AssetMutationResponse response = term.save(client);
         assertNotNull(response);
@@ -144,14 +120,15 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Create a new category within the glossary.
      *
+     * @param client connectivity to the Atlan tenant in which to create the term
      * @param name of the category to create
      * @param glossary in which to create the category
      * @return the created category
      * @throws AtlanException on any errors creating the category
      */
-    static GlossaryCategory createCategory(String name, Glossary glossary) throws AtlanException {
+    static GlossaryCategory createCategory(AtlanClient client, String name, Glossary glossary) throws AtlanException {
         GlossaryCategory category = GlossaryCategory.creator(name, glossary).build();
-        AssetMutationResponse response = category.save();
+        AssetMutationResponse response = category.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -170,12 +147,13 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Delete (purge) the glossary with the provided GUID.
      *
+     * @param client connectivity to the Atlan tenant in which to create the term
      * @param guid of the glossary to purge
      * @return the purged glossary
      * @throws AtlanException on any errors purging the glossary
      */
-    static Glossary deleteGlossary(String guid) throws AtlanException {
-        AssetMutationResponse response = Glossary.purge(guid);
+    static Glossary deleteGlossary(AtlanClient client, String guid) throws AtlanException {
+        AssetMutationResponse response = Glossary.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -191,12 +169,13 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Delete (purge) the category with the provided GUID.
      *
+     * @param client connectivity to the Atlan tenant in which to create the term
      * @param guid of the category to purge
      * @return the purged category
      * @throws AtlanException on any errors purging the category
      */
-    static GlossaryCategory deleteCategory(String guid) throws AtlanException {
-        AssetMutationResponse response = GlossaryCategory.purge(guid);
+    static GlossaryCategory deleteCategory(AtlanClient client, String guid) throws AtlanException {
+        AssetMutationResponse response = GlossaryCategory.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -213,12 +192,13 @@ public class GlossaryTest extends AtlanLiveTest {
     /**
      * Delete (purge) the term with the provided GUID.
      *
+     * @param client connectivity to the Atlan tenant in which to create the term
      * @param guid of the term to purge
      * @return the purged term
      * @throws AtlanException on any errors purging the term
      */
-    static GlossaryTerm deleteTerm(String guid) throws AtlanException {
-        AssetMutationResponse response = GlossaryTerm.purge(guid);
+    static GlossaryTerm deleteTerm(AtlanClient client, String guid) throws AtlanException {
+        AssetMutationResponse response = GlossaryTerm.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -233,7 +213,7 @@ public class GlossaryTest extends AtlanLiveTest {
 
     @Test(groups = {"glossary.create.glossary"})
     void createGlossary() throws AtlanException {
-        glossary = createGlossary(GLOSSARY_NAME);
+        glossary = createGlossary(client, GLOSSARY_NAME);
     }
 
     @Test(
@@ -249,7 +229,7 @@ public class GlossaryTest extends AtlanLiveTest {
         categories.add(top1);
         categories.add(top2);
 
-        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(categories, false);
+        AssetMutationResponse response = client.assets.save(categories, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -280,7 +260,7 @@ public class GlossaryTest extends AtlanLiveTest {
         categories.add(mid2a);
         categories.add(mid2b);
 
-        response = Atlan.getDefaultClient().assets.save(categories, false);
+        response = client.assets.save(categories, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 3);
@@ -322,7 +302,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
                 .build());
 
-        response = Atlan.getDefaultClient().assets.save(categories, false);
+        response = client.assets.save(categories, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 5);
@@ -346,9 +326,9 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.hierarchy"},
             dependsOnGroups = {"glossary.create.hierarchy"})
     void traverseHierarchy() throws AtlanException {
-        Glossary glossary = Glossary.findByName(GLOSSARY_NAME);
+        Glossary glossary = Glossary.findByName(client, GLOSSARY_NAME);
         assertNotNull(glossary);
-        Glossary.CategoryHierarchy tree = glossary.getHierarchy();
+        Glossary.CategoryHierarchy tree = glossary.getHierarchy(client);
         assertNotNull(tree);
         List<IGlossaryCategory> dfs = tree.depthFirst();
         assertNotNull(dfs);
@@ -398,7 +378,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm1() throws AtlanException {
-        term1 = createTerm(TERM_NAME1, glossary);
+        term1 = createTerm(client, TERM_NAME1, glossary);
         assertEquals(term1.getName(), TERM_NAME1);
     }
 
@@ -406,7 +386,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm2() throws AtlanException {
-        term2 = createTerm(TERM_NAME2, glossary);
+        term2 = createTerm(client, TERM_NAME2, glossary);
         assertEquals(term2.getName(), TERM_NAME2);
     }
 
@@ -414,7 +394,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm3() throws AtlanException {
-        term3 = createTerm(TERM_NAME3, glossary);
+        term3 = createTerm(client, TERM_NAME3, glossary);
         assertEquals(term3.getName(), TERM_NAME3);
     }
 
@@ -422,7 +402,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.create.term"},
             dependsOnGroups = {"glossary.create.glossary"})
     void createTerm4() throws AtlanException {
-        term4 = createTerm(TERM_NAME4, glossary);
+        term4 = createTerm(client, TERM_NAME4, glossary);
         assertEquals(term4.getName(), TERM_NAME4);
     }
 
@@ -430,7 +410,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.glossary"},
             dependsOnGroups = {"glossary.create.glossary", "glossary.create.hierarchy", "glossary.create.term"})
     void readGlossary() throws AtlanException {
-        Glossary g = Glossary.get(glossary.getGuid());
+        Glossary g = Glossary.get(client, glossary.getGuid(), true);
         assertNotNull(g);
         assertTrue(g.isComplete());
         assertEquals(g.getGuid(), glossary.getGuid());
@@ -457,7 +437,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.read.term"},
             dependsOnGroups = {"glossary.create.term"})
     void readTerm() throws AtlanException {
-        GlossaryTerm term = GlossaryTerm.get(term1.getGuid());
+        GlossaryTerm term = GlossaryTerm.get(client, term1.getGuid(), true);
         assertNotNull(term);
         assertTrue(term.isComplete());
         assertEquals(term.getGuid(), term1.getGuid());
@@ -476,7 +456,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        AssetMutationResponse response = g.save();
+        AssetMutationResponse response = g.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Glossary);
         g = (Glossary) one;
@@ -487,7 +467,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         g = Glossary.updateCertificate(
-                glossary.getQualifiedName(), GLOSSARY_NAME, CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client, glossary.getQualifiedName(), GLOSSARY_NAME, CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertEquals(g.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(g.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
@@ -496,8 +476,8 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.update.category"},
             dependsOnGroups = {"glossary.create.hierarchy"})
     void updateCategory() throws AtlanException {
-        category = GlossaryCategory.get(leaf1baGuid);
-        List<GlossaryCategory> list = GlossaryCategory.findByName("leaf1ba" + PREFIX, GLOSSARY_NAME);
+        category = GlossaryCategory.get(client, leaf1baGuid, true);
+        List<GlossaryCategory> list = GlossaryCategory.findByName(client, "leaf1ba" + PREFIX, GLOSSARY_NAME);
         assertNotNull(list);
         assertEquals(list.size(), 1);
         assertEquals(category.getGuid(), list.get(0).getGuid());
@@ -509,7 +489,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
@@ -520,6 +500,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(c.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(c.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         c = GlossaryCategory.updateCertificate(
+                client,
                 category.getQualifiedName(),
                 category.getName(),
                 glossary.getGuid(),
@@ -539,7 +520,7 @@ public class GlossaryTest extends AtlanLiveTest {
                         category.getAnchor().getGuid())
                 .removeAnnouncement()
                 .build();
-        AssetMutationResponse response = toUpdate.save();
+        AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
@@ -563,7 +544,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        AssetMutationResponse response = term.updateMergingCM(false);
+        AssetMutationResponse response = term.updateMergingCM(client, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), 0);
@@ -598,7 +579,12 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(c.getName(), category.getName());
 
         term = GlossaryTerm.updateCertificate(
-                term1.getQualifiedName(), term1.getName(), glossary.getGuid(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                client,
+                term1.getQualifiedName(),
+                term1.getName(),
+                glossary.getGuid(),
+                CERTIFICATE_STATUS,
+                CERTIFICATE_MESSAGE);
         assertNotNull(term);
         assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(term.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
@@ -609,7 +595,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.update.term"})
     void searchTerms() throws AtlanException {
 
-        IndexSearchRequest index = GlossaryTerm.select()
+        IndexSearchRequest index = GlossaryTerm.select(client)
                 .where(GlossaryTerm.NAME.eq(TERM_NAME1))
                 .pageSize(100)
                 .aggregate("type", Asset.TYPE_NAME.bucketBy())
@@ -617,7 +603,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .includeOnRelations(Asset.CERTIFICATE_STATUS)
                 .toRequest();
 
-        IndexSearchResponse response = index.search();
+        IndexSearchResponse response = index.search(client);
         assertNotNull(response);
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -655,9 +641,9 @@ public class GlossaryTest extends AtlanLiveTest {
                 .seeAlsoOne(GlossaryTerm.refByGuid(term2.getGuid()))
                 .seeAlsoOne(GlossaryTerm.refByGuid(term3.getGuid()))
                 .build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.save(client);
         assertNotNull(response);
-        GlossaryTerm result = GlossaryTerm.get(term1.getGuid());
+        GlossaryTerm result = GlossaryTerm.get(client, term1.getGuid(), true);
         assertNotNull(result);
         assertNotNull(result.getSeeAlso());
         assertEquals(result.getSeeAlso().size(), 2);
@@ -675,14 +661,14 @@ public class GlossaryTest extends AtlanLiveTest {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .seeAlsoOne(GlossaryTerm.refByGuid(term2.getGuid(), Reference.SaveSemantic.REMOVE))
                 .build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.save(client);
         assertNotNull(response);
-        GlossaryTerm result = GlossaryTerm.get(term1.getGuid());
+        GlossaryTerm result = GlossaryTerm.get(client, term1.getGuid(), true);
         assertNotNull(result);
         assertNotNull(result.getSeeAlso());
         List<IGlossaryTerm> activeRelationships = result.getSeeAlso().stream()
                 .filter(r -> r.getRelationshipStatus() == AtlanStatus.ACTIVE)
-                .collect(Collectors.toList());
+                .toList();
         assertEquals(activeRelationships.size(), 1);
         assertEquals(activeRelationships.get(0).getGuid(), term3.getGuid());
     }
@@ -694,9 +680,9 @@ public class GlossaryTest extends AtlanLiveTest {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .seeAlsoOne(GlossaryTerm.refByGuid(term4.getGuid(), Reference.SaveSemantic.APPEND))
                 .build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.save(client);
         assertNotNull(response);
-        GlossaryTerm result = GlossaryTerm.get(term1.getGuid());
+        GlossaryTerm result = GlossaryTerm.get(client, term1.getGuid(), true);
         assertNotNull(result);
         assertNotNull(result.getSeeAlso());
         Set<IGlossaryTerm> activeRelationships = result.getSeeAlso().stream()
@@ -717,9 +703,9 @@ public class GlossaryTest extends AtlanLiveTest {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .seeAlsoOne(GlossaryTerm.refByGuid(term4.getGuid(), Reference.SaveSemantic.APPEND))
                 .build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.save(client);
         assertNotNull(response);
-        GlossaryTerm result = GlossaryTerm.get(term1.getGuid());
+        GlossaryTerm result = GlossaryTerm.get(client, term1.getGuid(), true);
         assertNotNull(result);
         assertNotNull(result.getSeeAlso());
         Set<IGlossaryTerm> activeRelationships = result.getSeeAlso().stream()
@@ -736,11 +722,11 @@ public class GlossaryTest extends AtlanLiveTest {
     @Test(
             groups = {"glossary.update.term.removeRelationship2"},
             dependsOnGroups = {"glossary.update.term.appendRelationship2"})
-    void removeUnrelatedRelationship() throws AtlanException {
+    void removeUnrelatedRelationship() {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .seeAlsoOne(GlossaryTerm.refByGuid(term2.getGuid(), Reference.SaveSemantic.REMOVE))
                 .build();
-        assertThrows(NotFoundException.class, term::save);
+        assertThrows(NotFoundException.class, () -> term.save(client));
     }
 
     @Test(
@@ -748,7 +734,8 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.create.*", "glossary.update.*", "glossary.read.*", "glossary.search.*"},
             alwaysRun = true)
     void deleteTerm1() throws AtlanException {
-        AssetMutationResponse response = GlossaryTerm.delete(term1.getGuid());
+        AssetMutationResponse response =
+                GlossaryTerm.delete(client, term1.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -775,8 +762,9 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.delete.term"},
             alwaysRun = true)
     void restoreTerm1() throws AtlanException {
-        assertTrue(GlossaryTerm.restore(term1.getQualifiedName()));
-        GlossaryTerm term = GlossaryTerm.get(term1.getQualifiedName());
+        assertTrue(GlossaryTerm.restore(client, term1.getQualifiedName()));
+        GlossaryTerm term = GlossaryTerm.get(client, term1.getQualifiedName());
+        assertFalse(term.isComplete());
         assertNotNull(term);
         assertEquals(term.getGuid(), term1.getGuid());
         assertEquals(term.getQualifiedName(), term1.getQualifiedName());
@@ -794,7 +782,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm1() throws AtlanException {
-        GlossaryTerm term = deleteTerm(term1.getGuid());
+        GlossaryTerm term = deleteTerm(client, term1.getGuid());
         assertEquals(term.getQualifiedName(), term1.getQualifiedName());
         assertEquals(term.getName(), term1.getName());
         assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
@@ -811,7 +799,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm2() throws AtlanException {
-        GlossaryTerm term = deleteTerm(term2.getGuid());
+        GlossaryTerm term = deleteTerm(client, term2.getGuid());
         assertEquals(term.getQualifiedName(), term2.getQualifiedName());
         assertEquals(term.getName(), term2.getName());
         assertNull(term.getCertificateStatus());
@@ -828,7 +816,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm3() throws AtlanException {
-        GlossaryTerm term = deleteTerm(term3.getGuid());
+        GlossaryTerm term = deleteTerm(client, term3.getGuid());
         assertEquals(term.getQualifiedName(), term3.getQualifiedName());
         assertEquals(term.getName(), term3.getName());
         assertNull(term.getCertificateStatus());
@@ -845,7 +833,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm4() throws AtlanException {
-        GlossaryTerm term = deleteTerm(term4.getGuid());
+        GlossaryTerm term = deleteTerm(client, term4.getGuid());
         assertEquals(term.getQualifiedName(), term4.getQualifiedName());
         assertEquals(term.getName(), term4.getName());
         assertNull(term.getCertificateStatus());
@@ -862,7 +850,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.purge.term"},
             alwaysRun = true)
     void purgeCategory() throws AtlanException {
-        GlossaryCategory c = deleteCategory(category.getGuid());
+        GlossaryCategory c = deleteCategory(client, category.getGuid());
         assertEquals(c.getQualifiedName(), category.getQualifiedName());
         assertEquals(c.getName(), category.getName());
         assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
@@ -879,8 +867,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.purge.category", "glossary.purge.term"},
             alwaysRun = true)
     void purgeHierarchy() throws AtlanException {
-        AssetMutationResponse response = Atlan.getDefaultClient()
-                .assets
+        AssetMutationResponse response = client.assets
                 .delete(
                         List.of(
                                 leaf1aaGuid,
@@ -890,7 +877,8 @@ public class GlossaryTest extends AtlanLiveTest {
                                 leaf2abGuid,
                                 leaf2baGuid,
                                 leaf2bbGuid),
-                        AtlanDeleteType.PURGE);
+                        AtlanDeleteType.PURGE)
+                .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -898,9 +886,9 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 7);
 
-        response = Atlan.getDefaultClient()
-                .assets
-                .delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.PURGE);
+        response = client.assets
+                .delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.PURGE)
+                .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -908,7 +896,9 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 4);
 
-        response = Atlan.getDefaultClient().assets.delete(List.of(top1Guid, top2Guid), AtlanDeleteType.PURGE);
+        response = client.assets
+                .delete(List.of(top1Guid, top2Guid), AtlanDeleteType.PURGE)
+                .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -922,7 +912,7 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.purge.category", "glossary.purge.hierarchy"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        Glossary g = deleteGlossary(glossary.getGuid());
+        Glossary g = deleteGlossary(client, glossary.getGuid());
         assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
         assertEquals(g.getName(), glossary.getName());
         assertEquals(g.getCertificateStatus(), CertificateStatus.VERIFIED);

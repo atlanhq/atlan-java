@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -143,36 +142,11 @@ public class ThoughtspotDashlet extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) ThoughtspotDashlet assets will be included.
      *
-     * @return a fluent search that includes all ThoughtspotDashlet assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all ThoughtspotDashlet assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) ThoughtspotDashlet assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all ThoughtspotDashlet assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all ThoughtspotDashlet assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) ThoughtspotDashlets will be included
-     * @return a fluent search that includes all ThoughtspotDashlet assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -249,18 +223,6 @@ public class ThoughtspotDashlet extends Asset
     /**
      * Retrieves a ThoughtspotDashlet by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the ThoughtspotDashlet to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full ThoughtspotDashlet, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotDashlet does not exist or the provided GUID is not a ThoughtspotDashlet
-     */
-    @JsonIgnore
-    public static ThoughtspotDashlet get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a ThoughtspotDashlet by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the ThoughtspotDashlet to retrieve, either its GUID or its full qualifiedName
      * @return the requested full ThoughtspotDashlet, complete with all of its relationships
@@ -268,7 +230,7 @@ public class ThoughtspotDashlet extends Asset
      */
     @JsonIgnore
     public static ThoughtspotDashlet get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -302,17 +264,6 @@ public class ThoughtspotDashlet extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ThoughtspotDashlet to active.
-     *
-     * @param qualifiedName for the ThoughtspotDashlet
-     * @return true if the ThoughtspotDashlet is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -360,18 +311,6 @@ public class ThoughtspotDashlet extends Asset
     /**
      * Remove the system description from a ThoughtspotDashlet.
      *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param name of the ThoughtspotDashlet
-     * @return the updated ThoughtspotDashlet, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a ThoughtspotDashlet.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the ThoughtspotDashlet
      * @param name of the ThoughtspotDashlet
@@ -381,18 +320,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ThoughtspotDashlet) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a ThoughtspotDashlet.
-     *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param name of the ThoughtspotDashlet
-     * @return the updated ThoughtspotDashlet, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -412,18 +339,6 @@ public class ThoughtspotDashlet extends Asset
     /**
      * Remove the owners from a ThoughtspotDashlet.
      *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param name of the ThoughtspotDashlet
-     * @return the updated ThoughtspotDashlet, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a ThoughtspotDashlet.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ThoughtspotDashlet's owners
      * @param qualifiedName of the ThoughtspotDashlet
      * @param name of the ThoughtspotDashlet
@@ -433,20 +348,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ThoughtspotDashlet) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a ThoughtspotDashlet.
-     *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated ThoughtspotDashlet, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -469,18 +370,6 @@ public class ThoughtspotDashlet extends Asset
     /**
      * Remove the certificate from a ThoughtspotDashlet.
      *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param name of the ThoughtspotDashlet
-     * @return the updated ThoughtspotDashlet, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a ThoughtspotDashlet.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the ThoughtspotDashlet's certificate
      * @param qualifiedName of the ThoughtspotDashlet
      * @param name of the ThoughtspotDashlet
@@ -490,21 +379,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ThoughtspotDashlet) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a ThoughtspotDashlet.
-     *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -528,18 +402,6 @@ public class ThoughtspotDashlet extends Asset
     /**
      * Remove the announcement from a ThoughtspotDashlet.
      *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param name of the ThoughtspotDashlet
-     * @return the updated ThoughtspotDashlet, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a ThoughtspotDashlet.
-     *
      * @param client connectivity to the Atlan client from which to remove the ThoughtspotDashlet's announcement
      * @param qualifiedName of the ThoughtspotDashlet
      * @param name of the ThoughtspotDashlet
@@ -549,20 +411,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (ThoughtspotDashlet) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the ThoughtspotDashlet.
-     *
-     * @param qualifiedName for the ThoughtspotDashlet
-     * @param name human-readable name of the ThoughtspotDashlet
-     * @param terms the list of terms to replace on the ThoughtspotDashlet, or null to remove all terms from the ThoughtspotDashlet
-     * @return the ThoughtspotDashlet that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -578,21 +426,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ThoughtspotDashlet) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ThoughtspotDashlet, without replacing existing terms linked to the ThoughtspotDashlet.
-     * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ThoughtspotDashlet
-     * @param terms the list of terms to append to the ThoughtspotDashlet
-     * @return the ThoughtspotDashlet that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -616,21 +449,6 @@ public class ThoughtspotDashlet extends Asset
      * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the ThoughtspotDashlet
-     * @param terms the list of terms to remove from the ThoughtspotDashlet, which must be referenced by GUID
-     * @return the ThoughtspotDashlet that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ThoughtspotDashlet removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ThoughtspotDashlet, without replacing all existing terms linked to the ThoughtspotDashlet.
-     * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the ThoughtspotDashlet
      * @param qualifiedName for the ThoughtspotDashlet
      * @param terms the list of terms to remove from the ThoughtspotDashlet, which must be referenced by GUID
@@ -647,21 +465,6 @@ public class ThoughtspotDashlet extends Asset
      * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated ThoughtspotDashlet
-     */
-    public static ThoughtspotDashlet appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ThoughtspotDashlet, without replacing existing Atlan tags linked to the ThoughtspotDashlet.
-     * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ThoughtspotDashlet
      * @param qualifiedName of the ThoughtspotDashlet
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -671,35 +474,6 @@ public class ThoughtspotDashlet extends Asset
     public static ThoughtspotDashlet appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (ThoughtspotDashlet) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a ThoughtspotDashlet, without replacing existing Atlan tags linked to the ThoughtspotDashlet.
-     * Note: this operation must make two API calls — one to retrieve the ThoughtspotDashlet's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated ThoughtspotDashlet
-     */
-    public static ThoughtspotDashlet appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -732,17 +506,6 @@ public class ThoughtspotDashlet extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a ThoughtspotDashlet.
-     *
-     * @param qualifiedName of the ThoughtspotDashlet
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ThoughtspotDashlet
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

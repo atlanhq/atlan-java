@@ -45,10 +45,6 @@ jobs:
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: package-toolkit-events
-          path: package-toolkit/events/build/libs/package-toolkit-events-*-jar-with-dependencies.jar
-      - uses: actions/upload-artifact@v4
-        with:
           name: api-token-connection-admin
           path: jars/api-token-connection-admin-*.jar
       - uses: actions/upload-artifact@v4
@@ -113,14 +109,6 @@ jobs:
           path: jars/tests-cleanup-*.jar
       - uses: actions/upload-artifact@v4
         with:
-          name: asset-scorer
-          path: jars/asset-scorer-*.jar
-      - uses: actions/upload-artifact@v4
-        with:
-          name: verification-enforcer
-          path: jars/verification-enforcer-*.jar
-      - uses: actions/upload-artifact@v4
-        with:
           name: lambda-layer
           path: sdk/build/distributions/sdk-*.zip
   publish-release:
@@ -174,10 +162,6 @@ jobs:
         with:
           name: package-toolkit-runtime
           path: ./containers/base/assembly
-      # - uses: actions/download-artifact@v4
-      #   with:
-      #     name: package-toolkit-events
-      #     path: ./containers/base/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@v6
         with:
@@ -205,8 +189,6 @@ jobs:
           - owner-propagator
           - relational-assets-builder
           - tests-cleanup
-          - asset-scorer
-          - verification-enforcer
     needs:
       - merge-build
       - publish-base-image

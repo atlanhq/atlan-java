@@ -90,9 +90,6 @@ class ImportDataDomainTest : PackageTest("idd") {
         prepFile()
         runCustomPackage(
             AssetImportCfg(
-                assetsFile = null,
-                assetsFailOnErrors = true,
-                glossariesFailOnErrors = true,
                 dataProductsFile = Paths.get(testDirectory, testFile).toString(),
                 dataProductsUpsertSemantic = "upsert",
                 dataProductsAttrToOverwrite = listOf(),
@@ -170,7 +167,7 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataDomain(domainName: String): DataDomain {
         val request =
-            DataDomain.select()
+            DataDomain.select(client)
                 .where(DataDomain.NAME.eq(domainName))
                 .includesOnResults(dataDomainAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
@@ -183,12 +180,22 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataProductWithRetry(productName: String): DataProduct {
         val request =
-            DataProduct.select()
+            DataProduct.select(client)
                 .where(DataProduct.NAME.eq(productName))
                 .includesOnResults(dataProductAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
+    }
+
+    @Test
+    fun filesCreated() {
+        validateFilesExist(files)
+    }
+
+    @Test
+    fun errorFreeLog() {
+        validateErrorFreeLog()
     }
 }

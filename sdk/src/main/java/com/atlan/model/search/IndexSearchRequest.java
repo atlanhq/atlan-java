@@ -3,7 +3,6 @@
 package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
@@ -119,15 +118,6 @@ public class IndexSearchRequest extends AtlanObject {
     /** TBC */
     @Builder.Default
     Boolean showHighlights = false;
-
-    /**
-     * Run the search.
-     *
-     * @return the matching assets
-     */
-    public IndexSearchResponse search() throws AtlanException {
-        return search(Atlan.getDefaultClient());
-    }
 
     /**
      * Run the search.

@@ -2,19 +2,22 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.adoption.exports
 
-import com.atlan.model.search.SearchLogRequest
+import AdoptionExportCfg
+import com.atlan.model.search.SearchLog
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class DetailedUserViews(
+    private val ctx: PackageContext<AdoptionExportCfg>,
     private val xlsx: ExcelWriter,
     private val logger: KLogger,
-    private val start: Long,
-    private val end: Long,
 ) {
     fun export() {
-        logger.info { "Exporting details of all asset views between [${start * 1000}, ${end * 1000}]..." }
+        val from = ctx.config.viewsFrom * 1000
+        val to = ctx.config.viewsTo * 1000
+        logger.info { "Exporting details of all asset views between [$from, $to]..." }
         val sheet = xlsx.createSheet("User views")
         xlsx.addHeader(
             sheet,
@@ -27,7 +30,7 @@ class DetailedUserViews(
                 "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
-        SearchLogRequest.views(start * 1000, end * 1000)
+        SearchLog.views(ctx.client, from, to)
             .stream()
             .forEach {
                 val guid = it.resultGuidsAllowed?.get(0) ?: ""
@@ -39,7 +42,7 @@ class DetailedUserViews(
                         it.resultsCount ?: "0",
                         it.resultTypeNamesAllowed ?: "",
                         it.resultQualifiedNamesAllowed ?: "",
-                        if (guid.isNotBlank()) Utils.getAssetLink(guid) else "",
+                        if (guid.isNotBlank()) Utils.getAssetLink(ctx.client, guid) else "",
                     ),
                 )
             }

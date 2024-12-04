@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -46,15 +45,6 @@ public class CustomMetadataDef extends TypeDef {
 
     /**
      * Create this custom metadata definition in Atlan.
-     * @return the result of the creation, or null if the creation failed
-     * @throws AtlanException on any API communication issues
-     */
-    public synchronized CustomMetadataDef create() throws AtlanException {
-        return create(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Create this custom metadata definition in Atlan.
      *
      * @param client connectivity to the Atlan tenant on which to create the custom metadata
      * @return the result of the creation, or null if the creation failed
@@ -73,18 +63,6 @@ public class CustomMetadataDef extends TypeDef {
      * Note: there are many restrictions on what you can / should update, so this should really be treated
      * as an internal method. (This will also force a refresh of the custom metadata cache.)
      *
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API communication issues
-     */
-    public synchronized CustomMetadataDef update() throws AtlanException {
-        return update(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Update this custom metadata definition in Atlan.
-     * Note: there are many restrictions on what you can / should update, so this should really be treated
-     * as an internal method. (This will also force a refresh of the custom metadata cache.)
-     *
      * @param client connectivity to the Atlan tenant on which to update the custom metadata
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API communication issues
@@ -95,17 +73,6 @@ public class CustomMetadataDef extends TypeDef {
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
-    }
-
-    /**
-     * Hard-deletes (purges) a custom metadata definition by its human-readable name. This operation is irreversible.
-     * If there are any existing uses of the custom metadata on an asset, this operation will fail.
-     *
-     * @param displayName human-readable name of the custom metadata definition
-     * @throws AtlanException on any error during the API invocation
-     */
-    public static synchronized void purge(String displayName) throws AtlanException {
-        purge(Atlan.getDefaultClient(), displayName);
     }
 
     /**

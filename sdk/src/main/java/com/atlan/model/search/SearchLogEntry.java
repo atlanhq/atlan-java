@@ -68,6 +68,9 @@ public class SearchLogEntry extends AtlanObject {
     /** Whether the search was successful (false) or not (true). */
     public static final BooleanField FAILED = new BooleanField(UNMAPPED, "failed");
 
+    /** Unique name of the persona through which the search or view was made. */
+    String persona;
+
     /** Details of the browser or other client used to make the request. */
     String userAgent;
 

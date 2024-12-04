@@ -17,5 +17,5 @@ data class APITokenConnectionAdminCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
-    @JsonProperty("api_token_guid") val apiTokenGuid: String? = null,
+    @JsonProperty("api_token_guid") val apiTokenGuid: String = "",
 ) : CustomConfig()

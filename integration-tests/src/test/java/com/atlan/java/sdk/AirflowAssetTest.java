@@ -5,7 +5,6 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -37,7 +36,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
 
     @Test(groups = {"airflow.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
-        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
@@ -46,7 +45,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
     void createDAG() throws AtlanException {
         AirflowDag toCreate =
                 AirflowDag.creator(DAG_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AirflowDag);
         dag = (AirflowDag) one;
@@ -61,7 +60,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"airflow.create.dag"})
     void createTask() throws AtlanException {
         AirflowTask toCreate = AirflowTask.creator(TASK_NAME, dag).build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -87,12 +86,12 @@ public class AirflowAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"airflow.create.dag"})
     void updateDAG() throws AtlanException {
         AirflowDag updated =
-                AirflowDag.updateCertificate(dag.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+                AirflowDag.updateCertificate(client, dag.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = AirflowDag.updateAnnouncement(
-                dag.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, dag.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -103,7 +102,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.read.dag"},
             dependsOnGroups = {"airflow.create.task", "airflow.update.dag"})
     void retrieveDAG() throws AtlanException {
-        AirflowDag d = AirflowDag.get(dag.getGuid());
+        AirflowDag d = AirflowDag.get(client, dag.getGuid(), true);
         assertNotNull(d);
         assertTrue(d.isComplete());
         assertEquals(d.getGuid(), dag.getGuid());
@@ -127,14 +126,14 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.update.dag.again"},
             dependsOnGroups = {"airflow.read.dag"})
     void updateDAGAgain() throws AtlanException {
-        AirflowDag updated = AirflowDag.removeCertificate(dag.getQualifiedName(), DAG_NAME);
+        AirflowDag updated = AirflowDag.removeCertificate(client, dag.getQualifiedName(), DAG_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AirflowDag.removeAnnouncement(dag.getQualifiedName(), DAG_NAME);
+        updated = AirflowDag.removeAnnouncement(client, dag.getQualifiedName(), DAG_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -145,8 +144,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.search.assets"},
             dependsOnGroups = {"airflow.update.dag.again"})
     void searchAssets() throws AtlanException, InterruptedException {
-        IndexSearchRequest index = Atlan.getDefaultClient()
-                .assets
+        IndexSearchRequest index = client.assets
                 .select()
                 .where(Asset.SUPER_TYPE_NAMES.eq(IAirflow.TYPE_NAME))
                 .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
@@ -194,7 +192,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.delete.task"},
             dependsOnGroups = {"airflow.update.*", "airflow.search.*"})
     void deleteTask() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(task.getGuid()).block();
+        AssetMutationResponse response = Asset.delete(client, task.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -219,8 +217,9 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.delete.task.restore"},
             dependsOnGroups = {"airflow.delete.task.read"})
     void restoreTask() throws AtlanException {
-        assertTrue(AirflowTask.restore(task.getQualifiedName()));
-        AirflowTask restored = AirflowTask.get(task.getQualifiedName());
+        assertTrue(AirflowTask.restore(client, task.getQualifiedName()));
+        AirflowTask restored = AirflowTask.get(client, task.getQualifiedName());
+        assertFalse(restored.isComplete());
         assertEquals(restored.getGuid(), task.getGuid());
         assertEquals(restored.getQualifiedName(), task.getQualifiedName());
         assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
@@ -230,7 +229,7 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.purge.task"},
             dependsOnGroups = {"airflow.delete.task.restore"})
     void purgeTask() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(task.getGuid());
+        AssetMutationResponse response = Asset.purge(client, task.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -255,6 +254,6 @@ public class AirflowAssetTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
 }

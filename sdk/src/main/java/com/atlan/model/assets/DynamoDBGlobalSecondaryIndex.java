@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -379,36 +378,11 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) DynamoDBGlobalSecondaryIndex assets will be included.
      *
-     * @return a fluent search that includes all DynamoDBGlobalSecondaryIndex assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all DynamoDBGlobalSecondaryIndex assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) DynamoDBGlobalSecondaryIndex assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all DynamoDBGlobalSecondaryIndex assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all DynamoDBGlobalSecondaryIndex assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) DynamoDBGlobalSecondaryIndexs will be included
-     * @return a fluent search that includes all DynamoDBGlobalSecondaryIndex assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -489,18 +463,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /**
      * Retrieves a DynamoDBGlobalSecondaryIndex by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the DynamoDBGlobalSecondaryIndex to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full DynamoDBGlobalSecondaryIndex, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBGlobalSecondaryIndex does not exist or the provided GUID is not a DynamoDBGlobalSecondaryIndex
-     */
-    @JsonIgnore
-    public static DynamoDBGlobalSecondaryIndex get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a DynamoDBGlobalSecondaryIndex by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the DynamoDBGlobalSecondaryIndex to retrieve, either its GUID or its full qualifiedName
      * @return the requested full DynamoDBGlobalSecondaryIndex, complete with all of its relationships
@@ -508,7 +470,7 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
      */
     @JsonIgnore
     public static DynamoDBGlobalSecondaryIndex get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -542,17 +504,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) DynamoDBGlobalSecondaryIndex to active.
-     *
-     * @param qualifiedName for the DynamoDBGlobalSecondaryIndex
-     * @return true if the DynamoDBGlobalSecondaryIndex is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -600,19 +551,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /**
      * Remove the system description from a DynamoDBGlobalSecondaryIndex.
      *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param name of the DynamoDBGlobalSecondaryIndex
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeDescription(String qualifiedName, String name)
-            throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a DynamoDBGlobalSecondaryIndex.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
      * @param name of the DynamoDBGlobalSecondaryIndex
@@ -622,19 +560,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a DynamoDBGlobalSecondaryIndex.
-     *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param name of the DynamoDBGlobalSecondaryIndex
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeUserDescription(String qualifiedName, String name)
-            throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -654,18 +579,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /**
      * Remove the owners from a DynamoDBGlobalSecondaryIndex.
      *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param name of the DynamoDBGlobalSecondaryIndex
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a DynamoDBGlobalSecondaryIndex.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the DynamoDBGlobalSecondaryIndex's owners
      * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
      * @param name of the DynamoDBGlobalSecondaryIndex
@@ -675,20 +588,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a DynamoDBGlobalSecondaryIndex.
-     *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -711,19 +610,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /**
      * Remove the certificate from a DynamoDBGlobalSecondaryIndex.
      *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param name of the DynamoDBGlobalSecondaryIndex
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeCertificate(String qualifiedName, String name)
-            throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a DynamoDBGlobalSecondaryIndex.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the DynamoDBGlobalSecondaryIndex's certificate
      * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
      * @param name of the DynamoDBGlobalSecondaryIndex
@@ -733,21 +619,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a DynamoDBGlobalSecondaryIndex.
-     *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -771,19 +642,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /**
      * Remove the announcement from a DynamoDBGlobalSecondaryIndex.
      *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param name of the DynamoDBGlobalSecondaryIndex
-     * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeAnnouncement(String qualifiedName, String name)
-            throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a DynamoDBGlobalSecondaryIndex.
-     *
      * @param client connectivity to the Atlan client from which to remove the DynamoDBGlobalSecondaryIndex's announcement
      * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
      * @param name of the DynamoDBGlobalSecondaryIndex
@@ -793,20 +651,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the DynamoDBGlobalSecondaryIndex.
-     *
-     * @param qualifiedName for the DynamoDBGlobalSecondaryIndex
-     * @param name human-readable name of the DynamoDBGlobalSecondaryIndex
-     * @param terms the list of terms to replace on the DynamoDBGlobalSecondaryIndex, or null to remove all terms from the DynamoDBGlobalSecondaryIndex
-     * @return the DynamoDBGlobalSecondaryIndex that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex replaceTerms(
-            String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -822,21 +666,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the DynamoDBGlobalSecondaryIndex, without replacing existing terms linked to the DynamoDBGlobalSecondaryIndex.
-     * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the DynamoDBGlobalSecondaryIndex
-     * @param terms the list of terms to append to the DynamoDBGlobalSecondaryIndex
-     * @return the DynamoDBGlobalSecondaryIndex that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -860,21 +689,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
      * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the DynamoDBGlobalSecondaryIndex
-     * @param terms the list of terms to remove from the DynamoDBGlobalSecondaryIndex, which must be referenced by GUID
-     * @return the DynamoDBGlobalSecondaryIndex that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DynamoDBGlobalSecondaryIndex removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a DynamoDBGlobalSecondaryIndex, without replacing all existing terms linked to the DynamoDBGlobalSecondaryIndex.
-     * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the DynamoDBGlobalSecondaryIndex
      * @param qualifiedName for the DynamoDBGlobalSecondaryIndex
      * @param terms the list of terms to remove from the DynamoDBGlobalSecondaryIndex, which must be referenced by GUID
@@ -891,21 +705,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
      * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated DynamoDBGlobalSecondaryIndex
-     */
-    public static DynamoDBGlobalSecondaryIndex appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a DynamoDBGlobalSecondaryIndex, without replacing existing Atlan tags linked to the DynamoDBGlobalSecondaryIndex.
-     * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DynamoDBGlobalSecondaryIndex
      * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -915,35 +714,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     public static DynamoDBGlobalSecondaryIndex appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a DynamoDBGlobalSecondaryIndex, without replacing existing Atlan tags linked to the DynamoDBGlobalSecondaryIndex.
-     * Note: this operation must make two API calls — one to retrieve the DynamoDBGlobalSecondaryIndex's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated DynamoDBGlobalSecondaryIndex
-     */
-    public static DynamoDBGlobalSecondaryIndex appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -976,17 +746,6 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a DynamoDBGlobalSecondaryIndex.
-     *
-     * @param qualifiedName of the DynamoDBGlobalSecondaryIndex
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DynamoDBGlobalSecondaryIndex
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

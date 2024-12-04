@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -160,36 +159,11 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) QlikSpace assets will be included.
      *
-     * @return a fluent search that includes all QlikSpace assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all QlikSpace assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) QlikSpace assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all QlikSpace assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all QlikSpace assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) QlikSpaces will be included
-     * @return a fluent search that includes all QlikSpace assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -266,18 +240,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /**
      * Retrieves a QlikSpace by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the QlikSpace to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full QlikSpace, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
-     */
-    @JsonIgnore
-    public static QlikSpace get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a QlikSpace by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the QlikSpace to retrieve, either its GUID or its full qualifiedName
      * @return the requested full QlikSpace, complete with all of its relationships
@@ -285,7 +247,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      */
     @JsonIgnore
     public static QlikSpace get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -318,17 +280,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) QlikSpace to active.
-     *
-     * @param qualifiedName for the QlikSpace
-     * @return true if the QlikSpace is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -376,18 +327,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /**
      * Remove the system description from a QlikSpace.
      *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the updated QlikSpace, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a QlikSpace.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the QlikSpace
      * @param name of the QlikSpace
@@ -397,18 +336,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (QlikSpace) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the updated QlikSpace, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -428,18 +355,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /**
      * Remove the owners from a QlikSpace.
      *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the updated QlikSpace, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a QlikSpace.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the QlikSpace's owners
      * @param qualifiedName of the QlikSpace
      * @param name of the QlikSpace
@@ -448,20 +363,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      */
     public static QlikSpace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikSpace) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated QlikSpace, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -483,18 +384,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /**
      * Remove the certificate from a QlikSpace.
      *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the updated QlikSpace, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a QlikSpace.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the QlikSpace's certificate
      * @param qualifiedName of the QlikSpace
      * @param name of the QlikSpace
@@ -504,21 +393,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (QlikSpace) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -542,18 +416,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /**
      * Remove the announcement from a QlikSpace.
      *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the updated QlikSpace, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a QlikSpace.
-     *
      * @param client connectivity to the Atlan client from which to remove the QlikSpace's announcement
      * @param qualifiedName of the QlikSpace
      * @param name of the QlikSpace
@@ -563,20 +425,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (QlikSpace) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the QlikSpace.
-     *
-     * @param qualifiedName for the QlikSpace
-     * @param name human-readable name of the QlikSpace
-     * @param terms the list of terms to replace on the QlikSpace, or null to remove all terms from the QlikSpace
-     * @return the QlikSpace that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -592,20 +440,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikSpace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the QlikSpace, without replacing existing terms linked to the QlikSpace.
-     * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the QlikSpace
-     * @param terms the list of terms to append to the QlikSpace
-     * @return the QlikSpace that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -629,20 +463,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the QlikSpace
-     * @param terms the list of terms to remove from the QlikSpace, which must be referenced by GUID
-     * @return the QlikSpace that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikSpace removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a QlikSpace, without replacing all existing terms linked to the QlikSpace.
-     * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the QlikSpace
      * @param qualifiedName for the QlikSpace
      * @param terms the list of terms to remove from the QlikSpace, which must be referenced by GUID
@@ -659,20 +479,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the QlikSpace
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated QlikSpace
-     */
-    public static QlikSpace appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a QlikSpace, without replacing existing Atlan tags linked to the QlikSpace.
-     * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the QlikSpace
      * @param qualifiedName of the QlikSpace
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -682,35 +488,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (QlikSpace) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a QlikSpace, without replacing existing Atlan tags linked to the QlikSpace.
-     * Note: this operation must make two API calls — one to retrieve the QlikSpace's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated QlikSpace
-     */
-    public static QlikSpace appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -743,17 +520,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the QlikSpace
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

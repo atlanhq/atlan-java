@@ -2,18 +2,22 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.structs.AtlanStruct
 
 object StructXformer {
-    fun encode(struct: AtlanStruct): String {
-        return struct.toJson(Atlan.getDefaultClient())
+    fun encode(
+        client: AtlanClient,
+        struct: AtlanStruct,
+    ): String {
+        return struct.toJson(client)
     }
 
     fun decode(
+        client: AtlanClient,
         struct: String,
         structClass: Class<AtlanStruct>,
     ): AtlanStruct {
-        return Atlan.getDefaultClient().readValue(struct, structClass)
+        return client.readValue(struct, structClass)
     }
 }

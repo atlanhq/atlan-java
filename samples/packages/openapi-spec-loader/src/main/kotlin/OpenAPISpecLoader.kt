@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
@@ -24,60 +24,63 @@ object OpenAPISpecLoader {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<OpenAPISpecLoaderCfg>()
+        Utils.initializeContext<OpenAPISpecLoaderCfg>().use { ctx ->
+            val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+            val importType = ctx.config.importType
+            val specUrl = ctx.config.specUrl
+            val specFilename = ctx.config.specFile
+            val specKey = ctx.config.specKey
+            val batchSize = 20
 
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val importType = Utils.getOrDefault(config.importType, "URL")
-        val specUrl = Utils.getOrDefault(config.specUrl, "")
-        val specFilename = Utils.getOrDefault(config.specFile, "")
-        val specKey = Utils.getOrDefault(config.specKey, "")
-        val batchSize = 20
-
-        val inputQN =
-            config.connectionQualifiedName?.let {
-                if (it.isNotEmpty()) it[0] else null
-            }
-        val connectionQN =
-            Utils.createOrReuseConnection(config.connectionUsage, inputQN, config.connection)
-
-        val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
-        if (!specFileProvided) {
-            logger.error { "No input file was provided for the OpenAPI spec." }
-            exitProcess(1)
-        }
-
-        if (connectionQN.isBlank()) {
-            logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
-            exitProcess(4)
-        }
-
-        val sourceUrl =
-            when (importType) {
-                "CLOUD" -> {
-                    Utils.getInputFile(
-                        specFilename,
-                        outputDirectory,
-                        false,
-                        Utils.getOrDefault(config.specPrefix, ""),
-                        specKey,
-                    )
+            val inputQN =
+                ctx.config.connectionQualifiedName?.let {
+                    if (it.isNotEmpty()) it[0] else null
                 }
-                "DIRECT" -> specFilename
-                else -> specUrl
+            val connectionQN =
+                Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
+
+            val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
+            if (!specFileProvided) {
+                logger.error { "No input file was provided for the OpenAPI spec." }
+                exitProcess(1)
             }
 
-        logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
-        loadOpenAPISpec(connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
+            if (connectionQN.isBlank()) {
+                logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
+                exitProcess(4)
+            }
+
+            val sourceUrl =
+                when (importType) {
+                    "CLOUD" -> {
+                        Utils.getInputFile(
+                            specFilename,
+                            outputDirectory,
+                            false,
+                            ctx.config.specPrefix,
+                            specKey,
+                        )
+                    }
+
+                    "DIRECT" -> specFilename
+                    else -> specUrl
+                }
+
+            logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
+            loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
+        }
     }
 
     /**
      * Process the OpenAPI spec and create relevant assets in Atlan.
      *
+     * @param client connectivity to the Atlan tenant
      * @param connectionQN qualifiedName of the connection in which to create the assets
      * @param spec object for reading from the OpenAPI spec itself
      * @param batchSize maximum number of assets to save per API request
      */
     fun loadOpenAPISpec(
+        client: AtlanClient,
         connectionQN: String,
         spec: OpenAPISpecReader,
         batchSize: Int,
@@ -100,7 +103,7 @@ object OpenAPISpecLoader {
         val specQN = toCreate.qualifiedName
         logger.info { "Saving APISpec: $specQN" }
         try {
-            val response = toCreate.save()
+            val response = toCreate.save(client)
             val mutation = response.getMutation(toCreate)
             if (mutation in
                 listOf(
@@ -116,39 +119,39 @@ object OpenAPISpecLoader {
             logger.error("Unable to save the APISpec.", e)
             exitProcess(5)
         }
-        val batch =
-            AssetBatch(Atlan.getDefaultClient(), batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true)
         val totalCount = spec.paths?.size!!.toLong()
         if (totalCount > 0) {
             logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
-            try {
-                val assetCount = AtomicLong(0)
-                for (apiPath in spec.paths.entries) {
-                    val pathUrl = apiPath.key
-                    val pathDetails = apiPath.value
-                    val operations = mutableListOf<String>()
-                    val desc = StringBuilder()
-                    desc.append("| Method | Summary|\n|---|---|\n")
-                    addOperationDetails(pathDetails.get, "GET", operations, desc)
-                    addOperationDetails(pathDetails.post, "POST", operations, desc)
-                    addOperationDetails(pathDetails.put, "PUT", operations, desc)
-                    addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
-                    addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
-                    val path =
-                        APIPath.creator(pathUrl, specQN)
-                            .description(desc.toString())
-                            .apiPathRawURI(pathUrl)
-                            .apiPathSummary(pathDetails.summary)
-                            .apiPathAvailableOperations(operations)
-                            .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
-                            .build()
-                    batch.add(path)
+            AssetBatch(client, batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true).use { batch ->
+                try {
+                    val assetCount = AtomicLong(0)
+                    for (apiPath in spec.paths.entries) {
+                        val pathUrl = apiPath.key
+                        val pathDetails = apiPath.value
+                        val operations = mutableListOf<String>()
+                        val desc = StringBuilder()
+                        desc.append("| Method | Summary|\n|---|---|\n")
+                        addOperationDetails(pathDetails.get, "GET", operations, desc)
+                        addOperationDetails(pathDetails.post, "POST", operations, desc)
+                        addOperationDetails(pathDetails.put, "PUT", operations, desc)
+                        addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
+                        addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
+                        val path =
+                            APIPath.creator(pathUrl, specQN)
+                                .description(desc.toString())
+                                .apiPathRawURI(pathUrl)
+                                .apiPathSummary(pathDetails.summary)
+                                .apiPathAvailableOperations(operations)
+                                .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
+                                .build()
+                        batch.add(path)
+                        Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                    }
+                    batch.flush()
                     Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                } catch (e: AtlanException) {
+                    logger.error("Unable to bulk-save API paths.", e)
                 }
-                batch.flush()
-                Utils.logProgress(assetCount, totalCount, logger, batchSize)
-            } catch (e: AtlanException) {
-                logger.error("Unable to bulk-save API paths.", e)
             }
         }
     }

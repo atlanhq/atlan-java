@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -139,36 +138,11 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) CogniteAsset assets will be included.
      *
-     * @return a fluent search that includes all CogniteAsset assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all CogniteAsset assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) CogniteAsset assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all CogniteAsset assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all CogniteAsset assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) CogniteAssets will be included
-     * @return a fluent search that includes all CogniteAsset assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -245,18 +219,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     /**
      * Retrieves a CogniteAsset by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the CogniteAsset to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full CogniteAsset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteAsset does not exist or the provided GUID is not a CogniteAsset
-     */
-    @JsonIgnore
-    public static CogniteAsset get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a CogniteAsset by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the CogniteAsset to retrieve, either its GUID or its full qualifiedName
      * @return the requested full CogniteAsset, complete with all of its relationships
@@ -264,7 +226,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      */
     @JsonIgnore
     public static CogniteAsset get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -297,17 +259,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) CogniteAsset to active.
-     *
-     * @param qualifiedName for the CogniteAsset
-     * @return true if the CogniteAsset is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -355,18 +306,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     /**
      * Remove the system description from a CogniteAsset.
      *
-     * @param qualifiedName of the CogniteAsset
-     * @param name of the CogniteAsset
-     * @return the updated CogniteAsset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a CogniteAsset.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the CogniteAsset
      * @param name of the CogniteAsset
@@ -376,18 +315,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteAsset) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a CogniteAsset.
-     *
-     * @param qualifiedName of the CogniteAsset
-     * @param name of the CogniteAsset
-     * @return the updated CogniteAsset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -407,18 +334,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     /**
      * Remove the owners from a CogniteAsset.
      *
-     * @param qualifiedName of the CogniteAsset
-     * @param name of the CogniteAsset
-     * @return the updated CogniteAsset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a CogniteAsset.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CogniteAsset's owners
      * @param qualifiedName of the CogniteAsset
      * @param name of the CogniteAsset
@@ -428,20 +343,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteAsset) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a CogniteAsset.
-     *
-     * @param qualifiedName of the CogniteAsset
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated CogniteAsset, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -464,18 +365,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     /**
      * Remove the certificate from a CogniteAsset.
      *
-     * @param qualifiedName of the CogniteAsset
-     * @param name of the CogniteAsset
-     * @return the updated CogniteAsset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a CogniteAsset.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the CogniteAsset's certificate
      * @param qualifiedName of the CogniteAsset
      * @param name of the CogniteAsset
@@ -485,21 +374,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteAsset) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a CogniteAsset.
-     *
-     * @param qualifiedName of the CogniteAsset
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -523,18 +397,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     /**
      * Remove the announcement from a CogniteAsset.
      *
-     * @param qualifiedName of the CogniteAsset
-     * @param name of the CogniteAsset
-     * @return the updated CogniteAsset, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a CogniteAsset.
-     *
      * @param client connectivity to the Atlan client from which to remove the CogniteAsset's announcement
      * @param qualifiedName of the CogniteAsset
      * @param name of the CogniteAsset
@@ -544,20 +406,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (CogniteAsset) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the CogniteAsset.
-     *
-     * @param qualifiedName for the CogniteAsset
-     * @param name human-readable name of the CogniteAsset
-     * @param terms the list of terms to replace on the CogniteAsset, or null to remove all terms from the CogniteAsset
-     * @return the CogniteAsset that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -573,20 +421,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CogniteAsset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the CogniteAsset, without replacing existing terms linked to the CogniteAsset.
-     * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the CogniteAsset
-     * @param terms the list of terms to append to the CogniteAsset
-     * @return the CogniteAsset that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -610,20 +444,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the CogniteAsset
-     * @param terms the list of terms to remove from the CogniteAsset, which must be referenced by GUID
-     * @return the CogniteAsset that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static CogniteAsset removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a CogniteAsset, without replacing all existing terms linked to the CogniteAsset.
-     * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the CogniteAsset
      * @param qualifiedName for the CogniteAsset
      * @param terms the list of terms to remove from the CogniteAsset, which must be referenced by GUID
@@ -640,20 +460,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the CogniteAsset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated CogniteAsset
-     */
-    public static CogniteAsset appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CogniteAsset, without replacing existing Atlan tags linked to the CogniteAsset.
-     * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the CogniteAsset
      * @param qualifiedName of the CogniteAsset
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -663,35 +469,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (CogniteAsset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a CogniteAsset, without replacing existing Atlan tags linked to the CogniteAsset.
-     * Note: this operation must make two API calls — one to retrieve the CogniteAsset's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the CogniteAsset
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated CogniteAsset
-     */
-    public static CogniteAsset appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -724,17 +501,6 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a CogniteAsset.
-     *
-     * @param qualifiedName of the CogniteAsset
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the CogniteAsset
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

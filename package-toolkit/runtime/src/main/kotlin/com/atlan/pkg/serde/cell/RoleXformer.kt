@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 
@@ -28,11 +28,13 @@ object RoleXformer {
     /**
      * Decodes (deserializes) a string form into a validated role GUID.
      *
+     * @param client connectivity to the Atlan tenant
      * @param roleRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the role GUID corresponding to the string
      */
     fun decode(
+        client: AtlanClient,
         roleRef: String,
         fieldName: String,
     ): String {
@@ -40,7 +42,7 @@ object RoleXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    return Atlan.getDefaultClient().roleCache.getIdForName(roleRef)
+                    return client.roleCache.getIdForName(roleRef)
                 } catch (e: NotFoundException) {
                     throw NoSuchElementException("Role name $roleRef is not known to Atlan.", e)
                 }

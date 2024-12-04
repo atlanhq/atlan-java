@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -71,17 +70,6 @@ public class Credential extends AtlanObject {
     /**
      * Retrieves a credential by its unique identifier (GUID).
      *
-     * @param guid unique identifier (GUID) of the credential to retrieve
-     * @return the credential, or null if none exists
-     * @throws AtlanException on any error during API invocation
-     */
-    public static CredentialResponse get(String guid) throws AtlanException {
-        return get(Atlan.getDefaultClient(), guid);
-    }
-
-    /**
-     * Retrieves a credential by its unique identifier (GUID).
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the credential
      * @param guid unique identifier (GUID) of the credential to retrieve
      * @return the credential, or null if none exists
@@ -89,18 +77,6 @@ public class Credential extends AtlanObject {
      */
     public static CredentialResponse get(AtlanClient client, String guid) throws AtlanException {
         return client.credentials.get(guid);
-    }
-
-    /**
-     * Sends this credential to Atlan to update it in Atlan, after first testing it
-     * to confirm it works.
-     *
-     * @return the updated credential
-     * @throws InvalidRequestException if the provided credentials cannot be validated successfully
-     * @throws AtlanException on any error during API invocation
-     */
-    public CredentialResponse update() throws AtlanException {
-        return update(Atlan.getDefaultClient());
     }
 
     /**

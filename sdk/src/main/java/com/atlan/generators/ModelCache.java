@@ -2,7 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
@@ -36,34 +36,31 @@ public class ModelCache {
 
     private static ModelCache INSTANCE = null;
 
-    private ModelCache() throws AtlanException {
+    private ModelCache(AtlanClient client) throws AtlanException {
         enumDefCache = new ConcurrentHashMap<>();
-        for (EnumDef enumDef :
-                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.ENUM).getEnumDefs()) {
+        for (EnumDef enumDef : client.typeDefs.list(AtlanTypeCategory.ENUM).getEnumDefs()) {
             enumDefCache.put(enumDef.getName(), enumDef);
         }
         structDefCache = new ConcurrentHashMap<>();
         for (StructDef structDef :
-                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.STRUCT).getStructDefs()) {
+                client.typeDefs.list(AtlanTypeCategory.STRUCT).getStructDefs()) {
             structDefCache.put(structDef.getName(), structDef);
         }
         entityDefCache = new ConcurrentHashMap<>();
         for (EntityDef entityDef :
-                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.ENTITY).getEntityDefs()) {
+                client.typeDefs.list(AtlanTypeCategory.ENTITY).getEntityDefs()) {
             entityDefCache.put(entityDef.getName(), entityDef);
         }
         relationshipDefCache = new ConcurrentHashMap<>();
-        for (RelationshipDef relationshipDef : Atlan.getDefaultClient()
-                .typeDefs
-                .list(AtlanTypeCategory.RELATIONSHIP)
-                .getRelationshipDefs()) {
+        for (RelationshipDef relationshipDef :
+                client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP).getRelationshipDefs()) {
             relationshipDefCache.put(relationshipDef.getName(), relationshipDef);
         }
     }
 
-    private static ModelCache createInstance() {
+    private static ModelCache createInstance(AtlanClient client) {
         try {
-            ModelCache cache = new ModelCache();
+            ModelCache cache = new ModelCache(client);
             cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
         } catch (AtlanException e) {
@@ -72,9 +69,9 @@ public class ModelCache {
         }
     }
 
-    public static ModelCache getInstance() {
+    public static ModelCache getInstance(AtlanClient client) {
         if (INSTANCE == null) {
-            INSTANCE = createInstance();
+            INSTANCE = createInstance(client);
         }
         return INSTANCE;
     }

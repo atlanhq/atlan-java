@@ -4,8 +4,6 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
-import com.atlan.Atlan;
-import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
@@ -19,7 +17,6 @@ import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.RequestOptions;
 import java.util.*;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -71,17 +68,18 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(groups = {"cm.create.cm.ipr"})
     void createCustomMetadataIPR() throws AtlanException {
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_IPR)
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_IPR_LICENSE, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_IPR_VERSION, AtlanCustomAttributePrimitiveType.DECIMAL, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_IPR_MANDATORY, AtlanCustomAttributePrimitiveType.BOOLEAN, null, false))
                 .attributeDef(
-                        AttributeDef.of(CM_ATTR_IPR_LICENSE, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                        AttributeDef.of(client, CM_ATTR_IPR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
                 .attributeDef(
-                        AttributeDef.of(CM_ATTR_IPR_VERSION, AtlanCustomAttributePrimitiveType.DECIMAL, null, false))
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_IPR_MANDATORY, AtlanCustomAttributePrimitiveType.BOOLEAN, null, false))
-                .attributeDef(AttributeDef.of(CM_ATTR_IPR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
-                .attributeDef(AttributeDef.of(CM_ATTR_IPR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
+                        AttributeDef.of(client, CM_ATTR_IPR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                 .options(CustomMetadataOptions.withEmoji("⚖️", true))
                 .build();
-        AtlanClient client = Atlan.getDefaultClient();
         TypeDefResponse typeDefResponse = client.typeDefs.create(
                 customMetadataDef,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
@@ -139,19 +137,18 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(groups = {"cm.create.cm.raci"})
     void createCustomMetadataRACI() throws AtlanException {
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_RACI)
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
                 .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
                 .build();
-        AtlanClient client = Atlan.getDefaultClient();
         TypeDefResponse typeDefResponse = client.typeDefs.create(
                 customMetadataDef,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
@@ -213,7 +210,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(groups = {"cm.create.cm.dq"})
     void createCustomMetadataDQ() throws AtlanException {
         EnumDef enumDef = EnumDef.creator(CM_ENUM_DQ_TYPE, DQ_TYPE_LIST).build();
-        AtlanClient client = Atlan.getDefaultClient();
         TypeDefResponse typeDefResponse = client.typeDefs.create(
                 enumDef,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
@@ -230,11 +226,16 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(resp.getElementDefs().size(), DQ_TYPE_LIST.size());
 
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_QUALITY)
-                .attributeDef(
-                        AttributeDef.of(CM_ATTR_QUALITY_COUNT, AtlanCustomAttributePrimitiveType.INTEGER, null, false))
-                .attributeDef(AttributeDef.of(CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                 .attributeDef(AttributeDef.of(
-                        CM_ATTR_QUALITY_TYPE, AtlanCustomAttributePrimitiveType.OPTIONS, CM_ENUM_DQ_TYPE, false))
+                        client, CM_ATTR_QUALITY_COUNT, AtlanCustomAttributePrimitiveType.INTEGER, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
+                .attributeDef(AttributeDef.of(
+                        client,
+                        CM_ATTR_QUALITY_TYPE,
+                        AtlanCustomAttributePrimitiveType.OPTIONS,
+                        CM_ENUM_DQ_TYPE,
+                        false))
                 .options(CustomMetadataOptions.withImage(
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
                         true))
@@ -288,11 +289,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.cm.dq"},
             dependsOnGroups = {"cm.create.cm.dq", "cm.update.term.add.dq"})
     void updateCustomMetadataDQ() throws AtlanException {
-        EnumDef enumDef = EnumDef.updater(
-                        Atlan.getDefaultClient(), CM_ENUM_DQ_TYPE, List.of("Accuracy", "Awesomeness"), false)
+        EnumDef enumDef = EnumDef.updater(client, CM_ENUM_DQ_TYPE, List.of("Accuracy", "Awesomeness"), false)
                 .build();
         assertNotNull(enumDef);
-        EnumDef updated = enumDef.update();
+        EnumDef updated = enumDef.update(client);
         assertNotNull(updated);
         assertEquals(updated.getCategory(), AtlanTypeCategory.ENUM);
         assertNotNull(updated.getName());
@@ -301,7 +301,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(updated.getElementDefs().size(), 7);
         List<String> values = updated.getElementDefs().stream()
                 .map(EnumDef.ElementDef::getValue)
-                .collect(Collectors.toList());
+                .toList();
         assertTrue(values.contains("Awesomeness"));
         assertTrue(values.contains("Accuracy"));
     }
@@ -310,13 +310,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.create.badges"},
             dependsOnGroups = {"cm.create.cm.dq", "cm.create.cm.ipr"})
     void createBadges() throws AtlanException {
-        Badge toCreate = Badge.creator(CM_ATTR_QUALITY_COUNT, CM_QUALITY, CM_ATTR_QUALITY_COUNT)
+        Badge toCreate = Badge.creator(client, CM_ATTR_QUALITY_COUNT, CM_QUALITY, CM_ATTR_QUALITY_COUNT)
                 .userDescription("How many data quality checks ran against this asset.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, 5, BadgeConditionColor.GREEN))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, 5, BadgeConditionColor.YELLOW))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, 2, BadgeConditionColor.RED))
                 .build();
-        AssetMutationResponse response = toCreate.save();
+        AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -344,14 +344,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
             }
         });
 
-        toCreate = Badge.creator(CM_ATTR_QUALITY_TYPE, CM_QUALITY, CM_ATTR_QUALITY_TYPE)
+        toCreate = Badge.creator(client, CM_ATTR_QUALITY_TYPE, CM_QUALITY, CM_ATTR_QUALITY_TYPE)
                 .userDescription("The type of quality checks used on this asset.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Completeness", "#001122"))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Timeliness", "#ffeedd"))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Accuracy", "#aabbcc"))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Consistency", "#ccbbaa"))
                 .build();
-        response = toCreate.save();
+        response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -367,11 +367,11 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     Set.of("#001122", "#ffeedd", "#aabbcc", "#ccbbaa").contains(condition.getBadgeConditionColorhex()));
         }
 
-        toCreate = Badge.creator(CM_ATTR_IPR_LICENSE, CM_IPR, CM_ATTR_IPR_LICENSE)
+        toCreate = Badge.creator(client, CM_ATTR_IPR_LICENSE, CM_IPR, CM_ATTR_IPR_LICENSE)
                 .userDescription("License associated with this asset.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "CC BY", BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.save();
+        response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -383,12 +383,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(badgeConditions.get(0).getBadgeConditionValue(), "\"CC BY\"");
         assertEquals(badgeConditions.get(0).getBadgeConditionColorhex(), BadgeConditionColor.GREEN.getValue());
 
-        toCreate = Badge.creator(CM_ATTR_IPR_MANDATORY, CM_IPR, CM_ATTR_IPR_MANDATORY)
+        toCreate = Badge.creator(client, CM_ATTR_IPR_MANDATORY, CM_IPR, CM_ATTR_IPR_MANDATORY)
                 .userDescription("Whether adherence to the associated license is mandatory or not.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, true, BadgeConditionColor.RED))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, false, BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.save();
+        response = toCreate.save(client);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -406,31 +406,30 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(groups = {"cm.create.term"})
     void createTerm() throws AtlanException {
-        glossary = GlossaryTest.createGlossary(PREFIX);
-        term = GlossaryTest.createTerm(PREFIX, glossary);
+        glossary = GlossaryTest.createGlossary(client, PREFIX);
+        term = GlossaryTest.createTerm(client, PREFIX, glossary);
     }
 
     @Test(groups = {"cm.create.groups"})
     void createGroups() throws AtlanException {
-        group1 = AdminTest.createGroup(GROUP_NAME1);
-        group2 = AdminTest.createGroup(GROUP_NAME2);
+        group1 = AdminTest.createGroup(client, GROUP_NAME1);
+        group2 = AdminTest.createGroup(client, GROUP_NAME2);
     }
 
     @Test(
             groups = {"cm.search.invalid"},
             dependsOnGroups = {"cm.create.cm.*"})
     void testInvalidSearchParameters() {
-        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
                         .gt(5)));
-        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_DATE)
-                        .startsWith("abc", false)));
-        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_IPR, CM_ATTR_IPR_MANDATORY)
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_IPR, CM_ATTR_IPR_DATE).startsWith("abc", false)));
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_IPR, CM_ATTR_IPR_MANDATORY)
                         .lt(3)));
-        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_QUALITY, CM_ATTR_QUALITY_TYPE)
+        assertThrows(InvalidRequestException.class, () -> GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_QUALITY, CM_ATTR_QUALITY_TYPE)
                         .lte(10)));
     }
 
@@ -444,8 +443,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_RACI_CONSULTED, List.of(group1.getName()))
                 .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
                 .build();
-        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_RACI, cm);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_RACI, cm);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -466,8 +465,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_IPR_DATE, 1659308400000L)
                 .attribute(CM_ATTR_IPR_URL, "https://creativecommons.org/licenses/by/2.0/")
                 .build();
-        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_IPR, cm);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_IPR, cm);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -488,8 +487,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_QUALITY_SQL, "SELECT * from SOMEWHERE;")
                 .attribute(CM_ATTR_QUALITY_TYPE, "Completeness")
                 .build();
-        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_QUALITY, cm);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_QUALITY, cm);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -510,8 +509,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
                 .attribute(CM_ATTR_IPR_MANDATORY, false)
                 .build();
-        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_IPR, cm);
-        GlossaryTerm t = GlossaryTerm.get(term.getQualifiedName());
+        GlossaryTerm.updateCustomMetadataAttributes(client, term.getGuid(), CM_IPR, cm);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -534,8 +533,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_RACI_ACCOUNTABLE, FIXED_USER)
                 .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
                 .build();
-        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_RACI, cm);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.replaceCustomMetadata(client, term.getGuid(), CM_RACI, cm);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -550,8 +549,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.term.replace.ipr"},
             dependsOnGroups = {"cm.update.term.replace.raci"})
     void replaceTermCMIPR() throws AtlanException {
-        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_IPR, null);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.replaceCustomMetadata(client, term.getGuid(), CM_IPR, null);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -567,8 +566,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchByAnyAccountable() throws AtlanException, InterruptedException {
 
-        IndexSearchRequest index = GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+        IndexSearchRequest index = GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
                         .hasAnyValue())
                 .includeOnResults(GlossaryTerm.NAME)
                 .includeOnResults(GlossaryTerm.ANCHOR)
@@ -597,8 +596,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchBySpecificAccountable() throws AtlanException, InterruptedException {
 
-        IndexSearchRequest index = GlossaryTerm.select()
-                .where(CustomMetadataField.of(Atlan.getDefaultClient(), CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
+        IndexSearchRequest index = GlossaryTerm.select(client)
+                .where(CustomMetadataField.of(client, CM_RACI, CM_ATTR_RACI_ACCOUNTABLE)
                         .eq(FIXED_USER, false))
                 .includeOnResults(GlossaryTerm.NAME)
                 .includeOnResults(GlossaryTerm.ANCHOR)
@@ -626,8 +625,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.term.remove.raci"},
             dependsOnGroups = {"cm.search.term.cm"})
     void removeTermCMRACI() throws AtlanException {
-        GlossaryTerm.removeCustomMetadata(term.getGuid(), CM_RACI);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_RACI);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -641,8 +640,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.term.remove.ipr"},
             dependsOnGroups = {"cm.update.term.remove.raci"})
     void removeTermCMIPR() throws AtlanException {
-        GlossaryTerm.removeCustomMetadata(term.getGuid(), CM_IPR);
-        GlossaryTerm t = GlossaryTerm.get(term.getQualifiedName());
+        GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_IPR);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -655,8 +654,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.term.remove.dq"},
             dependsOnGroups = {"cm.update.term.remove.ipr"})
     void removeObjectCMDQ() throws AtlanException {
-        GlossaryTerm.removeCustomMetadata(term.getGuid(), CM_QUALITY);
-        GlossaryTerm t = GlossaryTerm.get(term.getGuid());
+        GlossaryTerm.removeCustomMetadata(client, term.getGuid(), CM_QUALITY);
+        GlossaryTerm t = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
@@ -668,8 +667,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.cm.attribute.1"},
             dependsOnGroups = {"cm.create.cm.raci"})
     void removeAttribute() throws AtlanException {
-        CustomMetadataDef existing =
-                Atlan.getDefaultClient().getCustomMetadataCache().getByName(CM_RACI);
+        CustomMetadataDef existing = client.getCustomMetadataCache().getByName(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef existingAttr : existingAttrs) {
@@ -684,7 +682,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        AtlanClient client = Atlan.getDefaultClient();
         TypeDefResponse typeDefResponse = client.typeDefs.update(
                 existing,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
@@ -714,8 +711,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.read.cm.structure.1"},
             dependsOnGroups = {"cm.update.cm.attribute.1"})
     void retrieveStructures() throws AtlanException {
-        Map<String, List<AttributeDef>> map =
-                Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes();
+        Map<String, List<AttributeDef>> map = client.getCustomMetadataCache().getAllCustomAttributes();
         assertNotNull(map);
         assertTrue(map.size() >= 3);
         assertTrue(map.containsKey(CM_RACI));
@@ -723,7 +719,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(map.containsKey(CM_QUALITY));
         AttributeDef extra = validateRACIStructure(map.get(CM_RACI), 4);
         assertNull(extra);
-        map = Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes(true);
+        map = client.getCustomMetadataCache().getAllCustomAttributes(true);
         assertNotNull(map);
         assertTrue(map.size() >= 3);
         assertTrue(map.containsKey(CM_RACI));
@@ -743,19 +739,18 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.cm.attribute.2"},
             dependsOnGroups = {"cm.read.cm.structure.1"})
     void recreateAttribute() throws AtlanException {
-        CustomMetadataDef existing =
-                Atlan.getDefaultClient().getCustomMetadataCache().getByName(CM_RACI);
+        CustomMetadataDef existing = client.getCustomMetadataCache().getByName(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef attributeDef : existingAttrs) {
             updatedAttrs.add(attributeDef.toBuilder().isNew(null).build());
         }
-        updatedAttrs.add(AttributeDef.of(CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false));
+        updatedAttrs.add(
+                AttributeDef.of(client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false));
         existing = existing.toBuilder()
                 .clearAttributeDefs()
                 .attributeDefs(updatedAttrs)
                 .build();
-        AtlanClient client = Atlan.getDefaultClient();
         TypeDefResponse typeDefResponse = client.typeDefs.update(
                 existing,
                 RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
@@ -788,7 +783,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void retrieveStructureWithoutArchived2() {
         try {
             Map<String, List<AttributeDef>> map =
-                    Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes();
+                    client.getCustomMetadataCache().getAllCustomAttributes();
             assertNotNull(map);
             assertTrue(map.size() >= 3);
             assertTrue(map.containsKey(CM_RACI));
@@ -813,7 +808,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void retrieveStructureWithArchived() {
         try {
             Map<String, List<AttributeDef>> map =
-                    Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes(true);
+                    client.getCustomMetadataCache().getAllCustomAttributes(true);
             assertNotNull(map);
             assertTrue(map.size() >= 3);
             assertTrue(map.containsKey(CM_RACI));
@@ -846,7 +841,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(client, false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -855,7 +850,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        t = GlossaryTerm.get(term.getQualifiedName());
+        t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
@@ -872,7 +867,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
-        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(client, false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -881,7 +876,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        t = GlossaryTerm.get(term.getQualifiedName());
+        t = GlossaryTerm.get(client, term.getQualifiedName(), true);
         assertNotNull(t);
         assertTrue(t.isComplete());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
@@ -893,7 +888,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByGuid() throws AtlanException, InterruptedException {
         AuditSearchRequest request =
-                AuditSearchRequest.byGuid(term.getGuid(), 40).build();
+                AuditSearchRequest.byGuid(client, term.getGuid(), 40).build();
         AuditSearchResponse response = retrySearchUntil(request, 13L);
         validateAudits(response.getEntityAudits());
     }
@@ -903,7 +898,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByQN() throws AtlanException, InterruptedException {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
-                        GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
+                        client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
                 .build();
         AuditSearchResponse response = retrySearchUntil(request, 13L);
         validateAudits(response.getEntityAudits());
@@ -914,8 +909,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.create.*", "cm.read.*", "cm.update.*", "cm.search.*"},
             alwaysRun = true)
     void purgeTerm() throws AtlanException {
-        GlossaryTest.deleteTerm(term.getGuid());
-        GlossaryTest.deleteGlossary(glossary.getGuid());
+        GlossaryTest.deleteTerm(client, term.getGuid());
+        GlossaryTest.deleteGlossary(client, glossary.getGuid());
     }
 
     @Test(
@@ -923,8 +918,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.term"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
-        AdminTest.deleteGroup(group1.getId());
-        AdminTest.deleteGroup(group2.getId());
+        AdminTest.deleteGroup(client, group1.getId());
+        AdminTest.deleteGroup(client, group2.getId());
     }
 
     @Test(
@@ -932,10 +927,11 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.term"},
             alwaysRun = true)
     void purgeBadges() throws AtlanException {
-        Badge.purge(badge1.getGuid());
-        Badge.purge(badge2.getGuid());
-        Badge.purge(badge3.getGuid());
-        Badge.purge(badge4.getGuid());
+        client.assets
+                .delete(
+                        List.of(badge1.getGuid(), badge2.getGuid(), badge3.getGuid(), badge4.getGuid()),
+                        AtlanDeleteType.PURGE)
+                .block();
     }
 
     @Test(
@@ -943,9 +939,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.badges"},
             alwaysRun = true)
     void purgeCustomMetadata() throws AtlanException {
-        CustomMetadataDef.purge(CM_RACI);
-        CustomMetadataDef.purge(CM_IPR);
-        CustomMetadataDef.purge(CM_QUALITY);
+        CustomMetadataDef.purge(client, CM_RACI);
+        CustomMetadataDef.purge(client, CM_IPR);
+        CustomMetadataDef.purge(client, CM_QUALITY);
     }
 
     @Test(
@@ -953,7 +949,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.cm"},
             alwaysRun = true)
     void purgeCustomMetadataEnums() throws AtlanException {
-        EnumDef.purge(CM_ENUM_DQ_TYPE);
+        EnumDef.purge(client, CM_ENUM_DQ_TYPE);
     }
 
     private void validateRACIAttributes(CustomMetadataAttributes cma) {

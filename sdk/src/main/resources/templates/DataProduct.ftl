@@ -2,20 +2,6 @@
     /**
      * Builds the minimal object necessary for creating a DataProduct.
      *
-     * @param name of the DataProduct
-     * @param domainQualifiedName unique name of the DataDomain in which this product exists
-     * @param assetSelection a query that defines which assets to include in the data product
-     * @return the minimal request necessary to create the DataProduct, as a builder
-     * @throws InvalidRequestException if the domain provided is without a qualifiedName
-     */
-    public static DataProductBuilder<?, ?> creator(String name, String domainQualifiedName, FluentSearch assetSelection)
-            throws InvalidRequestException {
-        return creator(Atlan.getDefaultClient(), name, domainQualifiedName, assetSelection);
-    }
-
-    /**
-     * Builds the minimal object necessary for creating a DataProduct.
-     *
      * @param client connectivity to the Atlan tenant where the DataProduct is intended to be created
      * @param name of the DataProduct
      * @param domainQualifiedName unique name of the DataDomain in which this product exists
@@ -27,20 +13,6 @@
             AtlanClient client, String name, String domainQualifiedName, FluentSearch assetSelection)
             throws InvalidRequestException {
         return creator(name, domainQualifiedName, "").assetSelection(client, assetSelection);
-    }
-
-    /**
-     * Builds the minimal object necessary for creating a DataProduct.
-     *
-     * @param name of the DataProduct
-     * @param domainQualifiedName unique name of the DataDomain in which this product exists
-     * @param assetSelection a query that defines which assets to include in the data product
-     * @return the minimal request necessary to create the DataProduct, as a builder
-     * @throws InvalidRequestException if the domain provided is without a qualifiedName
-     */
-    public static DataProductBuilder<?, ?> creator(String name, String domainQualifiedName, IndexSearchDSL assetSelection)
-            throws InvalidRequestException {
-        return creator(Atlan.getDefaultClient(), name, domainQualifiedName, assetSelection);
     }
 
     /**
@@ -116,48 +88,6 @@
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the domain, if found.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param name of the DataProduct
-     * @return the DataProduct, if found
-     * @throws AtlanException on any API problems, or if the DataProduct does not exist
-     */
-    public static List<DataProduct> findByName(String name)
-            throws AtlanException {
-        return findByName(name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a DataProduct by its human-readable name.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param name of the DataProduct
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the DataProduct
-     * @return the DataProduct, if found
-     * @throws AtlanException on any API problems, or if the DataProduct does not exist
-     */
-    public static List<DataProduct> findByName(String name, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
-    }
-
-    /**
-     * Find a DataProduct by its human-readable name.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param name of the DataProduct
-     * @param attributes an optional collection of attributes (checked) to retrieve for the DataProduct
-     * @return the DataProduct, if found
-     * @throws AtlanException on any API problems, or if the DataProduct does not exist
-     */
-    public static List<DataProduct> findByName(String name, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(Atlan.getDefaultClient(), name, attributes);
     }
 
     /**

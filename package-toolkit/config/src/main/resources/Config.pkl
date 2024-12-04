@@ -302,8 +302,8 @@ const function getOutputs(m): Mapping<String, FileOutput> = new Mapping {
     ["\(getPythonPkgName(m))/__init__.py"] = Renderers.getBlankFile()
     ["\(getPythonPkgName(m))/main.py.example"] = Renderers.getMainPy(getPythonPkgName(m))
     ["\(getPythonPkgName(m))/logging.conf"] = Renderers.getLoggingConfPy()
-    ["requirements.txt"] = Renderers.getRequirementsPy()
-    ["requirements-dev.txt"] = Renderers.getRequirementsDevPy()
+    ["requirements.txt.example"] = Renderers.getRequirementsPy()
+    ["requirements-dev.txt.example"] = Renderers.getRequirementsDevPy()
     ["version.txt"] = Renderers.getVersionPy(m)
     ["Dockerfile"] = Renderers.getDockerfilePy(getPythonPkgName(m))
   }
@@ -373,6 +373,9 @@ abstract class UIElement {
 
   /// Sizing of the input on the UI (8 is full-width, 4 is half-width).
   hidden width: Int = 8
+
+  /// Default fallback value to use for the element if nothing is selected or entered in the UI.
+  hidden fallback: Any? = null
 
   /// (Generated) UI configuration for the element.
   fixed ui: Widget = new Widget {

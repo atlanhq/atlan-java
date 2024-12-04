@@ -263,6 +263,15 @@ public abstract class HttpClient {
                 } else {
                     log.debug(" ... no permission for the operation (yet), will retry: {}", response.body());
                 }
+            } else if (response.code() == 429) {
+                // Retry on a rate-limited request (since we will exponentially back-off anyway)
+                // TODO: is there anything in the response we should pick up to tell us how long to wait before
+                // retrying?
+                if (exception != null) {
+                    log.debug(" ... rate-limited, will retry with a delay: {}", response.body(), exception);
+                } else {
+                    log.debug(" ... rate-limited, will retry with a delay: {}", response.body());
+                }
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.
                 if (exception != null) {
@@ -271,7 +280,7 @@ public abstract class HttpClient {
                     log.debug(" ... internal server error, will retry: {}", response.body());
                 }
             }
-            return (response.code() == 403 || response.code() >= 500);
+            return (response.code() == 403 || response.code() == 429 || response.code() >= 500);
         }
         return false;
     }

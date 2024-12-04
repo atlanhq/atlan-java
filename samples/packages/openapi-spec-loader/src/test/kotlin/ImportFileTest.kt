@@ -40,7 +40,7 @@ class ImportFileTest : PackageTest("f") {
                 importType = "DIRECT",
                 specFile = testFile,
                 connectionUsage = "CREATE",
-                connection = Connection.creator(testId, connectorType).build(),
+                connection = Connection.creator(client, testId, connectorType).build(),
             ),
             OpenAPISpecLoader::main,
         )
@@ -52,7 +52,7 @@ class ImportFileTest : PackageTest("f") {
 
     @Test
     fun connectionCreated() {
-        val results = Connection.findByName(testId, connectorType)
+        val results = Connection.findByName(client, testId, connectorType)
         assertNotNull(results)
         assertEquals(1, results.size)
         assertEquals(testId, results[0].name)
@@ -60,9 +60,9 @@ class ImportFileTest : PackageTest("f") {
 
     @Test
     fun specCreated() {
-        val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
+        val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APISpec.select()
+            APISpec.select(client)
                 .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APISpec.NAME)
                 .includeOnResults(APISpec.API_SPEC_TYPE)
@@ -84,9 +84,9 @@ class ImportFileTest : PackageTest("f") {
 
     @Test
     fun pathsCreated() {
-        val connectionQN = Connection.findByName(testId, connectorType)?.get(0)?.qualifiedName!!
+        val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APIPath.select()
+            APIPath.select(client)
                 .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APIPath.NAME)
                 .includeOnResults(APIPath.DESCRIPTION)

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserialization
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.serde.Serde
@@ -25,6 +26,7 @@ import kotlin.system.exitProcess
  * particular column's blank values to actually overwrite (i.e. remove) existing values for that
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
+ * @param ctx context in which the package is running
  * @param filename name of the file to import
  * @param logger through which to record progress and any errors
  * @param typeNameFilter name of the types that should be processed (primarily useful for multi-pass loads)
@@ -39,18 +41,19 @@ import kotlin.system.exitProcess
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class CSVImporter(
-    private val filename: String,
+    protected val ctx: PackageContext<*>,
+    protected val filename: String,
     protected val logger: KLogger,
     protected val typeNameFilter: String = "",
-    private val attrsToOverwrite: List<AtlanField> = listOf(),
-    private val updateOnly: Boolean = false,
-    private val batchSize: Int = 20,
-    private val trackBatches: Boolean = true,
-    private val caseSensitive: Boolean = true,
-    private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
-    private val tableViewAgnostic: Boolean = false,
-    private val failOnErrors: Boolean = true,
-    private val fieldSeparator: Char = ',',
+    protected val attrsToOverwrite: List<AtlanField> = listOf(),
+    protected val updateOnly: Boolean = false,
+    protected val batchSize: Int = 20,
+    protected val trackBatches: Boolean = true,
+    protected val caseSensitive: Boolean = true,
+    protected val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    protected val tableViewAgnostic: Boolean = false,
+    protected val failOnErrors: Boolean = true,
+    protected val fieldSeparator: Char = ',',
 ) : AssetGenerator, RowPreprocessor {
     /** {@inheritDoc} */
     override fun preprocessRow(
@@ -108,7 +111,7 @@ abstract class CSVImporter(
             fieldSeparator,
         ).use { csv ->
             val start = System.currentTimeMillis()
-            val results = csv.streamRows(this, batchSize, logger, columnsToSkip)
+            val results = csv.streamRows(ctx, this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             if (results.anyFailures && failOnErrors) {
                 logger.error { "Some errors detected, failing the workflow." }
@@ -137,6 +140,7 @@ abstract class CSVImporter(
             val qualifiedName = row.getOrElse(qnIdx) { "" }
             val deserializer =
                 RowDeserializer(
+                    ctx = ctx,
                     heading = header,
                     row = row,
                     typeIdx = typeIdx,

@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
@@ -24,38 +23,37 @@ import kotlin.system.exitProcess
 object TestsCleanup {
     private val logger = KotlinLogging.logger {}
 
-    private const val PRIVILEGED_CLIENT = "pc"
     private const val DELETION_BATCH = 20
-    private lateinit var client: AtlanClient
 
     /**
      * Actually run the logic to clean up test assets.
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<TestsCleanupCfg>()
+        Utils.initializeContext<TestsCleanupCfg>().use { ctx ->
+            val prefix = ctx.config.prefix
+            if (prefix.isBlank()) {
+                logger.error { "Missing required parameter - you must specify a prefix for objects to be purged." }
+                exitProcess(1)
+            }
 
-        val prefix = Utils.getOrDefault(config.prefix, "")
-        if (prefix.isBlank()) {
-            logger.error { "Missing required parameter - you must specify a prefix for objects to be purged." }
-            exitProcess(1)
+            purgeGlossaries(ctx.client, prefix)
+            purgeProducts(ctx.client, prefix)
+            purgeDomains(ctx.client, prefix)
+            purgeAssets(ctx.client, prefix)
+            purgePurposes(ctx.client, prefix)
+            purgePersonas(ctx.client, prefix)
+            purgeCustomMetadata(ctx.client, prefix)
+            purgeTags(ctx.client, prefix)
         }
-
-        client = Atlan.getDefaultClient()
-
-        purgeGlossaries(prefix)
-        purgeProducts(prefix)
-        purgeDomains(prefix)
-        purgeAssets(prefix)
-        purgePurposes(prefix)
-        purgePersonas(prefix)
-        purgeCustomMetadata(prefix)
-        purgeTags(prefix)
     }
 
-    private fun purgeGlossaries(prefix: String) {
+    private fun purgeGlossaries(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val glossaries =
-            Glossary.select(true)
+            Glossary.select(client, true)
                 .where(Glossary.NAME.startsWith(prefix))
                 .includeOnResults(Glossary.NAME)
                 .stream()
@@ -65,53 +63,62 @@ object TestsCleanup {
             val qn = glossary.qualifiedName
             val name = glossary.name
             val terms =
-                GlossaryTerm.select(true)
+                GlossaryTerm.select(client, true)
                     .where(GlossaryTerm.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
                     .toList()
             logger.info { "Purging ${terms.size} terms from glossary: $name" }
-            purgeByGuids(terms)
+            purgeByGuids(client, terms)
             val categories =
-                GlossaryCategory.select(true)
+                GlossaryCategory.select(client, true)
                     .where(GlossaryCategory.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
                     .toList()
             logger.info { "Purging ${categories.size} categories from glossary: $name" }
-            purgeByGuids(categories)
+            purgeByGuids(client, categories)
             logger.info { "Purging glossary: $name" }
-            purgeByGuids(listOf(glossary.guid))
+            purgeByGuids(client, listOf(glossary.guid))
         }
     }
 
     data class AssetDetails(val name: String, val qualifiedName: String, val guid: String)
 
-    private fun purgeProducts(prefix: String) {
+    private fun purgeProducts(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
-            DataProduct.select(true)
+            DataProduct.select(client, true)
                 .where(DataProduct.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} data products." }
-        purgeByGuids(list)
+        purgeByGuids(client, list)
     }
 
-    private fun purgeDomains(prefix: String) {
+    private fun purgeDomains(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
-            DataDomain.select(true)
+            DataDomain.select(client, true)
                 .where(DataDomain.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} data domains." }
-        purgeByGuids(list)
+        purgeByGuids(client, list)
     }
 
-    private fun purgeAssets(prefix: String) {
+    private fun purgeAssets(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
-            Connection.select(true)
+            Connection.select(client, true)
                 .where(Connection.NAME.startsWith(prefix))
                 .stream()
                 .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
@@ -126,35 +133,44 @@ object TestsCleanup {
                     .map { it.guid }
                     .toList()
             logger.info { "Purging ${assets.size} assets from connection: $name" }
-            purgeByGuids(assets)
+            purgeByGuids(client, assets)
             logger.info { "Purging connection: $name" }
-            purgeByGuids(listOf(connection.guid))
+            purgeByGuids(client, listOf(connection.guid))
         }
     }
 
-    private fun purgePurposes(prefix: String) {
+    private fun purgePurposes(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
-            Purpose.select(true)
+            Purpose.select(client, true)
                 .where(Purpose.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} purposes." }
-        purgeByGuids(list)
+        purgeByGuids(client, list)
     }
 
-    private fun purgePersonas(prefix: String) {
+    private fun purgePersonas(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
-            Persona.select(true)
+            Persona.select(client, true)
                 .where(Persona.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} personas." }
-        purgeByGuids(list)
+        purgeByGuids(client, list)
     }
 
-    private fun purgeCustomMetadata(prefix: String) {
+    private fun purgeCustomMetadata(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val enums =
             client.typeDefs.list(AtlanTypeCategory.ENUM)
                 .enumDefs
@@ -164,7 +180,7 @@ object TestsCleanup {
                 .toList()
         enums.forEach { e ->
             logger.info { "Purging enum: ${e.internalName}" }
-            getPrivilegedClient().typeDefs.purge(e.internalName)
+            getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
         }
         val list =
             client.typeDefs.list(AtlanTypeCategory.CUSTOM_METADATA)
@@ -176,16 +192,16 @@ object TestsCleanup {
         list.forEach { cm ->
             val badgeQNPrefix = "badges/global/${cm.internalName}."
             val badges =
-                Badge.select(true)
+                Badge.select(client, true)
                     .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
                     .stream()
                     .map { it.guid }
                     .toList()
             logger.info { "Purging ${badges.size} badges for custom metadata: ${cm.name}" }
-            purgeByGuids(badges)
+            purgeByGuids(client, badges)
             logger.info { "Purging custom metadata: ${cm.name}" }
             try {
-                getPrivilegedClient().typeDefs.purge(cm.internalName)
+                getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(cm.internalName) }
             } catch (e: AtlanException) {
                 logger.error(e) { " ... failed to purge: ${cm.name}" }
             }
@@ -194,7 +210,10 @@ object TestsCleanup {
 
     data class TypeDefDetails(val name: String, val internalName: String)
 
-    private fun purgeTags(prefix: String) {
+    private fun purgeTags(
+        client: AtlanClient,
+        prefix: String,
+    ) {
         val list =
             client.typeDefs.list(AtlanTypeCategory.ATLAN_TAG)
                 .atlanTagDefs
@@ -205,21 +224,24 @@ object TestsCleanup {
         list.forEach { cm ->
             logger.info { "Purging Atlan tag: ${cm.name}" }
             try {
-                getPrivilegedClient().typeDefs.purge(cm.internalName)
+                getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(cm.internalName) }
             } catch (e: AtlanException) {
                 logger.error(e) { " ... failed to purge ${cm.name}" }
             }
         }
     }
 
-    private fun purgeByGuids(guidList: List<String>) {
+    private fun purgeByGuids(
+        client: AtlanClient,
+        guidList: List<String>,
+    ) {
         if (guidList.isNotEmpty()) {
             val deletionType = AtlanDeleteType.PURGE
             val totalToDelete = guidList.size
             logger.info { " --- Deleting ($deletionType) $totalToDelete assets... ---" }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
-                getPrivilegedClient().assets.delete(guidList, deletionType)
+                getPrivilegedClient(client).use { sudo -> sudo.assets.delete(guidList, deletionType) }
             } else {
                 // Delete in parallel
                 guidList
@@ -231,16 +253,14 @@ object TestsCleanup {
                         val i = currentCount.getAndAdd(DELETION_BATCH.toLong())
                         logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                         if (batch.isNotEmpty()) {
-                            getPrivilegedClient().assets.delete(batch, deletionType)
+                            getPrivilegedClient(client).use { sudo -> sudo.assets.delete(batch, deletionType) }
                         }
                     }
             }
         }
     }
 
-    private fun getPrivilegedClient(): AtlanClient {
-        val privileged = Atlan.getClient("INTERNAL", PRIVILEGED_CLIENT)
-        privileged.apiToken = client.impersonate.escalate()
-        return privileged
+    private fun getPrivilegedClient(client: AtlanClient): AtlanClient {
+        return AtlanClient("INTERNAL", client.impersonate.escalate())
     }
 }

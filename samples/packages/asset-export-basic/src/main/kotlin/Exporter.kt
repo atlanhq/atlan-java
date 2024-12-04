@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.model.fields.CustomMetadataField
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import java.io.File
 
@@ -13,43 +14,22 @@ object Exporter {
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-        val config = Utils.setPackageOps<AssetExportBasicCfg>()
-        export(config, outputDirectory)
+        Utils.initializeContext<AssetExportBasicCfg>().use { ctx ->
+            export(ctx, outputDirectory)
+        }
     }
 
     fun export(
-        config: AssetExportBasicCfg,
+        ctx: PackageContext<AssetExportBasicCfg>,
         outputDirectory: String,
     ) {
         val batchSize = 300
-        val assetsExportScope = Utils.getOrDefault(config.exportScope, "ENRICHED_ONLY")
-        val limitToAssets = Utils.getAsList(config.assetTypesToInclude)
-        val limitToAttributes = Utils.getAsList(config.attributesToInclude)
-        val assetsQualifiedNamePrefix = Utils.getOrDefault(config.qnPrefix, "default")
-        val multiAssetPrefixes = Utils.getAsList(config.qnPrefixes)
-        val includeDescription = Utils.getOrDefault(config.includeDescription, true)
-        val includeArchived = Utils.getOrDefault(config.includeArchived, false)
-        val deliveryType = Utils.getOrDefault(config.deliveryType, "DIRECT")
-        val allAttributes = Utils.getOrDefault(config.allAttributes, false)
-
-        val cmFields = getAllCustomMetadataFields()
-
-        val ctx =
-            Context(
-                assetsExportScope,
-                limitToAssets,
-                limitToAttributes,
-                multiAssetPrefixes.ifEmpty { listOf(assetsQualifiedNamePrefix) },
-                includeDescription,
-                includeArchived,
-                cmFields,
-                allAttributes,
-            )
+        val cmFields = getAllCustomMetadataFields(ctx.client)
 
         val exportedFiles = mutableListOf<File>()
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
-        if ("GLOSSARIES_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeGlossaries, false)) {
-            val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize)
+        if ("GLOSSARIES_ONLY" == ctx.config.exportScope || ctx.config.includeGlossaries) {
+            val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize, cmFields)
             glossaryExporter.export()
             exportedFiles.add(File(glossaryFile))
         } else {
@@ -57,8 +37,8 @@ object Exporter {
             File(glossaryFile).createNewFile()
         }
         val meshFile = "$outputDirectory${File.separator}products-export.csv"
-        if ("PRODUCTS_ONLY" == assetsExportScope || Utils.getOrDefault(config.includeProducts, false)) {
-            val meshExporter = MeshExporter(ctx, meshFile, batchSize)
+        if ("PRODUCTS_ONLY" == ctx.config.exportScope || ctx.config.includeProducts) {
+            val meshExporter = MeshExporter(ctx, meshFile, batchSize, cmFields)
             meshExporter.export()
             exportedFiles.add(File(meshFile))
         } else {
@@ -66,8 +46,8 @@ object Exporter {
             File(meshFile).createNewFile()
         }
         val assetsFile = "$outputDirectory${File.separator}asset-export.csv"
-        if ("GLOSSARIES_ONLY" != assetsExportScope && "PRODUCTS_ONLY" != assetsExportScope) {
-            val assetExporter = AssetExporter(ctx, assetsFile, batchSize)
+        if ("GLOSSARIES_ONLY" != ctx.config.exportScope && "PRODUCTS_ONLY" != ctx.config.exportScope) {
+            val assetExporter = AssetExporter(ctx, assetsFile, batchSize, cmFields)
             assetExporter.export()
             exportedFiles.add(File(assetsFile))
         } else {
@@ -75,9 +55,9 @@ object Exporter {
             File(assetsFile).createNewFile()
         }
 
-        when (deliveryType) {
+        when (ctx.config.deliveryType) {
             "EMAIL" -> {
-                val emails = Utils.getAsList(config.emailAddresses)
+                val emails = Utils.getAsList(ctx.config.emailAddresses)
                 if (emails.isNotEmpty()) {
                     Utils.sendEmail(
                         "[Atlan] Asset Export (basic) results",
@@ -91,7 +71,7 @@ object Exporter {
                 for (exportFile in exportedFiles) {
                     Utils.uploadOutputFile(
                         exportFile.path,
-                        Utils.getOrDefault(config.targetPrefix, ""),
+                        Utils.getOrDefault(ctx.config.targetPrefix, ""),
                         "",
                     )
                 }
@@ -99,27 +79,16 @@ object Exporter {
         }
     }
 
-    fun getAllCustomMetadataFields(): List<CustomMetadataField> {
+    fun getAllCustomMetadataFields(client: AtlanClient): List<CustomMetadataField> {
         val customMetadataDefs =
-            Atlan.getDefaultClient().customMetadataCache
+            client.customMetadataCache
                 .getAllCustomAttributes(false, true)
         val cmFields = mutableListOf<CustomMetadataField>()
         for ((setName, attributes) in customMetadataDefs) {
             for (attribute in attributes) {
-                cmFields.add(CustomMetadataField(Atlan.getDefaultClient(), setName, attribute.displayName))
+                cmFields.add(CustomMetadataField(client, setName, attribute.displayName))
             }
         }
         return cmFields
     }
-
-    data class Context(
-        val assetsExportScope: String,
-        val limitToAssets: List<String>,
-        val limitToAttributes: List<String>,
-        val assetsQualifiedNamePrefixes: List<String>,
-        val includeDescription: Boolean,
-        val includeArchived: Boolean,
-        val cmFields: List<CustomMetadataField>,
-        val allAttributes: Boolean,
-    )
 }

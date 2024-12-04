@@ -3,12 +3,13 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.ModelDataModel
 import com.atlan.model.assets.ModelEntity
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.search.IndexSearchResponse
+import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageTest
 import mu.KotlinLogging
 import org.testng.Assert.assertTrue
@@ -78,8 +79,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
     }
 
     private fun createConnection(): Connection {
-        val client = Atlan.getDefaultClient()
-        val c1 = Connection.creator(connectionName, connectorType).build()
+        val c1 = Connection.creator(client, connectionName, connectorType).build()
         val response = c1.save(client).block()
         return response.getResult(c1)
     }
@@ -91,8 +91,6 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
-                assetsAttrToOverwrite = null,
-                assetsFailOnErrors = true,
             ),
             Importer::main,
         )
@@ -104,7 +102,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun connectionCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
+        val c1 = Connection.findByName(client, connectionName, connectorType, listOf(Connection.CONNECTOR_TYPE))
         assertNotNull(c1)
         assertEquals(1, c1.size)
         assertEquals(connectionName, c1.first().name)
@@ -113,9 +111,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun dataModelsCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelDataModel.select()
+            ModelDataModel.select(client)
                 .where(ModelDataModel.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(modelAttrs)
                 .toRequest()
@@ -129,9 +127,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun versionsCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelVersion.select()
+            ModelVersion.select(client)
                 .where(ModelVersion.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(versionAttrs)
                 .toRequest()
@@ -145,9 +143,9 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun entitiesCreated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelEntity.select()
+            ModelEntity.select(client)
                 .where(ModelEntity.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(entityAttrs)
                 .toRequest()
@@ -168,14 +166,22 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
 
     @Test
     fun entitiesRelated() {
-        val c1 = Connection.findByName(connectionName, connectorType)[0]!!
+        val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            ModelEntity.select()
+            ModelEntity.select(client)
                 .where(ModelEntity.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(entityAttrs)
                 .includeOnRelations(ModelEntity.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 2)
+        var response: IndexSearchResponse
+        var count = 0
+        do {
+            Thread.sleep(HttpClient.waitTime(count).toMillis())
+            response = retrySearchUntil(request, 2)
+            val to = response.assets.flatMap { (it as ModelEntity).modelEntityMappedToEntities }.filterNotNull().toSet()
+            val from = response.assets.flatMap { (it as ModelEntity).modelEntityMappedFromEntities }.filterNotNull().toSet()
+            count++
+        } while ((to.isEmpty() || from.isEmpty()) && count < client.maxNetworkRetries)
         assertNotNull(response)
         assertEquals(2, response.assets.size)
         assertEquals(setOf(ModelEntity.TYPE_NAME), response.assets.map { it.typeName }.toSet())

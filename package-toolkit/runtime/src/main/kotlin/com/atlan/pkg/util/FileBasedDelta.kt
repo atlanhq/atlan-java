@@ -2,9 +2,10 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.model.assets.Asset
+import com.atlan.model.core.AtlanCloseable
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.cache.ChecksumCache
 import com.atlan.pkg.cache.PersistentConnectionCache
@@ -52,8 +53,7 @@ class FileBasedDelta(
     private val purge: Boolean = false,
     private val compareChecksums: Boolean = false,
     private val fallback: String = Paths.get(separator, "tmp").toString(),
-) : AutoCloseable {
-    private val client = Atlan.getDefaultClient()
+) : AtlanCloseable {
     val assetsToReload = ChecksumCache("changes")
     val assetsToDelete = ChecksumCache("deletes")
     private lateinit var guidsToDeleteToDetails: OffHeapAssetCache
@@ -105,7 +105,6 @@ class FileBasedDelta(
                 }
             }
         }
-        guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
     }
 
     /**
@@ -120,11 +119,13 @@ class FileBasedDelta(
     /**
      * Actually run the removal of any assets identified for deletion.
      *
+     * @param client connectivity to the Atlan tenant
      * @return a list of the assets that were deleted
      */
-    fun deleteAssets(): OffHeapAssetCache {
-        translateToGuids()
-        return deleteAssetsByGuid()
+    fun deleteAssets(client: AtlanClient): OffHeapAssetCache {
+        guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
+        translateToGuids(client)
+        return deleteAssetsByGuid(client)
     }
 
     /**
@@ -186,15 +187,17 @@ class FileBasedDelta(
 
     /**
      * Translate all assets to delete to their GUIDs
+     *
+     * @param client connectivity to the Atlan tenant
      */
-    private fun translateToGuids() {
+    private fun translateToGuids(client: AtlanClient) {
         val totalToTranslate = assetsToDelete.size
         logger.info { " --- Translating $totalToTranslate qualifiedNames to GUIDs... ---" }
         // Skip archived assets, as they're already deleted (leave it to separate process to
         // purge them, if desired)
         val currentCount = AtomicLong(0)
         if (totalToTranslate < QUERY_BATCH) {
-            translate(assetsToDelete.entrySet().map { it.key.qualifiedName }.toList())
+            translate(client, assetsToDelete.entrySet().map { it.key.qualifiedName }.toList())
         } else {
             // Translate from qualifiedName to GUID in parallel
             assetsToDelete.entrySet()
@@ -206,7 +209,7 @@ class FileBasedDelta(
                 .forEach { batch ->
                     val i = currentCount.getAndAdd(QUERY_BATCH.toLong())
                     logger.info { " ... next batch of $QUERY_BATCH (${round((i.toDouble() / totalToTranslate) * 100)}%)" }
-                    translate(batch)
+                    translate(client, batch)
                 }
         }
     }
@@ -214,9 +217,13 @@ class FileBasedDelta(
     /**
      * Translate a specific list of qualifiedNames to GUIDs.
      *
+     * @param client connectivity to the Atlan tenant
      * @param qualifiedNamesToDelete the list of qualifiedNames to query all at the same time
      */
-    private fun translate(qualifiedNamesToDelete: List<String>) {
+    private fun translate(
+        client: AtlanClient,
+        qualifiedNamesToDelete: List<String>,
+    ) {
         val builder =
             client.assets.select()
                 .pageSize(QUERY_BATCH)
@@ -234,7 +241,7 @@ class FileBasedDelta(
                 .excludeMeanings(true)
                 .excludeAtlanTags(true)
                 .build()
-                .search()
+                .search(client)
         response.forEach { validateResult(it) }
     }
 
@@ -255,9 +262,10 @@ class FileBasedDelta(
     /**
      * Delete all assets we have identified for deletion, in batches of 20 at a time.
      *
+     * @param client connectivity to the Atlan tenant
      * @return a list of the assets that were deleted
      */
-    private fun deleteAssetsByGuid(): OffHeapAssetCache {
+    private fun deleteAssetsByGuid(client: AtlanClient): OffHeapAssetCache {
         if (guidsToDeleteToDetails.isNotEmpty) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
             val guidList = guidsToDeleteToDetails.entrySet()
@@ -289,32 +297,8 @@ class FileBasedDelta(
 
     /** {@inheritDoc} */
     override fun close() {
-        var exception: Exception? = null
-        try {
-            assetsToReload.close()
-        } catch (e: Exception) {
-            exception = e
-        }
-        try {
-            assetsToDelete.close()
-        } catch (e: Exception) {
-            if (exception != null) {
-                exception.addSuppressed(e)
-            } else {
-                exception = e
-            }
-        }
-        try {
-            guidsToDeleteToDetails.close()
-        } catch (e: Exception) {
-            if (exception != null) {
-                exception.addSuppressed(e)
-            } else {
-                exception = e
-            }
-        }
-        if (exception != null) {
-            throw exception
-        }
+        AtlanCloseable.close(assetsToReload)
+        AtlanCloseable.close(assetsToDelete)
+        AtlanCloseable.close(guidsToDeleteToDetails)
     }
 }

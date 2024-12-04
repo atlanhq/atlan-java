@@ -11,10 +11,10 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class LakeFormationTagSyncCfg(
-    @JsonProperty("import_type") val importType: String? = null,
+    @JsonProperty("import_type") val importType: String = "CLOUD",
     @JsonProperty("cloud_source") val cloudSource: String? = null,
-    @JsonProperty("remove_schema") val removeSchema: Boolean? = null,
+    @JsonProperty("remove_schema") val removeSchema: Boolean = false,
     @JsonProperty("config_type") val configType: String? = null,
-    @JsonProperty("fail_on_errors") val failOnErrors: Boolean? = null,
-    @JsonProperty("batch_size") val batchSize: Number? = null,
+    @JsonProperty("fail_on_errors") val failOnErrors: Boolean = true,
+    @JsonProperty("batch_size") val batchSize: Number = 20,
 ) : CustomConfig()

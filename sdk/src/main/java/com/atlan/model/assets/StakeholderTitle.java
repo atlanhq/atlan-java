@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -84,36 +83,11 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval. Only active (non-archived) StakeholderTitle assets will be included.
      *
-     * @return a fluent search that includes all StakeholderTitle assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select() {
-        return select(Atlan.getDefaultClient());
-    }
-
-    /**
-     * Start a fluent search that will return all StakeholderTitle assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) StakeholderTitle assets will be included.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
      * @return a fluent search that includes all StakeholderTitle assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
-    }
-
-    /**
-     * Start a fluent search that will return all StakeholderTitle assets.
-     * Additional conditions can be chained onto the returned search before any
-     * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval.
-     *
-     * @param includeArchived when true, archived (soft-deleted) StakeholderTitles will be included
-     * @return a fluent search that includes all StakeholderTitle assets
-     */
-    public static FluentSearch.FluentSearchBuilder<?, ?> select(boolean includeArchived) {
-        return select(Atlan.getDefaultClient(), includeArchived);
     }
 
     /**
@@ -190,18 +164,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     /**
      * Retrieves a StakeholderTitle by one of its identifiers, complete with all of its relationships.
      *
-     * @param id of the StakeholderTitle to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full StakeholderTitle, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the StakeholderTitle does not exist or the provided GUID is not a StakeholderTitle
-     */
-    @JsonIgnore
-    public static StakeholderTitle get(String id) throws AtlanException {
-        return get(Atlan.getDefaultClient(), id);
-    }
-
-    /**
-     * Retrieves a StakeholderTitle by one of its identifiers, complete with all of its relationships.
-     *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the StakeholderTitle to retrieve, either its GUID or its full qualifiedName
      * @return the requested full StakeholderTitle, complete with all of its relationships
@@ -209,7 +171,7 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
      */
     @JsonIgnore
     public static StakeholderTitle get(AtlanClient client, String id) throws AtlanException {
-        return get(client, id, true);
+        return get(client, id, false);
     }
 
     /**
@@ -243,17 +205,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
         }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) StakeholderTitle to active.
-     *
-     * @param qualifiedName for the StakeholderTitle
-     * @return true if the StakeholderTitle is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return restore(Atlan.getDefaultClient(), qualifiedName);
     }
 
     /**
@@ -301,18 +252,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     /**
      * Remove the system description from a StakeholderTitle.
      *
-     * @param qualifiedName of the StakeholderTitle
-     * @param name of the StakeholderTitle
-     * @return the updated StakeholderTitle, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeDescription(String qualifiedName, String name) throws AtlanException {
-        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the system description from a StakeholderTitle.
-     *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the StakeholderTitle
      * @param name of the StakeholderTitle
@@ -322,18 +261,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (StakeholderTitle) Asset.removeDescription(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the user's description from a StakeholderTitle.
-     *
-     * @param qualifiedName of the StakeholderTitle
-     * @param name of the StakeholderTitle
-     * @return the updated StakeholderTitle, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
     }
 
     /**
@@ -353,18 +280,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     /**
      * Remove the owners from a StakeholderTitle.
      *
-     * @param qualifiedName of the StakeholderTitle
-     * @param name of the StakeholderTitle
-     * @return the updated StakeholderTitle, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeOwners(String qualifiedName, String name) throws AtlanException {
-        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the owners from a StakeholderTitle.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the StakeholderTitle's owners
      * @param qualifiedName of the StakeholderTitle
      * @param name of the StakeholderTitle
@@ -374,20 +289,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (StakeholderTitle) Asset.removeOwners(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a StakeholderTitle.
-     *
-     * @param qualifiedName of the StakeholderTitle
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated StakeholderTitle, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
     }
 
     /**
@@ -410,18 +311,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     /**
      * Remove the certificate from a StakeholderTitle.
      *
-     * @param qualifiedName of the StakeholderTitle
-     * @param name of the StakeholderTitle
-     * @return the updated StakeholderTitle, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the certificate from a StakeholderTitle.
-     *
      * @param client connectivity to the Atlan tenant from which to remove the StakeholderTitle's certificate
      * @param qualifiedName of the StakeholderTitle
      * @param name of the StakeholderTitle
@@ -431,21 +320,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (StakeholderTitle) Asset.removeCertificate(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a StakeholderTitle.
-     *
-     * @param qualifiedName of the StakeholderTitle
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
     }
 
     /**
@@ -469,18 +343,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     /**
      * Remove the announcement from a StakeholderTitle.
      *
-     * @param qualifiedName of the StakeholderTitle
-     * @param name of the StakeholderTitle
-     * @return the updated StakeholderTitle, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
-    }
-
-    /**
-     * Remove the announcement from a StakeholderTitle.
-     *
      * @param client connectivity to the Atlan client from which to remove the StakeholderTitle's announcement
      * @param qualifiedName of the StakeholderTitle
      * @param name of the StakeholderTitle
@@ -490,20 +352,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
         return (StakeholderTitle) Asset.removeAnnouncement(client, updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the StakeholderTitle.
-     *
-     * @param qualifiedName for the StakeholderTitle
-     * @param name human-readable name of the StakeholderTitle
-     * @param terms the list of terms to replace on the StakeholderTitle, or null to remove all terms from the StakeholderTitle
-     * @return the StakeholderTitle that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
-        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
     }
 
     /**
@@ -519,20 +367,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (StakeholderTitle) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the StakeholderTitle, without replacing existing terms linked to the StakeholderTitle.
-     * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the StakeholderTitle
-     * @param terms the list of terms to append to the StakeholderTitle
-     * @return the StakeholderTitle that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
     }
 
     /**
@@ -556,20 +390,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
      * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the StakeholderTitle
-     * @param terms the list of terms to remove from the StakeholderTitle, which must be referenced by GUID
-     * @return the StakeholderTitle that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static StakeholderTitle removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a StakeholderTitle, without replacing all existing terms linked to the StakeholderTitle.
-     * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing terms,
-     * and a second to remove the provided terms.
-     *
      * @param client connectivity to the Atlan tenant from which to remove terms from the StakeholderTitle
      * @param qualifiedName for the StakeholderTitle
      * @param terms the list of terms to remove from the StakeholderTitle, which must be referenced by GUID
@@ -586,21 +406,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
      * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param qualifiedName of the StakeholderTitle
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @throws AtlanException on any API problems
-     * @return the updated StakeholderTitle
-     */
-    public static StakeholderTitle appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a StakeholderTitle, without replacing existing Atlan tags linked to the StakeholderTitle.
-     * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
      * @param client connectivity to the Atlan tenant on which to append Atlan tags to the StakeholderTitle
      * @param qualifiedName of the StakeholderTitle
      * @param atlanTagNames human-readable names of the Atlan tags to add
@@ -610,35 +415,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     public static StakeholderTitle appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (StakeholderTitle) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
-    }
-
-    /**
-     * Add Atlan tags to a StakeholderTitle, without replacing existing Atlan tags linked to the StakeholderTitle.
-     * Note: this operation must make two API calls — one to retrieve the StakeholderTitle's existing Atlan tags,
-     * and a second to append the new Atlan tags.
-     *
-     * @param qualifiedName of the StakeholderTitle
-     * @param atlanTagNames human-readable names of the Atlan tags to add
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems
-     * @return the updated StakeholderTitle
-     */
-    public static StakeholderTitle appendAtlanTags(
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        return appendAtlanTags(
-                Atlan.getDefaultClient(),
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
     }
 
     /**
@@ -671,17 +447,6 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
-    }
-
-    /**
-     * Remove an Atlan tag from a StakeholderTitle.
-     *
-     * @param qualifiedName of the StakeholderTitle
-     * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the StakeholderTitle
-     */
-    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
     }
 
     /**

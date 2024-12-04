@@ -42,6 +42,7 @@ uiConfig {
             ["CLOUD"] = "Object storage"
           }
           default = "DIRECT"
+          fallback = default
         }
         ["cloud_source"] = new CredentialInput {
           title = "Import metadata from"
@@ -62,18 +63,21 @@ uiConfig {
           required = false
           helpText = "Select the file containing assets to import, produced by one of the Asset Export packages."
           placeholderText = "Select assets CSV file"
+          fallback = ""
         }
         ["assets_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the file containing asset metadata."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["assets_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "assets.csv"
           width = 4
+          fallback = ""
         }
         ["assets_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -85,6 +89,7 @@ uiConfig {
           }
           default = "update"
           helpText = "Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan."
+          fallback = default
         }
         ["assets_config"] = new Radio {
           title = "Options"
@@ -113,21 +118,25 @@ uiConfig {
           helpText = "Select attributes you want to clear (remove) from assets if their value is blank in the provided file."
           multiSelect = true
           width = 8
+          fallback = List()
         }
         ["assets_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["assets_case_sensitive"] = new BooleanInput {
           title = "Case-sensitive match for updates"
           required = false
           helpText = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No)."
+          fallback = true
         }
         ["assets_table_view_agnostic"] = new BooleanInput {
           title = "Table/view agnostic?"
           required = false
           helpText = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No)."
+          fallback = false
         }
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
@@ -135,6 +144,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["assets_batch_size"] = new NumericInput {
           title = "Batch size"
@@ -142,6 +152,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details"
@@ -149,6 +160,7 @@ uiConfig {
           hide = true
           defaultSelection = true
           helpText = "Whether to track details about every asset across batches (Yes) or only counts (No)."
+          fallback = defaultSelection
         }
       }
     }
@@ -161,18 +173,21 @@ uiConfig {
           required = false
           helpText = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages."
           placeholderText = "Select glossaries CSV file"
+          fallback = ""
         }
         ["glossaries_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the file containing glossaries, categories and terms."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["glossaries_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "glossaries.csv"
           width = 4
+          fallback = ""
         }
         ["glossaries_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -183,6 +198,7 @@ uiConfig {
           }
           default = "upsert"
           helpText = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan."
+          fallback = default
         }
         ["glossaries_config"] = new Radio {
           title = "Options"
@@ -211,11 +227,13 @@ uiConfig {
           helpText = "Select attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file."
           multiSelect = true
           width = 8
+          fallback = List()
         }
         ["glossaries_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["glossaries_field_separator"] = new TextInput {
           title = "Field separator"
@@ -223,6 +241,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["glossaries_batch_size"] = new NumericInput {
           title = "Batch size"
@@ -230,6 +249,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
       }
     }
@@ -242,18 +262,21 @@ uiConfig {
           required = false
           helpText = "Select the file containing domains and data products to import, produced by one of the Asset Export packages."
           placeholderText = "Select data products CSV file"
+          fallback = ""
         }
         ["data_products_prefix"] = new TextInput {
           title = "Prefix (path)"
           helpText = "Enter the directory (path) within the object store from which to retrieve the file containing domains and data products."
           placeholderText = "path/to/file"
           width = 4
+          fallback = ""
         }
         ["data_products_key"] = new TextInput {
           title = "Object key (filename)"
           helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
           placeholderText = "data_products.csv"
           width = 4
+          fallback = ""
         }
         ["data_products_upsert_semantic"] = new Radio {
           title = "Input handling"
@@ -264,6 +287,7 @@ uiConfig {
           }
           default = "upsert"
           helpText = "Whether to allow the creation of new domains and data products from the input CSV, or ensure these are only updated if they already exist in Atlan."
+          fallback = default
         }
         ["data_products_config"] = new Radio {
           title = "Options"
@@ -292,11 +316,13 @@ uiConfig {
           helpText = "Select attributes you want to clear (remove) from domains and data products if their value is blank in the provided file."
           multiSelect = true
           width = 8
+          fallback = List()
         }
         ["data_products_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
         }
         ["data_products_field_separator"] = new TextInput {
           title = "Field separator"
@@ -304,6 +330,7 @@ uiConfig {
           helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
+          fallback = placeholderText
         }
         ["data_products_batch_size"] = new NumericInput {
           title = "Batch size"
@@ -311,6 +338,7 @@ uiConfig {
           helpText = "Maximum number of rows to process at a time (per API request)."
           placeholderValue = 20
           width = 4
+          fallback = placeholderValue
         }
       }
     }

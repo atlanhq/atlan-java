@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
+import com.atlan.AtlanClient
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.DataDomain
@@ -19,38 +19,43 @@ object CustomMetadataExtender {
      */
     @JvmStatic
     fun main(args: Array<String>) {
-        val config = Utils.setPackageOps<CustomMetadataExtenderCfg>()
+        Utils.initializeContext<CustomMetadataExtenderCfg>().use { ctx ->
 
-        val cmName = Utils.getOrDefault(config.customMetadata, "")
-        val connectionQNs = Utils.getOrDefault(config.connectionQualifiedName, listOf())
-        val glossaryNames = Utils.getAsList(config.glossaries)
-        val domains = Utils.getOrDefault(config.domains, "ALL")
-        val domainName = Utils.getOrDefault(config.domainsSpecific, "")
+            val cmName = ctx.config.customMetadata
+            val connectionQNs = ctx.config.connectionQualifiedName
+            val glossaryNames = Utils.getAsList(ctx.config.glossaries)
+            val domains = ctx.config.domains
+            val domainName = ctx.config.domainsSpecific
 
-        if (cmName.isBlank()) {
-            logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
-            exitProcess(3)
+            if (cmName.isBlank()) {
+                logger.error { "Missing required parameter - you must specify the name of the custom metadata to extend." }
+                exitProcess(3)
+            }
+
+            if (connectionQNs.isEmpty() && glossaryNames.isEmpty() && (domains == "NONE" || (domains == "SOME" && domainName.isEmpty()))) {
+                logger.error { "Missing required parameter - you must provide AT LEAST some additional connections, additional glossaries, or an additional domain." }
+                exitProcess(4)
+            }
+
+            extendCM(ctx.client, cmName, connectionQNs, glossaryNames, domains, domainName)
         }
-
-        if (connectionQNs.isEmpty() && glossaryNames.isEmpty() && (domains == "NONE" || (domains == "SOME" && domainName.isEmpty()))) {
-            logger.error { "Missing required parameter - you must provide AT LEAST some additional connections, additional glossaries, or an additional domain." }
-            exitProcess(4)
-        }
-
-        extendCM(cmName, connectionQNs, glossaryNames, domains, domainName)
     }
 
     /**
      * Look up the qualifiedNames of all glossary names provided.
      *
+     * @param client connectivity to the Atlan tenant
      * @param glossaryNames simple names of glossaries
      * @return list of corresponding qualifiedNames for the provided glossaries
      */
-    fun getGlossaryQualifiedNames(glossaryNames: List<String>): List<String> {
+    fun getGlossaryQualifiedNames(
+        client: AtlanClient,
+        glossaryNames: List<String>,
+    ): List<String> {
         val list = mutableListOf<String>()
         glossaryNames.forEach { gn ->
             try {
-                val glossary = Glossary.findByName(gn)
+                val glossary = Glossary.findByName(client, gn)
                 list.add(glossary.qualifiedName)
             } catch (e: NotFoundException) {
                 logger.warn { "Unable to find glossary '$gn' - skipping..." }
@@ -65,6 +70,7 @@ object CustomMetadataExtender {
      * Actually add the token as a connection admin, appending it to any pre-existing
      * connection admins (rather than replacing).
      *
+     * @param client connectivity to the Atlan tenant
      * @param cmName human-readable name of the custom metadata to extend
      * @param connectionQNs list of qualifiedNames of connections to add to the custom metadata
      * @param glossaryNames list of names of glossaries to add to the custom metadata
@@ -72,6 +78,7 @@ object CustomMetadataExtender {
      * @param domainName name of a single domain to extend to (if domains is some)
      */
     fun extendCM(
+        client: AtlanClient,
         cmName: String,
         connectionQNs: List<String>,
         glossaryNames: List<String>,
@@ -79,7 +86,7 @@ object CustomMetadataExtender {
         domainName: String,
     ) {
         logger.info { "Extending custom metadata $cmName with connections: $connectionQNs" }
-        val glossaryQNs = getGlossaryQualifiedNames(glossaryNames)
+        val glossaryQNs = getGlossaryQualifiedNames(client, glossaryNames)
         logger.info { "Extending custom metadata $cmName with glossaries: $glossaryQNs" }
         val domainQNs = mutableSetOf<String>()
         when (domains) {
@@ -89,7 +96,7 @@ object CustomMetadataExtender {
             }
             "SOME" -> {
                 try {
-                    val found = DataDomain.findByName(domainName)
+                    val found = DataDomain.findByName(client, domainName)
                     if (found.size > 1) {
                         logger.warn { "Found multiple domains with the name $domainName, taking only the first" }
                     }
@@ -102,7 +109,7 @@ object CustomMetadataExtender {
             }
             else -> logger.info { "Not extending custom metadata to any additional domains." }
         }
-        val cm = Atlan.getDefaultClient().customMetadataCache.getByName(cmName)
+        val cm = client.customMetadataCache.getByName(cmName)
         if (cm == null) {
             logger.error { "Unable to find custom metadata with name: $cmName" }
         } else {
@@ -126,7 +133,7 @@ object CustomMetadataExtender {
                     .attributeDefs(attrs)
                     .build()
             try {
-                revised.update()
+                revised.update(client)
             } catch (e: AtlanException) {
                 logger.error(e) { "Problem while updating $cmName" }
             }

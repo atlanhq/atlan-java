@@ -3,7 +3,6 @@
 package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -16,8 +15,6 @@ import lombok.Singular;
 
 /**
  * Class to encapsulate all the options that can be overridden on individual API calls.
- * For the moment, only {@link #getDefault()} is used (behind-the-scenes), but this would provide the foundation
- * to open up per-request variations of things like the maximum number of retries to allow.
  */
 @Builder(toBuilder = true)
 @Getter
@@ -33,20 +30,6 @@ public class RequestOptions {
 
     @Singular
     private final Map<String, List<String>> extraHeaders;
-
-    /**
-     * Returns a default set of request options, using the global settings of the SDK.
-     *
-     * @return default request options
-     */
-    public static RequestOptions getDefault() {
-        return RequestOptions.builder()
-                .connectTimeout(Atlan.DEFAULT_CONNECT_TIMEOUT)
-                .readTimeout(Atlan.DEFAULT_READ_TIMEOUT)
-                .maxNetworkRetries(Atlan.getMaxNetworkRetries())
-                .extraHeaders(Atlan.EXTRA_HEADERS)
-                .build();
-    }
 
     /**
      * Returns a new set of request options, initialized from the values set in the provided client.

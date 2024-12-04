@@ -2,12 +2,12 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde
 
-import com.atlan.Atlan
 import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.model.typedefs.AttributeDef
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.serde.Serde
@@ -25,12 +25,14 @@ object FieldSerde {
     /**
      * Serialize a single field's value from an asset object.
      *
+     * @param ctx context in which the custom package is running
      * @param asset from which to serialize the value
      * @param field attribute within the asset to serialize
      * @param logger through which to record any errors
      * @return the serialized form of that field's value, from that asset
      */
     fun getValueForField(
+        ctx: PackageContext<*>,
         asset: Asset,
         field: AtlanField,
         logger: KLogger,
@@ -38,10 +40,9 @@ object FieldSerde {
         val value: Any?
         val dates: Boolean
         if (field is CustomMetadataField) {
-            val client = Atlan.getDefaultClient()
             value = asset.getCustomMetadata(field.setName, field.attributeName)
-            val attrId = client.customMetadataCache.getAttrIdForName(field.setName, field.attributeName)
-            val attrDef = client.customMetadataCache.getAttributeDef(attrId)
+            val attrId = ctx.client.customMetadataCache.getAttrIdForName(field.setName, field.attributeName)
+            val attrDef = ctx.client.customMetadataCache.getAttributeDef(attrId)
             dates = attrDef.typeName.lowercase() == "date"
         } else {
             val deserializedName = ReflectionCache.getDeserializedName(asset.javaClass, field.atlanFieldName)
@@ -50,7 +51,7 @@ object FieldSerde {
             dates = ReflectionCache.isDate(asset.javaClass, field.atlanFieldName)
         }
         return try {
-            CellXformer.encode(value, asset.guid, dates)
+            CellXformer.encode(ctx, value, asset.guid, dates)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e
@@ -65,12 +66,14 @@ object FieldSerde {
     /**
      * Deserialize a single field's value from a row of tabular data.
      *
+     * @param ctx context in which the custom package is running
      * @param value the single field's value
      * @param setter the method on the asset that will be used to set the value onto the object
      * @param logger through which to record any errors
      * @return the deserialized form of that field's value
      */
     fun getValueFromCell(
+        ctx: PackageContext<*>,
         value: String,
         setter: Method,
         logger: KLogger,
@@ -84,7 +87,7 @@ object FieldSerde {
         }
         return try {
             val assetClass = setter.declaringClass.enclosingClass
-            CellXformer.decode(assetClass, value, paramClass, innerClass, fieldName)
+            CellXformer.decode(ctx, assetClass, value, paramClass, innerClass, fieldName)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e

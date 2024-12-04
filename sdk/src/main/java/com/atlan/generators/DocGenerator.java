@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.*;
 import freemarker.template.Template;
 import java.io.*;
@@ -12,8 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DocGenerator extends AbstractGenerator {
 
-    public DocGenerator(GeneratorConfig cfg) {
-        super(cfg);
+    public DocGenerator(AtlanClient client, GeneratorConfig cfg) {
+        super(client, cfg);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class DocGenerator extends AbstractGenerator {
     private void generateEnumDocs() throws Exception {
         Template docTemplate = ftl.getTemplate("enum_doc.ftl");
         for (EnumDef enumDef : cache.getEnumDefCache().values()) {
-            EnumGenerator enumGen = new EnumGenerator(enumDef, cfg);
+            EnumGenerator enumGen = new EnumGenerator(client, enumDef, cfg);
             String originalName = enumGen.getOriginalName().toLowerCase(Locale.ROOT);
             // For enums there is only one doc file to generate
             String directory = AssetDocGenerator.DIRECTORY + File.separator + "enums";
@@ -129,7 +130,7 @@ public class DocGenerator extends AbstractGenerator {
         // Template javaPropertySnippetTemplate = ftl.getTemplate("snippet_java_properties_struct.ftl");
         // Template rawPropertySnippetTemplate = ftl.getTemplate("snippet_raw_properties_struct.ftl");
         for (StructDef structDef : cache.getStructDefCache().values()) {
-            StructGenerator structGen = new StructGenerator(structDef, cfg);
+            StructGenerator structGen = new StructGenerator(client, structDef, cfg);
             String originalName = structGen.getOriginalName().toLowerCase(Locale.ROOT);
             // First the overall struct file
             String directory = AssetDocGenerator.DIRECTORY + File.separator + "structs";

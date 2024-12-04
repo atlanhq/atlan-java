@@ -1,6 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
@@ -32,32 +31,32 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
         )
 
     private fun createConnections() {
-        Connection.creator(c1, connectorType)
+        Connection.creator(client, c1, connectorType)
             .build()
-            .save()
+            .save(client)
             .block()
     }
 
     private fun createAssets() {
-        val client = Atlan.getDefaultClient()
-        val connection1 = Connection.findByName(c1, connectorType)[0]!!
-        val batch = AssetBatch(client, 20)
-        val db1 = Database.creator("db1", connection1.qualifiedName).build()
-        batch.add(db1)
-        val sch1 = Schema.creator("sch1", db1).build()
-        batch.add(sch1)
-        val tbl1 =
-            Table.creator("tbl1", sch1)
-                .userDescription("Must have some enrichment to be included!")
-                .build()
-        batch.add(tbl1)
-        batch.flush()
+        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
+        AssetBatch(client, 20).use { batch ->
+            val db1 = Database.creator("db1", connection1.qualifiedName).build()
+            batch.add(db1)
+            val sch1 = Schema.creator("sch1", db1).build()
+            batch.add(sch1)
+            val tbl1 =
+                Table.creator("tbl1", sch1)
+                    .userDescription("Must have some enrichment to be included!")
+                    .build()
+            batch.add(tbl1)
+            batch.flush()
+        }
     }
 
     private fun archiveTable() {
-        val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
+        val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(connection))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
@@ -65,14 +64,14 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             response.stream()
                 .map { it.guid }
                 .toList()
-        Atlan.getDefaultClient().assets.delete(guids, AtlanDeleteType.SOFT).block()
+        client.assets.delete(guids, AtlanDeleteType.SOFT).block()
     }
 
     override fun setup() {
         createConnections()
         createAssets()
         archiveTable()
-        val connection = Connection.findByName(c1, connectorType)?.get(0)?.qualifiedName!!
+        val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(connection),
@@ -91,16 +90,16 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
 
     @Test
     fun activeAssetMigrated() {
-        val targetConnection = Connection.findByName(c1, connectorType)[0]!!
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val request =
-            Table.select()
+            Table.select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .includeOnResults(Table.STATUS)
                 .toRequest()
         var count = 0
         var status = AtlanStatus.DELETED
         var response: IndexSearchResponse? = null
-        while (status == AtlanStatus.DELETED && count < (Atlan.getDefaultClient().maxNetworkRetries * 2)) {
+        while (status == AtlanStatus.DELETED && count < (client.maxNetworkRetries * 2)) {
             response = retrySearchUntil(request, 1)
             val list = response.stream().toList()
             assertTrue(list.isNotEmpty())
@@ -118,7 +117,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(c1, connectorType)[0]!!
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val filename = targetConnection.qualifiedName.replace("/", "_")
         validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }

@@ -2,10 +2,10 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cache
 
-import com.atlan.Atlan
 import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.pkg.PackageContext
 import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
@@ -13,11 +13,15 @@ import java.util.stream.Stream
 
 /**
  * Utility class for lazy-loading a cache of assets based on some human-constructable identity.
+ *
+ * @param ctx context for the custom package
+ * @param cacheName name indicating the contents of this cache
  */
 abstract class AssetCache<T : Asset>(
+    ctx: PackageContext<*>,
     cacheName: String,
 ) : AbstractMassCache<T>(
-        Atlan.getDefaultClient(),
+        ctx.client,
         cacheName,
     ) {
     private val logger = KotlinLogging.logger {}

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.typedefs.*;
 import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
@@ -33,8 +34,8 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
     private List<String> mapContainers = null;
     private final Set<String> superTypes;
 
-    public AssetGenerator(EntityDef entityDef, GeneratorConfig cfg) {
-        super(entityDef, cfg);
+    public AssetGenerator(AtlanClient client, EntityDef entityDef, GeneratorConfig cfg) {
+        super(client, entityDef, cfg);
         this.entityDef = entityDef;
         resolveClassName();
         super.description = cache.getTypeDescription(originalName);
@@ -148,7 +149,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         nonInheritedAttributes = new TreeSet<>();
         for (AttributeDef attributeDef :
                 cache.getEntityDefCache().get(getOriginalName()).getAttributeDefs()) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, attributeDef, cfg);
+            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 nonInheritedAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -156,7 +157,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         }
         classAttributes = new TreeSet<>();
         for (AttributeDef attributeDef : allAttributes) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, attributeDef, cfg);
+            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 classAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -164,7 +165,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         }
         interfaceAttributes = new TreeSet<>();
         for (AttributeDef attributeDef : cache.getAllAttributesForType(getOriginalName())) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, attributeDef, cfg);
+            SearchableAttribute<?> attribute = new SearchableAttribute<>(client, className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -183,7 +184,8 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
         for (RelationshipAttributeDef relationshipAttributeDef :
                 cache.getEntityDefCache().get(getOriginalName()).getRelationshipAttributeDefs()) {
             if (uniqueRelationships.contains(relationshipAttributeDef.getName())) {
-                SearchableAttribute<?> attribute = new SearchableAttribute<>(className, relationshipAttributeDef, cfg);
+                SearchableAttribute<?> attribute =
+                        new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
                 if (!attribute.getType().getName().equals("Internal")) {
                     nonInheritedAttributes.add(attribute);
                     checkAndAddMapContainer(attribute);
@@ -191,14 +193,16 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : allRelationships) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, relationshipAttributeDef, cfg);
+            SearchableAttribute<?> attribute =
+                    new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 classAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : cache.getAllRelationshipsForType(getOriginalName())) {
-            SearchableAttribute<?> attribute = new SearchableAttribute<>(className, relationshipAttributeDef, cfg);
+            SearchableAttribute<?> attribute =
+                    new SearchableAttribute<>(client, className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
