@@ -105,7 +105,7 @@ class DomainImporter(
         val parentIdx = header.indexOf(DataDomain.PARENT_DOMAIN.atlanFieldName)
 
         val maxBound = max(typeIdx, max(nameIdx, parentIdx))
-        if (maxBound > row.size || row[typeIdx] != typeNameFilter) {
+        if (maxBound > row.size || CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) != typeNameFilter) {
             // If any of the columns are beyond the size of the row, or the row
             // represents something other than a domain, short-circuit
             return false
@@ -127,7 +127,7 @@ class DomainImporter(
             // short-circuit
             return false
         }
-        return row[typeIdx] == typeNameFilter
+        return CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeNameFilter
     }
 
     /** {@inheritDoc} */

@@ -72,7 +72,7 @@ class CategoryImporter(
         val anchorIdx = header.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
 
         val maxBound = max(typeIdx, max(nameIdx, max(parentIdx, anchorIdx)))
-        if (maxBound > row.size || row[typeIdx] != typeNameFilter) {
+        if (maxBound > row.size || CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) != typeNameFilter) {
             // If any of the columns are beyond the size of the row, or the row
             // represents something other than a category, short-circuit
             return false
@@ -95,7 +95,7 @@ class CategoryImporter(
             // short-circuit
             return false
         }
-        return row[typeIdx] == typeNameFilter
+        return CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeNameFilter
     }
 
     /** {@inheritDoc} */
