@@ -127,12 +127,12 @@ object Utils {
             userId.isNotEmpty() -> {
                 logger.info { "No API token found, attempting to impersonate user: $userId" }
                 client.userId = userId
-                client.impersonate.user(userId)
+                client.apiToken = client.impersonate.user(userId)
             }
 
             else -> {
                 logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                client.impersonate.escalate()
+                client.apiToken = client.impersonate.escalate()
             }
         }
         setWorkflowOpts(client, config.runtime)

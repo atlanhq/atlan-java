@@ -218,6 +218,14 @@ const function getFallback(u: Config.UIElement): String =
   else
     " = \(u.fallback)"
 
+const function getFallbackParam(u: Config.UIElement): Any =
+  if (u.fallback is List)
+    "[\((u.fallback as List).fold(List(), (acc: List<String>, value) ->
+      acc.add("\"\(value)\"")
+    ).join(", "))]"
+  else
+    u.fallback
+
 /// Render an empty file.
 const function getBlankFile(): FileOutput = new FileOutput {
   text = ""
@@ -799,18 +807,18 @@ local class WorkflowInputs {
         when (u is Config.BooleanInput) {
           new NameValueBoolPair {
             name = k
-            value = u.ui.default as Boolean
+            value = if (u.fallback != null) getFallbackParam(u) as Boolean else u.ui.default as Boolean
           }
         } else {
           when (u is Config.NumericInput || u is Config.DateInput) {
             new NameValuePair {
               name = k
-              value = "-1"
+              value = if (u.fallback != null) getFallbackParam(u).toString() else "-1"
             }
           } else {
             new NameValuePair {
               name = k
-              value = ""
+              value = if (u.fallback != null) getFallbackParam(u).toString() else ""
             }
           }
         }
