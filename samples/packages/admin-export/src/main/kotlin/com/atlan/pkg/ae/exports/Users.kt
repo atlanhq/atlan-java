@@ -41,8 +41,8 @@ class Users(
                 .column("profileRoleOther")
                 .build()
         ctx.client.users.list(request).forEach { user ->
-            val personas = user.personas?.joinToString("\n") { it.displayName } ?: ""
-            val groups = ctx.client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name } ?: ""
+            val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
+            val groups = ctx.client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name ?: "" } ?: ""
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
