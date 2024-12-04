@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.DeltaProcessor
 import com.atlan.util.StringUtils
@@ -63,7 +64,7 @@ class FieldImporter(
         typeIdx: Int,
         qnIdx: Int,
     ): List<String> {
-        if (row[typeIdx] == typeNameFilter) {
+        if (CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeNameFilter) {
             // Only build up the details if this is in fact a field row
             val hierarchyPath = getHierarchyPath(row, header)
             val path = getFieldPath(hierarchyPath, row, header)
@@ -139,7 +140,7 @@ class FieldImporter(
             val parentIdx = header.indexOf(PARENT_FIELD_QN)
 
             val maxBound = max(typeIdx, max(nameIdx, parentIdx))
-            if (maxBound > row.size || row[typeIdx] != typeNameFilter) {
+            if (maxBound > row.size || CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) != typeNameFilter) {
                 // If any of the columns are beyond the size of the row, or the row
                 // represents something other than a field, short-circuit
                 return false
@@ -150,7 +151,7 @@ class FieldImporter(
                 // short-circuit
                 return false
             }
-            return row[typeIdx] == typeNameFilter
+            return CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeNameFilter
         }
         return false
     }

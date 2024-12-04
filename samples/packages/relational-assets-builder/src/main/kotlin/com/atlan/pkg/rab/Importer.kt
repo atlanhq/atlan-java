@@ -230,7 +230,7 @@ object Importer {
             }
 
             val values = row.toMutableList()
-            val typeName = values[typeIdx]
+            val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
             val qnDetails = getQualifiedNameDetails(values, header, typeName)
             if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
                 if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {

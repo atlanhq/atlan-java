@@ -12,6 +12,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.DeltaProcessor
@@ -180,7 +181,7 @@ object Importer {
                 }
             }
             val values = row.toMutableList()
-            val typeName = values[typeIdx]
+            val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
             val qnDetails = getQualifiedNameDetails(values, header, typeName)
             if (qnDetails.parentUniqueQN.isNotBlank()) {
                 if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {

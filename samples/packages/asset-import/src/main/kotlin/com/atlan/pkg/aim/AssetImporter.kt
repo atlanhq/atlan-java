@@ -386,10 +386,10 @@ class AssetImporter(
     ): Boolean {
         return if (updateOnly) {
             // If we are only updating, process in-parallel, in any order
-            row.size >= typeIdx && row[typeIdx].isNotBlank()
+            row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
         } else {
             // If we are doing more than only updates, process the assets in top-down order
-            return row.size >= typeIdx && row[typeIdx] == typeToProcess
+            return row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
         }
     }
 
@@ -834,7 +834,10 @@ class AssetImporter(
             qnIdx: Int,
         ): List<String> {
             // Keep a running collection of the types that are in the file
-            typesInFile.add(row[typeIdx])
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank()) {
+                typesInFile.add(row[typeIdx])
+            }
             return row
         }
 
