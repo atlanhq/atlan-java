@@ -2,8 +2,10 @@ changelog:
   exclude:
     labels:
       - ignore
+      - dependencies
     authors:
       - octocat
+      - dependabot
   categories:
     - title: 🎉 New features
       labels:
