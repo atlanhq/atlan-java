@@ -30,9 +30,9 @@ object Importer {
         outputDirectory: String = "tmp",
     ): ImportResults? {
         val directUpload = ctx.config.importType == "DIRECT"
-        val assetsFileProvided = (directUpload && ctx.config.assetsFile.isNotBlank()) || (!directUpload && ctx.config.assetsKey.isNotBlank())
-        val glossariesFileProvided = (directUpload && ctx.config.glossariesFile.isNotBlank()) || (!directUpload && ctx.config.glossariesKey.isNotBlank())
-        val dataProductsFileProvided = (directUpload && ctx.config.dataProductsFile.isNotBlank()) || (!directUpload && ctx.config.dataProductsKey.isNotBlank())
+        val assetsFileProvided = (directUpload && ctx.config.assetsFile.isNotBlank() && !ctx.config.assetsFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.assetsKey.isNotBlank())
+        val glossariesFileProvided = (directUpload && ctx.config.glossariesFile.isNotBlank() && !ctx.config.glossariesFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.glossariesKey.isNotBlank())
+        val dataProductsFileProvided = (directUpload && ctx.config.dataProductsFile.isNotBlank() && !ctx.config.dataProductsFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.dataProductsKey.isNotBlank())
         if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)
