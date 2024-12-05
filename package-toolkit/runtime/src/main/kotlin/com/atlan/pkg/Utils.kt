@@ -519,6 +519,7 @@ object Utils {
      *
      * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
+     * @return a URL that links directly to an asset in Atlan
      */
     fun getAssetLink(
         client: AtlanClient,
@@ -532,6 +533,7 @@ object Utils {
      *
      * @param client connectivity to the Atlan tenant
      * @param guid of the asset for which to produce a link
+     * @return a URL that links directly to a data product or data domain in Atlan
      */
     fun getProductLink(
         client: AtlanClient,
@@ -715,6 +717,7 @@ object Utils {
      * @param syncer object storage syncer
      * @param outputDirectory local directory into which to download the file
      * @param prefix object prefix in object storage
+     * @return a list of paths of the input files
      */
     fun getInputFiles(
         syncer: ObjectStorageSyncer,
@@ -731,6 +734,7 @@ object Utils {
      * @param syncer object storage syncer
      * @param outputDirectory local directory into which to download the file
      * @param remote object key in object storage
+     * @return the path of the input file
      */
     fun getInputFile(
         syncer: ObjectStorageSyncer,
@@ -741,6 +745,24 @@ object Utils {
         val path = "$outputDirectory${separator}$filename"
         syncer.downloadFrom(remote, path)
         return path
+    }
+
+    /**
+     * Determines whether a particular input file has been provided or not.
+     *
+     * @param importType details of the type of import expected (direct vs object store-based)
+     * @param directFile details of the directly-provided file
+     * @param objectStoreKey details of the object store-provided file
+     * @return true if the file has been provided through either means, otherwise false
+     */
+    fun isFileProvided(
+        importType: String,
+        directFile: String,
+        objectStoreKey: String,
+    ): Boolean {
+        val directUpload = importType == "DIRECT"
+        return (directUpload && directFile.isNotBlank() && !directFile.endsWith(DEFAULT_FILE)) ||
+            (!directUpload && objectStoreKey.isNotBlank())
     }
 
     /**

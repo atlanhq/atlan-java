@@ -26,10 +26,6 @@ object OpenAPISpecLoader {
     fun main(args: Array<String>) {
         Utils.initializeContext<OpenAPISpecLoaderCfg>().use { ctx ->
             val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
-            val importType = ctx.config.importType
-            val specUrl = ctx.config.specUrl
-            val specFilename = ctx.config.specFile
-            val specKey = ctx.config.specKey
             val batchSize = 20
 
             val inputQN =
@@ -39,7 +35,7 @@ object OpenAPISpecLoader {
             val connectionQN =
                 Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
 
-            val specFileProvided = (importType == "DIRECT" && specFilename.isNotBlank()) || (importType == "CLOUD" && specKey.isNotBlank()) || (importType == "URL" && specUrl.isNotBlank())
+            val specFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.specFile, ctx.config.specKey)
             if (!specFileProvided) {
                 logger.error { "No input file was provided for the OpenAPI spec." }
                 exitProcess(1)
@@ -51,19 +47,19 @@ object OpenAPISpecLoader {
             }
 
             val sourceUrl =
-                when (importType) {
+                when (ctx.config.importType) {
                     "CLOUD" -> {
                         Utils.getInputFile(
-                            specFilename,
+                            ctx.config.specFile,
                             outputDirectory,
                             false,
                             ctx.config.specPrefix,
-                            specKey,
+                            ctx.config.specKey,
                         )
                     }
 
-                    "DIRECT" -> specFilename
-                    else -> specUrl
+                    "DIRECT" -> ctx.config.specFile
+                    else -> ctx.config.specUrl
                 }
 
             logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
