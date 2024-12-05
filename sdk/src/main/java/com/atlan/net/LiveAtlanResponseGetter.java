@@ -361,30 +361,37 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         switch (code) {
             case 400:
                 exception = new InvalidRequestException(
-                        ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.findCode(), error.findMessage());
+                        ErrorCode.INVALID_REQUEST_PASSTHROUGH,
+                        error.findCode(),
+                        error.findMessage(),
+                        error.renderCauses());
                 break;
             case 404:
-                exception =
-                        new NotFoundException(ErrorCode.NOT_FOUND_PASSTHROUGH, error.findCode(), error.findMessage());
+                exception = new NotFoundException(
+                        ErrorCode.NOT_FOUND_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
             case 401:
                 exception = new AuthenticationException(
-                        ErrorCode.AUTHENTICATION_PASSTHROUGH, error.findCode(), error.findMessage());
+                        ErrorCode.AUTHENTICATION_PASSTHROUGH,
+                        error.findCode(),
+                        error.findMessage(),
+                        error.renderCauses());
                 break;
             case 403:
                 exception = new PermissionException(
-                        ErrorCode.PERMISSION_PASSTHROUGH, error.findCode(), error.findMessage());
+                        ErrorCode.PERMISSION_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
             case 409:
-                exception =
-                        new ConflictException(ErrorCode.CONFLICT_PASSTHROUGH, error.findCode(), error.findMessage());
+                exception = new ConflictException(
+                        ErrorCode.CONFLICT_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
             case 429:
-                exception =
-                        new RateLimitException(ErrorCode.RATE_LIMIT_PASSTHROUGH, error.findCode(), error.findMessage());
+                exception = new RateLimitException(
+                        ErrorCode.RATE_LIMIT_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
             default:
-                exception = new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, error.findCode(), error.findMessage());
+                exception = new ApiException(
+                        ErrorCode.ERROR_PASSTHROUGH, null, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
         }
 
