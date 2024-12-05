@@ -272,7 +272,7 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
     keys=simpleFormatter,jsonFormatter
 
     [logger_root]
-    level=INFO
+    level=DEBUG
     handlers=consoleHandler,fileHandler
 
     [logger_pyatlan]
