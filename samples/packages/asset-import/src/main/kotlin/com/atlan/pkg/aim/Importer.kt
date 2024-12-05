@@ -29,10 +29,9 @@ object Importer {
         ctx: PackageContext<AssetImportCfg>,
         outputDirectory: String = "tmp",
     ): ImportResults? {
-        val directUpload = ctx.config.importType == "DIRECT"
-        val assetsFileProvided = (directUpload && ctx.config.assetsFile.isNotBlank() && !ctx.config.assetsFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.assetsKey.isNotBlank())
-        val glossariesFileProvided = (directUpload && ctx.config.glossariesFile.isNotBlank() && !ctx.config.glossariesFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.glossariesKey.isNotBlank())
-        val dataProductsFileProvided = (directUpload && ctx.config.dataProductsFile.isNotBlank() && !ctx.config.dataProductsFile.endsWith(Utils.DEFAULT_FILE)) || (!directUpload && ctx.config.dataProductsKey.isNotBlank())
+        val assetsFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.assetsFile, ctx.config.assetsKey)
+        val glossariesFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.glossariesFile, ctx.config.glossariesKey)
+        val dataProductsFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.dataProductsFile, ctx.config.dataProductsKey)
         if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
             logger.error { "No input file was provided for either data products, glossaries or assets." }
             exitProcess(1)
@@ -45,7 +44,7 @@ object Importer {
                     Utils.getInputFile(
                         ctx.config.glossariesFile,
                         outputDirectory,
-                        directUpload,
+                        ctx.config.importType == "DIRECT",
                         ctx.config.glossariesPrefix,
                         ctx.config.glossariesKey,
                     )
@@ -74,7 +73,7 @@ object Importer {
                     Utils.getInputFile(
                         ctx.config.assetsFile,
                         outputDirectory,
-                        directUpload,
+                        ctx.config.importType == "DIRECT",
                         ctx.config.assetsPrefix,
                         ctx.config.assetsKey,
                     )
@@ -97,7 +96,7 @@ object Importer {
                     Utils.getInputFile(
                         ctx.config.dataProductsFile,
                         outputDirectory,
-                        directUpload,
+                        ctx.config.importType == "DIRECT",
                         ctx.config.dataProductsPrefix,
                         ctx.config.dataProductsKey,
                     )

@@ -35,11 +35,7 @@ object Loader {
         ctx: PackageContext<LineageBuilderCfg>,
         outputDirectory: String = "tmp",
     ) {
-        val lineageUpload = ctx.config.lineageImportType == "DIRECT"
-        val lineageFilename = ctx.config.lineageFile
-        val lineageKey = ctx.config.lineageKey
-
-        val lineageFileProvided = (lineageUpload && lineageFilename.isNotBlank()) || (!lineageUpload && lineageKey.isNotBlank())
+        val lineageFileProvided = Utils.isFileProvided(ctx.config.lineageImportType, ctx.config.lineageFile, ctx.config.lineageKey)
         if (!lineageFileProvided) {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)
@@ -47,11 +43,11 @@ object Loader {
 
         val lineageInput =
             Utils.getInputFile(
-                lineageFilename,
+                ctx.config.lineageFile,
                 outputDirectory,
-                lineageUpload,
+                ctx.config.lineageImportType == "DIRECT",
                 ctx.config.lineagePrefix,
-                lineageKey,
+                ctx.config.lineageKey,
             )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors)

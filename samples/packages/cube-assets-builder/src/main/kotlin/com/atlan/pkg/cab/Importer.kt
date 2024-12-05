@@ -49,13 +49,10 @@ object Importer {
     fun import(
         ctx: PackageContext<CubeAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
-    ): String? {
+    ): String {
         val fieldSeparator = ctx.config.assetsFieldSeparator[0]
-        val assetsUpload = ctx.config.assetsImportType == "DIRECT"
-        val assetsKey = ctx.config.assetsKey
-        val assetsFilename = ctx.config.assetsFile
 
-        val assetsFileProvided = (assetsUpload && assetsFilename.isNotBlank()) || (!assetsUpload && assetsKey.isNotBlank())
+        val assetsFileProvided = Utils.isFileProvided(ctx.config.assetsImportType, ctx.config.assetsFile, ctx.config.assetsKey)
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
@@ -65,11 +62,11 @@ object Importer {
         // to allow subsequent out-of-order parallel processing
         val assetsInput =
             Utils.getInputFile(
-                assetsFilename,
+                ctx.config.assetsFile,
                 outputDirectory,
-                assetsUpload,
+                ctx.config.assetsImportType == "DIRECT",
                 ctx.config.assetsPrefix,
-                assetsKey,
+                ctx.config.assetsKey,
             )
         val preprocessedDetails = Preprocessor(assetsInput, fieldSeparator).preprocess<Results>()
 
