@@ -34722,6 +34722,11 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>causes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/core/AtlanError.Cause.html" title="class in com.atlan.model.core">AtlanError.Cause</a>&gt; causes</pre>
+<div class="block">Underlying causes noted for the error, if any.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> code</pre>
 <div class="block">A numeric error code.</div>
@@ -34750,6 +34755,11 @@ loadScripts(document, 'script');</script>
 <h5>errorDetailsMap</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; errorDetailsMap</pre>
 <div class="block">Details about where the error occurred.</div>
+</li>
+<li class="block-list">
+<h5>errorId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> errorId</pre>
+<div class="block">Unique ID for the error (from the back-end).</div>
 </li>
 <li class="block-list">
 <h5>errorMessage</h5>
@@ -34785,6 +34795,40 @@ loadScripts(document, 'script');</script>
 <h5>url</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> url</pre>
 <div class="block">Path attempted to access for an unauthorized call.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.core.AtlanError.Cause">
+<h3>Class&nbsp;<a href="com/atlan/model/core/AtlanError.Cause.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanError.Cause</a></h3>
+<div class="type-signature">class Cause extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>errorMessage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> errorMessage</pre>
+<div class="block">Message from the back-end component or class about the cause of the error.</div>
+</li>
+<li class="block-list">
+<h5>errorType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> errorType</pre>
+<div class="block">Back-end component or class that was an underlying cause for the error.</div>
+</li>
+<li class="block-list">
+<h5>location</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> location</pre>
+<div class="block">Specific location in the back-end code for the cause of the error.</div>
 </li>
 </ul>
 </section>
