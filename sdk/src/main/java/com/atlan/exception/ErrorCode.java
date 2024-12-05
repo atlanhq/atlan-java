@@ -25,7 +25,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     INVALID_REQUEST_PASSTHROUGH(
             400,
             "ATLAN-JAVA-400-000",
-            "Server responded with an invalid request -- {0}: {1}",
+            "Server responded with an invalid request -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
     MISSING_GROUP_ID(
             400,
@@ -281,7 +281,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     AUTHENTICATION_PASSTHROUGH(
             401,
             "ATLAN-JAVA-401-000",
-            "Server responded with an authentication error -- {0}: {1}",
+            "Server responded with an authentication error -- {0}: {1} -- caused by: {2}",
             "Your API or bearer token is either invalid or has expired, or you are attempting to access a URL you are not authorized to access. Ensure you are using a valid token, that there is no service outage for the underlying authorization component, or try obtaining a new token and try again."),
     NO_API_TOKEN(
             401,
@@ -315,7 +315,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     PERMISSION_PASSTHROUGH(
             403,
             "ATLAN-JAVA-403-000",
-            "Server responded with a permission error -- {0}: {1}",
+            "Server responded with a permission error -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
     UNABLE_TO_IMPERSONATE(
             403,
@@ -331,7 +331,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     NOT_FOUND_PASSTHROUGH(
             404,
             "ATLAN-JAVA-404-000",
-            "Server responded with a not found error -- {0}: {1}",
+            "Server responded with a not found error -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
 
     ASSET_NOT_FOUND_BY_GUID(
@@ -503,7 +503,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     CONFLICT_PASSTHROUGH(
             409,
             "ATLAN-JAVA-409-000",
-            "Server responded with a conflict -- {0}: {1}",
+            "Server responded with a conflict -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
     RESERVED_SERVICE_TYPE(
             409,
@@ -514,13 +514,13 @@ public enum ErrorCode implements ExceptionMessageSet {
     RATE_LIMIT_PASSTHROUGH(
             429,
             "ATLAN-JAVA-429-000",
-            "Server responded with a rate limit violation -- {0}: {1}",
+            "Server responded with a rate limit violation -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
 
     ERROR_PASSTHROUGH(
             500,
             "ATLAN-JAVA-500-000",
-            "Server responded with an error -- {0}: {1}",
+            "Server responded with an error -- {0}: {1} -- caused by: {2}",
             "Check the details of the server's message to correct your request."),
 
     DUPLICATE_CUSTOM_ATTRIBUTES(
