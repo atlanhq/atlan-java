@@ -36,7 +36,7 @@ object OpenAPISpecLoader {
                 Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
 
             val specFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.specFile, ctx.config.specKey)
-            if (!specFileProvided) {
+            if (!specFileProvided && (ctx.config.importType == "URL" && ctx.config.specUrl.isBlank())) {
                 logger.error { "No input file was provided for the OpenAPI spec." }
                 exitProcess(1)
             }
