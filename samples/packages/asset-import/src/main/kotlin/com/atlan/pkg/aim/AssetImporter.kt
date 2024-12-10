@@ -244,7 +244,7 @@ class AssetImporter(
             Asset.NAME.atlanFieldName,
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
-        ) // TODO: other required fields, across ALL (non-GTC, non-mesh) types
+        )
 
     /** {@inheritDoc} */
     override fun preprocess(
@@ -255,7 +255,7 @@ class AssetImporter(
         // (meaning relationships where both ends are of the same type)
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
         typeDefs.relationshipDefs.stream()
-            .filter { it.endDef1.type == it.endDef2.type && it.endDef1.cardinality == it.endDef2.cardinality }
+            .filter { it.endDef1.type == it.endDef2.type }
             .forEach { cyclicalRelationships[it.endDef1.type] = setOf(it.endDef1.name, it.endDef2.name) }
         val results = super.preprocess(outputFile, outputHeaders)
         return results
