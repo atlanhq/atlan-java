@@ -236,15 +236,17 @@ class AssetImporter(
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
-    private val cyclicalRelationships = mutableMapOf<String, Set<String>>()
-    private val mapToSecondPass = mutableMapOf<String, Set<String>>()
+    private val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
+    private val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
     private val secondPassRemain =
         setOf(
             Asset.QUALIFIED_NAME.atlanFieldName,
             Asset.NAME.atlanFieldName,
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
-        ) // TODO: other required fields, across ALL (non-GTC, non-mesh) types
+        )
+
+    private data class RelationshipEnds(val name: String, val end1: String, val end2: String)
 
     /** {@inheritDoc} */
     override fun preprocess(
@@ -255,8 +257,8 @@ class AssetImporter(
         // (meaning relationships where both ends are of the same type)
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
         typeDefs.relationshipDefs.stream()
-            .filter { it.endDef1.type == it.endDef2.type && it.endDef1.cardinality == it.endDef2.cardinality }
-            .forEach { cyclicalRelationships[it.endDef1.type] = setOf(it.endDef1.name, it.endDef2.name) }
+            .filter { it.endDef1.type == it.endDef2.type }
+            .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
         val results = super.preprocess(outputFile, outputHeaders)
         return results
     }
@@ -270,26 +272,26 @@ class AssetImporter(
     ): List<String> {
         // Check if the type on this row has any cyclical relationships as headers in the input file
         val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-        if (!mapToSecondPass.containsKey(typeName)) {
-            if (this.header.isEmpty()) this.header = header
-            val cyclical = cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList()
-            if (cyclical.size == 2) {
-                val one = cyclical[0]
-                val two = cyclical[1]
-                if (header.contains(one) && header.contains(two)) {
-                    // If both ends of the same relationship are in the input file, throw an error
-                    // alerting the user that this can't work and they'll need to pick one end or the other
-                    throw IllegalStateException(
-                        """
-                        Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
-                        You should only use one end of this relationship or the other when importing.
-                        """.trimIndent(),
-                    )
-                }
+        if (this.header.isEmpty()) this.header = header
+        cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
+            val one = relationship.end1
+            val two = relationship.end2
+            if (header.contains(one) && header.contains(two)) {
+                // If both ends of the same relationship are in the input file, throw an error
+                // alerting the user that this can't work, and they'll need to pick one end or the other
+                throw IllegalStateException(
+                    """
+                    Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
+                    You should only use one end of this relationship or the other when importing.
+                    """.trimIndent(),
+                )
             }
             // Retain any of the cyclical relationships that remain so that we can second-pass process them
-            val secondPassColumns = cyclical.filter { header.contains(it) }.toSet()
-            mapToSecondPass[typeName] = secondPassColumns
+            if (header.contains(one)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
+            } else if (header.contains(two)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+            }
         }
         return row
     }

@@ -263,8 +263,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      */
     private static void raiseMalformedJsonError(String responseBody, int responseCode, Throwable e)
             throws ApiException {
-        String details = e == null ? "none" : e.getMessage();
-        throw new ApiException(ErrorCode.JSON_ERROR, e, responseBody, "" + responseCode, details);
+        throw new ApiException(ErrorCode.ERROR_PASSTHROUGH, e, "" + responseCode, responseBody, "");
     }
 
     /**
@@ -274,16 +273,9 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      * @throws AtlanException a more specific exception, based on the details of that response
      */
     private static void handleApiError(AtlanResponse response) throws AtlanException {
+        // Attempt to parse the error into an AtlanError object, but if that fails, fallback
+        // to just using the raw message body (wasn't JSON to begin with)
         AtlanError error = null;
-
-        // Check for a 500 response first -- if found, we won't have a JSON body to parse,
-        // so preemptively exit with a generic ApiException pass-through.
-        int rc = response.code();
-        if (rc == 500) {
-            throw new ApiException(
-                    ErrorCode.ERROR_PASSTHROUGH, null, "" + rc, response.body() == null ? "" : response.body());
-        }
-
         try {
             error = Serde.allInclusiveMapper.readValue(response.body(), AtlanError.class);
         } catch (IOException e) {
@@ -307,8 +299,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
         // Check for a 500 response first -- if found, we won't have a JSON body to parse,
         // so preemptively exit with a generic ApiException pass-through.
-        if (code == 500) {
-            throw new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, "" + code, body == null ? "" : body);
+        if (code >= 500) {
+            raiseMalformedJsonError(body, code, null);
         }
 
         AtlanError error = new AtlanError();
@@ -326,17 +318,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     private static void handleApiError(AtlanEventStreamResponse response) throws AtlanException {
         AtlanError error = null;
 
-        // Check for a 500 response first -- if found, we won't have a JSON body to parse,
-        // so preemptively exit with a generic ApiException pass-through.
-        int rc = response.code();
-        if (rc == 500) {
-            throw new ApiException(
-                    ErrorCode.ERROR_PASSTHROUGH,
-                    null,
-                    "" + rc,
-                    response.body() == null ? "" : response.body().toString());
-        }
-
+        // Attempt to parse the error into an AtlanError object, but if that fails, fallback
+        // to just using the raw message body (wasn't JSON to begin with)
         try {
             error = Serde.allInclusiveMapper.readValue(response.body().get(0), AtlanError.class);
         } catch (IOException e) {
