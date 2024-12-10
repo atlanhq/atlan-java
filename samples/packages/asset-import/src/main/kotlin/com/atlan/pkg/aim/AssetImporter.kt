@@ -236,8 +236,8 @@ class AssetImporter(
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
-    private val cyclicalRelationships = mutableMapOf<String, Set<String>>()
-    private val mapToSecondPass = mutableMapOf<String, Set<String>>()
+    private val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
+    private val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
     private val secondPassRemain =
         setOf(
             Asset.QUALIFIED_NAME.atlanFieldName,
@@ -245,6 +245,8 @@ class AssetImporter(
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
         )
+
+    private data class RelationshipEnds(val name: String, val end1: String, val end2: String)
 
     /** {@inheritDoc} */
     override fun preprocess(
@@ -256,7 +258,7 @@ class AssetImporter(
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
         typeDefs.relationshipDefs.stream()
             .filter { it.endDef1.type == it.endDef2.type }
-            .forEach { cyclicalRelationships[it.endDef1.type] = setOf(it.endDef1.name, it.endDef2.name) }
+            .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
         val results = super.preprocess(outputFile, outputHeaders)
         return results
     }
@@ -272,13 +274,12 @@ class AssetImporter(
         val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
         if (!mapToSecondPass.containsKey(typeName)) {
             if (this.header.isEmpty()) this.header = header
-            val cyclical = cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList()
-            if (cyclical.size == 2) {
-                val one = cyclical[0]
-                val two = cyclical[1]
+            cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
+                val one = relationship.end1
+                val two = relationship.end2
                 if (header.contains(one) && header.contains(two)) {
                     // If both ends of the same relationship are in the input file, throw an error
-                    // alerting the user that this can't work and they'll need to pick one end or the other
+                    // alerting the user that this can't work, and they'll need to pick one end or the other
                     throw IllegalStateException(
                         """
                         Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
@@ -286,10 +287,13 @@ class AssetImporter(
                         """.trimIndent(),
                     )
                 }
+                // Retain any of the cyclical relationships that remain so that we can second-pass process them
+                if (header.contains(one)) {
+                    mapToSecondPass.getOrElse(typeName) { mutableSetOf() }.add(one)
+                } else if (header.contains(two)) {
+                    mapToSecondPass.getOrElse(typeName) { mutableSetOf() }.add(two)
+                }
             }
-            // Retain any of the cyclical relationships that remain so that we can second-pass process them
-            val secondPassColumns = cyclical.filter { header.contains(it) }.toSet()
-            mapToSecondPass[typeName] = secondPassColumns
         }
         return row
     }
