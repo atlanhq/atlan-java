@@ -272,27 +272,25 @@ class AssetImporter(
     ): List<String> {
         // Check if the type on this row has any cyclical relationships as headers in the input file
         val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-        if (!mapToSecondPass.containsKey(typeName)) {
-            if (this.header.isEmpty()) this.header = header
-            cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
-                val one = relationship.end1
-                val two = relationship.end2
-                if (header.contains(one) && header.contains(two)) {
-                    // If both ends of the same relationship are in the input file, throw an error
-                    // alerting the user that this can't work, and they'll need to pick one end or the other
-                    throw IllegalStateException(
-                        """
-                        Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
-                        You should only use one end of this relationship or the other when importing.
-                        """.trimIndent(),
-                    )
-                }
-                // Retain any of the cyclical relationships that remain so that we can second-pass process them
-                if (header.contains(one)) {
-                    mapToSecondPass.getOrElse(typeName) { mutableSetOf() }.add(one)
-                } else if (header.contains(two)) {
-                    mapToSecondPass.getOrElse(typeName) { mutableSetOf() }.add(two)
-                }
+        if (this.header.isEmpty()) this.header = header
+        cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
+            val one = relationship.end1
+            val two = relationship.end2
+            if (header.contains(one) && header.contains(two)) {
+                // If both ends of the same relationship are in the input file, throw an error
+                // alerting the user that this can't work, and they'll need to pick one end or the other
+                throw IllegalStateException(
+                    """
+                    Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
+                    You should only use one end of this relationship or the other when importing.
+                    """.trimIndent(),
+                )
+            }
+            // Retain any of the cyclical relationships that remain so that we can second-pass process them
+            if (header.contains(one)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
+            } else if (header.contains(two)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
             }
         }
         return row
