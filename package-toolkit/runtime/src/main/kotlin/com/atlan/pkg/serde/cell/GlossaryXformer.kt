@@ -53,7 +53,7 @@ object GlossaryXformer {
         return when (fieldName) {
             GlossaryTerm.ANCHOR.atlanFieldName -> {
                 ctx.glossaryCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Parent glossary $assetRef not found.")
+                    ?: throw NoSuchElementException("Parent glossary $assetRef not found (in $fieldName).")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }

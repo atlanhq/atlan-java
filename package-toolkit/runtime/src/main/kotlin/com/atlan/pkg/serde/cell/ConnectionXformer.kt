@@ -66,7 +66,7 @@ object ConnectionXformer {
         return when (fieldName) {
             "connection" -> {
                 ctx.connectionCache.getByIdentity(assetRef)
-                    ?: throw NoSuchElementException("Connection $assetRef not found.")
+                    ?: throw NoSuchElementException("Connection $assetRef not found (in $fieldName).")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }

@@ -53,11 +53,11 @@ object GlossaryCategoryXformer {
         return when (fieldName) {
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName -> {
                 ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Parent category $assetRef not found.")
+                    ?: throw NoSuchElementException("Parent category $assetRef not found (in $fieldName).")
             }
             GlossaryTerm.CATEGORIES.atlanFieldName -> {
                 ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Category relationship $assetRef not found.")
+                    ?: throw NoSuchElementException("Category relationship $assetRef not found (in $fieldName).")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
