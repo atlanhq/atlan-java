@@ -70,7 +70,7 @@ object GlossaryTermXformer {
             "assignedTerms", in TERM_TO_TERM_FIELDS,
             ->
                 ctx.termCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Term $assetRef not found (via $fieldName).")
+                    ?: throw NoSuchElementException("Term $assetRef not found (in $fieldName).")
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }

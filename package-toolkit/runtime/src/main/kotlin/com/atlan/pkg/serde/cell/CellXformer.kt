@@ -101,7 +101,7 @@ object CellXformer {
             when (type) {
                 Collection::class.java, List::class.java -> list
                 Set::class.java, SortedSet::class.java -> TreeSet(list)
-                else -> throw IOException("Unable to deserialize cell to Java class: $type")
+                else -> throw IOException("Unable to deserialize cell to Java class (in $fieldName): $type")
             }
         } else if (Map::class.java.isAssignableFrom(type)) {
             TODO("Not yet implemented for import")
@@ -118,7 +118,7 @@ object CellXformer {
             // there should be asset references
             AssetRefXformer.decode(ctx, value, fieldName)
         } else {
-            throw IOException("Unhandled data type for $fieldName: $type")
+            throw IOException("Unhandled data type (in $fieldName): $type")
         }
     }
 
