@@ -89,7 +89,7 @@ class PersistentConnectionCache(
                         ps.setString(3, a.connectionQualifiedName)
                         ps.setString(4, a.name)
                         ps.setInt(5, if (a is Column) a.order ?: -1 else -1)
-                        ps.setString(6, a.tenantId)
+                        ps.setString(6, if (a.tenantId.isNullOrBlank()) "default" else a.tenantId)
                         ps.executeUpdate()
                     }
                 }
