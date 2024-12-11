@@ -22,6 +22,14 @@ import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
+import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender
+import io.opentelemetry.sdk.OpenTelemetrySdk
+import io.opentelemetry.sdk.logs.SdkLoggerProvider
+import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor
+import io.opentelemetry.sdk.resources.Resource
+import io.opentelemetry.sdk.trace.SdkTracerProvider
+import io.opentelemetry.sdk.trace.samplers.Sampler
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -63,6 +71,21 @@ object Utils {
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
+        val otelEndpoint = getEnvVar("OTEL_EXPORTER_OTLP_ENDPOINT")
+        if (otelEndpoint.isNotBlank()) {
+            // Configure OpenTelemetry, but only if there is an endpoint defined
+            val otel: OpenTelemetrySdk =
+                OpenTelemetrySdk.builder()
+                    .setTracerProvider(SdkTracerProvider.builder().setSampler(Sampler.alwaysOn()).build())
+                    .setLoggerProvider(
+                        SdkLoggerProvider.builder()
+                            .setResource(Resource.getDefault().toBuilder().put("k8s.workflow.node.name", getEnvVar("OTEL_WF_NODE_NAME")).build())
+                            .addLogRecordProcessor(BatchLogRecordProcessor.builder(OtlpGrpcLogRecordExporter.builder().setEndpoint(otelEndpoint).build()).build())
+                            .build(),
+                    ).build()
+            Runtime.getRuntime().addShutdownHook(Thread(otel::close))
+            OpenTelemetryAppender.install(otel)
+        }
         logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
