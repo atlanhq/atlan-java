@@ -35,35 +35,61 @@ object OpenAPISpecLoader {
             val connectionQN =
                 Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
 
-            val specFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.specFile, ctx.config.specKey)
-            if (!specFileProvided && (ctx.config.importType == "URL" && ctx.config.specUrl.isBlank())) {
-                logger.error { "No input file was provided for the OpenAPI spec." }
-                exitProcess(1)
-            }
-
             if (connectionQN.isBlank()) {
                 logger.error { "Missing required parameter - you must provide BOTH a connection name and specification URL." }
                 exitProcess(4)
             }
 
-            val sourceUrl =
-                when (ctx.config.importType) {
-                    "CLOUD" -> {
-                        Utils.getInputFile(
-                            ctx.config.specFile,
-                            outputDirectory,
-                            false,
-                            ctx.config.specPrefix,
-                            ctx.config.specKey,
+            val sourceUrls =
+                when (ctx.config.importStyle) {
+                    "single" -> {
+                        val specFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.specFile, ctx.config.specKey)
+                        if (!specFileProvided && (ctx.config.importType == "URL" && ctx.config.specUrl.isBlank())) {
+                            logger.error { "No input file was provided for the OpenAPI spec." }
+                            exitProcess(1)
+                        }
+                        listOf(
+                            when (ctx.config.importType) {
+                                "CLOUD" ->
+                                    Utils.getInputFile(
+                                        ctx.config.specFile,
+                                        outputDirectory,
+                                        false,
+                                        ctx.config.specPrefix,
+                                        ctx.config.specKey,
+                                    )
+                                "DIRECT" -> ctx.config.specFile
+                                else -> ctx.config.specUrl
+                            },
                         )
                     }
-
-                    "DIRECT" -> ctx.config.specFile
-                    else -> ctx.config.specUrl
+                    "multiple" -> {
+                        if (ctx.config.importType == "DIRECT") {
+                            if (ctx.config.directory.isBlank()) {
+                                logger.error { "No input directory was provided for the OpenAPI spec files." }
+                                exitProcess(1)
+                            }
+                            val files = Utils.getFilesInDirectory(ctx.config.importType, ctx.config.directory)
+                            if (files.isEmpty()) {
+                                logger.error { "No files found in the directory: ${ctx.config.directory}" }
+                                exitProcess(2)
+                            }
+                            files
+                        } else {
+                            logger.error { "Import style 'multiple' is not supported for import type 'CLOUD'." }
+                            exitProcess(3)
+                        }
+                    }
+                    else -> {
+                        logger.error { "Unsupported import style: ${ctx.config.importStyle}" }
+                        exitProcess(5)
+                    }
                 }
 
-            logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
-            loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
+            for (sourceUrl in sourceUrls) {
+                logger.info { "Loading OpenAPI specification from $sourceUrl into: $connectionQN" }
+                loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceUrl), batchSize)
+            }
         }
     }
 

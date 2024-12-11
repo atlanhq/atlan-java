@@ -766,6 +766,36 @@ object Utils {
     }
 
     /**
+     * Get the list of files in the provided directory.
+     *
+     * @param importType details of the type of import expected (direct vs object store-based)
+     * @param directory path to the directory to list files from
+     * @return list of absolute paths of files in the directory
+     */
+    fun getFilesInDirectory(
+        importType: String,
+        directory: String,
+    ): List<String> {
+        if (importType == "DIRECT") {
+            val path = Paths.get(directory)
+            val files = mutableListOf<String>()
+            if (path.isDirectory()) {
+                path.walk().forEach {
+                    if (it.isRegularFile()) {
+                        files.add(it.pathString)
+                    }
+                }
+            } else {
+                files.add(directory)
+            }
+            return files
+        } else {
+            // return empty list for object store-based imports
+            return listOf()
+        }
+    }
+
+    /**
      * Upload the provided output file to the object store defined by the credentials available.
      * Note: if no credentials are provided, the default (in-tenant) object store will be used.
      *
