@@ -93,5 +93,5 @@ otel = [ "log4j-core", "otel-sdk", "otel-exporter", "otel-semconv", "otel-append
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
-git-publish = { id = "org.ajoberstar.git-publish", version = "5.1.0" }
+git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
 pkl = { id = "org.pkl-lang", version = "0.27.1" }
