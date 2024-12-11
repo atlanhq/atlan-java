@@ -31,6 +31,7 @@ jobs:
     outputs:
       tests: ${{ steps.test-files.outputs.tests }}
     steps:
+      - uses: actions/checkout@v4
       - name: List integration tests
         id: test-files
         run: |
@@ -75,6 +76,7 @@ jobs:
     outputs:
       tests: ${{ steps.test-directories.outputs.tests }}
     steps:
+      - uses: actions/checkout@v4
       - name: List package tests
         id: test-directories
         run: |
