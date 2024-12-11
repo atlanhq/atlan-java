@@ -28,8 +28,26 @@ jobs:
         with:
           name: integration-logs
           path: integration-tests/*.log
-  package-test:
+  list-tests:
     runs-on: ubuntu-latest
+    outputs:
+      tests: ${{ steps.test-directories.outputs.tests }}
+    steps:
+      - name: List package tests
+        id: test-directories
+        run: |
+          dirs=$(find samples/packages -type d -depth 1 | sed 's|/|:|g; s|^|:|; s|$|:test|' | grep -v 'build' | tr '\n' ' ')
+          json_dirs=$(echo "${dirs[@]}" | jq -R -c 'split(" ")[:-1]')
+          echo "tests=$json_dirs" >> $GITHUB_OUTPUT
+  package-test:
+    needs: [list-tests]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tests: ${{ fromJson(needs.list-tests.outputs.tests) }}
+    concurrency:
+      group: ${{ matrix.tests }}
     name: "Packages"
     steps:
       - name: Free disk space
@@ -40,12 +58,16 @@ jobs:
           java-version: 17
           distribution: temurin
       - name: Package tests
-        run: ./gradlew -PpackageTests test
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
+        uses: nick-fields/retry@v3
+        with:
+          max_attempts: 3
+          timeout_minutes: 10
+          command: ./gradlew -PpackageTests ${{ matrix.tests }}
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
