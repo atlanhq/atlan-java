@@ -26,9 +26,28 @@ jobs:
           path: |
             integration-tests/build/classes/java/test/com/atlan/java/sdk/*.class
             samples/packages/**/build/classes/kotlin/test/**/*.class
-  live-test:
-    needs: build
+  list-integration-tests:
     runs-on: ubuntu-latest
+    outputs:
+      tests: ${{ steps.test-files.outputs.tests }}
+    steps:
+      - name: List integration tests
+        id: test-files
+        run: |
+          files=$(ls integration-tests/src/test/java/com/atlan/java/sdk/*Test.java | sed -E 's|.*/src/test/java/||; s|/|.|g; s|\.java$||' | tr '\n' ' ')
+          json_files=$(echo "$files[@]}" | jq -R -c 'split(" ")[:-1]')
+          echo "tests=$json_files" >> $GITHUB_OUTPUT
+  integration-test:
+    needs:
+      - build
+      - list-integration-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tests: ${{fromJson(needs.list-integration-tests.outputs.tests)}}
+    concurrency:
+      group: ${{ matrix.tests }}
     name: "Integration"
     steps:
       - uses: actions/checkout@v4
@@ -40,17 +59,17 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-      # - name: Integration tests
-      #   run: ./gradlew -PintegrationTests integration-tests:test
-      #   env:
-      #     ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
-      #     ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
-      #     NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-      # - if: success() || failure()
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: integration-logs
-      #     path: integration-tests/*.log
+      - name: Integration tests
+        run: ./gradlew -PintegrationTests integration-tests:test --tests "${{ matrix.tests }}"
+        env:
+          ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
+          ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+      - if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-logs
+          path: integration-tests/*.log
   list-packages:
     runs-on: ubuntu-latest
     outputs:
@@ -59,7 +78,7 @@ jobs:
       - name: List package tests
         id: test-directories
         run: |
-          dirs=$(find samples/packages -type d -depth 1 | sed 's|/|:|g; s|^|:|; s|$|:test|' | grep -v 'build' | tr '\n' ' ')
+          dirs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed 's|/|:|g; s|^|:|; s|$|:test|' | grep -v 'build' | tr '\n' ' ')
           json_dirs=$(echo "${dirs[@]}" | jq -R -c 'split(" ")[:-1]')
           echo "tests=$json_dirs" >> $GITHUB_OUTPUT
   package-test:
