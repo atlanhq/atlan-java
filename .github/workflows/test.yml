@@ -35,9 +35,9 @@ jobs:
       - name: List integration tests
         id: test-files
         run: |
-          files=$(ls integration-tests/src/test/java/com/atlan/java/sdk/*Test.java | sed -E 's|.*/src/test/java/||; s|/|.|g; s|\.java$||' | tr '\n' ' ')
-          json_files=$(echo "$files[@]}" | jq -R -c 'split(" ")[:-1]')
-          echo "tests=$json_files" >> $GITHUB_OUTPUT
+          tests=$(ls integration-tests/src/test/java/com/atlan/java/sdk/*Test.java | sed -E 's|.*/src/test/java/com/atlan/java/sdk/||; s|/|.|g; s|\.java$||' | tr '\n' ' ')
+          json_tests=$(echo "$tests[@]}" | jq -R -c 'split(" ")[:-1]')
+          echo "tests=$json_tests" >> $GITHUB_OUTPUT
   integration-test:
     needs:
       - build
@@ -61,7 +61,7 @@ jobs:
           java-version: 17
           distribution: temurin
       - name: Integration tests
-        run: ./gradlew -PintegrationTests integration-tests:test --tests "${{ matrix.tests }}"
+        run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}"
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
@@ -69,8 +69,8 @@ jobs:
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: integration-logs
-          path: integration-tests/*.log
+          name: ${{ matrix.tests }}
+          path: integration-tests/${{ matrix.tests }}.log
   list-packages:
     runs-on: ubuntu-latest
     outputs:
@@ -80,9 +80,9 @@ jobs:
       - name: List package tests
         id: test-directories
         run: |
-          dirs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed 's|/|:|g; s|^|:|; s|$|:test|' | grep -v 'build' | tr '\n' ' ')
-          json_dirs=$(echo "${dirs[@]}" | jq -R -c 'split(" ")[:-1]')
-          echo "tests=$json_dirs" >> $GITHUB_OUTPUT
+          pkgs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed -E 's|samples/packages/||' | grep -v 'build' | tr '\n' ' ')
+          json_pkgs=$(echo "${pkgs[@]}" | jq -R -c 'split(" ")[:-1]')
+          echo "tests=$json_pkgs" >> $GITHUB_OUTPUT
   package-test:
     needs:
       - build
@@ -117,9 +117,9 @@ jobs:
         with:
           max_attempts: 3
           timeout_minutes: 10
-          command: ./gradlew -PpackageTests ${{ matrix.tests }}
+          command: "./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test"
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: package-logs
-          path: samples/packages/**/debug.log
+          name: ${{ matrix.tests }}
+          path: samples/packages/${{ matrix.tests }}/**/debug.log
