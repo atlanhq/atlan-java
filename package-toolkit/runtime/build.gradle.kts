@@ -237,6 +237,7 @@ tasks {
             include(dependency("io.opentelemetry:opentelemetry-exporter-otlp:.*"))
             include(dependency("io.opentelemetry:opentelemetry-exporter-otlp-common:.*"))
             include(dependency("io.opentelemetry:opentelemetry-exporter-sender-okhttp:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:.*"))
             include(dependency("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:.*"))
             include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:.*"))
             include(dependency("io.opentelemetry:opentelemetry-sdk-trace:.*"))
