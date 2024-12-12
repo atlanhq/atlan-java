@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: Apache-2.0
-// import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
 
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarName = "package-toolkit-runtime"
@@ -10,7 +9,6 @@ plugins {
     alias(libs.plugins.shadow)
     `maven-publish`
     signing
-    // kotlin("kapt")
 }
 
 dependencies {
@@ -30,7 +28,6 @@ dependencies {
     implementation(platform(libs.otel.bom))
     implementation(libs.bundles.otel)
     // annotationProcessor(libs.log4j.core)
-    // annotationProcessor(libs.log4j.plugins)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
@@ -53,17 +50,11 @@ java {
 }
 
 tasks {
-    // kapt {
-    //     arguments {
-    //         arg("log4j.pluginClass", "true")
-    //     }
-    // }
     shadowJar {
         dependsOn("genPklConnectors")
         isZip64 = true
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
-        // transform(Log4j2PluginsCacheFileTransformer::class.java)
         dependencies {
             include(dependency("org.jetbrains.kotlin:.*:.*"))
             include(dependency("io.github.microutils:kotlin-logging-jvm:.*"))
@@ -229,6 +220,7 @@ tasks {
             // OpenTelemetry
             include(dependency("io.opentelemetry:opentelemetry-api:.*"))
             include(dependency("io.opentelemetry:opentelemetry-api-incubator:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-context:.*"))
             include(dependency("io.opentelemetry:opentelemetry-sdk:.*"))
             include(dependency("io.opentelemetry:opentelemetry-sdk-logs:.*"))
             include(dependency("io.opentelemetry:opentelemetry-sdk-common:.*"))
