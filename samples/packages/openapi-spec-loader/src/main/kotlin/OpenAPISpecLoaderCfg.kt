@@ -16,10 +16,8 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class OpenAPISpecLoaderCfg(
     @JsonProperty("import_type") val importType: String = "URL",
-    @JsonProperty("import_style") val importStyle: String = "single",
     @JsonProperty("spec_url") val specUrl: String = "",
     @JsonProperty("spec_file") val specFile: String = "",
-    @JsonProperty("directory") val directory: String = "",
     @JsonProperty("spec_prefix") val specPrefix: String = "",
     @JsonProperty("spec_key") val specKey: String = "",
     @JsonProperty("cloud_source") val cloudSource: String? = null,
