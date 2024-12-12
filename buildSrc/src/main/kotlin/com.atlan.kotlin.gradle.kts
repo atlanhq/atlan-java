@@ -43,7 +43,6 @@ configurations.all {
             versionCatalogs.named("libs").findLibrary("guava").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-compress").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("otel-api").orElseThrow(::AssertionError),
         )
     }
 }

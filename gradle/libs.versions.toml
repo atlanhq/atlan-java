@@ -32,9 +32,8 @@ kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
 jetty = "12.0.16"
 netty = "4.1.115.Final"
-otlp = "1.45.0"
-otel = "2.10.0"
-otel-experimental = "2.10.0-alpha"
+otlp = "1.35.0"
+otel-experimental = "1.33.6-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -78,12 +77,9 @@ kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.r
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
-otlp-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otlp" }
-otel-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "otel" }
-otel-api = { module = "io.opentelemetry:opentelemetry-api", version.ref = "otlp" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" }
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
-otel-auto = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" }
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otlp" }
+otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "otlp" }
+otel-auto = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure", version.ref = "otlp" }
 otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-experimental" }
 
 [bundles]

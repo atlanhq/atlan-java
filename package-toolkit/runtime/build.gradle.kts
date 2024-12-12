@@ -24,10 +24,7 @@ dependencies {
     api(libs.adls)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
-    implementation(platform(libs.otlp.bom))
-    implementation(platform(libs.otel.bom))
     implementation(libs.bundles.otel)
-    // annotationProcessor(libs.log4j.core)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
