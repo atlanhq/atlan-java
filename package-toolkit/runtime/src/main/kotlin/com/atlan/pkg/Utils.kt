@@ -19,7 +19,6 @@ import com.atlan.pkg.objectstore.LocalSync
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.objectstore.S3Credential
 import com.atlan.pkg.objectstore.S3Sync
-import com.atlan.pkg.serde.cell.ModelAssetXformer.logger
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -45,7 +44,6 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
@@ -242,6 +240,7 @@ object Utils {
         config: T = setPackageOps<T>(),
         reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
+        Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler())
         if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
