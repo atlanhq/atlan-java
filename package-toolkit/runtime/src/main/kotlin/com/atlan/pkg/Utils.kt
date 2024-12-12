@@ -58,9 +58,10 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
+    private val otelInitialized = AtomicBoolean(false)
+
     val logger = getLogger(Utils.javaClass.name)
     val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
-    private val otelInitialized = AtomicBoolean(false)
 
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
@@ -90,7 +91,11 @@ object Utils {
             OpenTelemetryAppender.install(otel)
             otelInitialized.set(true)
         }
-        return KotlinLogging.logger(name)
+        val log = KotlinLogging.logger(name)
+        if (otelInitialized.get()) {
+            log.info { "OpenTelemetry initialized." }
+        }
+        return log
     }
 
     /**
