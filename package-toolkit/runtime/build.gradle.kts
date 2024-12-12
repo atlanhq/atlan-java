@@ -215,6 +215,28 @@ tasks {
             include(dependency("org.reactivestreams:reactive-streams:.*"))
             // SQLite
             include(dependency("org.xerial:sqlite-jdbc:.*"))
+            // OpenTelemetry
+            include(dependency("io.opentelemetry:opentelemetry-api:*"))
+            include(dependency("io.opentelemetry:opentelemetry-api-incubator:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-common:*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-common:*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-otlp:*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-otlp-common:*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-sender-okhttp:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-trace:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-metrics:*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-logs:*"))
+            include(dependency("io.opentelemetry.semconv:opentelemetry-semconv:*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17:*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-context-data-2.17-autoconfigure:*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:*"))
+            include(dependency("com.squareup.okhttp3:okhttp:*"))
+            include(dependency("com.squareup.okio:okio:*"))
+            include(dependency("com.squareup.okio:okio-jvm:*"))
         }
         mergeServiceFiles()
     }
