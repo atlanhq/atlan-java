@@ -76,6 +76,7 @@ object Utils {
     fun getLogger(name: String): KLogger {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         val otelEndpoint = getEnvVar("OTEL_EXPORTER_OTLP_ENDPOINT")
+        var otelInitializedHere = false
         if (otelEndpoint.isNotBlank() && !otelInitialized.get()) {
             // Configure OpenTelemetry, but only if there is an endpoint defined
             val otel: OpenTelemetrySdk =
@@ -90,9 +91,10 @@ object Utils {
             Runtime.getRuntime().addShutdownHook(Thread(otel::close))
             OpenTelemetryAppender.install(otel)
             otelInitialized.set(true)
+            otelInitializedHere = true
         }
         val log = KotlinLogging.logger(name)
-        if (otelInitialized.get()) {
+        if (otelInitializedHere) {
             log.info { "OpenTelemetry initialized." }
         }
         return log
