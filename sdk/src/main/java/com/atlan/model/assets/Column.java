@@ -913,8 +913,8 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
                 break;
             case SnowflakeDynamicTable.TYPE_NAME:
                 builder.tableName(parentName)
-                    .tableQualifiedName(parentQualifiedName)
-                    .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName(parentQualifiedName));
+                        .tableQualifiedName(parentQualifiedName)
+                        .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName(parentQualifiedName));
                 break;
         }
         return builder;
