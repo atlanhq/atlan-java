@@ -115,7 +115,7 @@ jobs:
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         uses: nick-fields/retry@v3
         with:
-          max_attempts: 3
+          max_attempts: 2
           timeout_minutes: 10
           command: "./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test"
       - if: success() || failure()

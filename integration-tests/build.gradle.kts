@@ -13,6 +13,9 @@ dependencies {
 
 tasks {
     test {
+        filter {
+            isFailOnNoMatchingTests = false
+        }
         useTestNG {
             maxParallelForks = 4
             options {
