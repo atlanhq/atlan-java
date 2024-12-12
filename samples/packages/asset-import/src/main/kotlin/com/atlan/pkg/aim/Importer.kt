@@ -7,7 +7,6 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.ImportResults
-import mu.KotlinLogging
 import kotlin.system.exitProcess
 
 /**
@@ -15,7 +14,7 @@ import kotlin.system.exitProcess
  * Note: all parameters should be passed through environment variables.
  */
 object Importer {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     @JvmStatic
     fun main(args: Array<String>) {

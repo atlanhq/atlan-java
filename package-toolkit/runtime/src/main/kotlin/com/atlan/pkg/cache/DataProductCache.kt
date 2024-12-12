@@ -8,12 +8,12 @@ import com.atlan.model.assets.DataProduct
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
-import mu.KotlinLogging
 
 class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx, "product") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
     private val includesOnRelations: List<AtlanField> = listOf(DataDomain.NAME)

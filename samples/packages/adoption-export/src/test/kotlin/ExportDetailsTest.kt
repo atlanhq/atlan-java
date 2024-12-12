@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.AdoptionExporter
 import com.atlan.pkg.serde.xls.ExcelReader
-import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit
  * Test export of detailed view and change information.
  */
 class ExportDetailsTest : PackageTest("d") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
         listOf(

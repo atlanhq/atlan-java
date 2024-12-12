@@ -8,11 +8,11 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
-import mu.KotlinLogging
 
 class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, "domain") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
 

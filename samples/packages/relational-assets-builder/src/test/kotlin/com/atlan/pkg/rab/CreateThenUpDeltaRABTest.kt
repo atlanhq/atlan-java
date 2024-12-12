@@ -23,8 +23,8 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
-import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -37,7 +37,7 @@ import kotlin.test.assertNull
  * Test creation of relational assets followed by an upsert of the same relational assets, including calculating a delta.
  */
 class CreateThenUpDeltaRABTest : PackageTest("ctud") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.IMPALA

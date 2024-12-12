@@ -14,12 +14,12 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.model.typedefs.EnumDef
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.lftag.LakeTagSynchronizer.CONNECTION_MAP_JSON
 import com.atlan.pkg.lftag.LakeTagSynchronizer.METADATA_MAP_JSON
 import com.atlan.pkg.lftag.LakeTagSynchronizer.TAG_FILE_NAME_PREFIX
 import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
 import java.nio.file.Paths
@@ -33,7 +33,7 @@ private const val NON_PI = "non-pi"
 private const val FULL_HISTORY = "fullhistory"
 
 class LakeTagSynchronizerTest : PackageTest("lts") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
     private val c1 = makeUnique("c1")
     private var connectionQualifiedName = ""
     private var schemaGuid = ""

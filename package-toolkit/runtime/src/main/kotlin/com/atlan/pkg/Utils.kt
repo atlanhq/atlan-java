@@ -42,6 +42,7 @@ import java.io.File.separator
 import java.io.IOException
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
@@ -57,22 +58,24 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
-    val logger = KotlinLogging.logger {}
+    val logger = getLogger(Utils.javaClass.name)
     val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
+    private val otelInitialized = AtomicBoolean(false)
 
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
     const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
 
     /**
-     * Set up the event-processing options, and start up the event processor.
+     * Set up a logger.
      *
-     * @return the configuration used to set up the event-processing handler, or null if no configuration was found
+     * @param name of the logger
+     * @return the logger
      */
-    inline fun <reified T : CustomConfig> setPackageOps(): T {
+    fun getLogger(name: String): KLogger {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         val otelEndpoint = getEnvVar("OTEL_EXPORTER_OTLP_ENDPOINT")
-        if (otelEndpoint.isNotBlank()) {
+        if (otelEndpoint.isNotBlank() && !otelInitialized.get()) {
             // Configure OpenTelemetry, but only if there is an endpoint defined
             val otel: OpenTelemetrySdk =
                 OpenTelemetrySdk.builder()
@@ -85,7 +88,17 @@ object Utils {
                     ).build()
             Runtime.getRuntime().addShutdownHook(Thread(otel::close))
             OpenTelemetryAppender.install(otel)
+            otelInitialized.set(true)
         }
+        return KotlinLogging.logger(name)
+    }
+
+    /**
+     * Set up the event-processing options, and start up the event processor.
+     *
+     * @return the configuration used to set up the event-processing handler, or null if no configuration was found
+     */
+    inline fun <reified T : CustomConfig> setPackageOps(): T {
         logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()

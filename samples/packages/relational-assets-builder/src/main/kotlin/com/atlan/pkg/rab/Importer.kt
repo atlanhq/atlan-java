@@ -21,7 +21,6 @@ import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.DeltaProcessor
-import mu.KotlinLogging
 import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.exitProcess
@@ -31,7 +30,7 @@ import kotlin.system.exitProcess
  * Note: all parameters should be passed through environment variables.
  */
 object Importer {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(Importer.javaClass.name)
 
     const val PREVIOUS_FILES_PREFIX = "csa-relational-assets-builder"
 

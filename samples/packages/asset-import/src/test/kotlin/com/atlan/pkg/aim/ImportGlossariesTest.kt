@@ -21,6 +21,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ThreadSafeWriter
 import de.siegmar.fastcsv.reader.CsvReader
@@ -28,7 +29,6 @@ import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
-import mu.KotlinLogging
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -40,7 +40,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary and its inter-related contents.
  */
 class ImportGlossariesTest : PackageTest("ig") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossary1 = makeUnique("g1")
     private val glossary2 = makeUnique("g2")

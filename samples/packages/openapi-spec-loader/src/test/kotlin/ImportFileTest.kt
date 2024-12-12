@@ -5,7 +5,7 @@ import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -17,7 +17,7 @@ import kotlin.test.assertNotNull
  * Test import of the canonical PetStore example from Swagger.
  */
 class ImportFileTest : PackageTest("f") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val connectorType = AtlanConnectorType.OPENLINEAGE
     private val testId = makeUnique("c1")

@@ -15,12 +15,12 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
-import mu.KotlinLogging
 
 class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, "connection") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
 

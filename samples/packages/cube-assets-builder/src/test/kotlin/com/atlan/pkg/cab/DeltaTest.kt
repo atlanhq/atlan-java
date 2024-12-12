@@ -8,9 +8,9 @@ import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.FileBasedDelta
-import mu.KotlinLogging
 import org.testng.Assert.assertTrue
 import java.io.File
 import java.nio.file.Paths
@@ -21,7 +21,7 @@ import kotlin.test.assertEquals
  * Test pre-processing of full-load CSV files to detect which assets should be removed.
  */
 class DeltaTest : PackageTest("cd") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.ESSBASE
@@ -68,7 +68,7 @@ class DeltaTest : PackageTest("cd") {
             mapOf(
                 AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
             )
-        delta = FileBasedDelta(connectionsMap, AssetImporter.Companion, KotlinLogging.logger {}, compareChecksums = true)
+        delta = FileBasedDelta(connectionsMap, AssetImporter.Companion, Utils.getLogger(this.javaClass.name), compareChecksums = true)
         delta!!.calculateDelta(
             Paths.get(testDirectory, currentFile).toString(),
             Paths.get(testDirectory, previousFile).toString(),

@@ -16,8 +16,8 @@ import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
-import mu.KotlinLogging
 import org.testng.Assert
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -31,7 +31,7 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing assigned terms.
  */
 class LinkTermsTest : PackageTest("lt") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossaryName = makeUnique("g1")
     private val connectionName = makeUnique("c1")

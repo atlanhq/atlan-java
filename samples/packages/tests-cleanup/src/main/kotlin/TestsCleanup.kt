@@ -15,13 +15,12 @@ import com.atlan.model.assets.Purpose
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.pkg.Utils
-import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.round
 import kotlin.system.exitProcess
 
 object TestsCleanup {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(TestsCleanup.javaClass.name)
 
     private const val DELETION_BATCH = 20
 

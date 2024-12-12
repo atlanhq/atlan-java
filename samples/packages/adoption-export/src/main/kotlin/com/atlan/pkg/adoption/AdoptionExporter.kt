@@ -12,7 +12,6 @@ import com.atlan.pkg.adoption.exports.DetailedSearches
 import com.atlan.pkg.adoption.exports.DetailedUserChanges
 import com.atlan.pkg.adoption.exports.DetailedUserViews
 import com.atlan.pkg.serde.xls.ExcelWriter
-import mu.KotlinLogging
 import java.io.File
 import kotlin.math.min
 
@@ -20,7 +19,7 @@ import kotlin.math.min
  * Actually run the export of adoption details.
  */
 object AdoptionExporter {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(AdoptionExporter.javaClass.name)
 
     @JvmStatic
     fun main(args: Array<String>) {

@@ -11,12 +11,11 @@ import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.parser.OpenAPIV3Parser
-import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.system.exitProcess
 
 object OpenAPISpecLoader {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(OpenAPISpecLoader.javaClass.name)
 
     /**
      * Actually run the loader, taking all settings from environment variables.

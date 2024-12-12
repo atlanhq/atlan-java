@@ -12,9 +12,9 @@ import com.atlan.model.enums.AtlanLineageDirection
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.lb.Loader
-import mu.KotlinLogging
 import org.testng.Assert
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -27,7 +27,7 @@ import kotlin.test.assertTrue
  * Test creation of lineage using partial assets.
  */
 class PartialAssetsTest : PackageTest("pa") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val connectionName = makeUnique("c1")
     private val connectorType = AtlanConnectorType.MATILLION

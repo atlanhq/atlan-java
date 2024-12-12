@@ -13,16 +13,16 @@ import com.atlan.model.assets.ModelEntityAssociation
 import com.atlan.model.assets.ModelVersion
 import com.atlan.model.relations.Reference
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer.TYPE_QN_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer.getRefByQN
-import mu.KotlinLogging
 
 /**
  * Static object to transform model asset references.
  */
 object ModelAssetXformer {
-    val logger = KotlinLogging.logger {}
+    val logger = Utils.getLogger(this.javaClass.name)
 
     private val MODEL_ASSET_MULTI_VERSIONED_FIELDS =
         setOf(

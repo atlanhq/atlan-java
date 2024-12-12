@@ -7,7 +7,7 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.model.typedefs.EnumDef
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.annotations.Test
 import kotlin.test.assertEquals
 
@@ -23,7 +23,7 @@ private const val TAG_KEY_STRING = "other"
 private val ORIGINAL_VALUES = setOf(ONE, FOUR)
 
 class EnumCreatorTest : PackageTest("en") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
     private val enum1 = makeUnique("enum")
     private val cm1 = makeUnique("cm")
     private val tagToMetadataMapper =

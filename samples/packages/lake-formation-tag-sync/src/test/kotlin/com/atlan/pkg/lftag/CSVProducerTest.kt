@@ -3,14 +3,14 @@
 package com.atlan.pkg.lftag
 
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.lftag.model.LFTagData
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
 
 class CSVProducerTest : PackageTest("csv") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     override fun setup() {
     }

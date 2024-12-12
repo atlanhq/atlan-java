@@ -12,7 +12,6 @@ import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
 import com.atlan.util.AssetBatch.AssetIdentity
-import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -21,7 +20,7 @@ import kotlin.system.exitProcess
  * Note: all parameters should be passed through environment variables.
  */
 object Loader {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(Loader.javaClass.name)
 
     @JvmStatic
     fun main(args: Array<String>) {

@@ -20,7 +20,6 @@ import com.atlan.pkg.serde.RowSerializer
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.RowGenerator
 import com.atlan.serde.Serde
-import mu.KotlinLogging
 
 /**
  * Export assets from Atlan, in one of two modes (defined by EXPORT_SCOPE environment variable):
@@ -41,7 +40,7 @@ class AssetExporter(
     private val batchSize: Int,
     private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     fun export() {
         val fieldsToExtract = getFieldsToExtract()
