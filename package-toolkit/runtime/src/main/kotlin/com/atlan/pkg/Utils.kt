@@ -22,14 +22,14 @@ import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.opentelemetry.api.common.Attributes
 import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
 import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender
 import io.opentelemetry.sdk.OpenTelemetrySdk
+import io.opentelemetry.sdk.autoconfigure.ResourceConfiguration
 import io.opentelemetry.sdk.logs.SdkLoggerProvider
 import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor
 import io.opentelemetry.sdk.resources.Resource
-import io.opentelemetry.sdk.trace.SdkTracerProvider
-import io.opentelemetry.sdk.trace.samplers.Sampler
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -40,9 +40,10 @@ import java.io.Closeable
 import java.io.File
 import java.io.File.separator
 import java.io.IOException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
-import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
@@ -58,14 +59,92 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
-    private val otelInitialized = AtomicBoolean(false)
+    // Note: this default value is necessary to avoid internal Argo errors if the
+    // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
+    const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
+
+    class GlobalExceptionHandler : Thread.UncaughtExceptionHandler {
+        override fun uncaughtException(
+            thread: Thread,
+            throwable: Throwable,
+        ) {
+            val msg = getStackTraceAsString(throwable)
+            try {
+                val logger = getLogger(this.javaClass.name)
+                logger.error("Uncaught exception in thread '${thread.name}': '$msg'")
+            } catch (e: Exception) {
+                print("Uncaught exception in thread '${thread.name}': '$msg'")
+                print("An unexpected error occurred in uncaughtException: '${e.message}'")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun getStackTraceAsString(throwable: Throwable): String {
+        val sw = StringWriter()
+        val pw = PrintWriter(sw)
+        throwable.printStackTrace(pw)
+        return sw.toString()
+    }
+
+    init {
+        val openTelemetryEndpoint = System.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+        val openTelemetryResourceAttributes = System.getenv("OTEL_RESOURCE_ATTRIBUTES")
+
+        if (!openTelemetryEndpoint.isNullOrBlank() && !openTelemetryResourceAttributes.isNullOrBlank()) {
+            setupOpenTelemetry(openTelemetryEndpoint)
+        }
+    }
 
     val logger = getLogger(Utils.javaClass.name)
     val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
 
-    // Note: this default value is necessary to avoid internal Argo errors if the
-    // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
-    const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
+    private fun setupOpenTelemetry(endpoint: String) {
+        val defaultResource: Resource = ResourceConfiguration.createEnvironmentResource()
+        val customResourceEnvNames =
+            mapOf(
+                "k8s.workflow.node.name" to "OTEL_WF_NODE_NAME",
+            )
+        val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
+
+        val logExporter =
+            OtlpGrpcLogRecordExporter.builder()
+                .setEndpoint(endpoint)
+                .build()
+
+        val logEmitterProvider =
+            SdkLoggerProvider.builder().setResource(resource)
+                .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
+                .build()
+
+        val openTelemetry =
+            OpenTelemetrySdk.builder().setLoggerProvider(logEmitterProvider).buildAndRegisterGlobal()
+
+        Runtime.getRuntime().addShutdownHook(Thread { openTelemetry.close() })
+
+        OpenTelemetryAppender.install(openTelemetry)
+    }
+
+    private fun appendCustomEnvResource(
+        resource: Resource,
+        envNames: Map<String, String>,
+    ): Resource {
+        var outputResource = Resource.empty().merge(resource)
+        envNames.forEach { entry ->
+            val envValue = System.getenv(entry.value) ?: ""
+            if (envValue != "") {
+                val tempResource =
+                    Resource.create(
+                        Attributes.builder().put(
+                            entry.key,
+                            envValue,
+                        ).build(),
+                    )
+                outputResource = outputResource.merge(tempResource)
+            }
+        }
+        return outputResource
+    }
 
     /**
      * Set up a logger.
@@ -74,6 +153,11 @@ object Utils {
      * @return the logger
      */
     fun getLogger(name: String): KLogger {
+        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
+        return KotlinLogging.logger(name)
+    }
+
+    /* fun getLogger(name: String): KLogger {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         val otelEndpoint = getEnvVar("OTEL_EXPORTER_OTLP_ENDPOINT")
         var otelInitializedHere = false
@@ -98,7 +182,7 @@ object Utils {
             log.info { "OpenTelemetry initialized." }
         }
         return log
-    }
+    } */
 
     /**
      * Set up the event-processing options, and start up the event processor.
@@ -156,6 +240,7 @@ object Utils {
         config: T = setPackageOps<T>(),
         reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
+        Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler())
         if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
