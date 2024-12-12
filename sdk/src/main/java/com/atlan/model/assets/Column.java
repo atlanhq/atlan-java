@@ -892,7 +892,6 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
                 .order(order);
         switch (parentType) {
             case Table.TYPE_NAME:
-            case SnowflakeDynamicTable.TYPE_NAME:
                 builder.tableName(parentName)
                         .tableQualifiedName(parentQualifiedName)
                         .table(Table.refByQualifiedName(parentQualifiedName));
@@ -911,6 +910,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
                 builder.tableName(tableName)
                         .tableQualifiedName(tableQualifiedName)
                         .tablePartition(TablePartition.refByQualifiedName(parentQualifiedName));
+                break;
+            case SnowflakeDynamicTable.TYPE_NAME:
+                builder.tableName(parentName)
+                    .tableQualifiedName(parentQualifiedName)
+                    .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName(parentQualifiedName));
                 break;
         }
         return builder;
