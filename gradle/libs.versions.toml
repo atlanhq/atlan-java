@@ -6,7 +6,6 @@ freemarker = "2.3.33"
 classgraph = "4.8.179"
 testng = "7.10.2"
 log4j = "2.24.2"
-log4j-plugins = "3.0.0-beta3"
 wiremock = "3.10.0"
 jnanoid = "2.0.0"
 awssdk = "2.29.32"
@@ -47,7 +46,6 @@ freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" 
 classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
 testng = { module = "org.testng:testng", version.ref = "testng" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
-log4j-plugins = { module = "org.apache.logging.log4j:log4j-plugin-processor", version.ref = "log4j-plugins" }
 log4j-slf4j2 = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
 wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
@@ -82,6 +80,7 @@ jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
 otlp-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otlp" }
 otel-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "otel" }
+otel-api = { module = "io.opentelemetry:opentelemetry-api", version.ref = "otlp" }
 otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" }
 otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
 otel-auto = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" }

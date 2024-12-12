@@ -35,6 +35,7 @@ configurations.all {
             libs.commons.io,
             libs.jetty.http,
             libs.netty.common,
+            libs.otel.api,
         )
     }
 }
