@@ -214,6 +214,14 @@ tasks {
             include(dependency("org.reactivestreams:reactive-streams:.*"))
             // SQLite
             include(dependency("org.xerial:sqlite-jdbc:.*"))
+            // OpenTelemetry
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-context-data-2.17-autoconfigure:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-api:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-api-incubator:.*"))
+            include(dependency("io.opentelemetry.semconv:opentelemetry-semconv:.*"))
         }
         mergeServiceFiles()
     }
