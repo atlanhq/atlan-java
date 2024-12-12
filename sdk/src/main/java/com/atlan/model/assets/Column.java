@@ -892,6 +892,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
                 .order(order);
         switch (parentType) {
             case Table.TYPE_NAME:
+            case SnowflakeDynamicTable.TYPE_NAME:
                 builder.tableName(parentName)
                         .tableQualifiedName(parentQualifiedName)
                         .table(Table.refByQualifiedName(parentQualifiedName));
