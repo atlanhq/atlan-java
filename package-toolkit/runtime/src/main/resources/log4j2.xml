@@ -18,11 +18,9 @@
                 </Route>
             </Routes>
         </Routing>
-        <OpenTelemetry name="OpenTelemetryAppender"/>
     </Appenders>
     <Loggers>
         <Root level="DEBUG">
-            <AppenderRef ref="OpenTelemetryAppender"/>
             <AppenderRef ref="ConsoleAppender" level="INFO"/>
             <AppenderRef ref="Routing"/>
         </Root>

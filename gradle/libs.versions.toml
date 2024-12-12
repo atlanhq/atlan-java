@@ -32,8 +32,6 @@ kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
 jetty = "12.0.16"
 netty = "4.1.115.Final"
-otlp = "1.42.1"
-otel-experimental = "2.8.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -77,16 +75,11 @@ kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.r
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otlp" }
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "otlp" }
-otel-auto = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure", version.ref = "otlp" }
-otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-experimental" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
 log4j = [ "log4j-core", "log4j-slf4j2" ]
 poi = [ "apache-poi", "apache-poi-ooxml" ]
-otel = [ "log4j-core", "log4j-slf4j2", "otel-sdk", "otel-exporter", "otel-auto", "otel-appender" ]
 
 [plugins]
 shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
