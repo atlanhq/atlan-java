@@ -66,7 +66,6 @@ public class AttributeDefOptions extends AtlanObject {
             BusinessPolicyException.TYPE_NAME,
             BusinessPolicyIncident.TYPE_NAME,
             BusinessPolicyLog.TYPE_NAME,
-            BusinessProcessModelEntity.TYPE_NAME,
             CalculationView.TYPE_NAME,
             Cognite3DModel.TYPE_NAME,
             CogniteAsset.TYPE_NAME,

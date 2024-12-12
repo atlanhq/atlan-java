@@ -268,6 +268,11 @@
                     .tableQualifiedName(tableQualifiedName)
                     .tablePartition(TablePartition.refByQualifiedName(parentQualifiedName));
                 break;
+            case SnowflakeDynamicTable.TYPE_NAME:
+                builder.tableName(parentName)
+                    .tableQualifiedName(parentQualifiedName)
+                    .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName(parentQualifiedName));
+                break;
         }
         return builder;
     }
