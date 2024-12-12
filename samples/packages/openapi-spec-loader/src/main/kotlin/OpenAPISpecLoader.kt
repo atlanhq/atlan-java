@@ -14,6 +14,7 @@ import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.parser.OpenAPIV3Parser
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.io.path.ExperimentalPathApi
 import kotlin.system.exitProcess
 
 object OpenAPISpecLoader {
@@ -36,7 +37,7 @@ object OpenAPISpecLoader {
             val connectionQN = Utils.createOrReuseConnection(ctx.client, ctx.config.connectionUsage, inputQN, ctx.config.connection)
 
             val specFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.specFile, ctx.config.specKey)
-            if (!specFileProvided && (ctx.config.importType == "URL" && ctx.config.specUrl.isBlank())) {
+            if (!specFileProvided && ((ctx.config.importType == "URL" && ctx.config.specUrl.isBlank()) || (ctx.config.importType == "CLOUD" && ctx.config.specPrefix.isBlank()))) {
                 logger.error { "No input file was provided for the OpenAPI spec." }
                 exitProcess(1)
             }
@@ -47,25 +48,40 @@ object OpenAPISpecLoader {
             }
 
             try {
-                val sourceFile =
+                val sourceFiles =
                     when (ctx.config.importType) {
-                        "DIRECT" -> ctx.config.specFile
+                        "DIRECT" -> listOf(ctx.config.specFile)
                         "CLOUD" ->
-                            Utils.getInputFile(
-                                ctx.config.specFile,
-                                outputDirectory,
-                                false,
-                                ctx.config.specPrefix,
-                                ctx.config.specKey,
-                            )
-                        "URL" -> ctx.config.specUrl
+                            when{
+                                ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
+                                    Utils.getInputFiles(
+                                        ctx.config.specFile,
+                                        outputDirectory,
+                                        false,
+                                        ctx.config.specPrefix,
+                                    )
+                                }
+                                else -> {
+                                    listOf(
+                                        Utils.getInputFile(
+                                            ctx.config.specFile,
+                                            outputDirectory,
+                                            false,
+                                            ctx.config.specPrefix,
+                                            ctx.config.specKey,
+                                        )
+                                    )
+                                }
+                            }
+                        "URL" -> listOf(ctx.config.specUrl)
                         else -> {
                             logger.error { "Unsupported import type: ${ctx.config.importType}" }
                             exitProcess(5)
                         }
                     }
-
-                processFile(ctx, connectionQN, sourceFile, batchSize)
+                for (sourceFile in sourceFiles){
+                    processFile(ctx, connectionQN, sourceFile, batchSize)
+                }
             } catch (e: Exception) {
                 logger.error(e) { "An error occurred during OpenAPI spec processing." }
                 exitProcess(1)
@@ -88,7 +104,7 @@ object OpenAPISpecLoader {
             }
             "zip" -> {
                 logger.info { "Extracting and processing ZIP file: $sourceFile" }
-                val zipExtractPath = "zip_tmp"
+                val zipExtractPath = "tmp"
                 val extractedFiles = Utils.unzipFiles(ctx.config.importType, sourceFile, zipExtractPath)
                 processExtractedFiles(ctx, connectionQN, extractedFiles, batchSize)
             }
