@@ -14,7 +14,6 @@ import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.parser.OpenAPIV3Parser
 import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
-import kotlin.io.path.ExperimentalPathApi
 import kotlin.system.exitProcess
 
 object OpenAPISpecLoader {
@@ -52,7 +51,7 @@ object OpenAPISpecLoader {
                     when (ctx.config.importType) {
                         "DIRECT" -> listOf(ctx.config.specFile)
                         "CLOUD" ->
-                            when{
+                            when {
                                 ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
                                     Utils.getInputFiles(
                                         ctx.config.specFile,
@@ -69,7 +68,7 @@ object OpenAPISpecLoader {
                                             false,
                                             ctx.config.specPrefix,
                                             ctx.config.specKey,
-                                        )
+                                        ),
                                     )
                                 }
                             }
@@ -79,7 +78,7 @@ object OpenAPISpecLoader {
                             exitProcess(5)
                         }
                     }
-                for (sourceFile in sourceFiles){
+                for (sourceFile in sourceFiles) {
                     processFile(ctx, connectionQN, sourceFile, batchSize)
                 }
             } catch (e: Exception) {
