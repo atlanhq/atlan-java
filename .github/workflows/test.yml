@@ -18,14 +18,16 @@ jobs:
           java-version: 17
           distribution: temurin
       - name: Compile
-        run: ./gradlew assemble shadowJar test
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: burrunan/gradle-cache-action@v1
         with:
-          name: build-artifacts
-          path: |
-            integration-tests/build/classes/java/test/com/atlan/java/sdk/*.class
-            samples/packages/**/build/classes/kotlin/test/**/*.class
+          arguments: build
+      # - name: Upload build artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: build-artifacts
+      #     path: |
+      #       integration-tests/build/classes/java/test/com/atlan/java/sdk/*.class
+      #       samples/packages/**/build/classes/kotlin/test/**/*.class
   list-integration-tests:
     runs-on: ubuntu-latest
     outputs:
@@ -52,20 +54,22 @@ jobs:
     name: "Integration"
     steps:
       - uses: actions/checkout@v4
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: build-artifacts
       - uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
       - name: Integration tests
-        run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}"
+        uses: burrunan/gradle-cache-action@v1
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        with:
+          arguments: -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}"
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
@@ -99,10 +103,10 @@ jobs:
       - name: Free disk space
         uses: jlumbroso/free-disk-space@main
       - uses: actions/checkout@v4
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
+      # - name: Download artifacts
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: build-artifacts
       - uses: actions/setup-java@v4
         with:
           java-version: 17
@@ -113,11 +117,11 @@ jobs:
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
-        uses: nick-fields/retry@v3
+        uses: burrunan/gradle-cache-action@v1
         with:
-          max_attempts: 3
-          timeout_minutes: 10
-          command: "./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test"
+          arguments: |
+            -PpackageTests
+            :samples:packages:${{ matrix.tests }}:test
       - if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
