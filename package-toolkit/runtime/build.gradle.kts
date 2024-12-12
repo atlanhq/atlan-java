@@ -24,6 +24,7 @@ dependencies {
     api(libs.adls)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
+    implementation(libs.otel.appender)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
