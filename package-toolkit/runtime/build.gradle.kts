@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
     implementation(libs.otel.appender)
+    implementation(libs.log4j.core)
+    implementation(libs.slf4j)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
