@@ -25,6 +25,8 @@ dependencies {
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
     implementation(libs.otel.appender)
+    implementation(libs.log4j.core)
+    implementation(libs.slf4j)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
@@ -55,6 +57,7 @@ tasks {
         dependencies {
             include(dependency("org.jetbrains.kotlin:.*:.*"))
             include(dependency("io.github.microutils:kotlin-logging-jvm:.*"))
+            include(dependency("org.slf4j:slf4j-api:.*"))
             include(dependency("org.apache.logging.log4j:log4j-api:.*"))
             include(dependency("org.apache.logging.log4j:log4j-core:.*"))
             include(dependency("org.apache.logging.log4j:log4j-slf4j2-impl:.*"))
