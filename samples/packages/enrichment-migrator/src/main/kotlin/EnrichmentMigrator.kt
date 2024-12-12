@@ -12,7 +12,6 @@ import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
-import mu.KotlinLogging
 import java.io.File
 import kotlin.jvm.optionals.getOrElse
 
@@ -21,7 +20,7 @@ import kotlin.jvm.optionals.getOrElse
  * Note: all parameters should be passed through environment variables.
  */
 object EnrichmentMigrator {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(EnrichmentMigrator.javaClass.name)
 
     @JvmStatic
     fun main(args: Array<String>) {

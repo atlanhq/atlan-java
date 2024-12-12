@@ -10,12 +10,12 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
-import mu.KotlinLogging
 
 class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(ctx, "category") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)

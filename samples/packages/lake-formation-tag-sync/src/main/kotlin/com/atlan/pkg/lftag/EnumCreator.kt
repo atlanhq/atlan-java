@@ -4,10 +4,10 @@ package com.atlan.pkg.lftag
 
 import com.atlan.AtlanClient
 import com.atlan.model.typedefs.EnumDef
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 
 class EnumCreator(private val client: AtlanClient, val tagToMetadataMapper: TagToMetadataMapper) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
     private val customMetadataCache = client.customMetadataCache
     private val enumCache = client.enumCache
 

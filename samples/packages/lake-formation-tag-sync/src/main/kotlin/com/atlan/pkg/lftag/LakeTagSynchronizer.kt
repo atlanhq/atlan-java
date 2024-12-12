@@ -12,7 +12,6 @@ import com.atlan.pkg.lftag.model.LFTagData
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import mu.KotlinLogging
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -21,7 +20,7 @@ import kotlin.system.exitProcess
  * Note: all parameters should be passed through environment variables.
  */
 object LakeTagSynchronizer {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(LakeTagSynchronizer.javaClass.name)
 
     const val CONNECTION_MAP_JSON = "connection_map.json"
     const val METADATA_MAP_JSON = "metadata_map.json"

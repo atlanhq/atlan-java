@@ -8,14 +8,14 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnrichmentMigratorPatternTest : PackageTest("p") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val targetDbName1 = "db_test02"
     private val targetDbName2 = "db_test03"

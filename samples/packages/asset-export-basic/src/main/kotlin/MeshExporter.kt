@@ -7,11 +7,11 @@ import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.RowSerializer
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.RowGenerator
-import mu.KotlinLogging
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -29,7 +29,7 @@ class MeshExporter(
     private val batchSize: Int,
     private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     fun export() {
         CSVWriter(filename).use { csv ->

@@ -38,7 +38,6 @@ import com.atlan.pkg.mdir.metrics.UTA
 import com.atlan.pkg.mdir.metrics.UTQ
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
 import java.io.File
 import java.text.NumberFormat
@@ -48,7 +47,7 @@ import java.util.Locale
  * Produce the metadata impact report
  */
 object Reporter {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(Reporter.javaClass.name)
 
     const val CAT_HEADLINES = "Headline numbers"
     const val CAT_SAVINGS = "Cost savings"

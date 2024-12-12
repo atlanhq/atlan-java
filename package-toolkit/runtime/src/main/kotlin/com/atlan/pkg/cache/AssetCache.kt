@@ -6,7 +6,7 @@ import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.stream.Stream
@@ -24,7 +24,7 @@ abstract class AssetCache<T : Asset>(
         ctx.client,
         cacheName,
     ) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private var preloaded = AtomicBoolean(false)
     private val ignore: MutableMap<String, String?> = ConcurrentHashMap()

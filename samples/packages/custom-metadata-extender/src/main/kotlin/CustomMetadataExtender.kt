@@ -8,11 +8,10 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.AttributeDefOptions
 import com.atlan.pkg.Utils
-import mu.KotlinLogging
 import kotlin.system.exitProcess
 
 object CustomMetadataExtender {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(CustomMetadataExtender.javaClass.name)
 
     /**
      * Actually run the logic to extend the custom metadata to additional connections and / or glossaries.

@@ -22,7 +22,7 @@
     </Appenders>
     <Loggers>
         <Root level="DEBUG">
-            <AppenderRef name="OpenTelemetryAppender"/>
+            <AppenderRef ref="OpenTelemetryAppender"/>
             <AppenderRef ref="ConsoleAppender" level="INFO"/>
             <AppenderRef ref="Routing"/>
         </Root>

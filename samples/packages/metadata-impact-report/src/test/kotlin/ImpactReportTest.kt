@@ -6,9 +6,9 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.mdir.Reporter
 import com.atlan.pkg.serde.xls.ExcelReader
-import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.io.File
@@ -20,7 +20,7 @@ import kotlin.test.assertNotNull
  * Test detection of duplicate assets.
  */
 class ImpactReportTest : PackageTest("ir") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossaryName = makeUnique("g1")
     private val files =

@@ -9,8 +9,8 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -19,7 +19,7 @@ import kotlin.test.assertTrue
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorArchivedTest : PackageTest("a") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
     private val connectorType = AtlanConnectorType.AWS_SITE_WISE
