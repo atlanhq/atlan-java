@@ -32,6 +32,7 @@ kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
 jetty = "12.0.16"
 netty = "4.1.115.Final"
+otel = "1.44.1"
 otel-appender = "2.10.0-alpha"
 
 [libraries]
@@ -77,10 +78,14 @@ rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
 otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-appender" }
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otel" }
+otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "otel" }
+otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure", version.ref = "otel" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
 log4j = [ "log4j-core", "log4j-slf4j2" ]
+otel = [ "otel-sdk", "otel-exporter", "otel-autoconfig", "otel-appender" ]
 poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
