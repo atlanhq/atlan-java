@@ -189,13 +189,6 @@ jobs:
         with:
           name: package-toolkit-runtime
           path: ./containers/base/assembly
-      - name: Inject OpenTelemetry agent
-        uses: robinraju/release-downloader@v1
-        with:
-          repository: open-telemetry/opentelemetry-java-instrumentation
-          tag: 'v2.10.0'
-          fileName: 'opentelemetry-javaagent.jar'
-          out-file-path: ./containers/base/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
         uses: docker/build-push-action@v6

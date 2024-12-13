@@ -22,6 +22,14 @@ import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.opentelemetry.api.common.Attributes
+import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
+import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender
+import io.opentelemetry.sdk.OpenTelemetrySdk
+import io.opentelemetry.sdk.autoconfigure.ResourceConfiguration
+import io.opentelemetry.sdk.logs.SdkLoggerProvider
+import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor
+import io.opentelemetry.sdk.resources.Resource
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -77,6 +85,56 @@ object Utils {
         val pw = PrintWriter(sw)
         throwable.printStackTrace(pw)
         return sw.toString()
+    }
+
+    init {
+        val openTelemetryEndpoint = System.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+        val openTelemetryResourceAttributes = System.getenv("OTEL_RESOURCE_ATTRIBUTES")
+        if (!openTelemetryEndpoint.isNullOrBlank() && !openTelemetryResourceAttributes.isNullOrBlank()) {
+            setupOpenTelemetry(openTelemetryEndpoint)
+        }
+    }
+
+    private fun appendCustomEnvResource(
+        resource: Resource,
+        envNames: Map<String, String>,
+    ): Resource {
+        var outputResource = Resource.empty().merge(resource)
+        envNames.forEach { entry ->
+            val envValue = System.getenv(entry.value) ?: ""
+            if (envValue != "") {
+                val tempResource =
+                    Resource.create(
+                        Attributes.builder().put(
+                            entry.key,
+                            envValue,
+                        ).build(),
+                    )
+                outputResource = outputResource.merge(tempResource)
+            }
+        }
+        return outputResource
+    }
+
+    private fun setupOpenTelemetry(endpoint: String) {
+        val defaultResource: Resource = ResourceConfiguration.createEnvironmentResource()
+        val customResourceEnvNames =
+            mapOf(
+                "k8s.workflow.node.name" to "OTEL_WF_NODE_NAME",
+            )
+        val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
+        val logExporter: OtlpGrpcLogRecordExporter =
+            OtlpGrpcLogRecordExporter.builder()
+                .setEndpoint(endpoint)
+                .build()
+        val logEmitterProvider: SdkLoggerProvider =
+            SdkLoggerProvider.builder().setResource(resource)
+                .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
+                .build()
+        val openTelemetry =
+            OpenTelemetrySdk.builder().setLoggerProvider(logEmitterProvider).buildAndRegisterGlobal()
+        Runtime.getRuntime().addShutdownHook(Thread { openTelemetry.close() })
+        OpenTelemetryAppender.install(openTelemetry)
     }
 
     val logger = getLogger(Utils.javaClass.name)
