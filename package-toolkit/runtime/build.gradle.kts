@@ -353,7 +353,10 @@ open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.
         return temporaryFiles.isNotEmpty()
     }
 
-    override fun modifyOutputStream(os: ZipOutputStream, preserveFileTimestamps: Boolean) {
+    override fun modifyOutputStream(
+        os: ZipOutputStream,
+        preserveFileTimestamps: Boolean,
+    ) {
         val pluginCache = PluginCache()
         pluginCache.loadCacheFiles(urlEnumeration)
         val entry = ZipEntry(PluginProcessor.PLUGIN_CACHE_FILE)
