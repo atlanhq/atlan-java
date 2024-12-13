@@ -84,6 +84,6 @@ log4j = [ "log4j-core", "log4j-slf4j2" ]
 poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
-shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+shadow = { id = "com.gradleup.shadow", version = "9.0.0-beta4" }
 git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
 pkl = { id = "org.pkl-lang", version = "0.27.1" }
