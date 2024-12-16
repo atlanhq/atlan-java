@@ -46,44 +46,39 @@ object OpenAPISpecLoader {
                 exitProcess(4)
             }
 
-            try {
-                val sourceFiles =
-                    when (ctx.config.importType) {
-                        "DIRECT" -> listOf(ctx.config.specFile)
-                        "CLOUD" ->
-                            when {
-                                ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
-                                    Utils.getInputFiles(
+            val sourceFiles =
+                when (ctx.config.importType) {
+                    "DIRECT" -> listOf(ctx.config.specFile)
+                    "CLOUD" ->
+                        when {
+                            ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
+                                Utils.getInputFiles(
+                                    ctx.config.specFile,
+                                    outputDirectory,
+                                    false,
+                                    ctx.config.specPrefix,
+                                )
+                            }
+                            else -> {
+                                listOf(
+                                    Utils.getInputFile(
                                         ctx.config.specFile,
                                         outputDirectory,
                                         false,
                                         ctx.config.specPrefix,
-                                    )
-                                }
-                                else -> {
-                                    listOf(
-                                        Utils.getInputFile(
-                                            ctx.config.specFile,
-                                            outputDirectory,
-                                            false,
-                                            ctx.config.specPrefix,
-                                            ctx.config.specKey,
-                                        ),
-                                    )
-                                }
+                                        ctx.config.specKey,
+                                    ),
+                                )
                             }
-                        "URL" -> listOf(ctx.config.specUrl)
-                        else -> {
-                            logger.error { "Unsupported import type: ${ctx.config.importType}" }
-                            exitProcess(5)
                         }
+                    "URL" -> listOf(ctx.config.specUrl)
+                    else -> {
+                        logger.error { "Unsupported import type: ${ctx.config.importType}" }
+                        exitProcess(5)
                     }
-                for (sourceFile in sourceFiles) {
-                    processFile(ctx, connectionQN, sourceFile, batchSize)
                 }
-            } catch (e: Exception) {
-                logger.error(e) { "An error occurred during OpenAPI spec processing." }
-                exitProcess(1)
+            for (sourceFile in sourceFiles) {
+                processFile(ctx, connectionQN, sourceFile, batchSize)
             }
         }
     }
