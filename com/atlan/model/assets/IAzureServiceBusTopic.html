@@ -97,9 +97,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">AzureServiceBusNamespace asset containing this AzureServiceBusTopic.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#TYPE_NAME" class="member-name-link">TYPE_NAME</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#AZURE_SERVICE_BUS_SCHEMAS" class="member-name-link">AZURE_SERVICE_BUS_SCHEMAS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">AzureServiceBusSchema assets contained within this AzureServiceBusTopic.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#TYPE_NAME" class="member-name-link">TYPE_NAME</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -568,6 +573,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAzureServiceBusNamespaceQualifiedName()" class="member-name-link">getAzureServiceBusNamespaceQualifiedName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Unique name of the AzureServiceBus Namespace in which this asset exists.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAzureServiceBusSchemaQualifiedName()" class="member-name-link">getAzureServiceBusSchemaQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Unique name of the AzureServiceBus Schema in which this asset exists.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAzureServiceBusSchema.html" title="interface in com.atlan.model.assets">IAzureServiceBusSchema</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAzureServiceBusSchemas()" class="member-name-link">getAzureServiceBusSchemas</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">AzureServiceBusSchema assets contained within this AzureServiceBusTopic.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/CertificateStatus.html" title="enum class in com.atlan.model.enums">CertificateStatus</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCertificateStatus()" class="member-name-link">getCertificateStatus</a>()</code></div>
@@ -1072,6 +1087,13 @@ loadScripts(document, 'script');</script>
 <h3>AZURE_SERVICE_BUS_NAMESPACE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">AZURE_SERVICE_BUS_NAMESPACE</span></div>
 <div class="block">AzureServiceBusNamespace asset containing this AzureServiceBusTopic.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="AZURE_SERVICE_BUS_SCHEMAS">
+<h3>AZURE_SERVICE_BUS_SCHEMAS</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">AZURE_SERVICE_BUS_SCHEMAS</span></div>
+<div class="block">AzureServiceBusSchema assets contained within this AzureServiceBusTopic.</div>
 </section>
 </li>
 </ul>
@@ -1717,6 +1739,20 @@ loadScripts(document, 'script');</script>
 <h3>getAzureServiceBusNamespaceQualifiedName</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAzureServiceBusNamespaceQualifiedName</span>()</div>
 <div class="block">Unique name of the AzureServiceBus Namespace in which this asset exists.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAzureServiceBusSchemaQualifiedName()">
+<h3>getAzureServiceBusSchemaQualifiedName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAzureServiceBusSchemaQualifiedName</span>()</div>
+<div class="block">Unique name of the AzureServiceBus Schema in which this asset exists.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAzureServiceBusSchemas()">
+<h3>getAzureServiceBusSchemas</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAzureServiceBusSchema.html" title="interface in com.atlan.model.assets">IAzureServiceBusSchema</a>&gt;</span>&nbsp;<span class="element-name">getAzureServiceBusSchemas</span>()</div>
+<div class="block">AzureServiceBusSchema assets contained within this AzureServiceBusTopic.</div>
 </section>
 </li>
 <li>
