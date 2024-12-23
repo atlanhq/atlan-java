@@ -7,11 +7,10 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.core.AssetMutationResponse
 import com.atlan.pkg.Utils
-import mu.KotlinLogging
 import kotlin.system.exitProcess
 
 object ApiTokenConnectionAdmin {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(ApiTokenConnectionAdmin.javaClass.name)
 
     /**
      * Actually run the logic to add the API token as a connection admin.

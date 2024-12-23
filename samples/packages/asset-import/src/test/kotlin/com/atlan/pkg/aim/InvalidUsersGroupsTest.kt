@@ -5,7 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -16,7 +16,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary that has invalid users and groups defined.
  */
 class InvalidUsersGroupsTest : PackageTest("iug") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossary1 = makeUnique("g1")
     private val glossary2 = makeUnique("g2")
@@ -82,8 +82,8 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
 
     @Test
     fun warningsInLog() {
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer trace_id:  span_id:  trace_flags:  - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
+        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer trace_id:  span_id:  trace_flags:  - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
     }
 
     @Test

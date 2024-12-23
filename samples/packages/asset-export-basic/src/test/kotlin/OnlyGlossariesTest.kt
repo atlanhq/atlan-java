@@ -1,14 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import kotlin.test.Test
 
 /**
  * Test export of only glossaries, no assets.
  */
 class OnlyGlossariesTest : PackageTest("og") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
         listOf(

@@ -7,7 +7,7 @@ import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.Assert.assertTrue
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -17,7 +17,7 @@ import kotlin.test.assertNotNull
  * Test detection of duplicate assets.
  */
 class DuplicateDetectorTest : PackageTest("dd") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val testId = makeUnique("dd")
     private val files =

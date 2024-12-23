@@ -2,8 +2,8 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.lftag.model
 
+import com.atlan.pkg.Utils
 import com.fasterxml.jackson.annotation.JsonProperty
-import mu.KotlinLogging
 
 class LFTableInfo(
     @JsonProperty("Table") var table: LFTable,
@@ -11,7 +11,7 @@ class LFTableInfo(
     @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair>?,
     @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag>?,
 ) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     fun getTagValuesByTagKey(tagValuesByTagKey: MutableMap<String, MutableSet<String>>): Map<String, Set<String>> {
         lfTagOnDatabase.forEach { lfTagPair ->

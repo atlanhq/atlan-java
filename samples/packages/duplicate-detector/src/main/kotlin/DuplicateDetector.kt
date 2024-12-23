@@ -15,12 +15,11 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import com.atlan.util.ParallelBatch
-import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 
 object DuplicateDetector {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     data class AssetKey(val typeName: String, val qualifiedName: String, val guid: String)
 

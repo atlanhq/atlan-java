@@ -64,8 +64,6 @@ gitPublish {
     repoUri.set("https://github.com/atlanhq/atlan-java.git")
     branch.set("gh-pages")
     sign.set(false) // disable commit signing
-    username = System.getenv("GRGIT_USER")
-    password = System.getenv("GRGIT_PASS")
 
     contents {
         from(tasks.javadoc) {

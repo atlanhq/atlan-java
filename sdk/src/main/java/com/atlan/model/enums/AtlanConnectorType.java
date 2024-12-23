@@ -133,6 +133,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     SAP_GIGYA("sap-gigya", AtlanConnectionCategory.SAAS),
     SAP_HYBRIS("sap-hybris", AtlanConnectionCategory.SAAS),
     IBM_DB2("ibmdb2", AtlanConnectionCategory.DATABASE),
+    BIGID("bigid", AtlanConnectionCategory.SAAS),
     ;
 
     @JsonValue

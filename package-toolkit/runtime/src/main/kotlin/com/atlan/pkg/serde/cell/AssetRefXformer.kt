@@ -16,7 +16,6 @@ import com.atlan.pkg.Utils
 import com.atlan.serde.Serde
 import com.atlan.util.ParallelBatch
 import mu.KLogger
-import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -24,7 +23,6 @@ import java.util.concurrent.atomic.AtomicLong
  */
 object AssetRefXformer {
     const val TYPE_QN_DELIMITER = "@"
-    private val logger = KotlinLogging.logger {}
 
     /**
      * Encodes (serializes) an asset reference into a string form.

@@ -14,14 +14,13 @@ import com.atlan.pkg.ae.exports.Policies
 import com.atlan.pkg.ae.exports.Purposes
 import com.atlan.pkg.ae.exports.Users
 import com.atlan.pkg.serde.xls.ExcelWriter
-import mu.KotlinLogging
 import java.io.File
 
 /**
  * Actually run the export of admin objects.
  */
 object AdminExporter {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
     private const val FILENAME = "admin-export.xlsx"
 
     @JvmStatic

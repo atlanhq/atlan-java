@@ -7,7 +7,7 @@ import com.atlan.model.assets.Link
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Note that this entire cache relies on first being preloaded -- otherwise nothing will every be found in it.
  */
 class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val byAssetGuid: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
 

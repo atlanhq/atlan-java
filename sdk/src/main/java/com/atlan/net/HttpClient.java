@@ -13,6 +13,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.extern.slf4j.Slf4j;
 
@@ -264,13 +265,23 @@ public abstract class HttpClient {
                     log.debug(" ... no permission for the operation (yet), will retry: {}", response.body());
                 }
             } else if (response.code() == 429) {
-                // Retry on a rate-limited request (since we will exponentially back-off anyway)
-                // TODO: is there anything in the response we should pick up to tell us how long to wait before
-                // retrying?
+                // Retry on a rate-limited request (including waiting the suggested wait time, if available in response
+                // header)
                 if (exception != null) {
                     log.debug(" ... rate-limited, will retry with a delay: {}", response.body(), exception);
                 } else {
                     log.debug(" ... rate-limited, will retry with a delay: {}", response.body());
+                }
+                Optional<String> retryAfter = response.headers.firstValue("retry-after");
+                if (retryAfter.isPresent()) {
+                    try {
+                        long waitTime = Long.parseLong(retryAfter.get());
+                        Thread.sleep(waitTime * 1000);
+                    } catch (NumberFormatException e) {
+                        log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
+                    } catch (InterruptedException e) {
+                        log.warn(" ... wait on retry-after was interrupted: {}", retryAfter.get(), e);
+                    }
                 }
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.

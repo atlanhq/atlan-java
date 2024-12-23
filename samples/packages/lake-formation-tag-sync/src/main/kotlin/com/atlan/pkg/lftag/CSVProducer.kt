@@ -6,15 +6,15 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
+import com.atlan.pkg.Utils
 import com.atlan.pkg.lftag.model.LFTagData
 import com.atlan.pkg.serde.csv.CSVWriter
-import mu.KotlinLogging
 
 class CSVProducer(
     private val connectionMap: Map<String, String>,
     metadataMap: Map<String, String>,
 ) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
     private val missingConnectionKeys = mutableSetOf<String>()
     private val tagToMetadataMapper = TagToMetadataMapper(metadataMap)
     private val headerNames =

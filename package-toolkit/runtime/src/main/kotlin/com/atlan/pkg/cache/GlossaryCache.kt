@@ -7,10 +7,10 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 
 class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glossary") {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
 
