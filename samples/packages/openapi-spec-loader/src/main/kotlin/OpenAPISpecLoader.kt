@@ -77,7 +77,7 @@ object OpenAPISpecLoader {
                     }
                 }
             for (sourceFile in sourceFiles) {
-                processFile(ctx, connectionQN, sourceFile, batchSize)
+                processFile(ctx, connectionQN, sourceFile, batchSize, outputDirectory)
             }
         }
     }
@@ -87,9 +87,9 @@ object OpenAPISpecLoader {
         connectionQN: String,
         sourceFile: String,
         batchSize: Int,
+        outputDirectory: String,
     ) {
-        val fileType = Utils.getFileType(ctx.config.importType, sourceFile)
-
+        val fileType = Paths.get(sourceFile).toFile().extension.lowercase()
         when (fileType) {
             "json" -> {
                 logger.info { "Loading OpenAPI specification from $sourceFile into: $connectionQN" }
@@ -97,8 +97,7 @@ object OpenAPISpecLoader {
             }
             "zip" -> {
                 logger.info { "Extracting and processing ZIP file: $sourceFile" }
-                val zipExtractPath = "tmp"
-                val extractedFiles = Utils.unzipFiles(ctx.config.importType, sourceFile, zipExtractPath)
+                val extractedFiles = Utils.unzipFiles(sourceFile, outputDirectory)
                 processExtractedFiles(ctx, connectionQN, extractedFiles, batchSize)
             }
             else -> {
