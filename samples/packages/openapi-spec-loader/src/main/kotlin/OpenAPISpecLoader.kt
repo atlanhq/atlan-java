@@ -10,8 +10,8 @@ import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.Operation
-import io.swagger.v3.oas.models.Paths
 import io.swagger.v3.parser.OpenAPIV3Parser
+import java.nio.file.Paths
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.system.exitProcess
 
@@ -47,7 +47,7 @@ object OpenAPISpecLoader {
 
             val sourceFiles =
                 when (ctx.config.importType) {
-                    "DIRECT" -> listOf(ctx.config.specFile)
+                    "DIRECT" -> listOf(Paths.get(outputDirectory, ctx.config.specFile).toString())
                     "CLOUD" ->
                         when {
                             ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
@@ -234,7 +234,7 @@ object OpenAPISpecLoader {
 
         val sourceURL: String
         val openAPIVersion: String
-        val paths: Paths?
+        val paths: io.swagger.v3.oas.models.Paths?
         val title: String
         val description: String
         val termsOfServiceURL: String

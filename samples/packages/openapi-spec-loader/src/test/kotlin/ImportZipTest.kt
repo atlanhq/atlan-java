@@ -16,10 +16,10 @@ import kotlin.test.assertNotNull
 /**
  * Test import of the canonical PetStore example from Swagger.
  */
-class ImportZipTest : PackageTest("f") {
+class ImportZipTest : PackageTest("z") {
     override val logger = KotlinLogging.logger {}
 
-    private val connectorType = AtlanConnectorType.OPENLINEAGE
+    private val connectorType = AtlanConnectorType.DATAFLOW
     private val testId = makeUnique("c1")
     private val testFile = "openapi.zip"
     private val files =
