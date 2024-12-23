@@ -18,7 +18,6 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -437,16 +436,16 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Table to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full Table, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
      */
     @JsonIgnore
-    public static Table get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+    public static Table get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof Table) {
@@ -455,7 +454,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof Table) {
                 return (Table) asset;
             } else {
@@ -489,17 +488,22 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
      */
     @JsonIgnore
-    public static Table get(AtlanClient client, String id, Collection<AtlanField> attributes, Collection<AtlanField> attributesOnRelated) throws AtlanException {
+    public static Table get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
             Optional<Asset> asset = Table.select(client)
-                .where(Table.GUID.eq(id))
-                .includesOnResults(attributes)
-                .includesOnRelations(attributesOnRelated)
-                .pageSize(1)
-                .stream()
-                .findFirst();
+                    .where(Table.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset.get() instanceof Table) {
@@ -509,12 +513,12 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
             }
         } else {
             Optional<Asset> asset = Table.select(client)
-                .where(Table.QUALIFIED_NAME.eq(id))
-                .includesOnResults(attributes)
-                .includesOnRelations(attributesOnRelated)
-                .pageSize(1)
-                .stream()
-                .findFirst();
+                    .where(Table.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             } else if (asset.get() instanceof Table) {

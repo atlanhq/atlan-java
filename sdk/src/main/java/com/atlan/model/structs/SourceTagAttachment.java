@@ -62,6 +62,9 @@ public class SourceTagAttachment extends AtlanStruct {
     /** Error message if the tag attachment sync at the source failed. */
     String sourceTagSyncError;
 
+    /** Specifies the source tag type. */
+    String sourceTagType;
+
     /**
      * Create a source-synced tag attachment with a particular value, when the attachment is
      * synced to the source.

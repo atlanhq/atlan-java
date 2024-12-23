@@ -128,8 +128,14 @@ public interface ICatalog {
             case AzureServiceBusNamespace.TYPE_NAME:
                 ref = AzureServiceBusNamespace.refByQualifiedName(qualifiedName);
                 break;
+            case AzureServiceBusSchema.TYPE_NAME:
+                ref = AzureServiceBusSchema.refByQualifiedName(qualifiedName);
+                break;
             case AzureServiceBusTopic.TYPE_NAME:
                 ref = AzureServiceBusTopic.refByQualifiedName(qualifiedName);
+                break;
+            case BigqueryTag.TYPE_NAME:
+                ref = BigqueryTag.refByQualifiedName(qualifiedName);
                 break;
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);

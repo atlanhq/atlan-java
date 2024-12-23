@@ -40,6 +40,10 @@ public interface IAzureServiceBus {
     KeywordField AZURE_SERVICE_BUS_NAMESPACE_QUALIFIED_NAME =
             new KeywordField("azureServiceBusNamespaceQualifiedName", "azureServiceBusNamespaceQualifiedName");
 
+    /** Unique name of the AzureServiceBus Schema in which this asset exists. */
+    KeywordField AZURE_SERVICE_BUS_SCHEMA_QUALIFIED_NAME =
+            new KeywordField("azureServiceBusSchemaQualifiedName", "azureServiceBusSchemaQualifiedName");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -309,6 +313,9 @@ public interface IAzureServiceBus {
 
     /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
     String getAzureServiceBusNamespaceQualifiedName();
+
+    /** Unique name of the AzureServiceBus Schema in which this asset exists. */
+    String getAzureServiceBusSchemaQualifiedName();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

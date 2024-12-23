@@ -9,14 +9,18 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -246,16 +250,17 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the TableauFlow to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full TableauFlow, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
      */
     @JsonIgnore
-    public static TableauFlow get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+    public static TableauFlow get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof TableauFlow) {
@@ -264,11 +269,78 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof TableauFlow) {
                 return (TableauFlow) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a TableauFlow by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TableauFlow to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the TableauFlow, including any relationships
+     * @return the requested TableauFlow, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     */
+    @JsonIgnore
+    public static TableauFlow get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a TableauFlow by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TableauFlow to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the TableauFlow, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the TableauFlow
+     * @return the requested TableauFlow, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
+     */
+    @JsonIgnore
+    public static TableauFlow get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = TableauFlow.select(client)
+                    .where(TableauFlow.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof TableauFlow) {
+                return (TableauFlow) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = TableauFlow.select(client)
+                    .where(TableauFlow.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof TableauFlow) {
+                return (TableauFlow) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }
