@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._1556352cbeb84f78cb898b2e746d5156.versionCatalogs
+
 /* SPDX-License-Identifier: Apache-2.0 */
 plugins {
     kotlin("jvm")
@@ -41,6 +43,8 @@ configurations.all {
             versionCatalogs.named("libs").findLibrary("guava").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-compress").orElseThrow(::AssertionError),
             versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("otel-sdk").orElseThrow(::AssertionError),
+            versionCatalogs.named("libs").findLibrary("otel-exporter").orElseThrow(::AssertionError),
         )
     }
 }

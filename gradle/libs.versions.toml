@@ -1,21 +1,20 @@
 [versions]
 jackson = "2.18.2"
 slf4j = "2.0.16"
-elasticsearch = "8.16.1"
-freemarker = "2.3.33"
+elasticsearch = "8.17.0"
+freemarker = "2.3.34"
 classgraph = "4.8.179"
 testng = "7.10.2"
-log4j = "2.24.2"
-log4j-plugins = "3.0.0-beta3"
+log4j = "2.24.3"
 wiremock = "3.10.0"
 jnanoid = "2.0.0"
-awssdk = "2.29.32"
-gcs = "26.51.0"
+awssdk = "2.29.39"
+gcs = "26.52.0"
 system-stubs = "2.1.7"
 fastcsv = "3.4.0"
 poi = "5.3.0"
 parsson = "1.1.7"
-simplejavamail = "8.12.3"
+simplejavamail = "8.12.4"
 swagger = "2.1.24"
 jsonpath = "2.9.0"
 commons-compress = "1.27.1"
@@ -26,16 +25,15 @@ angus-mail = "2.0.3"
 pkl = "0.27.1"
 adls = "12.22.0"
 azure = "1.14.2"
-guava = "33.3.1-jre"
-openlineage = "1.25.0"
+guava = "33.4.0-jre"
+openlineage = "1.26.0"
 kotlin = "2.1.0"
 kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
 jetty = "12.0.16"
-netty = "4.1.115.Final"
-otlp = "1.45.0"
-otel = "2.10.0"
-otel-experimental = "2.10.0-alpha"
+netty = "4.1.116.Final"
+otel = "1.42.1"
+otel-appender = "2.8.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -47,7 +45,6 @@ freemarker = { module = "org.freemarker:freemarker", version.ref = "freemarker" 
 classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
 testng = { module = "org.testng:testng", version.ref = "testng" }
 log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
-log4j-plugins = { module = "org.apache.logging.log4j:log4j-plugin-processor", version.ref = "log4j-plugins" }
 log4j-slf4j2 = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
 wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 jnanoid = { module = "com.aventrix.jnanoid:jnanoid", version.ref = "jnanoid" }
@@ -80,20 +77,18 @@ kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.r
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
-otlp-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otlp" }
-otel-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "otel" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" }
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
-otel-auto = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" }
-otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-experimental" }
+otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-appender" }
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otel" }
+otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "otel" }
+otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure", version.ref = "otel" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
 log4j = [ "log4j-core", "log4j-slf4j2" ]
+otel = [ "otel-sdk", "otel-exporter", "otel-autoconfig", "otel-appender" ]
 poi = [ "apache-poi", "apache-poi-ooxml" ]
-otel = [ "log4j-core", "log4j-slf4j2", "otel-sdk", "otel-exporter", "otel-auto", "otel-appender" ]
 
 [plugins]
-shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
+shadow = { id = "com.gradleup.shadow", version = "9.0.0-beta4" }
 git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
 pkl = { id = "org.pkl-lang", version = "0.27.1" }
