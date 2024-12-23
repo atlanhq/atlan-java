@@ -90,39 +90,9 @@ object Utils {
     init {
         val openTelemetryEndpoint = System.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
         val openTelemetryResourceAttributes = System.getenv("OTEL_RESOURCE_ATTRIBUTES")
-
         if (!openTelemetryEndpoint.isNullOrBlank() && !openTelemetryResourceAttributes.isNullOrBlank()) {
             setupOpenTelemetry(openTelemetryEndpoint)
         }
-    }
-
-    val logger = getLogger(Utils.javaClass.name)
-    val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
-
-    private fun setupOpenTelemetry(endpoint: String) {
-        val defaultResource: Resource = ResourceConfiguration.createEnvironmentResource()
-        val customResourceEnvNames =
-            mapOf(
-                "k8s.workflow.node.name" to "OTEL_WF_NODE_NAME",
-            )
-        val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
-
-        val logExporter =
-            OtlpGrpcLogRecordExporter.builder()
-                .setEndpoint(endpoint)
-                .build()
-
-        val logEmitterProvider =
-            SdkLoggerProvider.builder().setResource(resource)
-                .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
-                .build()
-
-        val openTelemetry =
-            OpenTelemetrySdk.builder().setLoggerProvider(logEmitterProvider).buildAndRegisterGlobal()
-
-        Runtime.getRuntime().addShutdownHook(Thread { openTelemetry.close() })
-
-        OpenTelemetryAppender.install(openTelemetry)
     }
 
     private fun appendCustomEnvResource(
@@ -146,6 +116,30 @@ object Utils {
         return outputResource
     }
 
+    private fun setupOpenTelemetry(endpoint: String) {
+        val defaultResource: Resource = ResourceConfiguration.createEnvironmentResource()
+        val customResourceEnvNames =
+            mapOf(
+                "k8s.workflow.node.name" to "OTEL_WF_NODE_NAME",
+            )
+        val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
+        val logExporter: OtlpGrpcLogRecordExporter =
+            OtlpGrpcLogRecordExporter.builder()
+                .setEndpoint(endpoint)
+                .build()
+        val logEmitterProvider: SdkLoggerProvider =
+            SdkLoggerProvider.builder().setResource(resource)
+                .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
+                .build()
+        val openTelemetry =
+            OpenTelemetrySdk.builder().setLoggerProvider(logEmitterProvider).buildAndRegisterGlobal()
+        Runtime.getRuntime().addShutdownHook(Thread { openTelemetry.close() })
+        OpenTelemetryAppender.install(openTelemetry)
+    }
+
+    val logger = getLogger(Utils.javaClass.name)
+    val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
+
     /**
      * Set up a logger.
      *
@@ -156,33 +150,6 @@ object Utils {
         System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         return KotlinLogging.logger(name)
     }
-
-    /* fun getLogger(name: String): KLogger {
-        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
-        val otelEndpoint = getEnvVar("OTEL_EXPORTER_OTLP_ENDPOINT")
-        var otelInitializedHere = false
-        if (otelEndpoint.isNotBlank() && !otelInitialized.get()) {
-            // Configure OpenTelemetry, but only if there is an endpoint defined
-            val otel: OpenTelemetrySdk =
-                OpenTelemetrySdk.builder()
-                    .setTracerProvider(SdkTracerProvider.builder().setSampler(Sampler.alwaysOn()).build())
-                    .setLoggerProvider(
-                        SdkLoggerProvider.builder()
-                            .setResource(Resource.getDefault().toBuilder().put("k8s.workflow.node.name", getEnvVar("OTEL_WF_NODE_NAME")).build())
-                            .addLogRecordProcessor(BatchLogRecordProcessor.builder(OtlpGrpcLogRecordExporter.builder().setEndpoint(otelEndpoint).build()).build())
-                            .build(),
-                    ).build()
-            Runtime.getRuntime().addShutdownHook(Thread(otel::close))
-            OpenTelemetryAppender.install(otel)
-            otelInitialized.set(true)
-            otelInitializedHere = true
-        }
-        val log = KotlinLogging.logger(name)
-        if (otelInitializedHere) {
-            log.info { "OpenTelemetry initialized." }
-        }
-        return log
-    } */
 
     /**
      * Set up the event-processing options, and start up the event processor.
