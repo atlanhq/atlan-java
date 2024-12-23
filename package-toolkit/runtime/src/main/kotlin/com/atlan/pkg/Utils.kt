@@ -39,12 +39,16 @@ import org.simplejavamail.mailer.MailerBuilder
 import java.io.Closeable
 import java.io.File
 import java.io.File.separator
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
 import kotlin.io.path.isDirectory
@@ -858,6 +862,91 @@ object Utils {
         val directUpload = importType == "DIRECT"
         return (directUpload && directFile.isNotBlank() && !directFile.endsWith(DEFAULT_FILE)) ||
             (!directUpload && objectStoreKey.isNotBlank())
+    }
+
+    /**
+     * Get the file type of the provided file.
+     *
+     * @param importType details of the type of import expected (direct vs object store-based vs url)
+     * @param filePath details of the directly-provided file
+     * @return the type of the file
+     */
+    fun getFileType(
+        importType: String,
+        filePath: String,
+    ): String {
+        if (importType == "DIRECT" || importType == "URL") {
+            return filePath.substringAfterLast(".")
+        }
+        return ""
+    }
+
+    /**
+     * Unzip the provided zip file into the specified directory.
+     *
+     * @param importType details of the type of import expected (direct vs object store-based)
+     * @param zipFilePath path to the zip file to unzip
+     * @param destDirPath path to the directory where the files should be unzipped
+     * @return list of absolute paths of the unzipped files
+     */
+    fun unzipFiles(
+        importType: String,
+        zipFilePath: String,
+        destDirPath: String,
+    ): List<String> {
+        val destDir = File(destDirPath)
+        if (!destDir.exists()) {
+            destDir.mkdirs()
+        }
+
+        ZipInputStream(FileInputStream(zipFilePath)).use { zipInputStream ->
+            var entry: ZipEntry? = zipInputStream.nextEntry
+            while (entry != null) {
+                val newFile = File(destDir, entry.name)
+                if (entry.isDirectory) {
+                    newFile.mkdirs()
+                } else {
+                    newFile.parentFile?.mkdirs()
+                    FileOutputStream(newFile).use { outputStream ->
+                        zipInputStream.copyTo(outputStream)
+                    }
+                }
+                zipInputStream.closeEntry()
+                entry = zipInputStream.nextEntry
+            }
+        }
+
+        return destDir.listFiles()?.map { it.absolutePath } ?: emptyList()
+    }
+
+    /**
+     * Get the list of files in the provided directory.
+     *
+     * @param importType details of the type of import expected (direct vs object store-based)
+     * @param directory path to the directory to list files from
+     * @return list of absolute paths of files in the directory
+     */
+    fun getFilesInDirectory(
+        importType: String,
+        directory: String,
+    ): List<String> {
+        if (importType == "DIRECT") {
+            val path = Paths.get(directory)
+            val files = mutableListOf<String>()
+            if (path.isDirectory()) {
+                path.walk().forEach {
+                    if (it.isRegularFile()) {
+                        files.add(it.pathString)
+                    }
+                }
+            } else {
+                files.add(directory)
+            }
+            return files
+        } else {
+            // return empty list for object store-based imports
+            return listOf()
+        }
     }
 
     /**
