@@ -131,9 +131,6 @@ public interface ICatalog {
             case AzureServiceBusTopic.TYPE_NAME:
                 ref = AzureServiceBusTopic.refByQualifiedName(qualifiedName);
                 break;
-            case BusinessProcessModelEntity.TYPE_NAME:
-                ref = BusinessProcessModelEntity.refByQualifiedName(qualifiedName);
-                break;
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
                 break;
