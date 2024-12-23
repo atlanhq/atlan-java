@@ -28,7 +28,6 @@ class ImportZipTest : PackageTest("f") {
         )
 
     private fun prepFile() {
-        // Prepare a copy of the .zip file with unique names for domains and products
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         input.copyTo(Paths.get(testDirectory, testFile).toFile(), true)
     }
@@ -120,28 +119,5 @@ class ImportZipTest : PackageTest("f") {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    // New test for .zip file import
-    @Test
-    fun zipFileImport() {
-        // Simulate the import of a .zip file containing the OpenAPI specification
-        val zipFile = Paths.get(testDirectory, testFile).toFile()
-        assertTrue(zipFile.exists(), "The .zip file should exist in the test directory.")
-
-        // Run the custom package with the .zip file
-        runCustomPackage(
-            OpenAPISpecLoaderCfg(
-                importType = "DIRECT",
-                specFile = testFile,
-                connectionUsage = "CREATE",
-                connection = Connection.creator(client, testId, connectorType).build(),
-            ),
-            OpenAPISpecLoader::main,
-        )
-
-        // Validate that the spec and paths were created as expected
-        specCreated()
-        pathsCreated()
     }
 }
