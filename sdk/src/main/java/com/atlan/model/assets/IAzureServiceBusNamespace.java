@@ -304,6 +304,9 @@ public interface IAzureServiceBusNamespace {
     /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
     String getAzureServiceBusNamespaceQualifiedName();
 
+    /** Unique name of the AzureServiceBus Schema in which this asset exists. */
+    String getAzureServiceBusSchemaQualifiedName();
+
     /** AzureServiceBusTopic assets contained within this AzureServiceBusNamespace. */
     SortedSet<IAzureServiceBusTopic> getAzureServiceBusTopics();
 
