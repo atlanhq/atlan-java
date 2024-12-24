@@ -8,6 +8,7 @@ import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
 import java.io.File
+import kotlin.test.assertEquals
 
 /**
  * Test export of all administrative information.
@@ -42,6 +43,23 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
+    }
+
+    @Test
+    fun csvFilesExistButAreEmpty() {
+        val csvFiles =
+            listOf(
+                "users.csv",
+                "groups.csv",
+                "personas.csv",
+                "purposes.csv",
+                "policies.csv",
+            )
+        csvFiles.forEach {
+            val file = File("$testDirectory${File.separator}$it")
+            assertTrue(file.isFile)
+            assertEquals(0, file.length())
+        }
     }
 
     @Test
