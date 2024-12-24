@@ -32,7 +32,7 @@ kotlin-mu = "3.0.5"
 rocksdb = "9.7.3"
 jetty = "12.0.16"
 netty = "4.1.116.Final"
-otel = "1.42.1"
+otel = "1.44.1"
 otel-appender = "2.8.0-alpha"
 
 [libraries]
