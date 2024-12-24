@@ -413,7 +413,7 @@ class RelationshipDef extends TypeDef {
     else "ASSOCIATION"
 
   /// Generated list of [relationship attributes][RelationshipAttributeDef] for the type definition.
-  fixed relationshipAttributeDefs: List<RelationshipAttributeDef>? = relationshipAttributes?.fold(List(), (acc: List<RelationshipAttributeDef>, key, value) ->
+  fixed attributeDefs: List<AttributeDef>? = relationshipAttributes?.fold(List(), (acc: List<RelationshipAttributeDef>, key, value) ->
     let (attrDef =
       (value) {
         name = key // Set the name from the map's key
