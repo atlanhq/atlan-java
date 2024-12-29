@@ -134,6 +134,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     SAP_HYBRIS("sap-hybris", AtlanConnectionCategory.SAAS),
     IBM_DB2("ibmdb2", AtlanConnectionCategory.DATABASE),
     BIGID("bigid", AtlanConnectionCategory.SAAS),
+    ANAPLAN("anaplan", AtlanConnectionCategory.BI),
     ;
 
     @JsonValue
