@@ -27,6 +27,12 @@ object Exporter {
         val cmFields = getAllCustomMetadataFields(ctx.client)
 
         val exportedFiles = mutableListOf<File>()
+
+        val domainRelationshipFile = "$outputDirectory${File.separator}domain-relationship-export.csv"
+        val domainrelationshpExporter = DomainRelationshipExporter(ctx, domainRelationshipFile, batchSize)
+        domainrelationshpExporter.export()
+        exportedFiles.add(File(domainRelationshipFile))
+
         val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
         if ("GLOSSARIES_ONLY" == ctx.config.exportScope || ctx.config.includeGlossaries) {
             val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize, cmFields)
