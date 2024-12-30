@@ -22,6 +22,28 @@ outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
     ["mdir"] = "/tmp/mdir.xlsx"
+    ["overview"] = "/tmp/overview.csv"
+    ["aum"] = "/tmp/aum.csv"
+    ["awd"] = "/tmp/awd.csv"
+    ["awdc"] = "/tmp/awdc.csv"
+    ["awdu"] = "/tmp/awdu.csv"
+    ["awo"] = "/tmp/awo.csv"
+    ["awog"] = "/tmp/awog.csv"
+    ["awou"] = "/tmp/awou.csv"
+    ["dla"] = "/tmp/dla.csv"
+    ["dlaxl"] = "/tmp/dlaxl.csv"
+    ["gcm"] = "/tmp/gcm.csv"
+    ["gtm"] = "/tmp/gtm.csv"
+    ["gum"] = "/tmp/gum.csv"
+    ["hqv"] = "/tmp/hqv.csv"
+    ["sut"] = "/tmp/sut.csv"
+    ["tla"] = "/tmp/tla.csv"
+    ["tlawl"] = "/tmp/tlawl.csv"
+    ["tlaxl"] = "/tmp/tlaxl.csv"
+    ["tlaxq"] = "/tmp/tlaxq.csv"
+    ["tlaxu"] = "/tmp/tlaxu.csv"
+    ["uta"] = "/tmp/uta.csv"
+    ["utq"] = "/tmp/utq.csv"
   }
 }
 keywords {
@@ -64,6 +86,17 @@ uiConfig {
     ["Delivery"] {
       description = "Where to send"
       inputs {
+        ["file_format"] = new Radio {
+          title = "File format"
+          required = true
+          helpText = "Select whether you want multiple CSV files or a single XLSX file."
+          possibleValues {
+            ["XLSX"] = "Single Excel file"
+            ["CSV"] = "Multiple CSV files"
+          }
+          default = "XLSX"
+          fallback = default
+        }
         ["delivery_type"] = new Radio {
           title = "Export via"
           required = true
