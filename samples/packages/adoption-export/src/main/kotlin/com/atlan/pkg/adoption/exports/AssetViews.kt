@@ -9,23 +9,20 @@ import com.atlan.model.search.aggregates.AssetViews
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.AdoptionExporter.getAssetDetails
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
-import org.apache.poi.ss.usermodel.Sheet
 
 class AssetViews(
     private val ctx: PackageContext<AdoptionExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting top ${ctx.config.viewsMax} most-viewed assets..." }
-        val sheet = xlsx.createSheet("Views")
         val viewCountMap =
             when (ctx.config.includeViews) {
                 "BY_VIEWS" -> {
-                    xlsx.addHeader(
-                        sheet,
+                    writer.writeHeader(
                         mapOf(
                             "Type" to "Type of asset",
                             "Qualified name" to "Unique name of the asset",
@@ -38,8 +35,7 @@ class AssetViews(
                     SearchLog.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), false).associateBy { it.guid }
                 }
                 "BY_USERS" -> {
-                    xlsx.addHeader(
-                        sheet,
+                    writer.writeHeader(
                         mapOf(
                             "Type" to "Type of asset",
                             "Qualified name" to "Unique name of the asset",
@@ -59,20 +55,19 @@ class AssetViews(
         viewCountMap.forEach { (k, v) ->
             val asset = assetMap[k]
             if (asset != null) {
-                outputAsset(sheet, asset, v)
+                outputAsset(writer, asset, v)
             }
         }
     }
 
     private fun outputAsset(
-        sheet: Sheet,
+        writer: TabularWriter,
         asset: Asset,
         views: AssetViews,
     ) {
         when (ctx.config.includeViews) {
             "BY_VIEWS" -> {
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         asset.typeName ?: "",
                         asset.qualifiedName ?: "",
@@ -85,8 +80,7 @@ class AssetViews(
             }
 
             "BY_USERS" -> {
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         asset.typeName ?: "",
                         asset.qualifiedName ?: "",

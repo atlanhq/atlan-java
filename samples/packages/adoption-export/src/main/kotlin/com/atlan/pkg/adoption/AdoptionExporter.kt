@@ -11,8 +11,10 @@ import com.atlan.pkg.adoption.exports.AssetViews
 import com.atlan.pkg.adoption.exports.DetailedSearches
 import com.atlan.pkg.adoption.exports.DetailedUserChanges
 import com.atlan.pkg.adoption.exports.DetailedUserViews
+import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import java.io.File
+import java.nio.file.Paths
 import kotlin.math.min
 
 /**
@@ -21,28 +23,81 @@ import kotlin.math.min
 object AdoptionExporter {
     private val logger = Utils.getLogger(AdoptionExporter.javaClass.name)
 
+    private const val FILENAME = "adoption-export.xlsx"
+
+    private const val CHANGES_FILE = "changes.csv"
+    private const val VIEWS_FILE = "views.csv"
+    private const val USER_SEARCHES_FILE = "user-searches.csv"
+    private const val USER_CHANGES_FILE = "user-changes.csv"
+    private const val USER_VIEWS_FILE = "user-views.csv"
+
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdoptionExportCfg>().use { ctx ->
 
-            val exportFile = "$outputDirectory${File.separator}adoption-export.xlsx"
-            ExcelWriter(exportFile).use { xlsx ->
+            val xlsxOutput = ctx.config.fileFormat == "XLSX"
+
+            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
+            val changesFile = "$outputDirectory${File.separator}$CHANGES_FILE"
+            val viewsFile = "$outputDirectory${File.separator}$VIEWS_FILE"
+            val userSearchesFile = "$outputDirectory${File.separator}$USER_SEARCHES_FILE"
+            val userChangesFile = "$outputDirectory${File.separator}$USER_CHANGES_FILE"
+            val userViewsFile = "$outputDirectory${File.separator}$USER_VIEWS_FILE"
+
+            // Touch every file, just so they exist, to avoid any workflow failures
+            Paths.get(outputDirectory).toFile().mkdirs()
+            Paths.get(xlsxFile).toFile().createNewFile()
+            Paths.get(changesFile).toFile().createNewFile()
+            Paths.get(viewsFile).toFile().createNewFile()
+            Paths.get(userSearchesFile).toFile().createNewFile()
+            Paths.get(userChangesFile).toFile().createNewFile()
+            Paths.get(userViewsFile).toFile().createNewFile()
+
+            val fileOutputs = mutableListOf<String>()
+
+            ExcelWriter(xlsxFile).use { xlsx ->
                 if (ctx.config.includeViews != "NONE") {
-                    AssetViews(ctx, xlsx, logger).export()
+                    if (xlsxOutput) {
+                        AssetViews(ctx, xlsx.createSheet("Views"), logger).export()
+                    } else {
+                        CSVWriter(viewsFile).use { csv -> AssetViews(ctx, csv, logger).export() }
+                    }
                     if (ctx.config.viewsDetails == "YES") {
-                        DetailedUserViews(ctx, xlsx, logger).export()
+                        if (xlsxOutput) {
+                            DetailedUserViews(ctx, xlsx.createSheet("User views"), logger).export()
+                        } else {
+                            CSVWriter(userViewsFile).use { csv -> DetailedUserViews(ctx, csv, logger).export() }
+                        }
                     }
                 }
                 if (ctx.config.includeChanges == "YES") {
-                    AssetChanges(ctx, xlsx, logger).export()
+                    if (xlsxOutput) {
+                        AssetChanges(ctx, xlsx.createSheet("Changes"), logger).export()
+                    } else {
+                        CSVWriter(changesFile).use { csv -> AssetChanges(ctx, csv, logger).export() }
+                    }
                     if (ctx.config.changesDetails == "YES") {
-                        DetailedUserChanges(ctx, xlsx, logger).export()
+                        if (xlsxOutput) {
+                            DetailedUserChanges(ctx, xlsx.createSheet("User changes"), logger).export()
+                        } else {
+                            CSVWriter(userChangesFile).use { csv -> DetailedUserChanges(ctx, csv, logger).export() }
+                        }
                     }
                 }
                 if (ctx.config.includeSearches == "YES") {
-                    DetailedSearches(ctx, xlsx, logger).export()
+                    if (xlsxOutput) {
+                        DetailedSearches(ctx, xlsx.createSheet("User searches"), logger).export()
+                    } else {
+                        CSVWriter(userSearchesFile).use { csv -> DetailedSearches(ctx, csv, logger).export() }
+                    }
                 }
+            }
+            if (xlsxOutput) {
+                fileOutputs.add(xlsxFile)
+            } else {
+                File(xlsxFile).delete()
+                File(xlsxFile).createNewFile()
             }
 
             when (ctx.config.deliveryType) {
@@ -53,17 +108,27 @@ object AdoptionExporter {
                             "[Atlan] Adoption Export results",
                             emails,
                             "Hi there! As requested, please find attached the results of the Adoption Export package.\n\nAll the best!\nAtlan",
-                            listOf(File(exportFile)),
+                            fileOutputs.map { File(it) },
                         )
                     }
                 }
 
                 "CLOUD" -> {
-                    Utils.uploadOutputFile(
-                        exportFile,
-                        ctx.config.targetPrefix,
-                        ctx.config.targetKey,
-                    )
+                    if (xlsxOutput) {
+                        Utils.uploadOutputFile(
+                            xlsxFile,
+                            ctx.config.targetPrefix,
+                            ctx.config.targetKey,
+                        )
+                    } else {
+                        fileOutputs.forEach {
+                            // When using CSVs, ignore any key specified and use the filename itself
+                            Utils.uploadOutputFile(
+                                it,
+                                ctx.config.targetPrefix,
+                            )
+                        }
+                    }
                 }
             }
         }

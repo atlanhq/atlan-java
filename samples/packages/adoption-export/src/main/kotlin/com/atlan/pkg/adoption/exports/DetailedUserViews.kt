@@ -6,21 +6,19 @@ import AdoptionExportCfg
 import com.atlan.model.search.SearchLog
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class DetailedUserViews(
     private val ctx: PackageContext<AdoptionExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         val from = ctx.config.viewsFrom * 1000
         val to = ctx.config.viewsTo * 1000
         logger.info { "Exporting details of all asset views between [$from, $to]..." }
-        val sheet = xlsx.createSheet("User views")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Time" to "Time at which the view / search occurred",
                 "Username" to "User who viewed / searched",
@@ -34,8 +32,7 @@ class DetailedUserViews(
             .stream()
             .forEach {
                 val guid = it.resultGuidsAllowed?.get(0) ?: ""
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         it.createdAt ?: it.timestamp ?: "",
                         it.userName ?: "",

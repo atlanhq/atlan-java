@@ -86,6 +86,27 @@ abstract class CSVXformer(
         fun trimWhitespace(s: String): String {
             return s.trim().trim('\uFEFF', '\u200B')
         }
+
+        /**
+         * Translate a row of input values into a map, keyed by input header name
+         * with the value being the value for that column on the row.
+         *
+         * @param header list of header column names
+         * @param values list of values, in the same order as the header columns
+         * @return map from header name to value on that row
+         */
+        fun getRowByHeader(
+            header: List<String>,
+            values: List<String>,
+        ): Map<String, String> {
+            val map = mutableMapOf<String, String>()
+            header.forEachIndexed { index, s ->
+                // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
+                val trimmed = trimWhitespace(s)
+                map[trimmed] = values.getOrElse(index) { "" }
+            }
+            return map.toMap()
+        }
     }
 
     /**
@@ -147,16 +168,11 @@ abstract class CSVXformer(
      * Translate a row of input values into a map, keyed by input header name
      * with the value being the value for that column on the row.
      *
+     * @param values a row of values, in the same order as the headers
      * @return map from header name to value on that row
      */
     private fun getRowByHeader(values: List<String>): Map<String, String> {
-        val map = mutableMapOf<String, String>()
-        header.forEachIndexed { index, s ->
-            // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
-            val trimmed = trimWhitespace(s)
-            map[trimmed] = values.getOrElse(index) { "" }
-        }
-        return map.toMap()
+        return getRowByHeader(header, values)
     }
 
     /** {@inheritDoc}  */
