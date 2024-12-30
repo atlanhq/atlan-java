@@ -138,6 +138,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     AWS_ECS("aws-ecs", AtlanConnectionCategory.ELT),
     AWS_LAMBDA("aws-lambda", AtlanConnectionCategory.ELT),
     AWS_SAGEMAKER("aws-sagemaker", AtlanConnectionCategory.ELT),
+    ANAPLAN("anaplan", AtlanConnectionCategory.BI),
     ;
 
     @JsonValue
