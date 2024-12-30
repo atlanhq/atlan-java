@@ -151,6 +151,7 @@ class AssetExporter(
                         Asset.LINKS,
                         Asset.README,
                         Asset.STARRED_DETAILS,
+                        Asset.DOMAIN_GUIDS,
                     )
                 } else {
                     mutableListOf(
@@ -169,6 +170,7 @@ class AssetExporter(
                         Asset.LINKS,
                         Asset.README,
                         Asset.STARRED_DETAILS,
+                        Asset.DOMAIN_GUIDS,
                     )
                 }
             for (cmField in cmFields) {

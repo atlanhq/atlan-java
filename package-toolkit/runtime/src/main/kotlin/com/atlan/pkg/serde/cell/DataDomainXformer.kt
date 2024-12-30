@@ -42,14 +42,14 @@ object DataDomainXformer {
      * Encodes (serializes) a data domain reference into a string form.
      *
      * @param ctx context in which the package is running
-     * @param assetGuid the GUID of the asset to be encoded
+     * @param domainGuid the GUID of the domain to be encoded
      * @return the string-encoded form for that asset
      */
     fun encodeFromGuid(
         ctx: PackageContext<*>,
-        assetGuid: String,
+        domainGuid: String,
     ): String {
-        val dataDomain = ctx.dataDomainCache.getByGuid(assetGuid)
+        val dataDomain = ctx.dataDomainCache.getByGuid(domainGuid)
         return if (dataDomain is DataDomain) {
             ctx.dataDomainCache.getIdentity(dataDomain.guid) ?: ""
         } else {
