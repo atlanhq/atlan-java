@@ -34,6 +34,9 @@ public interface IAzureServiceBusTopic {
     /** AzureServiceBusNamespace asset containing this AzureServiceBusTopic. */
     RelationField AZURE_SERVICE_BUS_NAMESPACE = new RelationField("azureServiceBusNamespace");
 
+    /** AzureServiceBusSchema assets contained within this AzureServiceBusTopic. */
+    RelationField AZURE_SERVICE_BUS_SCHEMAS = new RelationField("azureServiceBusSchemas");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -306,6 +309,12 @@ public interface IAzureServiceBusTopic {
 
     /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
     String getAzureServiceBusNamespaceQualifiedName();
+
+    /** Unique name of the AzureServiceBus Schema in which this asset exists. */
+    String getAzureServiceBusSchemaQualifiedName();
+
+    /** AzureServiceBusSchema assets contained within this AzureServiceBusTopic. */
+    SortedSet<IAzureServiceBusSchema> getAzureServiceBusSchemas();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

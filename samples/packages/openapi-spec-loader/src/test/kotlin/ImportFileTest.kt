@@ -28,7 +28,6 @@ class ImportFileTest : PackageTest("f") {
         )
 
     private fun prepFile() {
-        // Prepare a copy of the file with unique names for domains and products
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         input.copyTo(Paths.get(testDirectory, testFile).toFile(), true)
     }

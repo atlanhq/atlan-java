@@ -13,6 +13,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Column;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.assets.MaterializedView;
+import com.atlan.model.assets.SnowflakeDynamicTable;
 import com.atlan.model.assets.Table;
 import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
@@ -38,7 +39,7 @@ import lombok.Getter;
 public class AssetBatch implements AtlanCloseable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
-            Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME);
+            Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, SnowflakeDynamicTable.TYPE_NAME);
 
     public enum CustomMetadataHandling {
         IGNORE,
@@ -434,9 +435,8 @@ public class AssetBatch implements AtlanCloseable {
             if (tableViewAgnostic) {
                 Set<String> typesInBatch =
                         _batch.stream().map(Asset::getTypeName).collect(Collectors.toSet());
-                fuzzyMatch = typesInBatch.contains(Table.TYPE_NAME)
-                        || typesInBatch.contains(View.TYPE_NAME)
-                        || typesInBatch.contains(MaterializedView.TYPE_NAME);
+                typesInBatch.retainAll(TABLE_LEVEL_ASSETS);
+                fuzzyMatch = !typesInBatch.isEmpty();
             }
             if (updateOnly || creationHandling != AssetCreationHandling.FULL || fuzzyMatch) {
                 Map<AssetIdentity, String> found = new HashMap<>();
@@ -475,12 +475,16 @@ public class AssetBatch implements AtlanCloseable {
                                 new AssetIdentity(View.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         AssetIdentity asMaterializedView = new AssetIdentity(
                                 MaterializedView.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
+                        AssetIdentity asDynamicTable = new AssetIdentity(
+                                SnowflakeDynamicTable.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         if (found.containsKey(asTable)) {
                             addFuzzyMatched(asset, Table.TYPE_NAME, found.get(asTable), revised);
                         } else if (found.containsKey(asView)) {
                             addFuzzyMatched(asset, View.TYPE_NAME, found.get(asView), revised);
                         } else if (found.containsKey(asMaterializedView)) {
                             addFuzzyMatched(asset, MaterializedView.TYPE_NAME, found.get(asMaterializedView), revised);
+                        } else if (found.containsKey(asDynamicTable)) {
+                            addFuzzyMatched(asset, SnowflakeDynamicTable.TYPE_NAME, found.get(asDynamicTable), revised);
                         } else if (creationHandling == AssetCreationHandling.PARTIAL) {
                             // Still create it (partial), if not found and partial asset creation is allowed
                             addPartialAsset(asset, revised);

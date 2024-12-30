@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -232,16 +233,16 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full Purpose, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
      */
     @JsonIgnore
-    public static Purpose get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+    public static Purpose get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof Purpose) {
@@ -250,11 +251,77 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof Purpose) {
                 return (Purpose) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a Purpose by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the Purpose, including any relationships
+     * @return the requested Purpose, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     */
+    @JsonIgnore
+    public static Purpose get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a Purpose by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the Purpose to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the Purpose, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the Purpose
+     * @return the requested Purpose, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Purpose does not exist or the provided GUID is not a Purpose
+     */
+    @JsonIgnore
+    public static Purpose get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = Purpose.select(client)
+                    .where(Purpose.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof Purpose) {
+                return (Purpose) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = Purpose.select(client)
+                    .where(Purpose.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof Purpose) {
+                return (Purpose) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }
