@@ -1,4 +1,9 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.java.sdk;
+
+import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.exception.AtlanException;
@@ -9,19 +14,15 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-
-import java.util.List;
-
-import static org.testng.Assert.*;
-import static org.testng.Assert.assertEquals;
 
 /**
  * Tests all aspects of Anaplan assets.
  */
 @Slf4j
-public class AnaplanAssetTest extends AtlanLiveTest{
+public class AnaplanAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("Anaplan");
 
@@ -55,11 +56,11 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.workspace"},
-        dependsOnGroups = {"anaplan.create.connection"})
+            groups = {"anaplan.create.workspace"},
+            dependsOnGroups = {"anaplan.create.connection"})
     void createWorkspace() throws AtlanException {
         AnaplanWorkspace toCreate = AnaplanWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
-            .build();
+                .build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AnaplanWorkspace);
@@ -72,11 +73,11 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.app"},
-        dependsOnGroups = {"anaplan.create.connection"})
+            groups = {"anaplan.create.app"},
+            dependsOnGroups = {"anaplan.create.connection"})
     void createApp() throws AtlanException {
-        AnaplanApp toCreate = AnaplanApp.creator(APP_NAME, connection.getQualifiedName())
-            .build();
+        AnaplanApp toCreate =
+                AnaplanApp.creator(APP_NAME, connection.getQualifiedName()).build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AnaplanApp);
@@ -89,8 +90,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.page"},
-        dependsOnGroups = {"anaplan.create.app"})
+            groups = {"anaplan.create.page"},
+            dependsOnGroups = {"anaplan.create.app"})
     void createPage() throws AtlanException {
         AnaplanPage toCreate = AnaplanPage.creator(PAGE_NAME, app).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -116,8 +117,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.model"},
-        dependsOnGroups = {"anaplan.create.workspace"})
+            groups = {"anaplan.create.model"},
+            dependsOnGroups = {"anaplan.create.workspace"})
     void createModel() throws AtlanException {
         AnaplanModel toCreate = AnaplanModel.creator(MODEL_NAME, workspace).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -144,8 +145,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.module"},
-        dependsOnGroups = {"anaplan.create.model"})
+            groups = {"anaplan.create.module"},
+            dependsOnGroups = {"anaplan.create.model"})
     void createModule() throws AtlanException {
         AnaplanModule toCreate = AnaplanModule.creator(MODULE_NAME, model).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -174,8 +175,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.list"},
-        dependsOnGroups = {"anaplan.create.model"})
+            groups = {"anaplan.create.list"},
+            dependsOnGroups = {"anaplan.create.model"})
     void createList() throws AtlanException {
         AnaplanList toCreate = AnaplanList.creator(LIST_NAME, model).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -204,10 +205,11 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.dimension"},
-        dependsOnGroups = {"anaplan.create.model"})
+            groups = {"anaplan.create.dimension"},
+            dependsOnGroups = {"anaplan.create.model"})
     void createDimension() throws AtlanException {
-        AnaplanDimension toCreate = AnaplanDimension.creator(DIMENSION_NAME, model).build();
+        AnaplanDimension toCreate =
+                AnaplanDimension.creator(DIMENSION_NAME, model).build();
         AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -234,10 +236,11 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.lineItem"},
-        dependsOnGroups = {"anaplan.create.module"})
+            groups = {"anaplan.create.lineItem"},
+            dependsOnGroups = {"anaplan.create.module"})
     void createLineItem() throws AtlanException {
-        AnaplanLineItem toCreate = AnaplanLineItem.creator(LINE_ITEM_NAME, module).build();
+        AnaplanLineItem toCreate =
+                AnaplanLineItem.creator(LINE_ITEM_NAME, module).build();
         AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -266,8 +269,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.create.view"},
-        dependsOnGroups = {"anaplan.create.module"})
+            groups = {"anaplan.create.view"},
+            dependsOnGroups = {"anaplan.create.module"})
     void createView() throws AtlanException {
         AnaplanView toCreate = AnaplanView.creator(VIEW_NAME, module).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -298,16 +301,16 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.update.view"},
-        dependsOnGroups = {"anaplan.create.view"})
+            groups = {"anaplan.update.view"},
+            dependsOnGroups = {"anaplan.create.view"})
     void updateView() throws AtlanException {
-        AnaplanView updated = AnaplanView.updateCertificate(
-            client, view.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        AnaplanView updated =
+                AnaplanView.updateCertificate(client, view.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = AnaplanView.updateAnnouncement(
-            client, view.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client, view.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -315,8 +318,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.read.view"},
-        dependsOnGroups = {"anaplan.create.*", "anaplan.update.view"})
+            groups = {"anaplan.read.view"},
+            dependsOnGroups = {"anaplan.create.*", "anaplan.update.view"})
     void retrieveView() throws AtlanException {
         AnaplanView c = AnaplanView.get(client, view.getGuid(), true);
         assertNotNull(c);
@@ -340,11 +343,10 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.update.view.again"},
-        dependsOnGroups = {"anaplan.read.view"})
+            groups = {"anaplan.update.view.again"},
+            dependsOnGroups = {"anaplan.read.view"})
     void updateViewAgain() throws AtlanException {
-        AnaplanView updated =
-            AnaplanView.removeCertificate(client, view.getQualifiedName(), VIEW_NAME);
+        AnaplanView updated = AnaplanView.removeCertificate(client, view.getQualifiedName(), VIEW_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
@@ -359,19 +361,19 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.search.assets"},
-        dependsOnGroups = {"anaplan.update.view.again"})
+            groups = {"anaplan.search.assets"},
+            dependsOnGroups = {"anaplan.update.view.again"})
     void searchAssets() throws AtlanException, InterruptedException {
         IndexSearchRequest index = client.assets
-            .select()
-            .where(Asset.SUPER_TYPE_NAMES.eq(IAnaplan.TYPE_NAME))
-            .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
-            .pageSize(10)
-            .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
-            .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
-            .toRequest();
+                .select()
+                .where(Asset.SUPER_TYPE_NAMES.eq(IAnaplan.TYPE_NAME))
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(10)
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
+                .toRequest();
 
         IndexSearchResponse response = retrySearchUntil(index, 3L);
 
@@ -379,10 +381,10 @@ public class AnaplanAssetTest extends AtlanLiveTest{
         assertEquals(response.getAggregations().size(), 1);
         assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
         assertEquals(
-            ((AggregationBucketResult) response.getAggregations().get("type"))
-                .getBuckets()
-                .size(),
-            3);
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                3);
 
         assertEquals(response.getApproximateCount().longValue(), 3L);
         List<Asset> entities = response.getAssets();
@@ -463,8 +465,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.delete.list"},
-        dependsOnGroups = {"anaplan.update.*", "anaplan.search.*"})
+            groups = {"anaplan.delete.list"},
+            dependsOnGroups = {"anaplan.update.*", "anaplan.search.*"})
     void deleteList() throws AtlanException {
         AssetMutationResponse response = Asset.delete(client, list.getGuid()).block();
         assertNotNull(response);
@@ -481,15 +483,15 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.delete.list.read"},
-        dependsOnGroups = {"anaplan.delete.list"})
+            groups = {"anaplan.delete.list.read"},
+            dependsOnGroups = {"anaplan.delete.list"})
     void readDeletedList() throws AtlanException {
         validateDeletedAsset(list, log);
     }
 
     @Test(
-        groups = {"anaplan.delete.list.restore"},
-        dependsOnGroups = {"anaplan.delete.list.read"})
+            groups = {"anaplan.delete.list.restore"},
+            dependsOnGroups = {"anaplan.delete.list.read"})
     void restoreList() throws AtlanException {
         assertTrue(AnaplanList.restore(client, list.getQualifiedName()));
         AnaplanList restored = AnaplanList.get(client, list.getQualifiedName());
@@ -500,8 +502,8 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.purge.list"},
-        dependsOnGroups = {"anaplan.delete.list.restore"})
+            groups = {"anaplan.purge.list"},
+            dependsOnGroups = {"anaplan.delete.list.restore"})
     void purgeList() throws AtlanException {
         AssetMutationResponse response = Asset.purge(client, list.getGuid()).block();
         assertNotNull(response);
@@ -518,15 +520,15 @@ public class AnaplanAssetTest extends AtlanLiveTest{
     }
 
     @Test(
-        groups = {"anaplan.purge.connection"},
-        dependsOnGroups = {
-            "anaplan.create.*",
-            "anaplan.read.*",
-            "anaplan.search.*",
-            "anaplan.update.*",
-            "anaplan.purge.list"
-        },
-        alwaysRun = true)
+            groups = {"anaplan.purge.connection"},
+            dependsOnGroups = {
+                "anaplan.create.*",
+                "anaplan.read.*",
+                "anaplan.search.*",
+                "anaplan.update.*",
+                "anaplan.purge.list"
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }
