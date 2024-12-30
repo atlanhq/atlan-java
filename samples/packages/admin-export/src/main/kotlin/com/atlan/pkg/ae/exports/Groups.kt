@@ -4,20 +4,18 @@ package com.atlan.pkg.ae.exports
 
 import AdminExportCfg
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
-import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class Groups(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting all groups..." }
-        val sheet = xlsx.createSheet("Groups")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Group name" to "Name of the group, as it appears in the UI",
                 "Internal name" to "Name of the group, as it must be specified programmatically",
@@ -32,8 +30,7 @@ class Groups(
         ctx.client.groups.list().forEach { group ->
             val createdAt = group.attributes?.createdAt?.get(0)?.toLong() ?: -1
             val updatedAt = group.attributes?.updatedAt?.get(0)?.toLong() ?: -1
-            xlsx.appendRow(
-                sheet,
+            writer.writeRecord(
                 listOf(
                     group.alias,
                     group.name,
