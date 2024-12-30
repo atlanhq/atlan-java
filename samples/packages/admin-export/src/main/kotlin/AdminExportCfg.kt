@@ -18,6 +18,7 @@ data class AdminExportCfg(
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("objects_to_include") val objectsToInclude: List<String> = listOf("users", "groups"),
     @JsonProperty("include_native_policies") val includeNativePolicies: Boolean = false,
+    @JsonProperty("file_format") val fileFormat: String = "XLSX",
     @JsonProperty("delivery_type") val deliveryType: String = "DIRECT",
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
     @JsonProperty("target_prefix") val targetPrefix: String = "",
