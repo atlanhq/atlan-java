@@ -14,6 +14,7 @@ data class MetadataImpactReportCfg(
     @JsonProperty("include_glossary") val includeGlossary: String = "TRUE",
     @JsonProperty("glossary_name") val glossaryName: String = "Metadata metrics",
     @JsonProperty("include_details") val includeDetails: Boolean = false,
+    @JsonProperty("file_format") val fileFormat: String = "XLSX",
     @JsonProperty("delivery_type") val deliveryType: String = "DIRECT",
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
     @JsonProperty("target_prefix") val targetPrefix: String? = null,
