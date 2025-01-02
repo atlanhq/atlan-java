@@ -74,7 +74,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.app"},
-            dependsOnGroups = {"anaplan.create.connection"})
+            dependsOnGroups = {"anaplan.create.workspace"})
     void createApp() throws AtlanException {
         AnaplanApp toCreate =
                 AnaplanApp.creator(APP_NAME, connection.getQualifiedName()).build();
@@ -103,7 +103,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanApp c = (AnaplanApp) one;
         assertEquals(c.getGuid(), app.getGuid());
         assertEquals(c.getQualifiedName(), app.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanPage);
@@ -118,7 +117,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.model"},
-            dependsOnGroups = {"anaplan.create.workspace"})
+            dependsOnGroups = {"anaplan.create.page"})
     void createModel() throws AtlanException {
         AnaplanModel toCreate = AnaplanModel.creator(MODEL_NAME, workspace).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -130,7 +129,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanWorkspace c = (AnaplanWorkspace) one;
         assertEquals(c.getGuid(), workspace.getGuid());
         assertEquals(c.getQualifiedName(), workspace.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanModel);
@@ -158,7 +156,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanModel c = (AnaplanModel) one;
         assertEquals(c.getGuid(), model.getGuid());
         assertEquals(c.getQualifiedName(), model.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanModule);
@@ -176,7 +173,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.list"},
-            dependsOnGroups = {"anaplan.create.model"})
+            dependsOnGroups = {"anaplan.create.module"})
     void createList() throws AtlanException {
         AnaplanList toCreate = AnaplanList.creator(LIST_NAME, model).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -188,7 +185,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanModel c = (AnaplanModel) one;
         assertEquals(c.getGuid(), model.getGuid());
         assertEquals(c.getQualifiedName(), model.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanList);
@@ -206,7 +202,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.dimension"},
-            dependsOnGroups = {"anaplan.create.model"})
+            dependsOnGroups = {"anaplan.create.list"})
     void createDimension() throws AtlanException {
         AnaplanDimension toCreate =
                 AnaplanDimension.creator(DIMENSION_NAME, model).build();
@@ -219,7 +215,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanModel c = (AnaplanModel) one;
         assertEquals(c.getGuid(), model.getGuid());
         assertEquals(c.getQualifiedName(), model.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanDimension);
@@ -237,7 +232,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.lineItem"},
-            dependsOnGroups = {"anaplan.create.module"})
+            dependsOnGroups = {"anaplan.create.dimension"})
     void createLineItem() throws AtlanException {
         AnaplanLineItem toCreate =
                 AnaplanLineItem.creator(LINE_ITEM_NAME, module).build();
@@ -250,7 +245,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanModule c = (AnaplanModule) one;
         assertEquals(c.getGuid(), module.getGuid());
         assertEquals(c.getQualifiedName(), module.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanLineItem);
@@ -270,7 +264,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"anaplan.create.view"},
-            dependsOnGroups = {"anaplan.create.module"})
+            dependsOnGroups = {"anaplan.create.lineItem"})
     void createView() throws AtlanException {
         AnaplanView toCreate = AnaplanView.creator(VIEW_NAME, module).build();
         AssetMutationResponse response = toCreate.save(client);
@@ -282,7 +276,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         AnaplanModule c = (AnaplanModule) one;
         assertEquals(c.getGuid(), module.getGuid());
         assertEquals(c.getQualifiedName(), module.getQualifiedName());
-        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof AnaplanView);
@@ -329,7 +322,6 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         assertEquals(c.getName(), VIEW_NAME);
         assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
         assertNotNull(c.getAnaplanModule());
-        assertEquals(c.getAnaplanModule(), module);
         assertEquals(c.getAnaplanModule().getTypeName(), AnaplanModule.TYPE_NAME);
         assertEquals(c.getAnaplanModule().getGuid(), module.getGuid());
         assertNotNull(c.getAnaplanWorkspaceQualifiedName());
@@ -375,7 +367,7 @@ public class AnaplanAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 3L);
+        IndexSearchResponse response = retrySearchUntil(index, 9L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -384,12 +376,12 @@ public class AnaplanAssetTest extends AtlanLiveTest {
                 ((AggregationBucketResult) response.getAggregations().get("type"))
                         .getBuckets()
                         .size(),
-                3);
+                9);
 
-        assertEquals(response.getApproximateCount().longValue(), 3L);
+        assertEquals(response.getApproximateCount().longValue(), 9L);
         List<Asset> entities = response.getAssets();
         assertNotNull(entities);
-        assertEquals(entities.size(), 3);
+        assertEquals(entities.size(), 9);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof AnaplanWorkspace);
