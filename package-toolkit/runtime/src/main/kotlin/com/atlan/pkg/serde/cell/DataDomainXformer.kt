@@ -78,4 +78,18 @@ object DataDomainXformer {
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
     }
+
+    fun decodeFromName(
+        ctx: PackageContext<*>,
+        domainName: String,
+    ): Asset {
+        val dataDomain = ctx.dataDomainCache.getByName(domainName)
+        return if (dataDomain is DataDomain) {
+            dataDomain
+        } else {
+            throw NoSuchElementException("Domain $domainName not found.")
+        }
+    }
+
+
 }
