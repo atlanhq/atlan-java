@@ -108,7 +108,7 @@ object CellXformer {
         } else if (Asset::class.java.isAssignableFrom(type)) {
             AssetRefXformer.decode(ctx, value, fieldName)
         } else if (AtlanEnum::class.java.isAssignableFrom(type)) {
-            EnumXformer.decode(value, type as Class<AtlanEnum>)
+            EnumXformer.decode(value, type as Class<AtlanEnum>, fieldName)
         } else if (AtlanStruct::class.java.isAssignableFrom(type)) {
             StructXformer.decode(ctx.client, value, type as Class<AtlanStruct>)
         } else if (AtlanTag::class.java.isAssignableFrom(type)) {
