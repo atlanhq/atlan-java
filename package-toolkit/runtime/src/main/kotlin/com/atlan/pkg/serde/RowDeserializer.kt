@@ -9,6 +9,7 @@ import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch
@@ -94,7 +95,11 @@ class RowDeserializer(
                             if (setter != null) {
                                 if (AssetRefXformer.requiresHandling(fieldName, value)) {
                                     if (value is Collection<*>) {
-                                        deserialization.related[fieldName] = value as Collection<Asset>
+                                        if (fieldName == "domainGUIDs") {
+                                            deserialization.related[fieldName] = value.mapNotNull { DataDomainXformer.decodeFromName(ctx, it.toString()) }
+                                        } else {
+                                            deserialization.related[fieldName] = value as Collection<Asset>
+                                        }
                                     } else {
                                         deserialization.related[fieldName] = listOf(value as Asset)
                                     }
