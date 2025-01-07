@@ -2,10 +2,8 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
-import com.atlan.serde.AuditDetailDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
  * An interface used to describe the detailed information within an audit entry.
@@ -13,7 +11,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * (You should be able to type-check through instanceof and then explicitly cast
  * to either of these more detailed objects.)
  */
-@JsonDeserialize(using = AuditDetailDeserializer.class)
 public interface AuditDetail {
 
     /** Returns the type of the instance details in the audit entry. */
