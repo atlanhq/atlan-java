@@ -46,17 +46,18 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
     @Override
     public CustomMetadataAttributesAuditDetail deserialize(JsonParser parser, DeserializationContext context)
             throws IOException {
-        return deserialize(parser.getCodec().readTree(parser));
+        return deserialize(parser.getCodec().readTree(parser), Long.MAX_VALUE);
     }
 
     /**
      * Actually do the work of deserializing custom metadata audit details.
      *
      * @param root of the parsed JSON tree
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
      * @return the deserialized custom metadata audit details
      * @throws IOException on any issues parsing the JSON
      */
-    CustomMetadataAttributesAuditDetail deserialize(JsonNode root) throws IOException {
+    CustomMetadataAttributesAuditDetail deserialize(JsonNode root, long minimumTime) throws IOException {
 
         String cmId = root.get("typeName").asText();
         if (cmId == null) {
@@ -66,7 +67,7 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
         String cmName = null;
         try {
             // Translate the ID-string to a human-readable name
-            cmName = client.getCustomMetadataCache().getNameForSid(cmId);
+            cmName = client.getCustomMetadataCache().getNameForSid(cmId, minimumTime);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the custom metadata was deleted since but the
             // audit record remains
@@ -83,7 +84,7 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
 
             CustomMetadataAttributes cma;
             try {
-                cma = client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, attributes);
+                cma = client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, attributes, minimumTime);
             } catch (AtlanException e) {
                 throw new IOException("Unable to translate custom metadata attributes: " + attributes, e);
             }
