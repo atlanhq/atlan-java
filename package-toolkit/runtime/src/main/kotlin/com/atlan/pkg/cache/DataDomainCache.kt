@@ -19,45 +19,12 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
         // Do nothing: domain cache can only be preloaded en-masse, not retrieved domain-by-domain.
-        val result = lookupByName(name, 0, ctx.client.maxNetworkRetries)
-        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
         val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
-    }
-
-    private fun lookupByName(
-        name: String?,
-        currentAttempt: Int,
-        maxRetries: Int,
-    ): DataDomain? {
-        try {
-            val dataDomain =
-                DataDomain.select(client)
-                    .where(DataDomain.NAME.eq(name))
-                    .includesOnResults(includesOnResults)
-                    .pageSize(1)
-                    .stream()
-                    .findFirst()
-            if (dataDomain.isPresent) {
-                return dataDomain.get() as DataDomain
-            } else {
-                if (currentAttempt >= maxRetries) {
-                    logger.warn { "No data domain found with name: $name" }
-                } else {
-                    Thread.sleep(HttpClient.waitTime(currentAttempt).toMillis())
-                    return lookupByName(name, currentAttempt + 1, maxRetries)
-                }
-            }
-        } catch (e: AtlanException) {
-            logger.warn { "Unable to lookup or find data domain: $name" }
-            logger.debug(e) { "Full stack trace:" }
-        }
-        name?.let { addToIgnore(name) }
-        return null
     }
 
     /** {@inheritDoc}  */

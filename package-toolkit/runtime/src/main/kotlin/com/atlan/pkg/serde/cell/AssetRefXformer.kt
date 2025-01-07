@@ -194,7 +194,6 @@ object AssetRefXformer {
         return when (fieldName) {
             Asset.LINKS.atlanFieldName -> true
             Asset.README.atlanFieldName -> true
-            Asset.DOMAIN_GUIDS.atlanFieldName -> true
             else -> false
         }
     }

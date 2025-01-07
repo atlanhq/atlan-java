@@ -95,11 +95,7 @@ class RowDeserializer(
                             if (setter != null) {
                                 if (AssetRefXformer.requiresHandling(fieldName, value)) {
                                     if (value is Collection<*>) {
-                                        if (fieldName == "domainGUIDs") {
-                                            deserialization.related[fieldName] = value.mapNotNull { DataDomainXformer.decodeFromName(ctx, it.toString()) }
-                                        } else {
-                                            deserialization.related[fieldName] = value as Collection<Asset>
-                                        }
+                                        deserialization.related[fieldName] = value as Collection<Asset>
                                     } else {
                                         deserialization.related[fieldName] = listOf(value as Asset)
                                     }
@@ -107,7 +103,14 @@ class RowDeserializer(
                                     // Only set the value on the asset directly if it does not require
                                     // special handling, otherwise leave it to the special handling
                                     // to set the value (later)
-                                    ReflectionCache.setValue(builder, fieldName, value)
+                                    if (fieldName == Asset.DOMAIN_GUIDS.atlanFieldName) {
+                                        if (value is String) {
+                                            val dataDomain = DataDomainXformer.decode(ctx, value, fieldName)
+                                            ReflectionCache.setValue(builder, fieldName, dataDomain.guid)
+                                        }
+                                    } else {
+                                        ReflectionCache.setValue(builder, fieldName, value)
+                                    }
                                 }
                             }
                         }
