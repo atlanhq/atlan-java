@@ -33,6 +33,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     public static final String DATABASE_NAME = PREFIX + "_db";
     public static final String SCHEMA_NAME = PREFIX + "_schema";
+    public static final String PROCEDURE_NAME = PREFIX + "_procedure";
     public static final String TABLE_NAME = PREFIX + "_table";
     public static final String VIEW_NAME = PREFIX + "_view";
     public static final String MVIEW_NAME = PREFIX + "_mview";
@@ -68,6 +69,13 @@ public class SQLAssetTest extends AtlanLiveTest {
     private static Glossary glossary = null;
     private static GlossaryTerm term1 = null;
     private static GlossaryTerm term2 = null;
+    private static Procedure procedure = null;
+    private static String definition =
+            """
+        BEGIN
+        insert into `atlanhq.testing_lineage.INSTACART_ALCOHOL_ORDER_TIME_copy`
+        select * from `atlanhq.testing_lineage.INSTACART_ALCOHOL_ORDER_TIME`;
+        END""";
 
     /**
      * Create a database with the provided characteristics.
@@ -149,6 +157,39 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(table.getName(), name);
         assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
         return table;
+    }
+
+    /**
+     * Create a procedure with the provided characteristics.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param name unique name for the table
+     * @param definition body of the procedure
+     * @param schema in which to create the table
+     * @return the created table
+     * @throws AtlanException on any errors creating the table
+     */
+    static Procedure createProcedure(AtlanClient client, String name, String definition, Schema schema)
+            throws AtlanException {
+        Procedure procedure = Procedure.creator(name, definition, schema).build();
+        AssetMutationResponse response = procedure.save(client);
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Schema);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Procedure);
+        procedure = (Procedure) one;
+        assertNotNull(procedure.getGuid());
+        assertNotNull(procedure.getQualifiedName());
+        assertEquals(procedure.getName(), name);
+        assertEquals(procedure.getDefinition(), definition);
+        assertEquals(procedure.getSchemaQualifiedName(), schema.getQualifiedName());
+        return procedure;
     }
 
     /**
@@ -323,6 +364,21 @@ public class SQLAssetTest extends AtlanLiveTest {
         schema = createSchema(client, SCHEMA_NAME, database);
         assertEquals(schema.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(schema.getDatabaseName(), DATABASE_NAME);
+    }
+
+    @Test(
+            groups = {"asset.create.procedure"},
+            dependsOnGroups = {"asset.create.schema"})
+    void createProcedure() throws AtlanException {
+        procedure = createProcedure(client, PROCEDURE_NAME, definition, schema);
+        StringBuilder qualifiedName = new StringBuilder();
+        qualifiedName.append(schema.getQualifiedName()).append("/_procedures_/").append(PROCEDURE_NAME);
+        assertEquals(procedure.getQualifiedName(), qualifiedName.toString());
+        assertEquals(procedure.getConnectorType(), CONNECTOR_TYPE);
+        assertEquals(procedure.getSchemaName(), SCHEMA_NAME);
+        assertEquals(procedure.getDatabaseName(), DATABASE_NAME);
+        assertEquals(procedure.getDatabaseQualifiedName(), database.getQualifiedName());
+        assertEquals(procedure.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
     @Test(
@@ -665,7 +721,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(guidsSeq, guidsPar);
         assertEquals(guids, guidsSeq);
 
-        assertEquals(response.getApproximateCount().longValue(), 15L);
+        assertEquals(response.getApproximateCount().longValue(), 16L);
         List<Asset> entities = response.getAssets();
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -674,10 +730,10 @@ public class SQLAssetTest extends AtlanLiveTest {
                 ((AggregationBucketResult) response.getAggregations().get("type"))
                         .getBuckets()
                         .size(),
-                8);
+                9);
 
         assertNotNull(entities);
-        assertEquals(entities.size(), 15);
+        assertEquals(entities.size(), 16);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof Connection);
@@ -701,83 +757,90 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(s.getName(), SCHEMA_NAME);
 
         one = entities.get(3);
+        assertTrue(one instanceof Procedure);
+        Procedure p = (Procedure) one;
+        assertEquals(p.getGuid(), procedure.getGuid());
+        assertEquals(p.getQualifiedName(), procedure.getQualifiedName());
+        assertEquals(p.getName(), PROCEDURE_NAME);
+
+        one = entities.get(4);
         assertTrue(one instanceof Table);
         Table t = (Table) one;
         assertEquals(t.getGuid(), table.getGuid());
         assertEquals(t.getQualifiedName(), table.getQualifiedName());
         assertEquals(t.getName(), TABLE_NAME);
 
-        one = entities.get(4);
+        one = entities.get(5);
         assertTrue(one instanceof View);
         View v = (View) one;
         assertEquals(v.getGuid(), view.getGuid());
         assertEquals(v.getQualifiedName(), view.getQualifiedName());
         assertEquals(v.getName(), VIEW_NAME);
 
-        one = entities.get(5);
+        one = entities.get(6);
         assertTrue(one instanceof MaterializedView);
         MaterializedView m = (MaterializedView) one;
         assertEquals(m.getGuid(), mview.getGuid());
         assertEquals(m.getQualifiedName(), mview.getQualifiedName());
         assertEquals(m.getName(), MVIEW_NAME);
 
-        one = entities.get(6);
-        assertTrue(one instanceof TablePartition);
-        TablePartition p = (TablePartition) one;
-        assertEquals(p.getGuid(), partition.getGuid());
-        assertEquals(p.getQualifiedName(), partition.getQualifiedName());
-        assertEquals(p.getName(), PARTITION_NAME);
-
         one = entities.get(7);
+        assertTrue(one instanceof TablePartition);
+        TablePartition tp = (TablePartition) one;
+        assertEquals(tp.getGuid(), partition.getGuid());
+        assertEquals(tp.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(tp.getName(), PARTITION_NAME);
+
+        one = entities.get(8);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         assertEquals(column.getGuid(), column1.getGuid());
         assertEquals(column.getQualifiedName(), column1.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME1);
 
-        one = entities.get(8);
+        one = entities.get(9);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column2.getGuid());
         assertEquals(column.getQualifiedName(), column2.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME2);
 
-        one = entities.get(9);
+        one = entities.get(10);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column3.getGuid());
         assertEquals(column.getQualifiedName(), column3.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME3);
 
-        one = entities.get(10);
+        one = entities.get(11);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column4.getGuid());
         assertEquals(column.getQualifiedName(), column4.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME4);
 
-        one = entities.get(11);
+        one = entities.get(12);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column5.getGuid());
         assertEquals(column.getQualifiedName(), column5.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME5);
 
-        one = entities.get(12);
+        one = entities.get(13);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column6.getGuid());
         assertEquals(column.getQualifiedName(), column6.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME6);
 
-        one = entities.get(13);
+        one = entities.get(14);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column7.getGuid());
         assertEquals(column.getQualifiedName(), column7.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME1);
 
-        one = entities.get(14);
+        one = entities.get(15);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column8.getGuid());
@@ -805,6 +868,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                     || a instanceof Schema
                     || a instanceof Table
                     || a instanceof View
+                    || a instanceof Procedure
                     || a instanceof MaterializedView
                     || a instanceof TablePartition
                     || a instanceof Column);
@@ -815,12 +879,13 @@ public class SQLAssetTest extends AtlanLiveTest {
                 || a instanceof Schema
                 || a instanceof Table
                 || a instanceof View
+                || a instanceof Procedure
                 || a instanceof MaterializedView
                 || a instanceof TablePartition
                 || a instanceof Column));
 
         List<Asset> results = response.stream().toList();
-        assertEquals(results.size(), 15);
+        assertEquals(results.size(), 16);
     }
 
     @Test(groups = {"asset.create.group.owners"})
