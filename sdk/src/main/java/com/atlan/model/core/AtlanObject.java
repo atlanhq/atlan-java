@@ -40,9 +40,9 @@ public abstract class AtlanObject implements Serializable {
         try {
             return client.writeValueAsString(this);
         } catch (IOException e) {
-            log.error("Unable to serialize this object: {}", this.getClass().getName(), e);
+            throw new IllegalStateException(
+                    "Unable to serialize: " + this.getClass().getName() + " -- " + e.getMessage(), e);
         }
-        return null;
     }
 
     /**
