@@ -73,9 +73,12 @@ class ADLSSync(
 
         val filesToDownload = mutableListOf<String>()
         val localFilesLastModified =
-            File(localDirectory).walkTopDown().filter { it.isFile }.map {
-                it.relativeTo(File(localDirectory)).path to it.lastModified()
-            }.toMap()
+            File(localDirectory)
+                .walkTopDown()
+                .filter { it.isFile }
+                .map {
+                    it.relativeTo(File(localDirectory)).path to it.lastModified()
+                }.toMap()
 
         if (adlsClient != null) {
             val fsClient = adlsClient.getFileSystemClient(containerName)
@@ -94,7 +97,9 @@ class ADLSSync(
                 val key = File(blob.name).relativeTo(File(prefix)).path
                 if (key.isNotBlank()) {
                     if (key !in localFilesLastModified ||
-                        blob.properties.lastModified.toInstant().toEpochMilli() > localFilesLastModified[key]!!
+                        blob.properties.lastModified
+                            .toInstant()
+                            .toEpochMilli() > localFilesLastModified[key]!!
                     ) {
                         filesToDownload.add(key)
                     }
@@ -212,7 +217,10 @@ class ADLSSync(
                 }
             } else if (blobContainerClient != null) {
                 blobContainerClient.listBlobs(ListBlobsOptions().setPrefix(prefix), null).associate {
-                    File(it.name).relativeTo(File(prefix)).path to it.properties.lastModified.toInstant().toEpochMilli()
+                    File(it.name).relativeTo(File(prefix)).path to
+                        it.properties.lastModified
+                            .toInstant()
+                            .toEpochMilli()
                 }
             } else {
                 throw IllegalStateException("No ADLS client configured -- cannot upload.")

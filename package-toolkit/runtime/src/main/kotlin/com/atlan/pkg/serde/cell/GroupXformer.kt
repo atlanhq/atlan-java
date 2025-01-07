@@ -23,9 +23,7 @@ object GroupXformer {
      * @param group to be encoded
      * @return the string-encoded form for that group
      */
-    fun encode(group: String): String {
-        return group
-    }
+    fun encode(group: String): String = group
 
     /**
      * Decodes (deserializes) a string form into a validated group name.

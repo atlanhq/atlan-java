@@ -115,19 +115,22 @@ object CustomMetadataExtender {
             val attrs = mutableListOf<AttributeDef>()
             cm.attributeDefs.forEach { attr ->
                 val options =
-                    attr.options.toBuilder()
+                    attr.options
+                        .toBuilder()
                         .applicableConnections(connectionQNs)
                         .applicableGlossaries(glossaryQNs)
                         .applicableDomains(domainQNs)
                         .build()
                 attrs.add(
-                    attr.toBuilder()
+                    attr
+                        .toBuilder()
                         .options(options)
                         .build(),
                 )
             }
             val revised =
-                cm.toBuilder()
+                cm
+                    .toBuilder()
                     .clearAttributeDefs()
                     .attributeDefs(attrs)
                     .build()

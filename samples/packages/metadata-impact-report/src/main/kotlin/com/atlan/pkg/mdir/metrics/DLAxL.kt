@@ -36,8 +36,9 @@ class DLAxL(
         caveats = "False positives could exist, when lineage is missing due to: not all data tools being loaded, improper sequence of crawling data tools, or due to bugs or lack of lineage support for the data tools involved.",
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(DLA.DASHBOARD_LEVEL))
             .withoutLineage()
             .pageSize(batchSize)
@@ -46,17 +47,15 @@ class DLAxL(
             .includesOnResults(DLA.ATTRIBUTES)
             .includeOnResults(Asset.HAS_LINEAGE)
             .includeOnRelations(Asset.NAME)
-    }
 
     /** {@inheritDoc} */
-    override fun getDetailedHeader(): Map<String, String> {
-        return mapOf(
+    override fun getDetailedHeader(): Map<String, String> =
+        mapOf(
             "Connector" to "Type of the data source",
             "Parent" to "Name of the parent that contains the dashboard-level asset",
             "Name" to "Name of the dashboard-level asset itself",
             "Link" to "Link to the detailed asset within Atlan",
         )
-    }
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {

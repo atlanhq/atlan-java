@@ -40,7 +40,8 @@ object AssetRefXformer {
             is Readme -> asset.description ?: ""
             is Link -> {
                 // Transform to a set of useful, non-overlapping info
-                Link._internal()
+                Link
+                    ._internal()
                     .name(asset.name)
                     .link(asset.link)
                     .build()
@@ -158,7 +159,12 @@ object AssetRefXformer {
                                 } else {
                                     // If the name has changed, update the name on the existing link
                                     logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
-                                    update = Link.updater(link.qualifiedName, related.name).link(link.link).nullFields(related.nullFields).build()
+                                    update =
+                                        Link
+                                            .updater(link.qualifiedName, related.name)
+                                            .link(link.link)
+                                            .nullFields(related.nullFields)
+                                            .build()
                                     break
                                 }
                             }
@@ -190,11 +196,10 @@ object AssetRefXformer {
     fun requiresHandling(
         fieldName: String,
         candidate: Any,
-    ): Boolean {
-        return when (fieldName) {
+    ): Boolean =
+        when (fieldName) {
             Asset.LINKS.atlanFieldName -> true
             Asset.README.atlanFieldName -> true
             else -> false
         }
-    }
 }

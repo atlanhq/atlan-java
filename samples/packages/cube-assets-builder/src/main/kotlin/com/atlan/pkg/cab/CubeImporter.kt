@@ -42,7 +42,8 @@ class CubeImporter(
         val name = deserializer.getValue(Cube.CUBE_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
-        return Cube.creator(name, connectionQN)
+        return Cube
+            .creator(name, connectionQN)
             .cubeDimensionCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }

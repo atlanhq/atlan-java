@@ -61,7 +61,8 @@ data class ImportResults(
                 var totalUpdated = 0L
                 var totalRestored = 0L
                 var totalSkipped = 0L
-                others.filterNotNull()
+                others
+                    .filterNotNull()
                     .forEach { result ->
                         totalCreated += result.numCreated
                         totalUpdated += result.numUpdated
@@ -74,7 +75,8 @@ data class ImportResults(
                 val skipped = OffHeapAssetCache(client, "ir-skipped")
                 val guidAssignments = mutableMapOf<String, String>()
                 val qualifiedNames = mutableMapOf<AssetIdentity, String>()
-                others.filterNotNull()
+                others
+                    .filterNotNull()
                     .forEach { result ->
                         guidAssignments.putAll(result.guidAssignments)
                         qualifiedNames.putAll(result.qualifiedNames)
@@ -127,14 +129,16 @@ data class ImportResults(
             var totalCreated = 0L
             var totalUpdated = 0L
             var totalRestored = 0L
-            results.filterNotNull()
+            results
+                .filterNotNull()
                 .forEach { result ->
                     totalCreated += result.primary.created?.size() ?: 0
                     totalUpdated += result.primary.updated?.size() ?: 0
                     totalRestored += result.primary.restored?.size() ?: 0
                 }
             val combined = OffHeapAssetCache(client, "allModified")
-            results.filterNotNull()
+            results
+                .filterNotNull()
                 .forEach { result ->
                     combined.extendedWith(result.primary.created, closeOriginal)
                     combined.extendedWith(result.primary.restored, closeOriginal)
@@ -170,7 +174,8 @@ data class ImportResults(
             var anyFailures = false
             val primaries = mutableListOf<Details>()
             val related = mutableListOf<Details>()
-            results.filterNotNull()
+            results
+                .filterNotNull()
                 .forEach { result ->
                     anyFailures = anyFailures || result.anyFailures
                     primaries.add(result.primary)

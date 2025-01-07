@@ -9,7 +9,9 @@ import com.atlan.pkg.model.Credential
 /**
  * Credentials captured for ADLS connectivity.
  */
-data class ADLSCredential(val from: Credential) {
+data class ADLSCredential(
+    val from: Credential,
+) {
     val clientId = from.username ?: ""
 
     /** Client secret provided, or the access key for Atlan's backing store if none was provided. */

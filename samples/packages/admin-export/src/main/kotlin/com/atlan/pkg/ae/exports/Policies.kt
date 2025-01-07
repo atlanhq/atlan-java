@@ -33,7 +33,8 @@ class Policies(
                 "Resources" to "Resources the policy controls",
             ),
         )
-        AuthPolicy.select(ctx.client)
+        AuthPolicy
+            .select(ctx.client)
             .includeOnResults(AuthPolicy.NAME)
             .includeOnResults(AuthPolicy.DESCRIPTION)
             .includeOnResults(AuthPolicy.ACCESS_CONTROL)
@@ -88,9 +89,10 @@ class Policies(
             }
 
             "glossary" -> {
-                policy.policyResources?.map {
-                    glossaryMap[it.substringAfter("entity:")]
-                }?.joinToString("\n") ?: ""
+                policy.policyResources
+                    ?.map {
+                        glossaryMap[it.substringAfter("entity:")]
+                    }?.joinToString("\n") ?: ""
             }
 
             "domain" -> {

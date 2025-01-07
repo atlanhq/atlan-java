@@ -46,10 +46,11 @@ interface AssetResolver {
         val parentPartialQN: String,
     )
 
-    data class ConnectionIdentity(val name: String, val type: String) {
-        override fun toString(): String {
-            return "$name/$type"
-        }
+    data class ConnectionIdentity(
+        val name: String,
+        val type: String,
+    ) {
+        override fun toString(): String = "$name/$type"
     }
 
     /**

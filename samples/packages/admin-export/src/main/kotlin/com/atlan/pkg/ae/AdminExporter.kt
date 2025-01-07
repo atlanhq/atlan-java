@@ -121,7 +121,8 @@ object AdminExporter {
 
     private fun preloadGlossaryNameMap(ctx: PackageContext<AdminExportCfg>): Map<String, String> {
         val map = mutableMapOf<String, String>()
-        Glossary.select(ctx.client)
+        Glossary
+            .select(ctx.client)
             .stream()
             .forEach {
                 map[it.qualifiedName] = it.name
@@ -131,7 +132,8 @@ object AdminExporter {
 
     private fun preloadConnectionMap(ctx: PackageContext<AdminExportCfg>): Map<String, ConnectionId> {
         val map = mutableMapOf<String, ConnectionId>()
-        Connection.select(ctx.client)
+        Connection
+            .select(ctx.client)
             .includeOnResults(Connection.CONNECTOR_TYPE)
             .stream()
             .forEach {
@@ -140,9 +142,10 @@ object AdminExporter {
         return map
     }
 
-    data class ConnectionId(val type: AtlanConnectorType, val name: String) {
-        override fun toString(): String {
-            return "$name (${type.value})"
-        }
+    data class ConnectionId(
+        val type: AtlanConnectorType,
+        val name: String,
+    ) {
+        override fun toString(): String = "$name (${type.value})"
     }
 }

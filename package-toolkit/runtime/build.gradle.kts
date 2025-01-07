@@ -347,9 +347,7 @@ open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.
     private val temporaryFiles = mutableListOf<File>()
     private var stats: ShadowStats? = null
 
-    override fun canTransformResource(element: FileTreeElement): Boolean {
-        return PluginProcessor.PLUGIN_CACHE_FILE == element.name
-    }
+    override fun canTransformResource(element: FileTreeElement): Boolean = PluginProcessor.PLUGIN_CACHE_FILE == element.name
 
     override fun transform(context: TransformerContext) {
         val temporaryFile = File.createTempFile("Log4j2Plugins", ".dat")
@@ -364,9 +362,7 @@ open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.
         }
     }
 
-    override fun hasTransformedResource(): Boolean {
-        return temporaryFiles.isNotEmpty()
-    }
+    override fun hasTransformedResource(): Boolean = temporaryFiles.isNotEmpty()
 
     override fun modifyOutputStream(
         os: ZipOutputStream,

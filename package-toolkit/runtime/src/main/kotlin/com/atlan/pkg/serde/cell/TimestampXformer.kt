@@ -15,13 +15,12 @@ object TimestampXformer {
      * @param ts epoch-based numeric timestamp
      * @return a human-readable date and time
      */
-    fun encode(ts: Long?): String {
-        return if (ts == null || ts == 0L) {
+    fun encode(ts: Long?): String =
+        if (ts == null || ts == 0L) {
             ""
         } else {
             FORMATTER.format(Instant.ofEpochMilli(ts))
         }
-    }
 
     /**
      * Decodes (deserializes) a human-readable date and time string form into an epoch-based
@@ -54,7 +53,5 @@ object TimestampXformer {
     fun decode(
         ts: Long?,
         fieldName: String,
-    ): Long? {
-        return ts
-    }
+    ): Long? = ts
 }

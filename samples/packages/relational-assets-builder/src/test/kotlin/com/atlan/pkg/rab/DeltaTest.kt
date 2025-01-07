@@ -83,7 +83,13 @@ class DeltaTest : PackageTest("rd") {
     @Test
     fun totalAssetsToDelete() {
         assertEquals(3, delta!!.assetsToDelete.size)
-        val types = delta!!.assetsToDelete.entrySet().map { it.key.typeName }.toList().toSet()
+        val types =
+            delta!!
+                .assetsToDelete
+                .entrySet()
+                .map { it.key.typeName }
+                .toList()
+                .toSet()
         assertEquals(2, types.size)
         assertTrue(types.contains(View.TYPE_NAME))
         assertTrue(types.contains(Column.TYPE_NAME))
@@ -107,7 +113,13 @@ class DeltaTest : PackageTest("rd") {
     @Test
     fun totalAssetsToReload() {
         assertEquals(3, delta!!.assetsToReload.size)
-        val types = delta!!.assetsToReload.entrySet().map { it.key.typeName }.toList().toSet()
+        val types =
+            delta!!
+                .assetsToReload
+                .entrySet()
+                .map { it.key.typeName }
+                .toList()
+                .toSet()
         assertEquals(3, types.size)
         assertTrue(types.contains(Connection.TYPE_NAME))
         assertTrue(types.contains(Table.TYPE_NAME))

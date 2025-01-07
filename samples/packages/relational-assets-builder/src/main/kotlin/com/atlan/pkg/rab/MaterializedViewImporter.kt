@@ -43,7 +43,8 @@ class MaterializedViewImporter(
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val schemaQN = "$connectionQN/${qnDetails.parentPartialQN}"
-        return MaterializedView.creator(name, schemaQN)
+        return MaterializedView
+            .creator(name, schemaQN)
             .columnCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }

@@ -27,7 +27,8 @@ class DetailedSearches(
                 "Qualified names" to "Unique name(s) of the first 20 assets that were found",
             ),
         )
-        SearchLog.searches(ctx.client, start, end)
+        SearchLog
+            .searches(ctx.client, start, end)
             .stream()
             .forEach {
                 writer.writeRecord(

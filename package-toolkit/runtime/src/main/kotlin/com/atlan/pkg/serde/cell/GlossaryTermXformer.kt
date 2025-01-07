@@ -65,13 +65,12 @@ object GlossaryTermXformer {
         ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
-    ): Asset {
-        return when (fieldName) {
+    ): Asset =
+        when (fieldName) {
             "assignedTerms", in TERM_TO_TERM_FIELDS,
             ->
                 ctx.termCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Term $assetRef not found (in $fieldName).")
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
-    }
 }

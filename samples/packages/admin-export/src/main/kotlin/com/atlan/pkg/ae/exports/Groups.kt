@@ -28,8 +28,16 @@ class Groups(
             ),
         )
         ctx.client.groups.list().forEach { group ->
-            val createdAt = group.attributes?.createdAt?.get(0)?.toLong() ?: -1
-            val updatedAt = group.attributes?.updatedAt?.get(0)?.toLong() ?: -1
+            val createdAt =
+                group.attributes
+                    ?.createdAt
+                    ?.get(0)
+                    ?.toLong() ?: -1
+            val updatedAt =
+                group.attributes
+                    ?.updatedAt
+                    ?.get(0)
+                    ?.toLong() ?: -1
             writer.writeRecord(
                 listOf(
                     group.alias,

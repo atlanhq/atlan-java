@@ -45,8 +45,8 @@ object DataTypeXformer {
      * @param type to map
      * @return the mapped data type
      */
-    private fun getMappedType(type: String): String? {
-        return if (spuriousValues.contains(type)) {
+    private fun getMappedType(type: String): String? =
+        if (spuriousValues.contains(type)) {
             // If it's in our list of spurious values, return null
             null
         } else {
@@ -54,7 +54,6 @@ object DataTypeXformer {
             // returning the received type itself
             typeMap.getOrDefault(type, type)
         }
-    }
 
     /**
      * Retrieve only the type name from the provided SQL type string.
@@ -63,8 +62,8 @@ object DataTypeXformer {
      * @param sqlType from which to retrieve the type name
      * @return the type name (alone), or null if none could be found
      */
-    private fun getTypeOnly(sqlType: String?): String? {
-        return if (sqlType != null) {
+    private fun getTypeOnly(sqlType: String?): String? =
+        if (sqlType != null) {
             if (sqlType.contains("(")) {
                 sqlType.substring(0, sqlType.indexOf("(")).trim { it <= ' ' }.uppercase()
             } else {
@@ -73,7 +72,6 @@ object DataTypeXformer {
         } else {
             null
         }
-    }
 
     /**
      * Retrieve the maximum length defined by the provided SQL type string.
@@ -85,7 +83,8 @@ object DataTypeXformer {
         if (sqlType != null) {
             if (sqlType.contains("(") && !sqlType.contains(",")) {
                 val length =
-                    sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(")"))
+                    sqlType
+                        .substring(sqlType.indexOf("(") + 1, sqlType.indexOf(")"))
                         .trim { it <= ' ' }
                 // TODO: should probably make this more general by catching a format exception...
                 if (length != "MAX") {
@@ -106,7 +105,8 @@ object DataTypeXformer {
         if (sqlType != null) {
             if (sqlType.contains("(") && sqlType.contains(",")) {
                 val precision =
-                    sqlType.substring(sqlType.indexOf("(") + 1, sqlType.indexOf(","))
+                    sqlType
+                        .substring(sqlType.indexOf("(") + 1, sqlType.indexOf(","))
                         .trim { it <= ' ' }
                 return precision.toInt()
             }
@@ -124,7 +124,8 @@ object DataTypeXformer {
         if (sqlType != null) {
             if (sqlType.contains("(") && sqlType.contains(",")) {
                 val scale =
-                    sqlType.substring(sqlType.indexOf(",") + 1, sqlType.indexOf(")"))
+                    sqlType
+                        .substring(sqlType.indexOf(",") + 1, sqlType.indexOf(")"))
                         .trim { it <= ' ' }
                 return scale.toDouble()
             }

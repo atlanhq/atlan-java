@@ -92,9 +92,7 @@ abstract class PackageTest(
      * @param input the string to make unique
      * @return the string with a unique suffix
      */
-    fun makeUnique(input: String): String {
-        return "${PREFIX}_${tag}_${input}_$nanoId"
-    }
+    fun makeUnique(input: String): String = "${PREFIX}_${tag}_${input}_$nanoId"
 
     /**
      * Validate (through assertions) that there are no errors recorded in the log file.
@@ -190,13 +188,19 @@ abstract class PackageTest(
         var response = request.search(client)
         var remainingActive = false
         if (isDeleteQuery) {
-            remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
+            remainingActive = response.assets
+                ?.filter { it.status != AtlanStatus.DELETED }
+                ?.toList()
+                ?.isNotEmpty() ?: false
         }
         while ((response.approximateCount < expectedSize || remainingActive) && count < (client.maxNetworkRetries * 2)) {
             Thread.sleep(HttpClient.waitTime(count).toMillis())
             response = request.search(client)
             if (isDeleteQuery) {
-                remainingActive = response.assets?.filter { it.status != AtlanStatus.DELETED }?.toList()?.isNotEmpty() ?: false
+                remainingActive = response.assets
+                    ?.filter { it.status != AtlanStatus.DELETED }
+                    ?.toList()
+                    ?.isNotEmpty() ?: false
             }
             count++
         }
@@ -330,7 +334,8 @@ abstract class PackageTest(
             val deletionType = AtlanDeleteType.PURGE
             results.forEach {
                 val assets =
-                    client.assets.select(true)
+                    client.assets
+                        .select(true)
                         .where(Asset.QUALIFIED_NAME.startsWith(it.qualifiedName))
                         .whereNot(Asset.TYPE_NAME.eq(Connection.TYPE_NAME))
                         .pageSize(50)
@@ -401,13 +406,15 @@ abstract class PackageTest(
     fun removeGlossary(name: String) {
         val glossary = Glossary.findByName(client, name)
         val terms =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
                 .toList()
         val categories =
-            GlossaryCategory.select(client)
+            GlossaryCategory
+                .select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossary.qualifiedName))
                 .stream()
                 .map { it.guid }
@@ -425,9 +432,7 @@ abstract class PackageTest(
     private fun getFile(
         filename: String,
         relativeTo: String,
-    ): File {
-        return if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
-    }
+    ): File = if (relativeTo.isBlank()) File(filename) else File("$relativeTo${File.separator}$filename")
 
     /**
      * Remove the provided domain, if it exists
@@ -436,7 +441,8 @@ abstract class PackageTest(
      */
     fun removeDomain(name: String) {
         val domainGuids =
-            DataDomain.select(client)
+            DataDomain
+                .select(client)
                 .where(DataDomain.NAME.eq(name))
                 .stream()
                 .map { it.guid }
@@ -455,7 +461,8 @@ abstract class PackageTest(
      */
     fun removeProduct(name: String) {
         val domainGuids =
-            DataProduct.select(client)
+            DataProduct
+                .select(client)
                 .where(DataProduct.NAME.eq(name))
                 .stream()
                 .map { it.guid }

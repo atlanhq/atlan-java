@@ -64,7 +64,8 @@ object ApiTokenConnectionAdmin {
     ): Asset {
         logger.info { "Looking up connection details: $connectionQN" }
         val found =
-            Connection.select(client)
+            Connection
+                .select(client)
                 .where(Connection.QUALIFIED_NAME.eq(connectionQN))
                 .includeOnResults(Connection.ADMIN_USERS)
                 .stream()
@@ -102,7 +103,8 @@ object ApiTokenConnectionAdmin {
         }
         try {
             val response =
-                connection.trimToRequired()
+                connection
+                    .trimToRequired()
                     .adminUsers(stillValidAdmins)
                     .adminUser(apiToken)
                     .build()

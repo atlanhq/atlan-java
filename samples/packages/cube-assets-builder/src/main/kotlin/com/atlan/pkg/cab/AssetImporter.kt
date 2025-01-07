@@ -151,8 +151,8 @@ abstract class AssetImporter(
         private fun calculatePath(
             parentField: String,
             appendToPath: String,
-        ): String {
-            return if (!parentField.contains(QN_DELIMITER)) {
+        ): String =
+            if (!parentField.contains(QN_DELIMITER)) {
                 CubeField.generateQualifiedName(parentField, appendToPath)
             } else {
                 val tokens = parentField.split(QN_DELIMITER)
@@ -165,7 +165,6 @@ abstract class AssetImporter(
                     "$appendToPath/$parentPath",
                 )
             }
-        }
     }
 
     /** {@inheritDoc} */
