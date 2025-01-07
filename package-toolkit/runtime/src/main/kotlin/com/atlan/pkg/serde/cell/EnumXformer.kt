@@ -5,9 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.enums.AtlanEnum
 
 object EnumXformer {
-    fun encode(enum: AtlanEnum): String {
-        return enum.value
-    }
+    fun encode(enum: AtlanEnum): String = enum.value
 
     fun decode(
         enum: String,

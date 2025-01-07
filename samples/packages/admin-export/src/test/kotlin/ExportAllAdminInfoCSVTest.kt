@@ -63,7 +63,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val file = "$testDirectory${File.separator}users.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
@@ -84,7 +85,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val file = "$testDirectory${File.separator}groups.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
@@ -103,7 +105,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val file = "$testDirectory${File.separator}personas.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
@@ -122,7 +125,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val file = "$testDirectory${File.separator}purposes.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
@@ -142,7 +146,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val file = "$testDirectory${File.separator}policies.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)

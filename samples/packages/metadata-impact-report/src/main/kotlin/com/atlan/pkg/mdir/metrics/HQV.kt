@@ -28,8 +28,9 @@ class HQV(
         caveats = "False negatives could exist (views not in the list), when: usage data is not tracked for the data stores for those views, or the views are used heavily but only infrequently and not within the last 30 days.",
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(listOf(View.TYPE_NAME, MaterializedView.TYPE_NAME)))
             .where(Asset.SOURCE_READ_COUNT.gt(100))
             .pageSize(batchSize)
@@ -39,11 +40,10 @@ class HQV(
             .aggregate("sum", Asset.SOURCE_READ_COUNT.sum())
             .includesOnResults(TLA.ATTRIBUTES)
             .includeOnResults(Asset.SOURCE_READ_COUNT)
-    }
 
     /** {@inheritDoc} */
-    override fun getDetailedHeader(): Map<String, String> {
-        return mapOf(
+    override fun getDetailedHeader(): Map<String, String> =
+        mapOf(
             "Connector" to "Type of the data source",
             "Database" to "Name of the database for the table-level asset",
             "Schema" to "Name of the schema for the table-level asset",
@@ -51,7 +51,6 @@ class HQV(
             "Queries" to "Number of queries in the last 30 days against this view",
             "Link" to "Link to the detailed asset within Atlan",
         )
-    }
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {

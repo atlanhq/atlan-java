@@ -11,7 +11,9 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
 
-class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, "domain") {
+class DataDomainCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<DataDomain>(ctx, "domain") {
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(DataDomain.NAME, DataDomain.STATUS, DataDomain.PARENT_DOMAIN, DataDomain.PARENT_DOMAIN_QUALIFIED_NAME)
@@ -35,7 +37,8 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
     ): DataDomain? {
         try {
             val dataDomain =
-                DataDomain.select(client)
+                DataDomain
+                    .select(client)
                     .where(DataDomain.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -83,7 +86,8 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
     override fun refreshCache() {
         val count = DataDomain.select(client).count()
         logger.info { "Caching all $count data domains, up-front..." }
-        DataDomain.select(client)
+        DataDomain
+            .select(client)
             .includesOnResults(includesOnResults)
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Desc))
             .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
@@ -95,7 +99,8 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
         // Note: this should NOT be streamed in parallel, as we could otherwise have situations
         // where a parent and child are processed at the same time (in separate threads) and
         // therefore the child becomes unable to resolve its parent's identity.
-        DataDomain.select(client)
+        DataDomain
+            .select(client)
             .includesOnResults(includesOnResults)
             .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Asc))

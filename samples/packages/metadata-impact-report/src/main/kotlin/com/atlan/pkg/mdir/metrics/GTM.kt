@@ -24,10 +24,10 @@ class GTM(
         logger,
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return GlossaryTerm.select(client)
+    override fun query(): FluentSearchBuilder<*, *> =
+        GlossaryTerm
+            .select(client)
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", GlossaryTerm.ANCHOR.bucketBy(100))
-    }
 }

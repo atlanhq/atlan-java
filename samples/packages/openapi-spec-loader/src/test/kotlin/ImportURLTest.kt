@@ -52,7 +52,8 @@ class ImportURLTest : PackageTest("u") {
     fun specCreated() {
         val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APISpec.select(client)
+            APISpec
+                .select(client)
                 .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APISpec.NAME)
                 .includeOnResults(APISpec.API_SPEC_TYPE)
@@ -76,7 +77,8 @@ class ImportURLTest : PackageTest("u") {
     fun pathsCreated() {
         val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APIPath.select(client)
+            APIPath
+                .select(client)
                 .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APIPath.NAME)
                 .includeOnResults(APIPath.DESCRIPTION)
@@ -98,7 +100,10 @@ class ImportURLTest : PackageTest("u") {
             assertNotNull(one.apiSpec)
             assertTrue(one.apiSpec is APISpec)
             assertNotNull(one.apiSpec.uniqueAttributes)
-            assertTrue(one.apiSpec.uniqueAttributes.qualifiedName.startsWith(connectionQN))
+            assertTrue(
+                one.apiSpec.uniqueAttributes.qualifiedName
+                    .startsWith(connectionQN),
+            )
         }
     }
 

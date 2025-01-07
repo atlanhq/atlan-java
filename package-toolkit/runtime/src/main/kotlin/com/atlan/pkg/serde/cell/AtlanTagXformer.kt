@@ -49,8 +49,8 @@ object AtlanTagXformer {
     fun decode(
         client: AtlanClient,
         atlanTag: String,
-    ): AtlanTag? {
-        return if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
+    ): AtlanTag? =
+        if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
             val builder = AtlanTag.builder()
             val typeName = decodeAttributes(client, tokens[0], builder)
@@ -60,7 +60,6 @@ object AtlanTagXformer {
         } else {
             null
         }
-    }
 
     private fun encodePropagation(atlanTag: AtlanTag): PropagationType {
         return if (atlanTag.propagate) {
@@ -82,21 +81,24 @@ object AtlanTagXformer {
         if (atlanTagTokens.size > 1) {
             when (atlanTagTokens[1].uppercase()) {
                 PropagationType.FULL.name ->
-                    builder.propagate(
-                        true,
-                    ).removePropagationsOnEntityDelete(true)
+                    builder
+                        .propagate(
+                            true,
+                        ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(false)
                         .restrictPropagationThroughHierarchy(false)
                 PropagationType.HIERARCHY_ONLY.name ->
-                    builder.propagate(
-                        true,
-                    ).removePropagationsOnEntityDelete(true)
+                    builder
+                        .propagate(
+                            true,
+                        ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(true)
                         .restrictPropagationThroughHierarchy(false)
                 PropagationType.LINEAGE_ONLY.name ->
-                    builder.propagate(
-                        true,
-                    ).removePropagationsOnEntityDelete(true)
+                    builder
+                        .propagate(
+                            true,
+                        ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(false)
                         .restrictPropagationThroughHierarchy(true)
                 else -> builder.propagate(false)
@@ -110,8 +112,8 @@ object AtlanTagXformer {
     private fun encodeAttributes(
         client: AtlanClient,
         atlanTag: AtlanTag,
-    ): String {
-        return if (atlanTag.sourceTagAttachments.isNullOrEmpty()) {
+    ): String =
+        if (atlanTag.sourceTagAttachments.isNullOrEmpty()) {
             ""
         } else {
             val attachments = mutableListOf<String>()
@@ -135,14 +137,13 @@ object AtlanTagXformer {
             }
             if (attachments.isNotEmpty()) " {{${attachments.joinToString(ATTACHMENT_DELIMITER)}}}" else ""
         }
-    }
 
     private fun decodeAttributes(
         client: AtlanClient,
         atlanTag: String,
         builder: AtlanTagBuilder<*, *>,
-    ): String {
-        return if (atlanTag.contains(" {{") && atlanTag.contains("}}")) {
+    ): String =
+        if (atlanTag.contains(" {{") && atlanTag.contains("}}")) {
             val simpleTagName = atlanTag.substringBefore(" {{")
             val encodedAttrs = atlanTag.substring(atlanTag.indexOf(" {{") + 3, atlanTag.indexOf("}}"))
             val attachments = encodedAttrs.split(ATTACHMENT_DELIMITER)
@@ -178,7 +179,6 @@ object AtlanTagXformer {
         } else {
             atlanTag
         }
-    }
 
     private fun encodeSourceTagIdentity(
         client: AtlanClient,

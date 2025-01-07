@@ -33,14 +33,19 @@ class Users(
             ),
         )
         val request =
-            UserRequest.builder()
+            UserRequest
+                .builder()
                 .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
                 .column("profileRole")
                 .column("profileRoleOther")
                 .build()
         ctx.client.users.list(request).forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
-            val groups = ctx.client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name ?: "" } ?: ""
+            val groups =
+                ctx.client.users
+                    .listGroups(user.id)
+                    ?.records
+                    ?.joinToString("\n") { it.name ?: "" } ?: ""
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)

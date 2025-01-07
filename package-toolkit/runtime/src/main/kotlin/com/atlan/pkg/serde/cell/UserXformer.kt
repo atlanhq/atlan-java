@@ -25,9 +25,7 @@ object UserXformer {
      * @param user to be encoded
      * @return the string-encoded form for that user
      */
-    fun encode(user: String): String {
-        return user
-    }
+    fun encode(user: String): String = user
 
     /**
      * Decodes (deserializes) a string form into a validated username.

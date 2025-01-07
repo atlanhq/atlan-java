@@ -9,7 +9,9 @@ import com.atlan.pkg.model.Credential
 /**
  * Credentials captured for S3 connectivity.
  */
-data class S3Credential(val from: Credential) {
+data class S3Credential(
+    val from: Credential,
+) {
     val accessKey = from.username ?: ""
     val secretKey = from.password ?: ""
 

@@ -27,7 +27,8 @@ class AwD(
     override fun query(): FluentSearchBuilder<*, *> {
         val hasSystemDesc = AwDC(client, batchSize, logger).query().build().toQuery()
         val hasUserDesc = AwDU(client, batchSize, logger).query().build().toQuery()
-        return client.assets.select()
+        return client.assets
+            .select()
             .whereNot(Asset.TYPE_NAME.`in`(EXCLUDE_ASSETS))
             .whereSome(hasSystemDesc)
             .whereSome(hasUserDesc)

@@ -34,7 +34,8 @@ class Personas(
                 "Domains" to "Domains controlled by the policies on this persona",
             ),
         )
-        Persona.select(ctx.client)
+        Persona
+            .select(ctx.client)
             .includeOnResults(Persona.NAME)
             .includeOnResults(Persona.DESCRIPTION)
             .includeOnResults(Persona.PERSONA_USERS)

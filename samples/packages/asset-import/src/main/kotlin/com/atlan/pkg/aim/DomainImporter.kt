@@ -177,9 +177,7 @@ class DomainImporter(
     }
 
     /** Pre-process the assets import file. */
-    private fun preprocess(): RowPreprocessor.Results {
-        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-    }
+    private fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
 
     private class Preprocessor(
         originalFile: String,

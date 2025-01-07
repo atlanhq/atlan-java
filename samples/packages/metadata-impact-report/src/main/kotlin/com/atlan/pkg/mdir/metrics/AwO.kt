@@ -27,7 +27,8 @@ class AwO(
     override fun query(): FluentSearchBuilder<*, *> {
         val hasIndividualOwner = AwOU(client, batchSize, logger).query().build().toQuery()
         val hasGroupOwner = AwOG(client, batchSize, logger).query().build().toQuery()
-        return client.assets.select()
+        return client.assets
+            .select()
             .whereNot(Asset.TYPE_NAME.`in`(EXCLUDE_ASSETS))
             .whereSome(hasIndividualOwner)
             .whereSome(hasGroupOwner)

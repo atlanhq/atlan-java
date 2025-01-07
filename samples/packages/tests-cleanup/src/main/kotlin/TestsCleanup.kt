@@ -52,7 +52,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val glossaries =
-            Glossary.select(client, true)
+            Glossary
+                .select(client, true)
                 .where(Glossary.NAME.startsWith(prefix))
                 .includeOnResults(Glossary.NAME)
                 .stream()
@@ -62,7 +63,8 @@ object TestsCleanup {
             val qn = glossary.qualifiedName
             val name = glossary.name
             val terms =
-                GlossaryTerm.select(client, true)
+                GlossaryTerm
+                    .select(client, true)
                     .where(GlossaryTerm.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -70,7 +72,8 @@ object TestsCleanup {
             logger.info { "Purging ${terms.size} terms from glossary: $name" }
             purgeByGuids(client, terms)
             val categories =
-                GlossaryCategory.select(client, true)
+                GlossaryCategory
+                    .select(client, true)
                     .where(GlossaryCategory.ANCHOR.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -82,14 +85,19 @@ object TestsCleanup {
         }
     }
 
-    data class AssetDetails(val name: String, val qualifiedName: String, val guid: String)
+    data class AssetDetails(
+        val name: String,
+        val qualifiedName: String,
+        val guid: String,
+    )
 
     private fun purgeProducts(
         client: AtlanClient,
         prefix: String,
     ) {
         val list =
-            DataProduct.select(client, true)
+            DataProduct
+                .select(client, true)
                 .where(DataProduct.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -103,7 +111,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val list =
-            DataDomain.select(client, true)
+            DataDomain
+                .select(client, true)
                 .where(DataDomain.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -117,7 +126,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val list =
-            Connection.select(client, true)
+            Connection
+                .select(client, true)
                 .where(Connection.NAME.startsWith(prefix))
                 .stream()
                 .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
@@ -126,7 +136,8 @@ object TestsCleanup {
             val qn = connection.qualifiedName
             val name = connection.name
             val assets =
-                client.assets.select(true)
+                client.assets
+                    .select(true)
                     .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
                     .stream()
                     .map { it.guid }
@@ -143,7 +154,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val list =
-            Purpose.select(client, true)
+            Purpose
+                .select(client, true)
                 .where(Purpose.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -157,7 +169,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val list =
-            Persona.select(client, true)
+            Persona
+                .select(client, true)
                 .where(Persona.NAME.startsWith(prefix))
                 .stream()
                 .map { it.guid }
@@ -171,7 +184,8 @@ object TestsCleanup {
         prefix: String,
     ) {
         val enums =
-            client.typeDefs.list(AtlanTypeCategory.ENUM)
+            client.typeDefs
+                .list(AtlanTypeCategory.ENUM)
                 .enumDefs
                 .stream()
                 .filter { it.name.startsWith(prefix) }
@@ -182,7 +196,8 @@ object TestsCleanup {
             getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
         }
         val list =
-            client.typeDefs.list(AtlanTypeCategory.CUSTOM_METADATA)
+            client.typeDefs
+                .list(AtlanTypeCategory.CUSTOM_METADATA)
                 .customMetadataDefs
                 .stream()
                 .filter { it.displayName.startsWith(prefix) }
@@ -191,7 +206,8 @@ object TestsCleanup {
         list.forEach { cm ->
             val badgeQNPrefix = "badges/global/${cm.internalName}."
             val badges =
-                Badge.select(client, true)
+                Badge
+                    .select(client, true)
                     .where(Badge.QUALIFIED_NAME.startsWith(badgeQNPrefix))
                     .stream()
                     .map { it.guid }
@@ -207,14 +223,18 @@ object TestsCleanup {
         }
     }
 
-    data class TypeDefDetails(val name: String, val internalName: String)
+    data class TypeDefDetails(
+        val name: String,
+        val internalName: String,
+    )
 
     private fun purgeTags(
         client: AtlanClient,
         prefix: String,
     ) {
         val list =
-            client.typeDefs.list(AtlanTypeCategory.ATLAN_TAG)
+            client.typeDefs
+                .list(AtlanTypeCategory.ATLAN_TAG)
                 .atlanTagDefs
                 .stream()
                 .filter { it.displayName.startsWith(prefix) }
@@ -259,7 +279,5 @@ object TestsCleanup {
         }
     }
 
-    private fun getPrivilegedClient(client: AtlanClient): AtlanClient {
-        return AtlanClient("INTERNAL", client.impersonate.escalate())
-    }
+    private fun getPrivilegedClient(client: AtlanClient): AtlanClient = AtlanClient("INTERNAL", client.impersonate.escalate())
 }

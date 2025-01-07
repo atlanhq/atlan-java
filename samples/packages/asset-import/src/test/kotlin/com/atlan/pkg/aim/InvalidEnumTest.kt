@@ -51,7 +51,8 @@ class InvalidEnumTest : PackageTest("ie") {
 
     override fun teardown() {
         val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
-        Table.select(client)
+        Table
+            .select(client)
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
             .where(Table.NAME.eq(table))
             .stream()

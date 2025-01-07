@@ -42,7 +42,8 @@ class DatabaseImporter(
         val name = deserializer.getValue(Database.DATABASE_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
-        return Database.creator(name, connectionQN)
+        return Database
+            .creator(name, connectionQN)
             .schemaCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toInt())
     }
 }

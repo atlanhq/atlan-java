@@ -32,9 +32,7 @@ class ExcelReader(
      *
      * @return boolean indicating whether the sheet is present (true) or not (false)
      */
-    fun hasSheet(name: String): Boolean {
-        return workbook.getSheet(name) != null
-    }
+    fun hasSheet(name: String): Boolean = workbook.getSheet(name) != null
 
     /**
      * Retrieve all rows from the specified sheet of the Excel workbook, by default using the
@@ -47,9 +45,7 @@ class ExcelReader(
     fun getRowsFromSheet(
         index: Int,
         headerRow: Int = 0,
-    ): List<Map<String, String>> {
-        return getRowsFromSheet(workbook.getSheetAt(index), headerRow)
-    }
+    ): List<Map<String, String>> = getRowsFromSheet(workbook.getSheetAt(index), headerRow)
 
     /**
      * Retrieve all rows from the specified sheet of the Excel workbook, by default using the

@@ -47,16 +47,56 @@ object CanonicalExampleTest {
         assertEquals(1, model.shared.supertypeDefinition.superTypes.size)
         assertEquals("Catalog", model.shared.supertypeDefinition.superTypes[0])
         assertNotNull(model.shared.supertypeDefinition.attributeDefs)
-        assertEquals(3, model.shared.supertypeDefinition.attributeDefs!!.size)
-        assertEquals("customSourceId", model.shared.supertypeDefinition.attributeDefs!![0].name)
-        assertEquals("Unique identifier for the Custom asset from the source system.", model.shared.supertypeDefinition.attributeDefs!![0].description)
-        assertEquals("string", model.shared.supertypeDefinition.attributeDefs!![0].typeName)
-        assertEquals("customDatasetName", model.shared.supertypeDefinition.attributeDefs!![1].name)
-        assertEquals("Simple name of the dataset in which this asset exists, or empty if it is itself a dataset.", model.shared.supertypeDefinition.attributeDefs!![1].description)
-        assertEquals("string", model.shared.supertypeDefinition.attributeDefs!![1].typeName)
-        assertEquals("customDatasetQualifiedName", model.shared.supertypeDefinition.attributeDefs!![2].name)
-        assertEquals("Unique name of the dataset in which this asset exists, or empty if it is itself a dataset.", model.shared.supertypeDefinition.attributeDefs!![2].description)
-        assertEquals("string", model.shared.supertypeDefinition.attributeDefs!![2].typeName)
+        assertEquals(
+            3,
+            model.shared.supertypeDefinition.attributeDefs!!
+                .size,
+        )
+        assertEquals(
+            "customSourceId",
+            model.shared.supertypeDefinition.attributeDefs!![0]
+                .name,
+        )
+        assertEquals(
+            "Unique identifier for the Custom asset from the source system.",
+            model.shared.supertypeDefinition.attributeDefs!![0]
+                .description,
+        )
+        assertEquals(
+            "string",
+            model.shared.supertypeDefinition.attributeDefs!![0]
+                .typeName,
+        )
+        assertEquals(
+            "customDatasetName",
+            model.shared.supertypeDefinition.attributeDefs!![1]
+                .name,
+        )
+        assertEquals(
+            "Simple name of the dataset in which this asset exists, or empty if it is itself a dataset.",
+            model.shared.supertypeDefinition.attributeDefs!![1]
+                .description,
+        )
+        assertEquals(
+            "string",
+            model.shared.supertypeDefinition.attributeDefs!![1]
+                .typeName,
+        )
+        assertEquals(
+            "customDatasetQualifiedName",
+            model.shared.supertypeDefinition.attributeDefs!![2]
+                .name,
+        )
+        assertEquals(
+            "Unique name of the dataset in which this asset exists, or empty if it is itself a dataset.",
+            model.shared.supertypeDefinition.attributeDefs!![2]
+                .description,
+        )
+        assertEquals(
+            "string",
+            model.shared.supertypeDefinition.attributeDefs!![2]
+                .typeName,
+        )
     }
 
     @Test

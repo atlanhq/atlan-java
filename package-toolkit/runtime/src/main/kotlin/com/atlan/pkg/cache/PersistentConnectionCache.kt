@@ -115,7 +115,8 @@ class PersistentConnectionCache(
                         val order = results.getInt("order_seq")
                         val tenantId = results.getString("tenant_id")
                         list.add(
-                            Column._internal()
+                            Column
+                                ._internal()
                                 .typeName(typeName)
                                 .qualifiedName(qualifiedName)
                                 .connectionQualifiedName(connectionQN)

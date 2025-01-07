@@ -34,7 +34,8 @@ class DetailedUserChanges(
             ),
         )
         val builder =
-            AuditSearch.builder(ctx.client)
+            AuditSearch
+                .builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
         if (ctx.config.changesByUser.isNotEmpty()) {
             builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
@@ -54,7 +55,8 @@ class DetailedUserChanges(
         if (end > 0) {
             builder.where(AuditSearchRequest.CREATED.lt(end))
         }
-        builder.stream()
+        builder
+            .stream()
             .forEach {
                 val agent =
                     when (it.action) {

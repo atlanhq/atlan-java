@@ -89,7 +89,12 @@ object OpenAPISpecLoader {
         batchSize: Int,
         outputDirectory: String,
     ) {
-        val fileType = Paths.get(sourceFile).toFile().extension.lowercase()
+        val fileType =
+            Paths
+                .get(sourceFile)
+                .toFile()
+                .extension
+                .lowercase()
         when (fileType) {
             "json" -> {
                 logger.info { "Loading OpenAPI specification from $sourceFile into: $connectionQN" }
@@ -134,7 +139,8 @@ object OpenAPISpecLoader {
         batchSize: Int,
     ) {
         val toCreate =
-            APISpec.creator(spec.title, connectionQN)
+            APISpec
+                .creator(spec.title, connectionQN)
                 .sourceURL(spec.sourceURL)
                 .apiSpecType(spec.openAPIVersion)
                 .description(spec.description)
@@ -185,7 +191,8 @@ object OpenAPISpecLoader {
                         addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
                         addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
                         val path =
-                            APIPath.creator(pathUrl, specQN)
+                            APIPath
+                                .creator(pathUrl, specQN)
                                 .description(desc.toString())
                                 .apiPathRawURI(pathUrl)
                                 .apiPathSummary(pathDetails.summary)
@@ -220,7 +227,12 @@ object OpenAPISpecLoader {
     ) {
         if (operation != null) {
             operations.add(name)
-            description.append("| `").append(name).append("` |").append(operation.summary).append(" |\n")
+            description
+                .append("| `")
+                .append(name)
+                .append("` |")
+                .append(operation.summary)
+                .append(" |\n")
         }
     }
 
@@ -228,7 +240,9 @@ object OpenAPISpecLoader {
      * Utility class for parsing and reading the contents of an OpenAPI spec file,
      * using the Swagger parser.
      */
-    class OpenAPISpecReader(url: String) {
+    class OpenAPISpecReader(
+        url: String,
+    ) {
         private val spec: OpenAPI
 
         val sourceURL: String

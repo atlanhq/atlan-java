@@ -39,7 +39,8 @@ class AssetChanges(
             ),
         )
         val builder =
-            AuditSearch.builder(ctx.client)
+            AuditSearch
+                .builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
                 .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(ctx.config.changesMax.toInt()))
         if (ctx.config.changesByUser.isNotEmpty()) {

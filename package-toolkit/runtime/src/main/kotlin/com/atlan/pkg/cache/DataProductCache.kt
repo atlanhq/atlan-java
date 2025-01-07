@@ -12,7 +12,9 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
 
-class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx, "product") {
+class DataProductCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<DataProduct>(ctx, "product") {
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(DataProduct.NAME, DataProduct.DATA_DOMAIN)
@@ -34,7 +36,8 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
             if (domain != null) {
                 try {
                     val request =
-                        DataProduct.select(client)
+                        DataProduct
+                            .select(client)
                             .where(DataProduct.NAME.eq(productName))
                             .includesOnResults(includesOnResults)
                             .includeOnResults(DataProduct.STATUS)
@@ -82,7 +85,8 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
     ): DataProduct? {
         try {
             val dp =
-                DataProduct.select(client)
+                DataProduct
+                    .select(client)
                     .where(DataProduct.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
@@ -108,15 +112,14 @@ class DataProductCache(val ctx: PackageContext<*>) : AssetCache<DataProduct>(ctx
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: DataProduct): String {
-        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(ctx, asset.dataDomain as DataDomain)}"
-    }
+    override fun getIdentityForAsset(asset: DataProduct): String = "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(ctx, asset.dataDomain as DataDomain)}"
 
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = DataProduct.select(client).count()
         logger.info { "Caching all $count data products, up-front..." }
-        DataProduct.select(client)
+        DataProduct
+            .select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

@@ -52,7 +52,8 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private val directoryPrefix = LakeTagSynchronizer.OUTPUT_SUBDIR
 
     private fun createConnections() {
-        Connection.creator(client, c1, connectorType)
+        Connection
+            .creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
@@ -79,28 +80,32 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     private fun createConnectionMap() {
         val connectionMap = mapOf("dev" to "$connectionQualifiedName/$databaseName")
-        Paths.get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON).toFile()
+        Paths
+            .get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON)
+            .toFile()
             .appendText(mapper.writeValueAsString(connectionMap))
     }
 
     private fun copyTagFile() {
-        Paths.get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
+        Paths
+            .get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
             .copyTo(Paths.get(testDirectory, directoryPrefix, "${TAG_FILE_NAME_PREFIX}_1.json"))
     }
 
     private fun createEnums() {
         val enumDef =
-            EnumDef.creator(
-                enum1,
-                listOf(PUBLIC, NON_PI, FULL_HISTORY),
-            )
-                .build()
+            EnumDef
+                .creator(
+                    enum1,
+                    listOf(PUBLIC, NON_PI, FULL_HISTORY),
+                ).build()
         enumDef.create(client)
     }
 
     private fun createCustomMetadata() {
         createEnums()
-        CustomMetadataDef.creator(cm1)
+        CustomMetadataDef
+            .creator(cm1)
             .attributeDef(AttributeDef.of(client, attr1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .attributeDef(AttributeDef.of(client, attr2, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .attributeDef(AttributeDef.of(client, attr3, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
@@ -115,7 +120,9 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
                 "privacy_sensitivity" to "$cm1::$attr2",
                 "data_load_method" to "$cm1::$attr3",
             )
-        Paths.get(testDirectory, directoryPrefix, METADATA_MAP_JSON).toFile()
+        Paths
+            .get(testDirectory, directoryPrefix, METADATA_MAP_JSON)
+            .toFile()
             .appendText(mapper.writeValueAsString(metaDataMap))
     }
 

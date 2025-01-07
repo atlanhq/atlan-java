@@ -38,16 +38,17 @@ class EnumCreatorTest : PackageTest("en") {
 
     private fun createEnum() {
         val enumDef =
-            EnumDef.creator(
-                enum1,
-                listOf(ONE, FOUR),
-            )
-                .build()
+            EnumDef
+                .creator(
+                    enum1,
+                    listOf(ONE, FOUR),
+                ).build()
         enumDef.create(client)
     }
 
     private fun createCustomMetadata() {
-        CustomMetadataDef.creator(cm1)
+        CustomMetadataDef
+            .creator(cm1)
             .attributeDef(AttributeDef.of(client, ATTR1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .attributeDef(AttributeDef.of(client, ATTR2, AtlanCustomAttributePrimitiveType.STRING, enum1, false))
             .build()

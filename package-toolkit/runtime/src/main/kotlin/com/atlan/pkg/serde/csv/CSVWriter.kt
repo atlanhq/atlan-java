@@ -23,9 +23,14 @@ import java.util.stream.Stream
  */
 class CSVWriter
     @JvmOverloads
-    constructor(path: String, fieldSeparator: Char = ',') : Closeable, TabularWriter {
+    constructor(
+        path: String,
+        fieldSeparator: Char = ',',
+    ) : Closeable,
+        TabularWriter {
         private val writer =
-            CsvWriter.builder()
+            CsvWriter
+                .builder()
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .quoteStrategy(QuoteStrategies.NON_EMPTY)
