@@ -517,21 +517,51 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the minimal request necessary to create the table partition, as a builder
      */
     public static TablePartitionBuilder<?, ?> creator(String name, String tableQualifiedName) {
-        String[] tokens = tableQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String tableName = StringUtils.getNameFromQualifiedName(tableQualifiedName);
         String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(tableQualifiedName);
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(
+                name,
+                connectionQualifiedName,
+                databaseName,
+                databaseQualifiedName,
+                schemaName,
+                schemaQualifiedName,
+                tableName,
+                tableQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a TablePartition.
+     *
+     * @param name of the TablePartition
+     * @param connectionQualifiedName unique name of the connection in which to create the TablePartition
+     * @param databaseName simple name of the Database in which to create the TablePartition
+     * @param databaseQualifiedName unique name of the Database in which to create the TablePartition
+     * @param schemaName simple name of the Schema in which to create the TablePartition
+     * @param schemaQualifiedName unique name of the Schema in which to create the TablePartition
+     * @param tableName simple name of the Table in which to create the TablePartition
+     * @param tableQualifiedName unique name of the Table in which to create the TablePartition
+     * @return the minimal request necessary to create the TablePartition, as a builder
+     */
+    public static TablePartitionBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String databaseName,
+            String databaseQualifiedName,
+            String schemaName,
+            String schemaQualifiedName,
+            String tableName,
+            String tableQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return TablePartition._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
-                .qualifiedName(generateQualifiedName(name, tableQualifiedName))
+                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
-                .tableName(tableName)
-                .tableQualifiedName(tableQualifiedName)
                 .parentTable(Table.refByQualifiedName(tableQualifiedName))
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -544,11 +574,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * Generate a unique table partition name.
      *
      * @param name of the table partition
-     * @param tableQualifiedName unique name of the table in which this partition exists
+     * @param schemaQualifiedName unique name of the schema in which this partition exists
      * @return a unique name for the table partition
      */
-    public static String generateQualifiedName(String name, String tableQualifiedName) {
-        return tableQualifiedName + "/" + name;
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
     }
 
     /**

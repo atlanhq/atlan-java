@@ -110,6 +110,33 @@ public interface ICatalog {
             case AirflowTask.TYPE_NAME:
                 ref = AirflowTask.refByQualifiedName(qualifiedName);
                 break;
+            case AnaplanApp.TYPE_NAME:
+                ref = AnaplanApp.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanDimension.TYPE_NAME:
+                ref = AnaplanDimension.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanLineItem.TYPE_NAME:
+                ref = AnaplanLineItem.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanList.TYPE_NAME:
+                ref = AnaplanList.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanModel.TYPE_NAME:
+                ref = AnaplanModel.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanModule.TYPE_NAME:
+                ref = AnaplanModule.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanPage.TYPE_NAME:
+                ref = AnaplanPage.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanView.TYPE_NAME:
+                ref = AnaplanView.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanWorkspace.TYPE_NAME:
+                ref = AnaplanWorkspace.refByQualifiedName(qualifiedName);
+                break;
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
                 break;
@@ -223,6 +250,12 @@ public interface ICatalog {
                 break;
             case DatabricksUnityCatalogTag.TYPE_NAME:
                 ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
+                break;
+            case DataverseAttribute.TYPE_NAME:
+                ref = DataverseAttribute.refByQualifiedName(qualifiedName);
+                break;
+            case DataverseEntity.TYPE_NAME:
+                ref = DataverseEntity.refByQualifiedName(qualifiedName);
                 break;
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
