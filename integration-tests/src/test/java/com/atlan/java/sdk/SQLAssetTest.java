@@ -164,7 +164,7 @@ public class SQLAssetTest extends AtlanLiveTest {
      *
      * @param client connectivity to the Atlan tenant
      * @param name unique name for the table
-     * @param definition body of the procedure definition
+     * @param definition body of the procedure
      * @param schema in which to create the table
      * @return the created table
      * @throws AtlanException on any errors creating the table
