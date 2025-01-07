@@ -427,7 +427,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * Builds the minimal object necessary to create a procedure.
      *
      * @param name of the table
-     * @param definition of the procdure
+     * @param definition of the procedure
      * @param schema in which the table should be created, which must have at least
      *               a qualifiedName
      * @return the minimal request necessary to create the table, as a builder
@@ -456,8 +456,8 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     /**
      * Builds the minimal object necessary to create a procedure.
      *
-     * @param name of the tabl
-     * @param definition of the procdure
+     * @param name of the table
+     * @param definition of the procedure
      * @param schemaQualifiedName unique name of the schema in which this table exists
      * @return the minimal request necessary to create the table, as a builder
      */
@@ -480,7 +480,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * Builds the minimal object necessary to create a procedure.
      *
      * @param name of the table
-     * @param definition of the procdure
+     * @param definition of the procedure
      * @param connectionQualifiedName unique name of the connection in which to create the Table
      * @param databaseName simple name of the Database in which to create the Table
      * @param databaseQualifiedName unique name of the Database in which to create the Table
