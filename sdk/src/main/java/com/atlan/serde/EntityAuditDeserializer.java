@@ -69,15 +69,15 @@ public class EntityAuditDeserializer extends StdDeserializer<EntityAudit> {
         AuditDetail auditDetail;
         if (guid != null && guid.isTextual()) {
             // Delegate to entity deserialization
-            auditDetail = client.getAssetDeserializer().deserialize(root, ts);
+            auditDetail = client.getAssetDeserializer().deserialize(detail, ts);
         } else if (attributes != null) {
             // Delegate to the custom metadata deserialization
-            auditDetail = client.getCustomMetadataAuditDeserializer().deserialize(root, ts);
+            auditDetail = client.getCustomMetadataAuditDeserializer().deserialize(detail, ts);
         } else {
             // Delegate to Atlan tag deserialization
-            auditDetail = client.getAtlanTagDeserializer().deserialize(root, ts);
+            auditDetail = client.getAtlanTagDeserializer().deserialize(detail, ts);
         }
-        auditDetail.setRawJsonObject(root);
+        auditDetail.setRawJsonObject(detail);
         return builder.detail(auditDetail).build();
     }
 }
