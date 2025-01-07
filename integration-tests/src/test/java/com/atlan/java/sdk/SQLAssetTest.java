@@ -240,7 +240,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(partition.getGuid());
         assertNotNull(partition.getQualifiedName());
         assertEquals(partition.getName(), name);
-        assertEquals(partition.getParentTable().getGuid(), table.getGuid());
         return partition;
     }
 
@@ -483,8 +482,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof Column);
         column7 = (Column) one;
         assertEquals(column7.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column7.getTableName(), TABLE_NAME);
-        assertEquals(column7.getTableQualifiedName(), table.getQualifiedName());
+        assertEquals(column7.getTableName(), PARTITION_NAME);
+        assertEquals(column7.getTableQualifiedName(), partition.getQualifiedName());
         assertEquals(column7.getSchemaName(), SCHEMA_NAME);
         assertEquals(column7.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column7.getDatabaseName(), DATABASE_NAME);
@@ -510,8 +509,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof Column);
         column8 = (Column) one;
         assertEquals(column8.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column8.getTableName(), TABLE_NAME);
-        assertEquals(column8.getTableQualifiedName(), table.getQualifiedName());
+        assertEquals(column8.getTableName(), PARTITION_NAME);
+        assertEquals(column8.getTableQualifiedName(), partition.getQualifiedName());
         assertEquals(column8.getSchemaName(), SCHEMA_NAME);
         assertEquals(column8.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column8.getDatabaseName(), DATABASE_NAME);
@@ -530,6 +529,38 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME1));
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME2));
         assertTrue(tableContract.endsWith("...\n"));
+    }
+
+    @Test(
+            groups = {"asset.read.partition"},
+            dependsOnGroups = {"asset.create.contract"})
+    void readTablePartition() throws AtlanException {
+        TablePartition p = TablePartition.get(client, partition.getGuid(), true);
+        assertNotNull(p);
+        assertTrue(p.isComplete());
+        assertEquals(p.getGuid(), partition.getGuid());
+        assertEquals(p.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(p.getName(), PARTITION_NAME);
+        ITable parent = p.getParentTable();
+        assertNotNull(parent);
+        assertEquals(parent.getTypeName(), Table.TYPE_NAME);
+        assertEquals(parent.getGuid(), table.getGuid());
+    }
+
+    @Test(
+            groups = {"asset.read.table"},
+            dependsOnGroups = {"asset.create.contract"})
+    void readTable() throws AtlanException {
+        Table t = Table.get(client, table.getGuid(), true);
+        assertNotNull(t);
+        assertTrue(t.isComplete());
+        assertEquals(t.getGuid(), table.getGuid());
+        assertEquals(t.getQualifiedName(), table.getQualifiedName());
+        assertEquals(t.getName(), TABLE_NAME);
+        Set<ITablePartition> partitions = t.getPartitions();
+        assertNotNull(partitions);
+        assertEquals(partitions.size(), 1);
+        assertEquals(partitions.stream().findFirst().get().getGuid(), partition.getGuid());
     }
 
     @Test(
@@ -600,7 +631,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 16L);
+        IndexSearchResponse response = retrySearchUntil(index, 15L);
 
         // Test iterator
         List<String> guids = new ArrayList<>();
@@ -634,7 +665,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(guidsSeq, guidsPar);
         assertEquals(guids, guidsSeq);
 
-        assertEquals(response.getApproximateCount().longValue(), 16L);
+        assertEquals(response.getApproximateCount().longValue(), 15L);
         List<Asset> entities = response.getAssets();
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -646,7 +677,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 8);
 
         assertNotNull(entities);
-        assertEquals(entities.size(), 16);
+        assertEquals(entities.size(), 15);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof Connection);
@@ -766,7 +797,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 16L);
+        IndexSearchResponse response = retrySearchUntil(index, 15L);
 
         for (Asset a : response) {
             assertTrue(a instanceof Connection
@@ -789,7 +820,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 || a instanceof Column));
 
         List<Asset> results = response.stream().toList();
-        assertEquals(results.size(), 16);
+        assertEquals(results.size(), 15);
     }
 
     @Test(groups = {"asset.create.group.owners"})
