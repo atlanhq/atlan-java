@@ -24,8 +24,8 @@ object DataDomainXformer {
     fun encode(
         ctx: PackageContext<*>,
         asset: Asset,
-    ): String {
-        return when (asset) {
+    ): String =
+        when (asset) {
             is DataDomain -> {
                 val dataDomain = ctx.dataDomainCache.getByGuid(asset.guid)
                 if (dataDomain is DataDomain) {
@@ -36,7 +36,6 @@ object DataDomainXformer {
             }
             else -> AssetRefXformer.encode(ctx, asset)
         }
-    }
 
     /**
      * Encodes (serializes) a data domain reference into a string form.
@@ -69,25 +68,12 @@ object DataDomainXformer {
         ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
-    ): Asset {
-        return when (fieldName) {
+    ): Asset =
+        when (fieldName) {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> {
                 ctx.dataDomainCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Domain $assetRef not found (in $fieldName).")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
-    }
-
-    fun decodeFromName(
-        ctx: PackageContext<*>,
-        domainName: String,
-    ): Asset {
-        val dataDomain = ctx.dataDomainCache.getByName(domainName)
-        return if (dataDomain is DataDomain) {
-            dataDomain
-        } else {
-            throw NoSuchElementException("Domain $domainName not found.")
-        }
-    }
 }

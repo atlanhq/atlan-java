@@ -24,9 +24,9 @@ class GUM(
         logger,
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return Glossary.select(client)
+    override fun query(): FluentSearchBuilder<*, *> =
+        Glossary
+            .select(client)
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
-    }
 }

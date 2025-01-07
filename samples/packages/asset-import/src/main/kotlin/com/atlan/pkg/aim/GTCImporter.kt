@@ -61,7 +61,8 @@ abstract class GTCImporter(
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val qualifiedName = generateQualifiedName(deserializer)
-        return FieldSerde.getBuilderForType(typeNameFilter)
+        return FieldSerde
+            .getBuilderForType(typeNameFilter)
             .qualifiedName(qualifiedName)
     }
 
@@ -88,9 +89,7 @@ abstract class GTCImporter(
     abstract fun getCacheId(deserializer: RowDeserializer): String
 
     /** Pre-process the GTC import file. */
-    fun preprocess(): RowPreprocessor.Results {
-        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-    }
+    fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
 
     private class Preprocessor(
         originalFile: String,

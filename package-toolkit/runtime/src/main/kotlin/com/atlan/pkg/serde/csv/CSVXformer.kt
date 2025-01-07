@@ -30,7 +30,8 @@ abstract class CSVXformer(
     private val targetHeader: Iterable<String?>?,
     private val logger: KLogger,
     private val fieldSeparator: Char = ',',
-) : Closeable, RowTransformer {
+) : Closeable,
+    RowTransformer {
     private val reader: CsvReader<CsvRecord>
     private val counter: CsvReader<CsvRecord>
     private val header: List<String>
@@ -38,7 +39,8 @@ abstract class CSVXformer(
     init {
         val input = Paths.get(inputFile)
         val builder =
-            CsvReader.builder()
+            CsvReader
+                .builder()
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
@@ -62,18 +64,20 @@ abstract class CSVXformer(
         ): List<String> {
             val input = Paths.get(file)
             val builder =
-                CsvReader.builder()
+                CsvReader
+                    .builder()
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
                     .ignoreDifferentFieldCount(false)
             builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
-                return one.map { obj: CsvRecord ->
-                    obj.fields.map { field ->
-                        trimWhitespace(field)
-                    }
-                }.orElse(emptyList())
+                return one
+                    .map { obj: CsvRecord ->
+                        obj.fields.map { field ->
+                            trimWhitespace(field)
+                        }
+                    }.orElse(emptyList())
             }
         }
 
@@ -83,8 +87,27 @@ abstract class CSVXformer(
          * @param s the original string to trim
          * @return a "clean" string without any of these characters or whitespace around it
          */
-        fun trimWhitespace(s: String): String {
-            return s.trim().trim('\uFEFF', '\u200B')
+        fun trimWhitespace(s: String): String = s.trim().trim('\uFEFF', '\u200B')
+
+        /**
+         * Translate a row of input values into a map, keyed by input header name
+         * with the value being the value for that column on the row.
+         *
+         * @param header list of header column names
+         * @param values list of values, in the same order as the header columns
+         * @return map from header name to value on that row
+         */
+        fun getRowByHeader(
+            header: List<String>,
+            values: List<String>,
+        ): Map<String, String> {
+            val map = mutableMapOf<String, String>()
+            header.forEachIndexed { index, s ->
+                // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
+                val trimmed = trimWhitespace(s)
+                map[trimmed] = values.getOrElse(index) { "" }
+            }
+            return map.toMap()
         }
     }
 
@@ -94,7 +117,8 @@ abstract class CSVXformer(
      * @param outputFile path to a file into which the transformed CSV output will be written.
      */
     fun transform(outputFile: String) {
-        CsvWriter.builder()
+        CsvWriter
+            .builder()
             .fieldSeparator(fieldSeparator)
             .quoteCharacter('"')
             .quoteStrategy(QuoteStrategies.NON_EMPTY)
@@ -124,7 +148,8 @@ abstract class CSVXformer(
         writer.writeRecord(targetHeader)
         // Calculate total number of rows that need to be transformed...
         val filteredRowCount = AtomicLong(0)
-        counter.stream().skip(1).forEach { row -> // TODO: parallelize?
+        counter.stream().skip(1).forEach { row ->
+            // TODO: parallelize?
             val rowByHeader = getRowByHeader(row.fields)
             if (includeRow(rowByHeader)) {
                 filteredRowCount.incrementAndGet()
@@ -133,7 +158,8 @@ abstract class CSVXformer(
         val totalRowCount = filteredRowCount.get()
         logger.info { "Transforming a total of $totalRowCount rows..." }
         // Actually do the mapping, of only those rows we need to transform...
-        reader.stream().skip(1).forEach { row -> // TODO: parallelize?
+        reader.stream().skip(1).forEach { row ->
+            // TODO: parallelize?
             val inputRow = getRowByHeader(row.fields)
             if (includeRow(inputRow)) {
                 mapRow(inputRow).forEach { outputRow ->
@@ -147,17 +173,10 @@ abstract class CSVXformer(
      * Translate a row of input values into a map, keyed by input header name
      * with the value being the value for that column on the row.
      *
+     * @param values a row of values, in the same order as the headers
      * @return map from header name to value on that row
      */
-    private fun getRowByHeader(values: List<String>): Map<String, String> {
-        val map = mutableMapOf<String, String>()
-        header.forEachIndexed { index, s ->
-            // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
-            val trimmed = trimWhitespace(s)
-            map[trimmed] = values.getOrElse(index) { "" }
-        }
-        return map.toMap()
-    }
+    private fun getRowByHeader(values: List<String>): Map<String, String> = getRowByHeader(header, values)
 
     /** {@inheritDoc}  */
     @Throws(IOException::class)

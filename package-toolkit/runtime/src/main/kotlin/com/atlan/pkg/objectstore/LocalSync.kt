@@ -26,9 +26,12 @@ class LocalSync(
         logger.info { "Syncing files from local://$baseDirectory/$prefix to $localDirectory" }
 
         val localFilesLastModified =
-            File(localDirectory).walkTopDown().filter { it.isFile }.map {
-                it.relativeTo(File(localDirectory)).path to it.lastModified()
-            }.toMap()
+            File(localDirectory)
+                .walkTopDown()
+                .filter { it.isFile }
+                .map {
+                    it.relativeTo(File(localDirectory)).path to it.lastModified()
+                }.toMap()
 
         val filesToDownload = mutableListOf<String>()
         val remoteDirectory = Paths.get(baseDirectory, prefix).toFile()

@@ -14,7 +14,9 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.GlossaryCategoryXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 
-class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(ctx, "category") {
+class CategoryCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<GlossaryCategory>(ctx, "category") {
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryCategory.NAME, GlossaryCategory.ANCHOR, GlossaryCategory.PARENT_CATEGORY)
@@ -39,7 +41,8 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
     ): GlossaryCategory? {
         try {
             val category =
-                GlossaryCategory.select(client)
+                GlossaryCategory
+                    .select(client)
                     .where(GlossaryCategory.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includeOnResults(GlossaryTerm.STATUS)
@@ -73,9 +76,7 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
      *
      * @param glossaryName name of the glossary for which to bulk-cache categories
      */
-    private fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> {
-        return this.traverseAndCacheHierarchy(glossaryName, emptyList())
-    }
+    private fun traverseAndCacheHierarchy(glossaryName: String): List<GlossaryCategory> = this.traverseAndCacheHierarchy(glossaryName, emptyList())
 
     /**
      * It is likely to be more efficient (for any sizeable import) to retrieve and traverse
@@ -154,7 +155,8 @@ class CategoryCache(val ctx: PackageContext<*>) : AssetCache<GlossaryCategory>(c
     override fun refreshCache() {
         val count = GlossaryCategory.select(client).count()
         logger.info { "Caching all $count categories, up-front..." }
-        Glossary.select(client)
+        Glossary
+            .select(client)
             .includeOnResults(Glossary.NAME)
             .stream(true)
             .forEach { glossary ->

@@ -66,7 +66,8 @@ class CSVReader
             }
             val inputFile = Paths.get(path)
             val builder =
-                CsvReader.builder()
+                CsvReader
+                    .builder()
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
@@ -90,8 +91,8 @@ class CSVReader
             logger: KLogger,
             outputFile: String? = null,
             outputHeaders: List<String>? = null,
-        ): RowPreprocessor.Results {
-            return if (outputFile != null) {
+        ): RowPreprocessor.Results =
+            if (outputFile != null) {
                 logger.info { "Transforming input CSV file to $outputFile..." }
                 CSVWriter(outputFile).use { csv ->
                     csv.writeHeader(outputHeaders ?: header)
@@ -110,7 +111,6 @@ class CSVReader
                 preproc.close()
                 csvPreprocessor.finalize(header)
             }
-        }
 
         /**
          * Parallel-read the CSV file into batched asset updates against Atlan.
@@ -201,7 +201,8 @@ class CSVReader
                     val count = AtomicLong(0)
                     csvChunkFiles.parallelStream().forEach { f ->
                         val reader =
-                            CsvReader.builder()
+                            CsvReader
+                                .builder()
                                 .fieldSeparator(',')
                                 .quoteCharacter('"')
                                 .skipEmptyLines(true)
@@ -254,7 +255,11 @@ class CSVReader
                         val relatedAssetHold = hold.value
                         val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
                         if (!resolvedGuid.isNullOrBlank()) {
-                            val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
+                            val resolvedAsset =
+                                relatedAssetHold.fromAsset
+                                    .toBuilder()
+                                    .guid(resolvedGuid)
+                                    .build() as Asset
                             AssetRefXformer.buildRelated(
                                 ctx,
                                 resolvedAsset,
@@ -297,7 +302,8 @@ class CSVReader
                     searchAndDelete.entries.parallelStream().forEach { entry ->
                         val guid = entry.key
                         val fields = entry.value
-                        ctx.client.assets.select()
+                        ctx.client.assets
+                            .select()
                             .where(Asset.GUID.eq(guid))
                             .includesOnResults(fields)
                             .stream()

@@ -71,8 +71,6 @@
         map.put("schemaQualifiedName", partition.getSchemaQualifiedName());
         map.put("name", partition.getName());
         map.put("qualifiedName", partition.getQualifiedName());
-        map.put("tableName", partition.getTableName());
-        map.put("tableQualifiedName", partition.getTableQualifiedName());
         validateRelationship(TablePartition.TYPE_NAME, map);
         return creator(
             name,
@@ -84,8 +82,8 @@
             partition.getName(),
             partition.getQualifiedName(),
             TablePartition.TYPE_NAME,
-            partition.getTableName(),
-            partition.getTableQualifiedName(),
+            null,
+            null,
             order
         ).tablePartition(partition.trimToReference());
     }
@@ -174,16 +172,7 @@
      */
     public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName, int order) {
         String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
-        String tableName = null;
-        String tableQualifiedName = null;
-        String schemaQualifiedName;
-        if (TablePartition.TYPE_NAME.equals(parentType)) {
-            tableQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
-            tableName = StringUtils.getNameFromQualifiedName(tableQualifiedName);
-            schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(tableQualifiedName);
-        } else {
-            schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
-        }
+        String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
@@ -198,8 +187,8 @@
             parentName,
             parentQualifiedName,
             parentType,
-            tableName,
-            tableQualifiedName,
+            null,
+            null,
             order
         );
     }
@@ -216,8 +205,8 @@
      * @param parentName simple name of the table / view / materialized view in which the Column should be created
      * @param parentQualifiedName unique name of the table / view / materialized view in which this Column exists
      * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
-     * @param tableName simple name of the table if the parentType is TablePartition
-     * @param tableQualifiedName unique name of the table if the parentType is TablePartition
+     * @param tableName (deprecated - unused)
+     * @param tableQualifiedName (deprecated - unused)
      * @param order the order the Column appears within its parent (the Column's position)
      * @return the minimal request necessary to create the Column, as a builder
      */
@@ -264,8 +253,8 @@
                     .materializedView(MaterializedView.refByQualifiedName(parentQualifiedName));
                 break;
             case TablePartition.TYPE_NAME:
-                builder.tableName(tableName)
-                    .tableQualifiedName(tableQualifiedName)
+                builder.tableName(parentName)
+                    .tableQualifiedName(parentQualifiedName)
                     .tablePartition(TablePartition.refByQualifiedName(parentQualifiedName));
                 break;
             case SnowflakeDynamicTable.TYPE_NAME:

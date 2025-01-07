@@ -7,21 +7,19 @@ import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.Persona
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.ae.AdminExporter
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class Personas(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, AdminExporter.ConnectionId>,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting all personas..." }
-        val sheet = xlsx.createSheet("Personas")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Persona name" to "",
                 "Description" to "",
@@ -36,7 +34,8 @@ class Personas(
                 "Domains" to "Domains controlled by the policies on this persona",
             ),
         )
-        Persona.select(ctx.client)
+        Persona
+            .select(ctx.client)
             .includeOnResults(Persona.NAME)
             .includeOnResults(Persona.DESCRIPTION)
             .includeOnResults(Persona.PERSONA_USERS)
@@ -89,8 +88,7 @@ class Personas(
                         }
                     }
                 }
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         persona.name,
                         persona.description,

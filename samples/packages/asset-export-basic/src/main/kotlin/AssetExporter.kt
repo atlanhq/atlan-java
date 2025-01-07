@@ -212,7 +212,5 @@ class AssetExporter(
      * @param asset the asset from which to generate the values
      * @return the values, as an iterable set of strings
      */
-    override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(ctx, asset, getFieldsToExtract(), logger).getRow()
-    }
+    override fun buildFromAsset(asset: Asset): Iterable<String> = RowSerializer(ctx, asset, getFieldsToExtract(), logger).getRow()
 }

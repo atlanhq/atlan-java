@@ -23,8 +23,8 @@ object GlossaryCategoryXformer {
     fun encode(
         ctx: PackageContext<*>,
         asset: Asset,
-    ): String {
-        return when (asset) {
+    ): String =
+        when (asset) {
             is GlossaryCategory -> {
                 val category = ctx.categoryCache.getByGuid(asset.guid)
                 if (category is GlossaryCategory) {
@@ -35,7 +35,6 @@ object GlossaryCategoryXformer {
             }
             else -> AssetRefXformer.encode(ctx, asset)
         }
-    }
 
     /**
      * Decodes (deserializes) a string form into a category reference object.
@@ -49,8 +48,8 @@ object GlossaryCategoryXformer {
         ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
-    ): Asset {
-        return when (fieldName) {
+    ): Asset =
+        when (fieldName) {
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName -> {
                 ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Parent category $assetRef not found (in $fieldName).")
@@ -61,5 +60,4 @@ object GlossaryCategoryXformer {
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
-    }
 }

@@ -23,13 +23,13 @@ class AwDU(
         logger,
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .whereNot(Asset.TYPE_NAME.`in`(EXCLUDE_ASSETS))
             .where(Asset.USER_DESCRIPTION.hasAnyValue())
             .whereNot(Asset.USER_DESCRIPTION.eq(""))
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
-    }
 }

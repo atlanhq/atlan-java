@@ -277,13 +277,13 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 
     [logger_pyatlan]
     level=DEBUG
-    handlers=fileHandler,jsonHandler
+    handlers=
     qualname=pyatlan
-    propagate=0
+    propagate=1
 
     [logger_urllib3]
     level=DEBUG
-    handlers=fileHandler,jsonHandler
+    handlers=
     qualname=urllib3
     propagate=0
 
@@ -318,6 +318,10 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 const function getRequirementsPy(): FileOutput = new FileOutput {
   text = """
     pyatlan
+    opentelemetry-api==1.29.0
+    opentelemetry-sdk==1.29.0
+    opentelemetry-instrumentation-logging==0.50b0
+    opentelemetry-exporter-otlp==1.29.0
     """
 }
 
@@ -363,7 +367,12 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
     from pydantic.v1 import BaseModel, BaseSettings, Field, validator
     from pyatlan.model.assets import Connection
     from pyatlan.pkg.models import ConnectorAndConnection
-    from pyatlan.pkg.utils import validate_connection, validate_multiselect, validate_connector_and_connection
+    from pyatlan.pkg.utils import (
+      add_otel_handler,
+      validate_connection,
+      validate_multiselect,
+      validate_connector_and_connection,
+    )
     from typing import Any, Optional, Union, Dict
     import logging.config
 
@@ -371,6 +380,8 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
     LOGGING_CONF = PARENT / "logging.conf"
     if LOGGING_CONF.exists():
       logging.config.fileConfig(LOGGING_CONF)
+    ROOT_LOGGER = logging.getLogger()
+    add_otel_handler(ROOT_LOGGER, ROOT_LOGGER.level, {})
     LOGGER = logging.getLogger(__name__)
 
     ENV = 'env'

@@ -53,7 +53,8 @@ class DuplicateDetectorTest : PackageTest("dd") {
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val terms =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryTerm.DESCRIPTION)
                 .includeOnResults(GlossaryTerm.ASSIGNED_ENTITIES)

@@ -150,7 +150,8 @@ object EnrichmentMigrator {
         sourcePrefix: String,
     ): List<String> {
         val databaseNames =
-            Database.select(client)
+            Database
+                .select(client)
                 .where(Asset.QUALIFIED_NAME.startsWith(connectionQN))
                 .where(Asset.NAME.regex(sourcePrefix))
                 .sort(Asset.NAME.order(SortOrder.Asc))
@@ -166,7 +167,8 @@ object EnrichmentMigrator {
         connectionQN: String,
     ): String {
         val connection =
-            Connection.select(client)
+            Connection
+                .select(client)
                 .where(Asset.QUALIFIED_NAME.eq(connectionQN))
                 .stream()
                 .findFirst()

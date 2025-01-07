@@ -14,22 +14,14 @@ class ChecksumCache(
     name: String?,
 ) : AbstractOffHeapCache<AssetIdentity, String>(name) {
     /** {@inheritDoc}  */
-    override fun serializeKey(key: AssetIdentity): ByteArray {
-        return key.toString().toByteArray(StandardCharsets.UTF_8)
-    }
+    override fun serializeKey(key: AssetIdentity): ByteArray = key.toString().toByteArray(StandardCharsets.UTF_8)
 
     /** {@inheritDoc}  */
-    override fun deserializeKey(bytes: ByteArray): AssetIdentity {
-        return AssetIdentity.fromString(String(bytes, StandardCharsets.UTF_8))
-    }
+    override fun deserializeKey(bytes: ByteArray): AssetIdentity = AssetIdentity.fromString(String(bytes, StandardCharsets.UTF_8))
 
     /** {@inheritDoc}  */
-    override fun serializeValue(value: String): ByteArray {
-        return value.toByteArray(StandardCharsets.UTF_8)
-    }
+    override fun serializeValue(value: String): ByteArray = value.toByteArray(StandardCharsets.UTF_8)
 
     /** {@inheritDoc}  */
-    override fun deserializeValue(bytes: ByteArray): String {
-        return String(bytes, StandardCharsets.UTF_8)
-    }
+    override fun deserializeValue(bytes: ByteArray): String = String(bytes, StandardCharsets.UTF_8)
 }

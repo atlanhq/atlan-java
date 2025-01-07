@@ -13,8 +13,10 @@ import com.atlan.pkg.ae.exports.Personas
 import com.atlan.pkg.ae.exports.Policies
 import com.atlan.pkg.ae.exports.Purposes
 import com.atlan.pkg.ae.exports.Users
+import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import java.io.File
+import java.nio.file.Paths
 
 /**
  * Actually run the export of admin objects.
@@ -22,6 +24,12 @@ import java.io.File
 object AdminExporter {
     private val logger = Utils.getLogger(this.javaClass.name)
     private const val FILENAME = "admin-export.xlsx"
+
+    private const val USERS_FILE = "users.csv"
+    private const val GROUPS_FILE = "groups.csv"
+    private const val PERSONAS_FILE = "personas.csv"
+    private const val PURPOSES_FILE = "purposes.csv"
+    private const val POLICIES_FILE = "policies.csv"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -32,16 +40,47 @@ object AdminExporter {
             // so we can resolve them to meaningful names
             val glossaryMap = preloadGlossaryNameMap(ctx)
             val connectionMap = preloadConnectionMap(ctx)
+            val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            val exportFile = "$outputDirectory${File.separator}$FILENAME"
-            ExcelWriter(exportFile).use { xlsx ->
+            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
+            val usersFile = "$outputDirectory${File.separator}$USERS_FILE"
+            val groupsFile = "$outputDirectory${File.separator}$GROUPS_FILE"
+            val personasFile = "$outputDirectory${File.separator}$PERSONAS_FILE"
+            val purposesFile = "$outputDirectory${File.separator}$PURPOSES_FILE"
+            val policiesFile = "$outputDirectory${File.separator}$POLICIES_FILE"
+
+            // Touch every file, just so they exist, to avoid any workflow failures
+            Paths.get(outputDirectory).toFile().mkdirs()
+            Paths.get(xlsxFile).toFile().createNewFile()
+            Paths.get(usersFile).toFile().createNewFile()
+            Paths.get(groupsFile).toFile().createNewFile()
+            Paths.get(personasFile).toFile().createNewFile()
+            Paths.get(purposesFile).toFile().createNewFile()
+            Paths.get(policiesFile).toFile().createNewFile()
+
+            val fileOutputs = mutableListOf<String>()
+
+            if (xlsxOutput) {
+                ExcelWriter(xlsxFile).use { xlsx ->
+                    ctx.config.objectsToInclude.forEach { objectName ->
+                        when (objectName) {
+                            "users" -> Users(ctx, xlsx.createSheet("Users"), logger).export()
+                            "groups" -> Groups(ctx, xlsx.createSheet("Groups"), logger).export()
+                            "personas" -> Personas(ctx, xlsx.createSheet("Personas"), glossaryMap, connectionMap, logger).export()
+                            "purposes" -> Purposes(ctx, xlsx.createSheet("Purposes"), logger).export()
+                            "policies" -> Policies(ctx, xlsx.createSheet("Policies"), glossaryMap, connectionMap, logger).export()
+                        }
+                    }
+                }
+                fileOutputs.add(xlsxFile)
+            } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
-                        "users" -> Users(ctx, xlsx, logger).export()
-                        "groups" -> Groups(ctx, xlsx, logger).export()
-                        "personas" -> Personas(ctx, xlsx, glossaryMap, connectionMap, logger).export()
-                        "purposes" -> Purposes(ctx, xlsx, logger).export()
-                        "policies" -> Policies(ctx, xlsx, glossaryMap, connectionMap, logger).export()
+                        "users" -> CSVWriter(usersFile).use { csv -> Users(ctx, csv, logger).export() }
+                        "groups" -> CSVWriter(groupsFile).use { csv -> Groups(ctx, csv, logger).export() }
+                        "personas" -> CSVWriter(personasFile).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "purposes" -> CSVWriter(purposesFile).use { csv -> Purposes(ctx, csv, logger).export() }
+                        "policies" -> CSVWriter(policiesFile).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
                     }
                 }
             }
@@ -54,17 +93,27 @@ object AdminExporter {
                             "[Atlan] Admin Export results",
                             emails,
                             "Hi there! As requested, please find attached the results of the Admin Export package.\n\nAll the best!\nAtlan",
-                            listOf(File(exportFile)),
+                            fileOutputs.map { File(it) },
                         )
                     }
                 }
 
                 "CLOUD" -> {
-                    Utils.uploadOutputFile(
-                        exportFile,
-                        ctx.config.targetPrefix,
-                        ctx.config.targetKey,
-                    )
+                    if (xlsxOutput) {
+                        Utils.uploadOutputFile(
+                            xlsxFile,
+                            ctx.config.targetPrefix,
+                            ctx.config.targetKey,
+                        )
+                    } else {
+                        fileOutputs.forEach {
+                            // When using CSVs, ignore any key specified and use the filename itself
+                            Utils.uploadOutputFile(
+                                it,
+                                ctx.config.targetPrefix,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -72,7 +121,8 @@ object AdminExporter {
 
     private fun preloadGlossaryNameMap(ctx: PackageContext<AdminExportCfg>): Map<String, String> {
         val map = mutableMapOf<String, String>()
-        Glossary.select(ctx.client)
+        Glossary
+            .select(ctx.client)
             .stream()
             .forEach {
                 map[it.qualifiedName] = it.name
@@ -82,7 +132,8 @@ object AdminExporter {
 
     private fun preloadConnectionMap(ctx: PackageContext<AdminExportCfg>): Map<String, ConnectionId> {
         val map = mutableMapOf<String, ConnectionId>()
-        Connection.select(ctx.client)
+        Connection
+            .select(ctx.client)
             .includeOnResults(Connection.CONNECTOR_TYPE)
             .stream()
             .forEach {
@@ -91,9 +142,10 @@ object AdminExporter {
         return map
     }
 
-    data class ConnectionId(val type: AtlanConnectorType, val name: String) {
-        override fun toString(): String {
-            return "$name (${type.value})"
-        }
+    data class ConnectionId(
+        val type: AtlanConnectorType,
+        val name: String,
+    ) {
+        override fun toString(): String = "$name (${type.value})"
     }
 }

@@ -6,19 +6,17 @@ import AdminExportCfg
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.Purpose
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class Purposes(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting all purposes..." }
-        val sheet = xlsx.createSheet("Purposes")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Purpose name" to "",
                 "Description" to "",
@@ -29,7 +27,8 @@ class Purposes(
                 "Users" to "Users to which these policies are applied",
             ),
         )
-        Purpose.select(ctx.client)
+        Purpose
+            .select(ctx.client)
             .includeOnResults(Purpose.NAME)
             .includeOnResults(Purpose.DESCRIPTION)
             .includeOnResults(Purpose.PURPOSE_ATLAN_TAGS)
@@ -60,8 +59,7 @@ class Purposes(
                         }
                     }
                 }
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         purpose.name,
                         purpose.description,

@@ -46,7 +46,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     private fun createCustomMetadata() {
-        CustomMetadataDef.creator(cm1)
+        CustomMetadataDef
+            .creator(cm1)
             .attributeDef(AttributeDef.of(client, "dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
             .build()
             .create(client)
@@ -65,14 +66,15 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
             val sch2 = Schema.creator("sch1", db2).build()
             batch.add(sch2)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .customMetadata(
                         cm1,
-                        CustomMetadataAttributes.builder()
+                        CustomMetadataAttributes
+                            .builder()
                             .attribute("dateSingle", now)
                             .build(),
-                    )
-                    .build()
+                    ).build()
             batch.add(tbl1)
             val tbl2 = Table.creator("tbl1", sch2).build()
             batch.add(tbl2)
@@ -108,13 +110,15 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .where(cmField.hasAnyValue())
                 .includeOnResults(cmField)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
-        response.stream()
+        response
+            .stream()
             .forEach {
                 val cm = it.customMetadataSets
                 assertNotNull(cm)

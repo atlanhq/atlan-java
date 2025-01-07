@@ -107,9 +107,7 @@ class DeltaProcessor(
     fun resolveAsset(
         values: List<String>,
         header: List<String>,
-    ): AssetIdentity? {
-        return delta?.resolveAsset(values, header)
-    }
+    ): AssetIdentity? = delta?.resolveAsset(values, header)
 
     /**
      * Determine whether the provided asset identity should be processed (true) or skipped (false).
@@ -184,7 +182,8 @@ class DeltaProcessor(
     ) {
         val previousFileLocation = "$previousFilesPrefix/$qualifiedNamePrefix"
         val sortedTime =
-            DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
+            DateTimeFormatter
+                .ofPattern("yyyyMMdd-HHmmssSSS")
                 .withZone(ZoneId.of("UTC"))
                 .format(Instant.now())
         Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")

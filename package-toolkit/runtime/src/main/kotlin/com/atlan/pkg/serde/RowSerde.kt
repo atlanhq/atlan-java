@@ -23,15 +23,14 @@ object RowSerde {
     fun getHeaderForField(
         field: AtlanField,
         assetClass: Class<*> = Asset::class.java,
-    ): String {
-        return if (field is CustomMetadataField) {
+    ): String =
+        if (field is CustomMetadataField) {
             // For custom metadata, translate the header to human-readable names
             field.setName + CM_HEADING_DELIMITER + field.attributeName
         } else {
             // Use renamed fields for deserialization, if available
             getHeaderForField(field.atlanFieldName, assetClass)
         }
-    }
 
     /**
      * Retrieve the name to use for the header for a particular field, assuming a particular type of asset.
@@ -43,7 +42,5 @@ object RowSerde {
     fun getHeaderForField(
         fieldName: String,
         assetClass: Class<*> = Asset::class.java,
-    ): String {
-        return ReflectionCache.getDeserializedName(assetClass, fieldName)
-    }
+    ): String = ReflectionCache.getDeserializedName(assetClass, fieldName)
 }

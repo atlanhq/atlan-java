@@ -61,9 +61,10 @@ object Importer {
         val assetsFileProvided =
             (
                 assetsUpload && assetsFilename.isNotBlank()
-            ) || (
-                !assetsUpload && assetsKey.isNotBlank()
-            )
+            ) ||
+                (
+                    !assetsUpload && assetsKey.isNotBlank()
+                )
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
@@ -319,9 +320,7 @@ object Importer {
         val type: String,
         val name: String,
     ) {
-        override fun toString(): String {
-            return "$type$DELIMITER$name"
-        }
+        override fun toString(): String = "$type$DELIMITER$name"
 
         companion object {
             const val DELIMITER = "::"

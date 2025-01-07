@@ -28,8 +28,9 @@ class TLAxQ(
         caveats = "False positives could exist, when queries are missing due to: a source where usage is not tracked, a lack of freshly-mined usage data, or where the only queries have happened more than 30 days ago.",
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
             .withoutLineage()
             .where(Asset.SOURCE_READ_COUNT.eq(0))
@@ -44,11 +45,10 @@ class TLAxQ(
             .includesOnResults(TLA.ATTRIBUTES)
             .includeOnResults(Asset.SOURCE_READ_COUNT)
             .includeOnResults(Asset.SOURCE_TOTAL_COST)
-    }
 
     /** {@inheritDoc} */
-    override fun getDetailedHeader(): Map<String, String> {
-        return mapOf(
+    override fun getDetailedHeader(): Map<String, String> =
+        mapOf(
             "Connector" to "Type of the data source",
             "Database" to "Name of the database for the table-level asset",
             "Schema" to "Name of the schema for the table-level asset",
@@ -59,7 +59,6 @@ class TLAxQ(
             "Cost" to "Total compute cost for the asset, in credits",
             "Link" to "Link to the detailed asset within Atlan",
         )
-    }
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {

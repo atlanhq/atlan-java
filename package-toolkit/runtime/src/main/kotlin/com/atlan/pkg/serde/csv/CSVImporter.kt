@@ -54,7 +54,8 @@ abstract class CSVImporter(
     protected val tableViewAgnostic: Boolean = false,
     protected val failOnErrors: Boolean = true,
     protected val fieldSeparator: Char = ',',
-) : AssetGenerator, RowPreprocessor {
+) : AssetGenerator,
+    RowPreprocessor {
     /** {@inheritDoc} */
     override fun preprocessRow(
         row: List<String>,
@@ -75,8 +76,8 @@ abstract class CSVImporter(
     open fun preprocess(
         outputFile: String? = null,
         outputHeaders: List<String>? = null,
-    ): RowPreprocessor.Results {
-        return CSVReader(
+    ): RowPreprocessor.Results =
+        CSVReader(
             filename,
             updateOnly,
             trackBatches,
@@ -91,7 +92,6 @@ abstract class CSVImporter(
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             results
         }
-    }
 
     /**
      * Actually run the import.
@@ -179,9 +179,7 @@ abstract class CSVImporter(
         header: List<String>,
         typeIdx: Int,
         qnIdx: Int,
-    ): Boolean {
-        return row[typeIdx] == typeNameFilter
-    }
+    ): Boolean = row[typeIdx] == typeNameFilter
 
     /**
      * Check if the provided field should be cleared, and if so clear it.

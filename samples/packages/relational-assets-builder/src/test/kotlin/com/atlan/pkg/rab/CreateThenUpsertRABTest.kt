@@ -222,7 +222,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     private fun validateDatabase(displayName: String) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Database.select(client)
+            Database
+                .select(client)
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(databaseAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -248,7 +249,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     private fun validateSchema(displayName: String) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Schema.select(client)
+            Schema
+                .select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(schemaAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -283,7 +285,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     private fun validateTable(displayName: String) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -306,7 +309,11 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         assertEquals("Ready to use", tbl.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", tbl.readme.description)
         assertEquals(2, tbl.atlanTags.size)
-        val tagNames = tbl.atlanTags.stream().map(AtlanTag::getTypeName).toList()
+        val tagNames =
+            tbl.atlanTags
+                .stream()
+                .map(AtlanTag::getTypeName)
+                .toList()
         assertTrue(tagNames.contains(tag1))
         assertTrue(tagNames.contains(tag2))
         tbl.atlanTags.forEach { tag ->
@@ -322,7 +329,11 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             }
         }
         assertEquals(2, tbl.columns.size)
-        val colNames = tbl.columns.stream().map(IColumn::getName).toList()
+        val colNames =
+            tbl.columns
+                .stream()
+                .map(IColumn::getName)
+                .toList()
         assertTrue(colNames.contains("COL1"))
         assertTrue(colNames.contains("COL2"))
         blockForBackgroundTasks(client, listOf(tbl.guid), 60)
@@ -339,7 +350,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
     ) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select(client)
+            Column
+                .select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
@@ -388,7 +400,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                View.select(client, true)
+                View
+                    .select(client, true)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(View.STATUS.eq(AtlanStatus.DELETED))
                     .includesOnResults(tableAttrs)
@@ -406,7 +419,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             assertEquals(AtlanStatus.DELETED, view.status)
         } else {
             val request =
-                View.select(client)
+                View
+                    .select(client)
                     .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .includesOnResults(tableAttrs)
                     .includeOnRelations(Asset.NAME)
@@ -430,7 +444,11 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             assertTrue(view.atlanTags.first().removePropagationsOnEntityDelete)
             assertTrue(view.atlanTags.first().restrictPropagationThroughLineage)
             assertEquals(2, view.columns.size)
-            val colNames = view.columns.stream().map(IColumn::getName).toList()
+            val colNames =
+                view.columns
+                    .stream()
+                    .map(IColumn::getName)
+                    .toList()
             assertTrue(colNames.contains("COL3"))
             assertTrue(colNames.contains("COL4"))
             blockForBackgroundTasks(client, listOf(view.guid), 60)
@@ -446,7 +464,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         if (!exists) {
             val request =
-                Column.select(client, true)
+                Column
+                    .select(client, true)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .where(Column.STATUS.eq(AtlanStatus.DELETED))
@@ -455,7 +474,12 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             val response = retrySearchUntil(request, 2, true)
             val found = response.assets
             assertEquals(2, found.size)
-            val states = found.stream().map(Asset::getStatus).toList().toSet()
+            val states =
+                found
+                    .stream()
+                    .map(Asset::getStatus)
+                    .toList()
+                    .toSet()
             assertEquals(1, states.size)
             if (states.first() != AtlanStatus.DELETED) {
                 logger.error { "Exact request: ${request.toJson(client)}" }
@@ -464,7 +488,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
             assertEquals(AtlanStatus.DELETED, states.first())
         } else {
             val request =
-                Column.select(client)
+                Column
+                    .select(client)
                     .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .includesOnResults(columnAttrs)
@@ -552,7 +577,8 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         Thread.sleep(15000)
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select(client)
+            Column
+                .select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .where(Column.DISPLAY_NAME.startsWith("Revised column"))

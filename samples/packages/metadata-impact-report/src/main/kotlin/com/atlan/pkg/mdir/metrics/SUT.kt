@@ -28,8 +28,9 @@ class SUT(
         caveats = "False positives could exist, when the single user listed is a non-personal (system-level) account that may be used by an application or process, rather than an individual user.",
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
             .where(Asset.SOURCE_READ_COUNT.gt(0))
             .where(Asset.SOURCE_READ_USER_COUNT.between(0, 1))
@@ -46,11 +47,10 @@ class SUT(
             .includeOnResults(Asset.SOURCE_READ_USER_COUNT)
             .includeOnResults(Asset.SOURCE_TOTAL_COST)
             .includeOnResults(Asset.SOURCE_READ_TOP_USERS)
-    }
 
     /** {@inheritDoc} */
-    override fun getDetailedHeader(): Map<String, String> {
-        return mapOf(
+    override fun getDetailedHeader(): Map<String, String> =
+        mapOf(
             "Connector" to "Type of the data source",
             "Database" to "Name of the database for the table-level asset",
             "Schema" to "Name of the schema for the table-level asset",
@@ -63,7 +63,6 @@ class SUT(
             "Rows" to "Total number of rows of data in the asset",
             "Link" to "Link to the detailed asset within Atlan",
         )
-    }
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {

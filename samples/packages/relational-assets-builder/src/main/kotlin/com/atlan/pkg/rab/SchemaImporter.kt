@@ -43,7 +43,8 @@ class SchemaImporter(
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val databaseQN = "$connectionQN/${qnDetails.parentPartialQN}"
-        return Schema.creator(name, databaseQN)
+        return Schema
+            .creator(name, databaseQN)
             .tableCount(preprocessed.qualifiedNameToTableCount[qnDetails.uniqueQN]?.toInt())
             .viewCount(preprocessed.qualifiedNameToViewCount[qnDetails.uniqueQN]?.toInt())
     }

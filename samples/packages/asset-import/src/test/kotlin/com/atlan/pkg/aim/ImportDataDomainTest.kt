@@ -167,7 +167,8 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataDomain(domainName: String): DataDomain {
         val request =
-            DataDomain.select(client)
+            DataDomain
+                .select(client)
                 .where(DataDomain.NAME.eq(domainName))
                 .includesOnResults(dataDomainAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
@@ -180,13 +181,18 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataProductWithRetry(productName: String): DataProduct {
         val request =
-            DataProduct.select(client)
+            DataProduct
+                .select(client)
                 .where(DataProduct.NAME.eq(productName))
                 .includesOnResults(dataProductAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
-        return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
+        return response
+            .stream()
+            .filter { a: Asset? -> a is DataProduct }
+            .findFirst()
+            .get() as DataProduct
     }
 
     @Test

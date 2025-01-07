@@ -64,7 +64,8 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             val sch3 = Schema.creator("sch1", db3).build()
             batch.add(sch3)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .userDescription(userDescription)
                     .build()
             batch.add(tbl1)
@@ -236,12 +237,14 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     fun userDescriptionOnTarget() {
         this.targetTableQualifiedNamesByName.forEach { entry ->
             val request =
-                Table.select(client)
+                Table
+                    .select(client)
                     .where(Table.QUALIFIED_NAME.eq(entry.value))
                     .includeOnResults(Asset.USER_DESCRIPTION)
                     .toRequest()
             val response = retrySearchUntil(request, 1)
-            response.stream()
+            response
+                .stream()
                 .forEach {
                     assertEquals(userDescription, it.userDescription)
                 }

@@ -246,7 +246,11 @@ class AssetImporter(
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
         )
 
-    private data class RelationshipEnds(val name: String, val end1: String, val end2: String)
+    private data class RelationshipEnds(
+        val name: String,
+        val end1: String,
+        val end2: String,
+    )
 
     /** {@inheritDoc} */
     override fun preprocess(
@@ -256,7 +260,8 @@ class AssetImporter(
         // Retrieve all relationships and filter to any cyclical relationships
         // (meaning relationships where both ends are of the same type)
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
-        typeDefs.relationshipDefs.stream()
+        typeDefs.relationshipDefs
+            .stream()
             .filter { it.endDef1.type == it.endDef2.type }
             .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
         val results = super.preprocess(outputFile, outputHeaders)
@@ -805,17 +810,14 @@ class AssetImporter(
          * @param types to sort into a loading order
          * @return an ordered (top-down) list of types
          */
-        fun getLoadOrder(types: Set<String>): List<String> {
-            return types.sortedBy { t ->
+        fun getLoadOrder(types: Set<String>): List<String> =
+            types.sortedBy { t ->
                 ordering.flatMap { it.types }.indexOf(t).takeIf { it >= 0 } ?: Int.MAX_VALUE
             }
-        }
     }
 
     /** Pre-process the assets import file. */
-    private fun preprocess(): Results {
-        return Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
-    }
+    private fun preprocess(): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
 
     private class Preprocessor(
         originalFile: String,

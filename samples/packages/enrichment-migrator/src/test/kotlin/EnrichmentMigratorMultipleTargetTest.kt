@@ -57,7 +57,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
             val sch3 = Schema.creator("sch1", db3).build()
             batch.add(sch3)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .description("Some description.")
                     .build()
             batch.add(tbl1)
@@ -99,7 +100,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     @Test
     fun datesOnTarget() {
         val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
-        Table.select(client)
+        Table
+            .select(client)
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
             .includeOnResults(Table.DESCRIPTION)
             .stream()

@@ -71,8 +71,8 @@ object CellXformer {
         type: Class<*>,
         innerType: Class<*>?,
         fieldName: String,
-    ): Any? {
-        return if (value.isNullOrEmpty()) {
+    ): Any? =
+        if (value.isNullOrEmpty()) {
             null
         } else if (String::class.java.isAssignableFrom(type)) {
             when (fieldName) {
@@ -116,7 +116,7 @@ object CellXformer {
         } else if (Asset::class.java.isAssignableFrom(type)) {
             AssetRefXformer.decode(ctx, value, fieldName)
         } else if (AtlanEnum::class.java.isAssignableFrom(type)) {
-            EnumXformer.decode(value, type as Class<AtlanEnum>)
+            EnumXformer.decode(value, type as Class<AtlanEnum>, fieldName)
         } else if (AtlanStruct::class.java.isAssignableFrom(type)) {
             StructXformer.decode(ctx.client, value, type as Class<AtlanStruct>)
         } else if (AtlanTag::class.java.isAssignableFrom(type)) {
@@ -128,53 +128,40 @@ object CellXformer {
         } else {
             throw IOException("Unhandled data type (in $fieldName): $type")
         }
-    }
 
-    private fun getDelimitedList(values: List<String>?): String {
-        return if (values.isNullOrEmpty()) {
+    private fun getDelimitedList(values: List<String>?): String =
+        if (values.isNullOrEmpty()) {
             ""
         } else {
             values.joinToString(LIST_DELIMITER)
         }
-    }
 
-    private fun parseDelimitedList(values: String?): List<String> {
-        return if (values.isNullOrEmpty()) {
+    private fun parseDelimitedList(values: String?): List<String> =
+        if (values.isNullOrEmpty()) {
             listOf()
         } else {
             values.split(LIST_DELIMITER).map { it.trim() }
         }
-    }
 
-    fun encodeString(value: String): String {
-        return if (value.contains(LIST_DELIMITER)) {
+    fun encodeString(value: String): String =
+        if (value.contains(LIST_DELIMITER)) {
             value.replace(LIST_DELIMITER, NEWLINE_SENTINEL)
         } else {
             value
         }
-    }
 
-    fun decodeString(value: String): String {
-        return if (value.contains(NEWLINE_SENTINEL)) {
+    fun decodeString(value: String): String =
+        if (value.contains(NEWLINE_SENTINEL)) {
             value.replace(NEWLINE_SENTINEL, LIST_DELIMITER)
         } else {
             value
         }
-    }
 
-    fun decodeBoolean(value: String): Boolean {
-        return value.toBoolean()
-    }
+    fun decodeBoolean(value: String): Boolean = value.toBoolean()
 
-    fun decodeInt(value: String): Int {
-        return value.toInt()
-    }
+    fun decodeInt(value: String): Int = value.toInt()
 
-    fun decodeLong(value: String): Long {
-        return value.toLong()
-    }
+    fun decodeLong(value: String): Long = value.toLong()
 
-    fun decodeDouble(value: String): Double {
-        return value.toDouble()
-    }
+    fun decodeDouble(value: String): Double = value.toDouble()
 }

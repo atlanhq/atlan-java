@@ -23,9 +23,10 @@ object WidgetSerde {
     // Creates a single static mapper to use across calls
     val mapper = jacksonObjectMapper()
 
-    class MultiSelectDeserializer : StdDeserializer<List<String>>(
-        TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
-    ) {
+    class MultiSelectDeserializer :
+        StdDeserializer<List<String>>(
+            TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
+        ) {
         override fun deserialize(
             p: JsonParser?,
             ctxt: DeserializationContext?,
@@ -45,9 +46,10 @@ object WidgetSerde {
         }
     }
 
-    class MultiSelectSerializer : StdSerializer<List<String>>(
-        TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
-    ) {
+    class MultiSelectSerializer :
+        StdSerializer<List<String>>(
+            TypeFactory.defaultInstance().constructCollectionType(List::class.java, String::class.java),
+        ) {
         override fun serializeWithType(
             value: List<String>?,
             gen: JsonGenerator?,
@@ -66,16 +68,15 @@ object WidgetSerde {
         }
     }
 
-    class ConnectorAndConnectionsDeserializer : StdDeserializer<ConnectorAndConnections>(
-        ConnectorAndConnections::class.java,
-    ) {
+    class ConnectorAndConnectionsDeserializer :
+        StdDeserializer<ConnectorAndConnections>(
+            ConnectorAndConnections::class.java,
+        ) {
         override fun deserializeWithType(
             p: JsonParser?,
             ctxt: DeserializationContext?,
             typeDeserializer: TypeDeserializer?,
-        ): ConnectorAndConnections? {
-            return deserialize(p, ctxt)
-        }
+        ): ConnectorAndConnections? = deserialize(p, ctxt)
 
         override fun deserialize(
             p: JsonParser?,
@@ -92,9 +93,10 @@ object WidgetSerde {
         }
     }
 
-    class ConnectorAndConnectionsSerializer : StdSerializer<ConnectorAndConnections>(
-        ConnectorAndConnections::class.java,
-    ) {
+    class ConnectorAndConnectionsSerializer :
+        StdSerializer<ConnectorAndConnections>(
+            ConnectorAndConnections::class.java,
+        ) {
         override fun serializeWithType(
             value: ConnectorAndConnections?,
             gen: JsonGenerator?,
@@ -113,16 +115,15 @@ object WidgetSerde {
         }
     }
 
-    class ConnectionDeserializer : StdDeserializer<Connection>(
-        Connection::class.java,
-    ) {
+    class ConnectionDeserializer :
+        StdDeserializer<Connection>(
+            Connection::class.java,
+        ) {
         override fun deserializeWithType(
             p: JsonParser?,
             ctxt: DeserializationContext?,
             typeDeserializer: TypeDeserializer?,
-        ): Connection? {
-            return deserialize(p, ctxt)
-        }
+        ): Connection? = deserialize(p, ctxt)
 
         override fun deserialize(
             p: JsonParser?,
@@ -141,9 +142,10 @@ object WidgetSerde {
         }
     }
 
-    class ConnectionSerializer : StdSerializer<Connection>(
-        Connection::class.java,
-    ) {
+    class ConnectionSerializer :
+        StdSerializer<Connection>(
+            Connection::class.java,
+        ) {
         override fun serializeWithType(
             value: Connection?,
             gen: JsonGenerator?,

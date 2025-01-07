@@ -6,20 +6,18 @@ import AdminExportCfg
 import com.atlan.api.UsersEndpoint
 import com.atlan.model.admin.UserRequest
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
-import com.atlan.pkg.serde.xls.ExcelWriter
 import mu.KLogger
 
 class Users(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting all users..." }
-        val sheet = xlsx.createSheet("Users")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Username" to "",
                 "First name" to "",
@@ -35,22 +33,26 @@ class Users(
             ),
         )
         val request =
-            UserRequest.builder()
+            UserRequest
+                .builder()
                 .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
                 .column("profileRole")
                 .column("profileRoleOther")
                 .build()
         ctx.client.users.list(request).forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
-            val groups = ctx.client.users.listGroups(user.id)?.records?.joinToString("\n") { it.name ?: "" } ?: ""
+            val groups =
+                ctx.client.users
+                    .listGroups(user.id)
+                    ?.records
+                    ?.joinToString("\n") { it.name ?: "" } ?: ""
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            xlsx.appendRow(
-                sheet,
+            writer.writeRecord(
                 listOf(
                     user.username,
                     user.firstName,

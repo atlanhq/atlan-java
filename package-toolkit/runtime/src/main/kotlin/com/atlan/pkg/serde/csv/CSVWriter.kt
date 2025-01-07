@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.csv
 
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.Utils
+import com.atlan.pkg.serde.TabularWriter
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
@@ -22,9 +23,14 @@ import java.util.stream.Stream
  */
 class CSVWriter
     @JvmOverloads
-    constructor(path: String, fieldSeparator: Char = ',') : Closeable {
+    constructor(
+        path: String,
+        fieldSeparator: Char = ',',
+    ) : Closeable,
+        TabularWriter {
         private val writer =
-            CsvWriter.builder()
+            CsvWriter
+                .builder()
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .quoteStrategy(QuoteStrategies.NON_EMPTY)
@@ -35,10 +41,22 @@ class CSVWriter
 
         /**
          * Write a header row into the CSV file.
+         * Note: since this is a CSV output, the description will be dropped (no standard way to add
+         * a comment to a CSV file).
+         *
+         * @param headers ordered map of header names and descriptions
+         */
+        override fun writeHeader(headers: Map<String, String>) {
+            header.addAll(headers.keys)
+            writeRecord(headers.keys)
+        }
+
+        /**
+         * Write a header row into the CSV file.
          *
          * @param values to use for the header
          */
-        fun writeHeader(values: Iterable<String>) {
+        override fun writeHeader(values: Iterable<String>) {
             header.addAll(values)
             writeRecord(values)
         }
@@ -50,9 +68,9 @@ class CSVWriter
          *
          * @param values map keyed by column name with values for the row of data
          */
-        fun writeRecord(values: Map<String, String?>?) {
+        override fun writeRecord(values: Map<String, Any?>?) {
             if (values != null) {
-                val list = mutableListOf<String>()
+                val list = mutableListOf<Any>()
                 header.forEach { name ->
                     list.add(values.getOrDefault(name, "") ?: "")
                 }
@@ -64,11 +82,11 @@ class CSVWriter
          * Write a row of data into the CSV file, where the values are already sequenced
          * in the same order as the header columns.
          *
-         * @param values to use for the row of data
+         * @param data to use for the row of data
          */
-        fun writeRecord(values: Iterable<String?>?) {
-            if (values != null) {
-                synchronized(writer) { writer.writeRecord(values) }
+        override fun writeRecord(data: Iterable<Any?>?) {
+            if (data != null) {
+                synchronized(writer) { writer.writeRecord(data.map { it?.toString() ?: "" }) }
             }
         }
 

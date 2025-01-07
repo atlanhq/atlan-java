@@ -31,7 +31,8 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
         )
 
     private fun createConnections() {
-        Connection.creator(client, c1, connectorType)
+        Connection
+            .creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
@@ -45,7 +46,8 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             val sch1 = Schema.creator("sch1", db1).build()
             batch.add(sch1)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .userDescription("Must have some enrichment to be included!")
                     .build()
             batch.add(tbl1)
@@ -56,12 +58,14 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private fun archiveTable() {
         val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(connection))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val guids =
-            response.stream()
+            response
+                .stream()
                 .map { it.guid }
                 .toList()
         client.assets.delete(guids, AtlanDeleteType.SOFT).block()
@@ -92,7 +96,8 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     fun activeAssetMigrated() {
         val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .includeOnResults(Table.STATUS)
                 .toRequest()

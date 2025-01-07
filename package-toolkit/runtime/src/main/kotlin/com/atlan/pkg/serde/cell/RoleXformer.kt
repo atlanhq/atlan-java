@@ -21,9 +21,7 @@ object RoleXformer {
      * @param role to be encoded
      * @return the string-encoded form for that role
      */
-    fun encode(role: String): String {
-        return role
-    }
+    fun encode(role: String): String = role
 
     /**
      * Decodes (deserializes) a string form into a validated role GUID.

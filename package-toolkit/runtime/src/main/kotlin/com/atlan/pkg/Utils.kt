@@ -109,10 +109,12 @@ object Utils {
             if (envValue != "") {
                 val tempResource =
                     Resource.create(
-                        Attributes.builder().put(
-                            entry.key,
-                            envValue,
-                        ).build(),
+                        Attributes
+                            .builder()
+                            .put(
+                                entry.key,
+                                envValue,
+                            ).build(),
                     )
                 outputResource = outputResource.merge(tempResource)
             }
@@ -128,11 +130,14 @@ object Utils {
             )
         val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
         val logExporter: OtlpGrpcLogRecordExporter =
-            OtlpGrpcLogRecordExporter.builder()
+            OtlpGrpcLogRecordExporter
+                .builder()
                 .setEndpoint(endpoint)
                 .build()
         val logEmitterProvider: SdkLoggerProvider =
-            SdkLoggerProvider.builder().setResource(resource)
+            SdkLoggerProvider
+                .builder()
+                .setResource(resource)
                 .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
                 .build()
         val openTelemetry =
@@ -404,9 +409,7 @@ object Utils {
     fun getOrDefault(
         configValue: List<String>?,
         default: List<String>,
-    ): List<String> {
-        return if (configValue.isNullOrEmpty()) default else configValue
-    }
+    ): List<String> = if (configValue.isNullOrEmpty()) default else configValue
 
     /**
      * Return the provided configuration value only if it is non-null and not empty,
@@ -419,13 +422,12 @@ object Utils {
     fun getOrDefault(
         configValue: Number?,
         default: Number,
-    ): Number {
-        return if (configValue == null || configValue == -1) {
+    ): Number =
+        if (configValue == null || configValue == -1) {
             default
         } else {
             configValue
         }
-    }
 
     /**
      * Return the provided configuration value only if it is non-null and not empty,
@@ -438,9 +440,7 @@ object Utils {
     fun getOrDefault(
         configValue: Boolean?,
         default: Boolean,
-    ): Boolean {
-        return configValue ?: default
-    }
+    ): Boolean = configValue ?: default
 
     /**
      * Returns the provided comma-separated configuration value as a list of strings.
@@ -452,7 +452,8 @@ object Utils {
         if (configValue == null) {
             return listOf()
         }
-        return configValue.split(",")
+        return configValue
+            .split(",")
             .map { it.trim() }
             .filter { it.isNotBlank() }
             .toList()
@@ -497,13 +498,12 @@ object Utils {
         action: String?,
         connectionQN: String?,
         connection: Connection?,
-    ): String {
-        return if (getOrDefault(action, "REUSE") == "REUSE") {
+    ): String =
+        if (getOrDefault(action, "REUSE") == "REUSE") {
             reuseConnection(client, connectionQN)
         } else {
             createConnection(client, connection)
         }
-    }
 
     /**
      * Create a connection using the details provided.
@@ -515,8 +515,8 @@ object Utils {
     fun createConnection(
         client: AtlanClient,
         connection: Connection?,
-    ): String {
-        return if (connection != null) {
+    ): String =
+        if (connection != null) {
             logger.info { "Attempting to create new connection..." }
             try {
                 val toCreate =
@@ -533,7 +533,6 @@ object Utils {
         } else {
             ""
         }
-    }
 
     /**
      * Calculate the creation handling semantic from a string semantic.
@@ -545,13 +544,12 @@ object Utils {
     fun getCreationHandling(
         semantic: String?,
         default: AssetCreationHandling,
-    ): AssetCreationHandling {
-        return if (semantic == null) {
+    ): AssetCreationHandling =
+        if (semantic == null) {
             default
         } else {
             AssetCreationHandling.fromValue(semantic)
         }
-    }
 
     /**
      * Validate the provided connection exists, and if so return its qualifiedName.
@@ -563,8 +561,8 @@ object Utils {
     fun reuseConnection(
         client: AtlanClient,
         providedConnectionQN: String?,
-    ): String {
-        return providedConnectionQN?.let {
+    ): String =
+        providedConnectionQN?.let {
             try {
                 logger.info { "Attempting to reuse connection: $providedConnectionQN" }
                 Connection.get(client, providedConnectionQN, false)
@@ -574,7 +572,6 @@ object Utils {
                 ""
             }
         } ?: ""
-    }
 
     /**
      * Send an email using the tenant's internal SMTP server.
@@ -593,7 +590,8 @@ object Utils {
         html: String? = null,
     ) {
         val builder =
-            EmailBuilder.startingBlank()
+            EmailBuilder
+                .startingBlank()
                 .from("support@atlan.app")
                 .withRecipients(null, false, recipients, Message.RecipientType.TO)
                 .withSubject(subject)
@@ -605,12 +603,15 @@ object Utils {
             builder.withAttachment(it.name, FileDataSource(it))
         }
         val email = builder.buildEmail()
-        MailerBuilder.withSMTPServer(
-            getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
-            getEnvVar("SMTP_PORT", "587").toInt(),
-            getEnvVar("SMTP_USER"),
-            getEnvVar("SMTP_PASS"),
-        ).buildMailer().sendMail(email).get()
+        MailerBuilder
+            .withSMTPServer(
+                getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
+                getEnvVar("SMTP_PORT", "587").toInt(),
+                getEnvVar("SMTP_USER"),
+                getEnvVar("SMTP_PASS"),
+            ).buildMailer()
+            .sendMail(email)
+            .get()
     }
 
     /**
@@ -623,9 +624,7 @@ object Utils {
     fun getAssetLink(
         client: AtlanClient,
         guid: String,
-    ): String {
-        return getLink(client, guid, "assets")
-    }
+    ): String = getLink(client, guid, "assets")
 
     /**
      * Return a URL that will link directly to a data product or data domain in Atlan.
@@ -637,9 +636,7 @@ object Utils {
     fun getProductLink(
         client: AtlanClient,
         guid: String,
-    ): String {
-        return getLink(client, guid, "products")
-    }
+    ): String = getLink(client, guid, "products")
 
     private fun getLink(
         client: AtlanClient,
@@ -980,8 +977,8 @@ object Utils {
      * @param directory (optional) fallback directory to use on local filesystem if no object store is detected
      * @return object storage syncer for Atlan's backing store
      */
-    fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer {
-        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
+    fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer =
+        when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
             "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
             "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
             "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
@@ -994,7 +991,6 @@ object Utils {
             }
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
-    }
 
     /**
      * Update the connection cache for the provided assets.

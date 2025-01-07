@@ -9,21 +9,19 @@ import com.atlan.model.search.AuditSearchRequest
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.exports.AssetChanges.Companion.EXCLUDE_TYPES
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class DetailedUserChanges(
     private val ctx: PackageContext<AdoptionExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         val start = ctx.config.changesFrom * 1000
         val end = ctx.config.changesTo * 1000
         logger.info { "Exporting details of all user-made changes between [$start, $end]..." }
-        val sheet = xlsx.createSheet("User changes")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Time" to "Time at which the change occurred",
                 "Username" to "User who made the change",
@@ -36,7 +34,8 @@ class DetailedUserChanges(
             ),
         )
         val builder =
-            AuditSearch.builder(ctx.client)
+            AuditSearch
+                .builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
         if (ctx.config.changesByUser.isNotEmpty()) {
             builder.where(AuditSearchRequest.USER.`in`(ctx.config.changesByUser))
@@ -56,7 +55,8 @@ class DetailedUserChanges(
         if (end > 0) {
             builder.where(AuditSearchRequest.CREATED.lt(end))
         }
-        builder.stream()
+        builder
+            .stream()
             .forEach {
                 val agent =
                     when (it.action) {
@@ -66,8 +66,7 @@ class DetailedUserChanges(
                         -> "background"
                         else -> it.headers?.get("x-atlan-agent") ?: "UI"
                     }
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         it.timestamp ?: "",
                         it.user ?: "",

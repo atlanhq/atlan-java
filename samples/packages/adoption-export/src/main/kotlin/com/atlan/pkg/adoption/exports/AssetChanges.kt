@@ -11,12 +11,12 @@ import com.atlan.model.search.AuditSearchRequest
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.adoption.AdoptionExporter.getAssetDetails
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class AssetChanges(
     private val ctx: PackageContext<AdoptionExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     companion object {
@@ -29,9 +29,7 @@ class AssetChanges(
 
     fun export() {
         logger.info { "Exporting changed assets..." }
-        val sheet = xlsx.createSheet("Changes")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Type" to "Type of asset",
                 "Qualified name" to "Unique name of the asset",
@@ -41,7 +39,8 @@ class AssetChanges(
             ),
         )
         val builder =
-            AuditSearch.builder(ctx.client)
+            AuditSearch
+                .builder(ctx.client)
                 .whereNot(AuditSearchRequest.ENTITY_TYPE.`in`(EXCLUDE_TYPES))
                 .aggregate("changes", AuditSearchRequest.ENTITY_ID.bucketBy(ctx.config.changesMax.toInt()))
         if (ctx.config.changesByUser.isNotEmpty()) {
@@ -70,8 +69,7 @@ class AssetChanges(
         val assetMap = getAssetDetails(ctx, changeCountMap)
         changeCountMap.forEach { (guid, changeCount) ->
             val asset = assetMap[guid]
-            xlsx.appendRow(
-                sheet,
+            writer.writeRecord(
                 listOf(
                     asset?.typeName ?: "(deleted)",
                     asset?.qualifiedName ?: guid,

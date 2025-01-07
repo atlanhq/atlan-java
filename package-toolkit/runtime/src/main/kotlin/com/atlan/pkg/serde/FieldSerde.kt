@@ -110,26 +110,24 @@ object FieldSerde {
     fun getCustomMetadataValueFromString(
         attrDef: AttributeDef,
         value: String?,
-    ): Any? {
-        return if (value.isNullOrEmpty()) {
+    ): Any? =
+        if (value.isNullOrEmpty()) {
             null
         } else if (attrDef.options?.multiValueSelect == true) {
             getMultiValuedCustomMetadata(attrDef, value)
         } else {
             getSingleValuedCustomMetadata(attrDef, value)
         }
-    }
 
     private fun getMultiValuedCustomMetadata(
         attrDef: AttributeDef,
         value: String?,
-    ): List<String> {
-        return if (value.isNullOrEmpty()) {
+    ): List<String> =
+        if (value.isNullOrEmpty()) {
             listOf()
         } else {
             value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(attrDef, it.trim()).toString() }
         }
-    }
 
     private fun getSingleValuedCustomMetadata(
         attrDef: AttributeDef,

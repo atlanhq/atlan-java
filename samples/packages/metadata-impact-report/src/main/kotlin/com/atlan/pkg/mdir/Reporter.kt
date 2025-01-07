@@ -36,10 +36,12 @@ import com.atlan.pkg.mdir.metrics.TLAxQ
 import com.atlan.pkg.mdir.metrics.TLAxU
 import com.atlan.pkg.mdir.metrics.UTA
 import com.atlan.pkg.mdir.metrics.UTQ
+import com.atlan.pkg.serde.TabularWriter
+import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
-import org.apache.poi.ss.usermodel.Sheet
 import java.io.File
+import java.nio.file.Paths
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -48,6 +50,34 @@ import java.util.Locale
  */
 object Reporter {
     private val logger = Utils.getLogger(Reporter.javaClass.name)
+
+    private const val FILENAME = "mdir.xlsx"
+
+    private val CSV_FILES =
+        mapOf(
+            "overview" to "overview.csv",
+            "AUM" to "aum.csv",
+            "AwD" to "awd.csv",
+            "AwDC" to "awdc.csv",
+            "AwDU" to "awdu.csv",
+            "AwO" to "awo.csv",
+            "AwOG" to "awog.csv",
+            "AwOU" to "awou.csv",
+            "DLA" to "dla.csv",
+            "DLAxL" to "dlaxl.csv",
+            "GCM" to "gcm.csv",
+            "GTM" to "gtm.csv",
+            "GUM" to "gum.csv",
+            "HQV" to "hqv.csv",
+            "SUT" to "sut.csv",
+            "TLA" to "tla.csv",
+            "TLAwL" to "tlawl.csv",
+            "TLAxL" to "tlaxl.csv",
+            "TLAxQ" to "tlaxq.csv",
+            "TLAxU" to "tlaxu.csv",
+            "UTA" to "uta.csv",
+            "UTQ" to "utq.csv",
+        )
 
     const val CAT_HEADLINES = "Headline numbers"
     const val CAT_SAVINGS = "Cost savings"
@@ -91,6 +121,18 @@ object Reporter {
         Utils.initializeContext<MetadataImpactReportCfg>().use { ctx ->
             val batchSize = 300
 
+            val xlsxOutput = ctx.config.fileFormat == "XLSX"
+
+            Paths.get(outputDirectory).toFile().mkdirs()
+
+            // Touch every file, just so they exist, to avoid any workflow failures
+            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
+            Paths.get(xlsxFile).toFile().createNewFile()
+            CSV_FILES.forEach { (_, filename) ->
+                val filePath = "$outputDirectory${File.separator}$filename"
+                Paths.get(filePath).toFile().createNewFile()
+            }
+
             val glossary =
                 if (ctx.config.includeGlossary == "TRUE") {
                     createGlossaryIdempotent(ctx.client, ctx.config.glossaryName)
@@ -98,7 +140,7 @@ object Reporter {
                     null
                 }
             val categoryNameToGuid = createCategoriesIdempotent(ctx.client, glossary)
-            val reportFile = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
+            val fileOutputs = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -108,17 +150,27 @@ object Reporter {
                             "[Atlan] Metadata Impact Report",
                             emails,
                             "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
-                            listOf(File(reportFile)),
+                            fileOutputs.map { File(it) },
                         )
                     }
                 }
 
                 "CLOUD" -> {
-                    Utils.uploadOutputFile(
-                        reportFile,
-                        ctx.config.targetPrefix,
-                        ctx.config.targetKey,
-                    )
+                    if (xlsxOutput) {
+                        Utils.uploadOutputFile(
+                            xlsxFile,
+                            ctx.config.targetPrefix,
+                            ctx.config.targetKey,
+                        )
+                    } else {
+                        fileOutputs.forEach {
+                            // When using CSVs, ignore any key specified and use the filename itself
+                            Utils.uploadOutputFile(
+                                it,
+                                ctx.config.targetPrefix,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -127,18 +179,18 @@ object Reporter {
     private fun createGlossaryIdempotent(
         client: AtlanClient,
         glossaryName: String,
-    ): Glossary {
-        return try {
+    ): Glossary =
+        try {
             Glossary.findByName(client, glossaryName)
         } catch (e: NotFoundException) {
             val create =
-                Glossary.creator(glossaryName)
+                Glossary
+                    .creator(glossaryName)
                     .assetIcon(AtlanIcon.PROJECTOR_SCREEN_CHART)
                     .build()
             val response = create.save(client)
             response.getResult(create)
         }
-    }
 
     private fun createCategoriesIdempotent(
         client: AtlanClient,
@@ -175,35 +227,72 @@ object Reporter {
         batchSize: Int = 300,
         glossary: Glossary? = null,
         categoryNameToGuid: Map<String, String>? = null,
-    ): String {
-        val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
-        ExcelWriter(outputFile).use { xlsx ->
-            val overview = xlsx.createSheet("Overview")
-            xlsx.addHeader(
-                overview,
-                mapOf(
-                    "Metric" to "",
-                    "Description" to "",
-                    "Result" to "Numeric result for the metric",
-                    "Caveats" to "Any caveats to be aware of with the metric",
-                    "Notes" to "Any other information to be aware of with the metric",
-                    // "Percentage" to "Percentage of total for the metric",
-                ),
-            )
-            reports.forEach { repClass ->
-                val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                logger.info { "Quantifying metric: ${metric.name} ..." }
-                val quantified = metric.quantify()
-                val term =
-                    if (ctx.config.includeGlossary == "TRUE") {
-                        writeMetricToGlossary(ctx.client, metric, quantified, glossary!!, categoryNameToGuid!!)
-                    } else {
-                        null
-                    }
-                writeMetricToExcel(ctx.client, metric, quantified, xlsx, overview, ctx.config.includeDetails, term, batchSize)
+    ): List<String> {
+        if (ctx.config.fileFormat == "XLSX") {
+            val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
+            ExcelWriter(outputFile).use { xlsx ->
+                val overview = xlsx.createSheet("Overview")
+                overview.writeHeader(
+                    mapOf(
+                        "Metric" to "",
+                        "Description" to "",
+                        "Result" to "Numeric result for the metric",
+                        "Caveats" to "Any caveats to be aware of with the metric",
+                        "Notes" to "Any other information to be aware of with the metric",
+                        // "Percentage" to "Percentage of total for the metric",
+                    ),
+                )
+                reports.forEach { repClass ->
+                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+                    outputReport(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, glossary, categoryNameToGuid)
+                }
             }
+            return listOf(outputFile)
+        } else {
+            val overviewFile = "$outputDirectory${File.separator}${CSV_FILES["overview"]}"
+            val outputFiles = mutableListOf<String>()
+            CSVWriter(overviewFile).use { overview ->
+                overview.writeHeader(
+                    mapOf(
+                        "Metric" to "",
+                        "Description" to "",
+                        "Result" to "Numeric result for the metric",
+                        "Caveats" to "Any caveats to be aware of with the metric",
+                        "Notes" to "Any other information to be aware of with the metric",
+                        // "Percentage" to "Percentage of total for the metric",
+                    ),
+                )
+                reports.forEach { repClass ->
+                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+                    val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
+                    CSVWriter(metricFile).use { details ->
+                        outputReport(ctx, metric, overview, details, batchSize, glossary, categoryNameToGuid)
+                    }
+                    outputFiles.add(metricFile)
+                }
+            }
+            return outputFiles
         }
-        return outputFile
+    }
+
+    private fun outputReport(
+        ctx: PackageContext<MetadataImpactReportCfg>,
+        metric: Metric,
+        overview: TabularWriter,
+        details: TabularWriter,
+        batchSize: Int,
+        glossary: Glossary? = null,
+        categoryNameToGuid: Map<String, String>? = null,
+    ) {
+        logger.info { "Quantifying metric: ${metric.name} ..." }
+        val quantified = metric.quantify()
+        val term =
+            if (ctx.config.includeGlossary == "TRUE") {
+                writeMetricToGlossary(ctx.client, metric, quantified, glossary!!, categoryNameToGuid!!)
+            } else {
+                null
+            }
+        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, term, batchSize)
     }
 
     private fun writeMetricToGlossary(
@@ -221,7 +310,8 @@ object Reporter {
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {
-            builder.announcementType(AtlanAnnouncementType.WARNING)
+            builder
+                .announcementType(AtlanAnnouncementType.WARNING)
                 .announcementTitle("Caveats")
                 .announcementMessage(metric.caveats)
                 .certificateStatus(CertificateStatus.DRAFT)
@@ -229,12 +319,14 @@ object Reporter {
             builder.certificateStatus(CertificateStatus.VERIFIED)
         }
         if (metric.notes.isNotBlank()) {
-            builder.announcementType(AtlanAnnouncementType.INFORMATION)
+            builder
+                .announcementType(AtlanAnnouncementType.INFORMATION)
                 .announcementTitle("Note")
                 .announcementMessage(metric.notes)
         }
         val term =
-            builder.displayName(metric.displayName)
+            builder
+                .displayName(metric.displayName)
                 .description(metric.description)
                 .certificateStatusMessage(prettyQuantity)
                 .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))
@@ -243,18 +335,17 @@ object Reporter {
         return response.getResult(term) ?: term.trimToRequired().guid(response.getAssignedGuid(term)).build()
     }
 
-    private fun writeMetricToExcel(
+    private fun writeMetricToFile(
         client: AtlanClient,
         metric: Metric,
         quantified: Double,
-        xlsx: ExcelWriter,
-        overview: Sheet,
+        overview: TabularWriter,
+        details: TabularWriter,
         includeDetails: Boolean,
         term: GlossaryTerm?,
         batchSize: Int,
     ) {
-        xlsx.appendRow(
-            overview,
+        overview.writeRecord(
             listOf(
                 metric.name,
                 metric.description,
@@ -281,7 +372,7 @@ object Reporter {
                 } else {
                     null
                 }
-            metric.outputDetailedRecords(xlsx, term, batch)
+            metric.outputDetailedRecords(details, term, batch)
             batch?.flush()
             batch?.close()
         }
