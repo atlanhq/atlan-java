@@ -67,7 +67,10 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
             if (asset.parentDomain == null) {
                 ""
             } else {
-                getIdentity(asset.parentDomain.guid)
+                // Note: this MUST bypass the read lock, since it is called within a write lock
+                // (otherwise, this will become a deadlock -- the read will wait until write lock is released,
+                // which will never happen because it is waiting on this read operation to complete.)
+                getIdentity(asset.parentDomain.guid, true)
             }
         return if (parentIdentity.isNullOrBlank()) {
             asset.name
@@ -89,11 +92,14 @@ class DataDomainCache(val ctx: PackageContext<*>) : AssetCache<DataDomain>(ctx, 
                 dataDomain as DataDomain
                 cache(dataDomain.guid, getIdentityForAsset(dataDomain), dataDomain)
             }
+        // Note: this should NOT be streamed in parallel, as we could otherwise have situations
+        // where a parent and child are processed at the same time (in separate threads) and
+        // therefore the child becomes unable to resolve its parent's identity.
         DataDomain.select(client)
             .includesOnResults(includesOnResults)
             .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
             .sort(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.order(SortOrder.Asc))
-            .stream(true)
+            .stream(false)
             .forEach { dataDomain ->
                 dataDomain as DataDomain
                 cache(dataDomain.guid, getIdentityForAsset(dataDomain), dataDomain)
