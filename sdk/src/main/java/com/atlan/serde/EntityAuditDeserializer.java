@@ -64,20 +64,23 @@ public class EntityAuditDeserializer extends StdDeserializer<EntityAudit> {
                 .headers(JacksonUtils.deserializeObject(client, root, "headers", new TypeReference<>() {}));
 
         JsonNode detail = root.get("detail");
-        JsonNode guid = detail.get("guid"); // only exists on entities
-        JsonNode attributes = detail.get("attributes"); // exists on entities and custom metadata
-        AuditDetail auditDetail;
-        if (guid != null && guid.isTextual()) {
-            // Delegate to entity deserialization
-            auditDetail = client.getAssetDeserializer().deserialize(detail, ts);
-        } else if (attributes != null) {
-            // Delegate to the custom metadata deserialization
-            auditDetail = client.getCustomMetadataAuditDeserializer().deserialize(detail, ts);
-        } else {
-            // Delegate to Atlan tag deserialization
-            auditDetail = client.getAtlanTagDeserializer().deserialize(detail, ts);
+        if (detail != null && !detail.isNull()) {
+            JsonNode guid = detail.get("guid"); // only exists on entities
+            JsonNode attributes = detail.get("attributes"); // exists on entities and custom metadata
+            AuditDetail auditDetail;
+            if (guid != null && guid.isTextual()) {
+                // Delegate to entity deserialization
+                auditDetail = client.getAssetDeserializer().deserialize(detail, ts);
+            } else if (attributes != null) {
+                // Delegate to the custom metadata deserialization
+                auditDetail = client.getCustomMetadataAuditDeserializer().deserialize(detail, ts);
+            } else {
+                // Delegate to Atlan tag deserialization
+                auditDetail = client.getAtlanTagDeserializer().deserialize(detail, ts);
+            }
+            auditDetail.setRawJsonObject(detail);
+            builder.detail(auditDetail);
         }
-        auditDetail.setRawJsonObject(detail);
-        return builder.detail(auditDetail).build();
+        return builder.build();
     }
 }
