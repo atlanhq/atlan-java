@@ -2,6 +2,8 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.java.sdk;
 
+import static org.testng.Assert.*;
+
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
@@ -11,12 +13,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-
-import java.util.List;
-
-import static org.testng.Assert.*;
 
 /**
  * Tests all aspects of Dataverse assets.
@@ -45,8 +44,8 @@ public class DataverseAssetTest extends AtlanLiveTest {
             groups = {"dataverse.create.entity"},
             dependsOnGroups = {"dataverse.create.connection"})
     void createEntity() throws AtlanException {
-        DataverseEntity toCreate =
-                DataverseEntity.creator(ENTITY_NAME, connection.getQualifiedName()).build();
+        DataverseEntity toCreate = DataverseEntity.creator(ENTITY_NAME, connection.getQualifiedName())
+                .build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataverseEntity);
@@ -62,7 +61,8 @@ public class DataverseAssetTest extends AtlanLiveTest {
             groups = {"dataverse.create.attribute"},
             dependsOnGroups = {"dataverse.create.entity"})
     void createAttribute() throws AtlanException {
-        DataverseAttribute toCreate = DataverseAttribute.creator(ATTRIBUTE_NAME, entity).build();
+        DataverseAttribute toCreate =
+                DataverseAttribute.creator(ATTRIBUTE_NAME, entity).build();
         AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -83,7 +83,6 @@ public class DataverseAssetTest extends AtlanLiveTest {
         assertEquals(attribute.getDataverseEntityQualifiedName(), entity.getQualifiedName());
         assertEquals(attribute.getConnectionQualifiedName(), connection.getQualifiedName());
     }
-
 
     @Test(
             groups = {"dataverse.read.attribute"},
@@ -166,14 +165,14 @@ public class DataverseAssetTest extends AtlanLiveTest {
         assertEquals(ds.getQualifiedName(), attribute.getQualifiedName());
         assertEquals(ds.getName(), attribute.getName());
         assertEquals(ds.getConnectionQualifiedName(), connection.getQualifiedName());
-
     }
 
     @Test(
             groups = {"dataverse.delete.attribute"},
             dependsOnGroups = {"dataverse.update.*", "dataverse.search.*"})
     void deleteAttribute() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(client, attribute.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, attribute.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -210,7 +209,8 @@ public class DataverseAssetTest extends AtlanLiveTest {
             groups = {"dataverse.purge.attribute"},
             dependsOnGroups = {"dataverse.delete.attribute.restore"})
     void purgeAttribute() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, attribute.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.purge(client, attribute.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
