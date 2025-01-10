@@ -65,7 +65,7 @@ class LineageTransformer(
             if (source !is ICatalog || target !is ICatalog) {
                 logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
             } else {
-                val xformConnector = inputRow[XFORM_CONNECTOR] ?: ""
+                val xformConnector = inputRow[XFORM_CONNECTOR]?.lowercase() ?: ""
                 val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
                 val connectionId = AssetResolver.ConnectionIdentity(xformConnection, xformConnector)
                 val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
