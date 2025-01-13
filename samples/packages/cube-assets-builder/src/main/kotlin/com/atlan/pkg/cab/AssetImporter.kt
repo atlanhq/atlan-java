@@ -90,7 +90,7 @@ abstract class AssetImporter(
             when (typeName) {
                 Connection.TYPE_NAME -> {
                     val connection = CSVXformer.trimWhitespace(row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)])
-                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)])
+                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]).lowercase()
                     parent = null
                     unique = ConnectionIdentity(connection, connector).toString()
                     partial = ""
