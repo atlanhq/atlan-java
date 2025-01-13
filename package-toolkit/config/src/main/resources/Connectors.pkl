@@ -389,6 +389,10 @@ hidden const APPLICATION: Type = new {
   value = "application"
   category = "application"
 }
+hidden const CUSTOM: Type = new {
+  value = "custom"
+  category = "custom"
+}
 hidden const MPARTICLE: Type = new {
   value = "mparticle"
   category = "database"
@@ -438,6 +442,7 @@ class Type {
 typealias AtlanConnectionCategory =
   "warehouse"|
   "bi"|
+  "custom"|
   "ObjectStore"|
   "SaaS"|
   "lake"|
