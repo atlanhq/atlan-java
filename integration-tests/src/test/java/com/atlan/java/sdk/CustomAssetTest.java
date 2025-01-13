@@ -2,6 +2,8 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.java.sdk;
 
+import static org.testng.Assert.*;
+
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
@@ -11,12 +13,9 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-
-import java.util.List;
-
-import static org.testng.Assert.*;
 
 /**
  * Tests all aspects of Custom assets.
@@ -42,8 +41,8 @@ public class CustomAssetTest extends AtlanLiveTest {
             groups = {"custom.create.entity"},
             dependsOnGroups = {"custom.create.connection"})
     void createEntity() throws AtlanException {
-        CustomEntity toCreate = CustomEntity.creator(ENTITY_NAME, connection.getQualifiedName())
-                .build();
+        CustomEntity toCreate =
+                CustomEntity.creator(ENTITY_NAME, connection.getQualifiedName()).build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof CustomEntity);
@@ -59,8 +58,8 @@ public class CustomAssetTest extends AtlanLiveTest {
             groups = {"custom.update.entity"},
             dependsOnGroups = {"custom.create.entity"})
     void updateEntity() throws AtlanException {
-        CustomEntity updated =
-                CustomEntity.updateCertificate(client, entity.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        CustomEntity updated = CustomEntity.updateCertificate(
+                client, entity.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
