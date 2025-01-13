@@ -102,6 +102,7 @@ public class AttributeDefOptions extends AtlanObject {
             CubeDimension.TYPE_NAME,
             CubeField.TYPE_NAME,
             CubeHierarchy.TYPE_NAME,
+            CustomEntity.TYPE_NAME,
             DataContract.TYPE_NAME,
             DataStudioAsset.TYPE_NAME,
             Database.TYPE_NAME,
