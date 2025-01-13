@@ -18,6 +18,7 @@ public enum AtlanConnectionCategory implements AtlanEnum {
     APPLICATION("application"),
     EVENT_BUS("eventbus"),
     DATA_QUALITY("data-quality"),
+    CUSTOM("custom"),
     SCHEMA_REGISTRY("schema-registry");
 
     @JsonValue

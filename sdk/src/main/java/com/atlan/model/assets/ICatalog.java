@@ -233,6 +233,9 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
+            case CustomEntity.TYPE_NAME:
+                ref = CustomEntity.refByQualifiedName(qualifiedName);
+                break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
