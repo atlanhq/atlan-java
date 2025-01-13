@@ -429,6 +429,10 @@ hidden const DATA_MODELING: Type = new {
   value = "datamodeling"
   category = "database"
 }
+hidden const DATAVERSE: Type = new {
+  value = "dataverse"
+  category = "SaaS"
+}
 
 class Type {
   value: String
