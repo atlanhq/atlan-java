@@ -53,11 +53,7 @@ class Users(
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            val nontechnicalNames =
-                ctx.client.users
-                    .listGroups(user.id)
-                    ?.records
-                    ?.joinToString("\n") { it.alias ?: "" } ?: ""
+            val nontechnicalNames = groups?.joinToString("\n") { it.alias ?: "" } ?: ""
             writer.writeRecord(
                 listOf(
                     user.username,
