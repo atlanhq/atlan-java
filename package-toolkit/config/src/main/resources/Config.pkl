@@ -458,6 +458,9 @@ class Widget {
 
   /// SQL query to run to determine the widget's selectable content.
   query: String?
+
+  /// Whether to prevent the Test Authentication button from showing (true) or show it (false) for credential inputs.
+  isTestAuthenticationDisabled: Boolean?
 }
 
 /// Widget that allows you to enter arbitrary text into a single-line text input field,
