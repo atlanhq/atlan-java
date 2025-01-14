@@ -435,6 +435,9 @@ public class PowerBIDataflowTest {
             .dataset(PowerBIDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .powerBIDataflowChild(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .powerBIDataflowChild(PowerBIDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .powerBIDataflowEntityColumn(PowerBIDataflowEntityColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIDataflowEntityColumn(
+                    PowerBIDataflowEntityColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .powerBIDataflowParent(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .powerBIDataflowParent(
                     PowerBIDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
@@ -442,6 +445,8 @@ public class PowerBIDataflowTest {
             .powerBIDataflowRefreshScheduleTimeZone("String0")
             .powerBIDataflowRefreshScheduleTime("String0")
             .powerBIDataflowRefreshScheduleTime("String1")
+            .powerBIDatasource(PowerBIDatasource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIDatasource(PowerBIDatasource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .powerBIProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .powerBIProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .table(PowerBITable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

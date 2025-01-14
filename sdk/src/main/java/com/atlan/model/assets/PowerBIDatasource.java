@@ -100,6 +100,11 @@ public class PowerBIDatasource extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** PowerBI Dataflows that are associated with this PowerBI Datasource. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> powerBIDataflows;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;

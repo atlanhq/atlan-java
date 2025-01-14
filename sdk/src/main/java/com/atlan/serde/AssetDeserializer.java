@@ -207,13 +207,23 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 if (!processedAttributes.contains(deserializeName)) {
                     Method method = ReflectionCache.getSetter(builderClass, deserializeName);
                     if (method != null) {
-                        try {
-                            Object value = Serde.deserialize(client, attributes.get(attrKey), method, deserializeName);
-                            ReflectionCache.setValue(builder, deserializeName, value);
-                        } catch (NoSuchMethodException e) {
-                            throw new IOException("Missing fromValue method for enum.", e);
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new IOException("Failed to deserialize through reflection.", e);
+                        if (deserializeName.equals("assetIcon")
+                                && typeName != null
+                                && (typeName.equals("Catalog") || typeName.equals("CustomEntity"))) {
+                            JsonNode value = attributes.get(attrKey);
+                            if (value != null && !value.isNull()) {
+                                builder.iconUrl(value.asText());
+                            }
+                        } else {
+                            try {
+                                Object value =
+                                        Serde.deserialize(client, attributes.get(attrKey), method, deserializeName);
+                                ReflectionCache.setValue(builder, deserializeName, value);
+                            } catch (NoSuchMethodException e) {
+                                throw new IOException("Missing fromValue method for enum.", e);
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                throw new IOException("Failed to deserialize through reflection.", e);
+                            }
                         }
                     } else {
                         // If the setter was not found, still retain it for later processing

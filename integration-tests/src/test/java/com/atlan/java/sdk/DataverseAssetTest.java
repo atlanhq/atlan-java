@@ -134,7 +134,7 @@ public class DataverseAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 9L);
+        IndexSearchResponse response = retrySearchUntil(index, 2L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -143,12 +143,12 @@ public class DataverseAssetTest extends AtlanLiveTest {
                 ((AggregationBucketResult) response.getAggregations().get("type"))
                         .getBuckets()
                         .size(),
-                9);
+                2);
 
-        assertEquals(response.getApproximateCount().longValue(), 9L);
+        assertEquals(response.getApproximateCount().longValue(), 2L);
         List<Asset> entities = response.getAssets();
         assertNotNull(entities);
-        assertEquals(entities.size(), 9);
+        assertEquals(entities.size(), 2);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof DataverseEntity);

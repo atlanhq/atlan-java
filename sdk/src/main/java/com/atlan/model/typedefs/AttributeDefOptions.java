@@ -180,6 +180,7 @@ public class AttributeDefOptions extends AtlanObject {
             PowerBIColumn.TYPE_NAME,
             PowerBIDashboard.TYPE_NAME,
             PowerBIDataflow.TYPE_NAME,
+            PowerBIDataflowEntityColumn.TYPE_NAME,
             PowerBIDataset.TYPE_NAME,
             PowerBIDatasource.TYPE_NAME,
             PowerBIMeasure.TYPE_NAME,

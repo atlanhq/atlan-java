@@ -467,6 +467,9 @@ public interface ICatalog {
             case PowerBIDataflow.TYPE_NAME:
                 ref = PowerBIDataflow.refByQualifiedName(qualifiedName);
                 break;
+            case PowerBIDataflowEntityColumn.TYPE_NAME:
+                ref = PowerBIDataflowEntityColumn.refByQualifiedName(qualifiedName);
+                break;
             case PowerBIDataset.TYPE_NAME:
                 ref = PowerBIDataset.refByQualifiedName(qualifiedName);
                 break;

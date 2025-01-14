@@ -435,6 +435,8 @@ public class PowerBIDatasourceTest {
             .connectionDetail("key2", "value2")
             .dataset(PowerBIDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dataset(PowerBIDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIDataflow(PowerBIDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
