@@ -30,11 +30,9 @@ class Users(
                 "Personas" to "Personas assigned to the user",
                 "License type" to "Type of license assigned to the user",
                 "Designation" to "Designation of the user",
-                "Non-Technical Groups" to "Non-Technical Names of Groups the user is assigned to",
+                "Group names" to "Non-technical names of groups the user is assigned to",
             ),
         )
-        // refresh group cache
-        ctx.client.groupCache.refresh()
         val request =
             UserRequest
                 .builder()
@@ -48,14 +46,14 @@ class Users(
                 ctx.client.users
                     .listGroups(user.id)
                     ?.records
-                    ?.joinToString("\n") { it.name ?: "" } ?: ""
+            val technicalNames = groups?.joinToString("\n") { it.name ?: "" } ?: ""
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            val nonTechGroupNames =
+            val nontechnicalNames =
                 ctx.client.users
                     .listGroups(user.id)
                     ?.records
@@ -66,14 +64,14 @@ class Users(
                     user.firstName,
                     user.lastName,
                     user.email,
-                    groups,
+                    technicalNames,
                     TimestampXformer.encode(user.createdTimestamp),
                     user.enabled,
                     TimestampXformer.encode(user.lastLoginTime),
                     personas,
                     user.workspaceRole,
                     designation,
-                    nonTechGroupNames,
+                    nontechnicalNames,
                 ),
             )
         }
