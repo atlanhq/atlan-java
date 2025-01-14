@@ -61,6 +61,7 @@ class ExportUsersTest : PackageTest("u") {
                 // assertFalse(row["Last name"].isNullOrBlank())
                 assertFalse(row["Email address"].isNullOrBlank())
                 assertTrue(row["Email address"]!!.contains('@'))
+                assertTrue((row["Groups"].isNullOrBlank() && row["Group names"].isNullOrBlank()) || row["Groups"]!!.isNotBlank() && row["Group names"]!!.isNotBlank())
             }
         }
     }
