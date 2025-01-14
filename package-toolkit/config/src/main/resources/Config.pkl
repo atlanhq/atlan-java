@@ -965,10 +965,14 @@ class CredentialInput extends UIElement {
   /// Type of credential to be nested within the widget.
   hidden credType: String
 
+  /// Whether to show the button for testing authentication. (Default: true, show it)
+  hidden allowTestAuthentication: Boolean = true
+
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "credential"
     credentialType = credType
+    isTestAuthenticationDisabled = !allowTestAuthentication
   }
 }
 
