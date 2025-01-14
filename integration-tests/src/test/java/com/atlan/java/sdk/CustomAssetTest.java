@@ -9,7 +9,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchRequest;
@@ -47,7 +46,8 @@ public class CustomAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"custom.create.connection"})
     void createParent() throws AtlanException {
         CustomEntity toCreate = CustomEntity.creator(PARENT_NAME, connection.getQualifiedName())
-                .subType("Guacamole")
+                .iconUrl("http://assets.atlan.com/assets/ph-bowl-food-light.svg")
+                .subType("Fruit Salad")
                 .build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
@@ -65,13 +65,13 @@ public class CustomAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"custom.create.parent"})
     void createChildren() throws AtlanException {
         CustomEntity one = CustomEntity.creator(CHILD_NAME1, connection.getQualifiedName())
-                .assetIcon(AtlanIcon.AVOCADO) // TODO: needs to be capable of being a URL...
-                .subType("Avocado")
+                .iconUrl("http://assets.atlan.com/assets/ph-apple-logo-light.svg")
+                .subType("Apple")
                 .customParentEntity(CustomEntity.refByGuid(parent.getGuid()))
                 .build();
         CustomEntity two = CustomEntity.creator(CHILD_NAME2, connection.getQualifiedName())
-                .assetIcon(AtlanIcon.PEPPER) // TODO: needs to be capable of being a URL...
-                .subType("Pepper")
+                .iconUrl("http://assets.atlan.com/assets/ph-orange-slice-light.svg")
+                .subType("Orange")
                 .customParentEntity(CustomEntity.refByQualifiedName(parent.getQualifiedName()))
                 .customRelatedToEntity(CustomEntity.refByGuid(one.getGuid()))
                 .build();
@@ -127,6 +127,8 @@ public class CustomAssetTest extends AtlanLiveTest {
         assertEquals(c.getName(), PARENT_NAME);
         assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(c.getCustomChildEntities().size(), 2);
+        assertEquals(c.getSubType(), "Fruit Salad");
+        assertEquals(c.getIconUrl(), "http://assets.atlan.com/assets/ph-bowl-food-light.svg");
     }
 
     @Test(
@@ -147,6 +149,8 @@ public class CustomAssetTest extends AtlanLiveTest {
                 || c.getCustomRelatedFromEntities().isEmpty());
         assertEquals(c.getCustomRelatedFromEntities().size(), 1);
         assertEquals(c.getCustomRelatedFromEntities().first().getGuid(), child2.getGuid());
+        assertEquals(c.getSubType(), "Apple");
+        assertEquals(c.getIconUrl(), "http://assets.atlan.com/assets/ph-apple-logo-light.svg");
     }
 
     @Test(
