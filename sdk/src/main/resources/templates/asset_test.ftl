@@ -61,7 +61,11 @@ public class ${className}Test {
                     .build())
 <#list testAttributes as testAttribute>
     <#list testAttribute.values as value>
+        <#if className == "CustomEntity" && testAttribute.builderMethod == "assetIcon">
+            .iconUrl("http://example.com/example-image.png")
+        <#else>
             .${testAttribute.builderMethod}(${value})
+        </#if>
     </#list>
 </#list>
             .build();

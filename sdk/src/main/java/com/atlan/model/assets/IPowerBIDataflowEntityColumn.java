@@ -25,56 +25,32 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Power BI dataflow in Atlan. Dataflows are reusable transformation logic that can be shared by many datasets and reports inside Power BI.
+ * Instance of a Power BI Dataflow Entity Column in Atlan. Dataflows are reusable transformation logic that can be shared by many datasets and reports inside Power BI. Each Dataflow has an Entity which represents an instance of SQL data from source, that has columns associated with it.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IPowerBIDataflow {
+public interface IPowerBIDataflowEntityColumn {
 
-    public static final String TYPE_NAME = "PowerBIDataflow";
+    public static final String TYPE_NAME = "PowerBIDataflowEntityColumn";
 
-    /** Datasets used by this dataflow. */
-    RelationField DATASETS = new RelationField("datasets");
+    /** PowerBI Dataflow in which this Dataflow Entity Column exists. */
+    RelationField POWER_BI_DATAFLOW = new RelationField("powerBIDataflow");
 
-    /** Child Dataflows to this PowerBI Dataflow. */
-    RelationField POWER_BI_DATAFLOW_CHILDREN = new RelationField("powerBIDataflowChildren");
+    /** Data type of this dataflow entity column. */
+    KeywordField POWER_BI_DATAFLOW_ENTITY_COLUMN_DATA_TYPE =
+            new KeywordField("powerBIDataflowEntityColumnDataType", "powerBIDataflowEntityColumnDataType");
 
-    /** PowerBI Dataflow Entity Columns that exist within this Dataflow. */
-    RelationField POWER_BI_DATAFLOW_ENTITY_COLUMNS = new RelationField("powerBIDataflowEntityColumns");
+    /** Unique name of the dataflow entity in which this dataflow entity column exists. */
+    TextField POWER_BI_DATAFLOW_ENTITY_NAME = new TextField("powerBIDataflowEntityName", "powerBIDataflowEntityName");
 
-    /** Parent Dataflows to this PowerBI Dataflow. */
-    RelationField POWER_BI_DATAFLOW_PARENTS = new RelationField("powerBIDataflowParents");
+    /** Unique name of the dataflow in which this dataflow entity column exists. */
+    KeywordField POWER_BI_DATAFLOW_QUALIFIED_NAME =
+            new KeywordField("powerBIDataflowQualifiedName", "powerBIDataflowQualifiedName");
 
-    /** Refresh Schedule frequency for a PowerBI Dataflow. */
-    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_FREQUENCY =
-            new KeywordField("powerBIDataflowRefreshScheduleFrequency", "powerBIDataflowRefreshScheduleFrequency");
-
-    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
-    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIME_ZONE =
-            new KeywordField("powerBIDataflowRefreshScheduleTimeZone", "powerBIDataflowRefreshScheduleTimeZone");
-
-    /** Time for the refresh schedule set for a PowerBI Dataflow. */
-    KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIMES =
-            new KeywordField("powerBIDataflowRefreshScheduleTimes", "powerBIDataflowRefreshScheduleTimes");
-
-    /** PowerBI Datasources that are associated with this Dataflow. */
-    RelationField POWER_BI_DATASOURCES = new RelationField("powerBIDatasources");
-
-    /** Lineage process that associates this PowerBI Dataflow. */
-    RelationField POWER_BI_PROCESSES = new RelationField("powerBIProcesses");
-
-    /** PowerBI Tables that are associated with this Dataflow. */
-    RelationField TABLES = new RelationField("tables");
-
-    /** Deprecated. See 'sourceUrl' instead. */
-    TextField WEB_URL = new TextField("webUrl", "webUrl");
-
-    /** Workspace in which this dataflow exists. */
-    RelationField WORKSPACE = new RelationField("workspace");
-
-    /** Unique name of the workspace in which this dataflow exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    /** Unique name of the workspace in which this dataflow entity column exists. */
+    KeywordField POWER_BI_WORKSPACE_QUALIFIED_NAME =
+            new KeywordField("powerBIWorkspaceQualifiedName", "powerBIWorkspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -367,9 +343,6 @@ public interface IPowerBIDataflow {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** Datasets used by this dataflow. */
-    SortedSet<IPowerBIDataset> getDatasets();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
@@ -475,26 +448,17 @@ public interface IPowerBIDataflow {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Child Dataflows to this PowerBI Dataflow. */
-    SortedSet<IPowerBIDataflow> getPowerBIDataflowChildren();
+    /** PowerBI Dataflow in which this Dataflow Entity Column exists. */
+    IPowerBIDataflow getPowerBIDataflow();
 
-    /** PowerBI Dataflow Entity Columns that exist within this Dataflow. */
-    SortedSet<IPowerBIDataflowEntityColumn> getPowerBIDataflowEntityColumns();
+    /** Data type of this dataflow entity column. */
+    String getPowerBIDataflowEntityColumnDataType();
 
-    /** Parent Dataflows to this PowerBI Dataflow. */
-    SortedSet<IPowerBIDataflow> getPowerBIDataflowParents();
+    /** Unique name of the dataflow entity in which this dataflow entity column exists. */
+    String getPowerBIDataflowEntityName();
 
-    /** Refresh Schedule frequency for a PowerBI Dataflow. */
-    String getPowerBIDataflowRefreshScheduleFrequency();
-
-    /** Time zone for the refresh schedule set for a PowerBI Dataflow. */
-    String getPowerBIDataflowRefreshScheduleTimeZone();
-
-    /** Time for the refresh schedule set for a PowerBI Dataflow. */
-    SortedSet<String> getPowerBIDataflowRefreshScheduleTimes();
-
-    /** PowerBI Datasources that are associated with this Dataflow. */
-    SortedSet<IPowerBIDatasource> getPowerBIDatasources();
+    /** Unique name of the dataflow in which this dataflow entity column exists. */
+    String getPowerBIDataflowQualifiedName();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
@@ -505,11 +469,11 @@ public interface IPowerBIDataflow {
     /** Whether this asset is hidden in Power BI (true) or not (false). */
     Boolean getPowerBIIsHidden();
 
-    /** Lineage process that associates this PowerBI Dataflow. */
-    SortedSet<ILineageProcess> getPowerBIProcesses();
-
     /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
+
+    /** Unique name of the workspace in which this dataflow entity column exists. */
+    String getPowerBIWorkspaceQualifiedName();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
@@ -604,9 +568,6 @@ public interface IPowerBIDataflow {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** PowerBI Tables that are associated with this Dataflow. */
-    SortedSet<IPowerBITable> getTables();
-
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
@@ -627,15 +588,6 @@ public interface IPowerBIDataflow {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
-
-    /** Deprecated. See 'sourceUrl' instead. */
-    String getWebUrl();
-
-    /** Workspace in which this dataflow exists. */
-    IPowerBIWorkspace getWorkspace();
-
-    /** Unique name of the workspace in which this dataflow exists. */
-    String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

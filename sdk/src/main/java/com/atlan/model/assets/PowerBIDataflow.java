@@ -99,6 +99,11 @@ public class PowerBIDataflow extends Asset
     @Singular
     SortedSet<IPowerBIDataflow> powerBIDataflowChildren;
 
+    /** PowerBI Dataflow Entity Columns that exist within this Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflowEntityColumn> powerBIDataflowEntityColumns;
+
     /** Parent Dataflows to this PowerBI Dataflow. */
     @Attribute
     @Singular
@@ -116,6 +121,11 @@ public class PowerBIDataflow extends Asset
     @Attribute
     @Singular
     SortedSet<String> powerBIDataflowRefreshScheduleTimes;
+
+    /** PowerBI Datasources that are associated with this Dataflow. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDatasource> powerBIDatasources;
 
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
