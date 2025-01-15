@@ -28,6 +28,80 @@ These additional directories serve other purposes:
 
 For guides on actually using the various utilities housed in this repository, see: [https://developer.atlan.com/getting-started/java-sdk/](https://developer.atlan.com/getting-started/java-sdk/)
 
+## Installing for Development
+
+- To install the SDK for development, first clone the repository:
+
+```shell
+git clone https://github.com/atlanhq/atlan-java.git
+```
+
+- Then cd into the repo:
+
+```shell
+cd atlan-java
+```
+
+- Install the Java 17 SDK (if not already installed):
+
+```shell
+/* For Mac */
+brew install openjdk@17
+```
+
+- Install dependencies and build the SDK:
+
+```shell
+./gradlew assemble
+```
+
+- For Lint Check and Code Autoformat:
+
+```shell
+./gradlew spotlessApply
+```
+
+- Setup your .env file:
+
+```shell
+/* For MacOs/Linux */
+cp .env.example .env
+
+/* For Windows */
+copy .env.example .env
+```
+
+- Update the .env file with your Atlan API Key and Atlan Base URL
+
+- Set the environment variables:
+
+```shell
+/* For MacOs/Linux */
+export $(cat .env | xargs)
+```
+
+```shell
+/* For Windows(PowerShell) */
+Get-Content .env | ForEach-Object {
+    if ($_ -match '^(.*?)=(.*)$') {
+        $env:($matches[1]) = $matches[2]
+    }
+}
+```
+
+- To run the tests:
+
+```shell
+./gradlew test
+```
+
+- To run custom package Tests:
+
+```shell
+./gradlew test -PpackageTests
+```
+
+
 ## Attribution
 
 Portions of the SDK are based on original work from https://github.com/stripe/stripe-java. Those classes that derive from this original work have an extra heading comment as follows:
