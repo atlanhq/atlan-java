@@ -361,10 +361,10 @@ public class DataverseAttribute extends Asset
     /**
      * Builds the minimal object necessary to create a DataverseAttribute.
      *
-     * @param name of the DataverseAttribute
-     * @param entity in which DataverseAttribute should be created, which must have at least
+     * @param name of the attribute
+     * @param entity in which the attribute should be created, which must have at least
      *                 a qualifiedName
-     * @return the minimal request necessary to create the DataverseAttribute, as a builder
+     * @return the minimal request necessary to create the attribute, as a builder
      * @throws InvalidRequestException if the entity provided is without a qualifiedName
      */
     public static DataverseAttribute.DataverseAttributeBuilder<?, ?> creator(String name, DataverseEntity entity)
@@ -381,7 +381,7 @@ public class DataverseAttribute extends Asset
     /**
      * Builds the minimal object necessary to create a DataverseAttribute.
      *
-     * @param name of the DataverseAttribute
+     * @param name of the attribute
      * @param entityQualifiedName unique name of the entity in which this attribute exists
      * @return the minimal request necessary to create the attribute, as a builder
      */
@@ -394,7 +394,7 @@ public class DataverseAttribute extends Asset
     /**
      * Builds the minimal object necessary to create a DataverseAttribute.
      *
-     * @param name of the DataverseAttribute
+     * @param name of the attribute
      * @param connectionQualifiedName unique name of the connection in which to create the attribute
      * @param entityQualifiedName unique name of the entity in which to create the attribute
      * @return the minimal request necessary to create the attribute, as a builder

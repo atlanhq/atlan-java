@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class CustomEntityTest {
+public class PowerBIDataflowEntityColumnTest {
 
-    private static final CustomEntity full = CustomEntity._internal()
+    private static final PowerBIDataflowEntityColumn full = PowerBIDataflowEntityColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,10 @@ public class CustomEntityTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
+            .powerBIFormatString("String0")
+            .powerBIIsHidden(true)
+            .powerBITableQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -144,7 +148,7 @@ public class CustomEntityTest {
             .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
-            .iconUrl("http://example.com/example-image.png")
+            .assetIcon(AtlanIcon.ATLAN_TAG)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -427,27 +431,25 @@ public class CustomEntityTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .customChildEntity(CustomEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .customChildEntity(CustomEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .customParentEntity(CustomEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .customRelatedFromEntity(CustomEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .customRelatedFromEntity(CustomEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .customRelatedToEntity(CustomEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .customRelatedToEntity(CustomEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIDataflowEntityColumnDataType("String0")
+            .powerBIDataflowEntityName("String0")
+            .powerBIDataflowQualifiedName("String0")
+            .powerBIWorkspaceQualifiedName("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static CustomEntity frodo;
+    private static PowerBIDataflowEntityColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"CustomEntity.builderEquivalency"})
+    @Test(groups = {"PowerBIDataflowEntityColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"CustomEntity.serialize"},
-            dependsOnGroups = {"CustomEntity.builderEquivalency"})
+            groups = {"PowerBIDataflowEntityColumn.serialize"},
+            dependsOnGroups = {"PowerBIDataflowEntityColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -456,17 +458,17 @@ public class CustomEntityTest {
     }
 
     @Test(
-            groups = {"CustomEntity.deserialize"},
-            dependsOnGroups = {"CustomEntity.serialize"})
+            groups = {"PowerBIDataflowEntityColumn.deserialize"},
+            dependsOnGroups = {"PowerBIDataflowEntityColumn.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CustomEntity.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, PowerBIDataflowEntityColumn.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"CustomEntity.equivalency"},
-            dependsOnGroups = {"CustomEntity.serialize", "CustomEntity.deserialize"})
+            groups = {"PowerBIDataflowEntityColumn.equivalency"},
+            dependsOnGroups = {"PowerBIDataflowEntityColumn.serialize", "PowerBIDataflowEntityColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -475,8 +477,8 @@ public class CustomEntityTest {
     }
 
     @Test(
-            groups = {"CustomEntity.equivalency"},
-            dependsOnGroups = {"CustomEntity.serialize", "CustomEntity.deserialize"})
+            groups = {"PowerBIDataflowEntityColumn.equivalency"},
+            dependsOnGroups = {"PowerBIDataflowEntityColumn.serialize", "PowerBIDataflowEntityColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -7,6 +7,7 @@ import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.CustomEntity;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.relations.Reference;
 import com.atlan.util.StringUtils;
@@ -199,6 +200,14 @@ public class AssetSerializer extends StdSerializer<Asset> {
                         sp.defaultSerializeField(serializeName, attrValue, gen);
                     }
                 }
+            }
+
+            // If a URL-based icon has been provided, allow that to be used as the assetIcon.
+            String iconUrl = asset.getIconUrl();
+            if (iconUrl != null
+                    && !iconUrl.isEmpty()
+                    && (asset.getTypeName().equals("Catalog") || asset instanceof CustomEntity)) {
+                attributes.put("assetIcon", iconUrl);
             }
 
         } catch (AtlanException e) {

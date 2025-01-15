@@ -70,6 +70,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Select how you want to provide the file containing relational assets to be imported."
+          allowTestAuthentication = false
         }
       }
     }
