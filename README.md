@@ -30,76 +30,76 @@ For guides on actually using the various utilities housed in this repository, se
 
 ## Installing for Development
 
-- To install the SDK for development, first clone the repository:
+### Initial Setup
+To get started developing the SDK:
 
+1. Clone the repository:
+   ```shell
+   git clone ..
+   ```
+
+2. Ensure you have the Java 17 SDK installed. For example, on macOS:
+   ```shell
+   brew install openjdk@..
+   ```
+
+### Building the SDK
+To build the SDK, from within the root of the cloned repository:
 ```shell
-git clone https://github.com/atlanhq/atlan-java.git
+./gradlew assemble shadowJar
 ```
+Note that we use the Gradle build tool. This accelerates subsequent rebuilds through things like caching, and thus only needing to rebuild paths within the project that have changed from one build to another.
 
-- Then cd into the repo:
 
-```shell
-cd atlan-java
-```
 
-- Install the Java 17 SDK (if not already installed):
-
-```shell
-/* For Mac */
-brew install openjdk@17
-```
-
-- Install dependencies and build the SDK:
-
-```shell
-./gradlew assemble
-```
-
-- For Lint Check and Code Autoformat:
+### Code Formatting
+Before committing code, ensure it adheres to the repository's formatting guidelines. You can apply the required formatting using:
 
 ```shell
 ./gradlew spotlessApply
 ```
 
-- Setup your .env file:
+### Environment Setup
+For running integration tests, you'll need to configure your environment:
 
-```shell
-/* For MacOs/Linux */
-cp .env.example .env
+1. Copy the example environment file:
+   ```shell
+   cp .env.example .env
+   ```
+2. Update the `.env` file with your Atlan API key and base URL.
+3. Export the environment variables:
+    - For macOS/Linux:
+      ```shell
+      export $(cat .env | xargs)
+      ```
+    - For Windows (PowerShell):
+      ```shell
+      Get-Content .env | ForEach-Object {
+          if ($_ -match '^(.*?)=(.*)$') {
+              $env:($matches[1]) = $matches[2]
+          }
+      }
+      ```
 
-/* For Windows */
-copy .env.example .env
-```
-
-- Update the .env file with your Atlan API Key and Atlan Base URL
-
-- Set the environment variables:
-
-```shell
-/* For MacOs/Linux */
-export $(cat .env | xargs)
-```
-
-```shell
-/* For Windows(PowerShell) */
-Get-Content .env | ForEach-Object {
-    if ($_ -match '^(.*?)=(.*)$') {
-        $env:($matches[1]) = $matches[2]
-    }
-}
-```
-
-- To run the tests:
+## Testing the SDK
+### Running Unit Tests
+You can run the SDK's unit tests **without needing access to an Atlan environment**:
 
 ```shell
 ./gradlew test
 ```
 
-- To run custom package Tests:
+### Running Integration Tests
+Once the environment is set up, you can run integration tests:
 
-```shell
-./gradlew test -PpackageTests
-```
+- Base SDK integration tests:
+  ```shell
+  ./gradlew test -PintegrationTests
+  ```
+- Package-specific integration tests:
+  ```shell
+  ./gradlew test -PpackageTests
+  ```
 
 
 ## Attribution
