@@ -59,6 +59,7 @@ Before committing code, ensure it adheres to the repository's formatting guideli
 ./gradlew spotlessApply
 ```
 
+## Testing the SDK
 ### Environment Setup
 For running integration tests, you'll need to configure your environment:
 
@@ -81,7 +82,6 @@ For running integration tests, you'll need to configure your environment:
       }
       ```
 
-## Testing the SDK
 ### Running Unit Tests
 You can run the SDK's unit tests **without needing access to an Atlan environment**:
 
