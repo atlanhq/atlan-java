@@ -348,7 +348,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.APPLICATION);
+                .connectorType(AtlanConnectorType.APP);
     }
 
     /**
