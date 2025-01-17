@@ -93,6 +93,12 @@ public interface IGlossary {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */

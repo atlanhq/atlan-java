@@ -31,6 +31,9 @@ public interface IApplication {
 
     public static final String TYPE_NAME = "Application";
 
+    /** ApplicationFields contained within this Application. */
+    RelationField APPLICATION_FIELDS = new RelationField("applicationFields");
+
     /** Assets contained within this Application. */
     RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
 
@@ -66,6 +69,15 @@ public interface IApplication {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
+    /** ApplicationFields contained within this Application. */
+    SortedSet<IApplicationField> getApplicationFields();
 
     /** Assets contained within this Application. */
     SortedSet<IAsset> getApplicationOwnedAssets();

@@ -147,6 +147,12 @@ public interface IGlossaryTerm {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */
