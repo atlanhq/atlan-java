@@ -524,8 +524,8 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @JsonIgnore
     public IndexSearchResponse getAssets(AtlanClient client) throws AtlanException {
         try {
-            IndexSearchDSL dsl = client.readValue(getDataProductAssetsDSL(), IndexSearchDSL.class);
-            return client.assets.search(IndexSearchRequest.builder(dsl).build());
+            DataProductAssetsDSL dsl = client.readValue(getDataProductAssetsDSL(), DataProductAssetsDSL.class);
+            return client.assets.search(dsl.getQuery());
         } catch (IOException e) {
             throw new LogicException(ErrorCode.DATA_PRODUCT_QUERY_ERROR, e);
         }
