@@ -42,11 +42,11 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.create.application"},
-        dependsOnGroups = {"app.create.connection"})
+            groups = {"app.create.application"},
+            dependsOnGroups = {"app.create.connection"})
     void createApplication() throws AtlanException {
         Application toCreate = Application.creator(APPLICATION_NAME, connection.getQualifiedName())
-            .build();
+                .build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Application);
@@ -59,10 +59,11 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.create.applicationField"},
-        dependsOnGroups = {"app.create.application"})
+            groups = {"app.create.applicationField"},
+            dependsOnGroups = {"app.create.application"})
     void createApplicationField() throws AtlanException {
-        ApplicationField toCreate = ApplicationField.creator(APPLICATION_FIELD_NAME, application).build();
+        ApplicationField toCreate =
+                ApplicationField.creator(APPLICATION_FIELD_NAME, application).build();
         AssetMutationResponse response = toCreate.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -84,16 +85,20 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.update.applicationField"},
-        dependsOnGroups = {"app.create.applicationField"})
+            groups = {"app.update.applicationField"},
+            dependsOnGroups = {"app.create.applicationField"})
     void updateApplicationField() throws AtlanException {
-        ApplicationField updated =
-            ApplicationField.updateCertificate(client, applicationField.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        ApplicationField updated = ApplicationField.updateCertificate(
+                client, applicationField.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         updated = ApplicationField.updateAnnouncement(
-            client, applicationField.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+                client,
+                applicationField.getQualifiedName(),
+                ANNOUNCEMENT_TYPE,
+                ANNOUNCEMENT_TITLE,
+                ANNOUNCEMENT_MESSAGE);
         assertNotNull(updated);
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -101,8 +106,8 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.read.applicationField"},
-        dependsOnGroups = {"app.create.*", "app.update.applicationField"})
+            groups = {"app.read.applicationField"},
+            dependsOnGroups = {"app.create.*", "app.update.applicationField"})
     void retrieveApplicationField() throws AtlanException {
         ApplicationField c = ApplicationField.get(client, applicationField.getGuid(), true);
         assertNotNull(c);
@@ -114,17 +119,19 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.update.applicationField.again"},
-        dependsOnGroups = {"app.read.applicationField"})
+            groups = {"app.update.applicationField.again"},
+            dependsOnGroups = {"app.read.applicationField"})
     void updateApplicationFieldAgain() throws AtlanException {
-        ApplicationField updated = ApplicationField.removeCertificate(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
+        ApplicationField updated =
+                ApplicationField.removeCertificate(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
         assertNotNull(updated);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = ApplicationField.removeAnnouncement(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
+        updated = ApplicationField.removeAnnouncement(
+                client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
         assertNotNull(updated);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
@@ -132,19 +139,19 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.search.assets"},
-        dependsOnGroups = {"app.update.applicationField.again"})
+            groups = {"app.search.assets"},
+            dependsOnGroups = {"app.update.applicationField.again"})
     void searchAssets() throws AtlanException, InterruptedException {
         IndexSearchRequest index = client.assets
-            .select()
-            .where(Asset.SUPER_TYPE_NAMES.eq(IApp.TYPE_NAME))
-            .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
-            .pageSize(10)
-            .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
-            .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
-            .includeOnResults(Asset.NAME)
-            .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
-            .toRequest();
+                .select()
+                .where(Asset.SUPER_TYPE_NAMES.eq(IApp.TYPE_NAME))
+                .where(Asset.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
+                .pageSize(10)
+                .aggregate("type", IReferenceable.TYPE_NAME.bucketBy())
+                .sort(Asset.CREATE_TIME.order(SortOrder.Asc))
+                .includeOnResults(Asset.NAME)
+                .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
+                .toRequest();
 
         IndexSearchResponse response = retrySearchUntil(index, 2L);
 
@@ -152,10 +159,10 @@ public class AppAssetTest extends AtlanLiveTest {
         assertEquals(response.getAggregations().size(), 1);
         assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
         assertEquals(
-            ((AggregationBucketResult) response.getAggregations().get("type"))
-                .getBuckets()
-                .size(),
-            2);
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                2);
 
         assertEquals(response.getApproximateCount().longValue(), 2L);
         List<Asset> entities = response.getAssets();
@@ -177,14 +184,14 @@ public class AppAssetTest extends AtlanLiveTest {
         assertEquals(c.getQualifiedName(), applicationField.getQualifiedName());
         assertEquals(c.getName(), applicationField.getName());
         assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
-
     }
 
     @Test(
-        groups = {"app.delete.applicationField"},
-        dependsOnGroups = {"app.update.*", "app.search.*"})
+            groups = {"app.delete.applicationField"},
+            dependsOnGroups = {"app.update.*", "app.search.*"})
     void deleteApplicationField() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(client, applicationField.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.delete(client, applicationField.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -199,15 +206,15 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.delete.applicationField.read"},
-        dependsOnGroups = {"app.delete.applicationField"})
+            groups = {"app.delete.applicationField.read"},
+            dependsOnGroups = {"app.delete.applicationField"})
     void readDeletedApplicationField() throws AtlanException {
         validateDeletedAsset(applicationField, log);
     }
 
     @Test(
-        groups = {"app.delete.applicationField.restore"},
-        dependsOnGroups = {"app.delete.applicationField.read"})
+            groups = {"app.delete.applicationField.restore"},
+            dependsOnGroups = {"app.delete.applicationField.read"})
     void restoreApplicationField() throws AtlanException {
         assertTrue(ApplicationField.restore(client, applicationField.getQualifiedName()));
         ApplicationField restored = ApplicationField.get(client, applicationField.getQualifiedName());
@@ -218,10 +225,11 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.purge.applicationField"},
-        dependsOnGroups = {"app.delete.applicationField.restore"})
+            groups = {"app.purge.applicationField"},
+            dependsOnGroups = {"app.delete.applicationField.restore"})
     void purgeApplicationField() throws AtlanException {
-        AssetMutationResponse response = Asset.purge(client, applicationField.getGuid()).block();
+        AssetMutationResponse response =
+                Asset.purge(client, applicationField.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -236,15 +244,15 @@ public class AppAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"app.purge.connection"},
-        dependsOnGroups = {
-            "app.create.*",
-            "app.read.*",
-            "app.search.*",
-            "app.update.*",
-            "app.purge.applicationField"
-        },
-        alwaysRun = true)
+            groups = {"app.purge.connection"},
+            dependsOnGroups = {
+                "app.create.*",
+                "app.read.*",
+                "app.search.*",
+                "app.update.*",
+                "app.purge.applicationField"
+            },
+            alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
     }

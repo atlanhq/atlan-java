@@ -9,13 +9,13 @@
      * @throws InvalidRequestException if the application provided is without a qualifiedName
      */
     public static ApplicationField.ApplicationFieldBuilder<?, ?> creator(String name, Application application)
-        throws InvalidRequestException {
+            throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("applicationQualifiedName", application.getQualifiedName());
         map.put("connectionQualifiedName", application.getConnectionQualifiedName());
         validateRelationship(Application.TYPE_NAME, map);
         return creator(name, application.getConnectionQualifiedName(), application.getQualifiedName())
-            .application(application.trimToReference());
+                .application(application.trimToReference());
     }
 
     /**
@@ -39,15 +39,15 @@
      * @return the minimal request necessary to create the field, as a builder
      */
     public static ApplicationField.ApplicationFieldBuilder<?, ?> creator(
-        String name, String connectionQualifiedName, String applicationQualifiedName) {
+            String name, String connectionQualifiedName, String applicationQualifiedName) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ApplicationField._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .name(name)
-            .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
-            .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(connectorType)
-            .parentApplication(Application.refByQualifiedName(applicationQualifiedName));
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(connectorType)
+                .parentApplication(Application.refByQualifiedName(applicationQualifiedName));
     }
 
     /**
