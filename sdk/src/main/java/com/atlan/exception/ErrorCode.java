@@ -553,7 +553,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             500,
             "ATLAN-JAVA-500-007",
             "Unable to modify asset to change {0}.",
-            "Unable to modify this base property of an asset, which should not happen. Please raise an issue on the public atlan-java GitHub repository.");
+            "Unable to modify this base property of an asset, which should not happen. Please raise an issue on the public atlan-java GitHub repository."),
+    DATA_PRODUCT_QUERY_ERROR(
+            500,
+            "ATLAN-JAVA-500-008",
+            "Unable to query assets for data product.",
+            "Unable to run the query DSL for the data product, which should not happen. Please raise an issue on the public atlan-java GitHub repository.");
 
     private static final String RAISE_GITHUB_ISSUE =
             "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred.";
