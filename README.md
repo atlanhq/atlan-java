@@ -28,6 +28,80 @@ These additional directories serve other purposes:
 
 For guides on actually using the various utilities housed in this repository, see: [https://developer.atlan.com/getting-started/java-sdk/](https://developer.atlan.com/getting-started/java-sdk/)
 
+## Installing for Development
+
+### Initial Setup
+To get started developing the SDK:
+
+1. Clone the repository:
+   ```shell
+   git clone ..
+   ```
+
+2. Ensure you have the Java 17 SDK installed. For example, on macOS:
+   ```shell
+   brew install openjdk@..
+   ```
+
+### Building the SDK
+To build the SDK, from within the root of the cloned repository:
+```shell
+./gradlew assemble shadowJar
+```
+Note that we use the Gradle build tool. This accelerates subsequent rebuilds through things like caching, and thus only needing to rebuild paths within the project that have changed from one build to another.
+
+
+
+### Code Formatting
+Before committing code, ensure it adheres to the repository's formatting guidelines. You can apply the required formatting using:
+
+```shell
+./gradlew spotlessApply
+```
+
+## Testing the SDK
+### Environment Setup
+For running integration tests, you'll need to configure your environment:
+
+1. Copy the example environment file:
+   ```shell
+   cp .env.example .env
+   ```
+2. Update the `.env` file with your Atlan API key and base URL.
+3. Export the environment variables:
+    - For macOS/Linux:
+      ```shell
+      export $(cat .env | xargs)
+      ```
+    - For Windows (PowerShell):
+      ```shell
+      Get-Content .env | ForEach-Object {
+          if ($_ -match '^(.*?)=(.*)$') {
+              $env:($matches[1]) = $matches[2]
+          }
+      }
+      ```
+
+### Running Unit Tests
+You can run the SDK's unit tests **without needing access to an Atlan environment**:
+
+```shell
+./gradlew test
+```
+
+### Running Integration Tests
+Once the environment is set up, you can run integration tests:
+
+- Base SDK integration tests:
+  ```shell
+  ./gradlew test -PintegrationTests
+  ```
+- Package-specific integration tests:
+  ```shell
+  ./gradlew test -PpackageTests
+  ```
+
+
 ## Attribution
 
 Portions of the SDK are based on original work from https://github.com/stripe/stripe-java. Those classes that derive from this original work have an extra heading comment as follows:
