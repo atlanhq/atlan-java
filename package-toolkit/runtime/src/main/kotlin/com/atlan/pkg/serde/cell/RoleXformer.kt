@@ -42,7 +42,7 @@ object RoleXformer {
                     // Try to look up the user reference by username
                     return client.roleCache.getIdForName(roleRef)
                 } catch (e: NotFoundException) {
-                    throw NoSuchElementException("Role name $roleRef is not known to Atlan (in $fieldName).", e)
+                    throw NoSuchElementException("Role name is not known to Atlan (in $fieldName): $roleRef", e)
                 }
             }
             else -> roleRef
