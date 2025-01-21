@@ -12,7 +12,7 @@
             .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.APPLICATION);
+            .connectorType(AtlanConnectorType.APP);
     }
 
     /**

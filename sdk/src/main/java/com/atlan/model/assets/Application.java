@@ -55,7 +55,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     /** ApplicationFields contained within this Application. */
     @Attribute
     @Singular
-    SortedSet<IApplicationField> applicationFields;
+    SortedSet<IApplicationField> applicationChildFields;
 
     /** Assets contained within this Application. */
     @Attribute

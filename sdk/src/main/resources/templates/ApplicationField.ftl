@@ -47,7 +47,7 @@
                 .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(connectorType)
-                .parentApplication(Application.refByQualifiedName(applicationQualifiedName));
+                .applicationParent(Application.refByQualifiedName(applicationQualifiedName));
     }
 
     /**

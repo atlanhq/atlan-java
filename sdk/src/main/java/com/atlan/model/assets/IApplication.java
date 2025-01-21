@@ -32,7 +32,7 @@ public interface IApplication {
     public static final String TYPE_NAME = "Application";
 
     /** ApplicationFields contained within this Application. */
-    RelationField APPLICATION_FIELDS = new RelationField("applicationFields");
+    RelationField APPLICATION_CHILD_FIELDS = new RelationField("applicationChildFields");
 
     /** Assets contained within this Application. */
     RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
@@ -70,14 +70,14 @@ public interface IApplication {
     /** Application asset containing this Asset. */
     IApplication getApplication();
 
+    /** ApplicationFields contained within this Application. */
+    SortedSet<IApplicationField> getApplicationChildFields();
+
     /** ApplicationField asset containing this Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
-
-    /** ApplicationFields contained within this Application. */
-    SortedSet<IApplicationField> getApplicationFields();
 
     /** Assets contained within this Application. */
     SortedSet<IAsset> getApplicationOwnedAssets();
@@ -448,7 +448,7 @@ public interface IApplication {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

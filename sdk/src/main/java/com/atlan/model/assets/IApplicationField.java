@@ -35,7 +35,7 @@ public interface IApplicationField {
     RelationField APPLICATION_FIELD_OWNED_ASSETS = new RelationField("applicationFieldOwnedAssets");
 
     /** Application asset containing this ApplicationField. */
-    RelationField PARENT_APPLICATION = new RelationField("parentApplication");
+    RelationField APPLICATION_PARENT = new RelationField("applicationParent");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -78,6 +78,9 @@ public interface IApplicationField {
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
+
+    /** Application asset containing this ApplicationField. */
+    IApplication getApplicationParent();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -442,13 +445,10 @@ public interface IApplicationField {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Application asset containing this ApplicationField. */
-    IApplication getParentApplication();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -57,6 +57,10 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     @Singular
     SortedSet<IAsset> applicationFieldOwnedAssets;
 
+    /** Application asset containing this ApplicationField. */
+    @Attribute
+    IApplication applicationParent;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -96,10 +100,6 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     @Attribute
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
-
-    /** Application asset containing this ApplicationField. */
-    @Attribute
-    IApplication parentApplication;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ApplicationField, from a potentially
@@ -382,7 +382,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                 .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(connectorType)
-                .parentApplication(Application.refByQualifiedName(applicationQualifiedName));
+                .applicationParent(Application.refByQualifiedName(applicationQualifiedName));
     }
 
     /**
