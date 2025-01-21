@@ -52,6 +52,11 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     @Attribute
     String appId;
 
+    /** ApplicationFields contained within this Application. */
+    @Attribute
+    @Singular
+    SortedSet<IApplicationField> applicationChildFields;
+
     /** Assets contained within this Application. */
     @Attribute
     @Singular
@@ -343,7 +348,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.APPLICATION);
+                .connectorType(AtlanConnectorType.APP);
     }
 
     /**

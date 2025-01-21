@@ -78,6 +78,12 @@ public interface IQlikChart {
     /** Application asset containing this Asset. */
     IApplication getApplication();
 
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
