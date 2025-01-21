@@ -524,13 +524,7 @@ object Reporter {
                 DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
             } catch (e: NotFoundException) {
                 val qualifiedName = DataDomain.findByName(client, metric.category)[0]!!.qualifiedName
-                val assets =
-                    Table
-                        .select(client)
-                        .where(Table.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
-                        .where(Table.ATLAN_TAGS.eq(qualifiedName))
-                        .build()
-                DataProduct.creator(client, metric.name, qualifiedName, assets)
+                DataProduct.creator(client, metric.name, qualifiedName, metric.query().build())
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {
