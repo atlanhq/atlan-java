@@ -143,6 +143,9 @@ public interface ICatalog {
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
                 break;
+            case ApplicationField.TYPE_NAME:
+                ref = ApplicationField.refByQualifiedName(qualifiedName);
+                break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
                 break;
@@ -746,6 +749,12 @@ public interface ICatalog {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();

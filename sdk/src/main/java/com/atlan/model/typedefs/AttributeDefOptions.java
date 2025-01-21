@@ -61,6 +61,7 @@ public class AttributeDefOptions extends AtlanObject {
             AnaplanWorkspace.TYPE_NAME,
             AnomaloCheck.TYPE_NAME,
             Application.TYPE_NAME,
+            ApplicationField.TYPE_NAME,
             AtlanCollection.TYPE_NAME,
             AtlanQuery.TYPE_NAME,
             AuthPolicy.TYPE_NAME,
