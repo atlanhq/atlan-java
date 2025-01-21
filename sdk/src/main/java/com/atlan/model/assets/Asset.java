@@ -112,6 +112,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     IApplication application;
 
+    /** ApplicationField asset containing this Asset. */
+    @Attribute
+    IApplicationField applicationField;
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    @Attribute
+    String applicationFieldQualifiedName;
+
     /** Qualified name of the Application that contains this asset. */
     @Attribute
     String applicationQualifiedName;

@@ -67,6 +67,13 @@ public interface IAsset {
     /** Application asset containing this Asset. */
     RelationField APPLICATION = new RelationField("application");
 
+    /** ApplicationField asset containing this Asset. */
+    RelationField APPLICATION_FIELD = new RelationField("applicationField");
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    KeywordField APPLICATION_FIELD_QUALIFIED_NAME =
+            new KeywordField("applicationFieldQualifiedName", "applicationFieldQualifiedName");
+
     /** Qualified name of the Application that contains this asset. */
     KeywordField APPLICATION_QUALIFIED_NAME = new KeywordField("applicationQualifiedName", "applicationQualifiedName");
 
@@ -608,6 +615,12 @@ public interface IAsset {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
