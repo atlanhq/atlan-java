@@ -91,6 +91,23 @@
     }
 
     /**
+     * Retrieves the assets associated with this data product.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a stream of the assets related to the data product
+     * @throws AtlanException on any API problems
+     */
+    @JsonIgnore
+    public IndexSearchResponse getAssets(AtlanClient client) throws AtlanException {
+        try {
+            DataProductAssetsDSL dsl = client.readValue(getDataProductAssetsDSL(), DataProductAssetsDSL.class);
+            return client.assets.search(dsl.getQuery());
+        } catch (IOException e) {
+            throw new LogicException(ErrorCode.DATA_PRODUCT_QUERY_ERROR, e);
+        }
+    }
+
+    /**
      * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the domain, if found.
      *
