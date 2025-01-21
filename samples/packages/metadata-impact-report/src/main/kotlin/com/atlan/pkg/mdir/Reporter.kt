@@ -4,38 +4,22 @@ package com.atlan.pkg.mdir
 
 import MetadataImpactReportCfg
 import com.atlan.AtlanClient
+import com.atlan.exception.ErrorCode
 import com.atlan.exception.NotFoundException
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
+import com.atlan.model.assets.Table
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
+import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.mdir.metrics.AUM
-import com.atlan.pkg.mdir.metrics.AwD
-import com.atlan.pkg.mdir.metrics.AwDC
-import com.atlan.pkg.mdir.metrics.AwDU
-import com.atlan.pkg.mdir.metrics.AwO
-import com.atlan.pkg.mdir.metrics.AwOG
-import com.atlan.pkg.mdir.metrics.AwOU
-import com.atlan.pkg.mdir.metrics.DLA
-import com.atlan.pkg.mdir.metrics.DLAxL
-import com.atlan.pkg.mdir.metrics.GCM
-import com.atlan.pkg.mdir.metrics.GTM
-import com.atlan.pkg.mdir.metrics.GUM
-import com.atlan.pkg.mdir.metrics.HQV
-import com.atlan.pkg.mdir.metrics.Metric
-import com.atlan.pkg.mdir.metrics.SUT
-import com.atlan.pkg.mdir.metrics.TLA
-import com.atlan.pkg.mdir.metrics.TLAwL
-import com.atlan.pkg.mdir.metrics.TLAxL
-import com.atlan.pkg.mdir.metrics.TLAxQ
-import com.atlan.pkg.mdir.metrics.TLAxU
-import com.atlan.pkg.mdir.metrics.UTA
-import com.atlan.pkg.mdir.metrics.UTQ
+import com.atlan.pkg.mdir.metrics.*
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
@@ -43,7 +27,9 @@ import com.atlan.util.AssetBatch
 import java.io.File
 import java.nio.file.Paths
 import java.text.NumberFormat
-import java.util.Locale
+import java.util.*
+import javax.xml.crypto.Data
+
 
 /**
  * Produce the metadata impact report
@@ -84,6 +70,13 @@ object Reporter {
     const val CAT_ADOPTION = "Adoption metrics"
 
     val CATEGORIES =
+        mapOf(
+            CAT_HEADLINES to "**Metrics that break down Atlan-managed assets as overall numbers.** These are mostly useful to contextualize the overall asset footprint of your data ecosystem.",
+            CAT_SAVINGS to "**Metrics that can be used to discover potential cost savings.** These are areas you may want to investigate for cost savings, though there are caveats with each one that are worth reviewing to understand potential limitations.",
+            CAT_ADOPTION to "**Metrics that can be used to monitor Atlan's adoption within your organization.** You may want to consider these alongside some of the headline numbers to calculate percentages of enrichment points that are important to your organization.",
+        )
+
+    val SUBDOMAINS =
         mapOf(
             CAT_HEADLINES to "**Metrics that break down Atlan-managed assets as overall numbers.** These are mostly useful to contextualize the overall asset footprint of your data ecosystem.",
             CAT_SAVINGS to "**Metrics that can be used to discover potential cost savings.** These are areas you may want to investigate for cost savings, though there are caveats with each one that are worth reviewing to understand potential limitations.",
@@ -132,6 +125,10 @@ object Reporter {
                 val filePath = "$outputDirectory${File.separator}$filename"
                 Paths.get(filePath).toFile().createNewFile()
             }
+
+            val domain = createDomainIdempotent(ctx.client, ctx.config.dataDomain)
+            val subdomainNameToGuid = createSubDomainsIdempotent(ctx.client, domain)
+            val fileOutputsDomain = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToGuid)
 
             val glossary =
                 if (ctx.config.includeGlossary == "TRUE") {
@@ -376,5 +373,165 @@ object Reporter {
             batch?.flush()
             batch?.close()
         }
+    }
+
+    private fun createDomainIdempotent(
+        client: AtlanClient,
+        domainName: String,
+    ): DataDomain =
+        try {
+            DataDomain.findByName(client, domainName)[0]!!
+        } catch (e: NotFoundException) {
+            val create = DataDomain.creator(domainName).build()
+            val response = create.save(client)
+            response.getResult(create)
+        }
+
+    private fun createSubDomainsIdempotent(
+        client: AtlanClient,
+        domain: DataDomain?,
+    ): Map<String, String> {
+        if (domain == null) return emptyMap()
+        val nameToResolved = mutableMapOf<String, String>()
+        val placeholderToName = mutableMapOf<String, String>()
+        AssetBatch(client, 20).use { batch ->
+            SUBDOMAINS.forEach { (name, description) ->
+                val builder =
+                    try {
+                        val found = DataDomain.findByName(client, name)[0]
+                        found.trimToRequired().guid(found.guid)
+                    } catch (e: NotFoundException) {
+                        DataDomain.creator(name, domain.qualifiedName)
+                    }
+                val subdomain = builder.description(description).build()
+                placeholderToName[subdomain.guid] = name
+                batch.add(subdomain)
+            }
+            batch.flush()
+            placeholderToName.forEach { (guid, name) ->
+                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+                nameToResolved[name] = resolved
+            }
+        }
+        return nameToResolved
+    }
+
+    private fun runReports(
+        ctx: PackageContext<MetadataImpactReportCfg>,
+        outputDirectory: String,
+        batchSize: Int = 300,
+        domain: DataDomain? = null,
+        subdomainNameToGuid: Map<String, String>? = null,
+    ): List<String> {
+        if (ctx.config.fileFormat == "XLSX") {
+            val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
+            ExcelWriter(outputFile).use { xlsx ->
+                val overview = xlsx.createSheet("Overview")
+                overview.writeHeader(
+                    mapOf(
+                        "Metric" to "",
+                        "Description" to "",
+                        "Result" to "Numeric result for the metric",
+                        "Caveats" to "Any caveats to be aware of with the metric",
+                        "Notes" to "Any other information to be aware of with the metric",
+                        // "Percentage" to "Percentage of total for the metric",
+                    ),
+                )
+                reports.forEach { repClass ->
+                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToGuid)
+                }
+            }
+            return listOf(outputFile)
+        } else {
+            val overviewFile = "$outputDirectory${File.separator}${CSV_FILES["overview"]}"
+            val outputFiles = mutableListOf<String>()
+            CSVWriter(overviewFile).use { overview ->
+                overview.writeHeader(
+                    mapOf(
+                        "Metric" to "",
+                        "Description" to "",
+                        "Result" to "Numeric result for the metric",
+                        "Caveats" to "Any caveats to be aware of with the metric",
+                        "Notes" to "Any other information to be aware of with the metric",
+                        // "Percentage" to "Percentage of total for the metric",
+                    ),
+                )
+                reports.forEach { repClass ->
+                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+                    val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
+                    CSVWriter(metricFile).use { details ->
+                        outputReportDomain(ctx, metric, overview, details, batchSize, domain, subdomainNameToGuid)
+                    }
+                    outputFiles.add(metricFile)
+                }
+            }
+            return outputFiles
+        }
+    }
+
+    private fun outputReportDomain(
+        ctx: PackageContext<MetadataImpactReportCfg>,
+        metric: Metric,
+        overview: TabularWriter,
+        details: TabularWriter,
+        batchSize: Int,
+        domain: DataDomain? = null,
+        subdomainNameToGuid: Map<String, String>? = null,
+    ) {
+        logger.info { "Quantifying metric: ${metric.name} ..." }
+        val quantified = metric.quantify()
+        val term =
+            if (ctx.config.includeGlossary == "TRUE") {
+                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToGuid!!)
+            } else {
+                null
+            }
+//        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, term, batchSize)
+    }
+
+    private fun writeMetricToDomain(
+        client: AtlanClient,
+        metric: Metric,
+        quantified: Double,
+        domain: DataDomain,
+        subdomainNameToGuid: Map<String, String>,
+    ): DataProduct {
+        val builder =
+            try {
+                DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
+            } catch (e: NotFoundException) {
+                val qualifiedName = DataDomain.findByName(client, metric.category)[0]!!.qualifiedName
+                val assets = Table.select(client)
+                    .where(Table.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
+                    .where(Table.ATLAN_TAGS.eq(qualifiedName))
+                    .build()
+                DataProduct.creator(client, metric.name, qualifiedName, assets)
+            }
+        val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
+        if (metric.caveats.isNotBlank()) {
+            builder
+                .announcementType(AtlanAnnouncementType.WARNING)
+                .announcementTitle("Caveats")
+                .announcementMessage(metric.caveats)
+                .certificateStatus(CertificateStatus.DRAFT)
+        } else {
+            builder.certificateStatus(CertificateStatus.VERIFIED)
+        }
+        if (metric.notes.isNotBlank()) {
+            builder
+                .announcementType(AtlanAnnouncementType.INFORMATION)
+                .announcementTitle("Note")
+                .announcementMessage(metric.notes)
+        }
+
+        val product =
+            builder
+                .displayName(metric.displayName)
+                .description(metric.description)
+                .certificateStatusMessage(prettyQuantity)
+                .build()
+        val response = product.save(client)
+        return response.getResult(product) ?: product.trimToRequired().guid(response.getAssignedGuid(product)).build()
     }
 }

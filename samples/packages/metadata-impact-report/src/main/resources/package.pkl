@@ -81,6 +81,13 @@ uiConfig {
           helpText = "Whether to include detailed results (Yes), or only the headline metrics (No) in the Excel file produced."
           fallback = false
         }
+        ["data_domain"] = new TextInput {
+          title = "Data domain"
+          required = true
+          helpText = "Name of the data domain to which the metadata metrics belong."
+          placeholderText = "Metadata metrics"
+          fallback = placeholderText
+        }
       }
     }
     ["Delivery"] {
