@@ -53,7 +53,7 @@ object UserXformer {
                         // And if found by email, return the username (since that's what we require)
                         return client.userCache.getNameForId(idFromEmail)
                     } catch (e: NotFoundException) {
-                        throw NoSuchElementException("Username / email address $userRef is not known to Atlan (in $fieldName).", e)
+                        throw NoSuchElementException("Username / email address is not known to Atlan (in $fieldName): $userRef", e)
                     }
                 }
             }

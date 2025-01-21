@@ -93,7 +93,7 @@ object ModelAssetXformer {
                         .semantic(Reference.SaveSemantic.APPEND)
                         .build()
                 } else {
-                    throw NoSuchElementException("Model asset $assetRef not found (in $fieldName).")
+                    throw NoSuchElementException("Model asset not found (in $fieldName): $assetRef")
                 }
             }
             in MODEL_ASSET_REF_FIELDS -> {
@@ -102,7 +102,7 @@ object ModelAssetXformer {
                         .semantic(Reference.SaveSemantic.REPLACE)
                         .build()
                 } else {
-                    throw NoSuchElementException("Model asset $assetRef not found (in $fieldName).")
+                    throw NoSuchElementException("Model asset not found (in $fieldName): $assetRef")
                 }
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)

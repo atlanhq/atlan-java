@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
@@ -19,8 +20,10 @@ import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -508,6 +511,23 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Retrieves the assets associated with this data product.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a stream of the assets related to the data product
+     * @throws AtlanException on any API problems
+     */
+    @JsonIgnore
+    public IndexSearchResponse getAssets(AtlanClient client) throws AtlanException {
+        try {
+            DataProductAssetsDSL dsl = client.readValue(getDataProductAssetsDSL(), DataProductAssetsDSL.class);
+            return client.assets.search(dsl.getQuery());
+        } catch (IOException e) {
+            throw new LogicException(ErrorCode.DATA_PRODUCT_QUERY_ERROR, e);
+        }
     }
 
     /**
