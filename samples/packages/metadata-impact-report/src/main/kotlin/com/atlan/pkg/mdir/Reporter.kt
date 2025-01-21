@@ -4,7 +4,6 @@ package com.atlan.pkg.mdir
 
 import MetadataImpactReportCfg
 import com.atlan.AtlanClient
-import com.atlan.exception.ErrorCode
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -16,10 +15,30 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
-import com.atlan.model.search.FluentSearch
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.mdir.metrics.*
+import com.atlan.pkg.mdir.metrics.AUM
+import com.atlan.pkg.mdir.metrics.AwD
+import com.atlan.pkg.mdir.metrics.AwDC
+import com.atlan.pkg.mdir.metrics.AwDU
+import com.atlan.pkg.mdir.metrics.AwO
+import com.atlan.pkg.mdir.metrics.AwOG
+import com.atlan.pkg.mdir.metrics.AwOU
+import com.atlan.pkg.mdir.metrics.DLA
+import com.atlan.pkg.mdir.metrics.DLAxL
+import com.atlan.pkg.mdir.metrics.GCM
+import com.atlan.pkg.mdir.metrics.GTM
+import com.atlan.pkg.mdir.metrics.GUM
+import com.atlan.pkg.mdir.metrics.HQV
+import com.atlan.pkg.mdir.metrics.Metric
+import com.atlan.pkg.mdir.metrics.SUT
+import com.atlan.pkg.mdir.metrics.TLA
+import com.atlan.pkg.mdir.metrics.TLAwL
+import com.atlan.pkg.mdir.metrics.TLAxL
+import com.atlan.pkg.mdir.metrics.TLAxQ
+import com.atlan.pkg.mdir.metrics.TLAxU
+import com.atlan.pkg.mdir.metrics.UTA
+import com.atlan.pkg.mdir.metrics.UTQ
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
@@ -27,9 +46,7 @@ import com.atlan.util.AssetBatch
 import java.io.File
 import java.nio.file.Paths
 import java.text.NumberFormat
-import java.util.*
-import javax.xml.crypto.Data
-
+import java.util.Locale
 
 /**
  * Produce the metadata impact report
@@ -126,18 +143,23 @@ object Reporter {
                 Paths.get(filePath).toFile().createNewFile()
             }
 
-            val domain = createDomainIdempotent(ctx.client, ctx.config.dataDomain)
-            val subdomainNameToGuid = createSubDomainsIdempotent(ctx.client, domain)
-            val fileOutputsDomain = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToGuid)
-
-            val glossary =
-                if (ctx.config.includeGlossary == "TRUE") {
-                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName)
+            val domain =
+                if (ctx.config.includeDataProducts == "TRUE") {
+                    createDomainIdempotent(ctx.client, ctx.config.dataDomain)
                 } else {
                     null
                 }
-            val categoryNameToGuid = createCategoriesIdempotent(ctx.client, glossary)
-            val fileOutputs = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
+            val subdomainNameToGuid = createSubDomainsIdempotent(ctx.client, domain)
+            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToGuid)
+
+//            val glossary =
+//                if (ctx.config.includeGlossary == "TRUE") {
+//                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName)
+//                } else {
+//                    null
+//                }
+//            val categoryNameToGuid = createCategoriesIdempotent(ctx.client, glossary)
+//            val fileOutputs = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -481,13 +503,13 @@ object Reporter {
     ) {
         logger.info { "Quantifying metric: ${metric.name} ..." }
         val quantified = metric.quantify()
-        val term =
-            if (ctx.config.includeGlossary == "TRUE") {
+        val product =
+            if (ctx.config.includeDataProducts == "TRUE") {
                 writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToGuid!!)
             } else {
                 null
             }
-//        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, term, batchSize)
+        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, product, batchSize)
     }
 
     private fun writeMetricToDomain(
@@ -502,10 +524,12 @@ object Reporter {
                 DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
             } catch (e: NotFoundException) {
                 val qualifiedName = DataDomain.findByName(client, metric.category)[0]!!.qualifiedName
-                val assets = Table.select(client)
-                    .where(Table.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
-                    .where(Table.ATLAN_TAGS.eq(qualifiedName))
-                    .build()
+                val assets =
+                    Table
+                        .select(client)
+                        .where(Table.CERTIFICATE_STATUS.eq(CertificateStatus.VERIFIED))
+                        .where(Table.ATLAN_TAGS.eq(qualifiedName))
+                        .build()
                 DataProduct.creator(client, metric.name, qualifiedName, assets)
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
@@ -533,5 +557,48 @@ object Reporter {
                 .build()
         val response = product.save(client)
         return response.getResult(product) ?: product.trimToRequired().guid(response.getAssignedGuid(product)).build()
+    }
+
+    private fun writeMetricToFile(
+        client: AtlanClient,
+        metric: Metric,
+        quantified: Double,
+        overview: TabularWriter,
+        details: TabularWriter,
+        includeDetails: Boolean,
+        product: DataProduct?,
+        batchSize: Int,
+    ) {
+        overview.writeRecord(
+            listOf(
+                metric.name,
+                metric.description,
+                quantified,
+                metric.caveats,
+                metric.notes,
+            ),
+        )
+        if (includeDetails) {
+            val batch =
+                if (product != null) {
+                    AssetBatch(
+                        client,
+                        batchSize,
+                        false,
+                        AssetBatch.CustomMetadataHandling.IGNORE,
+                        true,
+                        false,
+                        false,
+                        false,
+                        AssetCreationHandling.FULL,
+                        false,
+                    )
+                } else {
+                    null
+                }
+            metric.outputDetailedRecords(details, product, batch)
+            batch?.flush()
+            batch?.close()
+        }
     }
 }
