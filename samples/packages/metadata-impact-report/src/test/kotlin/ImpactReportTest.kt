@@ -3,13 +3,13 @@
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.enums.AtlanAnnouncementType
-import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.pkg.mdir.Reporter
 import com.atlan.pkg.serde.xls.ExcelReader
-import org.testng.Assert.*
+import org.testng.Assert.assertEquals
+import org.testng.Assert.assertNotNull
+import org.testng.Assert.assertTrue
 import java.io.File
 import kotlin.test.Test
 
