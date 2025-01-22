@@ -40,7 +40,7 @@ class ImpactReportCSVTest : PackageTest("irc") {
     override fun setup() {
         runCustomPackage(
             MetadataImpactReportCfg(
-                glossaryName = glossaryName,
+                dataDomain = "Metadata metrics",
                 includeDetails = true,
                 fileFormat = "CSV",
             ),
