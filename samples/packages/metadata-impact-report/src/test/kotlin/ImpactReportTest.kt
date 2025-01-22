@@ -14,7 +14,7 @@ import kotlin.test.Test
 class ImpactReportTest : PackageTest("ir") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val glossaryName = makeUnique("g1")
+    private val dataDomain = "Metadata metrics"
     private val files =
         listOf(
             "debug.log",
@@ -24,7 +24,7 @@ class ImpactReportTest : PackageTest("ir") {
     override fun setup() {
         runCustomPackage(
             MetadataImpactReportCfg(
-                glossaryName = glossaryName,
+                dataDomain = dataDomain,
                 includeDetails = true,
             ),
             Reporter::main,
@@ -32,19 +32,20 @@ class ImpactReportTest : PackageTest("ir") {
     }
 
     override fun teardown() {
-        removeGlossary(glossaryName)
+//        removeGlossary(dataDomain)
+        removeDomainandProduct(dataDomain)
     }
 
 //    @Test(groups = ["mdir.create"])
 //    fun glossaryCreated() {
-//        val glossary = Glossary.findByName(client, glossaryName)
+//        val glossary = Glossary.findByName(client, dataDomain)
 //        assertNotNull(glossary)
-//        assertEquals(glossaryName, glossary.name)
+//        assertEquals(dataDomain, glossary.name)
 //    }
 
 //    @Test(groups = ["mdir.create"])
 //    fun categoriesCreated() {
-//        val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
+//        val glossaryQN = Glossary.findByName(client, dataDomain).qualifiedName!!
 //        val request =
 //            GlossaryCategory
 //                .select(client)
@@ -66,7 +67,7 @@ class ImpactReportTest : PackageTest("ir") {
 
 //    @Test(groups = ["mdir.create"])
 //    fun termsCreated() {
-//        val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
+//        val glossaryQN = Glossary.findByName(client, dataDomain).qualifiedName!!
 //        val request =
 //            GlossaryTerm
 //                .select(client)
@@ -199,7 +200,7 @@ class ImpactReportTest : PackageTest("ir") {
         runCustomPackage(
             MetadataImpactReportCfg(
                 includeGlossary = "TRUE",
-                glossaryName = glossaryName,
+                dataDomain = dataDomain,
                 includeDetails = true,
             ),
             Reporter::main,
