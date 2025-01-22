@@ -9,7 +9,6 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryCategory
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.AtlanIcon
@@ -194,207 +193,207 @@ object Reporter {
         }
     }
 
-    private fun createGlossaryIdempotent(
-        client: AtlanClient,
-        glossaryName: String,
-    ): Glossary =
-        try {
-            Glossary.findByName(client, glossaryName)
-        } catch (e: NotFoundException) {
-            val create =
-                Glossary
-                    .creator(glossaryName)
-                    .assetIcon(AtlanIcon.PROJECTOR_SCREEN_CHART)
-                    .build()
-            val response = create.save(client)
-            response.getResult(create)
-        }
+//    private fun createGlossaryIdempotent(
+//        client: AtlanClient,
+//        glossaryName: String,
+//    ): Glossary =
+//        try {
+//            Glossary.findByName(client, glossaryName)
+//        } catch (e: NotFoundException) {
+//            val create =
+//                Glossary
+//                    .creator(glossaryName)
+//                    .assetIcon(AtlanIcon.PROJECTOR_SCREEN_CHART)
+//                    .build()
+//            val response = create.save(client)
+//            response.getResult(create)
+//        }
+//
+//    private fun createCategoriesIdempotent(
+//        client: AtlanClient,
+//        glossary: Glossary?,
+//    ): Map<String, String> {
+//        if (glossary == null) return emptyMap()
+//        val nameToResolved = mutableMapOf<String, String>()
+//        val placeholderToName = mutableMapOf<String, String>()
+//        AssetBatch(client, 20).use { batch ->
+//            CATEGORIES.forEach { (name, description) ->
+//                val builder =
+//                    try {
+//                        val found = GlossaryCategory.findByNameFast(client, name, glossary.qualifiedName)[0]
+//                        found.trimToRequired().guid(found.guid)
+//                    } catch (e: NotFoundException) {
+//                        GlossaryCategory.creator(name, glossary)
+//                    }
+//                val category = builder.description(description).build()
+//                placeholderToName[category.guid] = name
+//                batch.add(category)
+//            }
+//            batch.flush()
+//            placeholderToName.forEach { (guid, name) ->
+//                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+//                nameToResolved[name] = resolved
+//            }
+//        }
+//        return nameToResolved
+//    }
 
-    private fun createCategoriesIdempotent(
-        client: AtlanClient,
-        glossary: Glossary?,
-    ): Map<String, String> {
-        if (glossary == null) return emptyMap()
-        val nameToResolved = mutableMapOf<String, String>()
-        val placeholderToName = mutableMapOf<String, String>()
-        AssetBatch(client, 20).use { batch ->
-            CATEGORIES.forEach { (name, description) ->
-                val builder =
-                    try {
-                        val found = GlossaryCategory.findByNameFast(client, name, glossary.qualifiedName)[0]
-                        found.trimToRequired().guid(found.guid)
-                    } catch (e: NotFoundException) {
-                        GlossaryCategory.creator(name, glossary)
-                    }
-                val category = builder.description(description).build()
-                placeholderToName[category.guid] = name
-                batch.add(category)
-            }
-            batch.flush()
-            placeholderToName.forEach { (guid, name) ->
-                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
-                nameToResolved[name] = resolved
-            }
-        }
-        return nameToResolved
-    }
+//    private fun runReports(
+//        ctx: PackageContext<MetadataImpactReportCfg>,
+//        outputDirectory: String,
+//        batchSize: Int = 300,
+//        glossary: Glossary? = null,
+//        categoryNameToGuid: Map<String, String>? = null,
+//    ): List<String> {
+//        if (ctx.config.fileFormat == "XLSX") {
+//            val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
+//            ExcelWriter(outputFile).use { xlsx ->
+//                val overview = xlsx.createSheet("Overview")
+//                overview.writeHeader(
+//                    mapOf(
+//                        "Metric" to "",
+//                        "Description" to "",
+//                        "Result" to "Numeric result for the metric",
+//                        "Caveats" to "Any caveats to be aware of with the metric",
+//                        "Notes" to "Any other information to be aware of with the metric",
+//                        // "Percentage" to "Percentage of total for the metric",
+//                    ),
+//                )
+//                reports.forEach { repClass ->
+//                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+//                    outputReport(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, glossary, categoryNameToGuid)
+//                }
+//            }
+//            return listOf(outputFile)
+//        } else {
+//            val overviewFile = "$outputDirectory${File.separator}${CSV_FILES["overview"]}"
+//            val outputFiles = mutableListOf<String>()
+//            CSVWriter(overviewFile).use { overview ->
+//                overview.writeHeader(
+//                    mapOf(
+//                        "Metric" to "",
+//                        "Description" to "",
+//                        "Result" to "Numeric result for the metric",
+//                        "Caveats" to "Any caveats to be aware of with the metric",
+//                        "Notes" to "Any other information to be aware of with the metric",
+//                        // "Percentage" to "Percentage of total for the metric",
+//                    ),
+//                )
+//                reports.forEach { repClass ->
+//                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
+//                    val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
+//                    CSVWriter(metricFile).use { details ->
+//                        outputReport(ctx, metric, overview, details, batchSize, glossary, categoryNameToGuid)
+//                    }
+//                    outputFiles.add(metricFile)
+//                }
+//            }
+//            return outputFiles
+//        }
+//    }
 
-    private fun runReports(
-        ctx: PackageContext<MetadataImpactReportCfg>,
-        outputDirectory: String,
-        batchSize: Int = 300,
-        glossary: Glossary? = null,
-        categoryNameToGuid: Map<String, String>? = null,
-    ): List<String> {
-        if (ctx.config.fileFormat == "XLSX") {
-            val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
-            ExcelWriter(outputFile).use { xlsx ->
-                val overview = xlsx.createSheet("Overview")
-                overview.writeHeader(
-                    mapOf(
-                        "Metric" to "",
-                        "Description" to "",
-                        "Result" to "Numeric result for the metric",
-                        "Caveats" to "Any caveats to be aware of with the metric",
-                        "Notes" to "Any other information to be aware of with the metric",
-                        // "Percentage" to "Percentage of total for the metric",
-                    ),
-                )
-                reports.forEach { repClass ->
-                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    outputReport(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, glossary, categoryNameToGuid)
-                }
-            }
-            return listOf(outputFile)
-        } else {
-            val overviewFile = "$outputDirectory${File.separator}${CSV_FILES["overview"]}"
-            val outputFiles = mutableListOf<String>()
-            CSVWriter(overviewFile).use { overview ->
-                overview.writeHeader(
-                    mapOf(
-                        "Metric" to "",
-                        "Description" to "",
-                        "Result" to "Numeric result for the metric",
-                        "Caveats" to "Any caveats to be aware of with the metric",
-                        "Notes" to "Any other information to be aware of with the metric",
-                        // "Percentage" to "Percentage of total for the metric",
-                    ),
-                )
-                reports.forEach { repClass ->
-                    val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
-                    CSVWriter(metricFile).use { details ->
-                        outputReport(ctx, metric, overview, details, batchSize, glossary, categoryNameToGuid)
-                    }
-                    outputFiles.add(metricFile)
-                }
-            }
-            return outputFiles
-        }
-    }
+//    private fun outputReport(
+//        ctx: PackageContext<MetadataImpactReportCfg>,
+//        metric: Metric,
+//        overview: TabularWriter,
+//        details: TabularWriter,
+//        batchSize: Int,
+//        glossary: Glossary? = null,
+//        categoryNameToGuid: Map<String, String>? = null,
+//    ) {
+//        logger.info { "Quantifying metric: ${metric.name} ..." }
+//        val quantified = metric.quantify()
+//        val term =
+//            if (ctx.config.includeGlossary == "TRUE") {
+//                writeMetricToGlossary(ctx.client, metric, quantified, glossary!!, categoryNameToGuid!!)
+//            } else {
+//                null
+//            }
+//        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, term, batchSize)
+//    }
 
-    private fun outputReport(
-        ctx: PackageContext<MetadataImpactReportCfg>,
-        metric: Metric,
-        overview: TabularWriter,
-        details: TabularWriter,
-        batchSize: Int,
-        glossary: Glossary? = null,
-        categoryNameToGuid: Map<String, String>? = null,
-    ) {
-        logger.info { "Quantifying metric: ${metric.name} ..." }
-        val quantified = metric.quantify()
-        val term =
-            if (ctx.config.includeGlossary == "TRUE") {
-                writeMetricToGlossary(ctx.client, metric, quantified, glossary!!, categoryNameToGuid!!)
-            } else {
-                null
-            }
-        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, term, batchSize)
-    }
-
-    private fun writeMetricToGlossary(
-        client: AtlanClient,
-        metric: Metric,
-        quantified: Double,
-        glossary: Glossary,
-        categoryNameToGuid: Map<String, String>,
-    ): GlossaryTerm {
-        val builder =
-            try {
-                GlossaryTerm.findByNameFast(client, metric.name, glossary.qualifiedName).trimToRequired()
-            } catch (e: NotFoundException) {
-                GlossaryTerm.creator(metric.name, glossary)
-            }
-        val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
-        if (metric.caveats.isNotBlank()) {
-            builder
-                .announcementType(AtlanAnnouncementType.WARNING)
-                .announcementTitle("Caveats")
-                .announcementMessage(metric.caveats)
-                .certificateStatus(CertificateStatus.DRAFT)
-        } else {
-            builder.certificateStatus(CertificateStatus.VERIFIED)
-        }
-        if (metric.notes.isNotBlank()) {
-            builder
-                .announcementType(AtlanAnnouncementType.INFORMATION)
-                .announcementTitle("Note")
-                .announcementMessage(metric.notes)
-        }
-        val term =
-            builder
-                .displayName(metric.displayName)
-                .description(metric.description)
-                .certificateStatusMessage(prettyQuantity)
-                .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))
-                .build()
-        val response = term.save(client)
-        return response.getResult(term) ?: term.trimToRequired().guid(response.getAssignedGuid(term)).build()
-    }
-
-    private fun writeMetricToFile(
-        client: AtlanClient,
-        metric: Metric,
-        quantified: Double,
-        overview: TabularWriter,
-        details: TabularWriter,
-        includeDetails: Boolean,
-        term: GlossaryTerm?,
-        batchSize: Int,
-    ) {
-        overview.writeRecord(
-            listOf(
-                metric.name,
-                metric.description,
-                quantified,
-                metric.caveats,
-                metric.notes,
-            ),
-        )
-        if (includeDetails) {
-            val batch =
-                if (term != null) {
-                    AssetBatch(
-                        client,
-                        batchSize,
-                        false,
-                        AssetBatch.CustomMetadataHandling.IGNORE,
-                        true,
-                        false,
-                        false,
-                        false,
-                        AssetCreationHandling.FULL,
-                        false,
-                    )
-                } else {
-                    null
-                }
-            metric.outputDetailedRecords(details, term, batch)
-            batch?.flush()
-            batch?.close()
-        }
-    }
+//    private fun writeMetricToGlossary(
+//        client: AtlanClient,
+//        metric: Metric,
+//        quantified: Double,
+//        glossary: Glossary,
+//        categoryNameToGuid: Map<String, String>,
+//    ): GlossaryTerm {
+//        val builder =
+//            try {
+//                GlossaryTerm.findByNameFast(client, metric.name, glossary.qualifiedName).trimToRequired()
+//            } catch (e: NotFoundException) {
+//                GlossaryTerm.creator(metric.name, glossary)
+//            }
+//        val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
+//        if (metric.caveats.isNotBlank()) {
+//            builder
+//                .announcementType(AtlanAnnouncementType.WARNING)
+//                .announcementTitle("Caveats")
+//                .announcementMessage(metric.caveats)
+//                .certificateStatus(CertificateStatus.DRAFT)
+//        } else {
+//            builder.certificateStatus(CertificateStatus.VERIFIED)
+//        }
+//        if (metric.notes.isNotBlank()) {
+//            builder
+//                .announcementType(AtlanAnnouncementType.INFORMATION)
+//                .announcementTitle("Note")
+//                .announcementMessage(metric.notes)
+//        }
+//        val term =
+//            builder
+//                .displayName(metric.displayName)
+//                .description(metric.description)
+//                .certificateStatusMessage(prettyQuantity)
+//                .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))
+//                .build()
+//        val response = term.save(client)
+//        return response.getResult(term) ?: term.trimToRequired().guid(response.getAssignedGuid(term)).build()
+//    }
+//
+//    private fun writeMetricToFile(
+//        client: AtlanClient,
+//        metric: Metric,
+//        quantified: Double,
+//        overview: TabularWriter,
+//        details: TabularWriter,
+//        includeDetails: Boolean,
+//        term: GlossaryTerm?,
+//        batchSize: Int,
+//    ) {
+//        overview.writeRecord(
+//            listOf(
+//                metric.name,
+//                metric.description,
+//                quantified,
+//                metric.caveats,
+//                metric.notes,
+//            ),
+//        )
+//        if (includeDetails) {
+//            val batch =
+//                if (term != null) {
+//                    AssetBatch(
+//                        client,
+//                        batchSize,
+//                        false,
+//                        AssetBatch.CustomMetadataHandling.IGNORE,
+//                        true,
+//                        false,
+//                        false,
+//                        false,
+//                        AssetCreationHandling.FULL,
+//                        false,
+//                    )
+//                } else {
+//                    null
+//                }
+//            metric.outputDetailedRecords(details, term, batch)
+//            batch?.flush()
+//            batch?.close()
+//        }
+//    }
 
     private fun createDomainIdempotent(
         client: AtlanClient,
