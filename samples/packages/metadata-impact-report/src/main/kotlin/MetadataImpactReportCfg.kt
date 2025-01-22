@@ -11,8 +11,6 @@ import javax.annotation.processing.Generated
 @Generated("com.atlan.pkg.CustomPackage")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class MetadataImpactReportCfg(
-    @JsonProperty("include_glossary") val includeGlossary: String = "TRUE",
-    @JsonProperty("glossary_name") val glossaryName: String = "Metadata metrics",
     @JsonProperty("include_details") val includeDetails: Boolean = false,
     @JsonProperty("include_data_products") val includeDataProducts: String = "TRUE",
     @JsonProperty("data_domain") val dataDomain: String = "Metadata metrics",
