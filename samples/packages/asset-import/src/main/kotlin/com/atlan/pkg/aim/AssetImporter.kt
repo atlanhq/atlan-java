@@ -854,6 +854,7 @@ class AssetImporter(
             return Results(
                 hasLinks = results.hasLinks,
                 hasTermAssignments = results.hasTermAssignments,
+                hasDomainRelationship = results.hasDomainRelationship,
                 typesInFile = typesInFile,
             )
         }
@@ -862,10 +863,12 @@ class AssetImporter(
     private class Results(
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        hasDomainRelationship: Boolean,
         val typesInFile: Set<String>,
     ) : RowPreprocessor.Results(
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
+            hasDomainRelationship = hasDomainRelationship,
             outputFile = null,
         )
 }

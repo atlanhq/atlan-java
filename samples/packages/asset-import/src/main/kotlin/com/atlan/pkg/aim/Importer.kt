@@ -83,6 +83,9 @@ object Importer {
                 if (includes.hasLinks) {
                     ctx.linkCache.preload()
                 }
+                if (includes.hasDomainRelationship) {
+                    ctx.dataDomainCache.preload()
+                }
                 assetImporter.import()
             } else {
                 null
