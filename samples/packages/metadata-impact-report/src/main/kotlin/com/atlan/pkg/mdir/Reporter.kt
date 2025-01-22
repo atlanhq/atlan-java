@@ -7,11 +7,8 @@ import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.assets.Glossary
-import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
-import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
