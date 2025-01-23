@@ -81,19 +81,15 @@ object Reporter {
     const val CAT_SAVINGS = "Cost savings"
     const val CAT_ADOPTION = "Adoption metrics"
 
-    val CATEGORIES =
-        mapOf(
-            CAT_HEADLINES to "**Metrics that break down Atlan-managed assets as overall numbers.** These are mostly useful to contextualize the overall asset footprint of your data ecosystem.",
-            CAT_SAVINGS to "**Metrics that can be used to discover potential cost savings.** These are areas you may want to investigate for cost savings, though there are caveats with each one that are worth reviewing to understand potential limitations.",
-            CAT_ADOPTION to "**Metrics that can be used to monitor Atlan's adoption within your organization.** You may want to consider these alongside some of the headline numbers to calculate percentages of enrichment points that are important to your organization.",
-        )
-
     val SUBDOMAINS =
         mapOf(
             CAT_HEADLINES to "**Metrics that break down Atlan-managed assets as overall numbers.** These are mostly useful to contextualize the overall asset footprint of your data ecosystem.",
             CAT_SAVINGS to "**Metrics that can be used to discover potential cost savings.** These are areas you may want to investigate for cost savings, though there are caveats with each one that are worth reviewing to understand potential limitations.",
             CAT_ADOPTION to "**Metrics that can be used to monitor Atlan's adoption within your organization.** You may want to consider these alongside some of the headline numbers to calculate percentages of enrichment points that are important to your organization.",
         )
+
+    var formattedSubDomains: Map<String, String> = emptyMap()
+    private var dataDomain: String = ""
 
     private val reports =
         listOf(
@@ -138,23 +134,18 @@ object Reporter {
                 Paths.get(filePath).toFile().createNewFile()
             }
 
+            dataDomain = ctx.config.dataDomain
+            formattedSubDomains = SUBDOMAINS.map { (name, description) -> dataDomain + "_" + name to description }.toMap()
+
             val domain =
                 if (ctx.config.includeDataProducts == "TRUE") {
-                    createDomainIdempotent(ctx.client, ctx.config.dataDomain)
+                    createDomainIdempotent(ctx.client, dataDomain)
                 } else {
                     null
                 }
+
             val subdomainNameToGuid = createSubDomainsIdempotent(ctx.client, domain)
             val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToGuid)
-
-//            val glossary =
-//                if (ctx.config.includeGlossary == "TRUE") {
-//                    createGlossaryIdempotent(ctx.client, ctx.config.glossaryName)
-//                } else {
-//                    null
-//                }
-//            val categoryNameToGuid = createCategoriesIdempotent(ctx.client, glossary)
-//            val fileOutputs = runReports(ctx, outputDirectory, batchSize, glossary, categoryNameToGuid)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -210,7 +201,7 @@ object Reporter {
         val nameToResolved = mutableMapOf<String, String>()
         val placeholderToName = mutableMapOf<String, String>()
         AssetBatch(client, 20).use { batch ->
-            SUBDOMAINS.forEach { (name, description) ->
+            formattedSubDomains.forEach { (name, description) ->
                 val builder =
                     try {
                         val found = DataDomain.findByName(client, name)[0]
@@ -314,10 +305,10 @@ object Reporter {
     ): DataProduct {
         val builder =
             try {
-                DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
+                DataProduct.findByName(client, dataDomain + "_" + metric.name)[0]!!.trimToRequired()
             } catch (e: NotFoundException) {
-                val qualifiedName = DataDomain.findByName(client, metric.category)[0]!!.qualifiedName
-                DataProduct.creator(client, metric.name, qualifiedName, metric.query().build())
+                val qualifiedName = DataDomain.findByName(client, dataDomain + "_" + metric.category)[0]!!.qualifiedName
+                DataProduct.creator(client, dataDomain + "_" + metric.name, qualifiedName, metric.query().build())
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {

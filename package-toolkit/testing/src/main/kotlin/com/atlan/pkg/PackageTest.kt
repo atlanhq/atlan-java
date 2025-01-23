@@ -479,7 +479,7 @@ abstract class PackageTest(
      *
      * @param domainName of the domain
      */
-    fun removeDomainandProduct(domainName: String) {
+    fun removeDomainAndProduct(domainName: String) {
         val domains =
             DataDomain
                 .select(client)
@@ -510,7 +510,7 @@ abstract class PackageTest(
                         .toList()
                 if (subDomainNames.isNotEmpty()) {
                     subDomainNames.forEach {
-                        removeDomainandProduct(it)
+                        removeDomainAndProduct(it)
                     }
                 }
 

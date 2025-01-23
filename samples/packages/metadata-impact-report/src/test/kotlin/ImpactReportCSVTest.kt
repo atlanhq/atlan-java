@@ -22,7 +22,8 @@ import kotlin.test.assertEquals
 class ImpactReportCSVTest : PackageTest("irc") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val dataDomain = "Metadata metrics"
+    private val dataDomain = makeUnique("g1")
+    private val formattedSubDomains = Reporter.SUBDOMAINS.map { (name, description) -> dataDomain + "_" + name to description }.toMap()
     private val files =
         listOf(
             "debug.log",
@@ -47,7 +48,7 @@ class ImpactReportCSVTest : PackageTest("irc") {
     }
 
     override fun teardown() {
-        removeDomainandProduct(dataDomain)
+        removeDomainAndProduct(dataDomain)
     }
 
     @Test
@@ -69,9 +70,9 @@ class ImpactReportCSVTest : PackageTest("irc") {
         Assert.assertEquals(3, subDomains.size)
         subDomains.forEach { subDomain ->
             when (subDomain.name) {
-                Reporter.CAT_SAVINGS -> Assert.assertEquals(Reporter.SUBDOMAINS[Reporter.CAT_SAVINGS], subDomain.description)
-                Reporter.CAT_HEADLINES -> Assert.assertEquals(Reporter.SUBDOMAINS[Reporter.CAT_HEADLINES], subDomain.description)
-                Reporter.CAT_ADOPTION -> Assert.assertEquals(Reporter.SUBDOMAINS[Reporter.CAT_ADOPTION], subDomain.description)
+                dataDomain + "_" + Reporter.CAT_SAVINGS -> Assert.assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_SAVINGS], subDomain.description)
+                dataDomain + "_" + Reporter.CAT_HEADLINES -> Assert.assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_HEADLINES], subDomain.description)
+                dataDomain + "_" + Reporter.CAT_ADOPTION -> Assert.assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_ADOPTION], subDomain.description)
             }
         }
     }
