@@ -68,10 +68,13 @@ class ProductImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataProduct.NAME.atlanFieldName) as String
         val dataDomainMinimal = deserializer.getValue(DataProduct.DATA_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val dataDomain = if (dataDomainMinimal != null) ctx.dataDomainCache.getByGuid(dataDomainMinimal.guid) as DataDomain else null
+        if (dataDomainMinimal == null) {
+            throw NoSuchElementException("No dataDomain provided for the data product, cannot be processed.")
+        }
+        val dataDomain = ctx.dataDomainCache.getByGuid(dataDomainMinimal.guid) ?: throw NoSuchElementException("dataDomain not found for the data product, cannot be processed: ${deserializer.getRawValue(DataProduct.DATA_DOMAIN.atlanFieldName)}")
         val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String?
         val qualifiedName = generateQualifiedName(deserializer, dataDomain)
-        val candidateDP = DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
+        val candidateDP = DataProduct.creator(name, dataDomain.qualifiedName, dataProductAssetsDSL)
         return if (qualifiedName != getCacheId(deserializer, dataDomain)) {
             // If there is an existing qualifiedName, use it, otherwise we will get a conflict exception
             candidateDP.qualifiedName(qualifiedName)
