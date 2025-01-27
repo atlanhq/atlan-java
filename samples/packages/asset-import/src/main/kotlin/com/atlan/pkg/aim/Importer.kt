@@ -7,6 +7,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.util.DeltaProcessor
 import kotlin.system.exitProcess
 
 /**
@@ -15,6 +16,8 @@ import kotlin.system.exitProcess
  */
 object Importer {
     private val logger = Utils.getLogger(this.javaClass.name)
+
+    private const val PREVIOUS_FILES_PREFIX = "csa-asset-import"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -77,13 +80,44 @@ object Importer {
                         ctx.config.assetsKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
-                logger.info { "=== Importing assets... ===" }
+                val previousFileDirect = ctx.config.assetsPreviousFileDirect
                 val assetImporter = AssetImporter(ctx, assetsInput, logger)
-                val includes = assetImporter.preprocess()
-                if (includes.hasLinks) {
+                val preprocessedDetails = assetImporter.preprocess()
+                if (preprocessedDetails.hasLinks) {
                     ctx.linkCache.preload()
                 }
-                assetImporter.import()
+                DeltaProcessor(
+                    ctx = ctx,
+                    semantic = ctx.config.assetsDeltaSemantic,
+                    qualifiedNamePrefix = preprocessedDetails.assetRootName,
+                    removalType = ctx.config.assetsDeltaRemovalType,
+                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    resolver = AssetImporter,
+                    preprocessedDetails = preprocessedDetails,
+                    typesToRemove = emptyList(),
+                    logger = logger,
+                    reloadSemantic = ctx.config.assetsDeltaReloadCalculation,
+                    previousFilePreprocessor =
+                        AssetImporter.Preprocessor(
+                            previousFileDirect,
+                            ctx.config.assetsFieldSeparator[0],
+                            logger,
+                        ),
+                    outputDirectory = outputDirectory,
+                ).use { delta ->
+
+                    delta.calculate()
+
+                    logger.info { "=== Importing assets... ===" }
+                    val importedAssets = assetImporter.import()
+
+                    delta.processDeletions()
+
+                    ImportResults.getAllModifiedAssets(ctx.client, true, importedAssets).use { modifiedAssets ->
+                        delta.updateConnectionCache(modifiedAssets)
+                    }
+                    importedAssets
+                }
             } else {
                 null
             }
@@ -116,14 +150,6 @@ object Importer {
             } else {
                 null
             }
-
-        ImportResults.getAllModifiedAssets(ctx.client, false, resultsAssets).use { allModified ->
-            Utils.updateConnectionCache(
-                client = ctx.client,
-                added = allModified,
-                fallback = outputDirectory,
-            )
-        }
         return ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
     }
 }

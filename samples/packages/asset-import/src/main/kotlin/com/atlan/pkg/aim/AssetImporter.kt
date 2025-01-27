@@ -201,8 +201,13 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.pkg.util.AssetResolver
+import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
+import com.atlan.pkg.util.DeltaProcessor
+import com.atlan.util.AssetBatch.AssetIdentity
+import com.atlan.util.StringUtils
 import mu.KLogger
+import java.io.IOException
 
 /**
  * Import assets into Atlan from a provided CSV file.
@@ -236,6 +241,8 @@ class AssetImporter(
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
+    private val connectionQNs = mutableSetOf<String>()
+    private val deltaProcessing = ctx.config.assetsDeltaSemantic == "full"
     private val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
     private val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
     private val secondPassRemain =
@@ -256,7 +263,7 @@ class AssetImporter(
     override fun preprocess(
         outputFile: String?,
         outputHeaders: List<String>?,
-    ): RowPreprocessor.Results {
+    ): DeltaProcessor.Results {
         // Retrieve all relationships and filter to any cyclical relationships
         // (meaning relationships where both ends are of the same type)
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
@@ -265,7 +272,13 @@ class AssetImporter(
             .filter { it.endDef1.type == it.endDef2.type }
             .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
         val results = super.preprocess(outputFile, outputHeaders)
-        return results
+        return DeltaProcessor.Results(
+            assetRootName = if (connectionQNs.isNotEmpty()) connectionQNs.first() else NO_CONNECTION_QN,
+            hasLinks = results.hasLinks,
+            hasTermAssignments = results.hasTermAssignments,
+            preprocessedFile = results.outputFile ?: filename,
+            multipleConnections = connectionQNs.size > 1,
+        )
     }
 
     /** {@inheritDoc} */
@@ -297,6 +310,11 @@ class AssetImporter(
             } else if (header.contains(two)) {
                 mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
             }
+        }
+        if (deltaProcessing) {
+            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+            val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+            connectionQNs.add(connectionQNFromAsset)
         }
         return row
     }
@@ -405,7 +423,8 @@ class AssetImporter(
         val types: List<String>,
     )
 
-    companion object {
+    companion object : AssetResolver {
+        const val NO_CONNECTION_QN = "NO_CONNECTION_FOUND"
         private val ordering =
             listOf(
                 TypeGrouping(
@@ -814,12 +833,42 @@ class AssetImporter(
             types.sortedBy { t ->
                 ordering.flatMap { it.types }.indexOf(t).takeIf { it >= 0 } ?: Int.MAX_VALUE
             }
+
+        /** {@inheritDoc} */
+        override fun resolveAsset(
+            values: List<String>,
+            header: List<String>,
+            connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
+        ): AssetIdentity {
+            val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
+            if (typeIdx < 0) {
+                throw IOException(
+                    "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
+                )
+            }
+            val qnIdx = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
+            if (qnIdx < 0) {
+                throw IOException(
+                    "Unable to find the column 'qualifiedName'. This is a mandatory column in the input CSV.",
+                )
+            }
+            val typeName = CSVXformer.trimWhitespace(values[typeIdx])
+            val qualifiedName = CSVXformer.trimWhitespace(values[qnIdx])
+            return AssetIdentity(typeName, qualifiedName)
+        }
+
+        /** {@inheritDoc} */
+        override fun getQualifiedNameDetails(
+            row: List<String>,
+            header: List<String>,
+            typeName: String,
+        ): QualifiedNameDetails = throw IllegalStateException("This method should never be called. Please raise an issue if you discover this in any log file.")
     }
 
     /** Pre-process the assets import file. */
     private fun preprocess(): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
 
-    private class Preprocessor(
+    class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
@@ -829,6 +878,7 @@ class AssetImporter(
             fieldSeparator = fieldSeparator,
         ) {
         private val typesInFile = mutableSetOf<String>()
+        private var connectionQNs = mutableSetOf<String>()
 
         /** {@inheritDoc} */
         override fun preprocessRow(
@@ -842,6 +892,9 @@ class AssetImporter(
             if (typeName.isNotBlank()) {
                 typesInFile.add(row[typeIdx])
             }
+            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+            val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+            connectionQNs.add(connectionQNFromAsset)
             return row
         }
 
@@ -849,23 +902,31 @@ class AssetImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): DeltaProcessor.Results {
             val results = super.finalize(header, outputFile)
             return Results(
+                connectionQN = if (connectionQNs.isNotEmpty()) connectionQNs.first() else NO_CONNECTION_QN,
+                multipleConnections = connectionQNs.size > 1,
                 hasLinks = results.hasLinks,
                 hasTermAssignments = results.hasTermAssignments,
+                outputFile = outputFile ?: filename,
                 typesInFile = typesInFile,
             )
         }
     }
 
     private class Results(
+        connectionQN: String,
+        multipleConnections: Boolean,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        outputFile: String,
         val typesInFile: Set<String>,
-    ) : RowPreprocessor.Results(
+    ) : DeltaProcessor.Results(
+            assetRootName = connectionQN,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
-            outputFile = null,
+            multipleConnections = multipleConnections,
+            preprocessedFile = outputFile,
         )
 }
