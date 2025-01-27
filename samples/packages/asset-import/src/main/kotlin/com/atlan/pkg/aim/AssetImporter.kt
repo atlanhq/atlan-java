@@ -201,6 +201,7 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
 import com.atlan.pkg.util.DeltaProcessor
@@ -218,11 +219,13 @@ import java.io.IOException
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
  * @param ctx context in which the package is running
+ * @param delta the processor containing any details about file deltas
  * @param filename name of the file to import
  * @param logger through which to write log entries
  */
 class AssetImporter(
     ctx: PackageContext<AssetImportCfg>,
+    private val delta: DeltaProcessor?,
     filename: String,
     logger: KLogger,
 ) : CSVImporter(
@@ -241,8 +244,6 @@ class AssetImporter(
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
-    private val connectionQNs = mutableSetOf<String>()
-    private val deltaProcessing = ctx.config.assetsDeltaSemantic == "full"
     private val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
     private val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
     private val secondPassRemain =
@@ -263,7 +264,7 @@ class AssetImporter(
     override fun preprocess(
         outputFile: String?,
         outputHeaders: List<String>?,
-    ): DeltaProcessor.Results {
+    ): RowPreprocessor.Results {
         // Retrieve all relationships and filter to any cyclical relationships
         // (meaning relationships where both ends are of the same type)
         val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
@@ -271,14 +272,7 @@ class AssetImporter(
             .stream()
             .filter { it.endDef1.type == it.endDef2.type }
             .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
-        val results = super.preprocess(outputFile, outputHeaders)
-        return DeltaProcessor.Results(
-            assetRootName = if (connectionQNs.isNotEmpty()) connectionQNs.first() else NO_CONNECTION_QN,
-            hasLinks = results.hasLinks,
-            hasTermAssignments = results.hasTermAssignments,
-            preprocessedFile = results.outputFile ?: filename,
-            multipleConnections = connectionQNs.size > 1,
-        )
+        return super.preprocess(outputFile, outputHeaders)
     }
 
     /** {@inheritDoc} */
@@ -310,11 +304,6 @@ class AssetImporter(
             } else if (header.contains(two)) {
                 mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
             }
-        }
-        if (deltaProcessing) {
-            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-            val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
-            connectionQNs.add(connectionQNFromAsset)
         }
         return row
     }
@@ -409,12 +398,22 @@ class AssetImporter(
         typeIdx: Int,
         qnIdx: Int,
     ): Boolean {
-        return if (updateOnly) {
-            // If we are only updating, process in-parallel, in any order
-            row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
+        val candidateRow =
+            if (updateOnly) {
+                // If we are only updating, process in-parallel, in any order
+                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
+            } else {
+                // If we are doing more than only updates, process the assets in top-down order
+                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
+            }
+        // Only proceed processing this candidate row if we're doing non-delta processing, or we have
+        // detected that it needs to be loaded via the delta processing
+        return if (candidateRow) {
+            delta?.resolveAsset(row, header)?.let { identity ->
+                delta.reloadAsset(identity)
+            } ?: true
         } else {
-            // If we are doing more than only updates, process the assets in top-down order
-            return row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
+            false
         }
     }
 
@@ -915,7 +914,7 @@ class AssetImporter(
         }
     }
 
-    private class Results(
+    class Results(
         connectionQN: String,
         multipleConnections: Boolean,
         hasLinks: Boolean,

@@ -81,8 +81,10 @@ object Importer {
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
                 val previousFileDirect = ctx.config.assetsPreviousFileDirect
-                val assetImporter = AssetImporter(ctx, assetsInput, logger)
-                val preprocessedDetails = assetImporter.preprocess()
+                val preprocessedDetails =
+                    AssetImporter
+                        .Preprocessor(assetsInput, ctx.config.assetsFieldSeparator[0], logger)
+                        .preprocess<AssetImporter.Results>()
                 if (preprocessedDetails.hasLinks) {
                     ctx.linkCache.preload()
                 }
@@ -109,6 +111,8 @@ object Importer {
                     delta.calculate()
 
                     logger.info { "=== Importing assets... ===" }
+                    val assetImporter = AssetImporter(ctx, delta, assetsInput, logger)
+                    assetImporter.preprocess() // Note: we still do this to detect any cyclical relationships
                     val importedAssets = assetImporter.import()
 
                     delta.processDeletions()
