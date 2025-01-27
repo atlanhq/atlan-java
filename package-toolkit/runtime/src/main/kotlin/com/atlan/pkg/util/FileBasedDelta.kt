@@ -271,7 +271,11 @@ class FileBasedDelta(
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
             val guidList = guidsToDeleteToDetails.entrySet()
             val totalToDelete = guidsToDeleteToDetails.size
-            logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
+            if (removeTypes.isNotEmpty()) {
+                logger.info { " --- Deleting ($deletionType) $totalToDelete assets (limited to types: $removeTypes)... ---" }
+            } else {
+                logger.info { " --- Deleting ($deletionType) $totalToDelete assets... ---" }
+            }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 if (totalToDelete > 0) {

@@ -17,7 +17,7 @@ import kotlin.system.exitProcess
 object Importer {
     private val logger = Utils.getLogger(this.javaClass.name)
 
-    private const val PREVIOUS_FILES_PREFIX = "csa-asset-import"
+    const val PREVIOUS_FILES_PREFIX = "csa-asset-import"
 
     @JvmStatic
     fun main(args: Array<String>) {
