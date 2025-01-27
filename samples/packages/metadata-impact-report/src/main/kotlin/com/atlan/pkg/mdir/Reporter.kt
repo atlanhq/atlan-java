@@ -38,6 +38,7 @@ import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
+import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.File
 import java.nio.file.Paths
 import java.text.NumberFormat
@@ -88,9 +89,6 @@ object Reporter {
             CAT_ADOPTION to "**Metrics that can be used to monitor Atlan's adoption within your organization.** You may want to consider these alongside some of the headline numbers to calculate percentages of enrichment points that are important to your organization.",
         )
 
-    var formattedSubDomains: Map<String, String> = emptyMap()
-    private var dataDomain: String = ""
-
     private val reports =
         listOf(
             AUM::class.java,
@@ -134,18 +132,15 @@ object Reporter {
                 Paths.get(filePath).toFile().createNewFile()
             }
 
-            dataDomain = ctx.config.dataDomain
-            formattedSubDomains = SUBDOMAINS.map { (name, description) -> dataDomain + "_" + name to description }.toMap()
-
             val domain =
                 if (ctx.config.includeDataProducts == "TRUE") {
-                    createDomainIdempotent(ctx.client, dataDomain)
+                    createDomainIdempotent(ctx.client, ctx.config.dataDomain)
                 } else {
                     null
                 }
 
-            val subdomainNameToGuid = createSubDomainsIdempotent(ctx.client, domain)
-            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToGuid)
+            val subdomainNameToQualifiedName = createSubDomainsIdempotent(ctx.client, domain)
+            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToQualifiedName)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -199,23 +194,35 @@ object Reporter {
     ): Map<String, String> {
         if (domain == null) return emptyMap()
         val nameToResolved = mutableMapOf<String, String>()
-        val placeholderToName = mutableMapOf<String, String>()
+        val placeholderToName = mutableMapOf<DataDomain, String>()
         AssetBatch(client, 20).use { batch ->
-            formattedSubDomains.forEach { (name, description) ->
+            SUBDOMAINS.forEach { (name, description) ->
                 val builder =
                     try {
-                        val found = DataDomain.findByName(client, name)[0]
-                        found.trimToRequired().guid(found.guid)
+                        val subDomains = DataDomain.findByName(client, name)
+                        var found: DataDomain? = null
+                        for (sub in subDomains) {
+                            if (sub.parentDomain != null && sub.parentDomain.guid == domain.guid) {
+                                found = sub
+                                break
+                            }
+                        }
+                        if (found != null) {
+                            found.trimToRequired().guid(found.guid)
+                        } else {
+                            DataDomain.creator(name, domain.qualifiedName)
+                        }
                     } catch (e: NotFoundException) {
                         DataDomain.creator(name, domain.qualifiedName)
                     }
                 val subdomain = builder.description(description).build()
-                placeholderToName[subdomain.guid] = name
+                placeholderToName[subdomain] = name
                 batch.add(subdomain)
             }
             batch.flush()
-            placeholderToName.forEach { (guid, name) ->
-                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+            placeholderToName.forEach { (subDomain, name) ->
+                val id = AssetIdentity(subDomain.typeName, subDomain.qualifiedName, false)
+                val resolved = batch.resolvedQualifiedNames.getOrDefault(id, subDomain.qualifiedName)
                 nameToResolved[name] = resolved
             }
         }
@@ -227,7 +234,7 @@ object Reporter {
         outputDirectory: String,
         batchSize: Int = 300,
         domain: DataDomain? = null,
-        subdomainNameToGuid: Map<String, String>? = null,
+        subdomainNameToQualifiedName: Map<String, String>? = null,
     ): List<String> {
         if (ctx.config.fileFormat == "XLSX") {
             val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
@@ -245,7 +252,7 @@ object Reporter {
                 )
                 reports.forEach { repClass ->
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToGuid)
+                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToQualifiedName)
                 }
             }
             return listOf(outputFile)
@@ -267,7 +274,7 @@ object Reporter {
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
                     val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
                     CSVWriter(metricFile).use { details ->
-                        outputReportDomain(ctx, metric, overview, details, batchSize, domain, subdomainNameToGuid)
+                        outputReportDomain(ctx, metric, overview, details, batchSize, domain, subdomainNameToQualifiedName)
                     }
                     outputFiles.add(metricFile)
                 }
@@ -283,13 +290,13 @@ object Reporter {
         details: TabularWriter,
         batchSize: Int,
         domain: DataDomain? = null,
-        subdomainNameToGuid: Map<String, String>? = null,
+        subdomainNameToQualifiedName: Map<String, String>? = null,
     ) {
         logger.info { "Quantifying metric: ${metric.name} ..." }
         val quantified = metric.quantify()
         val product =
             if (ctx.config.includeDataProducts == "TRUE") {
-                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToGuid!!)
+                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToQualifiedName!!)
             } else {
                 null
             }
@@ -301,14 +308,13 @@ object Reporter {
         metric: Metric,
         quantified: Double,
         domain: DataDomain,
-        subdomainNameToGuid: Map<String, String>,
+        subdomainNameToQualifiedName: Map<String, String>,
     ): DataProduct {
         val builder =
             try {
-                DataProduct.findByName(client, dataDomain + "_" + metric.name)[0]!!.trimToRequired()
+                DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
             } catch (e: NotFoundException) {
-                val qualifiedName = DataDomain.findByName(client, dataDomain + "_" + metric.category)[0]!!.qualifiedName
-                DataProduct.creator(client, dataDomain + "_" + metric.name, qualifiedName, metric.query().build())
+                DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {

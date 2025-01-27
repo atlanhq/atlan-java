@@ -20,7 +20,7 @@ class ImpactReportTest : PackageTest("ir") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val dataDomain = makeUnique("g1")
-    private val formattedSubDomains = Reporter.SUBDOMAINS.map { (name, description) -> dataDomain + "_" + name to description }.toMap()
+    private val formattedSubDomains = Reporter.SUBDOMAINS.map { (name, description) -> name to description }.toMap()
     private val files =
         listOf(
             "debug.log",
@@ -60,9 +60,9 @@ class ImpactReportTest : PackageTest("ir") {
         assertEquals(3, subDomains.size)
         subDomains.forEach { subDomain ->
             when (subDomain.name) {
-                dataDomain + "_" + Reporter.CAT_SAVINGS -> assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_SAVINGS], subDomain.description)
-                dataDomain + "_" + Reporter.CAT_HEADLINES -> assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_HEADLINES], subDomain.description)
-                dataDomain + "_" + Reporter.CAT_ADOPTION -> assertEquals(formattedSubDomains[dataDomain + "_" + Reporter.CAT_ADOPTION], subDomain.description)
+                Reporter.CAT_SAVINGS -> assertEquals(formattedSubDomains[Reporter.CAT_SAVINGS], subDomain.description)
+                Reporter.CAT_HEADLINES -> assertEquals(formattedSubDomains[Reporter.CAT_HEADLINES], subDomain.description)
+                Reporter.CAT_ADOPTION -> assertEquals(formattedSubDomains[Reporter.CAT_ADOPTION], subDomain.description)
             }
         }
     }
