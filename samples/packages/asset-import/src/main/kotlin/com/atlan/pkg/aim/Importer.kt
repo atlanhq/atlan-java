@@ -113,7 +113,9 @@ object Importer {
 
                     delta.processDeletions()
 
-                    ImportResults.getAllModifiedAssets(ctx.client, true, importedAssets).use { modifiedAssets ->
+                    // Note: we won't close the original set of changes here, as we'll combine it later for a full set of changes
+                    // (at which point, it will be closed)
+                    ImportResults.getAllModifiedAssets(ctx.client, false, importedAssets).use { modifiedAssets ->
                         delta.updateConnectionCache(modifiedAssets)
                     }
                     importedAssets
