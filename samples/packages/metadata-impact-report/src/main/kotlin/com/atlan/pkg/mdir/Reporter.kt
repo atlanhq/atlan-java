@@ -139,8 +139,8 @@ object Reporter {
                     null
                 }
 
-            val subdomainNameToQualifiedName = createSubDomainsIdempotent(ctx.client, domain)
-            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToQualifiedName)
+            val (subdomainNameToQualifiedName, subdomainNameToGuid) = createSubDomainsIdempotent(ctx.client, domain)
+            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToQualifiedName, subdomainNameToGuid)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -191,10 +191,12 @@ object Reporter {
     private fun createSubDomainsIdempotent(
         client: AtlanClient,
         domain: DataDomain?,
-    ): Map<String, String> {
-        if (domain == null) return emptyMap()
+    ): Pair<Map<String, String>, Map<String, String>> {
+        if (domain == null) return emptyMap<String, String>() to emptyMap<String, String>()
         val nameToResolved = mutableMapOf<String, String>()
+        val guidToResolved = mutableMapOf<String, String>()
         val placeholderToName = mutableMapOf<DataDomain, String>()
+        val placeholderToGuid = mutableMapOf<String, String>()
         AssetBatch(client, 20).use { batch ->
             SUBDOMAINS.forEach { (name, description) ->
                 val builder =
@@ -217,6 +219,7 @@ object Reporter {
                     }
                 val subdomain = builder.description(description).build()
                 placeholderToName[subdomain] = name
+                placeholderToGuid[subdomain.guid] = name
                 batch.add(subdomain)
             }
             batch.flush()
@@ -225,8 +228,12 @@ object Reporter {
                 val resolved = batch.resolvedQualifiedNames.getOrDefault(id, subDomain.qualifiedName)
                 nameToResolved[name] = resolved
             }
+            placeholderToGuid.forEach { (guid, name) ->
+                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+                guidToResolved[name] = resolved
+            }
         }
-        return nameToResolved
+        return nameToResolved to guidToResolved
     }
 
     private fun runReports(
@@ -235,6 +242,7 @@ object Reporter {
         batchSize: Int = 300,
         domain: DataDomain? = null,
         subdomainNameToQualifiedName: Map<String, String>? = null,
+        subdomainNameToGuid: Map<String, String>? = null,
     ): List<String> {
         if (ctx.config.fileFormat == "XLSX") {
             val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
@@ -252,7 +260,7 @@ object Reporter {
                 )
                 reports.forEach { repClass ->
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToQualifiedName)
+                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToQualifiedName, subdomainNameToGuid)
                 }
             }
             return listOf(outputFile)
@@ -291,12 +299,13 @@ object Reporter {
         batchSize: Int,
         domain: DataDomain? = null,
         subdomainNameToQualifiedName: Map<String, String>? = null,
+        subdomainNameToGuid: Map<String, String>? = null,
     ) {
         logger.info { "Quantifying metric: ${metric.name} ..." }
         val quantified = metric.quantify()
         val product =
             if (ctx.config.includeDataProducts == "TRUE") {
-                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToQualifiedName!!)
+                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToQualifiedName!!, subdomainNameToGuid!!)
             } else {
                 null
             }
@@ -309,10 +318,19 @@ object Reporter {
         quantified: Double,
         domain: DataDomain,
         subdomainNameToQualifiedName: Map<String, String>,
+        subdomainNameToGuid: Map<String, String>,
     ): DataProduct {
         val builder =
             try {
-                DataProduct.findByName(client, metric.name)[0]!!.trimToRequired()
+                val products = DataProduct.findByName(client, metric.name)
+                var found: DataProduct? = null
+                for (product in products) {
+                    if (product.domainGUIDs != null && product.domainGUIDs.size > 0 && product.domainGUIDs.first() == subdomainNameToGuid[metric.category]) {
+                        found = product
+                        break
+                    }
+                }
+                found!!.trimToRequired() ?: DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
             } catch (e: NotFoundException) {
                 DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
             }
