@@ -86,7 +86,7 @@ object Importer {
         val targetHeaders = CSVXformer.getHeader(assetsInput, fieldSeparator).toMutableList()
         // Inject two columns at the end that we need for column assets
         targetHeaders.add(Column.ORDER.atlanFieldName)
-        targetHeaders.add(ColumnImporter.COLUMN_PARENT_QN)
+        targetHeaders.add(ColumnXformer.COLUMN_PARENT_QN)
         val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
         val preprocessedDetails =
             Preprocessor(assetsInput, fieldSeparator)
@@ -129,7 +129,7 @@ object Importer {
                 ColumnXformer.COLUMN_NAME,
                 ColumnXformer.COLUMN_PARENT_QN,
                 ConnectionImporter.CONNECTOR_TYPE,
-                AssetImporter.ENTITY_NAME,
+                AssetXformer.ENTITY_NAME,
             ),
         )
         inputHeaders.forEach { completeHeaders.add(it) }
@@ -149,27 +149,27 @@ object Importer {
                 writer.writeRecord(completeHeaders)
 
                 logger.info { " --- Transforming databases... ---" }
-                val databaseXformer = DatabaseXformer(ctx, preprocessedDetails, logger)
+                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 databaseXformer.transform(writer)
 
                 logger.info { " --- Transforming schemas... ---" }
-                val schemaXformer = SchemaXformer(ctx, preprocessedDetails, logger)
+                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 schemaXformer.transform(writer)
 
                 logger.info { " --- Transforming tables... ---" }
-                val tableXformer = TableXformer(ctx, preprocessedDetails, logger)
+                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 tableXformer.transform(writer)
 
                 logger.info { " --- Transforming views... ---" }
-                val viewXformer = ViewXformer(ctx, preprocessedDetails, logger)
+                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 viewXformer.transform(writer)
 
                 logger.info { " --- Transforming materialized views... ---" }
-                val materializedViewXformer = MaterializedViewXformer(ctx, preprocessedDetails, logger)
+                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 materializedViewXformer.transform(writer)
 
                 logger.info { " --- Transforming columns... ---" }
-                val columnXformer = ColumnXformer(ctx, preprocessedDetails, logger)
+                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 columnXformer.transform(writer)
             }
 
@@ -222,7 +222,7 @@ object Importer {
         ): List<String> {
             val values = row.toMutableList()
             val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
-            val qnDetails = getSQLHierarchyDetails(CSVXformer.getRowByHeader(header, values), typeName)
+            val qnDetails = getSQLHierarchyDetails(CSVXformer.getRowByHeader(header, values), typeName, entityQualifiedNameToType)
             if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
                 if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
                     qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)

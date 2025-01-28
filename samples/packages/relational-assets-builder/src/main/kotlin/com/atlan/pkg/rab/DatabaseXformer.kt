@@ -11,17 +11,19 @@ import mu.KLogger
 
 class DatabaseXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
+    completeHeaders: List<String>,
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : AssetXformer(
         ctx = ctx,
+        completeHeaders = completeHeaders,
         typeNameFilter = Database.TYPE_NAME,
         preprocessedDetails = preprocessedDetails,
         logger = logger,
     ) {
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(ctx, inputRow)
-        val details = getSQLHierarchyDetails(inputRow, typeNameFilter)
+        val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
         val assetQN = "$connectionQN/${details.partialQN}"
         val schemaCount = preprocessedDetails.qualifiedNameToChildCount[details.uniqueQN]?.toInt()
         return if (assetQN.isNotBlank()) {
@@ -31,7 +33,7 @@ class DatabaseXformer(
                 RowSerde.getHeaderForField(Asset.NAME) to details.name,
                 RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE) to getConnectorType(inputRow),
                 RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME) to connectionQN,
-                RowSerde.getHeaderForField(Database.SCHEMA_COUNT) to (schemaCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java) to (schemaCount?.toString() ?: ""),
             )
         } else {
             mapOf()

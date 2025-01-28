@@ -9,10 +9,12 @@ import mu.KLogger
 
 class TableXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
+    completeHeaders: List<String>,
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : ContainerXformer(
         ctx = ctx,
+        completeHeaders = completeHeaders,
         typeNameFilter = Table.TYPE_NAME,
         preprocessedDetails = preprocessedDetails,
         logger = logger,

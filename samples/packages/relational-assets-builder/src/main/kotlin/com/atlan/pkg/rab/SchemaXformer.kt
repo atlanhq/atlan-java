@@ -11,17 +11,19 @@ import mu.KLogger
 
 class SchemaXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
+    completeHeaders: List<String>,
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : AssetXformer(
         ctx = ctx,
+        completeHeaders = completeHeaders,
         typeNameFilter = Schema.TYPE_NAME,
         preprocessedDetails = preprocessedDetails,
         logger = logger,
     ) {
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(ctx, inputRow)
-        val details = getSQLHierarchyDetails(inputRow, typeNameFilter)
+        val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
         val assetQN = "$connectionQN/${details.partialQN}"
         val parentQN = "$connectionQN/${details.parentPartialQN}"
         val tableCount = preprocessedDetails.qualifiedNameToTableCount[details.uniqueQN]?.toInt()
@@ -33,11 +35,11 @@ class SchemaXformer(
                 RowSerde.getHeaderForField(Asset.NAME) to details.name,
                 RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE) to getConnectorType(inputRow),
                 RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME) to connectionQN,
-                RowSerde.getHeaderForField(Schema.DATABASE_NAME) to details.parentName,
-                RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME) to parentQN,
-                RowSerde.getHeaderForField(Schema.DATABASE) to "Database@$parentQN",
-                RowSerde.getHeaderForField(Schema.TABLE_COUNT) to (tableCount?.toString() ?: ""),
-                RowSerde.getHeaderForField(Schema.VIEW_COUNT) to (viewCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Schema.DATABASE_NAME, Schema::class.java) to details.parentName,
+                RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME, Schema::class.java) to parentQN,
+                RowSerde.getHeaderForField(Schema.DATABASE, Schema::class.java) to "Database@$parentQN",
+                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java) to (tableCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java) to (viewCount?.toString() ?: ""),
             )
         } else {
             mapOf()
