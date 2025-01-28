@@ -893,7 +893,14 @@ class AssetImporter(
             }
             val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
             val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
-            connectionQNs.add(connectionQNFromAsset)
+            if (connectionQNFromAsset != null) {
+                connectionQNs.add(connectionQNFromAsset)
+            } else if (typeName == Connection.TYPE_NAME) {
+                // If the qualifiedName comes back as null and the asset itself is a connection, add it
+                connectionQNs.add(qualifiedName)
+            } else {
+                throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+            }
             return row
         }
 

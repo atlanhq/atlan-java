@@ -23,7 +23,6 @@ import com.atlan.pkg.util.DeltaProcessor
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
-import java.io.File
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicInteger
@@ -119,7 +118,7 @@ object Importer {
         connectionImporter.import()?.close()
 
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
-        val transformedFile = "$outputDirectory${File.separator}CSA_RAB_transformed.csv"
+        val transformedFile = "$assetsInput.transformed.csv"
         // Determine any non-standard RAB fields in the header and append them to the end of
         // the list of standard header fields, so they're passed-through to asset import
         val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = ctx.config.assetsFieldSeparator[0]).toMutableList()
