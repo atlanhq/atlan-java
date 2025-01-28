@@ -82,13 +82,64 @@ object Importer {
                 ctx.config.assetsPrefix,
                 assetsKey,
             )
-        val targetHeaders = CSVXformer.getHeader(assetsInput, fieldSeparator).toMutableList()
+
+        ctx.connectionCache.preload()
+
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+        logger.info { "=== Importing assets... ===" }
+
+        logger.info { " --- Importing connections... ---" }
+        // Note: we force-track the batches here to ensure any created connections are cached
+        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
+        // with the subsequent processing steps.)
+        // We also need to load these connections first, irrespective of any delta calculation, so that
+        // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
+        val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
+        connectionImporter.import()?.close()
+
+        val transformedFile = transform(ctx, fieldSeparator, assetsInput)
+
+        val previousFileXformed =
+            if (ctx.config.previousFileDirect.isNotBlank()) {
+                transform(ctx, fieldSeparator, ctx.config.previousFileDirect)
+            } else {
+                ""
+            }
+
+        val importConfig =
+            AssetImportCfg(
+                assetsFile = transformedFile,
+                assetsUpsertSemantic = ctx.config.assetsUpsertSemantic,
+                assetsDeltaSemantic = ctx.config.deltaSemantic,
+                assetsDeltaRemovalType = ctx.config.deltaRemovalType,
+                assetsDeltaReloadCalculation = ctx.config.deltaReloadCalculation,
+                assetsPreviousFileDirect = previousFileXformed,
+                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
+                assetsAttrToOverwrite = ctx.config.assetsAttrToOverwrite,
+                assetsFailOnErrors = ctx.config.assetsFailOnErrors,
+                assetsFieldSeparator = ctx.config.assetsFieldSeparator,
+                assetsBatchSize = ctx.config.assetsBatchSize,
+                trackBatches = ctx.config.trackBatches,
+            )
+        Utils.initializeContext(importConfig, ctx).use { iCtx ->
+            com.atlan.pkg.aim.Importer
+                .import(iCtx, outputDirectory)
+                ?.close()
+        }
+    }
+
+    private fun transform(
+        ctx: PackageContext<RelationalAssetsBuilderCfg>,
+        fieldSeparator: Char,
+        inputFile: String,
+    ): String {
+        val targetHeaders = getHeader(inputFile, fieldSeparator).toMutableList()
         // Inject two columns at the end that we need for column assets
         targetHeaders.add(Column.ORDER.atlanFieldName)
         targetHeaders.add(ColumnXformer.COLUMN_PARENT_QN)
-        val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
+        val revisedFile = Paths.get("$inputFile.CSA_RAB.csv")
         val preprocessedDetails =
-            Preprocessor(assetsInput, fieldSeparator)
+            Preprocessor(inputFile, fieldSeparator)
                 .preprocess<Results>(
                     outputFile = revisedFile.toString(),
                     outputHeaders = targetHeaders,
@@ -103,25 +154,11 @@ object Importer {
             ctx.termCache.preload()
         }
 
-        ctx.connectionCache.preload()
-
-        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
-        logger.info { "=== Importing assets... ===" }
-
-        logger.info { " --- Importing connections... ---" }
-        // Note: we force-track the batches here to ensure any created connections are cached
-        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
-        // with the subsequent processing steps.)
-        // We also need to load these connections first, irrespective of any delta calculation, so that
-        // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
-        val connectionImporter = ConnectionImporter(ctx, preprocessedDetails, logger)
-        connectionImporter.import()?.close()
-
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
-        val transformedFile = "$assetsInput.transformed.csv"
+        val transformedFile = "$inputFile.transformed.csv"
         // Determine any non-standard RAB fields in the header and append them to the end of
         // the list of standard header fields, so they're passed-through to asset import
-        val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = ctx.config.assetsFieldSeparator[0]).toMutableList()
+        val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = fieldSeparator).toMutableList()
         inputHeaders.removeAll(BASE_OUTPUT_HEADERS)
         inputHeaders.removeAll(
             listOf(
@@ -171,26 +208,7 @@ object Importer {
                 val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 columnXformer.transform(writer)
             }
-
-        val importConfig =
-            AssetImportCfg(
-                assetsFile = transformedFile,
-                assetsUpsertSemantic = ctx.config.assetsUpsertSemantic,
-                assetsDeltaSemantic = ctx.config.deltaSemantic,
-                assetsDeltaRemovalType = ctx.config.deltaRemovalType,
-                assetsDeltaReloadCalculation = ctx.config.deltaReloadCalculation,
-                assetsPreviousFileDirect = ctx.config.previousFileDirect,
-                assetsAttrToOverwrite = ctx.config.assetsAttrToOverwrite,
-                assetsFailOnErrors = ctx.config.assetsFailOnErrors,
-                assetsFieldSeparator = ctx.config.assetsFieldSeparator,
-                assetsBatchSize = ctx.config.assetsBatchSize,
-                trackBatches = ctx.config.trackBatches,
-            )
-        Utils.initializeContext(importConfig, ctx).use { iCtx ->
-            com.atlan.pkg.aim.Importer
-                .import(iCtx, outputDirectory)
-                ?.close()
-        }
+        return transformedFile
     }
 
     private class Preprocessor(
