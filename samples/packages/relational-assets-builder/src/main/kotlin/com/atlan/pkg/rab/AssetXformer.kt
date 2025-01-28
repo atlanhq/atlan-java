@@ -122,7 +122,9 @@ abstract class AssetXformer(
                 "CONTAINER", Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ENTITY_NAME) { "" })
                     parent = getSQLHierarchyDetails(row, Schema.TYPE_NAME, entityQualifiedNameToType)
-                    actualTypeName = entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") { typeName }
+                    actualTypeName = entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") {
+                        throw IllegalStateException("Could not find any table/view at: ${parent.uniqueQN}/$current")
+                    }
                 }
                 Column.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ColumnXformer.COLUMN_NAME) { "" })
