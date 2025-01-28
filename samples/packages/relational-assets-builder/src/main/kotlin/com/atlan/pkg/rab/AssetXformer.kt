@@ -95,11 +95,19 @@ abstract class AssetXformer(
 
         fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" })
 
-        /** {@inheritDoc} */
+        /**
+         * Attempt to resolve the full SQL hierarchy details of a row (asset).
+         * Note: when the entityQualifiedNameToType is not passed, only very limited details can be resolved and returned,
+         * so use with caution unless you're able to provide the entityQualifiedNameToType map.
+         *
+         * @param row of data, representing a single asset
+         * @param typeName of that single row's asset
+         * @param entityQualifiedNameToType a map from unresolved (unique) qualifiedName of an asset to its type
+         */
         fun getSQLHierarchyDetails(
             row: Map<String, String>,
             typeName: String,
-            entityQualifiedNameToType: Map<String, String>,
+            entityQualifiedNameToType: Map<String, String>? = null,
         ): SQLHierarchyDetails {
             val parent: SQLHierarchyDetails?
             val current: String
@@ -122,8 +130,12 @@ abstract class AssetXformer(
                 "CONTAINER", Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ENTITY_NAME) { "" })
                     parent = getSQLHierarchyDetails(row, Schema.TYPE_NAME, entityQualifiedNameToType)
-                    actualTypeName = entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") {
-                        throw IllegalStateException("Could not find any table/view at: ${parent.uniqueQN}/$current")
+                    // Only do this lookup if we have been passed a map -- otherwise this is detail that cannot
+                    // yet be resolved (and will not yet be used, either)
+                    if (entityQualifiedNameToType != null) {
+                        actualTypeName = entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") {
+                            throw IllegalStateException("Could not find any table/view at: ${parent.uniqueQN}/$current")
+                        }
                     }
                 }
                 Column.TYPE_NAME -> {

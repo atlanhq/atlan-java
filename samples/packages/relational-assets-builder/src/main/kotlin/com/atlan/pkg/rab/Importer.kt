@@ -239,7 +239,7 @@ object Importer {
         ): List<String> {
             val values = row.toMutableList()
             val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
-            val qnDetails = getSQLHierarchyDetails(CSVXformer.getRowByHeader(header, values), typeName, entityQualifiedNameToType)
+            val qnDetails = getSQLHierarchyDetails(CSVXformer.getRowByHeader(header, values), typeName)
             if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
                 if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
                     qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
