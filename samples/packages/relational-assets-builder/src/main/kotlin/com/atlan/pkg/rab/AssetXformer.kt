@@ -133,9 +133,10 @@ abstract class AssetXformer(
                     // Only do this lookup if we have been passed a map -- otherwise this is detail that cannot
                     // yet be resolved (and will not yet be used, either)
                     if (entityQualifiedNameToType != null) {
-                        actualTypeName = entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") {
-                            throw IllegalStateException("Could not find any table/view at: ${parent.uniqueQN}/$current")
-                        }
+                        actualTypeName =
+                            entityQualifiedNameToType.getOrElse("${parent.uniqueQN}/$current") {
+                                throw IllegalStateException("Could not find any table/view at: ${parent.uniqueQN}/$current")
+                            }
                     }
                 }
                 Column.TYPE_NAME -> {
