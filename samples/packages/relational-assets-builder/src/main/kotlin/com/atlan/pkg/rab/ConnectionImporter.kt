@@ -21,17 +21,17 @@ import java.util.stream.Stream
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
  * @param ctx context through which this package is running
- * @param preprocessed details of the preprocessed CSV file
+ * @param inputFile the input file containing connection details
  * @param logger through which to record logging
  */
 class ConnectionImporter(
     ctx: PackageContext<RelationalAssetsBuilderCfg>,
-    private val preprocessed: Importer.Results,
+    private val inputFile: String,
     logger: KLogger,
 ) : AssetImporter(
         ctx = ctx,
         delta = null,
-        filename = preprocessed.preprocessedFile,
+        filename = inputFile,
         // Only allow full or updates to connections, as partial connections would be hidden
         // and impossible to delete via utilities like the Connection Delete workflow
         typeNameFilter = Connection.TYPE_NAME,

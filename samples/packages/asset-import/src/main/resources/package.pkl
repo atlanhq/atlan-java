@@ -132,6 +132,13 @@ uiConfig {
           helpText = "Path to a direct file (locally) to use for delta processing."
           fallback = ""
         }
+        ["assets_previous_file_prefix"] = new TextInput {
+          title = "Previous files location"
+          required = false
+          hide = true
+          helpText = "Object store prefix in which previous files exist for delta processing."
+          fallback = ""
+        }
         ["assets_config"] = new Radio {
           title = "Options"
           required = true

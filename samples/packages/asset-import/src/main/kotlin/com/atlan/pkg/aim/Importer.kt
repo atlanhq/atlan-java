@@ -93,7 +93,7 @@ object Importer {
                     semantic = ctx.config.assetsDeltaSemantic,
                     qualifiedNamePrefix = preprocessedDetails.assetRootName,
                     removalType = ctx.config.assetsDeltaRemovalType,
-                    previousFilesPrefix = PREVIOUS_FILES_PREFIX,
+                    previousFilesPrefix = ctx.config.assetsPreviousFilePrefix.ifBlank { PREVIOUS_FILES_PREFIX },
                     resolver = AssetImporter,
                     preprocessedDetails = preprocessedDetails,
                     typesToRemove = emptyList(),

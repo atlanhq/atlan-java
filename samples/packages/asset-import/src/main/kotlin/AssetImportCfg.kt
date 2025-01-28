@@ -24,6 +24,7 @@ data class AssetImportCfg(
     @JsonProperty("assets_delta_removal_type") val assetsDeltaRemovalType: String = "archive",
     @JsonProperty("assets_delta_reload_calculation") val assetsDeltaReloadCalculation: String = "all",
     @JsonProperty("assets_previous_file_direct") val assetsPreviousFileDirect: String = "",
+    @JsonProperty("assets_previous_file_prefix") val assetsPreviousFilePrefix: String = "",
     @JsonProperty("assets_config") val assetsConfig: String? = null,
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
