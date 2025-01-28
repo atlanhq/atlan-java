@@ -5,6 +5,7 @@ package com.atlan.pkg.mdir
 import MetadataImpactReportCfg
 import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.enums.AssetCreationHandling
@@ -38,7 +39,6 @@ import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
-import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.File
 import java.nio.file.Paths
 import java.text.NumberFormat
@@ -195,20 +195,20 @@ object Reporter {
         if (domain == null) return emptyMap<String, String>() to emptyMap<String, String>()
         val nameToResolved = mutableMapOf<String, String>()
         val guidToResolved = mutableMapOf<String, String>()
-        val placeholderToName = mutableMapOf<DataDomain, String>()
+        val placeholderToName = mutableMapOf<Asset, String>()
         val placeholderToGuid = mutableMapOf<String, String>()
         AssetBatch(client, 20).use { batch ->
             SUBDOMAINS.forEach { (name, description) ->
                 val builder =
                     try {
-                        val subDomains = DataDomain.findByName(client, name)
-                        var found: DataDomain? = null
-                        for (sub in subDomains) {
-                            if (sub.parentDomain != null && sub.parentDomain.guid == domain.guid) {
-                                found = sub
-                                break
-                            }
-                        }
+                        val found =
+                            DataDomain
+                                .select(client)
+                                .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.eq(domain.qualifiedName))
+                                .where(DataDomain.NAME.eq(name))
+                                .stream()
+                                .toList()
+                                .firstOrNull()
                         if (found != null) {
                             found.trimToRequired().guid(found.guid)
                         } else {
@@ -223,13 +223,21 @@ object Reporter {
                 batch.add(subdomain)
             }
             batch.flush()
-            placeholderToName.forEach { (subDomain, name) ->
-                val id = AssetIdentity(subDomain.typeName, subDomain.qualifiedName, false)
-                val resolved = batch.resolvedQualifiedNames.getOrDefault(id, subDomain.qualifiedName)
-                nameToResolved[name] = resolved
-            }
+//            placeholderToName.forEach { (subDomain, name) ->
+//                val id = AssetIdentity(subDomain.typeName, subDomain.qualifiedName, false)
+//                val resolved = batch.resolvedQualifiedNames.getOrDefault(id, subDomain.qualifiedName)
+//                nameToResolved[name] = resolved
+//            }
             placeholderToGuid.forEach { (guid, name) ->
                 val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
+                val dd = DataDomain.findByName(client, name)
+                var resolvedName = ""
+                for (d in dd) {
+                    if (d.guid == resolved) {
+                        resolvedName = d.qualifiedName
+                    }
+                }
+                nameToResolved[name] = resolvedName
                 guidToResolved[name] = resolved
             }
         }
@@ -319,18 +327,26 @@ object Reporter {
         domain: DataDomain,
         subdomainNameToQualifiedName: Map<String, String>,
         subdomainNameToGuid: Map<String, String>,
-    ): DataProduct {
+    ): Asset {
         val builder =
             try {
-                val products = DataProduct.findByName(client, metric.name)
-                var found: DataProduct? = null
-                for (product in products) {
-                    if (product.domainGUIDs != null && product.domainGUIDs.size > 0 && product.domainGUIDs.first() == subdomainNameToGuid[metric.category]) {
-                        found = product
-                        break
-                    }
-                }
-                found!!.trimToRequired() ?: DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
+//                val products = DataProduct.findByName(client, metric.name)
+//                var found: DataProduct? = null
+//                for (product in products) {
+//                    if (product.domainGUIDs != null && product.domainGUIDs.size > 0 && product.domainGUIDs.first() == subdomainNameToGuid[metric.category]) {
+//                        found = product
+//                        break
+//                    }
+//                }
+                val found =
+                    DataProduct
+                        .select(client)
+                        .where(DataProduct.NAME.eq(metric.name))
+                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.eq(subdomainNameToQualifiedName[metric.category]))
+                        .stream()
+                        .toList()
+                        .firstOrNull()
+                found?.trimToRequired() ?: DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
             } catch (e: NotFoundException) {
                 DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
             }
@@ -368,7 +384,7 @@ object Reporter {
         overview: TabularWriter,
         details: TabularWriter,
         includeDetails: Boolean,
-        product: DataProduct?,
+        product: Asset?,
         batchSize: Int,
     ) {
         overview.writeRecord(

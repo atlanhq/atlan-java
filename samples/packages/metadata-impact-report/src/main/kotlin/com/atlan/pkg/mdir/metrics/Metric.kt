@@ -4,7 +4,6 @@ package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
@@ -99,15 +98,14 @@ abstract class Metric(
 
     fun outputDetailedRecords(
         writer: TabularWriter,
-        product: DataProduct?,
+        asset: Asset?,
         batch: AssetBatch?,
     ) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
             writer.writeHeader(header)
-            query().stream().forEach { asset ->
-                val row = getDetailedRecord(asset)
-                writer.writeRecord(row)
+            query().stream().forEach { currentAsset ->
+                writer.writeRecord(getDetailedRecord(currentAsset))
             }
         }
     }
