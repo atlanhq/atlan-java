@@ -124,12 +124,14 @@ object Importer {
         // the list of standard header fields, so they're passed-through to asset import
         val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = ctx.config.assetsFieldSeparator[0]).toMutableList()
         inputHeaders.removeAll(BASE_OUTPUT_HEADERS)
-        inputHeaders.removeAll(listOf(
-            ColumnXformer.COLUMN_NAME,
-            ColumnXformer.COLUMN_PARENT_QN,
-            ConnectionImporter.CONNECTOR_TYPE,
-            AssetImporter.ENTITY_NAME,
-        ))
+        inputHeaders.removeAll(
+            listOf(
+                ColumnXformer.COLUMN_NAME,
+                ColumnXformer.COLUMN_PARENT_QN,
+                ConnectionImporter.CONNECTOR_TYPE,
+                AssetImporter.ENTITY_NAME,
+            ),
+        )
         inputHeaders.forEach { completeHeaders.add(it) }
 
         CsvWriter
@@ -143,8 +145,7 @@ object Importer {
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING,
                 StandardOpenOption.WRITE,
-            )
-            .use { writer ->
+            ).use { writer ->
                 writer.writeRecord(completeHeaders)
 
                 logger.info { " --- Transforming databases... ---" }
@@ -187,7 +188,9 @@ object Importer {
                 trackBatches = ctx.config.trackBatches,
             )
         Utils.initializeContext(importConfig, ctx).use { iCtx ->
-            com.atlan.pkg.aim.Importer.import(iCtx, outputDirectory)?.close()
+            com.atlan.pkg.aim.Importer
+                .import(iCtx, outputDirectory)
+                ?.close()
         }
     }
 

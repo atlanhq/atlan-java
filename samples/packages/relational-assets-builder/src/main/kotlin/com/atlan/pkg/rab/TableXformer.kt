@@ -12,8 +12,8 @@ class TableXformer(
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : ContainerXformer(
-    ctx = ctx,
-    typeNameFilter = Table.TYPE_NAME,
-    preprocessedDetails = preprocessedDetails,
-    logger = logger,
-)
+        ctx = ctx,
+        typeNameFilter = Table.TYPE_NAME,
+        preprocessedDetails = preprocessedDetails,
+        logger = logger,
+    )

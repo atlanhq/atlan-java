@@ -12,8 +12,8 @@ class ViewXformer(
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : ContainerXformer(
-    ctx = ctx,
-    typeNameFilter = View.TYPE_NAME,
-    preprocessedDetails = preprocessedDetails,
-    logger = logger,
-)
+        ctx = ctx,
+        typeNameFilter = View.TYPE_NAME,
+        preprocessedDetails = preprocessedDetails,
+        logger = logger,
+    )

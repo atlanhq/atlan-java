@@ -24,12 +24,11 @@ abstract class AssetXformer(
     val preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : CSVXformer(
-    inputFile = preprocessedDetails.preprocessedFile,
-    targetHeader = BASE_OUTPUT_HEADERS,
-    logger = logger,
-    fieldSeparator = ctx.config.assetsFieldSeparator[0],
-) {
-
+        inputFile = preprocessedDetails.preprocessedFile,
+        targetHeader = BASE_OUTPUT_HEADERS,
+        logger = logger,
+        fieldSeparator = ctx.config.assetsFieldSeparator[0],
+    ) {
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val assetMap = mapAsset(inputRow)
@@ -43,44 +42,43 @@ abstract class AssetXformer(
     }
 
     /** {@inheritDoc} */
-    override fun includeRow(inputRow: Map<String, String>): Boolean {
-        return trimWhitespace(inputRow.getOrElse(Asset.TYPE_NAME.atlanFieldName) { "" }) == typeNameFilter
-    }
+    override fun includeRow(inputRow: Map<String, String>): Boolean = trimWhitespace(inputRow.getOrElse(Asset.TYPE_NAME.atlanFieldName) { "" }) == typeNameFilter
 
     abstract fun mapAsset(inputRow: Map<String, String>): Map<String, String>
 
     companion object {
         const val ENTITY_NAME = "entityName"
 
-        val BASE_OUTPUT_HEADERS = listOf(
-            RowSerde.getHeaderForField(Asset.QUALIFIED_NAME),
-            RowSerde.getHeaderForField(Asset.TYPE_NAME),
-            RowSerde.getHeaderForField(Asset.NAME),
-            RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE),
-            RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME),
-            RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java), // TODO: new
-            RowSerde.getHeaderForField(Schema.DATABASE_NAME, Schema::class.java),
-            RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME, Schema::class.java),
-            RowSerde.getHeaderForField(Schema.DATABASE, Schema::class.java),
-            RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java), // TODO: new
-            RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java), // TODO: new
-            RowSerde.getHeaderForField(Table.SCHEMA_NAME, Table::class.java),
-            RowSerde.getHeaderForField(Table.SCHEMA_QUALIFIED_NAME, Table::class.java),
-            RowSerde.getHeaderForField(Table.SCHEMA, Table::class.java),
-            RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java), // TODO: new
-            RowSerde.getHeaderForField(Column.TABLE_NAME, Column::class.java),
-            RowSerde.getHeaderForField(Column.TABLE_QUALIFIED_NAME, Column::class.java),
-            RowSerde.getHeaderForField(Column.TABLE, Column::class.java),
-            RowSerde.getHeaderForField(Column.VIEW_NAME, Column::class.java),
-            RowSerde.getHeaderForField(Column.VIEW_QUALIFIED_NAME, Column::class.java),
-            RowSerde.getHeaderForField(Column.VIEW, Column::class.java),
-            RowSerde.getHeaderForField(Column.MATERIALIZED_VIEW, Column::class.java),
-            RowSerde.getHeaderForField(Column.ORDER, Column::class.java),
-            RowSerde.getHeaderForField(Column.RAW_DATA_TYPE_DEFINITION, Column::class.java),
-            RowSerde.getHeaderForField(Column.PRECISION, Column::class.java),
-            RowSerde.getHeaderForField(Column.NUMERIC_SCALE, Column::class.java),
-            RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
-        )
+        val BASE_OUTPUT_HEADERS =
+            listOf(
+                RowSerde.getHeaderForField(Asset.QUALIFIED_NAME),
+                RowSerde.getHeaderForField(Asset.TYPE_NAME),
+                RowSerde.getHeaderForField(Asset.NAME),
+                RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE),
+                RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME),
+                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java), // TODO: new
+                RowSerde.getHeaderForField(Schema.DATABASE_NAME, Schema::class.java),
+                RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME, Schema::class.java),
+                RowSerde.getHeaderForField(Schema.DATABASE, Schema::class.java),
+                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java), // TODO: new
+                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java), // TODO: new
+                RowSerde.getHeaderForField(Table.SCHEMA_NAME, Table::class.java),
+                RowSerde.getHeaderForField(Table.SCHEMA_QUALIFIED_NAME, Table::class.java),
+                RowSerde.getHeaderForField(Table.SCHEMA, Table::class.java),
+                RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java), // TODO: new
+                RowSerde.getHeaderForField(Column.TABLE_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.TABLE_QUALIFIED_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.TABLE, Column::class.java),
+                RowSerde.getHeaderForField(Column.VIEW_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.VIEW_QUALIFIED_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.VIEW, Column::class.java),
+                RowSerde.getHeaderForField(Column.MATERIALIZED_VIEW, Column::class.java),
+                RowSerde.getHeaderForField(Column.ORDER, Column::class.java),
+                RowSerde.getHeaderForField(Column.RAW_DATA_TYPE_DEFINITION, Column::class.java),
+                RowSerde.getHeaderForField(Column.PRECISION, Column::class.java),
+                RowSerde.getHeaderForField(Column.NUMERIC_SCALE, Column::class.java),
+                RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
+            )
 
         fun getConnectionQN(
             ctx: PackageContext<RelationalAssetsBuilderCfg>,
@@ -92,11 +90,7 @@ abstract class AssetXformer(
             return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
         }
 
-        fun getConnectorType(
-            inputRow: Map<String, String>,
-        ): String {
-            return trimWhitespace(inputRow.getOrElse("connectorType") { "" })
-        }
+        fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" })
 
         /** {@inheritDoc} */
         fun getSQLHierarchyDetails(

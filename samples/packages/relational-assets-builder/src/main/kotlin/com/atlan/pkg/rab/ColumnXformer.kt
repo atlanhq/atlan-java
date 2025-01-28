@@ -18,18 +18,17 @@ class ColumnXformer(
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : AssetXformer(
-    ctx = ctx,
-    typeNameFilter = Column.TYPE_NAME,
-    preprocessedDetails = preprocessedDetails,
-    logger = logger,
-) {
+        ctx = ctx,
+        typeNameFilter = Column.TYPE_NAME,
+        preprocessedDetails = preprocessedDetails,
+        logger = logger,
+    ) {
     companion object {
         const val COLUMN_PARENT_QN = "columnParentQualifiedName"
         const val COLUMN_NAME = "columnName"
     }
-    override fun mapAsset(
-        inputRow: Map<String, String>,
-    ): Map<String, String> {
+
+    override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(ctx, inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter)
         val assetQN = "$connectionQN/${details.partialQN}"

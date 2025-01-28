@@ -12,8 +12,8 @@ class MaterializedViewXformer(
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : ContainerXformer(
-    ctx = ctx,
-    typeNameFilter = MaterializedView.TYPE_NAME,
-    preprocessedDetails = preprocessedDetails,
-    logger = logger,
-)
+        ctx = ctx,
+        typeNameFilter = MaterializedView.TYPE_NAME,
+        preprocessedDetails = preprocessedDetails,
+        logger = logger,
+    )

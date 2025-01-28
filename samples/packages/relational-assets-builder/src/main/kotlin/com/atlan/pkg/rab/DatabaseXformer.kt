@@ -14,14 +14,12 @@ class DatabaseXformer(
     preprocessedDetails: Importer.Results,
     private val logger: KLogger,
 ) : AssetXformer(
-    ctx = ctx,
-    typeNameFilter = Database.TYPE_NAME,
-    preprocessedDetails = preprocessedDetails,
-    logger = logger,
-) {
-    override fun mapAsset(
-        inputRow: Map<String, String>,
-    ): Map<String, String> {
+        ctx = ctx,
+        typeNameFilter = Database.TYPE_NAME,
+        preprocessedDetails = preprocessedDetails,
+        logger = logger,
+    ) {
+    override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(ctx, inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter)
         val assetQN = "$connectionQN/${details.partialQN}"
