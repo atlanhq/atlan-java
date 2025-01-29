@@ -475,6 +475,56 @@ abstract class PackageTest(
     }
 
     /**
+     * Remove the provided domain and all its subdomains and products, if they exist
+     *
+     * @param domainName of the domain
+     */
+    fun removeDomainAndProduct(domainName: String) {
+        val domains =
+            DataDomain
+                .select(client)
+                .where(DataDomain.NAME.eq(domainName))
+                .stream()
+                .toList()
+        try {
+            if (domains.isNotEmpty()) {
+                // find all the products under the domain
+                val productGuids =
+                    DataProduct
+                        .select(client)
+                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.eq(domains[0].qualifiedName))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+                if (productGuids.isNotEmpty()) {
+                    client.assets.delete(productGuids, AtlanDeleteType.HARD)
+                }
+
+                // find all subdomains under the domain
+                val subDomainNames =
+                    DataDomain
+                        .select(client)
+                        .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.eq(domains[0].qualifiedName))
+                        .stream()
+                        .map { it.name }
+                        .toList()
+                if (subDomainNames.isNotEmpty()) {
+                    subDomainNames.forEach {
+                        removeDomainAndProduct(it)
+                    }
+                }
+
+                // delete the domain
+                domains.forEach { domain ->
+                    client.assets.delete(domain.guid, AtlanDeleteType.HARD)
+                }
+            }
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to remove domain: $domainName" }
+        }
+    }
+
+    /**
      * Set up and run a custom package, using the provided configuration.
      *
      * @param cfg for the custom package
