@@ -8,7 +8,6 @@ import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageContext
@@ -139,8 +138,8 @@ object Reporter {
                     null
                 }
 
-            val (subdomainNameToQualifiedName, subdomainNameToGuid) = createSubDomainsIdempotent(ctx.client, domain)
-            val fileOutputs = runReports(ctx, outputDirectory, batchSize, domain, subdomainNameToQualifiedName, subdomainNameToGuid)
+            val subdomainNameToQualifiedName = createSubDomainsIdempotent(ctx.client, domain)
+            val fileOutputs = runReports(ctx, outputDirectory, batchSize, subdomainNameToQualifiedName)
 
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
@@ -203,12 +202,9 @@ object Reporter {
     private fun createSubDomainsIdempotent(
         client: AtlanClient,
         domain: Asset?,
-    ): Pair<Map<String, String>, Map<String, String>> {
-        if (domain == null) return emptyMap<String, String>() to emptyMap<String, String>()
+    ): Map<String, String> {
+        if (domain == null) return emptyMap()
         val nameToResolved = mutableMapOf<String, String>()
-        val guidToResolved = mutableMapOf<String, String>()
-        val placeholderToName = mutableMapOf<Asset, String>()
-        val placeholderToGuid = mutableMapOf<String, String>()
         AssetBatch(client, 20).use { batch ->
             SUBDOMAINS.forEach { (name, description) ->
                 val builder =
@@ -230,35 +226,26 @@ object Reporter {
                         DataDomain.creator(name, domain.qualifiedName)
                     }
                 val subdomain = builder.description(description).build()
-                placeholderToName[subdomain] = name
-                placeholderToGuid[subdomain.guid] = name
                 println(name)
                 batch.add(subdomain)
             }
-            val resp = batch.flush()
-            placeholderToGuid.forEach { (guid, name) ->
-//                val resolved = resp.guidAssignments.getOrDefault(guid, guid)
-                val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
-                val resolvedName =
-                    DataDomain
-                        .select(client)
-                        .where(DataDomain.GUID.eq(resolved))
-                        .stream()
-                        .toList()
-                if (resolvedName.isNotEmpty()) nameToResolved[name] = resolvedName.first().qualifiedName
-                guidToResolved[name] = resolved
-            }
+            batch.flush()
+            DataDomain
+                .select(client)
+                .where(DataDomain.GUID.`in`(batch.resolvedGuids.values.toList()))
+                .stream()
+                .forEach {
+                    nameToResolved[it.name] = it.qualifiedName
+                }
         }
-        return nameToResolved to guidToResolved
+        return nameToResolved
     }
 
     private fun runReports(
         ctx: PackageContext<MetadataImpactReportCfg>,
         outputDirectory: String,
         batchSize: Int = 300,
-        domain: Asset? = null,
-        subdomainNameToQualifiedName: Map<String, String>? = null,
-        subdomainNameToGuid: Map<String, String>? = null,
+        subdomainNameToQualifiedName: Map<String, String>,
     ): List<String> {
         if (ctx.config.fileFormat == "XLSX") {
             val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
@@ -276,7 +263,7 @@ object Reporter {
                 )
                 reports.forEach { repClass ->
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), batchSize, domain, subdomainNameToQualifiedName, subdomainNameToGuid)
+                    outputReportDomain(ctx, metric, overview, xlsx.createSheet(metric.getShortName()), subdomainNameToQualifiedName)
                 }
             }
             return listOf(outputFile)
@@ -298,7 +285,7 @@ object Reporter {
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
                     val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
                     CSVWriter(metricFile).use { details ->
-                        outputReportDomain(ctx, metric, overview, details, batchSize, domain, subdomainNameToQualifiedName)
+                        outputReportDomain(ctx, metric, overview, details, subdomainNameToQualifiedName)
                     }
                     outputFiles.add(metricFile)
                 }
@@ -312,29 +299,21 @@ object Reporter {
         metric: Metric,
         overview: TabularWriter,
         details: TabularWriter,
-        batchSize: Int,
-        domain: Asset? = null,
-        subdomainNameToQualifiedName: Map<String, String>? = null,
-        subdomainNameToGuid: Map<String, String>? = null,
+        subdomainNameToQualifiedName: Map<String, String>,
     ) {
         logger.info { "Quantifying metric: ${metric.name} ..." }
         val quantified = metric.quantify()
-        val product =
-            if (ctx.config.includeDataProducts == "TRUE") {
-                writeMetricToDomain(ctx.client, metric, quantified, domain!!, subdomainNameToQualifiedName!!, subdomainNameToGuid!!)
-            } else {
-                null
-            }
-        writeMetricToFile(ctx.client, metric, quantified, overview, details, ctx.config.includeDetails, product, batchSize)
+        if (ctx.config.includeDataProducts == "TRUE") {
+            writeMetricToDomain(ctx.client, metric, quantified, subdomainNameToQualifiedName)
+        }
+        writeMetricToFile(metric, quantified, overview, details, ctx.config.includeDetails)
     }
 
     private fun writeMetricToDomain(
         client: AtlanClient,
         metric: Metric,
         quantified: Double,
-        domain: Asset,
         subdomainNameToQualifiedName: Map<String, String>,
-        subdomainNameToGuid: Map<String, String>,
     ): Asset {
         val builder =
             try {
@@ -387,14 +366,11 @@ object Reporter {
     }
 
     private fun writeMetricToFile(
-        client: AtlanClient,
         metric: Metric,
         quantified: Double,
         overview: TabularWriter,
         details: TabularWriter,
         includeDetails: Boolean,
-        product: Asset?,
-        batchSize: Int,
     ) {
         overview.writeRecord(
             listOf(
@@ -406,26 +382,7 @@ object Reporter {
             ),
         )
         if (includeDetails) {
-            val batch =
-                if (product != null) {
-                    AssetBatch(
-                        client,
-                        batchSize,
-                        false,
-                        AssetBatch.CustomMetadataHandling.IGNORE,
-                        true,
-                        false,
-                        false,
-                        false,
-                        AssetCreationHandling.FULL,
-                        false,
-                    )
-                } else {
-                    null
-                }
-            metric.outputDetailedRecords(details, product, batch)
-            batch?.flush()
-            batch?.close()
+            metric.outputDetailedRecords(details)
         }
     }
 }
