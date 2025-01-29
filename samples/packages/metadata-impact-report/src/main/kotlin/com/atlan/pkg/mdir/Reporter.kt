@@ -179,9 +179,21 @@ object Reporter {
     private fun createDomainIdempotent(
         client: AtlanClient,
         domainName: String,
-    ): DataDomain =
+    ): Asset =
         try {
-            DataDomain.findByName(client, domainName)[0]!!
+            val domain =
+                DataDomain
+                    .select(client)
+                    .where(DataDomain.NAME.eq(domainName))
+                    .stream()
+                    .toList()
+            if (domain.isEmpty()) {
+                val create = DataDomain.creator(domainName).build()
+                val response = create.save(client)
+                response.getResult(create)
+            } else {
+                domain.first()
+            }
         } catch (e: NotFoundException) {
             val create = DataDomain.creator(domainName).build()
             val response = create.save(client)
@@ -190,7 +202,7 @@ object Reporter {
 
     private fun createSubDomainsIdempotent(
         client: AtlanClient,
-        domain: DataDomain?,
+        domain: Asset?,
     ): Pair<Map<String, String>, Map<String, String>> {
         if (domain == null) return emptyMap<String, String>() to emptyMap<String, String>()
         val nameToResolved = mutableMapOf<String, String>()
@@ -220,24 +232,20 @@ object Reporter {
                 val subdomain = builder.description(description).build()
                 placeholderToName[subdomain] = name
                 placeholderToGuid[subdomain.guid] = name
+                println(name)
                 batch.add(subdomain)
             }
-            batch.flush()
-//            placeholderToName.forEach { (subDomain, name) ->
-//                val id = AssetIdentity(subDomain.typeName, subDomain.qualifiedName, false)
-//                val resolved = batch.resolvedQualifiedNames.getOrDefault(id, subDomain.qualifiedName)
-//                nameToResolved[name] = resolved
-//            }
+            val resp = batch.flush()
             placeholderToGuid.forEach { (guid, name) ->
+//                val resolved = resp.guidAssignments.getOrDefault(guid, guid)
                 val resolved = batch.resolvedGuids.getOrDefault(guid, guid)
-                val dd = DataDomain.findByName(client, name)
-                var resolvedName = ""
-                for (d in dd) {
-                    if (d.guid == resolved) {
-                        resolvedName = d.qualifiedName
-                    }
-                }
-                nameToResolved[name] = resolvedName
+                val resolvedName =
+                    DataDomain
+                        .select(client)
+                        .where(DataDomain.GUID.eq(resolved))
+                        .stream()
+                        .toList()
+                if (resolvedName.isNotEmpty()) nameToResolved[name] = resolvedName.first().qualifiedName
                 guidToResolved[name] = resolved
             }
         }
@@ -248,7 +256,7 @@ object Reporter {
         ctx: PackageContext<MetadataImpactReportCfg>,
         outputDirectory: String,
         batchSize: Int = 300,
-        domain: DataDomain? = null,
+        domain: Asset? = null,
         subdomainNameToQualifiedName: Map<String, String>? = null,
         subdomainNameToGuid: Map<String, String>? = null,
     ): List<String> {
@@ -305,7 +313,7 @@ object Reporter {
         overview: TabularWriter,
         details: TabularWriter,
         batchSize: Int,
-        domain: DataDomain? = null,
+        domain: Asset? = null,
         subdomainNameToQualifiedName: Map<String, String>? = null,
         subdomainNameToGuid: Map<String, String>? = null,
     ) {
@@ -324,31 +332,32 @@ object Reporter {
         client: AtlanClient,
         metric: Metric,
         quantified: Double,
-        domain: DataDomain,
+        domain: Asset,
         subdomainNameToQualifiedName: Map<String, String>,
         subdomainNameToGuid: Map<String, String>,
     ): Asset {
         val builder =
             try {
-//                val products = DataProduct.findByName(client, metric.name)
-//                var found: DataProduct? = null
-//                for (product in products) {
-//                    if (product.domainGUIDs != null && product.domainGUIDs.size > 0 && product.domainGUIDs.first() == subdomainNameToGuid[metric.category]) {
-//                        found = product
-//                        break
-//                    }
-//                }
-                val found =
-                    DataProduct
-                        .select(client)
-                        .where(DataProduct.NAME.eq(metric.name))
-                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.eq(subdomainNameToQualifiedName[metric.category]))
-                        .stream()
-                        .toList()
-                        .firstOrNull()
-                found?.trimToRequired() ?: DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
+                val foundProducts = DataProduct.findByName(client, metric.name)
+
+                val matchingProduct =
+                    foundProducts.firstOrNull { product ->
+                        product.qualifiedName.substringBefore("/product/") == subdomainNameToQualifiedName[metric.category]
+                    }
+
+                matchingProduct?.trimToRequired() ?: DataProduct.creator(
+                    client,
+                    metric.name,
+                    subdomainNameToQualifiedName[metric.category],
+                    metric.query().build(),
+                )
             } catch (e: NotFoundException) {
-                DataProduct.creator(client, metric.name, subdomainNameToQualifiedName[metric.category], metric.query().build())
+                DataProduct.creator(
+                    client,
+                    metric.name,
+                    subdomainNameToQualifiedName[metric.category],
+                    metric.query().build(),
+                )
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {
