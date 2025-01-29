@@ -119,7 +119,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     PREFECT("prefect", AtlanConnectionCategory.ELT),
     DATA_MODELING("dm", AtlanConnectionCategory.DATABASE),
     MODEL("model", AtlanConnectionCategory.DATABASE),
-    APPLICATION("application", AtlanConnectionCategory.APPLICATION),
+    APP("application", AtlanConnectionCategory.APP),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     IICS("iics", AtlanConnectionCategory.ELT),
     ABINITIO("abinitio", AtlanConnectionCategory.ELT),
@@ -139,7 +139,8 @@ public enum AtlanConnectorType implements AtlanEnum {
     AWS_LAMBDA("aws-lambda", AtlanConnectionCategory.ELT),
     AWS_SAGEMAKER("aws-sagemaker", AtlanConnectionCategory.ELT),
     ANAPLAN("anaplan", AtlanConnectionCategory.BI),
-    ;
+    CUSTOM("custom", AtlanConnectionCategory.CUSTOM),
+    DATAVERSE("dataverse", AtlanConnectionCategory.SAAS);
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

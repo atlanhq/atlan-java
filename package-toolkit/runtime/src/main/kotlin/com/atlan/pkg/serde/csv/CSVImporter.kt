@@ -54,7 +54,8 @@ abstract class CSVImporter(
     protected val tableViewAgnostic: Boolean = false,
     protected val failOnErrors: Boolean = true,
     protected val fieldSeparator: Char = ',',
-) : AssetGenerator, RowPreprocessor {
+) : AssetGenerator,
+    RowPreprocessor {
     /** {@inheritDoc} */
     override fun preprocessRow(
         row: List<String>,
@@ -75,8 +76,8 @@ abstract class CSVImporter(
     open fun preprocess(
         outputFile: String? = null,
         outputHeaders: List<String>? = null,
-    ): RowPreprocessor.Results {
-        return CSVReader(
+    ): RowPreprocessor.Results =
+        CSVReader(
             filename,
             updateOnly,
             trackBatches,
@@ -91,7 +92,6 @@ abstract class CSVImporter(
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             results
         }
-    }
 
     /**
      * Actually run the import.
@@ -179,9 +179,7 @@ abstract class CSVImporter(
         header: List<String>,
         typeIdx: Int,
         qnIdx: Int,
-    ): Boolean {
-        return row[typeIdx] == typeNameFilter
-    }
+    ): Boolean = row[typeIdx] == typeNameFilter
 
     /**
      * Check if the provided field should be cleared, and if so clear it.
@@ -202,36 +200,31 @@ abstract class CSVImporter(
                     Serde.getAssetClassForType(candidate.typeName),
                     field.atlanFieldName,
                 )
-            val value = getter.invoke(candidate)
-            if (value == null ||
-                (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
-            ) {
-                builder.nullField(field.atlanFieldName)
-                return true
+            if (getter == null) {
+                logger.warn {
+                    "Field ${field.atlanFieldName} not known on ${candidate.typeName} -- skipping clearing it."
+                }
+            } else {
+                val value = getter.invoke(candidate)
+                if (value == null ||
+                    (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
+                ) {
+                    builder.nullField(field.atlanFieldName)
+                    return true
+                }
             }
         } catch (e: ClassNotFoundException) {
-            logger.error(
-                "Unknown type {} — cannot clear {}.",
-                candidate.typeName,
-                field.atlanFieldName,
-                e,
-            )
+            logger.error(e) {
+                "Unknown type ${candidate.typeName} — cannot clear ${field.atlanFieldName}."
+            }
         } catch (e: IllegalAccessException) {
-            logger.error(
-                "Unable to clear {} on: {}::{}",
-                field.atlanFieldName,
-                candidate.typeName,
-                candidate.qualifiedName,
-                e,
-            )
+            logger.error(e) {
+                "Unable to clear ${field.atlanFieldName} on: ${candidate.typeName}::${candidate.qualifiedName}"
+            }
         } catch (e: InvocationTargetException) {
-            logger.error(
-                "Unable to clear {} on: {}::{}",
-                field.atlanFieldName,
-                candidate.typeName,
-                candidate.qualifiedName,
-                e,
-            )
+            logger.error(e) {
+                "Unable to clear ${field.atlanFieldName} on: ${candidate.typeName}::${candidate.qualifiedName}"
+            }
         }
         return false
     }

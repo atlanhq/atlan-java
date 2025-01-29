@@ -25,9 +25,7 @@ object UserXformer {
      * @param user to be encoded
      * @return the string-encoded form for that user
      */
-    fun encode(user: String): String {
-        return user
-    }
+    fun encode(user: String): String = user
 
     /**
      * Decodes (deserializes) a string form into a validated username.
@@ -55,7 +53,7 @@ object UserXformer {
                         // And if found by email, return the username (since that's what we require)
                         return client.userCache.getNameForId(idFromEmail)
                     } catch (e: NotFoundException) {
-                        throw NoSuchElementException("Username / email address $userRef is not known to Atlan (in $fieldName).", e)
+                        throw NoSuchElementException("Username / email address is not known to Atlan (in $fieldName): $userRef", e)
                     }
                 }
             }

@@ -21,9 +21,7 @@ object RoleXformer {
      * @param role to be encoded
      * @return the string-encoded form for that role
      */
-    fun encode(role: String): String {
-        return role
-    }
+    fun encode(role: String): String = role
 
     /**
      * Decodes (deserializes) a string form into a validated role GUID.
@@ -44,7 +42,7 @@ object RoleXformer {
                     // Try to look up the user reference by username
                     return client.roleCache.getIdForName(roleRef)
                 } catch (e: NotFoundException) {
-                    throw NoSuchElementException("Role name $roleRef is not known to Atlan (in $fieldName).", e)
+                    throw NoSuchElementException("Role name is not known to Atlan (in $fieldName): $roleRef", e)
                 }
             }
             else -> roleRef

@@ -171,7 +171,7 @@ object Importer {
             }
             if (connectionIdentity == null) {
                 val name = row.getOrNull(header.indexOf("connectionName"))
-                val type = row.getOrNull(header.indexOf("connectorType"))
+                val type = row.getOrNull(header.indexOf("connectorType"))?.lowercase()
                 if (name != null && type != null) {
                     connectionIdentity = AssetResolver.ConnectionIdentity(name, type)
                 }

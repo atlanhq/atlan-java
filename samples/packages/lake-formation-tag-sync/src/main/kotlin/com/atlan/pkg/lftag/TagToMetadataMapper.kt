@@ -4,7 +4,9 @@ package com.atlan.pkg.lftag
 
 import com.atlan.pkg.lftag.model.LFTagPair
 
-class TagToMetadataMapper(private val metadataMap: Map<String, String>) {
+class TagToMetadataMapper(
+    private val metadataMap: Map<String, String>,
+) {
     val missingTagKeys = mutableSetOf<String>()
     private val regex = "::".toRegex()
 

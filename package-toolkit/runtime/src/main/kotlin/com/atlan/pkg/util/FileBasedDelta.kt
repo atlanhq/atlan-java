@@ -112,9 +112,7 @@ class FileBasedDelta(
      *
      * @return true if there is at least one asset to be deleted, otherwise false
      */
-    fun hasAnythingToDelete(): Boolean {
-        return assetsToDelete.isNotEmpty
-    }
+    fun hasAnythingToDelete(): Boolean = assetsToDelete.isNotEmpty
 
     /**
      * Actually run the removal of any assets identified for deletion.
@@ -168,7 +166,8 @@ class FileBasedDelta(
         }
         val inputFile = Paths.get(filename)
         val builder =
-            CsvReader.builder()
+            CsvReader
+                .builder()
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
@@ -200,7 +199,8 @@ class FileBasedDelta(
             translate(client, assetsToDelete.entrySet().map { it.key.qualifiedName }.toList())
         } else {
             // Translate from qualifiedName to GUID in parallel
-            assetsToDelete.entrySet()
+            assetsToDelete
+                .entrySet()
                 .map { it.key.qualifiedName }
                 .asSequence()
                 .chunked(QUERY_BATCH)
@@ -225,7 +225,8 @@ class FileBasedDelta(
         qualifiedNamesToDelete: List<String>,
     ) {
         val builder =
-            client.assets.select()
+            client.assets
+                .select()
                 .pageSize(QUERY_BATCH)
                 .where(Asset.QUALIFIED_NAME.`in`(qualifiedNamesToDelete))
                 .includesOnResults(PersistentConnectionCache.REQUIRED_FIELDS)
@@ -270,7 +271,11 @@ class FileBasedDelta(
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
             val guidList = guidsToDeleteToDetails.entrySet()
             val totalToDelete = guidsToDeleteToDetails.size
-            logger.info { " --- Deleting ($deletionType) $totalToDelete assets across $removeTypes... ---" }
+            if (removeTypes.isNotEmpty()) {
+                logger.info { " --- Deleting ($deletionType) $totalToDelete assets (limited to types: $removeTypes)... ---" }
+            } else {
+                logger.info { " --- Deleting ($deletionType) $totalToDelete assets... ---" }
+            }
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 if (totalToDelete > 0) {

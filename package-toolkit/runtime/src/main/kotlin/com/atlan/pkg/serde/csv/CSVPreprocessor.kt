@@ -35,8 +35,8 @@ abstract class CSVPreprocessor(
     inline fun <reified T : RowPreprocessor.Results> preprocess(
         outputFile: String? = producesFile,
         outputHeaders: List<String>? = usingHeaders,
-    ): T {
-        return CSVReader(
+    ): T =
+        CSVReader(
             filename,
             updateOnly = true,
             trackBatches = false,
@@ -51,5 +51,4 @@ abstract class CSVPreprocessor(
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             results
         }
-    }
 }

@@ -21,6 +21,10 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.search.IndexSearchResponse;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -307,6 +311,24 @@ public class DataMeshTest extends AtlanLiveTest {
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof DataProduct);
         assertEquals(one.getGuid(), product.getGuid());
+    }
+
+    @Test(
+            groups = {"mesh.read.product"},
+            dependsOnGroups = {"mesh.update.product"})
+    void readProduct() throws AtlanException {
+        DataProduct dp = DataProduct.get(client, product.getGuid(), true);
+        assertNotNull(dp);
+        assertEquals(dp.getGuid(), product.getGuid());
+        assertNotNull(dp.getDataProductAssetsDSL());
+        IndexSearchResponse response = dp.getAssets(client);
+        assertNotNull(response);
+        List<Asset> assets = response.stream().toList();
+        assertNotNull(assets);
+        assertEquals(assets.size(), 2);
+        assertEquals(
+                assets.stream().map(Asset::getGuid).collect(Collectors.toSet()),
+                Set.of(table.getGuid(), view.getGuid()));
     }
 
     @Test(

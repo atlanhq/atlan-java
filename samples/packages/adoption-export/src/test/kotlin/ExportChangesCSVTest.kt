@@ -54,7 +54,8 @@ class ExportChangesCSVTest : PackageTest("cc") {
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
         var lastCount = Int.MAX_VALUE
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)

@@ -133,6 +133,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
         }
         if (multiValued) {
             builder.typeName("array<" + baseType + ">")
+                    .cardinality(AtlanCustomAttributeCardinality.SET)
                     .options(AttributeDefOptions.of(client, type, optionsName, otherOptions).toBuilder()
                             .multiValueSelect(true)
                             .build());
@@ -382,6 +383,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
          * nothing to the attribute definition.
          *
          * @param by name of the user who is archiving the attribute definition
+         * @return the builder for archiving this attribute definition
          */
         public B archive(String by) {
             if (options != null) {
@@ -392,6 +394,36 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
                         .archivedAt(removalEpoch)
                         .build();
                 displayName = displayName + "-archived-" + removalEpoch;
+            }
+            return self();
+        }
+
+        /**
+         * Configure this attribute definition to allow multiple values. Note that you MUST
+         * first have defined a type for the attribute definition, or this will likely not work
+         * as expected.
+         *
+         * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+         * @return the builder configured for the multiple or singular values for this attribute definition
+         */
+        public B multiValued(boolean multiValued) {
+            if (options != null) {
+                options = options.toBuilder().multiValueSelect(multiValued).build();
+            } else {
+                options = AttributeDefOptions.builder()
+                        .multiValueSelect(multiValued)
+                        .build();
+            }
+            if (multiValued) {
+                if (typeName != null && !typeName.startsWith("array<")) {
+                    typeName("array<" + typeName + ">");
+                }
+                cardinality(AtlanCustomAttributeCardinality.SET);
+            } else {
+                if (typeName != null && typeName.startsWith("array<")) {
+                    typeName(typeName.substring("array<".length(), typeName.length() - 1));
+                }
+                cardinality(AtlanCustomAttributeCardinality.SINGLE);
             }
             return self();
         }

@@ -25,9 +25,7 @@ class ExcelWriter
          * @param name of the sheet to create
          * @return the worksheet
          */
-        fun createSheet(name: String): ExcelSheetWriter {
-            return ExcelSheetWriter(workbook, name)
-        }
+        fun createSheet(name: String): ExcelSheetWriter = ExcelSheetWriter(workbook, name)
 
         /** {@inheritDoc} */
         override fun close() {

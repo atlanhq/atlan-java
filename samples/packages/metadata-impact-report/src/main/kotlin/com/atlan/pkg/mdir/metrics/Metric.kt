@@ -38,17 +38,17 @@ abstract class Metric(
             client: AtlanClient,
             batchSize: Int,
             logger: KLogger,
-        ): Metric {
-            return report.getDeclaredConstructor(
-                AtlanClient::class.java,
-                Int::class.java,
-                KLogger::class.java,
-            ).newInstance(
-                client,
-                batchSize,
-                logger,
-            ) as Metric
-        }
+        ): Metric =
+            report
+                .getDeclaredConstructor(
+                    AtlanClient::class.java,
+                    Int::class.java,
+                    KLogger::class.java,
+                ).newInstance(
+                    client,
+                    batchSize,
+                    logger,
+                ) as Metric
     }
 
     /**
@@ -57,18 +57,14 @@ abstract class Metric(
      * @param guid of the asset
      * @return the full URL to view the asset in Atlan
      */
-    fun getAssetLink(guid: String): String {
-        return "${client.baseUrl}/assets/$guid/overview"
-    }
+    fun getAssetLink(guid: String): String = "${client.baseUrl}/assets/$guid/overview"
 
     /**
      * Return the abbreviated name for the metric, for example TLAxL.
      *
      * @return the abbreviated name for the metric
      */
-    fun getShortName(): String {
-        return name.substringBefore(" - ")
-    }
+    fun getShortName(): String = name.substringBefore(" - ")
 
     /**
      * Output the detailed records for this report.
@@ -138,9 +134,7 @@ abstract class Metric(
      *
      * @return a mapping from column name to a description of the column's use
      */
-    open fun getDetailedHeader(): Map<String, String> {
-        return mapOf()
-    }
+    open fun getDetailedHeader(): Map<String, String> = mapOf()
 
     /**
      * Produce a single row of detailed output for a single result in this report.
@@ -148,7 +142,5 @@ abstract class Metric(
      * @param asset the asset from which to draw the details for the row
      * @return a list of values for the row
      */
-    open fun getDetailedRecord(asset: Asset): List<Any> {
-        return listOf()
-    }
+    open fun getDetailedRecord(asset: Asset): List<Any> = listOf()
 }

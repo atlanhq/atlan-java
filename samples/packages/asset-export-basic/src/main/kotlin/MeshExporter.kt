@@ -34,11 +34,13 @@ class MeshExporter(
     fun export() {
         CSVWriter(filename).use { csv ->
             val headerNames =
-                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
+                Stream
+                    .of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
                     .map(AtlanField::getAtlanFieldName)
                     .collect(Collectors.toList())
             headerNames.addAll(
-                getAttributesToExtract().stream()
+                getAttributesToExtract()
+                    .stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -47,7 +49,8 @@ class MeshExporter(
 
             // Retrieve all domains up-front
             val domains =
-                DataDomain.select(ctx.client, ctx.config.includeArchived)
+                DataDomain
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -58,7 +61,8 @@ class MeshExporter(
 
             // And finally extract all the data products
             val products =
-                DataProduct.select(ctx.client, ctx.config.includeArchived)
+                DataProduct
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -124,7 +128,5 @@ class MeshExporter(
      * @param asset the asset from which to generate the values
      * @return the values, as an iterable set of strings
      */
-    override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return RowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
-    }
+    override fun buildFromAsset(asset: Asset): Iterable<String> = RowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
 }

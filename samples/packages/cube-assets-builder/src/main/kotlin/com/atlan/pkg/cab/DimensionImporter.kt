@@ -43,7 +43,8 @@ class DimensionImporter(
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val cubeQN = "$connectionQN/${qnDetails.parentPartialQN}"
-        return CubeDimension.creator(name, cubeQN)
+        return CubeDimension
+            .creator(name, cubeQN)
             .cubeHierarchyCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 }

@@ -51,7 +51,8 @@ class RowDeserializer(
             logger.warn("No qualifiedName or typeName found on row, cannot deserialize: {}", row)
         } else {
             val builder =
-                FieldSerde.getBuilderForType(typeName)
+                FieldSerde
+                    .getBuilderForType(typeName)
                     .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                     .qualifiedName(qualifiedName)
             return getAssets(builder)

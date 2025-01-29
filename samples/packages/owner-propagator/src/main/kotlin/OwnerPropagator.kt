@@ -37,7 +37,8 @@ object OwnerPropagator {
         batchSize: Int,
     ): List<Asset> {
         val assets = mutableListOf<Asset>()
-        Table.select(client)
+        Table
+            .select(client)
             .where(Table.QUALIFIED_NAME.startsWith(qnPrefix))
             .includeOnResults(Table.SCHEMA)
             .includeOnResults(Table.OWNER_USERS)
@@ -69,7 +70,8 @@ object OwnerPropagator {
                 val table = it as Table
                 val schemaOwners = table.schema.ownerUsers
                 batch.add(
-                    table.trimToRequired()
+                    table
+                        .trimToRequired()
                         .ownerUsers(table.ownerUsers)
                         .ownerUsers(schemaOwners)
                         .build(),

@@ -1,10 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-package com.atlan.pkg.rab
+package com.atlan.pkg.aim
 
-import com.atlan.model.assets.Column
-import com.atlan.model.assets.Connection
-import com.atlan.model.assets.Table
+import com.atlan.model.assets.MaterializedView
+import com.atlan.model.assets.Schema
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
@@ -20,7 +19,7 @@ import kotlin.test.assertEquals
 /**
  * Test pre-processing of full-load CSV files to detect which assets should be removed.
  */
-class DeltaTest : PackageTest("rd") {
+class DeltaTest : PackageTest("aid") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
@@ -56,7 +55,7 @@ class DeltaTest : PackageTest("rd") {
             lines.forEach { line ->
                 val revised =
                     line
-                        .replace("{{CONNECTION1}}", conn1)
+                        .replace("{{CONNECTION}}", conn1QN)
                 output.appendText("$revised\n")
             }
         }
@@ -82,45 +81,48 @@ class DeltaTest : PackageTest("rd") {
 
     @Test
     fun totalAssetsToDelete() {
-        assertEquals(3, delta!!.assetsToDelete.size)
-        val types = delta!!.assetsToDelete.entrySet().map { it.key.typeName }.toList().toSet()
-        assertEquals(2, types.size)
+        assertEquals(1, delta!!.assetsToDelete.size)
+        val types =
+            delta!!
+                .assetsToDelete
+                .entrySet()
+                .map { it.key.typeName }
+                .toList()
+                .toSet()
+        assertEquals(1, types.size)
         assertTrue(types.contains(View.TYPE_NAME))
-        assertTrue(types.contains(Column.TYPE_NAME))
     }
 
     @Test
     fun specificAssetsToDelete() {
         delta!!.assetsToDelete.entrySet().forEach {
             when (it.key.typeName) {
-                View.TYPE_NAME -> assertTrue("$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW" == it.key.qualifiedName)
-                Column.TYPE_NAME -> {
-                    assertTrue(
-                        "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL3" == it.key.qualifiedName ||
-                            "$conn1QN/TEST_DB/TEST_SCHEMA/TEST_VIEW/COL4" == it.key.qualifiedName,
-                    )
-                }
+                View.TYPE_NAME -> assertTrue("$conn1QN/DB/SCH/VIEW" == it.key.qualifiedName)
             }
         }
     }
 
     @Test
     fun totalAssetsToReload() {
-        assertEquals(3, delta!!.assetsToReload.size)
-        val types = delta!!.assetsToReload.entrySet().map { it.key.typeName }.toList().toSet()
-        assertEquals(3, types.size)
-        assertTrue(types.contains(Connection.TYPE_NAME))
-        assertTrue(types.contains(Table.TYPE_NAME))
-        assertTrue(types.contains(Column.TYPE_NAME))
+        assertEquals(2, delta!!.assetsToReload.size)
+        val types =
+            delta!!
+                .assetsToReload
+                .entrySet()
+                .map { it.key.typeName }
+                .toList()
+                .toSet()
+        assertEquals(2, types.size)
+        assertTrue(types.contains(Schema.TYPE_NAME))
+        assertTrue(types.contains(MaterializedView.TYPE_NAME))
     }
 
     @Test
     fun specificAssetsToReload() {
         delta!!.assetsToReload.entrySet().forEach {
             when (it.key.typeName) {
-                Connection.TYPE_NAME -> assertEquals(conn1QN, it.key.qualifiedName)
-                Table.TYPE_NAME -> assertEquals("$conn1QN/TEST_DB/TEST_SCHEMA/TEST_TBL", it.key.qualifiedName)
-                Column.TYPE_NAME -> assertEquals("$conn1QN/TEST_DB/TEST_SCHEMA/TEST_TBL/COL2", it.key.qualifiedName)
+                Schema.TYPE_NAME -> assertEquals("$conn1QN/DB/SCH", it.key.qualifiedName)
+                MaterializedView.TYPE_NAME -> assertEquals("$conn1QN/DB/SCH/MVIEW", it.key.qualifiedName)
             }
         }
     }

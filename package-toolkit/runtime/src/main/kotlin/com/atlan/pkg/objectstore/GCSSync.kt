@@ -27,11 +27,18 @@ class GCSSync(
 ) : ObjectStorageSyncer {
     private val storage =
         if (credentials.isNotBlank()) {
-            StorageOptions.newBuilder().setProjectId(projectId)
+            StorageOptions
+                .newBuilder()
+                .setProjectId(projectId)
                 .setCredentials(GoogleCredentials.fromStream(credentials.byteInputStream()))
-                .build().service
+                .build()
+                .service
         } else {
-            StorageOptions.newBuilder().setProjectId(projectId).build().service
+            StorageOptions
+                .newBuilder()
+                .setProjectId(projectId)
+                .build()
+                .service
         }
 
     /** {@inheritDoc} */
@@ -44,9 +51,12 @@ class GCSSync(
         val bucket = storage.get(bucketName)
 
         val localFilesLastModified =
-            File(localDirectory).walkTopDown().filter { it.isFile }.map {
-                it.relativeTo(File(localDirectory)).path to it.lastModified()
-            }.toMap()
+            File(localDirectory)
+                .walkTopDown()
+                .filter { it.isFile }
+                .map {
+                    it.relativeTo(File(localDirectory)).path to it.lastModified()
+                }.toMap()
 
         val filesToDownload = mutableListOf<String>()
         bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().forEach { file ->

@@ -83,6 +83,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store from which to retrieve the OpenAPI spec containing metadata to be imported."
+          allowTestAuthentication = false
         }
       }
     }

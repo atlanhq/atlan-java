@@ -28,7 +28,8 @@ class DetailedUserViews(
                 "Link" to "Link to the asset's profile page in Atlan",
             ),
         )
-        SearchLog.views(ctx.client, from, to)
+        SearchLog
+            .views(ctx.client, from, to)
             .stream()
             .forEach {
                 val guid = it.resultGuidsAllowed?.get(0) ?: ""

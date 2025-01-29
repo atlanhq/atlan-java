@@ -5,9 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.enums.AtlanEnum
 
 object EnumXformer {
-    fun encode(enum: AtlanEnum): String {
-        return enum.value
-    }
+    fun encode(enum: AtlanEnum): String = enum.value
 
     fun decode(
         enum: String,
@@ -17,7 +15,7 @@ object EnumXformer {
         val method = enumClass.getMethod("fromValue", String::class.java)
         val result: Any? = method.invoke(null, enum)
         if (result == null) {
-            throw IllegalArgumentException("$enumClass (in field $fieldName) does not have any matching value for: $enum")
+            throw IllegalArgumentException("No matching value found for $enumClass (in field $fieldName): $enum")
         } else {
             return result as AtlanEnum
         }

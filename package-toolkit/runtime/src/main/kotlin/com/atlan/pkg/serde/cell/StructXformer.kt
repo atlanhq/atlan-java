@@ -9,15 +9,11 @@ object StructXformer {
     fun encode(
         client: AtlanClient,
         struct: AtlanStruct,
-    ): String {
-        return struct.toJson(client)
-    }
+    ): String = struct.toJson(client)
 
     fun decode(
         client: AtlanClient,
         struct: String,
         structClass: Class<AtlanStruct>,
-    ): AtlanStruct {
-        return client.readValue(struct, structClass)
-    }
+    ): AtlanStruct = client.readValue(struct, structClass)
 }

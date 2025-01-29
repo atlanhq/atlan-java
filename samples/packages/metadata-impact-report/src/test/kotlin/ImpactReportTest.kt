@@ -54,7 +54,8 @@ class ImpactReportTest : PackageTest("ir") {
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryCategory.select(client)
+            GlossaryCategory
+                .select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryCategory.NAME)
                 .includeOnResults(GlossaryCategory.DESCRIPTION)
@@ -75,7 +76,8 @@ class ImpactReportTest : PackageTest("ir") {
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryTerm.DISPLAY_NAME)
                 .includeOnResults(GlossaryTerm.DESCRIPTION)

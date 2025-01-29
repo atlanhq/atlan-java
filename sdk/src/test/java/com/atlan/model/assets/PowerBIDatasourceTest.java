@@ -94,6 +94,8 @@ public class PowerBIDatasourceTest {
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .anomaloCheck(AnomaloCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .application(Application.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationField(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationFieldQualifiedName("String0")
             .applicationQualifiedName("String0")
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
@@ -435,6 +437,8 @@ public class PowerBIDatasourceTest {
             .connectionDetail("key2", "value2")
             .dataset(PowerBIDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dataset(PowerBIDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIDataflow(PowerBIDataflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

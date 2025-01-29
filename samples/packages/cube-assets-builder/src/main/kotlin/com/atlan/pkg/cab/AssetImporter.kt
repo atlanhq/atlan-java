@@ -90,7 +90,7 @@ abstract class AssetImporter(
             when (typeName) {
                 Connection.TYPE_NAME -> {
                     val connection = CSVXformer.trimWhitespace(row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)])
-                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)])
+                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]).lowercase()
                     parent = null
                     unique = ConnectionIdentity(connection, connector).toString()
                     partial = ""
@@ -151,8 +151,8 @@ abstract class AssetImporter(
         private fun calculatePath(
             parentField: String,
             appendToPath: String,
-        ): String {
-            return if (!parentField.contains(QN_DELIMITER)) {
+        ): String =
+            if (!parentField.contains(QN_DELIMITER)) {
                 CubeField.generateQualifiedName(parentField, appendToPath)
             } else {
                 val tokens = parentField.split(QN_DELIMITER)
@@ -165,7 +165,6 @@ abstract class AssetImporter(
                     "$appendToPath/$parentPath",
                 )
             }
-        }
     }
 
     /** {@inheritDoc} */

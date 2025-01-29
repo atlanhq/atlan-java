@@ -19,7 +19,7 @@ interface AssetResolver {
     fun getConnectionIdentityFromQN(agnosticQualifiedName: String): ConnectionIdentity? {
         val tokens = agnosticQualifiedName.split("/")
         return if (tokens.size > 1) {
-            ConnectionIdentity(tokens[0], tokens[1])
+            ConnectionIdentity(tokens[0], tokens[1].lowercase())
         } else {
             null
         }
@@ -46,10 +46,11 @@ interface AssetResolver {
         val parentPartialQN: String,
     )
 
-    data class ConnectionIdentity(val name: String, val type: String) {
-        override fun toString(): String {
-            return "$name/$type"
-        }
+    data class ConnectionIdentity(
+        val name: String,
+        val type: String,
+    ) {
+        override fun toString(): String = "$name/$type"
     }
 
     /**

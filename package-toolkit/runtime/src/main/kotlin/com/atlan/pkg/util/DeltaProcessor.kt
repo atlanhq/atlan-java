@@ -62,6 +62,14 @@ class DeltaProcessor(
      */
     fun calculate() {
         if (semantic == "full") {
+            if (preprocessedDetails.multipleConnections) {
+                throw IllegalStateException(
+                    """
+                    Assets in multiple connections detected in the input file.
+                    Full delta processing currently only works for a single connection per input file, exiting.
+                    """.trimIndent(),
+                )
+            }
             if (qualifiedNamePrefix.isNullOrBlank()) {
                 logger.warn { "Unable to determine qualifiedName prefix, cannot calculate any delta." }
             } else {
@@ -107,9 +115,7 @@ class DeltaProcessor(
     fun resolveAsset(
         values: List<String>,
         header: List<String>,
-    ): AssetIdentity? {
-        return delta?.resolveAsset(values, header)
-    }
+    ): AssetIdentity? = delta?.resolveAsset(values, header)
 
     /**
      * Determine whether the provided asset identity should be processed (true) or skipped (false).
@@ -184,7 +190,8 @@ class DeltaProcessor(
     ) {
         val previousFileLocation = "$previousFilesPrefix/$qualifiedNamePrefix"
         val sortedTime =
-            DateTimeFormatter.ofPattern("yyyyMMdd-HHmmssSSS")
+            DateTimeFormatter
+                .ofPattern("yyyyMMdd-HHmmssSSS")
                 .withZone(ZoneId.of("UTC"))
                 .format(Instant.now())
         Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
@@ -220,12 +227,14 @@ class DeltaProcessor(
      * @param hasLinks whether there are any links in the input file
      * @param hasTermAssignments whether there are any term assignments in the input file
      * @param preprocessedFile full path to the preprocessed input file
+     * @param multipleConnections whether multiple connections were present in the input file (true) or only a single connection (false)
      */
     open class Results(
         val assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
         val preprocessedFile: String,
+        val multipleConnections: Boolean = false,
     ) : RowPreprocessor.Results(
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,

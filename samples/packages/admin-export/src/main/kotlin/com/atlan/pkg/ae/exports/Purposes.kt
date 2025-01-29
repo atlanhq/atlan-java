@@ -27,7 +27,8 @@ class Purposes(
                 "Users" to "Users to which these policies are applied",
             ),
         )
-        Purpose.select(ctx.client)
+        Purpose
+            .select(ctx.client)
             .includeOnResults(Purpose.NAME)
             .includeOnResults(Purpose.DESCRIPTION)
             .includeOnResults(Purpose.PURPOSE_ATLAN_TAGS)

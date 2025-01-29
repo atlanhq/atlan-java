@@ -24,10 +24,10 @@ class GCM(
         logger,
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return GlossaryCategory.select(client)
+    override fun query(): FluentSearchBuilder<*, *> =
+        GlossaryCategory
+            .select(client)
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", GlossaryCategory.ANCHOR.bucketBy(100))
-    }
 }

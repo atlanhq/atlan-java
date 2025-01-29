@@ -37,11 +37,13 @@ class GlossaryExporter(
         CSVWriter(filename).use { csv ->
             // TODO: qualifiedName is not a good way to do this for glossary objects...
             val headerNames =
-                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
+                Stream
+                    .of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
                     .map(AtlanField::getAtlanFieldName)
                     .collect(Collectors.toList())
             headerNames.addAll(
-                getAttributesToExtract().stream()
+                getAttributesToExtract()
+                    .stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -50,7 +52,8 @@ class GlossaryExporter(
 
             // Retrieve all glossaries up-front
             val glossaries =
-                Glossary.select(ctx.client, ctx.config.includeArchived)
+                Glossary
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -77,7 +80,8 @@ class GlossaryExporter(
 
             // And finally extract all the terms
             val assets =
-                GlossaryTerm.select(ctx.client, ctx.config.includeArchived)
+                GlossaryTerm
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -141,9 +145,7 @@ class GlossaryExporter(
      * @param asset the asset from which to generate the values
      * @return the values, as an iterable set of strings
      */
-    override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return GlossaryRowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
-    }
+    override fun buildFromAsset(asset: Asset): Iterable<String> = GlossaryRowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
 
     /**
      * Class to serialize glossary assets into a row of tabular data.

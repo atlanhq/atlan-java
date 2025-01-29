@@ -63,7 +63,8 @@ class ImpactReportCSVTest : PackageTest("irc") {
     fun categoriesCreated() {
         val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryCategory.select(client)
+            GlossaryCategory
+                .select(client)
                 .where(GlossaryCategory.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryCategory.NAME)
                 .includeOnResults(GlossaryCategory.DESCRIPTION)
@@ -84,7 +85,8 @@ class ImpactReportCSVTest : PackageTest("irc") {
     fun termsCreated() {
         val glossaryQN = Glossary.findByName(client, glossaryName).qualifiedName!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(glossaryQN))
                 .includeOnResults(GlossaryTerm.DISPLAY_NAME)
                 .includeOnResults(GlossaryTerm.DESCRIPTION)
@@ -225,7 +227,8 @@ class ImpactReportCSVTest : PackageTest("irc") {
         val file = "$testDirectory${File.separator}overview.csv"
         val header = CSVXformer.getHeader(file)
         assertFalse(header.isEmpty())
-        CsvReader.builder()
+        CsvReader
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)

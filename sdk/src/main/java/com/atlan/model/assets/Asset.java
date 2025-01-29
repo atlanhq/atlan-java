@@ -112,6 +112,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     IApplication application;
 
+    /** ApplicationField asset containing this Asset. */
+    @Attribute
+    IApplicationField applicationField;
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    @Attribute
+    String applicationFieldQualifiedName;
+
     /** Qualified name of the Application that contains this asset. */
     @Attribute
     String applicationQualifiedName;
@@ -797,6 +805,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<String> viewerUsers;
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    transient String iconUrl;
 
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore

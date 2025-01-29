@@ -75,11 +75,11 @@ class DLA(
     }
 
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(DASHBOARD_LEVEL))
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
-    }
 }

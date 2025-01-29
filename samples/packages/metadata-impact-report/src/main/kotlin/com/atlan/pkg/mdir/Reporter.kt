@@ -179,18 +179,18 @@ object Reporter {
     private fun createGlossaryIdempotent(
         client: AtlanClient,
         glossaryName: String,
-    ): Glossary {
-        return try {
+    ): Glossary =
+        try {
             Glossary.findByName(client, glossaryName)
         } catch (e: NotFoundException) {
             val create =
-                Glossary.creator(glossaryName)
+                Glossary
+                    .creator(glossaryName)
                     .assetIcon(AtlanIcon.PROJECTOR_SCREEN_CHART)
                     .build()
             val response = create.save(client)
             response.getResult(create)
         }
-    }
 
     private fun createCategoriesIdempotent(
         client: AtlanClient,
@@ -310,7 +310,8 @@ object Reporter {
             }
         val prettyQuantity = NumberFormat.getNumberInstance(Locale.US).format(quantified)
         if (metric.caveats.isNotBlank()) {
-            builder.announcementType(AtlanAnnouncementType.WARNING)
+            builder
+                .announcementType(AtlanAnnouncementType.WARNING)
                 .announcementTitle("Caveats")
                 .announcementMessage(metric.caveats)
                 .certificateStatus(CertificateStatus.DRAFT)
@@ -318,12 +319,14 @@ object Reporter {
             builder.certificateStatus(CertificateStatus.VERIFIED)
         }
         if (metric.notes.isNotBlank()) {
-            builder.announcementType(AtlanAnnouncementType.INFORMATION)
+            builder
+                .announcementType(AtlanAnnouncementType.INFORMATION)
                 .announcementTitle("Note")
                 .announcementMessage(metric.notes)
         }
         val term =
-            builder.displayName(metric.displayName)
+            builder
+                .displayName(metric.displayName)
                 .description(metric.description)
                 .certificateStatusMessage(prettyQuantity)
                 .category(GlossaryCategory.refByGuid(categoryNameToGuid[metric.category]))

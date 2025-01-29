@@ -42,7 +42,5 @@ class GlossaryImporter(
     }
 
     /** {@inheritDoc} */
-    override fun getCacheId(deserializer: RowDeserializer): String {
-        return deserializer.getValue(Glossary.NAME.atlanFieldName)?.let { it as String } ?: ""
-    }
+    override fun getCacheId(deserializer: RowDeserializer): String = deserializer.getValue(Glossary.NAME.atlanFieldName)?.let { it as String } ?: ""
 }

@@ -23,8 +23,8 @@ object GlossaryXformer {
     fun encode(
         ctx: PackageContext<*>,
         asset: Asset,
-    ): String {
-        return when (asset) {
+    ): String =
+        when (asset) {
             is Glossary -> {
                 val glossary = ctx.glossaryCache.getByGuid(asset.guid)
                 if (glossary is Glossary) {
@@ -35,7 +35,6 @@ object GlossaryXformer {
             }
             else -> AssetRefXformer.encode(ctx, asset)
         }
-    }
 
     /**
      * Decodes (deserializes) a string form into a glossary reference object.
@@ -49,13 +48,12 @@ object GlossaryXformer {
         ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
-    ): Asset {
-        return when (fieldName) {
+    ): Asset =
+        when (fieldName) {
             GlossaryTerm.ANCHOR.atlanFieldName -> {
                 ctx.glossaryCache.getByIdentity(assetRef)?.trimToReference()
-                    ?: throw NoSuchElementException("Parent glossary $assetRef not found (in $fieldName).")
+                    ?: throw NoSuchElementException("Parent glossary not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
-    }
 }

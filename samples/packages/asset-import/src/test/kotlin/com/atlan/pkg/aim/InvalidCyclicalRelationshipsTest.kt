@@ -95,7 +95,8 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
     fun noAssetsCreated() {
         val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val assets =
-            client.assets.select()
+            client.assets
+                .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(c1.qualifiedName))
                 .stream()
                 .toList()

@@ -49,6 +49,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
+          allowTestAuthentication = false
         }
       }
     }
@@ -90,6 +91,53 @@ uiConfig {
           default = "update"
           helpText = "Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan."
           fallback = default
+        }
+        ["assets_delta_semantic"] = new Radio {
+          title = "Delta handling"
+          required = false
+          possibleValues {
+            ["full"] = "Full replacement"
+            ["delta"] = "Incremental"
+          }
+          default = "delta"
+          helpText = "Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets)."
+          fallback = default
+        }
+        ["assets_delta_removal_type"] = new Radio {
+          title = "Removal type"
+          required = false
+          possibleValues {
+            ["archive"] = "Archive (recoverable)"
+            ["purge"] = "Purge (cannot be recovered)"
+          }
+          default = "archive"
+          helpText = "How to delete any assets not found in the latest file."
+          fallback = default
+        }
+        ["assets_delta_reload_calculation"] = new Radio {
+          title = "Reload which assets"
+          required = false
+          possibleValues {
+            ["all"] = "All assets"
+            ["changes"] = "Changed assets only"
+          }
+          default = "all"
+          helpText = "Which assets to reload from the latest input CSV file. Changed assets only will calculate which assets have changed between the files and only attempt to reload those changes."
+          fallback = default
+        }
+        ["assets_previous_file_direct"] = new TextInput {
+          title = "Previous file"
+          required = false
+          hide = true
+          helpText = "Path to a direct file (locally) to use for delta processing."
+          fallback = ""
+        }
+        ["assets_previous_file_prefix"] = new TextInput {
+          title = "Previous files location"
+          required = false
+          hide = true
+          helpText = "Object store prefix in which previous files exist for delta processing."
+          fallback = ""
         }
         ["assets_config"] = new Radio {
           title = "Options"
@@ -351,6 +399,10 @@ uiConfig {
     new UIRule {
       whenInputs { ["import_type"] = "CLOUD" }
       required { "cloud_source" "assets_prefix" "assets_key" "glossaries_prefix" "glossaries_key" "data_products_prefix" "data_products_key" }
+    }
+    new UIRule {
+      whenInputs { ["assets_delta_semantic"] = "full" }
+      required { "assets_delta_removal_type" "assets_delta_reload_calculation" }
     }
     new UIRule {
       whenInputs { ["assets_config"] = "advanced" }

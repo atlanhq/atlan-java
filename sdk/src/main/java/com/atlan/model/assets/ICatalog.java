@@ -143,6 +143,9 @@ public interface ICatalog {
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
                 break;
+            case ApplicationField.TYPE_NAME:
+                ref = ApplicationField.refByQualifiedName(qualifiedName);
+                break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
                 break;
@@ -232,6 +235,9 @@ public interface ICatalog {
                 break;
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
+                break;
+            case CustomEntity.TYPE_NAME:
+                ref = CustomEntity.refByQualifiedName(qualifiedName);
                 break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
@@ -463,6 +469,9 @@ public interface ICatalog {
                 break;
             case PowerBIDataflow.TYPE_NAME:
                 ref = PowerBIDataflow.refByQualifiedName(qualifiedName);
+                break;
+            case PowerBIDataflowEntityColumn.TYPE_NAME:
+                ref = PowerBIDataflowEntityColumn.refByQualifiedName(qualifiedName);
                 break;
             case PowerBIDataset.TYPE_NAME:
                 ref = PowerBIDataset.refByQualifiedName(qualifiedName);
@@ -740,6 +749,12 @@ public interface ICatalog {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
