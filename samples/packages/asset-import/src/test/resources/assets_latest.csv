@@ -1,0 +1,5 @@
+qualifiedName,typeName,name,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,description,database,schema
+{{CONNECTION}}/DB,Database,DB,iceberg,{{CONNECTION}},,,,,,,
+{{CONNECTION}}/DB/SCH,Schema,SCH,iceberg,{{CONNECTION}},{{CONNECTION}}/DB,DB,,,A revised schema,Database@{{CONNECTION}}/DB,
+{{CONNECTION}}/DB/SCH/TBL,Table,TBL,iceberg,{{CONNECTION}},{{CONNECTION}}/DB,DB,{{CONNECTION}}/DB/SCH,SCH,,,Schema@{{CONNECTION}}/DB/SCH
+{{CONNECTION}}/DB/SCH/MVIEW,MaterialisedView,MVIEW,iceberg,{{CONNECTION}},{{CONNECTION}}/DB,DB,{{CONNECTION}}/DB/SCH,SCH,,,Schema@{{CONNECTION}}/DB/SCH
