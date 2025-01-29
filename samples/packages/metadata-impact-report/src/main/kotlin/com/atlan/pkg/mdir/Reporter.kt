@@ -230,13 +230,15 @@ object Reporter {
                 batch.add(subdomain)
             }
             batch.flush()
-            DataDomain
-                .select(client)
-                .where(DataDomain.GUID.`in`(batch.resolvedGuids.values.toList()))
-                .stream()
-                .forEach {
-                    nameToResolved[it.name] = it.qualifiedName
-                }
+            while (nameToResolved.size < SUBDOMAINS.size) {
+                DataDomain
+                    .select(client)
+                    .where(DataDomain.GUID.`in`(batch.resolvedGuids.values.toList()))
+                    .stream()
+                    .forEach {
+                        nameToResolved[it.name] = it.qualifiedName
+                    }
+            }
         }
         return nameToResolved
     }
@@ -318,7 +320,7 @@ object Reporter {
         val builder =
             try {
                 val foundProducts = DataProduct.findByName(client, metric.name)
-
+                println(subdomainNameToQualifiedName[metric.category])
                 val matchingProduct =
                     foundProducts.firstOrNull { product ->
                         product.qualifiedName.substringBefore("/product/") == subdomainNameToQualifiedName[metric.category]
