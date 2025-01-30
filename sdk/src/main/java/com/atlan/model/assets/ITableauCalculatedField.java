@@ -51,7 +51,8 @@ public interface ITableauCalculatedField {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this calculated field exists. */
-    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
+    KeywordTextField PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("projectQualifiedName", "projectQualifiedName.keyword", "projectQualifiedName");
 
     /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     TextField ROLE = new TextField("role", "role");

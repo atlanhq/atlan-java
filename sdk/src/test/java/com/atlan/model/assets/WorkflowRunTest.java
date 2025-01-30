@@ -412,6 +412,8 @@ public class WorkflowRunTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .workflowRunActionChoice("String0")
+            .workflowRunActionChoice("String1")
             .workflowRunComment("String0")
             .workflowRunConfig("String0")
             .workflowRunCreatedBy("String0")

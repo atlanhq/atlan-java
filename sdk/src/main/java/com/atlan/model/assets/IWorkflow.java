@@ -35,6 +35,9 @@ public interface IWorkflow {
 
     public static final String TYPE_NAME = "Workflow";
 
+    /** List of workflow action choices. */
+    KeywordField WORKFLOW_ACTION_CHOICES = new KeywordField("workflowActionChoices", "workflowActionChoices");
+
     /** Details of the workflow. */
     TextField WORKFLOW_CONFIG = new TextField("workflowConfig", "workflowConfig");
 
@@ -550,6 +553,9 @@ public interface IWorkflow {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** List of workflow action choices. */
+    SortedSet<String> getWorkflowActionChoices();
 
     /** Details of the workflow. */
     String getWorkflowConfig();

@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -46,7 +47,8 @@ public interface IPowerBITile {
     RelationField REPORT = new RelationField("report");
 
     /** Unique name of the workspace in which this tile exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    KeywordTextField WORKSPACE_QUALIFIED_NAME =
+            new KeywordTextField("workspaceQualifiedName", "workspaceQualifiedName.keyword", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

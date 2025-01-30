@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.BusinessPolicyRule;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -62,6 +63,11 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     /** Duration for the business policy to complete review. */
     @Attribute
     String businessPolicyReviewPeriod;
+
+    /** List of rules applied to this business policy. */
+    @Attribute
+    @Singular
+    List<BusinessPolicyRule> businessPolicyRules;
 
     /** Selected approval workflow id for business policy */
     @Attribute

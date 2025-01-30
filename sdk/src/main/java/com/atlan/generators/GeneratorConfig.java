@@ -110,7 +110,8 @@ public class GeneratorConfig {
             Map.entry("userDefRelationshipFrom", "userDefRelationshipFroms"),
             Map.entry("userDefRelationshipTo", "userDefRelationshipTos"),
             Map.entry("adfActivityPrecedingDependency", "adfActivityPrecedingDependencies"),
-            Map.entry("modelEntityImplemented", "modelImplementedEntities"));
+            Map.entry("modelEntityImplemented", "modelImplementedEntities"),
+            Map.entry("bprValue", "bprValues"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),
@@ -352,7 +353,7 @@ public class GeneratorConfig {
      */
     public boolean includeTypedef(TypeDef typeDef) {
         if (typeDef == null || typeDef.getServiceType() == null) {
-            return false;
+            return true;
         } else {
             return serviceTypes.contains(typeDef.getServiceType()) && !doNotGenerateAssets.contains(typeDef.getName());
         }

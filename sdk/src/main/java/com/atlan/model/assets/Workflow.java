@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -47,6 +48,11 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** List of workflow action choices. */
+    @Attribute
+    @Singular
+    SortedSet<String> workflowActionChoices;
 
     /** Details of the workflow. */
     @Attribute

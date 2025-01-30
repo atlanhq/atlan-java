@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -36,6 +37,10 @@ public interface IApplicationField {
 
     /** Application asset containing this ApplicationField. */
     RelationField APPLICATION_PARENT = new RelationField("applicationParent");
+
+    /** Unique name of the parent Application asset that contains this ApplicationField asset. */
+    KeywordField APPLICATION_PARENT_QUALIFIED_NAME =
+            new KeywordField("applicationParentQualifiedName", "applicationParentQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -81,6 +86,9 @@ public interface IApplicationField {
 
     /** Application asset containing this ApplicationField. */
     IApplication getApplicationParent();
+
+    /** Unique name of the parent Application asset that contains this ApplicationField asset. */
+    String getApplicationParentQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -448,7 +456,7 @@ public interface IApplicationField {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
