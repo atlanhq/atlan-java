@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -47,6 +48,11 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** List of workflow run action choices. */
+    @Attribute
+    @Singular
+    SortedSet<String> workflowRunActionChoices;
 
     /** The comment added by the requester */
     @Attribute

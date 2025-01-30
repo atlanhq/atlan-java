@@ -66,7 +66,8 @@ public interface IPowerBITable {
             new TextField("powerBITableSourceExpressions", "powerBITableSourceExpressions");
 
     /** Unique name of the workspace in which this table exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    KeywordTextField WORKSPACE_QUALIFIED_NAME =
+            new KeywordTextField("workspaceQualifiedName", "workspaceQualifiedName.keyword", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

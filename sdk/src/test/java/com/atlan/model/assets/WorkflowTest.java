@@ -412,6 +412,8 @@ public class WorkflowTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .workflowActionChoice("String0")
+            .workflowActionChoice("String1")
             .workflowConfig("String0")
             .workflowCreatedBy("String0")
             .workflowDeletedAt(123456789L)
