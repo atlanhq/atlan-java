@@ -22,7 +22,7 @@ import kotlin.test.assertEquals
 class ImpactReportCSVTest : PackageTest("irc") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val dataDomain = makeUnique("g1")
+    private val dataDomain = makeUnique("cd1")
     private val files =
         listOf(
             "debug.log",
@@ -47,7 +47,7 @@ class ImpactReportCSVTest : PackageTest("irc") {
     }
 
     override fun teardown() {
-        removeDomainAndProduct(dataDomain)
+        removeDomainAndChildren(dataDomain)
     }
 
     @Test
