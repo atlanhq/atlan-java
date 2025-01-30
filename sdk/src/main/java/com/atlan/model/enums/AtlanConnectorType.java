@@ -119,7 +119,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     PREFECT("prefect", AtlanConnectionCategory.ELT),
     DATA_MODELING("dm", AtlanConnectionCategory.DATABASE),
     MODEL("model", AtlanConnectionCategory.DATABASE),
-    APP("application", AtlanConnectionCategory.APP),
+    APP("app", AtlanConnectionCategory.APP),
     UNKNOWN_CUSTOM("(custom)", AtlanConnectionCategory.API),
     IICS("iics", AtlanConnectionCategory.ELT),
     ABINITIO("abinitio", AtlanConnectionCategory.ELT),

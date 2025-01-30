@@ -4,11 +4,9 @@ package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.serde.TabularWriter
-import com.atlan.util.AssetBatch
 import mu.KLogger
 
 abstract class Metric(
@@ -70,28 +68,13 @@ abstract class Metric(
      * Output the detailed records for this report.
      *
      * @param writer through which to dump out the detailed result records
-     * @param term the glossary term that defines the metric, to which to associate assets
-     * @param batch through which to bulk-process the term assignments
      */
-    fun outputDetailedRecords(
-        writer: TabularWriter,
-        term: GlossaryTerm?,
-        batch: AssetBatch?,
-    ) {
+    fun outputDetailedRecords(writer: TabularWriter) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
             writer.writeHeader(header)
-            query().stream().forEach { asset ->
-                val row = getDetailedRecord(asset)
-                writer.writeRecord(row)
-                // TODO: requires additional testing
-                // if (term != null && batch != null && category != Reporter.CAT_HEADLINES) {
-                //     batch.add(
-                //         asset.trimToRequired()
-                //             .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
-                //             .build(),
-                //     )
-                // }
+            query().stream().forEach { currentAsset ->
+                writer.writeRecord(getDetailedRecord(currentAsset))
             }
         }
     }
