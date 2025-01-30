@@ -150,7 +150,7 @@ implements <a href="IWorkflow.html" title="interface in com.atlan.model.assets">
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IWorkflow">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IWorkflow.html" title="interface in com.atlan.model.assets">IWorkflow</a></h3>
-<code><a href="IWorkflow.html#WORKFLOW_CONFIG">WORKFLOW_CONFIG</a>, <a href="IWorkflow.html#WORKFLOW_CREATED_BY">WORKFLOW_CREATED_BY</a>, <a href="IWorkflow.html#WORKFLOW_DELETED_AT">WORKFLOW_DELETED_AT</a>, <a href="IWorkflow.html#WORKFLOW_RUN_EXPIRES_IN">WORKFLOW_RUN_EXPIRES_IN</a>, <a href="IWorkflow.html#WORKFLOW_STATUS">WORKFLOW_STATUS</a>, <a href="IWorkflow.html#WORKFLOW_TEMPLATE_GUID">WORKFLOW_TEMPLATE_GUID</a>, <a href="IWorkflow.html#WORKFLOW_TYPE">WORKFLOW_TYPE</a>, <a href="IWorkflow.html#WORKFLOW_UPDATED_BY">WORKFLOW_UPDATED_BY</a></code></div>
+<code><a href="IWorkflow.html#WORKFLOW_ACTION_CHOICES">WORKFLOW_ACTION_CHOICES</a>, <a href="IWorkflow.html#WORKFLOW_CONFIG">WORKFLOW_CONFIG</a>, <a href="IWorkflow.html#WORKFLOW_CREATED_BY">WORKFLOW_CREATED_BY</a>, <a href="IWorkflow.html#WORKFLOW_DELETED_AT">WORKFLOW_DELETED_AT</a>, <a href="IWorkflow.html#WORKFLOW_RUN_EXPIRES_IN">WORKFLOW_RUN_EXPIRES_IN</a>, <a href="IWorkflow.html#WORKFLOW_STATUS">WORKFLOW_STATUS</a>, <a href="IWorkflow.html#WORKFLOW_TEMPLATE_GUID">WORKFLOW_TEMPLATE_GUID</a>, <a href="IWorkflow.html#WORKFLOW_TYPE">WORKFLOW_TYPE</a>, <a href="IWorkflow.html#WORKFLOW_UPDATED_BY">WORKFLOW_UPDATED_BY</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -245,184 +245,189 @@ implements <a href="IWorkflow.html" title="interface in com.atlan.model.assets">
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Fixed typeName for Workflows.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowConfig()" class="member-name-link">getWorkflowConfig</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowActionChoices()" class="member-name-link">getWorkflowActionChoices</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">List of workflow action choices.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowConfig()" class="member-name-link">getWorkflowConfig</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Details of the workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowCreatedBy()" class="member-name-link">getWorkflowCreatedBy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowCreatedBy()" class="member-name-link">getWorkflowCreatedBy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Username of the user who created this workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowDeletedAt()" class="member-name-link">getWorkflowDeletedAt</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowDeletedAt()" class="member-name-link">getWorkflowDeletedAt</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Deletion time of this workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowRunExpiresIn()" class="member-name-link">getWorkflowRunExpiresIn</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowRunExpiresIn()" class="member-name-link">getWorkflowRunExpiresIn</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Time duration after which a run of this workflow will expire.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/WorkflowStatus.html" title="enum class in com.atlan.model.enums">WorkflowStatus</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowStatus()" class="member-name-link">getWorkflowStatus</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/WorkflowStatus.html" title="enum class in com.atlan.model.enums">WorkflowStatus</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowStatus()" class="member-name-link">getWorkflowStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Status of the workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowTemplateGuid()" class="member-name-link">getWorkflowTemplateGuid</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowTemplateGuid()" class="member-name-link">getWorkflowTemplateGuid</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">GUID of the workflow template from which this workflow was created.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/WorkflowType.html" title="enum class in com.atlan.model.enums">WorkflowType</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowType()" class="member-name-link">getWorkflowType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/WorkflowType.html" title="enum class in com.atlan.model.enums">WorkflowType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowType()" class="member-name-link">getWorkflowType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Type of the workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowUpdatedBy()" class="member-name-link">getWorkflowUpdatedBy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWorkflowUpdatedBy()" class="member-name-link">getWorkflowUpdatedBy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Username of the user who updated this workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Reference to a Workflow by GUID.</div>
-</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
- <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Reference to a Workflow by GUID.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
+ <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Reference to a Workflow by qualifiedName.</div>
+<div class="block">Reference to a Workflow by GUID.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
- <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Reference to a Workflow by qualifiedName.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+ <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Reference to a Workflow by qualifiedName.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the announcement from a Workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAtlanTag</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAtlanTag</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove an Atlan tag from a Workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the certificate from a Workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the system description from a Workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeOwners</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeOwners</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the owners from a Workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)" class="member-name-link">removeTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)" class="member-name-link">removeTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove terms from a Workflow, without replacing all existing terms linked to the Workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeUserDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeUserDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the user's description from a Workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)" class="member-name-link">replaceTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)" class="member-name-link">replaceTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Replace the terms linked to the Workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#restore(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">restore</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#restore(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">restore</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Restore the archived (soft-deleted) Workflow to active.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start a fluent search that will return all Workflow assets.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient,boolean)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ boolean&nbsp;includeArchived)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Start a fluent search that will return all Workflow assets.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient,boolean)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- boolean&nbsp;includeArchived)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Start a fluent search that will return all Workflow assets.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToReference()" class="member-name-link">trimToReference</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToReference()" class="member-name-link">trimToReference</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to create a relationship to a Workflow, from a potentially
  more-complete Workflow object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToRequired()" class="member-name-link">trimToRequired</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToRequired()" class="member-name-link">trimToRequired</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to apply an update to a Workflow, from a potentially
  more-complete Workflow object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)" class="member-name-link">updateAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)" class="member-name-link">updateAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="../enums/AtlanAnnouncementType.html" title="enum class in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Update the announcement on a Workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)" class="member-name-link">updateCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.html" title="class in com.atlan.model.assets">Workflow</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)" class="member-name-link">updateCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="../enums/CertificateStatus.html" title="enum class in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Update the certificate on a Workflow.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Workflow.WorkflowBuilder.html" title="class in com.atlan.model.assets">Workflow.WorkflowBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to update a Workflow.</div>
 </div>
 </div>
@@ -1035,6 +1040,17 @@ implements <a href="IWorkflow.html" title="interface in com.atlan.model.assets">
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="../relations/Reference.html#toBuilder()">toBuilder</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getWorkflowActionChoices()">
+<h3>getWorkflowActionChoices</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getWorkflowActionChoices</span>()</div>
+<div class="block">List of workflow action choices.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IWorkflow.html#getWorkflowActionChoices()">getWorkflowActionChoices</a></code>&nbsp;in interface&nbsp;<code><a href="IWorkflow.html" title="interface in com.atlan.model.assets">IWorkflow</a></code></dd>
 </dl>
 </section>
 </li>

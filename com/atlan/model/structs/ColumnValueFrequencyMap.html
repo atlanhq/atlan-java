@@ -84,9 +84,10 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ColumnValueFrequencyMap</span>
+<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/Generated.html" title="class or interface in javax.annotation.processing" class="external-link">@Generated</a>("com.atlan.generators.ModelGeneratorV2")
+</span><span class="modifiers">public class </span><span class="element-name type-name-label">ColumnValueFrequencyMap</span>
 <span class="extends-implements">extends <a href="AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a></span></div>
-<div class="block">Detailed information about frequently occuring values for a column.</div>
+<div class="block">Detailed information representing a column value and it's frequency.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -175,12 +176,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnValue()" class="member-name-link">getColumnValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Value for the column.</div>
+<div class="block">Sample value for the column.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnValueFrequency()" class="member-name-link">getColumnValueFrequency</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Number of records that contain the value.</div>
+<div class="block">Frequency of the sample value in the column.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
@@ -199,12 +200,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnValueFrequencyMap.ColumnValueFrequencyMapBuilder.html" title="class in com.atlan.model.structs">ColumnValueFrequencyMap.ColumnValueFrequencyMapBuilder</a>&lt;?,<wbr>?&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.atlan.model.core.AtlanObject">Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#getRawJsonObject()">getRawJsonObject</a>, <a href="../core/AtlanObject.html#setRawJsonObject(com.fasterxml.jackson.databind.JsonNode)">setRawJsonObject</a>, <a href="../core/AtlanObject.html#toJson(com.atlan.AtlanClient)">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></div>
+<code><a href="../core/AtlanObject.html#getRawJsonObject()">getRawJsonObject</a>, <a href="../core/AtlanObject.html#setRawJsonObject(com.fasterxml.jackson.databind.JsonNode)">setRawJsonObject</a>, <a href="../core/AtlanObject.html#toJson(com.atlan.AtlanClient)">toJson</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -263,8 +267,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Quickly create a new ColumnValueFrequencyMap.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>columnValue</code> - Value for the column.</dd>
-<dd><code>columnValueFrequency</code> - Number of records that contain the value.</dd>
+<dd><code>columnValue</code> - Sample value for the column.</dd>
+<dd><code>columnValueFrequency</code> - Frequency of the sample value in the column.</dd>
 <dt>Returns:</dt>
 <dd>a ColumnValueFrequencyMap with the provided information</dd>
 </dl>
@@ -286,14 +290,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getColumnValue()">
 <h3>getColumnValue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getColumnValue</span>()</div>
-<div class="block">Value for the column.</div>
+<div class="block">Sample value for the column.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getColumnValueFrequency()">
 <h3>getColumnValueFrequency</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getColumnValueFrequency</span>()</div>
-<div class="block">Number of records that contain the value.</div>
+<div class="block">Frequency of the sample value in the column.</div>
 </section>
 </li>
 <li>
@@ -323,6 +327,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="AtlanStruct.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="toString()">
+<h3>toString</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../core/AtlanObject.html#toString()">AtlanObject</a></code></span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
 </dl>
 </section>
 </li>

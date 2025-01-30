@@ -7210,6 +7210,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Application asset containing this ApplicationField.</div>
 </li>
 <li class="block-list">
+<h5>applicationParentQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> applicationParentQualifiedName</pre>
+<div class="block">Unique name of the parent Application asset that contains this ApplicationField asset.</div>
+</li>
+<li class="block-list">
 <h5>inputToAirflowTasks</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
 <div class="block">Tasks to which this asset provides input.</div>
@@ -9487,6 +9492,11 @@ loadScripts(document, 'script');</script>
 <h5>businessPolicyReviewPeriod</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> businessPolicyReviewPeriod</pre>
 <div class="block">Duration for the business policy to complete review.</div>
+</li>
+<li class="block-list">
+<h5>businessPolicyRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/structs/BusinessPolicyRule.html" title="class in com.atlan.model.structs">BusinessPolicyRule</a>&gt; businessPolicyRules</pre>
+<div class="block">List of rules applied to this business policy.</div>
 </li>
 <li class="block-list">
 <h5>businessPolicySelectedApprovalWF</h5>
@@ -36231,6 +36241,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Fixed typeName for Workflows.</div>
 </li>
 <li class="block-list">
+<h5>workflowActionChoices</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; workflowActionChoices</pre>
+<div class="block">List of workflow action choices.</div>
+</li>
+<li class="block-list">
 <h5>workflowConfig</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> workflowConfig</pre>
 <div class="block">Details of the workflow.</div>
@@ -36293,6 +36308,11 @@ loadScripts(document, 'script');</script>
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for WorkflowRuns.</div>
+</li>
+<li class="block-list">
+<h5>workflowRunActionChoices</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; workflowRunActionChoices</pre>
+<div class="block">List of workflow run action choices.</div>
 </li>
 <li class="block-list">
 <h5>workflowRunComment</h5>
@@ -40395,6 +40415,65 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.structs.BusinessPolicyRule">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/BusinessPolicyRule.html" title="class in com.atlan.model.structs">com.atlan.model.structs.BusinessPolicyRule</a></h3>
+<div class="type-signature">class BusinessPolicyRule extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>bprId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprId</pre>
+<div class="block">business policy rule id we have to keep it hierarchical e.g. policyId_ruleId</div>
+</li>
+<li class="block-list">
+<h5>bprName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprName</pre>
+<div class="block">Name for business policy rule it can be a display string to show on UI</div>
+</li>
+<li class="block-list">
+<h5>bprOperand</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprOperand</pre>
+<div class="block">operand in rule for business policy rule these can be attributes like certificateStatus, tags etc.</div>
+</li>
+<li class="block-list">
+<h5>bprOperator</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprOperator</pre>
+<div class="block">operator to apply in rule for business policy rule this can be must_be, must_not_be etc</div>
+</li>
+<li class="block-list">
+<h5>bprQuery</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprQuery</pre>
+<div class="block">es query for business policy rule in combination with filter DSL of policy</div>
+</li>
+<li class="block-list">
+<h5>bprSequence</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bprSequence</pre>
+<div class="block">business policy rule to make the ordering easier</div>
+</li>
+<li class="block-list">
+<h5>bprValues</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; bprValues</pre>
+<div class="block">value to validate for the operand against the operator for business policy rule.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for BusinessPolicyRule.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.structs.ColumnValueFrequencyMap">
 <h3>Class&nbsp;<a href="com/atlan/model/structs/ColumnValueFrequencyMap.html" title="class in com.atlan.model.structs">com.atlan.model.structs.ColumnValueFrequencyMap</a></h3>
 <div class="type-signature">class ColumnValueFrequencyMap extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -40410,12 +40489,12 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>columnValue</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> columnValue</pre>
-<div class="block">Value for the column.</div>
+<div class="block">Sample value for the column.</div>
 </li>
 <li class="block-list">
 <h5>columnValueFrequency</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> columnValueFrequency</pre>
-<div class="block">Number of records that contain the value.</div>
+<div class="block">Frequency of the sample value in the column.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -40635,12 +40714,12 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>boundaries</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt; boundaries</pre>
-<div class="block">TBC</div>
+<div class="block">Boundaries of the histogram.</div>
 </li>
 <li class="block-list">
 <h5>frequencies</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&gt; frequencies</pre>
-<div class="block">TBC</div>
+<div class="block">Frequencies of the histogram.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
