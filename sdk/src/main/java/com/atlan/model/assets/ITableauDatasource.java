@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -63,7 +64,8 @@ public interface ITableauDatasource {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this datasource exists. */
-    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
+    KeywordTextField PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("projectQualifiedName", "projectQualifiedName.keyword", "projectQualifiedName");
 
     /** Unique name of the site in which this datasource exists. */
     TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");

@@ -61,6 +61,10 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     @Attribute
     IApplication applicationParent;
 
+    /** Unique name of the parent Application asset that contains this ApplicationField asset. */
+    @Attribute
+    String applicationParentQualifiedName;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
