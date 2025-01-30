@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/enrichment-migrator"
@@ -21,6 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
+    ["transformed-file"] = "/tmp/transformed-file.csv"
   }
 }
 keywords {
@@ -28,6 +29,18 @@ keywords {
   "utility"
 }
 preview = true
+
+publishConfig = new AssetImport {
+  assetsFile = transferFile(outputs!!, "transformed-file")
+  assetsUpsertSemantic = "update"
+  assetsConfig = transferConfigInput(uiConfig, "config_type")
+  assetsFailOnErrors = transferConfigInput(uiConfig, "fail_on_errors")
+  assetsCaseSensitive = transferConfigInput(uiConfig, "case_sensitive")
+  assetsTableViewAgnostic = transferConfigInput(uiConfig, "table_view_agnostic")
+  assetsFieldSeparator = transferConfigInput(uiConfig, "field_separator")
+  assetsBatchSize = transferConfigInput(uiConfig, "batch_size")
+  trackBatches = true
+}
 
 uiConfig {
   tasks {
