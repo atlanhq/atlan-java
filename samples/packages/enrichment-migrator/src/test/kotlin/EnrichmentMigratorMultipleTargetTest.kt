@@ -27,6 +27,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -98,8 +99,21 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     }
 
     @Test
-    fun datesOnTarget() {
+    fun descriptionOnTarget2() {
         val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        Table
+            .select(client)
+            .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
+            .includeOnResults(Table.DESCRIPTION)
+            .stream()
+            .forEach {
+                assertEquals("Some description.", it.description)
+            }
+    }
+
+    @Test
+    fun descriptionOnTarget3() {
+        val targetConnection = Connection.findByName(client, c3, c3Type)[0]!!
         Table
             .select(client)
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
@@ -113,11 +127,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val t1 = Connection.findByName(client, c2, c2Type)[0]!!
-        val t2 = Connection.findByName(client, c3, c3Type)[0]!!
-        val f1 = t1.qualifiedName.replace("/", "_")
-        val f2 = t2.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$f1.csv", "CSA_EM_transformed_$f2.csv"))
     }
 
     @Test

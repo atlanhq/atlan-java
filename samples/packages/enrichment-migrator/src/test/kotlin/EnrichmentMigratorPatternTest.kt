@@ -34,6 +34,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -225,12 +226,6 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        validateFilesExist(
-            listOf(
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName1.csv".replace("/", "_"),
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName2.csv".replace("/", "_"),
-            ),
-        )
     }
 
     @Test

@@ -140,6 +140,30 @@ abstract class PackageTest(
     }
 
     /**
+     * Check whether the provided line appears in the specified file.
+     *
+     * @param filename for the file
+     * @param line the line to check the presence of
+     * @param relativeTo (optional) path under which the log file should be present
+     */
+    fun fileHasLine(
+        filename: String,
+        line: String,
+        relativeTo: String = testDirectory,
+    ) {
+        val file = validateFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { candidate ->
+                if (candidate == line) {
+                    // short-circuit
+                    return
+                }
+            }
+        }
+        assertEquals("Transformed file does not contain expected details.", line)
+    }
+
+    /**
      * Validate (through assertions) that these files exist and are non-empty files.
      *
      * @param files list of filenames
@@ -159,7 +183,7 @@ abstract class PackageTest(
      * Validate (through assertions) that these files exist, but are empty.
      *
      * @param files list of filenames
-     * @param relativeTo (optional) path under whic hthe files should be present
+     * @param relativeTo (optional) path under which the files should be present
      */
     fun validateFileExistsButEmpty(
         files: List<String>,

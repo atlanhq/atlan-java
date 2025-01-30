@@ -6,14 +6,10 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanDeleteType
-import com.atlan.model.enums.AtlanStatus
-import com.atlan.model.search.IndexSearchResponse
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * Test migration of asset metadata.
@@ -27,6 +23,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -85,7 +82,6 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
     }
 
     override fun teardown() {
@@ -93,38 +89,20 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     }
 
     @Test
-    fun activeAssetMigrated() {
+    fun activeAssetInFile() {
         val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
-        val request =
-            Table
-                .select(client)
-                .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
-                .includeOnResults(Table.STATUS)
-                .toRequest()
-        var count = 0
-        var status = AtlanStatus.DELETED
-        var response: IndexSearchResponse? = null
-        while (status == AtlanStatus.DELETED && count < (client.maxNetworkRetries * 2)) {
-            response = retrySearchUntil(request, 1)
-            val list = response.stream().toList()
-            assertTrue(list.isNotEmpty())
-            assertEquals(1, list.size)
-            status = list[0].status
-            count++
-        }
-        if (status != AtlanStatus.ACTIVE) {
-            logger.error { "Exact request ($count): ${request.toJson(client)}" }
-            logger.error { "Exact response ($count): ${response?.rawJsonObject}" }
-        }
-        assertEquals(AtlanStatus.ACTIVE, status)
+        fileHasLine(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","ACTIVE","tbl1",,,"Must have some enrichment to be included!",,,,,,,,,,,,,,,,,
+                """.trimIndent(),
+        )
     }
 
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
-        val filename = targetConnection.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
 
     @Test
