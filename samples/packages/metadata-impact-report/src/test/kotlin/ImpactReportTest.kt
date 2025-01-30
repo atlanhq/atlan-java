@@ -19,7 +19,7 @@ import kotlin.test.Test
 class ImpactReportTest : PackageTest("ir") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val dataDomain = makeUnique("g1")
+    private val dataDomain = makeUnique("d1")
     private val files =
         listOf(
             "debug.log",
@@ -37,7 +37,7 @@ class ImpactReportTest : PackageTest("ir") {
     }
 
     override fun teardown() {
-        removeDomainAndProduct(dataDomain)
+        removeDomainAndChildren(dataDomain)
     }
 
     @Test(groups = ["mdir.create"])

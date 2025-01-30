@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
+import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.AtlanClient
 import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
@@ -503,20 +504,22 @@ abstract class PackageTest(
      *
      * @param domainName of the domain
      */
-    fun removeDomainAndProduct(domainName: String) {
-        val domains =
+    fun removeDomainAndChildren(domainName: String) {
+        val domain =
             DataDomain
                 .select(client)
                 .where(DataDomain.NAME.eq(domainName))
+                .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
                 .stream()
                 .toList()
+                .firstOrNull()
         try {
-            if (domains.isNotEmpty()) {
+            if (domain != null) {
                 // find all the products under the domain
                 val productGuids =
                     DataProduct
                         .select(client)
-                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.eq(domains[0].qualifiedName))
+                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.startsWith(domain.qualifiedName))
                         .stream()
                         .map { it.guid }
                         .toList()
@@ -525,23 +528,19 @@ abstract class PackageTest(
                 }
 
                 // find all subdomains under the domain
-                val subDomainNames =
+                val subdomains =
                     DataDomain
                         .select(client)
-                        .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.eq(domains[0].qualifiedName))
+                        .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.startsWith(domain.qualifiedName))
+                        .sort(DataDomain.QUALIFIED_NAME.order(SortOrder.Desc))
                         .stream()
-                        .map { it.name }
+                        .map { it.guid }
                         .toList()
-                if (subDomainNames.isNotEmpty()) {
-                    subDomainNames.forEach {
-                        removeDomainAndProduct(it)
-                    }
-                }
 
-                // delete the domain
-                domains.forEach { domain ->
-                    client.assets.delete(domain.guid, AtlanDeleteType.HARD)
+                subdomains.forEach { subdomain ->
+                    client.assets.delete(subdomain, AtlanDeleteType.HARD)
                 }
+                client.assets.delete(domain.guid, AtlanDeleteType.HARD)
             }
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove domain: $domainName" }
