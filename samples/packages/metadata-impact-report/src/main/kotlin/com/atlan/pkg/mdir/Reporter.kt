@@ -184,6 +184,7 @@ object Reporter {
                 DataDomain
                     .select(client)
                     .where(DataDomain.NAME.eq(domainName))
+                    .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
                     .stream()
                     .toList()
             if (domain.isEmpty()) {
@@ -226,7 +227,6 @@ object Reporter {
                         DataDomain.creator(name, domain.qualifiedName)
                     }
                 val subdomain = builder.description(description).build()
-                println(name)
                 batch.add(subdomain)
             }
             batch.flush()
@@ -319,14 +319,14 @@ object Reporter {
     ): Asset {
         val builder =
             try {
-                val foundProducts = DataProduct.findByName(client, metric.name)
-                println(subdomainNameToQualifiedName[metric.category])
-                val matchingProduct =
-                    foundProducts.firstOrNull { product ->
-                        product.qualifiedName.substringBefore("/product/") == subdomainNameToQualifiedName[metric.category]
-                    }
-
-                matchingProduct?.trimToRequired() ?: DataProduct.creator(
+                DataProduct
+                    .select(client)
+                    .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.eq(subdomainNameToQualifiedName[metric.category]))
+                    .where(DataProduct.NAME.eq(metric.name))
+                    .stream()
+                    .toList()
+                    .firstOrNull()
+                    ?.trimToRequired() ?: DataProduct.creator(
                     client,
                     metric.name,
                     subdomainNameToQualifiedName[metric.category],
