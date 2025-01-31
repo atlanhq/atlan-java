@@ -386,6 +386,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                 .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(connectorType)
+                .applicationParentQualifiedName(applicationQualifiedName)
                 .applicationParent(Application.refByQualifiedName(applicationQualifiedName));
     }
 
