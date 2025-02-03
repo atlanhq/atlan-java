@@ -12,7 +12,10 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
+import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.util.AssetBatch
+import java.io.File
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -97,7 +100,13 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -128,6 +137,18 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
                 assertEquals(1, attrs.size)
                 assertEquals(now, attrs["dateSingle"])
             }
+    }
+
+    @Test
+    fun customMetadataInFile() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1",,,,,,,,,,,,,,,,"${TimestampXformer.encode(now)}"
+                """.trimIndent(),
+        )
     }
 
     @Test

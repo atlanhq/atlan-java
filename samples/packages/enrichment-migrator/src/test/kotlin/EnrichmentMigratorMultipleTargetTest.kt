@@ -7,7 +7,9 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -74,7 +76,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     override fun setup() {
         createConnections()
         createAssets()
-        Thread.sleep(15000)
         runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
@@ -89,13 +90,31 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
         removeConnection(c1, c1Type)
         removeConnection(c2, c2Type)
         removeConnection(c3, c3Type)
+    }
+
+    @Test
+    fun descriptionInFileOnTarget2() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1","Some description."
+                """.trimIndent(),
+        )
     }
 
     @Test
@@ -109,6 +128,18 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
             .forEach {
                 assertEquals("Some description.", it.description)
             }
+    }
+
+    @Test
+    fun descriptionInFileOnTarget3() {
+        val targetConnection = Connection.findByName(client, c3, c3Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1","Some description."
+                """.trimIndent(),
+        )
     }
 
     @Test

@@ -165,6 +165,30 @@ abstract class PackageTest(
     }
 
     /**
+     * Check whether the provided line appears as the start of any line in the specified file.
+     *
+     * @param filename for the file
+     * @param line the line to check any line in the file starts with
+     * @param relativeTo (optional) path under which the log file should be present
+     */
+    fun fileHasLineStartingWith(
+        filename: String,
+        line: String,
+        relativeTo: String = testDirectory,
+    ) {
+        val file = validateFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { candidate ->
+                if (candidate.startsWith(line)) {
+                    // short-circuit
+                    return
+                }
+            }
+        }
+        assertEquals("Transformed file does not contain any line starting with expected details.", line)
+    }
+
+    /**
      * Validate (through assertions) that these files exist and are non-empty files.
      *
      * @param files list of filenames
