@@ -123,52 +123,77 @@ abstract class PublishConfig {
   /// (Generated) Arguments to provide to the command that runs in the container image.
   fixed args: List<String> = containerCommand.toList().sublist(1, containerCommand.length)
 
+  /// (Optional) Input artifacts that the publish package will consume.
+  fixed inputArtifacts: Listing<FrameworkRenderer.NamedPair>
+
+  /// (Optional) Outputs produced by the publish package.
+  fixed outputs: WorkflowOutputs?
+
+  /// (Optional) Parameters to pass through to the publish package.
+  fixed parameters: Map<String, String>?
+
   /// Transfer a value from a UI configuration input as the setting for this publish config.
   /// - `uiConfig` the package's UI configuration
   /// - `name` the name of the property in the package's UI configuration to transfer
   function transferConfigInput(uiConfig: UIConfig, name: String): String =
     if (!uiConfig.properties.containsKey(name))
-      throw("Invalid UI configuration property: " + name)
+      throw("Invalid UI configuration property when trying to transfer a config input -- ensure the name matches a UI input: " + name)
     else
-      "{{some-property.prefix.???." + name + "}}"
+      "{{inputs.parameters." + name + "}}"
 
   /// Transfer an output file produced by the package as the setting for this publish config.
   /// - `outputs` the package's outputs
   /// - `name` the name (key) of the output file produced by the package
-  function transferFile(outputs: WorkflowOutputs, name: String): String =
-    if (!outputs.files.containsKey(name))
-      throw("Invalid file reference: " + name)
+  /// - `rename` (optional) new name to give the output file after transferring it
+  function transferFile(outputs: WorkflowOutputs?, name: String, rename: String?): FrameworkRenderer.NamePathPair =
+    if (outputs == null || !outputs.files.containsKey(name))
+      throw("Invalid file reference when trying to transfer a file -- ensure the name matches an output from the package: " + name)
     else
-      "{{some-file.prefix.???." + name + "}}"
+      let (nm = name)
+        new FrameworkRenderer.NamePathPair {
+          name = nm
+          path = if (rename != null) "/tmp/\(rename)" else outputs.files.getOrNull(name)!!
+        }
 }
 
 /// Use an asset import step as the final publish phase for the package.
 class AssetImport extends PublishConfig {
-  hidden assetsFile: String? // TODO: is there a way to enforce this is non-null in cases where it should be required?
-  hidden assetsUpsertSemantic: ImportSemantic?|String?
-  hidden assetsConfig: ConfigType?|String?
-  hidden assetsAttrToOverwrite: Listing<String>?|String?
-  hidden assetsFailOnErrors: Boolean?|String?
-  hidden assetsCaseSensitive: Boolean?|String?
-  hidden assetsTableViewAgnostic: Boolean?|String?
-  hidden assetsFieldSeparator: String?
-  hidden assetsBatchSize: Int?|String?
-  hidden trackBatches: Boolean?|String?
-  hidden glossariesFile: String?
-  hidden glossariesUpsertSemantic: ImportSemantic?|String?
-  hidden glossariesConfig: ConfigType?|String?
-  hidden glossariesAttrToOverwrite: Listing<String>?|String?
-  hidden glossariesFailOnErrors: Boolean?|String?
-  hidden glossariesFieldSeparator: String?
-  hidden glossariesBatchSize: Int?|String?
-  hidden dataProductsFile: String?
-  hidden dataProductsUpsertSemantic: ImportSemantic?|String?
-  hidden dataProductsConfig: ConfigType?|String?
-  hidden dataProductsAttrToOverwrite: Listing<String>?|String?
-  hidden dataProductsFailOnErrors: Boolean?|String?
-  hidden dataProductsFieldSeparator: String?
-  hidden dataProductsBatchSize: Int?|String?
+  hidden assetsFile: FrameworkRenderer.NamePathPair? = null // TODO: is there a way to enforce this is non-null in cases where it should be required?
+  hidden assetsUpsertSemantic: ImportSemantic?|String? = null
+  hidden assetsConfig: ConfigType?|String? = null
+  hidden assetsAttrToOverwrite: Listing<String>?|String? = null
+  hidden assetsFailOnErrors: Boolean?|String? = null
+  hidden assetsCaseSensitive: Boolean?|String? = null
+  hidden assetsTableViewAgnostic: Boolean?|String? = null
+  hidden assetsFieldSeparator: String? = null
+  hidden assetsBatchSize: Int?|String? = null
+  hidden trackBatches: Boolean?|String? = null
+  hidden glossariesFile: FrameworkRenderer.NamePathPair? = null
+  hidden glossariesUpsertSemantic: ImportSemantic?|String? = null
+  hidden glossariesConfig: ConfigType?|String? = null
+  hidden glossariesAttrToOverwrite: Listing<String>?|String? = null
+  hidden glossariesFailOnErrors: Boolean?|String? = null
+  hidden glossariesFieldSeparator: String? = null
+  hidden glossariesBatchSize: Int?|String? = null
+  hidden dataProductsFile: FrameworkRenderer.NamePathPair? = null
+  hidden dataProductsUpsertSemantic: ImportSemantic?|String? = null
+  hidden dataProductsConfig: ConfigType?|String? = null
+  hidden dataProductsAttrToOverwrite: Listing<String>?|String? = null
+  hidden dataProductsFailOnErrors: Boolean?|String? = null
+  hidden dataProductsFieldSeparator: String? = null
+  hidden dataProductsBatchSize: Int?|String? = null
 
+  fixed inputArtifacts {
+    when (assetsFile != null) { assetsFile }
+    when (glossariesFile != null) { glossariesFile }
+    when (dataProductsFile != null) { dataProductsFile }
+  }
+  fixed outputs {
+    files {
+      ["debug-logs"] = "/tmp/debug.log"
+      // TODO: add error file, once we produce it
+    }
+  }
   fixed containerImage = "ghcr.io/atlanhq/csa-asset-import:4.2.2" // TODO: how to dynamically keep this version up-to-date?
   fixed containerCommand {
     "/dumb-init"
@@ -179,7 +204,7 @@ class AssetImport extends PublishConfig {
 
   fixed parameters: Map<String, String> = new Mapping {
     ["import_type"] = "DIRECT"
-    when (assetsFile != null) { ["assets_file"] = assetsFile }
+    when (assetsFile != null) { ["assets_file"] = assetsFile.path }
     when (assetsUpsertSemantic != null) { ["assets_upsert_semantic"] = assetsUpsertSemantic }
     when (assetsConfig != null) { ["assets_config"] = assetsConfig }
     when (assetsAttrToOverwrite != null) {
@@ -191,7 +216,38 @@ class AssetImport extends PublishConfig {
     }
     when (assetsFailOnErrors != null) { ["assets_fail_on_errors"] = assetsFailOnErrors.toString() }
     when (assetsCaseSensitive != null) { ["assets_case_sensitive"] = assetsCaseSensitive.toString() }
-    // TODO: the remainder...
+    when (assetsTableViewAgnostic != null) { ["assets_table_view_agnostic"] = assetsTableViewAgnostic.toString() }
+    when (assetsFieldSeparator != null) { ["assets_field_separator"] = assetsFieldSeparator }
+    when (assetsBatchSize != null) { ["assets_batch_size"] = assetsBatchSize.toString() }
+    when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
+
+    when (glossariesFile != null) { ["glossaries_file"] = glossariesFile.path }
+    when (glossariesUpsertSemantic != null) { ["glossaries_upsert_semantic"] = glossariesUpsertSemantic }
+    when (glossariesConfig != null) { ["glossaries_config"] = glossariesConfig }
+    when (glossariesAttrToOverwrite != null) {
+      when (glossariesAttrToOverwrite is Listing) {
+        ["glossaries_attr_to_overwrite"] = "[\"" + glossariesAttrToOverwrite.join("\",\"") + "\"]"
+      } else {
+        ["glossaries_attr_to_overwrite"] = glossariesAttrToOverwrite
+      }
+    }
+    when (glossariesFailOnErrors != null) { ["glossaries_fail_on_errors"] = glossariesFailOnErrors.toString() }
+    when (glossariesFieldSeparator != null) { ["glossaries_field_separator"] = glossariesFieldSeparator }
+    when (glossariesBatchSize != null) { ["glossaries_batch_size"] = glossariesBatchSize.toString() }
+
+    when (dataProductsFile != null) { ["data_products_file"] = dataProductsFile.path }
+    when (dataProductsUpsertSemantic != null) { ["data_products_upsert_semantic"] = dataProductsUpsertSemantic }
+    when (dataProductsConfig != null) { ["data_products_config"] = dataProductsConfig }
+    when (dataProductsAttrToOverwrite != null) {
+      when (dataProductsAttrToOverwrite is Listing) {
+        ["data_products_attr_to_overwrite"] = "[\"" + dataProductsAttrToOverwrite.join("\",\"") + "\"]"
+      } else {
+        ["data_products_attr_to_overwrite"] = dataProductsAttrToOverwrite
+      }
+    }
+    when (dataProductsFailOnErrors != null) { ["data_products_fail_on_errors"] = dataProductsFailOnErrors.toString() }
+    when (dataProductsFieldSeparator != null) { ["data_products_field_separator"] = dataProductsFieldSeparator }
+    when (dataProductsBatchSize != null) { ["data_products_batch_size"] = dataProductsBatchSize.toString() }
   }.toMap()
 }
 

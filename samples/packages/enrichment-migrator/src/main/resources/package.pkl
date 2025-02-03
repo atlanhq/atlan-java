@@ -21,7 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
-    ["transformed-file"] = "/tmp/transformed-file.csv"
+    ["transformed_file"] = "/tmp/transformed-file.csv"
   }
 }
 keywords {
@@ -31,7 +31,7 @@ keywords {
 preview = true
 
 publishConfig = new AssetImport {
-  assetsFile = transferFile(outputs!!, "transformed-file")
+  assetsFile = transferFile(outputs, "transformed_file", "assets.csv")
   assetsUpsertSemantic = "update"
   assetsConfig = transferConfigInput(uiConfig, "config_type")
   assetsFailOnErrors = transferConfigInput(uiConfig, "fail_on_errors")

@@ -1,7 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-import EnrichmentMigratorXform.getSourceDatabaseNames
-import EnrichmentMigratorXform.getTargetDatabaseName
 import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.AtlanClient
 import com.atlan.exception.ErrorCode
@@ -12,12 +10,10 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
-import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
-import sun.tools.jconsole.ProxyClient.getConnectionName
 import java.io.File
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
@@ -142,23 +138,6 @@ object EnrichmentMigrator {
                         }
                     }
                 }
-
-            // TODO: remove calling asset import directly (let that be orchestrated by the DAG)
-
-            // 3. Import the transformed file
-            val importConfig =
-                AssetImportCfg(
-                    assetsFile = transformedFile,
-                    assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = ctx.config.failOnErrors,
-                    assetsBatchSize = ctx.config.batchSize,
-                    assetsFieldSeparator = ctx.config.fieldSeparator,
-                    assetsCaseSensitive = ctx.config.caseSensitive,
-                    assetsTableViewAgnostic = ctx.config.tableViewAgnostic,
-                )
-            Utils.initializeContext(importConfig, ctx).use { iCtx ->
-                Importer.import(iCtx, outputDirectory)?.close()
-            }
         }
     }
 

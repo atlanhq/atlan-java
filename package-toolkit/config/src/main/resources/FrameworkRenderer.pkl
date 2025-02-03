@@ -27,80 +27,112 @@ const function getCredentialConfigMap(m: Credential): FileOutput = new FileOutpu
   renderer = new YamlRenderer {}
 }
 
+local const function getProcessTemplate(
+  templateName: String,
+  uiCfg: Framework.UIConfig,
+  publish: Framework.PublishConfig?,
+  package: String,
+  outs: Framework.WorkflowOutputs?,
+  img: String,
+  pullPolicy: Framework.ImagePullPolicy,
+  cmd: List<String>,
+  arguments: List<String>,
+  params: Map<String, String>?,
+  inputFiles: Boolean,
+  inputArtifacts: List<NamedPair>
+) = new WorkflowTemplateDefinition {
+  name = templateName
+  cfg = uiCfg
+  pub = publish
+  f = inputFiles
+  directInputFiles = inputArtifacts
+  container = new WorkflowContainer {
+    config = cfg
+    image = img
+    command = cmd
+    args = arguments
+    imagePullPolicy = pullPolicy
+    volumeMounts = if (credVariable != null) new Listing {
+      new VolumeMount {
+        name = "credentials"
+        mountPath = "/tmp/credentials"
+      }
+    } else null
+    passthroughParams = params
+  }
+  outputs = outs
+  pkg = package
+  credVariable = let (creds = cfg.properties.filter((_, u) -> u is Framework.CredentialInput))
+      if (creds.isEmpty) null else creds.keys.first
+  volumes = if (credVariable != null) new Listing {
+    new EmptyDirVolume {
+      name = "credentials"
+    }
+  } else null
+  initContainers = if (credVariable != null) new Listing {
+    new WorkflowContainer {
+      name = "fetch-credentials"
+      image = "ghcr.io/atlanhq/rest-master:af621a5"
+      command = new Listing {
+        "/bin/sh"
+        "-c"
+          """
+          if [ -z "$\(credVariable.toUpperCase())" ]; then exit 0; fi
+          python3 main.py GET http://heracles-service.heracles.svc.cluster.local/credentials/$\(credVariable.toUpperCase())/use --raw-input '{}' --raw-input-file-pattern '' --raw-input-file-sort '' --raw-input-multiline f --execution-script "if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):\\n  LOGGER.debug('Heracles is unavailable. Performing retry with back-off')\\n  failure_handler = FailureHandler.RETRY\\nif state == ExecutionState.OUTPUT_PROCESS:\\n  output = json.loads(output)\\nif state == ExecutionState.API_POST:\\n  stop = True" --raw-input-paginate '0' --auth-type oauth2 --auth-oauth2-type client_credentials --auth-oauth2-impersonate-user "$IMPERSONATE_USER" --auth-oauth2-client-credentials-client-id CLIENT_ID --auth-oauth2-client-credentials-secret CLIENT_SECRET --auth-oauth2-client-credentials-token-url TOKEN_URL --output-chunk-size '0' --output-file-prefix /tmp/credentials --pagination-wait-time '0' --max-retries '10'
+          """
+      }.toList()
+      env = new Listing {
+        new NameValuePair {
+          name = "IMPERSONATE_USER"
+          value = "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
+        }
+        new NameValuePair {
+          name = credVariable.toUpperCase()
+          value = "{{inputs.parameters.\(credVariable)}}"
+        }
+        new NameValuePair {
+          name = "OAUTHLIB_INSECURE_TRANSPORT"
+          value = "1"
+        }
+        new NamedSecret {
+          name = "CLIENT_ID"
+          secretName = "argo-client-creds"
+          secretKey = "login"
+        }
+        new NamedSecret {
+          name = "CLIENT_SECRET"
+          secretName = "argo-client-creds"
+          secretKey = "password"
+        }
+        new NamedSecret {
+          name = "TOKEN_URL"
+          secretName = "argo-client-creds"
+          secretKey = "host"
+        }
+      }.toList()
+      mirrorVolumeMounts = true
+    }
+  } else null
+}
+
 /// Render the workflow template YAML file.
 const function getWorkflowTemplate(m: Framework): FileOutput = new FileOutput {
   value = new WorkflowTemplate {
     name = m.name
-    template = new WorkflowTemplateDefinition {
-      cfg = m.uiConfig
-      pub = m.publishConfig
-      container = new WorkflowContainer {
-        config = m.uiConfig
-        image = m.containerImage
-        command = m.command
-        args = m.args
-        imagePullPolicy = m.containerImagePullPolicy
-        volumeMounts = if (credVariable != null) new Listing {
-          new VolumeMount {
-            name = "credentials"
-            mountPath = "/tmp/credentials"
-          }
-        } else null
-      }
-      outputs = m.outputs
-      pkg = m.name
-      credVariable = let (creds = m.uiConfig.properties.filter((_, u) -> u is Framework.CredentialInput))
-          if (creds.isEmpty) null else creds.keys.first
-      volumes = if (credVariable != null) new Listing {
-        new EmptyDirVolume {
-          name = "credentials"
-        }
-      } else null
-      initContainers = if (credVariable != null) new Listing {
-        new WorkflowContainer {
-          name = "fetch-credentials"
-          image = "ghcr.io/atlanhq/rest-master:af621a5"
-          command = new Listing {
-            "/bin/sh"
-            "-c"
-              """
-              if [ -z "$\(credVariable.toUpperCase())" ]; then exit 0; fi
-              python3 main.py GET http://heracles-service.heracles.svc.cluster.local/credentials/$\(credVariable.toUpperCase())/use --raw-input '{}' --raw-input-file-pattern '' --raw-input-file-sort '' --raw-input-multiline f --execution-script "if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):\\n  LOGGER.debug('Heracles is unavailable. Performing retry with back-off')\\n  failure_handler = FailureHandler.RETRY\\nif state == ExecutionState.OUTPUT_PROCESS:\\n  output = json.loads(output)\\nif state == ExecutionState.API_POST:\\n  stop = True" --raw-input-paginate '0' --auth-type oauth2 --auth-oauth2-type client_credentials --auth-oauth2-impersonate-user "$IMPERSONATE_USER" --auth-oauth2-client-credentials-client-id CLIENT_ID --auth-oauth2-client-credentials-secret CLIENT_SECRET --auth-oauth2-client-credentials-token-url TOKEN_URL --output-chunk-size '0' --output-file-prefix /tmp/credentials --pagination-wait-time '0' --max-retries '10'
-              """
-          }.toList()
-          env = new Listing {
-            new NameValuePair {
-              name = "IMPERSONATE_USER"
-              value = "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
-            }
-            new NameValuePair {
-              name = credVariable.toUpperCase()
-              value = "{{inputs.parameters.\(credVariable)}}"
-            }
-            new NameValuePair {
-              name = "OAUTHLIB_INSECURE_TRANSPORT"
-              value = "1"
-            }
-            new NamedSecret {
-              name = "CLIENT_ID"
-              secretName = "argo-client-creds"
-              secretKey = "login"
-            }
-            new NamedSecret {
-              name = "CLIENT_SECRET"
-              secretName = "argo-client-creds"
-              secretKey = "password"
-            }
-            new NamedSecret {
-              name = "TOKEN_URL"
-              secretName = "argo-client-creds"
-              secretKey = "host"
-            }
-          }.toList()
-          mirrorVolumeMounts = true
-        }
-      } else null
-    }
+    template = getProcessTemplate(
+      m.name,
+      m.uiConfig,
+      m.publishConfig,
+      m.name,
+      m.outputs,
+      m.containerImage,
+      m.containerImagePullPolicy,
+      m.command,
+      m.args,
+      null,
+      true, // TODO: need to figure out whether to include file details, dynamically...
+      List()
+    )
   }
   renderer = new YamlRenderer {}
 }
@@ -527,23 +559,38 @@ class NamedSecret extends NamedPair {
 local class NestedConfig extends NamedPair {
   name: String = "NESTED_CONFIG"
   fixed value: String = new Listing {
-    if (inputs == null || inputs.isEmpty)
-      "null"
-    else
-      "{"
-    new Listing {
-      for (k, ui in inputs) {
-        if (ui is Framework.FileUploader || ui is Framework.FileCopier)
-          "\"\(k)\": \"/tmp/\(k)/{{inputs.parameters.\(k)}}\""
-        else if (ui is Framework.NumericInput || ui is Framework.DateInput || ui is Framework.BooleanInput)
-          "\"\(k)\": {{inputs.parameters.\(k)}}"
-        else
-          "\"\(k)\": {{=toJson(inputs.parameters.\(k))}}"
-      }
-    }.join(",\n")
-    "}"
+    when (passthrough != null) {
+      if (passthrough.isEmpty)
+        "null"
+      else
+        "{"
+      new Listing {
+        for (k, v in passthrough) {
+          "\"\(k)\": \"\(v)\""
+        }
+      }.join(",\n")
+      "}"
+    }
+    when (inputs != null) {
+      if (inputs.isEmpty)
+        "null"
+      else
+        "{"
+      new Listing {
+        for (k, ui in inputs) {
+          if (ui is Framework.FileUploader || ui is Framework.FileCopier)
+            "\"\(k)\": \"/tmp/\(k)/{{inputs.parameters.\(k)}}\""
+          else if (ui is Framework.NumericInput || ui is Framework.DateInput || ui is Framework.BooleanInput)
+            "\"\(k)\": {{inputs.parameters.\(k)}}"
+          else
+            "\"\(k)\": {{=toJson(inputs.parameters.\(k))}}"
+        }
+      }.join(",\n")
+      "}"
+    }
   }.join("\n")
-  hidden inputs: Map<String, Framework.UIElement>
+  hidden inputs: Map<String, Framework.UIElement>?
+  hidden passthrough: Map<String, String>?
 }
 
 class NameValueBoolPair extends NamedPair {
@@ -651,32 +698,28 @@ local class PackageConfig {
   annotations: Mapping<String, String>
 }
 
-/// Used to render the appropriately-wrapped output file for the Argo hand-over portion of a package.
-local class WorkflowTemplate {
-  fixed apiVersion = "argoproj.io/v1alpha1"
-  fixed kind = "WorkflowTemplate"
-  fixed metadata = new Mapping {
-    ["name"] = name
-  }
-  // TODO: rewrite this so that every package ALWAYS has a DAG
-  //  - in all cases, the "main" template has a DAG that calls the "process" template (which itself does the work)
-  //  - when there is a file movement, the main template starts with move-files tasks, and updates the "process" template to depend on these previous tasks
-  //  - when there is a publish step, the main template adds a "publish" template to the end of the DAG (which will always have a dependency on the "process" template)
-  fixed spec: Map<String, List<WorkflowTemplateDefinition>> = new Mapping {
-    when (fileMoves.isEmpty && publish == null) {
-      ["templates"] = List(template)
-    } else {
-      ["templates"] = new Listing {
-        when (!fileMoves.isEmpty) { setup }
-        (template) { name = "process" }
-        when (publish != null) { publish }
-      }.toList()
-    }
-  }.toMap()
-  hidden name: String
-  hidden template: WorkflowTemplateDefinition
-  hidden fileMoves: Listing<TaskDefinition> = new Listing {
-    for (k, u in template.inputs.config.properties) {
+/// Used to render a standard spec in a workflow template, irrespective of input files and / or separate publish step.
+local class WorkflowTemplateSpec {
+  hidden package: WorkflowTemplateDefinition
+
+  hidden passthrough: List<NameValuePair> = new Listing {
+      for (k, u in package.inputs.config.properties) {
+        when (u is Framework.FileUploader) {
+          new NameValuePair {
+            name = k
+            value = "{{inputs.parameters.\(k)_key}}"
+          }
+        } else {
+          new NameValuePair {
+            name = k
+            value = "{{inputs.parameters.\(k)}}"
+          }
+        }
+      }
+    }.toList()
+
+  hidden fixed fileMoves: Listing<TaskDefinition> = new Listing {
+    for (k, u in package.inputs.config.properties) {
       when (u is Framework.FileUploader) {
         new TaskDefinition {
           name = "move-\(getSafeTaskName(k))"
@@ -701,70 +744,94 @@ local class WorkflowTemplate {
       }
     }
   }
-  hidden setup: WorkflowTemplateDefinition? = (if (!fileMoves.isEmpty)
+
+  hidden fixed move: WorkflowTemplateDefinition? =
+    if (!fileMoves.isEmpty)
       new WorkflowTemplateDefinition {
-        cfg = template.cfg
-        dag = new WorkflowDag { // TODO: need to move this DAG out into the top-level, not buried within the sub-step
-          tasks = new Listing {
-            ...fileMoves
+        cfg = package.cfg
+        dag = new WorkflowDag {
+          tasks = fileMoves.toList()
+        }
+        name = "move"
+        pkg = package.pkg
+        f = true
+      }
+    else null
+
+  fixed entrypoint = "main"
+  templates: Listing<WorkflowTemplateDefinition> = new Listing {
+    new WorkflowTemplateDefinition {
+      name = "main"
+      dag = new WorkflowDag {
+        tasks = new Listing {
+          when (move != null) {
             new TaskDefinition {
-              name = "process"
-              template = "process"
-              depends = fileMoves.toList().map((it) -> it.name).join(" && ")
+              name = "move"
+              template = "move"
               arguments = new Arguments {
                 parameters = passthrough
               }
             }
-          }.toList()
-        }
-        name = "main"
-        pkg = template.pkg
-        f = true
-        credVariable = template.credVariable
-        volumes = if (credVariable != null) new Listing {
-          new EmptyDirVolume {
-            name = "credentials"
           }
-        } else null
-      } else null)
-  hidden publish: WorkflowTemplateDefinition? = (if (template.pub != null)
-      new WorkflowTemplateDefinition {
-        cfg = template.cfg
-        dag = new WorkflowDag { // TODO: need to move this DAG out into the top-level, not buried within the sub-step
-          tasks = new Listing {
-            let (pub = template.pub!!)
-              new TaskDefinition {
-                name = "publish"
-                template = pub.getClass().simpleName // TODO: will this work?
-                depends = "process"
-                arguments = new Arguments {
-                  parameters = passthrough // TODO: is this sufficient?
-                }
+          new TaskDefinition {
+            name = "process"
+            dependencies = new Listing {
+              when (move != null) { "move" }
+            }.toList()
+            template = "process"
+            arguments = new Arguments {
+              parameters = passthrough
+            }
+          }
+          when (package.pub != null) {
+            new TaskDefinition {
+              name = "load"
+              dependencies = List("process")
+              template = "load"
+              arguments = new Arguments {
+                parameters = passthrough
               }
-          }.toList()
-        }
-        name = "publish"
-        pkg = template.pkg // TODO: check this
-      } else null)
-  hidden passthrough: List<NameValuePair> = (if (!fileMoves.isEmpty) new Listing {
-      new NameValuePair {
-        name = S3_CONFIG_PREFIX
-        value = "{{inputs.parameters.\(S3_CONFIG_PREFIX)}}"
-      }
-      for (k, u in template.inputs.config.properties) {
-        when (u is Framework.FileUploader) {
-          new NameValuePair {
-            name = k
-            value = "{{inputs.parameters.\(k)_key}}"
+            }
           }
-        } else {
-          new NameValuePair {
-            name = k
-            value = "{{inputs.parameters.\(k)}}"
-          }
-        }
+        }.toList()
       }
-    }.toList() else List())
+      cfg = package.cfg
+      pkg = package.pkg
+      // TODO: missing file-based input parameters?
+    }
+    (package) { name = "process" }
+    when (move != null) { move }
+    when (package.pub != null) {
+      getProcessTemplate(
+        "load",
+        package.cfg,
+        package.pub,
+        package.pkg,
+        package.pub.outputs,
+        package.pub.containerImage,
+        package.pub.containerImagePullPolicy,
+        package.pub.command,
+        package.pub.args,
+        package.pub.parameters,
+        false,
+        package.pub.inputArtifacts.toList()
+      )
+    }
+  }
+}
+
+/// Used to render the appropriately-wrapped output file for the Argo hand-over portion of a package.
+local class WorkflowTemplate {
+  fixed apiVersion = "argoproj.io/v1alpha1"
+  fixed kind = "WorkflowTemplate"
+  fixed metadata = new Mapping {
+    ["name"] = name
+  }
+  fixed spec = new WorkflowTemplateSpec {
+    package = template
+  }
+  hidden name: String
+  hidden template: WorkflowTemplateDefinition
 }
 
 local class WorkflowTemplateDefinition {
@@ -774,6 +841,7 @@ local class WorkflowTemplateDefinition {
     pkgName = pkg
     fileInputSetup = f
     credentialInjection = (credVariable != null)
+    passthroughFiles = directInputFiles
   }
   outputs: Framework.WorkflowOutputs?
   volumes: Listing<WorkflowVolume>?
@@ -784,24 +852,29 @@ local class WorkflowTemplateDefinition {
   hidden pub: Framework.PublishConfig?
   hidden pkg: String = ""
   hidden f: Boolean = false
-  hidden credVariable: String?
+  hidden credVariable: String? = null
+  hidden directInputFiles: List<NamedPair>? = null
 }
 
 local class WorkflowInputs {
   fixed parameters: List<NamedPair> = params.toList()
-  fixed artifacts: List<NamePathS3Tuple>? = if (fileInputSetup) null else arts.toList()
+  fixed artifacts: List<NamedPair>? = if (fileInputSetup) null else arts.toList()
   hidden config: Framework.UIConfig
   hidden pkgName: String = ""
   hidden fileInputSetup: Boolean = false
   hidden credentialInjection: Boolean = false
+  hidden passthroughFiles: List<NamedPair>? = null
 
-  hidden arts: Listing<NamePathS3Tuple> = new Listing {
+  hidden arts: Listing<NamedPair> = new Listing {
     for (k, u in config.properties) {
       when (u is Framework.FileUploader || u is Framework.FileCopier) {
         new NamePathS3Tuple {
           inputName = k
         }
       }
+    }
+    when (passthroughFiles != null) {
+      ...passthroughFiles
     }
   }
   hidden params: Listing<NamedPair> = new Listing {
@@ -877,6 +950,7 @@ local class WorkflowDag {
 local class TaskDefinition {
   name: String
   depends: String?
+  dependencies: List<String>?
   template: String?
   templateRef: TemplateRef?
   fixed `when` = condition
@@ -901,6 +975,7 @@ local class WorkflowContainer {
   imagePullPolicy: Framework.ImagePullPolicy = "IfNotPresent"
   command: List<String>
   args: List<String> = List()
+  hidden passthroughParams: Map<String, String>?
   hidden config: Framework.UIConfig
   hidden defaultVars: List<NamedPair> = new Listing {
     new NameValuePair {
@@ -1017,12 +1092,18 @@ local class WorkflowContainer {
   hidden configVars: List<NamedPair> = config.properties.fold(List(), (acc: List<NamedPair>, key, property) ->
     acc.add(resolvePropertyToVar(key, property))
   )
-  hidden nestedConfig: NestedConfig = new NestedConfig {
-    inputs = config.properties.fold(new Mapping {}, (acc: Mapping<String, Framework.UIElement>, key, property) ->
-      (acc) {
-        [key] = property
+  hidden nestedConfig: NestedConfig =
+    if (passthroughParams != null)
+      new NestedConfig {
+        passthrough = passthroughParams
       }
-    ).toMap()
+    else
+      new NestedConfig {
+        inputs = config.properties.fold(new Mapping {}, (acc: Mapping<String, Framework.UIElement>, key, property) ->
+          (acc) {
+            [key] = property
+          }
+        ).toMap()
   }
   env: List<NamedPair> = defaultVars + configVars + List(nestedConfig)
 }
