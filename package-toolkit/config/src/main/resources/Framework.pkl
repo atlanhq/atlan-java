@@ -214,6 +214,11 @@ class AssetImport extends PublishConfig {
     ["import_type"] = "DIRECT"
     when (assetsFile != null) { ["assets_file"] = assetsFile.path }
     when (assetsUpsertSemantic != null) { ["assets_upsert_semantic"] = assetsUpsertSemantic }
+    when (assetsDeltaSemantic != null) { ["assets_delta_semantic"] = assetsDeltaSemantic.toString() }
+    when (assetsDeltaRemovalType != null) { ["assets_delta_removal_type"] = assetsDeltaRemovalType.toString() }
+    when (assetsDeltaReloadCalculation != null) { ["assets_delta_reload_calculation"] = assetsDeltaReloadCalculation.toString() }
+    when (assetsPreviousFileDirect != null) { ["assets_previous_file_direct"] = assetsPreviousFileDirect.path }
+    when (assetsPreviousFilePrefix != null) { ["assets_previous_file_prefix"] = assetsPreviousFilePrefix }
     when (assetsConfig != null) { ["assets_config"] = assetsConfig }
     when (assetsAttrToOverwrite != null) {
       when (assetsAttrToOverwrite is Listing) {

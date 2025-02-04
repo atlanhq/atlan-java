@@ -26,7 +26,6 @@ import java.io.File
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.io.path.createFile
 import kotlin.system.exitProcess
 
 /**
@@ -102,9 +101,6 @@ object Importer {
 
         if (ctx.config.previousFileDirect.isNotBlank()) {
             transform(ctx, fieldSeparator, ctx.config.previousFileDirect, "$outputDirectory${File.separator}previous-file-transformed.csv")
-        } else {
-            // Just touch the file, so it isn't non-existent (which would break Argo)
-            Paths.get("$outputDirectory${File.separator}previous-file-transformed.csv").createFile()
         }
     }
 

@@ -21,8 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
-    ["current_file"] = "/tmp/current-file-transformed.csv"
-    ["previous_file"] = "/tmp/previous-file-transformed.csv"
+    ["transformed_file"] = "/tmp/current-file-transformed.csv"
   }
 }
 keywords {
@@ -33,12 +32,11 @@ preview = true
 
 publishConfig = new AssetImport {
   versionTag = version.toString()
-  assetsFile = transferFile(outputs, "current_file", "current.csv")
+  assetsFile = transferFile(outputs, "transformed_file", "current.csv")
   assetsUpsertSemantic = transferConfigInput(uiConfig, "assets_upsert_semantic")
   assetsDeltaSemantic = transferConfigInput(uiConfig, "delta_semantic")
   assetsDeltaRemovalType = transferConfigInput(uiConfig, "delta_removal_type")
   assetsDeltaReloadCalculation = transferConfigInput(uiConfig, "delta_reload_calculation")
-  assetsPreviousFileDirect = transferFile(outputs, "previous_file", "previous.csv")
   assetsPreviousFilePrefix = "csa-relational-assets-builder"
   assetsFailOnErrors = transferConfigInput(uiConfig, "assets_fail_on_errors")
   assetsFieldSeparator = transferConfigInput(uiConfig, "assets_field_separator")
