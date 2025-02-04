@@ -723,6 +723,25 @@ local class WorkflowTemplateSpec {
       }
     }.toList()
 
+  hidden filePassthrough: List<NameValuePair> = new Listing {
+    for (k, u in package.inputs.config.properties) {
+      new NameValuePair {
+        name = k
+        value = "{{inputs.parameters.\(k)}}"
+      }
+      when (u is Framework.FileUploader) {
+        new NameValuePair {
+          name = "\(k)_key"
+          value = "{{inputs.parameters.\(k)_key}}"
+        }
+        new NameValuePair {
+          name = "\(k)_id"
+          value = "{{inputs.parameters.\(k)_id}}"
+        }
+      }
+    }
+  }.toList()
+
   hidden fixed fileMoves: Listing<TaskDefinition> = new Listing {
     for (k, u in package.inputs.config.properties) {
       when (u is Framework.FileUploader) {
@@ -774,7 +793,7 @@ local class WorkflowTemplateSpec {
               name = "move"
               template = "move"
               arguments = new Arguments {
-                parameters = passthrough
+                parameters = filePassthrough
               }
             }
           }
@@ -810,8 +829,14 @@ local class WorkflowTemplateSpec {
       }
       cfg = package.cfg
       pkg = package.pkg
+      // Ensures input artifacts for files are excluded as part of the overall DAG's arguments
+      f = move != null
     }
-    (package) { name = "process" }
+    (package) {
+      name = "process"
+      // Ensures input artifacts for files are included as part of template's arguments
+      f = move == null
+    }
     when (move != null) { move }
     when (package.pub != null) {
       getProcessTemplate(
