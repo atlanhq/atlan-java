@@ -129,9 +129,9 @@ const function getWorkflowTemplate(m: Framework): FileOutput = new FileOutput {
       m.containerImagePullPolicy,
       m.command,
       m.args,
-      null,
-      true, // TODO: need to figure out whether to include file details, dynamically...
-      List()
+      null, // Only include UI-based parameters at the top-most level
+      true, // Always include file details at the top-most level (?)
+      List() // Do not passthrough any non-UI-provided artifacts as inputs at the top-most level
     )
   }
   renderer = new YamlRenderer {}
@@ -797,7 +797,6 @@ local class WorkflowTemplateSpec {
       }
       cfg = package.cfg
       pkg = package.pkg
-      // TODO: missing file-based input parameters?
     }
     (package) { name = "process" }
     when (move != null) { move }
@@ -812,8 +811,8 @@ local class WorkflowTemplateSpec {
         package.pub.containerImagePullPolicy,
         package.pub.command,
         package.pub.args,
-        package.pub.parameters,
-        false,
+        package.pub.parameters, // Always passthrough non-UI parameters
+        false, // Always passthrough direct input files (from previous step(s))
         package.pub.inputArtifacts.toList()
       )
     }

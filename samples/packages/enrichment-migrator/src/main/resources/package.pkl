@@ -31,6 +31,7 @@ keywords {
 preview = true
 
 publishConfig = new AssetImport {
+  versionTag = version.toString()
   assetsFile = transferFile(outputs, "transformed_file", "assets.csv")
   assetsUpsertSemantic = "update"
   assetsConfig = transferConfigInput(uiConfig, "config_type")

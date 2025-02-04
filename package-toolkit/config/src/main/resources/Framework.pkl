@@ -108,6 +108,9 @@ fixed command: List<String> = List(containerCommand[0])
 fixed args: List<String> = containerCommand.toList().sublist(1, containerCommand.length)
 
 abstract class PublishConfig {
+  /// Image tag for the version of the publish package to use.
+  hidden versionTag: String
+
   /// Container image to run the logic of the publish step.
   fixed containerImage: String
 
@@ -158,7 +161,7 @@ abstract class PublishConfig {
 
 /// Use an asset import step as the final publish phase for the package.
 class AssetImport extends PublishConfig {
-  hidden assetsFile: FrameworkRenderer.NamePathPair? = null // TODO: is there a way to enforce this is non-null in cases where it should be required?
+  hidden assetsFile: FrameworkRenderer.NamePathPair? = null
   hidden assetsUpsertSemantic: ImportSemantic?|String? = null
   hidden assetsConfig: ConfigType?|String? = null
   hidden assetsAttrToOverwrite: Listing<String>?|String? = null
@@ -194,7 +197,7 @@ class AssetImport extends PublishConfig {
       // TODO: add error file, once we produce it
     }
   }
-  fixed containerImage = "ghcr.io/atlanhq/csa-asset-import:4.2.2" // TODO: how to dynamically keep this version up-to-date?
+  fixed containerImage = "ghcr.io/atlanhq/csa-asset-import:\(versionTag)"
   fixed containerCommand {
     "/dumb-init"
     "--"
