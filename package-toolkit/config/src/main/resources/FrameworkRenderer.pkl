@@ -608,6 +608,11 @@ class NamePathPair extends NamedPair {
   path: String
 }
 
+class NameFromPair extends NamedPair {
+  name: String
+  from: String
+}
+
 class VolumeMount extends NamedPair {
   name: String
   mountPath: String
@@ -790,6 +795,14 @@ local class WorkflowTemplateSpec {
               template = "load"
               arguments = new Arguments {
                 parameters = passthrough
+                artifacts = new Listing {
+                  for (n in package.pub.inputArtifacts) {
+                    new NameFromPair {
+                      name = n.name
+                      from = "{{tasks.process.outputs.artifacts.\(n.name)}}"
+                    }
+                  }
+                }.toList()
               }
             }
           }
@@ -964,6 +977,7 @@ local class TemplateRef {
 
 local class Arguments {
   parameters: List<NamedPair>
+  artifacts: List<NamedPair>? = null
 }
 
 local class WorkflowContainer {
