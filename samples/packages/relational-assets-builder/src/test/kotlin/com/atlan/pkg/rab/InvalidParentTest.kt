@@ -41,21 +41,13 @@ class InvalidParentTest : PackageTest("ip") {
 
     override fun setup() {
         prepFile()
-        runCustomPackage(
-            RelationalAssetsBuilderCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "upsert",
-            ),
-            Importer::main,
-        )
         assertFailsWith(IllegalStateException::class, "Could not find any table/view at: $conn1/azure-cosmos-db/cosmosdb/xyz/schemaMismatch") {
             runCustomPackage(
-                AssetImportCfg(
-                    assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
+                RelationalAssetsBuilderCfg(
+                    assetsFile = Paths.get(testDirectory, testFile).toString(),
                     assetsUpsertSemantic = "upsert",
-                    assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
                 ),
-                com.atlan.pkg.aim.Importer::main,
+                Importer::main,
             )
         }
     }
