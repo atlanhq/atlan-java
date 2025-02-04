@@ -9,7 +9,9 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -34,6 +36,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -94,7 +97,13 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -225,12 +234,6 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        validateFilesExist(
-            listOf(
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName1.csv".replace("/", "_"),
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName2.csv".replace("/", "_"),
-            ),
-        )
     }
 
     @Test
@@ -249,6 +252,30 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
                     assertEquals(userDescription, it.userDescription)
                 }
         }
+    }
+
+    @Test
+    fun userDescriptionInFileForTarget2() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db_test02/sch1/tbl1","Table","tbl1",,,"Some user description"
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun userDescriptionInFileForTarget3() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db_test03/sch1/tbl1","Table","tbl1",,,"Some user description"
+                """.trimIndent(),
+        )
     }
 
     @Test

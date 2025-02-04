@@ -7,7 +7,9 @@ import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -27,6 +29,7 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -73,7 +76,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     override fun setup() {
         createConnections()
         createAssets()
-        Thread.sleep(15000)
         runCustomPackage(
             EnrichmentMigratorCfg(
                 sourceConnection = listOf(Connection.findByName(client, c1, c1Type)?.get(0)?.qualifiedName!!),
@@ -88,7 +90,13 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -98,8 +106,45 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     }
 
     @Test
-    fun datesOnTarget() {
+    fun descriptionInFileOnTarget2() {
         val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1","Some description."
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun descriptionOnTarget2() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        Table
+            .select(client)
+            .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
+            .includeOnResults(Table.DESCRIPTION)
+            .stream()
+            .forEach {
+                assertEquals("Some description.", it.description)
+            }
+    }
+
+    @Test
+    fun descriptionInFileOnTarget3() {
+        val targetConnection = Connection.findByName(client, c3, c3Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1","Some description."
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun descriptionOnTarget3() {
+        val targetConnection = Connection.findByName(client, c3, c3Type)[0]!!
         Table
             .select(client)
             .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
@@ -113,11 +158,6 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val t1 = Connection.findByName(client, c2, c2Type)[0]!!
-        val t2 = Connection.findByName(client, c3, c3Type)[0]!!
-        val f1 = t1.qualifiedName.replace("/", "_")
-        val f2 = t2.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$f1.csv", "CSA_EM_transformed_$f2.csv"))
     }
 
     @Test
