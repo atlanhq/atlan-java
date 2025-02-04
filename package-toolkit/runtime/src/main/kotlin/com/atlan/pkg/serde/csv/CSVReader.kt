@@ -345,6 +345,7 @@ class CSVReader
                                     primaryBatch.updated,
                                     primaryBatch.restored,
                                     primaryBatch.skipped,
+                                    primaryBatch.failures,
                                     primaryBatch.numCreated,
                                     primaryBatch.numUpdated,
                                     primaryBatch.numRestored,
@@ -360,6 +361,7 @@ class CSVReader
                                     relatedBatch.updated,
                                     relatedBatch.restored,
                                     relatedBatch.skipped,
+                                    relatedBatch.failures,
                                     relatedBatch.numCreated,
                                     relatedBatch.numUpdated,
                                     relatedBatch.numRestored,
@@ -377,10 +379,13 @@ class CSVReader
             totalFailures: AtomicLong,
         ) {
             if (b.failures.isNotEmpty()) {
-                for (f in b.failures) {
-                    logger.info { "Failed batch reason: ${f.failureReason}" }
-                    totalFailures.getAndAdd(f.failedAssets.size.toLong())
-                    for (failed in f.failedAssets) {
+                for (f in b.failures.entrySet()) {
+                    logger.info { "Failed batch reason: ${f.value.failureReason}" }
+                    totalFailures.getAndAdd(
+                        f.value.failedAssets.size
+                            .toLong(),
+                    )
+                    for (failed in f.value.failedAssets) {
                         logger.info {
                             " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
                         }

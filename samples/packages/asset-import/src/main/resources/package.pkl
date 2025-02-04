@@ -21,6 +21,9 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
+    ["overall-stats"] = "/tmp/overall-stats.csv"
+    ["failed-assets"] = "/tmp/failed-assets.csv"
+    ["skipped-assets"] = "/tmp/skipped-assets.csv"
   }
 }
 keywords {

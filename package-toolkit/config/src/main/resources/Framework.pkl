@@ -199,7 +199,9 @@ class AssetImport extends PublishConfig {
   fixed outputs {
     files {
       ["debug-logs"] = "/tmp/debug.log"
-      // TODO: add error file, once we produce it
+      ["overall-stats"] = "/tmp/overall-stats.csv"
+      ["failed-assets"] = "/tmp/failed-assets.csv"
+      ["skipped-assets"] = "/tmp/skipped-assets.csv"
     }
   }
   fixed containerImage = "ghcr.io/atlanhq/csa-asset-import:\(versionTag)"
