@@ -2,11 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import AssetImportCfg
 import RelationalAssetsBuilderCfg
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.rab.Importer.PREVIOUS_FILES_PREFIX
 import org.testng.annotations.Test
+import java.io.File
 import java.nio.file.Paths
 import kotlin.IllegalStateException
 import kotlin.test.assertFailsWith
@@ -38,13 +41,21 @@ class InvalidParentTest : PackageTest("ip") {
 
     override fun setup() {
         prepFile()
+        runCustomPackage(
+            RelationalAssetsBuilderCfg(
+                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsUpsertSemantic = "upsert",
+            ),
+            Importer::main,
+        )
         assertFailsWith(IllegalStateException::class, "Could not find any table/view at: $conn1/azure-cosmos-db/cosmosdb/xyz/schemaMismatch") {
             runCustomPackage(
-                RelationalAssetsBuilderCfg(
-                    assetsFile = Paths.get(testDirectory, testFile).toString(),
+                AssetImportCfg(
+                    assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
                     assetsUpsertSemantic = "upsert",
+                    assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
                 ),
-                Importer::main,
+                com.atlan.pkg.aim.Importer::main,
             )
         }
     }

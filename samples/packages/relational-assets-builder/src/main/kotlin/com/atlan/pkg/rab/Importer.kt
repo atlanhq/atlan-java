@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
-import AssetImportCfg
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
@@ -23,9 +22,11 @@ import com.atlan.pkg.util.DeltaProcessor
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
+import java.io.File
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.io.path.createFile
 import kotlin.system.exitProcess
 
 /**
@@ -97,34 +98,13 @@ object Importer {
         val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
         connectionImporter.import()?.close()
 
-        val transformedFile = transform(ctx, fieldSeparator, assetsInput)
+        transform(ctx, fieldSeparator, assetsInput, "$outputDirectory${File.separator}current-file-transformed.csv")
 
-        val previousFileXformed =
-            if (ctx.config.previousFileDirect.isNotBlank()) {
-                transform(ctx, fieldSeparator, ctx.config.previousFileDirect)
-            } else {
-                ""
-            }
-
-        val importConfig =
-            AssetImportCfg(
-                assetsFile = transformedFile,
-                assetsUpsertSemantic = ctx.config.assetsUpsertSemantic,
-                assetsDeltaSemantic = ctx.config.deltaSemantic,
-                assetsDeltaRemovalType = ctx.config.deltaRemovalType,
-                assetsDeltaReloadCalculation = ctx.config.deltaReloadCalculation,
-                assetsPreviousFileDirect = previousFileXformed,
-                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
-                assetsAttrToOverwrite = ctx.config.assetsAttrToOverwrite,
-                assetsFailOnErrors = ctx.config.assetsFailOnErrors,
-                assetsFieldSeparator = ctx.config.assetsFieldSeparator,
-                assetsBatchSize = ctx.config.assetsBatchSize,
-                trackBatches = ctx.config.trackBatches,
-            )
-        Utils.initializeContext(importConfig, ctx).use { iCtx ->
-            com.atlan.pkg.aim.Importer
-                .import(iCtx, outputDirectory)
-                ?.close()
+        if (ctx.config.previousFileDirect.isNotBlank()) {
+            transform(ctx, fieldSeparator, ctx.config.previousFileDirect, "$outputDirectory${File.separator}previous-file-transformed.csv")
+        } else {
+            // Just touch the file, so it isn't non-existent (which would break Argo)
+            Paths.get("$outputDirectory${File.separator}previous-file-transformed.csv").createFile()
         }
     }
 
@@ -132,7 +112,8 @@ object Importer {
         ctx: PackageContext<RelationalAssetsBuilderCfg>,
         fieldSeparator: Char,
         inputFile: String,
-    ): String {
+        outputFile: String,
+    ) {
         val targetHeaders = getHeader(inputFile, fieldSeparator).toMutableList()
         // Inject two columns at the end that we need for column assets
         targetHeaders.add(Column.ORDER.atlanFieldName)
@@ -155,7 +136,6 @@ object Importer {
         }
 
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
-        val transformedFile = "$inputFile.transformed.csv"
         // Determine any non-standard RAB fields in the header and append them to the end of
         // the list of standard header fields, so they're passed-through to asset import
         val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = fieldSeparator).toMutableList()
@@ -177,7 +157,7 @@ object Importer {
             .quoteStrategy(QuoteStrategies.NON_EMPTY)
             .lineDelimiter(LineDelimiter.PLATFORM)
             .build(
-                Paths.get(transformedFile),
+                Paths.get(outputFile),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING,
                 StandardOpenOption.WRITE,
@@ -208,7 +188,6 @@ object Importer {
                 val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 columnXformer.transform(writer)
             }
-        return transformedFile
     }
 
     private class Preprocessor(

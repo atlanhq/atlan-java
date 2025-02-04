@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import AssetImportCfg
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -25,8 +26,10 @@ import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
+import com.atlan.pkg.rab.Importer.PREVIOUS_FILES_PREFIX
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
+import java.io.File
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -199,6 +202,16 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 deltaSemantic = "full",
             ),
             Importer::main,
+        )
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
+                assetsUpsertSemantic = "upsert",
+                assetsDeltaSemantic = "full",
+                assetsFailOnErrors = true,
+                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
+            ),
+            com.atlan.pkg.aim.Importer::main,
         )
     }
 
@@ -587,6 +600,18 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
             ),
             Importer::main,
         )
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
+                assetsUpsertSemantic = "upsert",
+                assetsDeltaSemantic = "full",
+                assetsDeltaReloadCalculation = "changes",
+                assetsPreviousFileDirect = "$testDirectory${File.separator}previous-file-transformed.csv",
+                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
+                assetsFailOnErrors = true,
+            ),
+            com.atlan.pkg.aim.Importer::main,
+        )
         // Allow Elastic index and deletion to become consistent
         Thread.sleep(15000)
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
@@ -730,7 +755,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
     @Test(dependsOnGroups = ["rab.ctud.*"])
     fun previousRunFilesCreated() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
-        val directory = Paths.get(testDirectory, Importer.PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
+        val directory = Paths.get(testDirectory, PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
         assertNotNull(directory)
         assertTrue(directory.isDirectory)
         val files = directory.walkTopDown().filter { it.isFile }.toList()
