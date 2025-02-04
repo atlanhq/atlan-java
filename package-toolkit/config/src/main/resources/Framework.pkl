@@ -163,6 +163,11 @@ abstract class PublishConfig {
 class AssetImport extends PublishConfig {
   hidden assetsFile: FrameworkRenderer.NamePathPair? = null
   hidden assetsUpsertSemantic: ImportSemantic?|String? = null
+  hidden assetsDeltaSemantic: DeltaSemantic?|String? = null
+  hidden assetsDeltaRemovalType: RemovalType?|String? = null
+  hidden assetsDeltaReloadCalculation: ReloadCalculation?|String? = null
+  hidden assetsPreviousFileDirect: FrameworkRenderer.NamePathPair? = null
+  hidden assetsPreviousFilePrefix: String? = null
   hidden assetsConfig: ConfigType?|String? = null
   hidden assetsAttrToOverwrite: Listing<String>?|String? = null
   hidden assetsFailOnErrors: Boolean?|String? = null
@@ -437,6 +442,15 @@ typealias CodeLanguage = "Java"|"Kotlin"|"Python"|"Other"
 
 /// Options for the semantic to use when importing (publishing) assets in Atlan.
 typealias ImportSemantic = "upsert"|"update"|"partial"
+
+/// Options for the semantic to use when doing delta-calculations for loading assets into Atlan.
+typealias DeltaSemantic = "full"|"delta"
+
+/// Options for how assets should be removed when they are no longer detected via a delta calculation.
+typealias RemovalType = "archive"|"purge"
+
+/// Options for which assets should be reloaded after calculating a delta.
+typealias ReloadCalculation = "all"|"changes"
 
 /// Configuration type for a package.
 typealias ConfigType = "default"|"advanced"

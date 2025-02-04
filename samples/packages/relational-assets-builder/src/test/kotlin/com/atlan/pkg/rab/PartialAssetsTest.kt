@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import AssetImportCfg
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -17,7 +18,9 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.rab.Importer.PREVIOUS_FILES_PREFIX
 import org.testng.Assert.assertTrue
+import java.io.File
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -146,6 +149,16 @@ class PartialAssetsTest : PackageTest("pa") {
                 trackBatches = false,
             ),
             Importer::main,
+        )
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
+                assetsUpsertSemantic = "partial",
+                assetsFailOnErrors = true,
+                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
+                trackBatches = false,
+            ),
+            com.atlan.pkg.aim.Importer::main,
         )
     }
 
