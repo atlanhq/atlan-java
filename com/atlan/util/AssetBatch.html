@@ -204,7 +204,7 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
 <div class="col-last odd-row-color">
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache)" class="member-name-link">AssetBatch</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapFailureCache)" class="member-name-link">AssetBatch</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  int&nbsp;maxSize,
  boolean&nbsp;replaceAtlanTags,
  <a href="AssetBatch.CustomMetadataHandling.html" title="enum class in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling,
@@ -217,7 +217,8 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;created,
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;updated,
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;restored,
- <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped)</code></div>
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped,
+ <a href="../cache/OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a>&nbsp;failed)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 </div>
@@ -255,7 +256,7 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Assets that were created (minimal info only).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../cache/OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFailures()" class="member-name-link">getFailures</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
@@ -500,7 +501,7 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache)">
+<section class="detail" id="&lt;init&gt;(com.atlan.AtlanClient,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling,boolean,boolean,boolean,boolean,com.atlan.model.enums.AssetCreationHandling,boolean,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapAssetCache,com.atlan.cache.OffHeapFailureCache)">
 <h3>AssetBatch</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AssetBatch</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  int&nbsp;maxSize,
@@ -515,7 +516,8 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;created,
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;updated,
  <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;restored,
- <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped)</span></div>
+ <a href="../cache/OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a>&nbsp;skipped,
+ <a href="../cache/OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a>&nbsp;failed)</span></div>
 <div class="block">Create a new batch of assets to be bulk-saved.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -533,6 +535,7 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
 <dd><code>updated</code> - off-heap asset cache tracking assets that have been updated</dd>
 <dd><code>restored</code> - off-heap asset cache tracking assets that have been restored</dd>
 <dd><code>skipped</code> - off-heap asset cache tracking assets that have been skipped</dd>
+<dd><code>failed</code> - off-heap cache tracking batches of assets that have failed</dd>
 </dl>
 </section>
 </li>
@@ -642,7 +645,7 @@ implements <a href="../model/core/AtlanCloseable.html" title="interface in com.a
 <li>
 <section class="detail" id="getFailures()">
 <h3>getFailures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AssetBatch.FailedBatch.html" title="class in com.atlan.util">AssetBatch.FailedBatch</a>&gt;</span>&nbsp;<span class="element-name">getFailures</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../cache/OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a></span>&nbsp;<span class="element-name">getFailures</span>()</div>
 <div class="block">Batches that failed to be committed (only populated when captureFailures is set to true).</div>
 </section>
 </li>
