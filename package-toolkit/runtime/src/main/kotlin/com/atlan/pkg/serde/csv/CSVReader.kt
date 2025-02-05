@@ -235,7 +235,7 @@ class CSVReader
                     val totalRestore = primaryBatch.numRestored
                     val totalSkipped = primaryBatch.numSkipped
                     val totalFailures = AtomicLong(0)
-                    someFailure = someFailure || primaryBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (primaryBatch.failures?.isNotEmpty() == true)
                     logFailures(primaryBatch, logger, totalFailures)
                     logSkipped(primaryBatch, logger)
                     logger.info { "Total assets created : $totalCreates" }
@@ -288,7 +288,7 @@ class CSVReader
                     val totalCreatesR = relatedBatch.numCreated
                     val totalUpdatesR = relatedBatch.numUpdated
                     val totalFailuresR = AtomicLong(0)
-                    someFailure = someFailure || relatedBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (relatedBatch.failures?.isNotEmpty() == true)
                     logFailures(relatedBatch, logger, totalFailuresR)
                     logger.info { "Total related assets created: $totalCreatesR" }
                     logger.info { "Total related assets updated: $totalUpdatesR" }
@@ -378,7 +378,7 @@ class CSVReader
             logger: KLogger,
             totalFailures: AtomicLong,
         ) {
-            if (b.failures.isNotEmpty()) {
+            if (b.failures?.isNotEmpty() == true) {
                 for (f in b.failures.entrySet()) {
                     logger.info { "Failed batch reason: ${f.value.failureReason}" }
                     totalFailures.getAndAdd(
