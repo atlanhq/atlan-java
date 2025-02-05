@@ -3,6 +3,8 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.cache.OffHeapAssetCache
+import com.atlan.cache.OffHeapFailureCache
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
@@ -101,6 +103,7 @@ object Importer {
             }
 
         // 3. Assets (last) -- since these may be related to the other objects loaded above
+        val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
         val resultsAssets =
             if (assetsFileProvided) {
                 val assetsInput =
@@ -148,6 +151,7 @@ object Importer {
                     val importedAssets = assetImporter.import()
 
                     delta.processDeletions()
+                    deletedAssets.putAll(delta.deletedAssets)
 
                     // Note: we won't close the original set of changes here, as we'll combine it later for a full set of changes
                     // (at which point, it will be closed)
@@ -160,132 +164,78 @@ object Importer {
                 null
             }
         val results = ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
-        CSVWriter("$outputDirectory${File.separator}overall-stats.csv").use { csv ->
+        CSVWriter("$outputDirectory${File.separator}results.csv").use { csv ->
             csv.writeHeader(
                 listOf(
-                    "Assets",
-                    "Count",
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Created",
-                    "Count" to (results?.primary?.numCreated ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Updated",
-                    "Count" to (results?.primary?.numUpdated ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Restored",
-                    "Count" to (results?.primary?.numRestored ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Skipped",
-                    "Count" to (results?.primary?.skipped?.size ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Created (related)",
-                    "Count" to (results?.related?.numCreated ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Updated (related)",
-                    "Count" to (results?.related?.numUpdated ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Restored (related)",
-                    "Count" to (results?.related?.numRestored ?: 0),
-                ),
-            )
-            csv.writeRecord(
-                mapOf(
-                    "Assets" to "Skipped (related)",
-                    "Count" to (results?.related?.skipped?.size ?: 0),
-                ),
-            )
-        }
-        CSVWriter("$outputDirectory${File.separator}failed-assets.csv").use { csv ->
-            csv.writeHeader(
-                listOf(
-                    "Batch ID",
+                    "Action",
                     "Asset type",
+                    "Asset GUID",
                     "Qualified name",
+                    "Asset name",
                     "Loaded as",
+                    "Batch ID",
                     "Failure reason",
                 ),
             )
-            results?.primary?.failed?.entrySet()?.forEach { entry ->
-                val batchId = entry.key
-                val failedBatch = entry.value
-                failedBatch.failedAssets.forEach { asset ->
-                    csv.writeRecord(
-                        mapOf(
-                            "Batch ID" to batchId,
-                            "Asset type" to asset.typeName,
-                            "Qualified name" to asset.qualifiedName,
-                            "Loaded as" to "primary",
-                            "Failure reason" to failedBatch.failureReason.toString(),
-                        ),
-                    )
-                }
-            }
-            results?.related?.failed?.entrySet()?.forEach { entry ->
-                val batchId = entry.key
-                val failedBatch = entry.value
-                failedBatch.failedAssets.forEach { asset ->
-                    csv.writeRecord(
-                        mapOf(
-                            "Batch ID" to batchId,
-                            "Asset type" to asset.typeName,
-                            "Qualified name" to asset.qualifiedName,
-                            "Loaded as" to "related",
-                            "Failure reason" to failedBatch.failureReason.toString(),
-                        ),
-                    )
-                }
-            }
+            addFailures(csv, results?.primary?.failed, "primary")
+            addFailures(csv, results?.related?.failed, "related")
+            addResults(csv, results?.primary?.skipped, "skipped", "primary")
+            addResults(csv, results?.related?.skipped, "skipped", "related")
+            addResults(csv, results?.primary?.created, "created", "primary")
+            addResults(csv, results?.related?.created, "created", "related")
+            addResults(csv, results?.primary?.updated, "updated", "primary")
+            addResults(csv, results?.related?.updated, "updated", "related")
+            addResults(csv, results?.primary?.restored, "restored", "primary")
+            addResults(csv, results?.related?.restored, "restored", "related")
+            addResults(csv, deletedAssets, "deleted", "")
         }
-        CSVWriter("$outputDirectory${File.separator}skipped-assets.csv").use { csv ->
-            csv.writeHeader(
-                listOf(
-                    "Asset type",
-                    "Qualified name",
-                    "Loaded as",
+        deletedAssets.close()
+        return results
+    }
+
+    private fun addResults(
+        csv: CSVWriter,
+        cache: OffHeapAssetCache?,
+        action: String,
+        loadedAs: String,
+    ) {
+        cache?.entrySet()?.forEach { entry ->
+            val asset = entry.value
+            csv.writeRecord(
+                mapOf(
+                    "Action" to action,
+                    "Asset type" to asset.typeName,
+                    "Qualified name" to asset.qualifiedName,
+                    "Loaded as" to loadedAs,
+                    "Asset GUID" to asset.guid,
+                    "Asset name" to (asset.name ?: ""),
                 ),
             )
-            results?.primary?.skipped?.entrySet()?.forEach { entry ->
-                val asset = entry.value
+        }
+    }
+
+    private fun addFailures(
+        csv: CSVWriter,
+        cache: OffHeapFailureCache?,
+        loadedAs: String,
+    ) {
+        cache?.entrySet()?.forEach { entry ->
+            val batchId = entry.key
+            val failedBatch = entry.value
+            failedBatch.failedAssets.forEach { asset ->
                 csv.writeRecord(
                     mapOf(
+                        "Action" to "failed",
+                        "Batch ID" to batchId,
                         "Asset type" to asset.typeName,
                         "Qualified name" to asset.qualifiedName,
-                        "Loaded as" to "primary",
-                    ),
-                )
-            }
-            results?.related?.skipped?.entrySet()?.forEach { entry ->
-                val asset = entry.value
-                csv.writeRecord(
-                    mapOf(
-                        "Asset type" to asset.typeName,
-                        "Qualified name" to asset.qualifiedName,
-                        "Loaded as" to "related",
+                        "Loaded as" to loadedAs,
+                        "Failure reason" to failedBatch.failureReason.toString(),
+                        "Asset GUID" to asset.guid,
+                        "Asset name" to (asset.name ?: ""),
                     ),
                 )
             }
         }
-        return results
     }
 }
