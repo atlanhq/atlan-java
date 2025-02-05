@@ -42,7 +42,6 @@ abstract class GTCImporter(
         attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite.toMutableList(), "glossaries", logger),
         updateOnly = ctx.config.glossariesUpsertSemantic == "update",
         batchSize = ctx.config.glossariesBatchSize.toInt(),
-        failOnErrors = ctx.config.glossariesFailOnErrors,
         fieldSeparator = ctx.config.glossariesFieldSeparator[0],
         trackBatches = true,
     ) {

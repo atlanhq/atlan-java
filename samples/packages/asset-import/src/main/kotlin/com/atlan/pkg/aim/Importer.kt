@@ -72,6 +72,12 @@ object Importer {
             } else {
                 null
             }
+        if (resultsGTC?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading glossaries, failing the workflow." }
+            createResultsFile(outputDirectory, resultsGTC)
+            resultsGTC.close()
+            exitProcess(1)
+        }
 
         // 2. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
         val resultsDDP =
@@ -101,6 +107,13 @@ object Importer {
             } else {
                 null
             }
+        if (resultsDDP?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading data products, failing the workflow." }
+            ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP).use { combined ->
+                createResultsFile(outputDirectory, combined)
+            }
+            exitProcess(2)
+        }
 
         // 3. Assets (last) -- since these may be related to the other objects loaded above
         val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
@@ -164,17 +177,32 @@ object Importer {
                 null
             }
         val results = ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
+        createResultsFile(outputDirectory, results, deletedAssets)
+        deletedAssets.close()
+        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading assets, failing the workflow." }
+            results.close()
+            exitProcess(3)
+        }
+        return results
+    }
+
+    private fun createResultsFile(
+        outputDirectory: String,
+        results: ImportResults?,
+        deletedAssets: OffHeapAssetCache? = null,
+    ) {
         CSVWriter("$outputDirectory${File.separator}results.csv").use { csv ->
             csv.writeHeader(
                 listOf(
                     "Action",
                     "Asset type",
-                    "Asset GUID",
                     "Qualified name",
                     "Asset name",
                     "Loaded as",
-                    "Batch ID",
                     "Failure reason",
+                    "Batch ID",
+                    "Asset GUID",
                 ),
             )
             addFailures(csv, results?.primary?.failed, "primary")
@@ -189,8 +217,6 @@ object Importer {
             addResults(csv, results?.related?.restored, "restored", "related")
             addResults(csv, deletedAssets, "deleted", "")
         }
-        deletedAssets.close()
-        return results
     }
 
     private fun addResults(

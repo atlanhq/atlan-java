@@ -468,7 +468,7 @@ public class ParallelBatch implements AtlanCloseable {
         if (failures == null) {
             lock.writeLock().lock();
             try {
-                failures = new OffHeapFailureCache("p-failed");
+                failures = new OffHeapFailureCache(client, "p-failed");
                 for (AssetBatch batch : batchMap.values()) {
                     if (batch.getFailures().isNotClosed()) {
                         failures.extendedWith(batch.getFailures(), true);

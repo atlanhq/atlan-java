@@ -2,9 +2,8 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.cache;
 
-import com.atlan.serde.Serde;
+import com.atlan.AtlanClient;
 import com.atlan.util.AssetBatch;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -13,8 +12,18 @@ import java.nio.charset.StandardCharsets;
  * memory usage.
  */
 public class OffHeapFailureCache extends AbstractOffHeapCache<String, AssetBatch.FailedBatch> {
-    public OffHeapFailureCache(String name) {
+
+    private final AtlanClient client;
+
+    /**
+     * Construct new cache for failures.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param name to distinguish which cache is which
+     */
+    public OffHeapFailureCache(AtlanClient client, String name) {
         super(name);
+        this.client = client;
     }
 
     /** {@inheritDoc} */
@@ -33,8 +42,8 @@ public class OffHeapFailureCache extends AbstractOffHeapCache<String, AssetBatch
     @Override
     public byte[] serializeValue(AssetBatch.FailedBatch value) {
         try {
-            return Serde.allInclusiveMapper.writeValueAsBytes(value);
-        } catch (JsonProcessingException e) {
+            return client.writeValueAsBytes(value);
+        } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -43,7 +52,7 @@ public class OffHeapFailureCache extends AbstractOffHeapCache<String, AssetBatch
     @Override
     public AssetBatch.FailedBatch deserializeValue(byte[] bytes) {
         try {
-            return Serde.allInclusiveMapper.readValue(bytes, AssetBatch.FailedBatch.class);
+            return client.readValue(bytes, AssetBatch.FailedBatch.class);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }

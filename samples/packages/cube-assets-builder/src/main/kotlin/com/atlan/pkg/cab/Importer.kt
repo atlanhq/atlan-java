@@ -90,7 +90,13 @@ object Importer {
         // We also need to load these connections first, irrespective of any delta calculation, so that
         // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
         val connectionImporter = ConnectionImporter(ctx, preprocessedDetails, logger)
-        connectionImporter.import()?.close()
+        val connectionResults = connectionImporter.import()
+        if (connectionResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading connections, failing the workflow." }
+            connectionResults.close()
+            exitProcess(1)
+        }
+        connectionResults?.close()
 
         val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(preprocessedDetails.connectionIdentity, null)
         if (connectionQN == null) {
@@ -119,19 +125,35 @@ object Importer {
             logger.info { " --- Importing cubes... ---" }
             val cubeImporter = CubeImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val cubeImporterResults = cubeImporter.import()
+            if (cubeImporterResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+                logger.error { "Some errors detected while loading cubes, failing the workflow." }
+                exitProcess(2)
+            }
 
             logger.info { " --- Importing dimensions... ---" }
             val dimensionImporter = DimensionImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val dimResults = dimensionImporter.import()
+            if (dimResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+                logger.error { "Some errors detected while loading dimensions, failing the workflow." }
+                exitProcess(3)
+            }
 
             logger.info { " --- Importing hierarchies... ---" }
             val hierarchyImporter = HierarchyImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             val hierResults = hierarchyImporter.import()
+            if (hierResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+                logger.error { "Some errors detected while loading hierarchies, failing the workflow." }
+                exitProcess(4)
+            }
 
             logger.info { " --- Importing fields... ---" }
             val fieldImporter = FieldImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
             fieldImporter.preprocess()
             val fieldResults = fieldImporter.import()
+            if (fieldResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+                logger.error { "Some errors detected while loading fields, failing the workflow." }
+                exitProcess(5)
+            }
 
             delta.processDeletions()
 

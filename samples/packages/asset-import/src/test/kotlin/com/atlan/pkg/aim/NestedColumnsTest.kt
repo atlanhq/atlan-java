@@ -18,7 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * Test import of source tag values.
+ * Test import of nested columns.
  */
 class NestedColumnsTest : PackageTest("nc") {
     override val logger = Utils.getLogger(this.javaClass.name)

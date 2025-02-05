@@ -59,7 +59,6 @@ abstract class AssetImporter(
         batchSize = batchSize,
         trackBatches = trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
-        failOnErrors = ctx.config.assetsFailOnErrors,
     ) {
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {

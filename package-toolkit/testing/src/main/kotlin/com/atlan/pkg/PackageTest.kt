@@ -47,7 +47,7 @@ abstract class PackageTest(
     protected abstract val logger: KLogger
 
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
-    private val sysExit = SystemExit()
+    protected val sysExit = SystemExit()
     protected val client = AtlanClient()
     protected val testDirectory = makeUnique("")
 

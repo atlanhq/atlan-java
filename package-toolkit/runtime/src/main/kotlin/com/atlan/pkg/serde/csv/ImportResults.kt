@@ -75,7 +75,7 @@ data class ImportResults(
                 val updated = OffHeapAssetCache(client, "ir-updated")
                 val restored = OffHeapAssetCache(client, "ir-restored")
                 val skipped = OffHeapAssetCache(client, "ir-skipped")
-                val failed = OffHeapFailureCache("ir-failed")
+                val failed = OffHeapFailureCache(client, "ir-failed")
                 val guidAssignments = mutableMapOf<String, String>()
                 val qualifiedNames = mutableMapOf<AssetIdentity, String>()
                 others
