@@ -87,13 +87,13 @@ abstract class AssetXformer(
             ctx: PackageContext<RelationalAssetsBuilderCfg>,
             inputRow: Map<String, String>,
         ): String {
-            val connectorType = trimWhitespace(inputRow.getOrElse("connectorType") { "" })
+            val connectorType = getConnectorType(inputRow)
             val connectionName = trimWhitespace(inputRow.getOrElse(Asset.CONNECTION_NAME.atlanFieldName) { "" })
             val connectionId = ConnectionIdentity(connectionName, connectorType)
             return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
         }
 
-        fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" })
+        fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" }).lowercase()
 
         /**
          * Attempt to resolve the full SQL hierarchy details of a row (asset).
