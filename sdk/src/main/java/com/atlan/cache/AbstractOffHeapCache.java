@@ -129,7 +129,7 @@ public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
             if (internal.isClosed())
                 throw new IllegalStateException("Off-heap cache is closed -- cannot bulk-add keys and values to it.");
             try (WriteBatch batch = new WriteBatch();
-                 WriteOptions options = new WriteOptions()) {
+                    WriteOptions options = new WriteOptions()) {
                 try (RocksIterator iterator = other.internal.newIterator()) {
                     for (iterator.seekToFirst(); iterator.isValid(); iterator.next()) {
                         batch.put(iterator.key(), iterator.value());
