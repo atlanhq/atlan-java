@@ -54,7 +54,7 @@ class DeltaProcessor(
     private val objectStore = Utils.getBackingStore(outputDirectory)
     private var initialLoad: Boolean = true
     private var delta: FileBasedDelta? = null
-    private var deletedAssets: OffHeapAssetCache? = null
+    var deletedAssets: OffHeapAssetCache? = null
     private val reloadAll = reloadSemantic == "all"
 
     /**
