@@ -74,6 +74,8 @@ object Importer {
             }
         if (resultsGTC?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
             logger.error { "Some errors detected while loading glossaries, failing the workflow." }
+            createResultsFile(outputDirectory, resultsGTC)
+            resultsGTC.close()
             exitProcess(1)
         }
 
@@ -107,6 +109,9 @@ object Importer {
             }
         if (resultsDDP?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
             logger.error { "Some errors detected while loading data products, failing the workflow." }
+            ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP).use { combined ->
+                createResultsFile(outputDirectory, combined)
+            }
             exitProcess(2)
         }
 
@@ -172,6 +177,21 @@ object Importer {
                 null
             }
         val results = ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
+        createResultsFile(outputDirectory, results, deletedAssets)
+        deletedAssets.close()
+        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading assets, failing the workflow." }
+            results.close()
+            exitProcess(3)
+        }
+        return results
+    }
+
+    private fun createResultsFile(
+        outputDirectory: String,
+        results: ImportResults?,
+        deletedAssets: OffHeapAssetCache? = null,
+    ) {
         CSVWriter("$outputDirectory${File.separator}results.csv").use { csv ->
             csv.writeHeader(
                 listOf(
@@ -197,12 +217,6 @@ object Importer {
             addResults(csv, results?.related?.restored, "restored", "related")
             addResults(csv, deletedAssets, "deleted", "")
         }
-        deletedAssets.close()
-        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
-            logger.error { "Some errors detected while loading assets, failing the workflow." }
-            exitProcess(3)
-        }
-        return results
     }
 
     private fun addResults(
