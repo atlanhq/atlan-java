@@ -238,7 +238,6 @@ class AssetImporter(
         caseSensitive = ctx.config.assetsCaseSensitive,
         creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
         tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
-        failOnErrors = ctx.config.assetsFailOnErrors,
         trackBatches = ctx.config.trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {

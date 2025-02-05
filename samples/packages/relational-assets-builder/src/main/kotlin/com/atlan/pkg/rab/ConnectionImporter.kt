@@ -42,7 +42,6 @@ class ConnectionImporter(
         batchSize = 1,
         trackBatches = true,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
-        failOnErrors = ctx.config.assetsFailOnErrors,
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"

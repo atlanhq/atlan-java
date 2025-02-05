@@ -43,7 +43,6 @@ class DomainImporter(
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors,
         trackBatches = true,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
     ) {

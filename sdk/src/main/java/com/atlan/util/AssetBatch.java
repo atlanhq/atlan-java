@@ -31,8 +31,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Utility class for managing bulk updates in batches.
@@ -331,7 +333,8 @@ public class AssetBatch implements AtlanCloseable {
                         client, "restored_" + Thread.currentThread().getId()),
                 new OffHeapAssetCache(
                         client, "skipped_" + Thread.currentThread().getId()),
-                new OffHeapFailureCache("failed_" + Thread.currentThread().getId()));
+                new OffHeapFailureCache(
+                        client, "failed_" + Thread.currentThread().getId()));
     }
 
     /**
@@ -677,6 +680,8 @@ public class AssetBatch implements AtlanCloseable {
      * Internal class to capture batch failures.
      */
     @Getter
+    @Builder
+    @Jacksonized
     @EqualsAndHashCode
     public static final class FailedBatch {
         private final List<Asset> failedAssets;

@@ -72,6 +72,10 @@ object Importer {
             } else {
                 null
             }
+        if (resultsGTC?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading glossaries, failing the workflow." }
+            exitProcess(1)
+        }
 
         // 2. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
         val resultsDDP =
@@ -101,6 +105,10 @@ object Importer {
             } else {
                 null
             }
+        if (resultsDDP?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading data products, failing the workflow." }
+            exitProcess(2)
+        }
 
         // 3. Assets (last) -- since these may be related to the other objects loaded above
         val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
@@ -169,12 +177,12 @@ object Importer {
                 listOf(
                     "Action",
                     "Asset type",
-                    "Asset GUID",
                     "Qualified name",
                     "Asset name",
                     "Loaded as",
-                    "Batch ID",
                     "Failure reason",
+                    "Batch ID",
+                    "Asset GUID",
                 ),
             )
             addFailures(csv, results?.primary?.failed, "primary")
@@ -190,6 +198,10 @@ object Importer {
             addResults(csv, deletedAssets, "deleted", "")
         }
         deletedAssets.close()
+        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading assets, failing the workflow." }
+            exitProcess(3)
+        }
         return results
     }
 

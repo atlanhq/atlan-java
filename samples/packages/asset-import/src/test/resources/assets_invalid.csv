@@ -1,0 +1,2 @@
+qualifiedName,typeName,name,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,description,database,schema
+default/non-existent/1234567890/DB,Database,DB,sap-hybris,default/non-existent/1234567890,,,,,,,
