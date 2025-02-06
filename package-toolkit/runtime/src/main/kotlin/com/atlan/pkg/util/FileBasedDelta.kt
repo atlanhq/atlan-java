@@ -279,7 +279,7 @@ class FileBasedDelta(
             val currentCount = AtomicLong(0)
             if (totalToDelete < DELETION_BATCH) {
                 if (totalToDelete > 0) {
-                    client.assets.delete(guidList.map { it.key.toString() }.toList(), deletionType)
+                    client.assets.delete(guidList.map { it.key }.toList(), deletionType)
                 }
             } else {
                 // Delete in parallel
@@ -292,7 +292,7 @@ class FileBasedDelta(
                         val i = currentCount.getAndAdd(DELETION_BATCH.toLong())
                         logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                         if (batch.isNotEmpty()) {
-                            client.assets.delete(batch.map { it.key.toString() }, deletionType)
+                            client.assets.delete(batch.map { it.key }, deletionType)
                         }
                     }
             }
