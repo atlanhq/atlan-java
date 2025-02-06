@@ -32,6 +32,7 @@ class DeletedLinkTest : PackageTest("dlt") {
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.IBM_DB2
     private lateinit var connection: Connection
+    private lateinit var linkGuid: String
 
     private val testFile = "deleted_link.csv"
 
@@ -64,8 +65,6 @@ class DeletedLinkTest : PackageTest("dlt") {
             Database.NAME,
             Database.CONNECTION_QUALIFIED_NAME,
             Database.CONNECTOR_TYPE,
-            Database.DESCRIPTION,
-            Database.SCHEMAS,
             Database.LINKS,
         )
 
@@ -81,7 +80,7 @@ class DeletedLinkTest : PackageTest("dlt") {
         return response.getResult(db)
     }
 
-    private fun createLink(database: Database) {
+    private fun createLink(database: Database): String {
         val l = Link.creator(  //
             database.trimToReference(),  //
             LINK_NAME,  //
@@ -89,13 +88,15 @@ class DeletedLinkTest : PackageTest("dlt") {
             .build()
         var response = l.save(client)
         val link = response.getResult(l)
-        response = Asset.delete(client, link.guid)
+        val linkGuid = link.guid
+        response = Asset.delete(client, linkGuid)
         assertEquals(response.deletedAssets.size, 1)
+        return linkGuid
     }
 
     override fun setup() {
         connection = createConnection()
-        createLink(createDatabase(connection))
+        linkGuid = createLink(createDatabase(connection))
         prepFile()
         runCustomPackage(
             AssetImportCfg(
@@ -109,9 +110,13 @@ class DeletedLinkTest : PackageTest("dlt") {
     }
 
     override fun teardown() {
+        removeLink()
         removeConnection(conn1, conn1Type)
     }
 
+    private fun removeLink() {
+        Asset.purge(client, linkGuid) //
+    }
     @Test(groups = ["aim.ctud.create"])
     fun connection1Created() {
         validateConnection()
