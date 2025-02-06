@@ -292,7 +292,7 @@ class FileBasedDelta(
                         val i = currentCount.getAndAdd(DELETION_BATCH.toLong())
                         logger.info { " ... next batch of $DELETION_BATCH (${round((i.toDouble() / totalToDelete) * 100)}%)" }
                         if (batch.isNotEmpty()) {
-                            client.assets.delete(batch.map { it.toString() }, deletionType)
+                            client.assets.delete(batch.map { it.key.toString() }, deletionType)
                         }
                     }
             }
