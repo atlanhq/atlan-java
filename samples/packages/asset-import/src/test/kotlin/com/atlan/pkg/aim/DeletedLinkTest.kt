@@ -81,10 +81,10 @@ class DeletedLinkTest : PackageTest("dlt") {
     }
 
     private fun createLink(database: Database): String {
-        val l = Link.creator(  //
-            database.trimToReference(),  //
-            LINK_NAME,  //
-            LINK_URL)  //
+        val l = Link.creator(
+            database.trimToReference(),
+            LINK_NAME,
+            LINK_URL)
             .build()
         var response = l.save(client)
         val link = response.getResult(l)
