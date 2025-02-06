@@ -29,8 +29,8 @@ import kotlin.test.assertNotNull
 class CreateThenUpDeltaAIMTest : PackageTest("ctuda") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val conn1 = makeUnique("dl1")
-    private val conn1Type = AtlanConnectorType.POSTGRES
+    private val conn1 = makeUnique("c1")
+    private val conn1Type = AtlanConnectorType.IBM_DB2
     private lateinit var connection: Connection
 
     private val testFile = "assets.csv"

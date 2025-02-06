@@ -9,6 +9,7 @@ import com.atlan.model.assets.Database
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Schema
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
@@ -29,8 +30,8 @@ private const val DB_NAME = "DB"
 class DeletedLinkTest : PackageTest("dlt") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val conn1 = makeUnique("c1")
-    private val conn1Type = AtlanConnectorType.IBM_DB2
+    private val conn1 = makeUnique("dl1")
+    private val conn1Type = AtlanConnectorType.POSTGRES
     private lateinit var connection: Connection
     private lateinit var linkGuid: String
 
@@ -103,7 +104,7 @@ class DeletedLinkTest : PackageTest("dlt") {
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "upsert",
+                assetsUpsertSemantic = "update",
                 assetsFailOnErrors = true,
                 assetsDeltaSemantic = "full",
             ),
@@ -160,8 +161,10 @@ class DeletedLinkTest : PackageTest("dlt") {
         assertEquals(conn1Type, db.connectorType)
         val links = db.links
         assertEquals(links.size, 1)
-        val link = links.elementAt(0)
+        var link = links.elementAt(0)
         assertEquals(link.name, LINK_NAME)
         assertEquals(link.link, LINK_URL)
+        link = Link.get(client, link.guid)
+        assertEquals(link.status, AtlanStatus.ACTIVE)
     }
 }
