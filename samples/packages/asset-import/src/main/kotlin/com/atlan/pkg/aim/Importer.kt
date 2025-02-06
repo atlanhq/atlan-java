@@ -3,11 +3,15 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.cache.OffHeapAssetCache
+import com.atlan.cache.OffHeapFailureCache
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
+import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.DeltaProcessor
+import java.io.File
 import kotlin.system.exitProcess
 
 /**
@@ -39,7 +43,7 @@ object Importer {
             exitProcess(1)
         }
 
-        // Glossaries...
+        // 1. Glossaries -- everything else can be linked to terms
         val resultsGTC =
             if (glossariesFileProvided) {
                 val glossariesInput =
@@ -68,7 +72,51 @@ object Importer {
             } else {
                 null
             }
+        if (resultsGTC?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading glossaries, failing the workflow." }
+            createResultsFile(outputDirectory, resultsGTC)
+            resultsGTC.close()
+            exitProcess(1)
+        }
 
+        // 2. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
+        val resultsDDP =
+            if (dataProductsFileProvided) {
+                val dataProductsInput =
+                    Utils.getInputFile(
+                        ctx.config.dataProductsFile,
+                        outputDirectory,
+                        ctx.config.importType == "DIRECT",
+                        ctx.config.dataProductsPrefix,
+                        ctx.config.dataProductsKey,
+                    )
+                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors)
+                logger.info { "=== Importing domains... ===" }
+                val domainImporter = DomainImporter(ctx, dataProductsInput, logger)
+                if (domainImporter.preprocess().hasLinks) {
+                    ctx.linkCache.preload()
+                }
+                val resultsDomain = domainImporter.import()
+                logger.info { "=== Importing products... ===" }
+                val productImporter = ProductImporter(ctx, dataProductsInput, logger)
+                if (productImporter.preprocess().hasLinks) {
+                    ctx.linkCache.preload()
+                }
+                val resultsProduct = productImporter.import()
+                ImportResults.combineAll(ctx.client, true, resultsDomain, resultsProduct)
+            } else {
+                null
+            }
+        if (resultsDDP?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+            logger.error { "Some errors detected while loading data products, failing the workflow." }
+            ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP).use { combined ->
+                createResultsFile(outputDirectory, combined)
+            }
+            exitProcess(2)
+        }
+
+        // 3. Assets (last) -- since these may be related to the other objects loaded above
+        val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
         val resultsAssets =
             if (assetsFileProvided) {
                 val assetsInput =
@@ -116,6 +164,7 @@ object Importer {
                     val importedAssets = assetImporter.import()
 
                     delta.processDeletions()
+                    deletedAssets.putAll(delta.deletedAssets)
 
                     // Note: we won't close the original set of changes here, as we'll combine it later for a full set of changes
                     // (at which point, it will be closed)
@@ -127,35 +176,92 @@ object Importer {
             } else {
                 null
             }
+        val results = ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
+        createResultsFile(outputDirectory, results, deletedAssets)
+        deletedAssets.close()
+        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading assets, failing the workflow." }
+            results.close()
+            exitProcess(3)
+        }
+        return results
+    }
 
-        // Data products...
-        val resultsDDP =
-            if (dataProductsFileProvided) {
-                val dataProductsInput =
-                    Utils.getInputFile(
-                        ctx.config.dataProductsFile,
-                        outputDirectory,
-                        ctx.config.importType == "DIRECT",
-                        ctx.config.dataProductsPrefix,
-                        ctx.config.dataProductsKey,
-                    )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors)
-                logger.info { "=== Importing domains... ===" }
-                val domainImporter = DomainImporter(ctx, dataProductsInput, logger)
-                if (domainImporter.preprocess().hasLinks) {
-                    ctx.linkCache.preload()
-                }
-                val resultsDomain = domainImporter.import()
-                logger.info { "=== Importing products... ===" }
-                val productImporter = ProductImporter(ctx, dataProductsInput, logger)
-                if (productImporter.preprocess().hasLinks) {
-                    ctx.linkCache.preload()
-                }
-                val resultsProduct = productImporter.import()
-                ImportResults.combineAll(ctx.client, true, resultsDomain, resultsProduct)
-            } else {
-                null
+    private fun createResultsFile(
+        outputDirectory: String,
+        results: ImportResults?,
+        deletedAssets: OffHeapAssetCache? = null,
+    ) {
+        CSVWriter("$outputDirectory${File.separator}results.csv").use { csv ->
+            csv.writeHeader(
+                listOf(
+                    "Action",
+                    "Asset type",
+                    "Qualified name",
+                    "Asset name",
+                    "Loaded as",
+                    "Failure reason",
+                    "Batch ID",
+                    "Asset GUID",
+                ),
+            )
+            addFailures(csv, results?.primary?.failed, "primary")
+            addFailures(csv, results?.related?.failed, "related")
+            addResults(csv, results?.primary?.skipped, "skipped", "primary")
+            addResults(csv, results?.related?.skipped, "skipped", "related")
+            addResults(csv, results?.primary?.created, "created", "primary")
+            addResults(csv, results?.related?.created, "created", "related")
+            addResults(csv, results?.primary?.updated, "updated", "primary")
+            addResults(csv, results?.related?.updated, "updated", "related")
+            addResults(csv, results?.primary?.restored, "restored", "primary")
+            addResults(csv, results?.related?.restored, "restored", "related")
+            addResults(csv, deletedAssets, "deleted", "")
+        }
+    }
+
+    private fun addResults(
+        csv: CSVWriter,
+        cache: OffHeapAssetCache?,
+        action: String,
+        loadedAs: String,
+    ) {
+        cache?.entrySet()?.forEach { entry ->
+            val asset = entry.value
+            csv.writeRecord(
+                mapOf(
+                    "Action" to action,
+                    "Asset type" to asset.typeName,
+                    "Qualified name" to asset.qualifiedName,
+                    "Loaded as" to loadedAs,
+                    "Asset GUID" to asset.guid,
+                    "Asset name" to (asset.name ?: ""),
+                ),
+            )
+        }
+    }
+
+    private fun addFailures(
+        csv: CSVWriter,
+        cache: OffHeapFailureCache?,
+        loadedAs: String,
+    ) {
+        cache?.entrySet()?.forEach { entry ->
+            val batchId = entry.key
+            val failedBatch = entry.value
+            failedBatch.failedAssets.forEach { asset ->
+                csv.writeRecord(
+                    mapOf(
+                        "Action" to "failed",
+                        "Batch ID" to batchId,
+                        "Asset type" to asset.typeName,
+                        "Qualified name" to asset.qualifiedName,
+                        "Loaded as" to loadedAs,
+                        "Failure reason" to failedBatch.failureReason.toString(),
+                        "Asset GUID" to asset.guid,
+                        "Asset name" to (asset.name ?: ""),
+                    ),
+                )
             }
-        return ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsAssets)
+        }
     }
 }

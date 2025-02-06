@@ -4,6 +4,7 @@ package com.atlan.util;
 
 import com.atlan.AtlanClient;
 import com.atlan.cache.OffHeapAssetCache;
+import com.atlan.cache.OffHeapFailureCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -30,8 +31,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Utility class for managing bulk updates in batches.
@@ -116,7 +119,7 @@ public class AssetBatch implements AtlanCloseable {
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
-    private final List<FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapFailureCache failures;
 
     /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
     @Getter
@@ -329,7 +332,9 @@ public class AssetBatch implements AtlanCloseable {
                 new OffHeapAssetCache(
                         client, "restored_" + Thread.currentThread().getId()),
                 new OffHeapAssetCache(
-                        client, "skipped_" + Thread.currentThread().getId()));
+                        client, "skipped_" + Thread.currentThread().getId()),
+                new OffHeapFailureCache(
+                        client, "failed_" + Thread.currentThread().getId()));
     }
 
     /**
@@ -349,6 +354,7 @@ public class AssetBatch implements AtlanCloseable {
      * @param updated off-heap asset cache tracking assets that have been updated
      * @param restored off-heap asset cache tracking assets that have been restored
      * @param skipped off-heap asset cache tracking assets that have been skipped
+     * @param failed off-heap cache tracking batches of assets that have failed
      */
     public AssetBatch(
             AtlanClient client,
@@ -364,7 +370,8 @@ public class AssetBatch implements AtlanCloseable {
             OffHeapAssetCache created,
             OffHeapAssetCache updated,
             OffHeapAssetCache restored,
-            OffHeapAssetCache skipped) {
+            OffHeapAssetCache skipped,
+            OffHeapFailureCache failed) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -379,6 +386,7 @@ public class AssetBatch implements AtlanCloseable {
         this.updated = updated;
         this.restored = restored;
         this.skipped = skipped;
+        this.failures = failed;
     }
 
     /**
@@ -527,7 +535,7 @@ public class AssetBatch implements AtlanCloseable {
                     }
                 } catch (AtlanException e) {
                     if (captureFailures) {
-                        failures.add(new FailedBatch(_batch, e));
+                        track(failures, _batch, e);
                     } else {
                         throw e;
                     }
@@ -626,6 +634,25 @@ public class AssetBatch implements AtlanCloseable {
         }
     }
 
+    private void track(OffHeapFailureCache tracker, List<Asset> batch, Exception failureReason) {
+        List<Asset> minimal = new ArrayList<>();
+        for (Asset asset : batch) {
+            try {
+                minimal.add(asset.trimToRequired()
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            } catch (InvalidRequestException e) {
+                minimal.add(IndistinctAsset._internal()
+                        .typeName(asset.getTypeName())
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            }
+        }
+        tracker.put(UUID.randomUUID().toString(), new FailedBatch(minimal, failureReason));
+    }
+
     /**
      * Construct the minimal asset representation necessary for the asset to be included in a
      * persistent connection cache.
@@ -653,12 +680,15 @@ public class AssetBatch implements AtlanCloseable {
      * Internal class to capture batch failures.
      */
     @Getter
+    @Builder
+    @Jacksonized
+    @EqualsAndHashCode
     public static final class FailedBatch {
         private final List<Asset> failedAssets;
         private final Exception failureReason;
 
         public FailedBatch(List<Asset> failedAssets, Exception failureReason) {
-            this.failedAssets = List.copyOf(failedAssets);
+            this.failedAssets = failedAssets;
             this.failureReason = failureReason;
         }
     }

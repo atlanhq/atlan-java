@@ -1,0 +1,1189 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+
+/// Module for rendering the outputs for a custom package's configuration in Atlan.
+@ModuleInfo { minPklVersion = "0.25.1" }
+module com.atlan.pkg.FrameworkRenderer
+
+import "Framework.pkl"
+import "Connectors.pkl"
+import "Credential.pkl"
+
+/// Render the configmap YAML file.
+const function getConfigMap(m: Framework): FileOutput = new FileOutput {
+  value = new ConfigMap {
+    name = m.name
+    config = m.uiConfig
+  }
+  renderer = new YamlRenderer {}
+}
+
+/// Render the connector-specific credential configmap YAML file.
+const function getCredentialConfigMap(m: Credential): FileOutput = new FileOutput {
+  value = new ConnectorConfigMap {
+    name = m.name
+    config = m
+  }
+  renderer = new YamlRenderer {}
+}
+
+local const function getProcessTemplate(
+  templateName: String,
+  uiCfg: Framework.UIConfig,
+  publish: Framework.PublishConfig?,
+  package: String,
+  outs: Framework.WorkflowOutputs?,
+  img: String,
+  pullPolicy: Framework.ImagePullPolicy,
+  cmd: List<String>,
+  arguments: List<String>,
+  params: Map<String, String>?,
+  inputFiles: Boolean,
+  inputArtifacts: List<NamedPair>
+) = new WorkflowTemplateDefinition {
+  name = templateName
+  cfg = uiCfg
+  pub = publish
+  f = inputFiles
+  directInputFiles = inputArtifacts
+  container = new WorkflowContainer {
+    config = cfg
+    image = img
+    command = cmd
+    args = arguments
+    imagePullPolicy = pullPolicy
+    volumeMounts = if (credVariable != null) new Listing {
+      new VolumeMount {
+        name = "credentials"
+        mountPath = "/tmp/credentials"
+      }
+    } else null
+    passthroughParams = params
+  }
+  outputs = outs
+  pkg = package
+  credVariable = let (creds = cfg.properties.filter((_, u) -> u is Framework.CredentialInput))
+      if (creds.isEmpty) null else creds.keys.first
+  volumes = if (credVariable != null) new Listing {
+    new EmptyDirVolume {
+      name = "credentials"
+    }
+  } else null
+  initContainers = if (credVariable != null) new Listing {
+    new WorkflowContainer {
+      name = "fetch-credentials"
+      image = "ghcr.io/atlanhq/rest-master:af621a5"
+      command = new Listing {
+        "/bin/sh"
+        "-c"
+          """
+          if [ -z "$\(credVariable.toUpperCase())" ]; then exit 0; fi
+          python3 main.py GET http://heracles-service.heracles.svc.cluster.local/credentials/$\(credVariable.toUpperCase())/use --raw-input '{}' --raw-input-file-pattern '' --raw-input-file-sort '' --raw-input-multiline f --execution-script "if state == ExecutionState.API_FAIL and (response.status_code >= 500 or response.status_code in {400}):\\n  LOGGER.debug('Heracles is unavailable. Performing retry with back-off')\\n  failure_handler = FailureHandler.RETRY\\nif state == ExecutionState.OUTPUT_PROCESS:\\n  output = json.loads(output)\\nif state == ExecutionState.API_POST:\\n  stop = True" --raw-input-paginate '0' --auth-type oauth2 --auth-oauth2-type client_credentials --auth-oauth2-impersonate-user "$IMPERSONATE_USER" --auth-oauth2-client-credentials-client-id CLIENT_ID --auth-oauth2-client-credentials-secret CLIENT_SECRET --auth-oauth2-client-credentials-token-url TOKEN_URL --output-chunk-size '0' --output-file-prefix /tmp/credentials --pagination-wait-time '0' --max-retries '10'
+          """
+      }.toList()
+      env = new Listing {
+        new NameValuePair {
+          name = "IMPERSONATE_USER"
+          value = "{{=sprig.ternary(sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow), '', 'true' == inputs.parameters['impersonate'])}}"
+        }
+        new NameValuePair {
+          name = credVariable.toUpperCase()
+          value = "{{inputs.parameters.\(credVariable)}}"
+        }
+        new NameValuePair {
+          name = "OAUTHLIB_INSECURE_TRANSPORT"
+          value = "1"
+        }
+        new NamedSecret {
+          name = "CLIENT_ID"
+          secretName = "argo-client-creds"
+          secretKey = "login"
+        }
+        new NamedSecret {
+          name = "CLIENT_SECRET"
+          secretName = "argo-client-creds"
+          secretKey = "password"
+        }
+        new NamedSecret {
+          name = "TOKEN_URL"
+          secretName = "argo-client-creds"
+          secretKey = "host"
+        }
+      }.toList()
+      mirrorVolumeMounts = true
+    }
+  } else null
+}
+
+/// Render the workflow template YAML file.
+const function getWorkflowTemplate(m: Framework): FileOutput = new FileOutput {
+  value = new WorkflowTemplate {
+    name = m.name
+    template = getProcessTemplate(
+      m.name,
+      m.uiConfig,
+      m.publishConfig,
+      m.name,
+      m.outputs,
+      m.containerImage,
+      m.containerImagePullPolicy,
+      m.command,
+      m.args,
+      null, // Only include UI-based parameters at the top-most level
+      true, // Always include file details at the top-most level (?)
+      List() // Do not passthrough any non-UI-provided artifacts as inputs at the top-most level
+    )
+  }
+  renderer = new YamlRenderer {}
+}
+
+/// Render the index.js file.
+const function getIndexJs(): FileOutput = new FileOutput {
+  text = """
+    function dummy() {
+        console.log("don't call this.")
+    }
+    module.exports = dummy;
+    """
+}
+
+/// Render the package.json file.
+const function getPackageJson(m: Framework): FileOutput = new FileOutput {
+  value = new PackageDefinition {
+    packageId = m.packageId
+    packageName = m.packageName
+    version = m.version.toString()
+    description = m.description
+    iconUrl = m.iconUrl
+    docsUrl = m.docsUrl
+    keywords = m.keywords
+    allowSchedule = m.allowSchedule
+    certified = m.certified
+    preview = m.preview
+    connectorType = m.connectorType
+    category = m.category
+  }
+  renderer = new JsonRenderer {}
+}
+
+/// Render the Kotlin class file that strongly-types the configuration handover.
+const function getConfigClassKt(m: Framework, className: String): FileOutput = new FileOutput {
+  text = new Listing {
+      """
+      /* SPDX-License-Identifier: Apache-2.0
+         Copyright 2024 Atlan Pte. Ltd. */
+      import com.atlan.model.assets.Connection
+      import com.atlan.pkg.CustomConfig
+      import com.atlan.pkg.model.ConnectorAndConnections
+      import com.atlan.pkg.serde.WidgetSerde
+      import com.fasterxml.jackson.annotation.JsonAutoDetect
+      import com.fasterxml.jackson.annotation.JsonProperty
+      import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+      import com.fasterxml.jackson.databind.annotation.JsonSerialize
+      import javax.annotation.processing.Generated;
+
+      /**
+       * Expected configuration for the \(m.packageName) custom package.
+       */
+      @Generated("com.atlan.pkg.CustomPackage")
+      @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+      data class \(className)(
+      """
+    for (k, u in m.uiConfig.properties) {(
+    if (u is Framework.DropDown || u is Framework.MultipleGroups || u is Framework.MultipleUsers || u is Framework.ConnectionSelector)
+      """
+          @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+          @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): List<String>\(getFallback(u)),
+      """
+    else if (u is Framework.ConnectorTypeSelector)
+      """
+          @JsonDeserialize(using = WidgetSerde.ConnectorAndConnectionsDeserializer::class)
+          @JsonSerialize(using = WidgetSerde.ConnectorAndConnectionsSerializer::class)
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): ConnectorAndConnections? = null,
+      """
+    else if (u is Framework.ConnectionCreator)
+      """
+          @JsonDeserialize(using = WidgetSerde.ConnectionDeserializer::class)
+          @JsonSerialize(using = WidgetSerde.ConnectionSerializer::class)
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Connection? = null,
+      """
+    else if (u is Framework.BooleanInput)
+      """
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Boolean\(getFallback(u)),
+      """
+    else if (u is Framework.NumericInput)
+      """
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Number\(getFallback(u)),
+      """
+    else if (u is Framework.DateInput)
+      """
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): Long\(getFallback(u)),
+      """
+    else
+      """
+          @JsonProperty(\"\(k)\") val \(getLowerCamelCase(k)): String\(getFallback(u)),
+      """
+    )}
+      """
+      ) : CustomConfig()
+      """
+  }.join("\n")
+}
+
+const function getLowerCamelCase(s: String): String =
+  s.split(Regex("[\\W_]+")).foldIndexed("", (idx, acc, word) ->
+    if (idx == 0)
+      "\(acc)\(word.decapitalize())"
+    else
+      "\(acc)\(word.capitalize())"
+  )
+
+const function getFallback(u: Framework.UIElement): String =
+  if (u.fallback == null)
+    "? = null"
+  else if (u.fallback is List)
+    " = listOf(\((u.fallback as List).fold(List(), (acc: List<String>, value) ->
+      acc.add("\"\(value)\"")
+    ).join(", ")))"
+  else if (u.fallback is String)
+    " = \"\(u.fallback)\""
+  else
+    " = \(u.fallback)"
+
+const function getFallbackParam(u: Framework.UIElement): Any =
+  if (u.fallback is List)
+    "[\((u.fallback as List).fold(List(), (acc: List<String>, value) ->
+      acc.add("\"\(value)\"")
+    ).join(", "))]"
+  else
+    u.fallback
+
+/// Render an empty file.
+const function getBlankFile(): FileOutput = new FileOutput {
+  text = ""
+}
+
+/// Render a baseline version file for a Python custom package.
+const function getVersionPy(m: Framework): FileOutput = new FileOutput {
+  text = """
+    \(m.version)
+    """
+}
+
+/// Render a baseline version file for a Python custom package.
+const function getMainPy(pkgName: String): FileOutput = new FileOutput {
+  text = """
+    from \(pkgName).\(pkgName)_cfg import RuntimeConfig
+    import logging
+
+    LOGGER = logging.getLogger(__name__)
+
+    def main():
+        runtime_config = RuntimeConfig()
+        custom_config = runtime_config.custom_config
+        # Retrieve inputs from custom_config
+
+        LOGGER.info("Starting execution of \(pkgName)...")
+
+
+    if __name__ == "__main__":
+        main()
+    """
+}
+
+/// Render the logging configuration for a Python custom package.
+const function getLoggingConfPy(): FileOutput = new FileOutput {
+  text = """
+    [loggers]
+    keys=root,pyatlan,urllib3
+
+    [handlers]
+    keys=consoleHandler,fileHandler,jsonHandler
+
+    [formatters]
+    keys=simpleFormatter,jsonFormatter
+
+    [logger_root]
+    level=DEBUG
+    handlers=consoleHandler,fileHandler
+
+    [logger_pyatlan]
+    level=DEBUG
+    handlers=
+    qualname=pyatlan
+    propagate=1
+
+    [logger_urllib3]
+    level=DEBUG
+    handlers=
+    qualname=urllib3
+    propagate=0
+
+    [handler_consoleHandler]
+    class=StreamHandler
+    level=INFO
+    formatter=simpleFormatter
+    args=(sys.stdout,)
+
+    [handler_fileHandler]
+    class=FileHandler
+    level=DEBUG
+    formatter=simpleFormatter
+    args=('/tmp/debug.log',)
+
+    [handler_jsonHandler]
+    class=FileHandler
+    level=DEBUG
+    formatter=jsonFormatter
+    args=('/tmp/pyatlan.json',)
+
+    [formatter_simpleFormatter]
+    format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+
+    [formatter_jsonFormatter]
+    format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
+    class=pyatlan.utils.JsonFormatter
+    """
+}
+
+/// Render the baseline requirements.txt for a Python custom package.
+const function getRequirementsPy(): FileOutput = new FileOutput {
+  text = """
+    pyatlan
+    opentelemetry-api==1.29.0
+    opentelemetry-sdk==1.29.0
+    opentelemetry-instrumentation-logging==0.50b0
+    opentelemetry-exporter-otlp==1.29.0
+    """
+}
+
+/// Render the baseline requirements-dev.txt for a Python custom package.
+const function getRequirementsDevPy(): FileOutput = new FileOutput {
+  text = """
+    pytest
+    pytest-order
+    nanoid
+    """
+}
+
+/// Render the baseline Dockerfile for a Python custom package.
+const function getDockerfilePy(pkgName: String): FileOutput = new FileOutput {
+  text = """
+    FROM python:3.9-bookworm
+
+    LABEL org.opencontainers.image.vendor="Atlan Pte. Ltd." \\
+          org.opencontainers.image.source="https://github.com/atlanhq/atlan-python" \\
+          org.opencontainers.image.description="Atlan image for \(pkgName) custom package." \\
+          org.opencontainers.image.licenses=Apache-2
+
+    COPY requirements.txt requirements.txt
+    COPY \(pkgName) /app/\(pkgName)
+    COPY package.pkl /app/package.pkl
+    COPY version.txt /app/version.txt
+
+    RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \\
+            && chmod +x /usr/local/bin/dumb-init \\
+            && pip3 install -r requirements.txt
+
+    WORKDIR /app
+    ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+    """
+}
+
+/// Render the Python class file that strongly-types the configuration handover.
+const function getConfigClassPy(m: Framework): FileOutput = new FileOutput {
+  text = new Listing {
+      """
+      from datetime import datetime
+      from pathlib import Path
+      from pydantic.v1 import BaseModel, BaseSettings, Field, validator
+      from pyatlan.model.assets import Connection
+      from pyatlan.pkg.models import ConnectorAndConnection
+      from pyatlan.pkg.utils import (
+        add_otel_handler,
+        validate_connection,
+        validate_multiselect,
+        validate_connector_and_connection,
+      )
+      from typing import Any, Optional, Union, Dict
+      import logging.config
+
+      PARENT = Path(__file__).parent
+      LOGGING_CONF = PARENT / "logging.conf"
+      if LOGGING_CONF.exists():
+        logging.config.fileConfig(LOGGING_CONF)
+      ROOT_LOGGER = logging.getLogger()
+      add_otel_handler(ROOT_LOGGER, ROOT_LOGGER.level, {})
+      LOGGER = logging.getLogger(__name__)
+
+      ENV = 'env'
+
+      class CustomConfig(BaseModel):
+          \"\"\"\"\"\"\"\"
+      """
+    for (k, u in m.uiConfig.properties) {
+      if (u is Framework.DropDown || u is Framework.MultipleGroups || u is Framework.MultipleUsers || u is Framework.ConnectionSelector)
+        """
+            \(k): Optional[List[str]] = Field(default_factory=list)
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_multiselect)
+        """
+
+      else if (u is Framework.ConnectorTypeSelector)
+        """
+            \(k): Optional[ConnectorAndConnection] = None
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_connector_and_connection)
+        """
+      else if (u is Framework.ConnectionCreator)
+        """
+            \(k): Optional[Connection] = None
+            _validate_\(k) = validator("\(k)", pre=True, allow_reuse=True)(validate_connection)
+        """
+      else if (u is Framework.BooleanInput)
+        """
+            \(k): bool = None
+        """
+      else if (u is Framework.NumericInput)
+        """
+            \(k): Optional[Union[int,float]] = None
+        """
+      else if (u is Framework.DateInput)
+        """
+            \(k): Optional[datetime] = None
+        """
+      else
+        """
+            \(k): str
+        """
+    }
+      """
+
+      class RuntimeConfig(BaseSettings):
+          user_id:Optional[str] = Field(default="")
+          agent:Optional[str] = Field(default="")
+          agent_id:Optional[str] = Field(default="")
+          agent_pkg:Optional[str] = Field(default="")
+          agent_wfl:Optional[str] = Field(default="")
+          custom_config:Optional[CustomConfig] = None
+
+          class Config:
+              fields = {
+                  'user_id': {
+                      ENV: 'ATLAN_USER_ID',
+                  },
+                  'agent': {
+                      ENV: 'X_ATLAN_AGENT'
+                  },
+                  'agent_id': {
+                      ENV: 'X_ATLAN_AGENT_ID'
+                  },
+                  'agent_pkg': {
+                      ENV: 'X_ATLAN_AGENT_PACKAGE_NAME'
+                  },
+                  'agent_wfl': {
+                      ENV: 'X_ATLAN_AGENT_WORKFLOW_ID'
+                  },
+                  'custom_config': {
+                      ENV: 'NESTED_CONFIG'
+                  }
+              }
+              @classmethod
+              def parse_env_var(cls, field_name:str, raw_value:str)->Any:
+                  if field_name == 'custom_config':
+                      return CustomConfig.parse_raw(raw_value)
+                  return cls.json_loads(raw_value)
+
+          @property
+          def envars_as_dict(self) -> Dict[str, Any]:
+              \"\"\"
+              :return dict: returns a dict of the environment variable names and values consumed by this RuntimeConfig.
+              the name of an environment variable will be the key and the value will be the value. This is provided
+              to facilitate testing
+              \"\"\"
+              ret_val: Dict[str, Any] = {}
+              for key, value in RuntimeConfig.Config.fields.items():
+                  if field_value := getattr(self, key):
+                      ret_val[value["env"]] = field_value.json()
+              return ret_val
+      """
+  }.join("\n")
+}
+
+local class NamePathS3Tuple extends NamedPair {
+  hidden inputName: String
+  name: String = "\(inputName)_s3"
+  path: String = "/tmp/\(inputName)/{{inputs.parameters.\(inputName)}}"
+  s3: Mapping<String, String> = new Mapping {
+    ["key"] = "{{inputs.parameters.\(inputName)}}"
+  }
+}
+
+class ConfigMapEntry extends NamedPair {
+  name: String
+  fixed valueFrom = (value) {
+    when (default != null) {
+      ["default"] = default
+    }
+  }
+  hidden configMapName: String
+  hidden configMapKey: String
+  hidden default: String? = null
+  hidden optional: Boolean? = null
+  hidden fixed value = new Mapping {
+    ["configMapKeyRef"] = new Mapping {
+      ["name"] = configMapName
+      ["key"] = configMapKey
+      when (optional != null) {
+        ["optional"] = optional
+      }
+    }
+  }
+}
+
+class NamedSecret extends NamedPair {
+  name: String
+  fixed valueFrom = new Mapping {
+    ["secretKeyRef"] = new Mapping {
+      ["name"] = secretName
+      ["key"] = secretKey
+      when (optional != null) {
+        ["optional"] = optional
+      }
+    }
+  }
+  hidden secretName: String
+  hidden secretKey: String
+  hidden optional: Boolean? = null
+}
+
+local class NestedConfig extends NamedPair {
+  name: String = "NESTED_CONFIG"
+  fixed value: String = new Listing {
+    when (passthrough != null) {
+      if (passthrough.isEmpty)
+        "null"
+      else
+        "{"
+      new Listing {
+        for (k, v in passthrough) {
+          "\"\(k)\": \"\(v)\""
+        }
+      }.join(",\n")
+      "}"
+    }
+    when (inputs != null) {
+      if (inputs.isEmpty)
+        "null"
+      else
+        "{"
+      new Listing {
+        for (k, ui in inputs) {
+          if (ui is Framework.FileUploader || ui is Framework.FileCopier)
+            "\"\(k)\": \"/tmp/\(k)/{{inputs.parameters.\(k)}}\""
+          else if (ui is Framework.NumericInput || ui is Framework.DateInput || ui is Framework.BooleanInput)
+            "\"\(k)\": {{inputs.parameters.\(k)}}"
+          else
+            "\"\(k)\": {{=toJson(inputs.parameters.\(k))}}"
+        }
+      }.join(",\n")
+      "}"
+    }
+  }.join("\n")
+  hidden inputs: Map<String, Framework.UIElement>?
+  hidden passthrough: Map<String, String>?
+}
+
+class NameValueBoolPair extends NamedPair {
+  name: String
+  value: Boolean
+}
+
+class NameValuePair extends NamedPair {
+  name: String
+  value: String
+}
+
+class NamePathPair extends NamedPair {
+  name: String
+  path: String
+}
+
+class NameFromPair extends NamedPair {
+  name: String
+  from: String
+}
+
+class VolumeMount extends NamedPair {
+  name: String
+  mountPath: String
+}
+
+open class WorkflowVolume extends NamedPair {
+  name: String
+}
+
+class EmptyDirVolume extends WorkflowVolume {
+  name: String
+  fixed emptyDir: Map<String, String> = new Mapping {}.toMap()
+}
+
+abstract class NamedPair {
+  name: String
+}
+
+/// Used to render the appropriately-wrapped output file for the UI portion of a package.
+local open class ConfigMap {
+  fixed apiVersion = "v1"
+  fixed kind = "ConfigMap"
+  fixed metadata: Mapping<String, Any> = new Mapping {
+    ["name"] = name
+  }
+  fixed data: Mapping<String, String> = new Mapping {
+    ["config"] = new JsonRenderer {}.renderValue(config)
+  }
+  hidden name: String
+  hidden config: Framework.UIConfig
+}
+
+local class PackageDefinition {
+  hidden packageId: String
+  hidden packageName: String
+  fixed name: String = packageId
+  version: String
+  description: String
+  keywords: Listing<String> = new Listing {}
+  hidden iconUrl: String
+  hidden docsUrl: String
+  hidden allowSchedule: Boolean = true
+  hidden certified: Boolean = true
+  hidden preview: Boolean = false
+  hidden connectorType: Connectors.Type?
+  hidden category: String = "custom"
+  fixed homepage: String = "https://packages.atlan.com/-/web/detail/\(packageId)"
+  fixed main: String = "index.js"
+  fixed scripts: Map<String, String> = Map()
+  fixed author: Map<String, String> = new Mapping {
+    ["name"] = "Atlan CSA"
+    ["email"] = "csa@atlan.com"
+    ["url"] = "https://atlan.com"
+  }.toMap()
+  fixed repository: Map<String, String> = new Mapping {
+    ["type"] = "git"
+    ["url"] = "https://github.com/atlanhq/marketplace-packages.git"
+  }.toMap()
+  fixed license: String = "MIT"
+  fixed bugs: Map<String, String> = new Mapping {
+    ["url"] = "https://atlan.com"
+    ["email"] = "support@atlan.com"
+  }.toMap()
+  fixed config: PackageConfig = new PackageConfig {
+    labels = new Mapping {
+      ["orchestration.atlan.com/verified"] = "true"
+      ["orchestration.atlan.com/type"] = category
+      ["orchestration.atlan.com/source"] = connectorType?.value ?? "atlan"
+      ["orchestration.atlan.com/sourceCategory"] = connectorType?.category ?? "utility"
+      ["orchestration.atlan.com/certified"] = certified.toString()
+      ["orchestration.atlan.com/preview"] = preview.toString()
+    }
+    annotations = new Mapping {
+      ["orchestration.atlan.com/name"] = packageName
+      ["orchestration.atlan.com/allowSchedule"] = allowSchedule.toString()
+      ["orchestration.atlan.com/dependentPackage"] = ""
+      ["orchestration.atlan.com/emoji"] = "🚀"
+      ["orchestration.atlan.com/categories"] = keywords.join(",")
+      ["orchestration.atlan.com/icon"] = iconUrl
+      ["orchestration.atlan.com/logo"] = iconUrl
+      ["orchestration.atlan.com/docsUrl"] = docsUrl
+    }
+  }
+}
+
+local class PackageConfig {
+  labels: Mapping<String, String>
+  annotations: Mapping<String, String>
+}
+
+/// Used to render a standard spec in a workflow template, irrespective of input files and / or separate publish step.
+local class WorkflowTemplateSpec {
+  hidden package: WorkflowTemplateDefinition
+
+  hidden passthrough: List<NameValuePair> = new Listing {
+      for (k, u in package.inputs.config.properties) {
+        when (u is Framework.FileUploader) {
+          new NameValuePair {
+            name = k
+            value = "{{inputs.parameters.\(k)_key}}"
+          }
+        } else {
+          new NameValuePair {
+            name = k
+            value = "{{inputs.parameters.\(k)}}"
+          }
+        }
+      }
+    }.toList()
+
+  hidden filePassthrough: List<NameValuePair> = new Listing {
+    for (k, u in package.inputs.config.properties) {
+      new NameValuePair {
+        name = k
+        value = "{{inputs.parameters.\(k)}}"
+      }
+      when (u is Framework.FileUploader) {
+        new NameValuePair {
+          name = "\(k)_key"
+          value = "{{inputs.parameters.\(k)_key}}"
+        }
+        new NameValuePair {
+          name = "\(k)_id"
+          value = "{{inputs.parameters.\(k)_id}}"
+        }
+      }
+    }
+  }.toList()
+
+  hidden fixed fileMoves: Listing<TaskDefinition> = new Listing {
+    for (k, u in package.inputs.config.properties) {
+      when (u is Framework.FileUploader) {
+        new TaskDefinition {
+          name = "move-\(getSafeTaskName(k))"
+          templateRef = new TemplateRef {
+            name = "atlan-workflow-helpers"
+            template = "move-artifact-to-s3"
+          }
+          condition = "'{{inputs.parameters.cloud_provider}}' == 'azure' && {{inputs.parameters.is_azure_artifacts}} == false && '{{inputs.parameters.\(k)_id}}' != ''"
+          arguments = new Arguments {
+            parameters = new Listing {
+              new NameValuePair {
+                name = "file-id"
+                value = "{{inputs.parameters.\(k)_id}}"
+              }
+              new NameValuePair {
+                name = "s3-file-key"
+                value = "{{inputs.parameters.\(k)_key}}"
+              }
+            }.toList()
+          }
+        }
+      }
+    }
+  }
+
+  hidden fixed move: WorkflowTemplateDefinition? =
+    if (!fileMoves.isEmpty)
+      new WorkflowTemplateDefinition {
+        cfg = package.cfg
+        dag = new WorkflowDag {
+          tasks = fileMoves.toList()
+        }
+        name = "move"
+        pkg = package.pkg
+        f = true
+      }
+    else null
+
+  fixed entrypoint = "main"
+  templates: Listing<WorkflowTemplateDefinition> = new Listing {
+    new WorkflowTemplateDefinition {
+      name = "main"
+      dag = new WorkflowDag {
+        tasks = new Listing {
+          when (move != null) {
+            new TaskDefinition {
+              name = "move"
+              template = "move"
+              arguments = new Arguments {
+                parameters = filePassthrough
+              }
+            }
+          }
+          new TaskDefinition {
+            name = "process"
+            dependencies = new Listing {
+              when (move != null) { "move" }
+            }.toList()
+            template = "process"
+            arguments = new Arguments {
+              parameters = passthrough
+            }
+          }
+          when (package.pub != null) {
+            new TaskDefinition {
+              name = "load"
+              dependencies = List("process")
+              template = "load"
+              arguments = new Arguments {
+                parameters = passthrough
+                artifacts = new Listing {
+                  for (n in package.pub.inputArtifacts) {
+                    new NameFromPair {
+                      name = n.name
+                      from = "{{tasks.process.outputs.artifacts.\(n.name)}}"
+                    }
+                  }
+                }.toList()
+              }
+            }
+          }
+        }.toList()
+      }
+      cfg = package.cfg
+      pkg = package.pkg
+      // Ensures input artifacts for files are excluded as part of the overall DAG's arguments
+      f = move != null
+    }
+    (package) {
+      name = "process"
+      // Ensures input artifacts for files are included as part of template's arguments
+      f = move == null
+    }
+    when (move != null) { move }
+    when (package.pub != null) {
+      getProcessTemplate(
+        "load",
+        package.cfg,
+        package.pub,
+        package.pkg,
+        package.pub.outputs,
+        package.pub.containerImage,
+        package.pub.containerImagePullPolicy,
+        package.pub.command,
+        package.pub.args,
+        package.pub.parameters, // Always passthrough non-UI parameters
+        false, // Always passthrough direct input files (from previous step(s))
+        package.pub.inputArtifacts.toList()
+      )
+    }
+  }
+}
+
+/// Used to render the appropriately-wrapped output file for the Argo hand-over portion of a package.
+local class WorkflowTemplate {
+  fixed apiVersion = "argoproj.io/v1alpha1"
+  fixed kind = "WorkflowTemplate"
+  fixed metadata = new Mapping {
+    ["name"] = name
+  }
+  fixed spec = new WorkflowTemplateSpec {
+    package = template
+  }
+  hidden name: String
+  hidden template: WorkflowTemplateDefinition
+}
+
+local class WorkflowTemplateDefinition {
+  name: String = "main"
+  fixed inputs: WorkflowInputs = new WorkflowInputs {
+    config = cfg
+    pkgName = pkg
+    fileInputSetup = f
+    credentialInjection = (credVariable != null)
+    passthroughFiles = directInputFiles
+  }
+  outputs: Framework.WorkflowOutputs?
+  volumes: Listing<WorkflowVolume>?
+  container: WorkflowContainer?
+  initContainers: Listing<WorkflowContainer>?
+  dag: WorkflowDag?
+  hidden cfg: Framework.UIConfig
+  hidden pub: Framework.PublishConfig?
+  hidden pkg: String = ""
+  hidden f: Boolean = false
+  hidden credVariable: String? = null
+  hidden directInputFiles: List<NamedPair>? = null
+}
+
+local class WorkflowInputs {
+  fixed parameters: List<NamedPair> = params.toList()
+  fixed artifacts: List<NamedPair>? = if (fileInputSetup) null else arts.toList()
+  hidden config: Framework.UIConfig
+  hidden pkgName: String = ""
+  hidden fileInputSetup: Boolean = false
+  hidden credentialInjection: Boolean = false
+  hidden passthroughFiles: List<NamedPair>? = null
+
+  hidden arts: Listing<NamedPair> = new Listing {
+    for (k, u in config.properties) {
+      when (u is Framework.FileUploader || u is Framework.FileCopier) {
+        new NamePathS3Tuple {
+          inputName = k
+        }
+      }
+    }
+    when (passthroughFiles != null) {
+      ...passthroughFiles
+    }
+  }
+  hidden params: Listing<NamedPair> = new Listing {
+    when (!pkgName.isEmpty) {
+      new NameValuePair {
+        name = S3_CONFIG_PREFIX
+        value = pkgName
+      }
+      when (fileInputSetup) {
+        new ConfigMapEntry {
+          name = "is_azure_artifacts"
+          configMapName = "atlan-defaults"
+          configMapKey = "azure_artifacts"
+          default = "false"
+        }
+        new ConfigMapEntry {
+          name = "cloud_provider"
+          configMapName = "atlan-defaults"
+          configMapKey = "cloud"
+          default = "aws"
+        }
+      }
+    }
+    for (k, u in config.properties) {
+      when (u is Framework.FileUploader || u is Framework.FileCopier) {
+        when (fileInputSetup) {
+          new NameValuePair {
+            name = k
+            value = "{}"
+          }
+          new NameValuePair {
+            name = "\(k)_key"
+            value = "{{= sprig.dig('fileKey', '\(DEFAULT_FILE)', sprig.mustFromJson(inputs.parameters.\(k))) }}"
+          }
+          new NameValuePair {
+            name = "\(k)_id"
+            value = "{{= sprig.dig('fileId', '', sprig.mustFromJson(inputs.parameters.\(k))) }}"
+          }
+        } else {
+          new NameValuePair {
+            name = k
+            value = DEFAULT_FILE
+          }
+        }
+      } else {
+        when (u is Framework.BooleanInput) {
+          new NameValueBoolPair {
+            name = k
+            value = if (u.fallback != null) getFallbackParam(u) as Boolean else u.ui.default as Boolean
+          }
+        } else {
+          when (u is Framework.NumericInput || u is Framework.DateInput) {
+            new NameValuePair {
+              name = k
+              value = if (u.fallback != null) getFallbackParam(u).toString() else "-1"
+            }
+          } else {
+            new NameValuePair {
+              name = k
+              value = if (u.fallback != null) getFallbackParam(u).toString() else ""
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+local class WorkflowDag {
+  tasks: List<TaskDefinition>
+}
+
+local class TaskDefinition {
+  name: String
+  depends: String?
+  dependencies: List<String>?
+  template: String?
+  templateRef: TemplateRef?
+  fixed `when` = condition
+  arguments: Arguments
+  hidden condition: String?
+}
+
+local class TemplateRef {
+  name: String
+  template: String
+}
+
+local class Arguments {
+  parameters: List<NamedPair>
+  artifacts: List<NamedPair>? = null
+}
+
+local class WorkflowContainer {
+  name: String?
+  volumeMounts: Listing<VolumeMount>?
+  mirrorVolumeMounts: Boolean?
+  image: String
+  imagePullPolicy: Framework.ImagePullPolicy = "IfNotPresent"
+  command: List<String>
+  args: List<String> = List()
+  hidden passthroughParams: Map<String, String>?
+  hidden config: Framework.UIConfig
+  hidden defaultVars: List<NamedPair> = new Listing {
+    new NameValuePair {
+      name = "ATLAN_BASE_URL"
+      value = "INTERNAL"
+    }
+    new NameValuePair {
+      name = "ATLAN_USER_ID"
+      value = "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/creator', '', workflow)}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT"
+      value = "workflow"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_ID"
+      value = "{{workflow.name}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_PACKAGE_NAME"
+      value = "{{=sprig.dig('annotations', 'package', 'argoproj', 'io/name', '', workflow)}}"
+    }
+    new NameValuePair {
+      name = "X_ATLAN_AGENT_WORKFLOW_ID"
+      value = "{{=sprig.dig('labels', 'workflows', 'argoproj', 'io/workflow-template', '', workflow)}}"
+    }
+    new NameValuePair {
+      name = "AZURE_STORAGE_CONTAINER_NAME"
+      value = "objectstore"
+    }
+    new ConfigMapEntry {
+      name = "CLOUD_PROVIDER"
+      configMapName = "atlan-defaults"
+      configMapKey = "cloud"
+      default = "aws"
+    }
+    new ConfigMapEntry {
+      name = "AWS_S3_BUCKET_NAME"
+      configMapName = "atlan-defaults"
+      configMapKey = "bucket"
+      optional = true
+    }
+    new ConfigMapEntry {
+      name = "AWS_S3_REGION"
+      configMapName = "atlan-defaults"
+      configMapKey = "region"
+      optional = true
+    }
+    new ConfigMapEntry {
+      name = "GCP_STORAGE_BUCKET"
+      configMapName = "atlan-defaults"
+      configMapKey = "bucket"
+      optional = true
+    }
+    new NamedSecret {
+      name = "GCP_PROJECT_ID"
+      secretName = "bucket-details-secret"
+      secretKey = "GCP_PROJECT_ID"
+      optional = true
+    }
+    new NamedSecret {
+      name = "AZURE_STORAGE_ACCESS_KEY"
+      secretName = "azurestorage"
+      secretKey = "AZURE_STORAGE_ACCESS_KEY"
+      optional = true
+    }
+    new NamedSecret {
+      name = "AZURE_STORAGE_ACCOUNT"
+      secretName = "azurestorage"
+      secretKey = "AZURE_STORAGE_ACCOUNT"
+      optional = true
+    }
+    new NamedSecret {
+      name = "CLIENT_ID"
+      secretName = "argo-client-creds"
+      secretKey = "login"
+    }
+    new NamedSecret {
+      name = "CLIENT_SECRET"
+      secretName = "argo-client-creds"
+      secretKey = "password"
+    }
+    new NamedSecret {
+      name = "SMTP_HOST"
+      secretName = "support-smtp-creds"
+      secretKey = "host"
+    }
+    new NamedSecret {
+      name = "SMTP_PORT"
+      secretName = "support-smtp-creds"
+      secretKey = "port"
+    }
+    new NamedSecret {
+      name = "SMTP_FROM"
+      secretName = "support-smtp-creds"
+      secretKey = "from"
+    }
+    new NamedSecret {
+      name = "SMTP_USER"
+      secretName = "support-smtp-creds"
+      secretKey = "login"
+    }
+    new NamedSecret {
+      name = "SMTP_PASS"
+      secretName = "workflow-parameter-store"
+      secretKey = "smtp_password"
+    }
+    new ConfigMapEntry {
+      name = "DOMAIN"
+      configMapName = "atlan-defaults"
+      configMapKey = "domain"
+    }
+  }.toList()
+  hidden configVars: List<NamedPair> = config.properties.fold(List(), (acc: List<NamedPair>, key, property) ->
+    acc.add(resolvePropertyToVar(key, property))
+  )
+  hidden nestedConfig: NestedConfig =
+    if (passthroughParams != null)
+      new NestedConfig {
+        passthrough = passthroughParams
+      }
+    else
+      new NestedConfig {
+        inputs = config.properties.fold(new Mapping {}, (acc: Mapping<String, Framework.UIElement>, key, property) ->
+          (acc) {
+            [key] = property
+          }
+        ).toMap()
+  }
+  env: List<NamedPair> = defaultVars + configVars + List(nestedConfig)
+}
+
+/// Used to render the configmap for a new connector type.
+local class ConnectorConfigMap extends ConfigMap {
+  fixed metadata: Mapping<String, Any> = new Mapping {
+    ["name"] = name
+    ["labels"] = new Mapping<String, String> {
+      ["workflows.argoproj.io/configmap-type"] = "Parameter"
+      ["orchestration.atlan.com/version"] = "1"
+      ["orchestration.atlan.com/source"] = config.source.replaceAll(" ", "")
+    }
+  }
+  fixed data: Mapping<String, String> = new Mapping {
+    ["icon"] = config.icon
+    ["helpdeskLink"] = config.helpdesk
+    ["logo"] = config.logo
+    ["connector"] = config.source
+    ["defaultConnectorType"] = config.connectorType
+    ["jdbcCredentialTemplate"] = config.jdbcCredential
+    ["restCredentialTemplate"] = config.restCredential
+    ["odbcCredentialTemplate"] = config.odbcCredential
+    ["grpcCredentialTemplate"] = config.grpcCredential
+    ["restMetadataTemplate"] = config.restMetadata
+    ["restMetadataOutputTransformerTemplate"] = config.restTransformer
+    when (config.sage != null) { ["sageTemplate"] = config.sage }
+    when (config.soda != null) { ["sodaConnectionTemplate"] = config.soda }
+    ["config"] = new JsonRenderer {}.renderValue(config)
+  }
+  hidden name: String
+  hidden config: Credential
+}
+
+const function resolvePropertyToVar(key: String, property: Framework.UIElement): NameValuePair = new NameValuePair {
+  name = key.toUpperCase()
+  value = if (property is Framework.FileUploader || property is Framework.FileCopier)
+    new NamePathS3Tuple { inputName = key }.path
+  else
+    "{{inputs.parameters.\(key)}}"
+}
+
+const function getSafeTaskName(name: String): String = name.replaceAll("_", "-")
+const DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
+const S3_CONFIG_PREFIX = "output_prefix"

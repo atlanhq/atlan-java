@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.csv
 
 import com.atlan.AtlanClient
 import com.atlan.cache.OffHeapAssetCache
+import com.atlan.cache.OffHeapFailureCache
 import com.atlan.model.core.AtlanCloseable
 import com.atlan.util.AssetBatch.AssetIdentity
 
@@ -39,6 +40,7 @@ data class ImportResults(
         val updated: OffHeapAssetCache?,
         val restored: OffHeapAssetCache?,
         val skipped: OffHeapAssetCache?,
+        val failed: OffHeapFailureCache?,
         val numCreated: Long,
         val numUpdated: Long,
         val numRestored: Long,
@@ -73,6 +75,7 @@ data class ImportResults(
                 val updated = OffHeapAssetCache(client, "ir-updated")
                 val restored = OffHeapAssetCache(client, "ir-restored")
                 val skipped = OffHeapAssetCache(client, "ir-skipped")
+                val failed = OffHeapFailureCache(client, "ir-failed")
                 val guidAssignments = mutableMapOf<String, String>()
                 val qualifiedNames = mutableMapOf<AssetIdentity, String>()
                 others
@@ -84,6 +87,7 @@ data class ImportResults(
                         updated.extendedWith(result.updated, closeOriginal)
                         restored.extendedWith(result.restored, closeOriginal)
                         skipped.extendedWith(result.skipped, closeOriginal)
+                        failed.extendedWith(result.failed, closeOriginal)
                         if (closeOriginal) {
                             result.close()
                         }
@@ -95,6 +99,7 @@ data class ImportResults(
                     updated,
                     restored,
                     skipped,
+                    failed,
                     totalCreated,
                     totalUpdated,
                     totalRestored,
@@ -108,6 +113,7 @@ data class ImportResults(
             AtlanCloseable.close(updated)
             AtlanCloseable.close(restored)
             AtlanCloseable.close(skipped)
+            AtlanCloseable.close(failed)
         }
     }
 

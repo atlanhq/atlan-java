@@ -30,13 +30,13 @@ import kotlin.test.assertNotNull
 /**
  * Test creation of partial relational assets.
  */
-class PartialAssetsTest : PackageTest("pa") {
+class CaseInsensitiveConnectorTypeTest : PackageTest("cict") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
-    private val conn1Type = AtlanConnectorType.MARIADB
+    private val conn1Type = AtlanConnectorType.SAP_S4_HANA
 
-    private val testFile = "input.csv"
+    private val testFile = "assets_upper.csv"
 
     private val files =
         listOf(
@@ -46,7 +46,7 @@ class PartialAssetsTest : PackageTest("pa") {
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
-        val input = Paths.get("src", "test", "resources", "assets_partial.csv").toFile()
+        val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
@@ -112,7 +112,6 @@ class PartialAssetsTest : PackageTest("pa") {
             Table.CERTIFICATE_STATUS,
             Table.CERTIFICATE_STATUS_MESSAGE,
             Table.README,
-            Table.ATLAN_TAGS,
             Table.COLUMN_COUNT,
             Table.COLUMNS,
             Table.IS_PARTIAL,
@@ -144,7 +143,7 @@ class PartialAssetsTest : PackageTest("pa") {
         runCustomPackage(
             RelationalAssetsBuilderCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "partial",
+                assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 trackBatches = false,
             ),
@@ -153,7 +152,7 @@ class PartialAssetsTest : PackageTest("pa") {
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
-                assetsUpsertSemantic = "partial",
+                assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = true,
                 assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
                 trackBatches = false,
@@ -208,7 +207,7 @@ class PartialAssetsTest : PackageTest("pa") {
         assertEquals(1, db.schemaCount)
         assertEquals(1, db.schemas.size)
         assertEquals("TEST_SCHEMA", db.schemas.first().name)
-        assertTrue(db.isPartial)
+        assertFalse(db.isPartial)
     }
 
     @Test
@@ -238,7 +237,7 @@ class PartialAssetsTest : PackageTest("pa") {
         assertEquals("TEST_TBL", sch.tables.first().name)
         assertEquals(1, sch.views.size)
         assertEquals("TEST_VIEW", sch.views.first().name)
-        assertTrue(sch.isPartial)
+        assertFalse(sch.isPartial)
     }
 
     @Test
@@ -277,7 +276,7 @@ class PartialAssetsTest : PackageTest("pa") {
                 .toList()
         assertTrue(colNames.contains("COL1"))
         assertTrue(colNames.contains("COL2"))
-        assertTrue(tbl.isPartial)
+        assertFalse(tbl.isPartial)
     }
 
     @Test
@@ -310,7 +309,7 @@ class PartialAssetsTest : PackageTest("pa") {
             assertTrue(col.tableQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_TBL"))
             assertTrue(col.viewName.isNullOrEmpty())
             assertTrue(col.viewQualifiedName.isNullOrEmpty())
-            assertTrue(col.isPartial)
+            assertFalse(col.isPartial)
             when (col.name) {
                 "COL1" -> {
                     assertEquals("VARCHAR", col.dataType)
@@ -361,7 +360,7 @@ class PartialAssetsTest : PackageTest("pa") {
                 .toList()
         assertTrue(colNames.contains("COL3"))
         assertTrue(colNames.contains("COL4"))
-        assertTrue(view.isPartial)
+        assertFalse(view.isPartial)
     }
 
     @Test
@@ -396,7 +395,7 @@ class PartialAssetsTest : PackageTest("pa") {
             assertTrue(col.viewQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_VIEW"))
             assertTrue(col.tableName.isNullOrEmpty())
             assertTrue(col.tableQualifiedName.isNullOrEmpty())
-            assertTrue(col.isPartial)
+            assertFalse(col.isPartial)
             when (col.name) {
                 "COL3" -> {
                     assertEquals("INT32", col.dataType)

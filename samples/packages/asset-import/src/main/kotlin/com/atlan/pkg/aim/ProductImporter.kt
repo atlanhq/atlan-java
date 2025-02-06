@@ -39,7 +39,6 @@ class ProductImporter(
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors,
         typeNameFilter = DataProduct.TYPE_NAME,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
         trackBatches = ctx.config.trackBatches,

@@ -223,23 +223,25 @@ object Utils {
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
         val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
-        when {
-            apiToken.isNotEmpty() -> {
-                logger.info { "Using provided API token for authentication." }
-            }
+        if (reuseCtx?.client == null) {
+            when {
+                apiToken.isNotEmpty() -> {
+                    logger.info { "Using provided API token for authentication." }
+                }
 
-            userId.isNotEmpty() -> {
-                logger.info { "No API token found, attempting to impersonate user: $userId" }
-                client.userId = userId
-                client.apiToken = client.impersonate.user(userId)
-            }
+                userId.isNotEmpty() -> {
+                    logger.info { "No API token found, attempting to impersonate user: $userId" }
+                    client.userId = userId
+                    client.apiToken = client.impersonate.user(userId)
+                }
 
-            else -> {
-                logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                client.apiToken = client.impersonate.escalate()
+                else -> {
+                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
+                    client.apiToken = client.impersonate.escalate()
+                }
             }
+            setWorkflowOpts(client, config.runtime)
         }
-        setWorkflowOpts(client, config.runtime)
         return PackageContext(config, client, reuseCtx?.client != null)
     }
 

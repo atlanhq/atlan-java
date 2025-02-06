@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/relational-assets-builder"
@@ -21,6 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
+    ["transformed_file"] = "/tmp/current-file-transformed.csv"
   }
 }
 keywords {
@@ -28,6 +29,20 @@ keywords {
   "utility"
 }
 preview = true
+
+publishConfig = new AssetImport {
+  versionTag = version.toString()
+  assetsFile = transferFile(outputs, "transformed_file", "current.csv")
+  assetsUpsertSemantic = transferConfigInput(uiConfig, "assets_upsert_semantic")
+  assetsDeltaSemantic = transferConfigInput(uiConfig, "delta_semantic")
+  assetsDeltaRemovalType = transferConfigInput(uiConfig, "delta_removal_type")
+  assetsDeltaReloadCalculation = transferConfigInput(uiConfig, "delta_reload_calculation")
+  assetsPreviousFilePrefix = "csa-relational-assets-builder"
+  assetsFailOnErrors = transferConfigInput(uiConfig, "assets_fail_on_errors")
+  assetsFieldSeparator = transferConfigInput(uiConfig, "assets_field_separator")
+  assetsBatchSize = transferConfigInput(uiConfig, "assets_batch_size")
+  trackBatches = transferConfigInput(uiConfig, "track_batches")
+}
 
 uiConfig {
   tasks {

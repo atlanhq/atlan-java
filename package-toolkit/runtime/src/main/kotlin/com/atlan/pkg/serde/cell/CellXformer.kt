@@ -104,7 +104,7 @@ object CellXformer {
                 else -> throw IOException("Unable to deserialize cell to Java class (in $fieldName): $type")
             }
         } else if (Map::class.java.isAssignableFrom(type)) {
-            TODO("Not yet implemented for import")
+            MapXformer.decode(ctx.client, value, type as Class<Map<*, *>>)
         } else if (Asset::class.java.isAssignableFrom(type)) {
             AssetRefXformer.decode(ctx, value, fieldName)
         } else if (AtlanEnum::class.java.isAssignableFrom(type)) {

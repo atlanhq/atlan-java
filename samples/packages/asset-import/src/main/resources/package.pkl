@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/asset-import"
@@ -21,6 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
+    ["results"] = "/tmp/results.csv"
   }
 }
 keywords {
