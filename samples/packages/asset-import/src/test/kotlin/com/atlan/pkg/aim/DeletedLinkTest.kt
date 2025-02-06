@@ -74,18 +74,20 @@ class DeletedLinkTest : PackageTest("dlt") {
         return response.getResult(c1)
     }
 
-    private fun createDatabase(connection:Connection): Database {
+    private fun createDatabase(connection: Connection): Database {
         val db = Database.creator(DB_NAME, connection.qualifiedName).build()
         val response = db.save(client)
         return response.getResult(db)
     }
 
     private fun createLink(database: Database): String {
-        val l = Link.creator(
-            database.trimToReference(),
-            LINK_NAME,
-            LINK_URL)
-            .build()
+        val l =
+            Link
+                .creator(
+                    database.trimToReference(),
+                    LINK_NAME,
+                    LINK_URL,
+                ).build()
         var response = l.save(client)
         val link = response.getResult(l)
         val linkGuid = link.guid
@@ -117,6 +119,7 @@ class DeletedLinkTest : PackageTest("dlt") {
     private fun removeLink() {
         Asset.purge(client, linkGuid) //
     }
+
     @Test(groups = ["aim.ctud.create"])
     fun connection1Created() {
         validateConnection()
@@ -161,5 +164,4 @@ class DeletedLinkTest : PackageTest("dlt") {
         assertEquals(link.name, LINK_NAME)
         assertEquals(link.link, LINK_URL)
     }
-
 }
