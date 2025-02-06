@@ -5,11 +5,13 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import java.util.stream.Stream
@@ -106,6 +108,11 @@ abstract class GTCImporter(
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName !in GLOSSARY_TYPES) {
+                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+                throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
+            }
             return row // No-op
         }
     }
