@@ -75,11 +75,12 @@ public class AnaplanAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"anaplan.create.systemDimension"},
-        dependsOnGroups = {"anaplan.create.workspace"})
+            groups = {"anaplan.create.systemDimension"},
+            dependsOnGroups = {"anaplan.create.workspace"})
     void createSystemDimension() throws AtlanException {
-        AnaplanSystemDimension toCreate =
-            AnaplanSystemDimension.creator(SYSTEM_DIMENSION_NAME, connection.getQualifiedName()).build();
+        AnaplanSystemDimension toCreate = AnaplanSystemDimension.creator(
+                        SYSTEM_DIMENSION_NAME, connection.getQualifiedName())
+                .build();
         AssetMutationResponse response = toCreate.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof AnaplanSystemDimension);
