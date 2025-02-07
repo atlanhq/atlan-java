@@ -415,9 +415,9 @@ public class AnaplanAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof AnaplanSystemDimension);
         assertFalse(one.isComplete());
         AnaplanSystemDimension sd = (AnaplanSystemDimension) one;
-        assertEquals(d.getQualifiedName(), systemDimension.getQualifiedName());
-        assertEquals(d.getName(), systemDimension.getName());
-        assertEquals(d.getConnectionQualifiedName(), connection.getQualifiedName());
+        assertEquals(sd.getQualifiedName(), systemDimension.getQualifiedName());
+        assertEquals(sd.getName(), systemDimension.getName());
+        assertEquals(sd.getConnectionQualifiedName(), connection.getQualifiedName());
 
         one = entities.get(2);
         assertTrue(one instanceof AnaplanApp);
