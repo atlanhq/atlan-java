@@ -28,7 +28,7 @@ class ImportDataDomainTest : PackageTest("idd") {
     private lateinit var d1: DataDomain
     private lateinit var d2: DataDomain
     private lateinit var d3: DataDomain
-    private val testFile = "input.csv"
+    private val testFile = "data_domain.csv"
 
     private val files =
         listOf(
@@ -38,7 +38,7 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for domains and products
-        val input = Paths.get("src", "test", "resources", "data_domain.csv").toFile()
+        val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
