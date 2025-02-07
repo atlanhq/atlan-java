@@ -109,7 +109,7 @@ abstract class GTCImporter(
             qnIdx: Int,
         ): List<String> {
             val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-            if (typeName !in GLOSSARY_TYPES) {
+            if (typeName.isNotBlank() && typeName !in GLOSSARY_TYPES) {
                 val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
                 throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
             }

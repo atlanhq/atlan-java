@@ -907,10 +907,10 @@ class AssetImporter(
                 typesInFile.add(row[typeIdx])
             }
             val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-            if (typeName in GLOSSARY_TYPES) {
+            if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
                 throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
             }
-            if (typeName in DATA_PRODUCT_TYPES) {
+            if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
                 throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
             }
             val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)

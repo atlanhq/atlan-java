@@ -196,7 +196,7 @@ class DomainImporter(
             qnIdx: Int,
         ): List<String> {
             val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-            if (typeName !in DATA_PRODUCT_TYPES) {
+            if (typeName.isNotBlank() && typeName !in DATA_PRODUCT_TYPES) {
                 val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
                 throw IllegalStateException("Found a non-product asset that should be loaded via another file (of type $typeName): $qualifiedName")
             }
