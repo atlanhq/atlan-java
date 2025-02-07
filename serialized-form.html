@@ -6091,6 +6091,105 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.AnaplanSystemDimension">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/AnaplanSystemDimension.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AnaplanSystemDimension</a></h3>
+<div class="type-signature">class AnaplanSystemDimension extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>anaplanModelName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanModelName</pre>
+<div class="block">Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>anaplanModelQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanModelQualifiedName</pre>
+<div class="block">Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>anaplanModuleName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanModuleName</pre>
+<div class="block">Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>anaplanModuleQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanModuleQualifiedName</pre>
+<div class="block">Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>anaplanSourceId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanSourceId</pre>
+<div class="block">Id/Guid of the Anaplan asset in the source system.</div>
+</li>
+<li class="block-list">
+<h5>anaplanWorkspaceName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanWorkspaceName</pre>
+<div class="block">Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>anaplanWorkspaceQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> anaplanWorkspaceQualifiedName</pre>
+<div class="block">Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy).</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for AnaplanSystemDimensions.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.AnaplanView">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/AnaplanView.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AnaplanView</a></h3>
 <div class="type-signature">class AnaplanView extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
