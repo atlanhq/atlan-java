@@ -45,6 +45,8 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.DataStudioAsset
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.DatabricksUnityCatalogTag
@@ -65,6 +67,9 @@ import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
+import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.KafkaConsumerGroup
 import com.atlan.model.assets.KafkaTopic
 import com.atlan.model.assets.LineageProcess
@@ -422,6 +427,17 @@ class AssetImporter(
     )
 
     companion object : AssetResolver {
+        val GLOSSARY_TYPES =
+            listOf(
+                Glossary.TYPE_NAME,
+                GlossaryTerm.TYPE_NAME,
+                GlossaryCategory.TYPE_NAME,
+            )
+        val DATA_PRODUCT_TYPES =
+            listOf(
+                DataDomain.TYPE_NAME,
+                DataProduct.TYPE_NAME,
+            )
         const val NO_CONNECTION_QN = "NO_CONNECTION_FOUND"
         private val ordering =
             listOf(
@@ -891,6 +907,12 @@ class AssetImporter(
                 typesInFile.add(row[typeIdx])
             }
             val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+            if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
+                throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
+            }
+            if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
+                throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
+            }
             val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
             if (connectionQNFromAsset != null) {
                 connectionQNs.add(connectionQNFromAsset)

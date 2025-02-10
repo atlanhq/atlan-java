@@ -131,6 +131,9 @@ public interface ICatalog {
             case AnaplanPage.TYPE_NAME:
                 ref = AnaplanPage.refByQualifiedName(qualifiedName);
                 break;
+            case AnaplanSystemDimension.TYPE_NAME:
+                ref = AnaplanSystemDimension.refByQualifiedName(qualifiedName);
+                break;
             case AnaplanView.TYPE_NAME:
                 ref = AnaplanView.refByQualifiedName(qualifiedName);
                 break;

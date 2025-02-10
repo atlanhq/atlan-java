@@ -57,6 +57,7 @@ public class AttributeDefOptions extends AtlanObject {
             AnaplanModel.TYPE_NAME,
             AnaplanModule.TYPE_NAME,
             AnaplanPage.TYPE_NAME,
+            AnaplanSystemDimension.TYPE_NAME,
             AnaplanView.TYPE_NAME,
             AnaplanWorkspace.TYPE_NAME,
             AnomaloCheck.TYPE_NAME,
