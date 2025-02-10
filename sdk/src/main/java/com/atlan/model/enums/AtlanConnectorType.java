@@ -140,7 +140,10 @@ public enum AtlanConnectorType implements AtlanEnum {
     AWS_SAGEMAKER("aws-sagemaker", AtlanConnectionCategory.ELT),
     ANAPLAN("anaplan", AtlanConnectionCategory.BI),
     CUSTOM("custom", AtlanConnectionCategory.CUSTOM),
-    DATAVERSE("dataverse", AtlanConnectionCategory.SAAS);
+    DATAVERSE("dataverse", AtlanConnectionCategory.SAAS),
+    SHARED_DRIVE("shared-drive", AtlanConnectionCategory.OBJECT_STORE),
+    SHARE_POINT("share-point", AtlanConnectionCategory.SAAS),
+    RDS("rds", AtlanConnectionCategory.WAREHOUSE);
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
