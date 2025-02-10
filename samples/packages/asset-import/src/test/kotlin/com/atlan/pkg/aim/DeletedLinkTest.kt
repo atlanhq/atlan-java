@@ -18,7 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-private const val LINK_NAME = "hp"
+private const val LINK_NAME = "HP"
 
 private const val LINK_URL = "https://hp.com"
 
@@ -81,37 +81,23 @@ class DeletedLinkTest : PackageTest("dlt") {
         return response.getResult(db)
     }
 
-    private fun createLink(database: Database): String {
-        val l =
-            Link
-                .creator(
-                    database.trimToReference(),
-                    LINK_NAME,
-                    LINK_URL,
-                ).build()
-        var response = l.save(client)
-        val link = response.getResult(l)
-        val linkGuid = link.guid
-        client.assets.delete(linkGuid, AtlanDeleteType.SOFT).block()
-        return linkGuid
-    }
-
     override fun setup() {
         connection = createConnection()
-        linkGuid = createLink(createDatabase(connection))
+        createDatabase(connection)
+//        linkGuid = createLink(createDatabase(connection))
         prepFile()
-        runCustomPackage(
-            AssetImportCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "upsert",
-                assetsFailOnErrors = false,
-                assetsCaseSensitive = true,
-                assetsTableViewAgnostic = false,
-                assetsFieldSeparator = ",",
-                assetsBatchSize = 20,
-            ),
-            Importer::main,
-        )
+//        runCustomPackage(
+//            AssetImportCfg(
+//                assetsFile = Paths.get(testDirectory, testFile).toString(),
+//                assetsUpsertSemantic = "upsert",
+//                assetsFailOnErrors = false,
+//                assetsCaseSensitive = true,
+//                assetsTableViewAgnostic = false,
+//                assetsFieldSeparator = ",",
+//                assetsBatchSize = 20,
+//            ),
+//            Importer::main,
+//        )
     }
 
     override fun teardown() {
@@ -123,7 +109,7 @@ class DeletedLinkTest : PackageTest("dlt") {
         client.assets.delete(linkGuid, AtlanDeleteType.HARD).block()
     }
 
-    @Test(groups = ["aim.ctud.create"])
+    @Test(groups = ["ai.dl.create"])
     fun connection1Created() {
         validateConnection()
     }
@@ -137,8 +123,45 @@ class DeletedLinkTest : PackageTest("dlt") {
         assertEquals(conn1Type, c1.connectorType)
     }
 
-    @Test(groups = ["aim.ctud.create"])
+    @Test(groups = ["ai.dl.create"])
     fun database1Created() {
+//        validateLinkPresent()
+    }
+
+    @Test(groups = ["ai.dl.import_1"], dependsOnGroups = ["ai.dl.create"])
+    private fun firstImport() {
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = false,
+                assetsCaseSensitive = true,
+                assetsTableViewAgnostic = false,
+                assetsFieldSeparator = ",",
+                assetsBatchSize = 20,
+            ),
+            Importer::main,
+        )
+
+        validateLinkPresent()
+    }
+
+    @Test(groups = ["ai.dl.import_1"], dependsOnGroups = ["ai.dl.import_1"])
+    private fun secondImport() {
+        client.assets.delete(linkGuid, AtlanDeleteType.SOFT).block()
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = false,
+                assetsCaseSensitive = true,
+                assetsTableViewAgnostic = false,
+                assetsFieldSeparator = ",",
+                assetsBatchSize = 20,
+            ),
+            Importer::main,
+        )
+
         validateLinkPresent()
     }
 
@@ -162,11 +185,12 @@ class DeletedLinkTest : PackageTest("dlt") {
         assertEquals(c1.qualifiedName, db.connectionQualifiedName)
         assertEquals(conn1Type, db.connectorType)
         val links = db.links
-        assertEquals(links.size, 1)
+        assertEquals(1, links.size)
         var link = links.elementAt(0)
-        assertEquals(link.name, LINK_NAME)
-        assertEquals(link.link, LINK_URL)
+        assertEquals(LINK_NAME, link.name)
+        assertEquals(LINK_URL, link.link)
         link = Link.get(client, link.guid)
-        assertEquals(link.status, AtlanStatus.ACTIVE)
+        assertEquals(AtlanStatus.ACTIVE, link.status)
+        linkGuid = link.guid
     }
 }
