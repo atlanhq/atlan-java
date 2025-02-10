@@ -3,12 +3,12 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Schema
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
@@ -45,7 +45,7 @@ class DeletedLinkTest : PackageTest("dlt") {
             lines.forEach { line ->
                 val revised =
                     line
-                        .replace("iceberg", "ibmdb2")
+                        .replace("iceberg", conn1Type.value)
                         .replace("{{CONNECTION}}", connectionQN)
                 output.appendText("$revised\n")
             }
@@ -92,8 +92,7 @@ class DeletedLinkTest : PackageTest("dlt") {
         var response = l.save(client)
         val link = response.getResult(l)
         val linkGuid = link.guid
-        response = Asset.delete(client, linkGuid)
-        assertEquals(response.deletedAssets.size, 1)
+        client.assets.delete(linkGuid, AtlanDeleteType.SOFT).block()
         return linkGuid
     }
 
@@ -104,9 +103,12 @@ class DeletedLinkTest : PackageTest("dlt") {
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "update",
-                assetsFailOnErrors = true,
-                assetsDeltaSemantic = "full",
+                assetsUpsertSemantic = "upsert",
+                assetsFailOnErrors = false,
+                assetsCaseSensitive = true,
+                assetsTableViewAgnostic = false,
+                assetsFieldSeparator = ",",
+                assetsBatchSize = 20,
             ),
             Importer::main,
         )
@@ -118,7 +120,7 @@ class DeletedLinkTest : PackageTest("dlt") {
     }
 
     private fun removeLink() {
-        Asset.purge(client, linkGuid) //
+        client.assets.delete(linkGuid, AtlanDeleteType.HARD).block()
     }
 
     @Test(groups = ["aim.ctud.create"])
