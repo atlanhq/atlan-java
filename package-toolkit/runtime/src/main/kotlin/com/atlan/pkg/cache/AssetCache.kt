@@ -6,7 +6,7 @@ import com.atlan.cache.AbstractMassCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.stream.Stream
@@ -24,7 +24,7 @@ abstract class AssetCache<T : Asset>(
         ctx.client,
         cacheName,
     ) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private var preloaded = AtomicBoolean(false)
     private val ignore: MutableMap<String, String?> = ConcurrentHashMap()
@@ -73,9 +73,7 @@ abstract class AssetCache<T : Asset>(
     fun getIdentity(
         guid: String,
         bypassReadLock: Boolean = false,
-    ): String? {
-        return getNameFromId(guid, bypassReadLock)
-    }
+    ): String? = getNameFromId(guid, bypassReadLock)
 
     /**
      * Mark the provided asset identity as one to ignore.
@@ -105,9 +103,7 @@ abstract class AssetCache<T : Asset>(
      *
      * @return the set of all assets in the cache
      */
-    protected fun listAll(): Stream<Map.Entry<String, T>> {
-        return entrySet()
-    }
+    protected fun listAll(): Stream<Map.Entry<String, T>> = entrySet()
 
     /**
      * Check whether the asset is archived, and if so mark it to be ignored.
@@ -119,15 +115,14 @@ abstract class AssetCache<T : Asset>(
     private fun isArchived(
         id: String,
         asset: T,
-    ): Boolean {
-        return if (asset.status != AtlanStatus.ACTIVE) {
+    ): Boolean =
+        if (asset.status != AtlanStatus.ACTIVE) {
             logger.warn { "Unable to cache archived asset: $id" }
             addToIgnore(id)
             true
         } else {
             false
         }
-    }
 
     /**
      * Create a unique, reconstructable identity for the provided asset.

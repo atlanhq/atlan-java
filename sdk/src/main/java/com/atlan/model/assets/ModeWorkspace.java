@@ -9,14 +9,18 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -254,16 +258,17 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full ModeWorkspace, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
      */
     @JsonIgnore
-    public static ModeWorkspace get(AtlanClient client, String id, boolean includeRelationships) throws AtlanException {
+    public static ModeWorkspace get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof ModeWorkspace) {
@@ -272,11 +277,78 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof ModeWorkspace) {
                 return (ModeWorkspace) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a ModeWorkspace by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the ModeWorkspace, including any relationships
+     * @return the requested ModeWorkspace, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
+     */
+    @JsonIgnore
+    public static ModeWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a ModeWorkspace by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the ModeWorkspace to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the ModeWorkspace, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the ModeWorkspace
+     * @return the requested ModeWorkspace, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
+     */
+    @JsonIgnore
+    public static ModeWorkspace get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = ModeWorkspace.select(client)
+                    .where(ModeWorkspace.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof ModeWorkspace) {
+                return (ModeWorkspace) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = ModeWorkspace.select(client)
+                    .where(ModeWorkspace.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof ModeWorkspace) {
+                return (ModeWorkspace) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }

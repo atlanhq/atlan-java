@@ -5,7 +5,7 @@ import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -17,7 +17,7 @@ import kotlin.test.assertNotNull
  * Test import of the canonical PetStore example from Swagger.
  */
 class ImportFileTest : PackageTest("f") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val connectorType = AtlanConnectorType.OPENLINEAGE
     private val testId = makeUnique("c1")
@@ -28,7 +28,6 @@ class ImportFileTest : PackageTest("f") {
         )
 
     private fun prepFile() {
-        // Prepare a copy of the file with unique names for domains and products
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         input.copyTo(Paths.get(testDirectory, testFile).toFile(), true)
     }
@@ -62,7 +61,8 @@ class ImportFileTest : PackageTest("f") {
     fun specCreated() {
         val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APISpec.select(client)
+            APISpec
+                .select(client)
                 .where(APISpec.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APISpec.NAME)
                 .includeOnResults(APISpec.API_SPEC_TYPE)
@@ -86,7 +86,8 @@ class ImportFileTest : PackageTest("f") {
     fun pathsCreated() {
         val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            APIPath.select(client)
+            APIPath
+                .select(client)
                 .where(APIPath.QUALIFIED_NAME.startsWith(connectionQN))
                 .includeOnResults(APIPath.NAME)
                 .includeOnResults(APIPath.DESCRIPTION)
@@ -108,7 +109,10 @@ class ImportFileTest : PackageTest("f") {
             assertNotNull(one.apiSpec)
             assertTrue(one.apiSpec is APISpec)
             assertNotNull(one.apiSpec.uniqueAttributes)
-            assertTrue(one.apiSpec.uniqueAttributes.qualifiedName.startsWith(connectionQN))
+            assertTrue(
+                one.apiSpec.uniqueAttributes.qualifiedName
+                    .startsWith(connectionQN),
+            )
         }
     }
 

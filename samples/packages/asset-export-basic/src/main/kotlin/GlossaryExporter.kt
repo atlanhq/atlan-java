@@ -8,12 +8,12 @@ import com.atlan.model.assets.Link
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.RowGenerator
 import mu.KLogger
-import mu.KotlinLogging
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -31,17 +31,19 @@ class GlossaryExporter(
     private val batchSize: Int,
     private val cmFields: List<CustomMetadataField>,
 ) : RowGenerator {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     fun export() {
         CSVWriter(filename).use { csv ->
             // TODO: qualifiedName is not a good way to do this for glossary objects...
             val headerNames =
-                Stream.of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
+                Stream
+                    .of(Asset.QUALIFIED_NAME, Asset.TYPE_NAME)
                     .map(AtlanField::getAtlanFieldName)
                     .collect(Collectors.toList())
             headerNames.addAll(
-                getAttributesToExtract().stream()
+                getAttributesToExtract()
+                    .stream()
                     .map { f -> RowSerde.getHeaderForField(f) }
                     .collect(Collectors.toList()),
             )
@@ -50,7 +52,8 @@ class GlossaryExporter(
 
             // Retrieve all glossaries up-front
             val glossaries =
-                Glossary.select(ctx.client, ctx.config.includeArchived)
+                Glossary
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -77,7 +80,8 @@ class GlossaryExporter(
 
             // And finally extract all the terms
             val assets =
-                GlossaryTerm.select(ctx.client, ctx.config.includeArchived)
+                GlossaryTerm
+                    .select(ctx.client, ctx.config.includeArchived)
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
@@ -141,9 +145,7 @@ class GlossaryExporter(
      * @param asset the asset from which to generate the values
      * @return the values, as an iterable set of strings
      */
-    override fun buildFromAsset(asset: Asset): Iterable<String> {
-        return GlossaryRowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
-    }
+    override fun buildFromAsset(asset: Asset): Iterable<String> = GlossaryRowSerializer(ctx, asset, getAttributesToExtract(), logger).getRow()
 
     /**
      * Class to serialize glossary assets into a row of tabular data.

@@ -5,21 +5,19 @@ package com.atlan.pkg.adoption.exports
 import AdoptionExportCfg
 import com.atlan.model.search.SearchLog
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 class DetailedSearches(
     private val ctx: PackageContext<AdoptionExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
     fun export() {
         val start = ctx.config.searchesFrom * 1000
         val end = ctx.config.searchesTo * 1000
         logger.info { "Exporting details of all UI-based searches between [$start, $end]..." }
-        val sheet = xlsx.createSheet("User searches")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Time" to "Time at which the search occurred",
                 "Username" to "User who searched",
@@ -29,11 +27,11 @@ class DetailedSearches(
                 "Qualified names" to "Unique name(s) of the first 20 assets that were found",
             ),
         )
-        SearchLog.searches(ctx.client, start, end)
+        SearchLog
+            .searches(ctx.client, start, end)
             .stream()
             .forEach {
-                xlsx.appendRow(
-                    sheet,
+                writer.writeRecord(
                     listOf(
                         it.createdAt ?: it.timestamp ?: "",
                         it.userName ?: "",

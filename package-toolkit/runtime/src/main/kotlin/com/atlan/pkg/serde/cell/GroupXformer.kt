@@ -23,9 +23,7 @@ object GroupXformer {
      * @param group to be encoded
      * @return the string-encoded form for that group
      */
-    fun encode(group: String): String {
-        return group
-    }
+    fun encode(group: String): String = group
 
     /**
      * Decodes (deserializes) a string form into a validated group name.
@@ -53,7 +51,7 @@ object GroupXformer {
                         // And if found by alias, return the group name (since that's what we require)
                         return client.groupCache.getNameForId(idFromAlias)
                     } catch (e: NotFoundException) {
-                        throw NoSuchElementException("Group name / alias $groupRef is not known to Atlan (in $fieldName).", e)
+                        throw NoSuchElementException("Group name / alias is not known to Atlan (in $fieldName): $groupRef", e)
                     }
                 }
             }

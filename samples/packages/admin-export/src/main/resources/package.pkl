@@ -22,6 +22,11 @@ outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
     ["admin-export"] = "/tmp/admin-export.xlsx"
+    ["users"] = "/tmp/users.csv"
+    ["groups"] = "/tmp/groups.csv"
+    ["personas"] = "/tmp/personas.csv"
+    ["purposes"] = "/tmp/purposes.csv"
+    ["policies"] = "/tmp/policies.csv"
   }
 }
 keywords {
@@ -56,6 +61,17 @@ uiConfig {
           helpText = "Whether to include out-of-the-box policies (Yes) or only those policies you can manage directly (No)."
           required = false
           fallback = false
+        }
+        ["file_format"] = new Radio {
+          title = "File format"
+          required = true
+          helpText = "Select whether you want multiple CSV files or a single XLSX file."
+          possibleValues {
+            ["XLSX"] = "Single Excel file"
+            ["CSV"] = "Multiple CSV files"
+          }
+          default = "XLSX"
+          fallback = default
         }
       }
     }
@@ -99,6 +115,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store to which to upload the exported file."
+          allowTestAuthentication = false
         }
       }
     }

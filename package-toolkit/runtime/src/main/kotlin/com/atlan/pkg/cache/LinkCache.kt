@@ -7,7 +7,7 @@ import com.atlan.model.assets.Link
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -15,8 +15,10 @@ import java.util.concurrent.ConcurrentHashMap
  * Cache for links, since these have purely generated qualifiedNames (a UUID).
  * Note that this entire cache relies on first being preloaded -- otherwise nothing will every be found in it.
  */
-class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
-    private val logger = KotlinLogging.logger {}
+class LinkCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<Link>(ctx, "link") {
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val byAssetGuid: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
 
@@ -24,14 +26,10 @@ class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
     private val includesOnRelations: List<AtlanField> = listOf(Asset.GUID)
 
     /** {@inheritDoc} */
-    override fun lookupByName(name: String?) {
-        throw IllegalStateException("Link cache can only be preloaded en-masse, not retrieved link-by-link.")
-    }
+    override fun lookupByName(name: String?): Unit = throw IllegalStateException("Link cache can only be preloaded en-masse, not retrieved link-by-link.")
 
     /** {@inheritDoc} */
-    override fun lookupById(id: String?) {
-        throw IllegalStateException("Link cache can only be preloaded en-masse, not retrieved link-by-link.")
-    }
+    override fun lookupById(id: String?): Unit = throw IllegalStateException("Link cache can only be preloaded en-masse, not retrieved link-by-link.")
 
     /**
      * Retrieve the pre-existing links for a particular asset.
@@ -41,9 +39,7 @@ class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
      * @param guid of the asset for which to retrieve pre-existing links
      * @return the set of (minimal) links that already exist on the asset
      */
-    fun getByAssetGuid(guid: String): Set<Link> {
-        return byAssetGuid.getOrDefault(guid, setOf()).map { getById(it, false) }.toSet()
-    }
+    fun getByAssetGuid(guid: String): Set<Link> = byAssetGuid.getOrDefault(guid, setOf()).map { getById(it, false) }.toSet()
 
     /**
      * Add a link to the cache.
@@ -56,7 +52,14 @@ class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
             val ref = (link.asset as Asset).trimToReference()
             val url = link.link
             val assetGuid = link.asset.guid
-            val minimal = link.trimToRequired().asset(ref).link(url).name(link.name).status(AtlanStatus.ACTIVE).build()
+            val minimal =
+                link
+                    .trimToRequired()
+                    .asset(ref)
+                    .link(url)
+                    .name(link.name)
+                    .status(AtlanStatus.ACTIVE)
+                    .build()
             cache(linkId, getIdentityForAsset(minimal), minimal)
             if (!byAssetGuid.containsKey(assetGuid)) {
                 byAssetGuid[assetGuid] = ConcurrentHashMap.newKeySet()
@@ -66,15 +69,14 @@ class LinkCache(val ctx: PackageContext<*>) : AssetCache<Link>(ctx, "link") {
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Link): String {
-        return "${asset.name}=${asset.link}@${asset.asset.guid}"
-    }
+    override fun getIdentityForAsset(asset: Link): String = "${asset.name}=${asset.link}@${asset.asset.guid}"
 
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = Link.select(client).count()
         logger.info { "Caching all $count links, up-front..." }
-        Link.select(client)
+        Link
+            .select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

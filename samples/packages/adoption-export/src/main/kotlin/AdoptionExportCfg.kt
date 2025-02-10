@@ -34,6 +34,7 @@ data class AdoptionExportCfg(
     @JsonProperty("include_searches") val includeSearches: String = "NO",
     @JsonProperty("searches_from") val searchesFrom: Long = -90,
     @JsonProperty("searches_to") val searchesTo: Long = 0,
+    @JsonProperty("file_format") val fileFormat: String = "XLSX",
     @JsonProperty("delivery_type") val deliveryType: String = "DIRECT",
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
     @JsonProperty("target_prefix") val targetPrefix: String? = null,

@@ -4,11 +4,9 @@ package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.search.AggregationBucketResult
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
-import com.atlan.pkg.serde.xls.ExcelWriter
-import com.atlan.util.AssetBatch
+import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
 
 abstract class Metric(
@@ -38,17 +36,17 @@ abstract class Metric(
             client: AtlanClient,
             batchSize: Int,
             logger: KLogger,
-        ): Metric {
-            return report.getDeclaredConstructor(
-                AtlanClient::class.java,
-                Int::class.java,
-                KLogger::class.java,
-            ).newInstance(
-                client,
-                batchSize,
-                logger,
-            ) as Metric
-        }
+        ): Metric =
+            report
+                .getDeclaredConstructor(
+                    AtlanClient::class.java,
+                    Int::class.java,
+                    KLogger::class.java,
+                ).newInstance(
+                    client,
+                    batchSize,
+                    logger,
+                ) as Metric
     }
 
     /**
@@ -57,46 +55,26 @@ abstract class Metric(
      * @param guid of the asset
      * @return the full URL to view the asset in Atlan
      */
-    fun getAssetLink(guid: String): String {
-        return "${client.baseUrl}/assets/$guid/overview"
-    }
+    fun getAssetLink(guid: String): String = "${client.baseUrl}/assets/$guid/overview"
 
     /**
      * Return the abbreviated name for the metric, for example TLAxL.
      *
      * @return the abbreviated name for the metric
      */
-    fun getShortName(): String {
-        return name.substringBefore(" - ")
-    }
+    fun getShortName(): String = name.substringBefore(" - ")
 
     /**
      * Output the detailed records for this report.
      *
-     * @param xlsx the Excel writer in which to create a sheet and dump out the detailed result records
-     * @param term the glossary term that defines the metric, to which to associate assets
-     * @param batch through which to bulk-process the term assignments
+     * @param writer through which to dump out the detailed result records
      */
-    fun outputDetailedRecords(
-        xlsx: ExcelWriter,
-        term: GlossaryTerm?,
-        batch: AssetBatch?,
-    ) {
+    fun outputDetailedRecords(writer: TabularWriter) {
         val header = getDetailedHeader()
         if (header.isNotEmpty()) {
-            val sheet = xlsx.createSheet(getShortName())
-            xlsx.addHeader(sheet, header)
-            query().stream().forEach { asset ->
-                val row = getDetailedRecord(asset)
-                xlsx.appendRow(sheet, row)
-                // TODO: requires additional testing
-                // if (term != null && batch != null && category != Reporter.CAT_HEADLINES) {
-                //     batch.add(
-                //         asset.trimToRequired()
-                //             .assignedTerm(GlossaryTerm.refByGuid(term.guid, Reference.SaveSemantic.APPEND))
-                //             .build(),
-                //     )
-                // }
+            writer.writeHeader(header)
+            query().stream().forEach { currentAsset ->
+                writer.writeRecord(getDetailedRecord(currentAsset))
             }
         }
     }
@@ -139,9 +117,7 @@ abstract class Metric(
      *
      * @return a mapping from column name to a description of the column's use
      */
-    open fun getDetailedHeader(): Map<String, String> {
-        return mapOf()
-    }
+    open fun getDetailedHeader(): Map<String, String> = mapOf()
 
     /**
      * Produce a single row of detailed output for a single result in this report.
@@ -149,7 +125,5 @@ abstract class Metric(
      * @param asset the asset from which to draw the details for the row
      * @return a list of values for the row
      */
-    open fun getDetailedRecord(asset: Asset): List<Any> {
-        return listOf()
-    }
+    open fun getDetailedRecord(asset: Asset): List<Any> = listOf()
 }

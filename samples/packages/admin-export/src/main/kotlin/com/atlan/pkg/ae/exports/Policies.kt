@@ -9,22 +9,20 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.ae.AdminExporter.ConnectionId
-import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.serde.TabularWriter
 import com.atlan.serde.Serde
 import mu.KLogger
 
 class Policies(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val xlsx: ExcelWriter,
+    private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, ConnectionId>,
     private val logger: KLogger,
 ) {
     fun export() {
         logger.info { "Exporting policies, ${ if (ctx.config.includeNativePolicies) "including" else "excluding" } out-of-the-box..." }
-        val sheet = xlsx.createSheet("Policies")
-        xlsx.addHeader(
-            sheet,
+        writer.writeHeader(
             mapOf(
                 "Policy name" to "",
                 "Description" to "",
@@ -35,7 +33,8 @@ class Policies(
                 "Resources" to "Resources the policy controls",
             ),
         )
-        AuthPolicy.select(ctx.client)
+        AuthPolicy
+            .select(ctx.client)
             .includeOnResults(AuthPolicy.NAME)
             .includeOnResults(AuthPolicy.DESCRIPTION)
             .includeOnResults(AuthPolicy.ACCESS_CONTROL)
@@ -48,8 +47,7 @@ class Policies(
                 policy as AuthPolicy
                 if (policy.accessControl != null || ctx.config.includeNativePolicies) {
                     val resources = getResources(ctx.client, policy)
-                    xlsx.appendRow(
-                        sheet,
+                    writer.writeRecord(
                         listOf(
                             policy.name,
                             policy.description,
@@ -91,9 +89,10 @@ class Policies(
             }
 
             "glossary" -> {
-                policy.policyResources?.map {
-                    glossaryMap[it.substringAfter("entity:")]
-                }?.joinToString("\n") ?: ""
+                policy.policyResources
+                    ?.map {
+                        glossaryMap[it.substringAfter("entity:")]
+                    }?.joinToString("\n") ?: ""
             }
 
             "domain" -> {

@@ -9,7 +9,9 @@ import com.atlan.pkg.model.Credential
 /**
  * Credentials captured for GCS connectivity.
  */
-data class GCSCredential(val from: Credential) {
+data class GCSCredential(
+    val from: Credential,
+) {
     /** GCP project ID provided, or the default project for Atlan's backing store if none was provided. */
     val projectId = Utils.getOrDefault(from.username ?: "", getEnvVar("GCP_PROJECT_ID"))
     val serviceAccountJson = from.password ?: ""

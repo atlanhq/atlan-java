@@ -3,14 +3,14 @@
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import kotlin.test.Test
 
 /**
  * Test export of only assets, no glossaries.
  */
 class NoGlossariesTest : PackageTest("ng") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
         listOf(

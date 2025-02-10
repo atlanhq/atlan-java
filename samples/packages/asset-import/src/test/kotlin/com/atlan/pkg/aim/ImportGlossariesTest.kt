@@ -21,6 +21,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ThreadSafeWriter
 import de.siegmar.fastcsv.reader.CsvReader
@@ -28,7 +29,6 @@ import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
-import mu.KotlinLogging
 import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -40,7 +40,7 @@ import kotlin.test.assertNotNull
  * Test import of a glossary and its inter-related contents.
  */
 class ImportGlossariesTest : PackageTest("ig") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossary1 = makeUnique("g1")
     private val glossary2 = makeUnique("g2")
@@ -78,7 +78,8 @@ class ImportGlossariesTest : PackageTest("ig") {
         val input = Paths.get(testDirectory, testFile)
         val output = Paths.get(testDirectory, revisedFile)
         val builder =
-            CsvReader.builder()
+            CsvReader
+                .builder()
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
@@ -87,7 +88,8 @@ class ImportGlossariesTest : PackageTest("ig") {
         val header: List<String> = CSVXformer.getHeader(input.toString(), ',')
         val tagsIdx = header.indexOf("atlanTags")
         val descriptionIdx = header.indexOf(Asset.DESCRIPTION.atlanFieldName)
-        CsvWriter.builder()
+        CsvWriter
+            .builder()
             .fieldSeparator(',')
             .quoteCharacter('"')
             .quoteStrategy(QuoteStrategies.NON_EMPTY)
@@ -210,7 +212,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun categoriesCreatedG1() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryCategory.select(client)
+            GlossaryCategory
+                .select(client)
                 .where(GlossaryCategory.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(categoryAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -251,7 +254,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun categoriesCreatedG2() {
         val g2 = Glossary.findByName(client, glossary2)!!
         val request =
-            GlossaryCategory.select(client)
+            GlossaryCategory
+                .select(client)
                 .where(GlossaryCategory.ANCHOR.eq(g2.qualifiedName))
                 .includesOnResults(categoryAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -286,7 +290,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun termsCreatedG1() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -312,7 +317,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun termsCreatedG2() {
         val g2 = Glossary.findByName(client, glossary2)!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g2.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -423,7 +429,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun tagsUnchanged() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .includesOnResults(termAttrs)
                 .includeOnRelations(Glossary.NAME)
@@ -449,7 +456,8 @@ class ImportGlossariesTest : PackageTest("ig") {
     fun descriptionsAdded() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
-            GlossaryTerm.select(client)
+            GlossaryTerm
+                .select(client)
                 .where(GlossaryTerm.ANCHOR.eq(g1.qualifiedName))
                 .where(GlossaryTerm.DESCRIPTION.hasAnyValue())
                 .includesOnResults(termAttrs)

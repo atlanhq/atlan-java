@@ -112,6 +112,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     IApplication application;
 
+    /** ApplicationField asset containing this Asset. */
+    @Attribute
+    IApplicationField applicationField;
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    @Attribute
+    String applicationFieldQualifiedName;
+
     /** Qualified name of the Application that contains this asset. */
     @Attribute
     String applicationQualifiedName;
@@ -798,6 +806,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> viewerUsers;
 
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    transient String iconUrl;
+
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
     @Singular
@@ -1116,15 +1127,15 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param guid of the asset to retrieve
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full asset, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     @JsonIgnore
-    public static Asset get(AtlanClient client, String guid, boolean includeRelationships) throws AtlanException {
-        AssetResponse response = client.assets.get(guid, !includeRelationships, !includeRelationships);
+    public static Asset get(AtlanClient client, String guid, boolean includeAllRelationships) throws AtlanException {
+        AssetResponse response = client.assets.get(guid, !includeAllRelationships, !includeAllRelationships);
         Asset asset = response.getAsset();
-        if (asset != null && includeRelationships) {
+        if (asset != null && includeAllRelationships) {
             asset.setCompleteObject();
         }
         return asset;
@@ -1137,17 +1148,17 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param typeName the type of the asset to retrieve
      * @param qualifiedName the unique name of the asset to retrieve
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full asset, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     @JsonIgnore
-    public static Asset get(AtlanClient client, String typeName, String qualifiedName, boolean includeRelationships)
+    public static Asset get(AtlanClient client, String typeName, String qualifiedName, boolean includeAllRelationships)
             throws AtlanException {
         AssetResponse response =
-                client.assets.get(typeName, qualifiedName, !includeRelationships, !includeRelationships);
+                client.assets.get(typeName, qualifiedName, !includeAllRelationships, !includeAllRelationships);
         Asset asset = response.getAsset();
-        if (asset != null && includeRelationships) {
+        if (asset != null && includeAllRelationships) {
             asset.setCompleteObject();
         }
         return asset;

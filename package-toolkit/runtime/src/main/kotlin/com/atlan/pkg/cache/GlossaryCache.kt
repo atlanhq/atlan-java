@@ -7,10 +7,12 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 
-class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glossary") {
-    private val logger = KotlinLogging.logger {}
+class GlossaryCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<Glossary>(ctx, "glossary") {
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(Glossary.NAME, Glossary.STATUS)
 
@@ -46,7 +48,8 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
     ): Glossary? {
         try {
             val glossary =
-                Glossary.select(client)
+                Glossary
+                    .select(client)
                     .where(Glossary.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -71,15 +74,14 @@ class GlossaryCache(val ctx: PackageContext<*>) : AssetCache<Glossary>(ctx, "glo
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Glossary): String {
-        return asset.name
-    }
+    override fun getIdentityForAsset(asset: Glossary): String = asset.name
 
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = Glossary.select(client).count()
         logger.info { "Caching all $count glossaries, up-front..." }
-        Glossary.select(client)
+        Glossary
+            .select(client)
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { glossary ->

@@ -4,6 +4,7 @@ package com.atlan.util;
 
 import com.atlan.AtlanClient;
 import com.atlan.cache.OffHeapAssetCache;
+import com.atlan.cache.OffHeapFailureCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -13,6 +14,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Column;
 import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.assets.MaterializedView;
+import com.atlan.model.assets.SnowflakeDynamicTable;
 import com.atlan.model.assets.Table;
 import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
@@ -29,8 +31,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Utility class for managing bulk updates in batches.
@@ -38,7 +42,7 @@ import lombok.Getter;
 public class AssetBatch implements AtlanCloseable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
-            Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME);
+            Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, SnowflakeDynamicTable.TYPE_NAME);
 
     public enum CustomMetadataHandling {
         IGNORE,
@@ -115,7 +119,7 @@ public class AssetBatch implements AtlanCloseable {
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
-    private final List<FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapFailureCache failures;
 
     /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
     @Getter
@@ -328,7 +332,9 @@ public class AssetBatch implements AtlanCloseable {
                 new OffHeapAssetCache(
                         client, "restored_" + Thread.currentThread().getId()),
                 new OffHeapAssetCache(
-                        client, "skipped_" + Thread.currentThread().getId()));
+                        client, "skipped_" + Thread.currentThread().getId()),
+                new OffHeapFailureCache(
+                        client, "failed_" + Thread.currentThread().getId()));
     }
 
     /**
@@ -348,6 +354,7 @@ public class AssetBatch implements AtlanCloseable {
      * @param updated off-heap asset cache tracking assets that have been updated
      * @param restored off-heap asset cache tracking assets that have been restored
      * @param skipped off-heap asset cache tracking assets that have been skipped
+     * @param failed off-heap cache tracking batches of assets that have failed
      */
     public AssetBatch(
             AtlanClient client,
@@ -363,7 +370,8 @@ public class AssetBatch implements AtlanCloseable {
             OffHeapAssetCache created,
             OffHeapAssetCache updated,
             OffHeapAssetCache restored,
-            OffHeapAssetCache skipped) {
+            OffHeapAssetCache skipped,
+            OffHeapFailureCache failed) {
         this.client = client;
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
@@ -378,6 +386,7 @@ public class AssetBatch implements AtlanCloseable {
         this.updated = updated;
         this.restored = restored;
         this.skipped = skipped;
+        this.failures = failed;
     }
 
     /**
@@ -434,9 +443,8 @@ public class AssetBatch implements AtlanCloseable {
             if (tableViewAgnostic) {
                 Set<String> typesInBatch =
                         _batch.stream().map(Asset::getTypeName).collect(Collectors.toSet());
-                fuzzyMatch = typesInBatch.contains(Table.TYPE_NAME)
-                        || typesInBatch.contains(View.TYPE_NAME)
-                        || typesInBatch.contains(MaterializedView.TYPE_NAME);
+                typesInBatch.retainAll(TABLE_LEVEL_ASSETS);
+                fuzzyMatch = !typesInBatch.isEmpty();
             }
             if (updateOnly || creationHandling != AssetCreationHandling.FULL || fuzzyMatch) {
                 Map<AssetIdentity, String> found = new HashMap<>();
@@ -475,12 +483,16 @@ public class AssetBatch implements AtlanCloseable {
                                 new AssetIdentity(View.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         AssetIdentity asMaterializedView = new AssetIdentity(
                                 MaterializedView.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
+                        AssetIdentity asDynamicTable = new AssetIdentity(
+                                SnowflakeDynamicTable.TYPE_NAME, asset.getQualifiedName(), caseInsensitive);
                         if (found.containsKey(asTable)) {
                             addFuzzyMatched(asset, Table.TYPE_NAME, found.get(asTable), revised);
                         } else if (found.containsKey(asView)) {
                             addFuzzyMatched(asset, View.TYPE_NAME, found.get(asView), revised);
                         } else if (found.containsKey(asMaterializedView)) {
                             addFuzzyMatched(asset, MaterializedView.TYPE_NAME, found.get(asMaterializedView), revised);
+                        } else if (found.containsKey(asDynamicTable)) {
+                            addFuzzyMatched(asset, SnowflakeDynamicTable.TYPE_NAME, found.get(asDynamicTable), revised);
                         } else if (creationHandling == AssetCreationHandling.PARTIAL) {
                             // Still create it (partial), if not found and partial asset creation is allowed
                             addPartialAsset(asset, revised);
@@ -523,7 +535,7 @@ public class AssetBatch implements AtlanCloseable {
                     }
                 } catch (AtlanException e) {
                     if (captureFailures) {
-                        failures.add(new FailedBatch(_batch, e));
+                        track(failures, _batch, e);
                     } else {
                         throw e;
                     }
@@ -622,6 +634,25 @@ public class AssetBatch implements AtlanCloseable {
         }
     }
 
+    private void track(OffHeapFailureCache tracker, List<Asset> batch, Exception failureReason) {
+        List<Asset> minimal = new ArrayList<>();
+        for (Asset asset : batch) {
+            try {
+                minimal.add(asset.trimToRequired()
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            } catch (InvalidRequestException e) {
+                minimal.add(IndistinctAsset._internal()
+                        .typeName(asset.getTypeName())
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            }
+        }
+        tracker.put(UUID.randomUUID().toString(), new FailedBatch(minimal, failureReason));
+    }
+
     /**
      * Construct the minimal asset representation necessary for the asset to be included in a
      * persistent connection cache.
@@ -649,12 +680,15 @@ public class AssetBatch implements AtlanCloseable {
      * Internal class to capture batch failures.
      */
     @Getter
+    @Builder
+    @Jacksonized
+    @EqualsAndHashCode
     public static final class FailedBatch {
         private final List<Asset> failedAssets;
         private final Exception failureReason;
 
         public FailedBatch(List<Asset> failedAssets, Exception failureReason) {
-            this.failedAssets = List.copyOf(failedAssets);
+            this.failedAssets = failedAssets;
             this.failureReason = failureReason;
         }
     }

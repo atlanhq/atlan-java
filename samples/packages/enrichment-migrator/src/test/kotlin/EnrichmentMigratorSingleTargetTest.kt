@@ -11,8 +11,11 @@ import com.atlan.model.fields.CustomMetadataField
 import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
+import com.atlan.pkg.serde.cell.TimestampXformer
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
+import java.io.File
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,7 +25,7 @@ import kotlin.test.assertNotNull
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
     private val c2 = makeUnique("c2")
@@ -34,6 +37,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -46,7 +50,8 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     private fun createCustomMetadata() {
-        CustomMetadataDef.creator(cm1)
+        CustomMetadataDef
+            .creator(cm1)
             .attributeDef(AttributeDef.of(client, "dateSingle", AtlanCustomAttributePrimitiveType.DATE, false))
             .build()
             .create(client)
@@ -65,14 +70,15 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
             val sch2 = Schema.creator("sch1", db2).build()
             batch.add(sch2)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .customMetadata(
                         cm1,
-                        CustomMetadataAttributes.builder()
+                        CustomMetadataAttributes
+                            .builder()
                             .attribute("dateSingle", now)
                             .build(),
-                    )
-                    .build()
+                    ).build()
             batch.add(tbl1)
             val tbl2 = Table.creator("tbl1", sch2).build()
             batch.add(tbl2)
@@ -94,7 +100,13 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -108,13 +120,15 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
         val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
         val cmField = CustomMetadataField.of(client, cm1, "dateSingle")
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .where(cmField.hasAnyValue())
                 .includeOnResults(cmField)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
-        response.stream()
+        response
+            .stream()
             .forEach {
                 val cm = it.customMetadataSets
                 assertNotNull(cm)
@@ -126,11 +140,20 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
     }
 
     @Test
+    fun customMetadataInFile() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1",,,,,,,,,,,,,,,,"${TimestampXformer.encode(now)}"
+                """.trimIndent(),
+        )
+    }
+
+    @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
-        val filename = targetConnection.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
 
     @Test

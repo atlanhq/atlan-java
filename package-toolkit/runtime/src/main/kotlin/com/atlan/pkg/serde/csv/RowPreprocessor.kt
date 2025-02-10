@@ -34,13 +34,12 @@ interface RowPreprocessor {
     fun finalize(
         header: List<String>,
         outputFile: String? = null,
-    ): Results {
-        return Results(
+    ): Results =
+        Results(
             hasLinks = header.contains(Asset.LINKS.atlanFieldName),
             hasTermAssignments = header.contains("assignedTerms"),
             outputFile = outputFile,
         )
-    }
 
     /** Extensible class through which to capture details of the pre-processing of a file. */
     open class Results(

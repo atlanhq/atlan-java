@@ -33,7 +33,8 @@ class TLAxU(
     /** {@inheritDoc} */
     override fun query(): FluentSearchBuilder<*, *> {
         val stale = Instant.now().minus(90, ChronoUnit.DAYS).toEpochMilli()
-        return client.assets.select()
+        return client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
             .where(Asset.SOURCE_UPDATED_AT.gt(0))
             .where(Asset.SOURCE_UPDATED_AT.lt(stale))
@@ -51,8 +52,8 @@ class TLAxU(
     }
 
     /** {@inheritDoc} */
-    override fun getDetailedHeader(): Map<String, String> {
-        return mapOf(
+    override fun getDetailedHeader(): Map<String, String> =
+        mapOf(
             "Connector" to "Type of the data source",
             "Database" to "Name of the database for the table-level asset",
             "Schema" to "Name of the schema for the table-level asset",
@@ -65,7 +66,6 @@ class TLAxU(
             "Rows" to "Total number of rows of data in the asset",
             "Link" to "Link to the detailed asset within Atlan",
         )
-    }
 
     /** {@inheritDoc} */
     override fun getDetailedRecord(asset: Asset): List<Any> {

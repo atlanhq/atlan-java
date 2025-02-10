@@ -16,8 +16,8 @@ import com.atlan.model.enums.AtlanTagColor
 import com.atlan.model.typedefs.AtlanTagDef
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
-import mu.KotlinLogging
 import org.testng.Assert
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -31,7 +31,7 @@ import kotlin.test.assertTrue
  * Test import of a very simple file containing assigned terms.
  */
 class LinkTermsTest : PackageTest("lt") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossaryName = makeUnique("g1")
     private val connectionName = makeUnique("c1")
@@ -143,7 +143,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun tableCreated() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.SOURCE_READ_COUNT)
@@ -165,7 +166,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun viewCreated() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select(client)
+            View
+                .select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.SOURCE_READ_COUNT)
@@ -187,7 +189,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun columnCreated() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Column.select(client)
+            Column
+                .select(client)
                 .where(Column.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Column.NAME)
                 .includeOnResults(Column.ATLAN_TAGS)
@@ -203,7 +206,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun termAssigned() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            client.assets.select()
+            client.assets
+                .select()
                 .where(Asset.TYPE_NAME.`in`(setOf(Table.TYPE_NAME, View.TYPE_NAME)))
                 .where(Asset.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Asset.NAME)
@@ -264,7 +268,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun testRevisedTable() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(Table.NAME)
                 .includeOnResults(Table.ASSIGNED_TERMS)
@@ -286,7 +291,8 @@ class LinkTermsTest : PackageTest("lt") {
     fun testRevisedView() {
         val c = Connection.findByName(client, connectionName, connectorType)[0]!!
         val request =
-            View.select(client)
+            View
+                .select(client)
                 .where(View.QUALIFIED_NAME.startsWith(c.qualifiedName))
                 .includeOnResults(View.NAME)
                 .includeOnResults(View.ASSIGNED_TERMS)

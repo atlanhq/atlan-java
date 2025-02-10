@@ -10,14 +10,18 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -95,6 +99,11 @@ public class PowerBIDatasource extends Asset
     @Attribute
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** PowerBI Dataflows that are associated with this PowerBI Datasource. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> powerBIDataflows;
 
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
@@ -238,17 +247,17 @@ public class PowerBIDatasource extends Asset
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full PowerBIDatasource, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
      */
     @JsonIgnore
-    public static PowerBIDatasource get(AtlanClient client, String id, boolean includeRelationships)
+    public static PowerBIDatasource get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof PowerBIDatasource) {
@@ -257,11 +266,78 @@ public class PowerBIDatasource extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof PowerBIDatasource) {
                 return (PowerBIDatasource) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a PowerBIDatasource by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the PowerBIDatasource, including any relationships
+     * @return the requested PowerBIDatasource, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
+     */
+    @JsonIgnore
+    public static PowerBIDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a PowerBIDatasource by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the PowerBIDatasource to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the PowerBIDatasource, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the PowerBIDatasource
+     * @return the requested PowerBIDatasource, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
+     */
+    @JsonIgnore
+    public static PowerBIDatasource get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = PowerBIDatasource.select(client)
+                    .where(PowerBIDatasource.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof PowerBIDatasource) {
+                return (PowerBIDatasource) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = PowerBIDatasource.select(client)
+                    .where(PowerBIDatasource.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof PowerBIDatasource) {
+                return (PowerBIDatasource) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }

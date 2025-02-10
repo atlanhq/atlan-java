@@ -110,11 +110,44 @@ public interface ICatalog {
             case AirflowTask.TYPE_NAME:
                 ref = AirflowTask.refByQualifiedName(qualifiedName);
                 break;
+            case AnaplanApp.TYPE_NAME:
+                ref = AnaplanApp.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanDimension.TYPE_NAME:
+                ref = AnaplanDimension.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanLineItem.TYPE_NAME:
+                ref = AnaplanLineItem.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanList.TYPE_NAME:
+                ref = AnaplanList.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanModel.TYPE_NAME:
+                ref = AnaplanModel.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanModule.TYPE_NAME:
+                ref = AnaplanModule.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanPage.TYPE_NAME:
+                ref = AnaplanPage.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanSystemDimension.TYPE_NAME:
+                ref = AnaplanSystemDimension.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanView.TYPE_NAME:
+                ref = AnaplanView.refByQualifiedName(qualifiedName);
+                break;
+            case AnaplanWorkspace.TYPE_NAME:
+                ref = AnaplanWorkspace.refByQualifiedName(qualifiedName);
+                break;
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
                 break;
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
+                break;
+            case ApplicationField.TYPE_NAME:
+                ref = ApplicationField.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -128,11 +161,14 @@ public interface ICatalog {
             case AzureServiceBusNamespace.TYPE_NAME:
                 ref = AzureServiceBusNamespace.refByQualifiedName(qualifiedName);
                 break;
+            case AzureServiceBusSchema.TYPE_NAME:
+                ref = AzureServiceBusSchema.refByQualifiedName(qualifiedName);
+                break;
             case AzureServiceBusTopic.TYPE_NAME:
                 ref = AzureServiceBusTopic.refByQualifiedName(qualifiedName);
                 break;
-            case BusinessProcessModelEntity.TYPE_NAME:
-                ref = BusinessProcessModelEntity.refByQualifiedName(qualifiedName);
+            case BigqueryTag.TYPE_NAME:
+                ref = BigqueryTag.refByQualifiedName(qualifiedName);
                 break;
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
@@ -203,6 +239,9 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
+            case CustomEntity.TYPE_NAME:
+                ref = CustomEntity.refByQualifiedName(qualifiedName);
+                break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
@@ -220,6 +259,12 @@ public interface ICatalog {
                 break;
             case DatabricksUnityCatalogTag.TYPE_NAME:
                 ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
+                break;
+            case DataverseAttribute.TYPE_NAME:
+                ref = DataverseAttribute.refByQualifiedName(qualifiedName);
+                break;
+            case DataverseEntity.TYPE_NAME:
+                ref = DataverseEntity.refByQualifiedName(qualifiedName);
                 break;
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
@@ -427,6 +472,9 @@ public interface ICatalog {
                 break;
             case PowerBIDataflow.TYPE_NAME:
                 ref = PowerBIDataflow.refByQualifiedName(qualifiedName);
+                break;
+            case PowerBIDataflowEntityColumn.TYPE_NAME:
+                ref = PowerBIDataflowEntityColumn.refByQualifiedName(qualifiedName);
                 break;
             case PowerBIDataset.TYPE_NAME:
                 ref = PowerBIDataset.refByQualifiedName(qualifiedName);
@@ -704,6 +752,12 @@ public interface ICatalog {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();

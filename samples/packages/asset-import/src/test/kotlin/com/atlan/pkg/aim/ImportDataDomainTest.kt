@@ -12,14 +12,14 @@ import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class ImportDataDomainTest : PackageTest("idd") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val dataDomain1 = makeUnique("d1")
     private val dataDomain2 = makeUnique("d2")
@@ -28,7 +28,7 @@ class ImportDataDomainTest : PackageTest("idd") {
     private lateinit var d1: DataDomain
     private lateinit var d2: DataDomain
     private lateinit var d3: DataDomain
-    private val testFile = "input.csv"
+    private val testFile = "data_domain.csv"
 
     private val files =
         listOf(
@@ -38,7 +38,7 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun prepFile() {
         // Prepare a copy of the file with unique names for domains and products
-        val input = Paths.get("src", "test", "resources", "data_domain.csv").toFile()
+        val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
@@ -167,7 +167,8 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataDomain(domainName: String): DataDomain {
         val request =
-            DataDomain.select(client)
+            DataDomain
+                .select(client)
                 .where(DataDomain.NAME.eq(domainName))
                 .includesOnResults(dataDomainAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
@@ -180,13 +181,18 @@ class ImportDataDomainTest : PackageTest("idd") {
 
     private fun findDataProductWithRetry(productName: String): DataProduct {
         val request =
-            DataProduct.select(client)
+            DataProduct
+                .select(client)
                 .where(DataProduct.NAME.eq(productName))
                 .includesOnResults(dataProductAttrs)
                 .includeOnRelations(Readme.DESCRIPTION)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
-        return response.stream().filter { a: Asset? -> a is DataProduct }.findFirst().get() as DataProduct
+        return response
+            .stream()
+            .filter { a: Asset? -> a is DataProduct }
+            .findFirst()
+            .get() as DataProduct
     }
 
     @Test

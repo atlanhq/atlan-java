@@ -7,11 +7,13 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_PRODUCT_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
+import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
@@ -39,7 +41,6 @@ class ProductImporter(
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors,
         typeNameFilter = DataProduct.TYPE_NAME,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
         trackBatches = ctx.config.trackBatches,
@@ -68,10 +69,13 @@ class ProductImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(DataProduct.NAME.atlanFieldName) as String
         val dataDomainMinimal = deserializer.getValue(DataProduct.DATA_DOMAIN.atlanFieldName)?.let { it as DataDomain }
-        val dataDomain = if (dataDomainMinimal != null) ctx.dataDomainCache.getByGuid(dataDomainMinimal.guid) as DataDomain else null
+        if (dataDomainMinimal == null) {
+            throw NoSuchElementException("No dataDomain provided for the data product, cannot be processed.")
+        }
+        val dataDomain = ctx.dataDomainCache.getByGuid(dataDomainMinimal.guid) ?: throw NoSuchElementException("dataDomain not found for the data product, cannot be processed: ${deserializer.getRawValue(DataProduct.DATA_DOMAIN.atlanFieldName)}")
         val dataProductAssetsDSL = deserializer.getValue(DataProduct.DATA_PRODUCT_ASSETS_DSL.atlanFieldName) as String?
         val qualifiedName = generateQualifiedName(deserializer, dataDomain)
-        val candidateDP = DataProduct.creator(name, dataDomain?.qualifiedName, dataProductAssetsDSL)
+        val candidateDP = DataProduct.creator(name, dataDomain.qualifiedName, dataProductAssetsDSL)
         return if (qualifiedName != getCacheId(deserializer, dataDomain)) {
             // If there is an existing qualifiedName, use it, otherwise we will get a conflict exception
             candidateDP.qualifiedName(qualifiedName)
@@ -120,9 +124,7 @@ class ProductImporter(
     }
 
     /** Pre-process the assets import file. */
-    private fun preprocess(): RowPreprocessor.Results {
-        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-    }
+    private fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
 
     private class Preprocessor(
         originalFile: String,
@@ -140,6 +142,11 @@ class ProductImporter(
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank() && typeName !in DATA_PRODUCT_TYPES) {
+                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+                throw IllegalStateException("Found a non-product asset that should be loaded via another file (of type $typeName): $qualifiedName")
+            }
             return row // No-op
         }
     }

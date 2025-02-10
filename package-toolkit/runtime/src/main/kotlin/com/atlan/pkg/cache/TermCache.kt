@@ -8,11 +8,13 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.GlossaryXformer
-import mu.KotlinLogging
 
-class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "term") {
-    private val logger = KotlinLogging.logger {}
+class TermCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<GlossaryTerm>(ctx, "term") {
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(GlossaryTerm.NAME, GlossaryTerm.ANCHOR)
     private val includesOnRelations: List<AtlanField> = listOf(Glossary.NAME)
@@ -33,7 +35,8 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
             if (glossary != null) {
                 try {
                     val term =
-                        GlossaryTerm.select(client)
+                        GlossaryTerm
+                            .select(client)
                             .where(GlossaryTerm.NAME.eq(termName))
                             .where(GlossaryTerm.ANCHOR.eq(glossary.qualifiedName))
                             .includesOnResults(includesOnResults)
@@ -73,7 +76,8 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
     ): GlossaryTerm? {
         try {
             val term =
-                GlossaryTerm.select(client)
+                GlossaryTerm
+                    .select(client)
                     .where(GlossaryTerm.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .includesOnRelations(includesOnRelations)
@@ -99,15 +103,14 @@ class TermCache(val ctx: PackageContext<*>) : AssetCache<GlossaryTerm>(ctx, "ter
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: GlossaryTerm): String {
-        return "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
-    }
+    override fun getIdentityForAsset(asset: GlossaryTerm): String = "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
 
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = GlossaryTerm.select(client).count()
         logger.info { "Caching all $count terms, up-front..." }
-        GlossaryTerm.select(client)
+        GlossaryTerm
+            .select(client)
             .includesOnResults(includesOnResults)
             .includesOnRelations(includesOnRelations)
             .stream(true)

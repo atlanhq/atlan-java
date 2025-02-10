@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -43,7 +44,6 @@ class DomainImporter(
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors,
         trackBatches = true,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
     ) {
@@ -177,9 +177,7 @@ class DomainImporter(
     }
 
     /** Pre-process the assets import file. */
-    private fun preprocess(): RowPreprocessor.Results {
-        return Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-    }
+    private fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
 
     private class Preprocessor(
         originalFile: String,
@@ -197,6 +195,11 @@ class DomainImporter(
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank() && typeName !in DATA_PRODUCT_TYPES) {
+                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+                throw IllegalStateException("Found a non-product asset that should be loaded via another file (of type $typeName): $qualifiedName")
+            }
             return row // No-op
         }
     }

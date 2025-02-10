@@ -4,7 +4,7 @@ package com.atlan.pkg.cache
 
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.sql.DriverManager
 import java.sql.SQLException
 import java.util.stream.Stream
@@ -20,7 +20,7 @@ class PersistentConnectionCache(
     private val dbFile: String,
     private val ignoreQNs: Collection<String> = emptySet(),
 ) {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
     private val dbString = "jdbc:sqlite:$dbFile"
 
     init {
@@ -115,7 +115,8 @@ class PersistentConnectionCache(
                         val order = results.getInt("order_seq")
                         val tenantId = results.getString("tenant_id")
                         list.add(
-                            Column._internal()
+                            Column
+                                ._internal()
                                 .typeName(typeName)
                                 .qualifiedName(qualifiedName)
                                 .connectionQualifiedName(connectionQN)

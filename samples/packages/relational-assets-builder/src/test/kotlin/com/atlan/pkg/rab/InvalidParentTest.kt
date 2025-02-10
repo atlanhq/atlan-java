@@ -5,7 +5,7 @@ package com.atlan.pkg.rab
 import RelationalAssetsBuilderCfg
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.annotations.Test
 import java.nio.file.Paths
 import kotlin.IllegalStateException
@@ -15,7 +15,7 @@ import kotlin.test.assertFailsWith
  * Test creation of relational assets where one of the columns has an invalid parent.
  */
 class InvalidParentTest : PackageTest("ip") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.FIREBOLT

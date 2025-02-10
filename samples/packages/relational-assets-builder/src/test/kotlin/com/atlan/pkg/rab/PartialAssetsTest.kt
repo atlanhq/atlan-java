@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.rab
 
+import AssetImportCfg
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
@@ -16,8 +17,10 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
+import com.atlan.pkg.rab.Importer.PREVIOUS_FILES_PREFIX
 import org.testng.Assert.assertTrue
+import java.io.File
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -28,7 +31,7 @@ import kotlin.test.assertNotNull
  * Test creation of partial relational assets.
  */
 class PartialAssetsTest : PackageTest("pa") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = AtlanConnectorType.MARIADB
@@ -147,6 +150,16 @@ class PartialAssetsTest : PackageTest("pa") {
             ),
             Importer::main,
         )
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}current-file-transformed.csv",
+                assetsUpsertSemantic = "partial",
+                assetsFailOnErrors = true,
+                assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
+                trackBatches = false,
+            ),
+            com.atlan.pkg.aim.Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -178,7 +191,8 @@ class PartialAssetsTest : PackageTest("pa") {
         val displayName = "Test DB"
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Database.select(client)
+            Database
+                .select(client)
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(databaseAttrs)
                 .includeOnRelations(Schema.NAME)
@@ -202,7 +216,8 @@ class PartialAssetsTest : PackageTest("pa") {
         val displayName = "Test schema"
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Schema.select(client)
+            Schema
+                .select(client)
                 .where(Schema.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(schemaAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -231,7 +246,8 @@ class PartialAssetsTest : PackageTest("pa") {
         val displayName = "Test table"
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -254,7 +270,11 @@ class PartialAssetsTest : PackageTest("pa") {
         assertEquals("Ready to use", tbl.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", tbl.readme.description)
         assertEquals(2, tbl.columns.size)
-        val colNames = tbl.columns.stream().map(IColumn::getName).toList()
+        val colNames =
+            tbl.columns
+                .stream()
+                .map(IColumn::getName)
+                .toList()
         assertTrue(colNames.contains("COL1"))
         assertTrue(colNames.contains("COL2"))
         assertTrue(tbl.isPartial)
@@ -266,7 +286,8 @@ class PartialAssetsTest : PackageTest("pa") {
         val displayCol2 = "Test column 2"
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select(client)
+            Column
+                .select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
@@ -313,7 +334,8 @@ class PartialAssetsTest : PackageTest("pa") {
     private fun validateView() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            View.select(client)
+            View
+                .select(client)
                 .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .includeOnRelations(Asset.NAME)
@@ -332,7 +354,11 @@ class PartialAssetsTest : PackageTest("pa") {
         assertEquals(2, view.columnCount)
         assertEquals("<h2>View readme</h2>", view.readme.description)
         assertEquals(2, view.columns.size)
-        val colNames = view.columns.stream().map(IColumn::getName).toList()
+        val colNames =
+            view.columns
+                .stream()
+                .map(IColumn::getName)
+                .toList()
         assertTrue(colNames.contains("COL3"))
         assertTrue(colNames.contains("COL4"))
         assertTrue(view.isPartial)
@@ -346,7 +372,8 @@ class PartialAssetsTest : PackageTest("pa") {
     private fun validateColumnsForView() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
-            Column.select(client)
+            Column
+                .select(client)
                 .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
                 .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                 .includesOnResults(columnAttrs)

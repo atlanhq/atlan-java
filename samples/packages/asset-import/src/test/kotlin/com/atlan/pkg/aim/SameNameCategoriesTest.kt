@@ -7,7 +7,7 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -20,7 +20,7 @@ import kotlin.test.assertTrue
  * but in different parent paths.
  */
 class SameNameCategoriesTest : PackageTest("snc") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private lateinit var ctx: PackageContext<AssetImportCfg>
     private val glossaryName = makeUnique("g1")

@@ -14,12 +14,12 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.CustomMetadataDef
 import com.atlan.model.typedefs.EnumDef
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.lftag.LakeTagSynchronizer.CONNECTION_MAP_JSON
 import com.atlan.pkg.lftag.LakeTagSynchronizer.METADATA_MAP_JSON
 import com.atlan.pkg.lftag.LakeTagSynchronizer.TAG_FILE_NAME_PREFIX
 import com.atlan.util.AssetBatch
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mu.KotlinLogging
 import org.testng.annotations.Test
 import java.io.File
 import java.nio.file.Paths
@@ -33,7 +33,7 @@ private const val NON_PI = "non-pi"
 private const val FULL_HISTORY = "fullhistory"
 
 class LakeTagSynchronizerTest : PackageTest("lts") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
     private val c1 = makeUnique("c1")
     private var connectionQualifiedName = ""
     private var schemaGuid = ""
@@ -52,7 +52,8 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private val directoryPrefix = LakeTagSynchronizer.OUTPUT_SUBDIR
 
     private fun createConnections() {
-        Connection.creator(client, c1, connectorType)
+        Connection
+            .creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
@@ -79,28 +80,32 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     private fun createConnectionMap() {
         val connectionMap = mapOf("dev" to "$connectionQualifiedName/$databaseName")
-        Paths.get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON).toFile()
+        Paths
+            .get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON)
+            .toFile()
             .appendText(mapper.writeValueAsString(connectionMap))
     }
 
     private fun copyTagFile() {
-        Paths.get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
+        Paths
+            .get("src", "test", "resources", "${TAG_FILE_NAME_PREFIX}_1.json")
             .copyTo(Paths.get(testDirectory, directoryPrefix, "${TAG_FILE_NAME_PREFIX}_1.json"))
     }
 
     private fun createEnums() {
         val enumDef =
-            EnumDef.creator(
-                enum1,
-                listOf(PUBLIC, NON_PI, FULL_HISTORY),
-            )
-                .build()
+            EnumDef
+                .creator(
+                    enum1,
+                    listOf(PUBLIC, NON_PI, FULL_HISTORY),
+                ).build()
         enumDef.create(client)
     }
 
     private fun createCustomMetadata() {
         createEnums()
-        CustomMetadataDef.creator(cm1)
+        CustomMetadataDef
+            .creator(cm1)
             .attributeDef(AttributeDef.of(client, attr1, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .attributeDef(AttributeDef.of(client, attr2, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
             .attributeDef(AttributeDef.of(client, attr3, AtlanCustomAttributePrimitiveType.OPTIONS, enum1, false))
@@ -115,7 +120,9 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
                 "privacy_sensitivity" to "$cm1::$attr2",
                 "data_load_method" to "$cm1::$attr3",
             )
-        Paths.get(testDirectory, directoryPrefix, METADATA_MAP_JSON).toFile()
+        Paths
+            .get(testDirectory, directoryPrefix, METADATA_MAP_JSON)
+            .toFile()
             .appendText(mapper.writeValueAsString(metaDataMap))
     }
 

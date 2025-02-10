@@ -12,7 +12,10 @@ import java.nio.file.Paths
 /**
  * To allow us to safely parallel-write files across threads.
  */
-class ThreadSafeWriter(filePath: String) : Writer(), Closeable {
+class ThreadSafeWriter(
+    filePath: String,
+) : Writer(),
+    Closeable {
     private val writer = Files.newBufferedWriter(Paths.get(filePath), StandardCharsets.UTF_8)
 
     /** {@inheritDoc}  */

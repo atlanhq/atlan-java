@@ -4,14 +4,12 @@ package com.atlan.util;
 
 import com.atlan.AtlanClient;
 import com.atlan.cache.OffHeapAssetCache;
+import com.atlan.cache.OffHeapFailureCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -55,7 +53,6 @@ public class ParallelBatch implements AtlanCloseable {
     private final boolean tableViewAgnostic;
 
     private final ConcurrentHashMap<Long, AssetBatch> batchMap = new ConcurrentHashMap<>();
-    private final List<AssetBatch.FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
     private final Map<String, String> resolvedGuids = new ConcurrentHashMap<>();
     private final Map<AssetBatch.AssetIdentity, String> resolvedQualifiedNames = new ConcurrentHashMap<>();
 
@@ -63,6 +60,7 @@ public class ParallelBatch implements AtlanCloseable {
     private OffHeapAssetCache updated = null;
     private OffHeapAssetCache restored = null;
     private OffHeapAssetCache skipped = null;
+    private OffHeapFailureCache failures = null;
 
     /**
      * Create a new batch of assets to be bulk-saved, in parallel (across threads).
@@ -465,19 +463,16 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @return all batches that failed, across all parallel batches
      */
-    public List<AssetBatch.FailedBatch> getFailures() {
-        boolean empty;
-        lock.readLock().lock();
-        try {
-            empty = failures.isEmpty();
-        } finally {
-            lock.readLock().unlock();
-        }
-        if (empty) {
+    public OffHeapFailureCache getFailures() {
+        if (!track) return null;
+        if (failures == null) {
             lock.writeLock().lock();
             try {
+                failures = new OffHeapFailureCache(client, "p-failed");
                 for (AssetBatch batch : batchMap.values()) {
-                    failures.addAll(batch.getFailures());
+                    if (batch.getFailures().isNotClosed()) {
+                        failures.extendedWith(batch.getFailures(), true);
+                    }
                 }
             } finally {
                 lock.writeLock().unlock();
@@ -601,5 +596,6 @@ public class ParallelBatch implements AtlanCloseable {
         AtlanCloseable.close(updated);
         AtlanCloseable.close(restored);
         AtlanCloseable.close(skipped);
+        AtlanCloseable.close(failures);
     }
 }

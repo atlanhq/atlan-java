@@ -66,7 +66,8 @@ class CSVReader
             }
             val inputFile = Paths.get(path)
             val builder =
-                CsvReader.builder()
+                CsvReader
+                    .builder()
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
@@ -90,8 +91,8 @@ class CSVReader
             logger: KLogger,
             outputFile: String? = null,
             outputHeaders: List<String>? = null,
-        ): RowPreprocessor.Results {
-            return if (outputFile != null) {
+        ): RowPreprocessor.Results =
+            if (outputFile != null) {
                 logger.info { "Transforming input CSV file to $outputFile..." }
                 CSVWriter(outputFile).use { csv ->
                     csv.writeHeader(outputHeaders ?: header)
@@ -110,7 +111,6 @@ class CSVReader
                 preproc.close()
                 csvPreprocessor.finalize(header)
             }
-        }
 
         /**
          * Parallel-read the CSV file into batched asset updates against Atlan.
@@ -201,7 +201,8 @@ class CSVReader
                     val count = AtomicLong(0)
                     csvChunkFiles.parallelStream().forEach { f ->
                         val reader =
-                            CsvReader.builder()
+                            CsvReader
+                                .builder()
                                 .fieldSeparator(',')
                                 .quoteCharacter('"')
                                 .skipEmptyLines(true)
@@ -234,7 +235,7 @@ class CSVReader
                     val totalRestore = primaryBatch.numRestored
                     val totalSkipped = primaryBatch.numSkipped
                     val totalFailures = AtomicLong(0)
-                    someFailure = someFailure || primaryBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (primaryBatch.failures?.isNotEmpty() == true)
                     logFailures(primaryBatch, logger, totalFailures)
                     logSkipped(primaryBatch, logger)
                     logger.info { "Total assets created : $totalCreates" }
@@ -254,7 +255,11 @@ class CSVReader
                         val relatedAssetHold = hold.value
                         val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
                         if (!resolvedGuid.isNullOrBlank()) {
-                            val resolvedAsset = relatedAssetHold.fromAsset.toBuilder().guid(resolvedGuid).build() as Asset
+                            val resolvedAsset =
+                                relatedAssetHold.fromAsset
+                                    .toBuilder()
+                                    .guid(resolvedGuid)
+                                    .build() as Asset
                             AssetRefXformer.buildRelated(
                                 ctx,
                                 resolvedAsset,
@@ -283,7 +288,7 @@ class CSVReader
                     val totalCreatesR = relatedBatch.numCreated
                     val totalUpdatesR = relatedBatch.numUpdated
                     val totalFailuresR = AtomicLong(0)
-                    someFailure = someFailure || relatedBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (relatedBatch.failures?.isNotEmpty() == true)
                     logFailures(relatedBatch, logger, totalFailuresR)
                     logger.info { "Total related assets created: $totalCreatesR" }
                     logger.info { "Total related assets updated: $totalUpdatesR" }
@@ -297,7 +302,8 @@ class CSVReader
                     searchAndDelete.entries.parallelStream().forEach { entry ->
                         val guid = entry.key
                         val fields = entry.value
-                        ctx.client.assets.select()
+                        ctx.client.assets
+                            .select()
                             .where(Asset.GUID.eq(guid))
                             .includesOnResults(fields)
                             .stream()
@@ -339,6 +345,7 @@ class CSVReader
                                     primaryBatch.updated,
                                     primaryBatch.restored,
                                     primaryBatch.skipped,
+                                    primaryBatch.failures,
                                     primaryBatch.numCreated,
                                     primaryBatch.numUpdated,
                                     primaryBatch.numRestored,
@@ -354,6 +361,7 @@ class CSVReader
                                     relatedBatch.updated,
                                     relatedBatch.restored,
                                     relatedBatch.skipped,
+                                    relatedBatch.failures,
                                     relatedBatch.numCreated,
                                     relatedBatch.numUpdated,
                                     relatedBatch.numRestored,
@@ -370,11 +378,14 @@ class CSVReader
             logger: KLogger,
             totalFailures: AtomicLong,
         ) {
-            if (b.failures.isNotEmpty()) {
-                for (f in b.failures) {
-                    logger.info { "Failed batch reason: ${f.failureReason}" }
-                    totalFailures.getAndAdd(f.failedAssets.size.toLong())
-                    for (failed in f.failedAssets) {
+            if (b.failures?.isNotEmpty() == true) {
+                for (f in b.failures.entrySet()) {
+                    logger.info { "Failed batch reason: ${f.value.failureReason}" }
+                    totalFailures.getAndAdd(
+                        f.value.failedAssets.size
+                            .toLong(),
+                    )
+                    for (failed in f.value.failedAssets) {
                         logger.info {
                             " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
                         }

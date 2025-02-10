@@ -5,18 +5,19 @@ package com.atlan.model.search;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AuditActionType;
+import com.atlan.serde.EntityAuditDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 /**
  * Detailed entry in the audit log. These objects should be treated as immutable.
  */
 @Getter
-@Jacksonized
+@JsonDeserialize(using = EntityAuditDeserializer.class)
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)

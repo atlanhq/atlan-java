@@ -22,6 +22,11 @@ outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
     ["adoption-export"] = "/tmp/adoption-export.xlsx"
+    ["changes"] = "/tmp/changes.csv"
+    ["views"] = "/tmp/views.csv"
+    ["user-searches"] = "/tmp/user-searches.csv"
+    ["user-changes"] = "/tmp/user-changes.csv"
+    ["user-views"] = "/tmp/user-views.csv"
   }
 }
 keywords {
@@ -223,6 +228,17 @@ uiConfig {
     ["Delivery"] {
       description = "Where to send"
       inputs {
+        ["file_format"] = new Radio {
+          title = "File format"
+          required = true
+          helpText = "Select whether you want multiple CSV files or a single XLSX file."
+          possibleValues {
+            ["XLSX"] = "Single Excel file"
+            ["CSV"] = "Multiple CSV files"
+          }
+          default = "XLSX"
+          fallback = default
+        }
         ["delivery_type"] = new Radio {
           title = "Export via"
           required = true
@@ -258,6 +274,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store to which to upload the exported file."
+          allowTestAuthentication = false
         }
       }
     }

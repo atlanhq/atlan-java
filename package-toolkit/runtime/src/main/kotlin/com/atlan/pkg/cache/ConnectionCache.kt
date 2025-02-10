@@ -15,12 +15,14 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.util.AssetResolver
-import mu.KotlinLogging
 
-class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, "connection") {
-    private val logger = KotlinLogging.logger {}
+class ConnectionCache(
+    val ctx: PackageContext<*>,
+) : AssetCache<Connection>(ctx, "connection") {
+    private val logger = Utils.getLogger(this.javaClass.name)
 
     private val includesOnResults: List<AtlanField> = listOf(Connection.NAME, Connection.CONNECTOR_TYPE, Connection.STATUS)
 
@@ -67,7 +69,8 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     ): Connection? {
         try {
             val connection =
-                Connection.select(client)
+                Connection
+                    .select(client)
                     .where(Connection.GUID.eq(guid))
                     .includesOnResults(includesOnResults)
                     .pageSize(1)
@@ -92,9 +95,7 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Connection): String {
-        return if (asset.connectorType == null) "" else getIdentityForAsset(asset.name, asset.connectorType)
-    }
+    override fun getIdentityForAsset(asset: Connection): String = if (asset.connectorType == null) "" else getIdentityForAsset(asset.name, asset.connectorType)
 
     /**
      * Build a connection identity from its component parts.
@@ -106,9 +107,7 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     fun getIdentityForAsset(
         name: String,
         type: AtlanConnectorType,
-    ): String {
-        return ConnectionXformer.encode(name, type.value)
-    }
+    ): String = ConnectionXformer.encode(name, type.value)
 
     /**
      * Get a map of all connections in the cache, indexed by their identity with values
@@ -134,7 +133,8 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
     override fun refreshCache() {
         val count = Connection.select(client).count()
         logger.info { "Caching all $count connections, up-front..." }
-        Connection.select(client)
+        Connection
+            .select(client)
             .includesOnResults(includesOnResults)
             .stream(true)
             .forEach { connection ->
@@ -158,7 +158,8 @@ class ConnectionCache(val ctx: PackageContext<*>) : AssetCache<Connection>(ctx, 
                     connection.guid,
                     false,
                     false,
-                    RequestOptions.from(ctx.client)
+                    RequestOptions
+                        .from(ctx.client)
                         .maxNetworkRetries(MAX_ASYNC_RETRIES)
                         .build(),
                 )

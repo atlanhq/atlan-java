@@ -4,11 +4,15 @@ package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
+import com.atlan.model.assets.ISQL
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
 import java.util.stream.Stream
 
@@ -21,27 +25,42 @@ import java.util.stream.Stream
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
  * @param ctx context through which this package is running
- * @param preprocessed details of the preprocessed CSV file
+ * @param inputFile the input file containing connection details
  * @param logger through which to record logging
  */
 class ConnectionImporter(
     ctx: PackageContext<RelationalAssetsBuilderCfg>,
-    private val preprocessed: Importer.Results,
+    private val inputFile: String,
     logger: KLogger,
-) : AssetImporter(
+) : CSVImporter(
         ctx = ctx,
-        delta = null,
-        filename = preprocessed.preprocessedFile,
-        // Only allow full or updates to connections, as partial connections would be hidden
-        // and impossible to delete via utilities like the Connection Delete workflow
-        typeNameFilter = Connection.TYPE_NAME,
+        filename = inputFile,
         logger = logger,
+        typeNameFilter = Connection.TYPE_NAME,
+        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
         creationHandling = if (ctx.config.assetsUpsertSemantic == "update") AssetCreationHandling.NONE else AssetCreationHandling.FULL,
         batchSize = 1,
         trackBatches = true,
+        fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
+    }
+
+    /** {@inheritDoc} */
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
+        // Can skip all of these columns when deserializing a row as they will be set by
+        // the creator methods anyway
+        return super.import(
+            setOf(
+                Asset.CONNECTION_NAME.atlanFieldName,
+                ISQL.DATABASE_NAME.atlanFieldName,
+                ISQL.SCHEMA_NAME.atlanFieldName,
+                AssetXformer.ENTITY_NAME,
+                ColumnXformer.COLUMN_PARENT_QN,
+                Column.ORDER.atlanFieldName,
+            ),
+        )
     }
 
     /** {@inheritDoc} */

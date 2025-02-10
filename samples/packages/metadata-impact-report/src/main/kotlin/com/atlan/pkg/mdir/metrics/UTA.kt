@@ -24,12 +24,12 @@ class UTA(
         logger,
     ) {
     /** {@inheritDoc} */
-    override fun query(): FluentSearchBuilder<*, *> {
-        return client.assets.select()
+    override fun query(): FluentSearchBuilder<*, *> =
+        client.assets
+            .select()
             .where(Asset.TYPE_NAME.`in`(TABLE_LEVEL))
             .where(Asset.SOURCE_READ_COUNT.gt(0))
             .pageSize(batchSize)
             .aggregate("total", Asset.GUID.distinct())
             .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(10))
-    }
 }

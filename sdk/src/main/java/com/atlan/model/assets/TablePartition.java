@@ -10,14 +10,18 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
@@ -382,17 +386,17 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full TablePartition, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
      */
     @JsonIgnore
-    public static TablePartition get(AtlanClient client, String id, boolean includeRelationships)
+    public static TablePartition get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof TablePartition) {
@@ -401,11 +405,78 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof TablePartition) {
                 return (TablePartition) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a TablePartition by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the TablePartition, including any relationships
+     * @return the requested TablePartition, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     */
+    @JsonIgnore
+    public static TablePartition get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a TablePartition by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the TablePartition to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the TablePartition, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the TablePartition
+     * @return the requested TablePartition, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     */
+    @JsonIgnore
+    public static TablePartition get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = TablePartition.select(client)
+                    .where(TablePartition.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof TablePartition) {
+                return (TablePartition) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = TablePartition.select(client)
+                    .where(TablePartition.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof TablePartition) {
+                return (TablePartition) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }
@@ -446,21 +517,51 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the minimal request necessary to create the table partition, as a builder
      */
     public static TablePartitionBuilder<?, ?> creator(String name, String tableQualifiedName) {
-        String[] tokens = tableQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String tableName = StringUtils.getNameFromQualifiedName(tableQualifiedName);
         String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(tableQualifiedName);
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return creator(
+                name,
+                connectionQualifiedName,
+                databaseName,
+                databaseQualifiedName,
+                schemaName,
+                schemaQualifiedName,
+                tableName,
+                tableQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a TablePartition.
+     *
+     * @param name of the TablePartition
+     * @param connectionQualifiedName unique name of the connection in which to create the TablePartition
+     * @param databaseName simple name of the Database in which to create the TablePartition
+     * @param databaseQualifiedName unique name of the Database in which to create the TablePartition
+     * @param schemaName simple name of the Schema in which to create the TablePartition
+     * @param schemaQualifiedName unique name of the Schema in which to create the TablePartition
+     * @param tableName simple name of the Table in which to create the TablePartition
+     * @param tableQualifiedName unique name of the Table in which to create the TablePartition
+     * @return the minimal request necessary to create the TablePartition, as a builder
+     */
+    public static TablePartitionBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String databaseName,
+            String databaseQualifiedName,
+            String schemaName,
+            String schemaQualifiedName,
+            String tableName,
+            String tableQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return TablePartition._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
-                .qualifiedName(generateQualifiedName(name, tableQualifiedName))
+                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
-                .tableName(tableName)
-                .tableQualifiedName(tableQualifiedName)
                 .parentTable(Table.refByQualifiedName(tableQualifiedName))
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -473,11 +574,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * Generate a unique table partition name.
      *
      * @param name of the table partition
-     * @param tableQualifiedName unique name of the table in which this partition exists
+     * @param schemaQualifiedName unique name of the schema in which this partition exists
      * @return a unique name for the table partition
      */
-    public static String generateQualifiedName(String name, String tableQualifiedName) {
-        return tableQualifiedName + "/" + name;
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
     }
 
     /**

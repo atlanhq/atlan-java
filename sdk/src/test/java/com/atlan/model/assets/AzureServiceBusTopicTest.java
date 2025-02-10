@@ -61,6 +61,7 @@ public class AzureServiceBusTopicTest {
                             .build())
             .azureServiceBusNamespaceName("String0")
             .azureServiceBusNamespaceQualifiedName("String0")
+            .azureServiceBusSchemaQualifiedName("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -92,6 +93,8 @@ public class AzureServiceBusTopicTest {
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .anomaloCheck(AnomaloCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .application(Application.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationField(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationFieldQualifiedName("String0")
             .applicationQualifiedName("String0")
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
@@ -430,6 +433,9 @@ public class AzureServiceBusTopicTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .azureServiceBusNamespace(AzureServiceBusNamespace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .azureServiceBusSchema(AzureServiceBusSchema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .azureServiceBusSchema(
+                    AzureServiceBusSchema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

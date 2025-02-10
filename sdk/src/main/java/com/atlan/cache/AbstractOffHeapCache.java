@@ -125,23 +125,25 @@ public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
      * @param other cache of entries to add to the cache
      */
     public void putAll(AbstractOffHeapCache<K, V> other) {
-        if (internal.isClosed())
-            throw new IllegalStateException("Off-heap cache is closed -- cannot bulk-add keys and values to it.");
-        try (WriteBatch batch = new WriteBatch();
-                WriteOptions options = new WriteOptions()) {
-            try (RocksIterator iterator = other.internal.newIterator()) {
-                for (iterator.seekToFirst(); iterator.isValid(); iterator.next()) {
-                    batch.put(iterator.key(), iterator.value());
+        if (other != null) {
+            if (internal.isClosed())
+                throw new IllegalStateException("Off-heap cache is closed -- cannot bulk-add keys and values to it.");
+            try (WriteBatch batch = new WriteBatch();
+                    WriteOptions options = new WriteOptions()) {
+                try (RocksIterator iterator = other.internal.newIterator()) {
+                    for (iterator.seekToFirst(); iterator.isValid(); iterator.next()) {
+                        batch.put(iterator.key(), iterator.value());
+                    }
                 }
+                lock.writeLock().lock();
+                try {
+                    internal.write(options, batch);
+                } finally {
+                    lock.writeLock().unlock();
+                }
+            } catch (RocksDBException e) {
+                throw new IllegalStateException("Error putting all values into cache.", e);
             }
-            lock.writeLock().lock();
-            try {
-                internal.write(options, batch);
-            } finally {
-                lock.writeLock().unlock();
-            }
-        } catch (RocksDBException e) {
-            throw new IllegalStateException("Error putting all values into cache.", e);
         }
     }
 

@@ -33,8 +33,8 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     public static final String DATABASE_NAME = PREFIX + "_db";
     public static final String SCHEMA_NAME = PREFIX + "_schema";
+    public static final String PROCEDURE_NAME = PREFIX + "_procedure";
     public static final String TABLE_NAME = PREFIX + "_table";
-    public static final String TABLE_NAME2 = TABLE_NAME + "2";
     public static final String VIEW_NAME = PREFIX + "_view";
     public static final String MVIEW_NAME = PREFIX + "_mview";
     public static final String PARTITION_NAME = PREFIX + "_partition";
@@ -44,8 +44,6 @@ public class SQLAssetTest extends AtlanLiveTest {
     public static final String COLUMN_NAME4 = PREFIX + "_col4";
     public static final String COLUMN_NAME5 = PREFIX + "_col5";
     public static final String COLUMN_NAME6 = PREFIX + "_col6";
-    public static final String COLUMN_NAME7 = PREFIX + "_col7";
-    public static final String COLUMN_NAME8 = PREFIX + "_col8";
 
     private static final String ATLAN_TAG_NAME1 = PREFIX + "1";
     private static final String ATLAN_TAG_NAME2 = PREFIX + "2";
@@ -56,7 +54,6 @@ public class SQLAssetTest extends AtlanLiveTest {
     private static Database database = null;
     private static Schema schema = null;
     private static Table table = null;
-    private static Table table2 = null;
     private static View view = null;
     private static MaterializedView mview = null;
     private static TablePartition partition = null;
@@ -72,6 +69,13 @@ public class SQLAssetTest extends AtlanLiveTest {
     private static Glossary glossary = null;
     private static GlossaryTerm term1 = null;
     private static GlossaryTerm term2 = null;
+    private static Procedure procedure = null;
+    private static String definition =
+            """
+        BEGIN
+        insert into `atlanhq.testing_lineage.INSTACART_ALCOHOL_ORDER_TIME_copy`
+        select * from `atlanhq.testing_lineage.INSTACART_ALCOHOL_ORDER_TIME`;
+        END""";
 
     /**
      * Create a database with the provided characteristics.
@@ -153,6 +157,39 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(table.getName(), name);
         assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
         return table;
+    }
+
+    /**
+     * Create a procedure with the provided characteristics.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param name unique name for the table
+     * @param definition body of the procedure
+     * @param schema in which to create the table
+     * @return the created table
+     * @throws AtlanException on any errors creating the table
+     */
+    static Procedure createProcedure(AtlanClient client, String name, String definition, Schema schema)
+            throws AtlanException {
+        Procedure procedure = Procedure.creator(name, definition, schema).build();
+        AssetMutationResponse response = procedure.save(client);
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Schema);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Procedure);
+        procedure = (Procedure) one;
+        assertNotNull(procedure.getGuid());
+        assertNotNull(procedure.getQualifiedName());
+        assertEquals(procedure.getName(), name);
+        assertEquals(procedure.getDefinition(), definition);
+        assertEquals(procedure.getSchemaQualifiedName(), schema.getQualifiedName());
+        return procedure;
     }
 
     /**
@@ -244,7 +281,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(partition.getGuid());
         assertNotNull(partition.getQualifiedName());
         assertEquals(partition.getName(), name);
-        assertEquals(partition.getTableQualifiedName(), table.getQualifiedName());
         return partition;
     }
 
@@ -331,6 +367,21 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"asset.create.procedure"},
+            dependsOnGroups = {"asset.create.schema"})
+    void createProcedure() throws AtlanException {
+        procedure = createProcedure(client, PROCEDURE_NAME, definition, schema);
+        StringBuilder qualifiedName = new StringBuilder();
+        qualifiedName.append(schema.getQualifiedName()).append("/_procedures_/").append(PROCEDURE_NAME);
+        assertEquals(procedure.getQualifiedName(), qualifiedName.toString());
+        assertEquals(procedure.getConnectorType(), CONNECTOR_TYPE);
+        assertEquals(procedure.getSchemaName(), SCHEMA_NAME);
+        assertEquals(procedure.getDatabaseName(), DATABASE_NAME);
+        assertEquals(procedure.getDatabaseQualifiedName(), database.getQualifiedName());
+        assertEquals(procedure.getConnectionQualifiedName(), connection.getQualifiedName());
+    }
+
+    @Test(
             groups = {"asset.create.table"},
             dependsOnGroups = {"asset.create.schema"})
     void createTable() throws AtlanException {
@@ -370,31 +421,10 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.partition"},
             dependsOnGroups = {"asset.create.mview"})
     void createPartition() throws AtlanException {
-        Table table = Table.creator(TABLE_NAME2, schema)
-                .columnCount(2L)
-                .isPartitioned(true)
-                .partitionCount(1L)
-                .build();
-        AssetMutationResponse response = table.save(client);
-        assertNotNull(response);
-        assertTrue(response.getDeletedAssets().isEmpty());
-        assertEquals(response.getUpdatedAssets().size(), 1);
-        Asset one = response.getUpdatedAssets().get(0);
-        assertTrue(one instanceof Schema);
-        Schema schema = (Schema) one;
-        assertEquals(schema.getQualifiedName(), schema.getQualifiedName());
-        assertEquals(response.getCreatedAssets().size(), 1);
-        one = response.getCreatedAssets().get(0);
-        assertTrue(one instanceof Table);
-        table2 = (Table) one;
-        assertNotNull(table2.getGuid());
-        assertNotNull(table2.getQualifiedName());
-        assertEquals(table2.getName(), TABLE_NAME2);
-        assertEquals(table2.getSchemaQualifiedName(), schema.getQualifiedName());
-        partition = createTablePartition(client, PARTITION_NAME, table2);
+        partition = createTablePartition(client, PARTITION_NAME, table);
         assertEquals(partition.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(partition.getTableName(), TABLE_NAME2);
         assertEquals(partition.getSchemaName(), SCHEMA_NAME);
+        assertEquals(partition.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(partition.getDatabaseName(), DATABASE_NAME);
         assertEquals(partition.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(partition.getConnectionQualifiedName(), connection.getQualifiedName());
@@ -494,10 +524,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.7"},
             dependsOnGroups = {"asset.create.column.6"})
     void createColumn7() throws AtlanException {
-        Column column = Column.creator(COLUMN_NAME7, partition, 1)
-                .partitionOrder(1)
-                .isPartition(true)
-                .build();
+        Column column = Column.creator(COLUMN_NAME1, partition, 1).build();
         AssetMutationResponse response = column.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -511,8 +538,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof Column);
         column7 = (Column) one;
         assertEquals(column7.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column7.getTableName(), TABLE_NAME2);
-        assertEquals(column7.getTableQualifiedName(), table2.getQualifiedName());
+        assertEquals(column7.getTableName(), PARTITION_NAME);
+        assertEquals(column7.getTableQualifiedName(), partition.getQualifiedName());
         assertEquals(column7.getSchemaName(), SCHEMA_NAME);
         assertEquals(column7.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column7.getDatabaseName(), DATABASE_NAME);
@@ -524,10 +551,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.8"},
             dependsOnGroups = {"asset.create.column.7"})
     void createColumn8() throws AtlanException {
-        Column column = Column.creator(COLUMN_NAME8, partition, 2)
-                .partitionOrder(2)
-                .isPartition(true)
-                .build();
+        Column column = Column.creator(COLUMN_NAME2, partition, 2).build();
         AssetMutationResponse response = column.save(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -541,8 +565,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof Column);
         column8 = (Column) one;
         assertEquals(column8.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column8.getTableName(), TABLE_NAME2);
-        assertEquals(column8.getTableQualifiedName(), table2.getQualifiedName());
+        assertEquals(column8.getTableName(), PARTITION_NAME);
+        assertEquals(column8.getTableQualifiedName(), partition.getQualifiedName());
         assertEquals(column8.getSchemaName(), SCHEMA_NAME);
         assertEquals(column8.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column8.getDatabaseName(), DATABASE_NAME);
@@ -561,6 +585,38 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME1));
         assertTrue(tableContract.contains(" - name: " + COLUMN_NAME2));
         assertTrue(tableContract.endsWith("...\n"));
+    }
+
+    @Test(
+            groups = {"asset.read.partition"},
+            dependsOnGroups = {"asset.create.contract"})
+    void readTablePartition() throws AtlanException {
+        TablePartition p = TablePartition.get(client, partition.getGuid(), true);
+        assertNotNull(p);
+        assertTrue(p.isComplete());
+        assertEquals(p.getGuid(), partition.getGuid());
+        assertEquals(p.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(p.getName(), PARTITION_NAME);
+        ITable parent = p.getParentTable();
+        assertNotNull(parent);
+        assertEquals(parent.getTypeName(), Table.TYPE_NAME);
+        assertEquals(parent.getGuid(), table.getGuid());
+    }
+
+    @Test(
+            groups = {"asset.read.table"},
+            dependsOnGroups = {"asset.create.contract"})
+    void readTable() throws AtlanException {
+        Table t = Table.get(client, table.getGuid(), true);
+        assertNotNull(t);
+        assertTrue(t.isComplete());
+        assertEquals(t.getGuid(), table.getGuid());
+        assertEquals(t.getQualifiedName(), table.getQualifiedName());
+        assertEquals(t.getName(), TABLE_NAME);
+        Set<ITablePartition> partitions = t.getPartitions();
+        assertNotNull(partitions);
+        assertEquals(partitions.size(), 1);
+        assertEquals(partitions.stream().findFirst().get().getGuid(), partition.getGuid());
     }
 
     @Test(
@@ -599,7 +655,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(byGuid.isComplete());
         assertEquals(byGuid.getGuid(), column7.getGuid());
         assertEquals(byGuid.getQualifiedName(), column7.getQualifiedName());
-        assertEquals(byGuid.getName(), COLUMN_NAME7);
+        assertEquals(byGuid.getName(), COLUMN_NAME1);
         ISQL one = byGuid.getParent();
         assertNotNull(one);
         assertEquals(one.getTypeName(), TablePartition.TYPE_NAME);
@@ -609,7 +665,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(byQN.isComplete());
         assertEquals(byQN.getGuid(), column7.getGuid());
         assertEquals(byQN.getQualifiedName(), column7.getQualifiedName());
-        assertEquals(byQN.getName(), COLUMN_NAME7);
+        assertEquals(byQN.getName(), COLUMN_NAME1);
         one = byQN.getParent();
         assertNotNull(one);
         assertEquals(one.getTypeName(), TablePartition.TYPE_NAME);
@@ -631,7 +687,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 16L);
+        IndexSearchResponse response = retrySearchUntil(index, 15L);
 
         // Test iterator
         List<String> guids = new ArrayList<>();
@@ -674,7 +730,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 ((AggregationBucketResult) response.getAggregations().get("type"))
                         .getBuckets()
                         .size(),
-                8);
+                9);
 
         assertNotNull(entities);
         assertEquals(entities.size(), 16);
@@ -701,39 +757,39 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(s.getName(), SCHEMA_NAME);
 
         one = entities.get(3);
+        assertTrue(one instanceof Procedure);
+        Procedure p = (Procedure) one;
+        assertEquals(p.getGuid(), procedure.getGuid());
+        assertEquals(p.getQualifiedName(), procedure.getQualifiedName());
+        assertEquals(p.getName(), PROCEDURE_NAME);
+
+        one = entities.get(4);
         assertTrue(one instanceof Table);
         Table t = (Table) one;
         assertEquals(t.getGuid(), table.getGuid());
         assertEquals(t.getQualifiedName(), table.getQualifiedName());
         assertEquals(t.getName(), TABLE_NAME);
 
-        one = entities.get(4);
+        one = entities.get(5);
         assertTrue(one instanceof View);
         View v = (View) one;
         assertEquals(v.getGuid(), view.getGuid());
         assertEquals(v.getQualifiedName(), view.getQualifiedName());
         assertEquals(v.getName(), VIEW_NAME);
 
-        one = entities.get(5);
+        one = entities.get(6);
         assertTrue(one instanceof MaterializedView);
         MaterializedView m = (MaterializedView) one;
         assertEquals(m.getGuid(), mview.getGuid());
         assertEquals(m.getQualifiedName(), mview.getQualifiedName());
         assertEquals(m.getName(), MVIEW_NAME);
 
-        one = entities.get(6);
-        assertTrue(one instanceof Table);
-        t = (Table) one;
-        assertEquals(t.getGuid(), table2.getGuid());
-        assertEquals(t.getQualifiedName(), table2.getQualifiedName());
-        assertEquals(t.getName(), TABLE_NAME2);
-
         one = entities.get(7);
         assertTrue(one instanceof TablePartition);
-        TablePartition p = (TablePartition) one;
-        assertEquals(p.getGuid(), partition.getGuid());
-        assertEquals(p.getQualifiedName(), partition.getQualifiedName());
-        assertEquals(p.getName(), PARTITION_NAME);
+        TablePartition tp = (TablePartition) one;
+        assertEquals(tp.getGuid(), partition.getGuid());
+        assertEquals(tp.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(tp.getName(), PARTITION_NAME);
 
         one = entities.get(8);
         assertTrue(one instanceof Column);
@@ -782,14 +838,14 @@ public class SQLAssetTest extends AtlanLiveTest {
         column = (Column) one;
         assertEquals(column.getGuid(), column7.getGuid());
         assertEquals(column.getQualifiedName(), column7.getQualifiedName());
-        assertEquals(column.getName(), COLUMN_NAME7);
+        assertEquals(column.getName(), COLUMN_NAME1);
 
         one = entities.get(15);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column8.getGuid());
         assertEquals(column.getQualifiedName(), column8.getQualifiedName());
-        assertEquals(column.getName(), COLUMN_NAME8);
+        assertEquals(column.getName(), COLUMN_NAME2);
     }
 
     @Test(
@@ -804,7 +860,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .includeOnResults(Asset.NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 16L);
+        IndexSearchResponse response = retrySearchUntil(index, 15L);
 
         for (Asset a : response) {
             assertTrue(a instanceof Connection
@@ -812,6 +868,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                     || a instanceof Schema
                     || a instanceof Table
                     || a instanceof View
+                    || a instanceof Procedure
                     || a instanceof MaterializedView
                     || a instanceof TablePartition
                     || a instanceof Column);
@@ -822,6 +879,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 || a instanceof Schema
                 || a instanceof Table
                 || a instanceof View
+                || a instanceof Procedure
                 || a instanceof MaterializedView
                 || a instanceof TablePartition
                 || a instanceof Column));

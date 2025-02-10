@@ -7,7 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
@@ -19,7 +19,7 @@ import kotlin.test.assertNotNull
  * Test import of an assets file that has both ends of the same cyclical relationship in it.
  */
 class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val connectionName = makeUnique("c1")
     private val connectorType = AtlanConnectorType.ADOBE_EXPERIENCE_MANAGER
@@ -95,7 +95,8 @@ class InvalidCyclicalRelationshipsTest : PackageTest("icr") {
     fun noAssetsCreated() {
         val c1 = Connection.findByName(client, connectionName, connectorType)[0]!!
         val assets =
-            client.assets.select()
+            client.assets
+                .select()
                 .where(Asset.QUALIFIED_NAME.startsWith(c1.qualifiedName))
                 .stream()
                 .toList()

@@ -22,6 +22,14 @@ import com.atlan.pkg.objectstore.S3Sync
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.opentelemetry.api.common.Attributes
+import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
+import io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender
+import io.opentelemetry.sdk.OpenTelemetrySdk
+import io.opentelemetry.sdk.autoconfigure.ResourceConfiguration
+import io.opentelemetry.sdk.logs.SdkLoggerProvider
+import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor
+import io.opentelemetry.sdk.resources.Resource
 import jakarta.activation.FileDataSource
 import jakarta.mail.Message
 import mu.KLogger
@@ -31,10 +39,16 @@ import org.simplejavamail.mailer.MailerBuilder
 import java.io.Closeable
 import java.io.File
 import java.io.File.separator
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.file.Paths
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.exists
 import kotlin.io.path.isDirectory
@@ -49,12 +63,102 @@ import kotlin.system.exitProcess
  * Common utilities for using the Atlan SDK within Kotlin.
  */
 object Utils {
-    val logger = KotlinLogging.logger {}
-    val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
-
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
     const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
+
+    class GlobalExceptionHandler : Thread.UncaughtExceptionHandler {
+        override fun uncaughtException(
+            thread: Thread,
+            throwable: Throwable,
+        ) {
+            val msg = getStackTraceAsString(throwable)
+            try {
+                val logger = getLogger(this.javaClass.name)
+                logger.error("Uncaught exception in thread '${thread.name}': '$msg'")
+            } catch (e: Exception) {
+                print("Uncaught exception in thread '${thread.name}': '$msg'")
+                print("An unexpected error occurred in uncaughtException: '${e.message}'")
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun getStackTraceAsString(throwable: Throwable): String {
+        val sw = StringWriter()
+        val pw = PrintWriter(sw)
+        throwable.printStackTrace(pw)
+        return sw.toString()
+    }
+
+    init {
+        val openTelemetryEndpoint = System.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
+        val openTelemetryResourceAttributes = System.getenv("OTEL_RESOURCE_ATTRIBUTES")
+        if (!openTelemetryEndpoint.isNullOrBlank() && !openTelemetryResourceAttributes.isNullOrBlank()) {
+            setupOpenTelemetry(openTelemetryEndpoint)
+        }
+    }
+
+    private fun appendCustomEnvResource(
+        resource: Resource,
+        envNames: Map<String, String>,
+    ): Resource {
+        var outputResource = Resource.empty().merge(resource)
+        envNames.forEach { entry ->
+            val envValue = System.getenv(entry.value) ?: ""
+            if (envValue != "") {
+                val tempResource =
+                    Resource.create(
+                        Attributes
+                            .builder()
+                            .put(
+                                entry.key,
+                                envValue,
+                            ).build(),
+                    )
+                outputResource = outputResource.merge(tempResource)
+            }
+        }
+        return outputResource
+    }
+
+    private fun setupOpenTelemetry(endpoint: String) {
+        val defaultResource: Resource = ResourceConfiguration.createEnvironmentResource()
+        val customResourceEnvNames =
+            mapOf(
+                "k8s.workflow.node.name" to "OTEL_WF_NODE_NAME",
+            )
+        val resource = appendCustomEnvResource(defaultResource, customResourceEnvNames)
+        val logExporter: OtlpGrpcLogRecordExporter =
+            OtlpGrpcLogRecordExporter
+                .builder()
+                .setEndpoint(endpoint)
+                .build()
+        val logEmitterProvider: SdkLoggerProvider =
+            SdkLoggerProvider
+                .builder()
+                .setResource(resource)
+                .addLogRecordProcessor(BatchLogRecordProcessor.builder(logExporter).build())
+                .build()
+        val openTelemetry =
+            OpenTelemetrySdk.builder().setLoggerProvider(logEmitterProvider).buildAndRegisterGlobal()
+        Runtime.getRuntime().addShutdownHook(Thread { openTelemetry.close() })
+        OpenTelemetryAppender.install(openTelemetry)
+    }
+
+    val logger = getLogger(Utils.javaClass.name)
+    val MAPPER = jacksonObjectMapper().apply { configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false) }
+
+    /**
+     * Set up a logger.
+     *
+     * @param name of the logger
+     * @return the logger
+     */
+    fun getLogger(name: String): KLogger {
+        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
+        return KotlinLogging.logger(name)
+    }
 
     /**
      * Set up the event-processing options, and start up the event processor.
@@ -62,7 +166,6 @@ object Utils {
      * @return the configuration used to set up the event-processing handler, or null if no configuration was found
      */
     inline fun <reified T : CustomConfig> setPackageOps(): T {
-        System.getProperty("logDirectory") ?: System.setProperty("logDirectory", "tmp")
         logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
@@ -113,29 +216,32 @@ object Utils {
         config: T = setPackageOps<T>(),
         reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
+        Thread.setDefaultUncaughtExceptionHandler(GlobalExceptionHandler())
         if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
         val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
-        when {
-            apiToken.isNotEmpty() -> {
-                logger.info { "Using provided API token for authentication." }
-            }
+        if (reuseCtx?.client == null) {
+            when {
+                apiToken.isNotEmpty() -> {
+                    logger.info { "Using provided API token for authentication." }
+                }
 
-            userId.isNotEmpty() -> {
-                logger.info { "No API token found, attempting to impersonate user: $userId" }
-                client.userId = userId
-                client.apiToken = client.impersonate.user(userId)
-            }
+                userId.isNotEmpty() -> {
+                    logger.info { "No API token found, attempting to impersonate user: $userId" }
+                    client.userId = userId
+                    client.apiToken = client.impersonate.user(userId)
+                }
 
-            else -> {
-                logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                client.apiToken = client.impersonate.escalate()
+                else -> {
+                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
+                    client.apiToken = client.impersonate.escalate()
+                }
             }
+            setWorkflowOpts(client, config.runtime)
         }
-        setWorkflowOpts(client, config.runtime)
         return PackageContext(config, client, reuseCtx?.client != null)
     }
 
@@ -305,9 +411,7 @@ object Utils {
     fun getOrDefault(
         configValue: List<String>?,
         default: List<String>,
-    ): List<String> {
-        return if (configValue.isNullOrEmpty()) default else configValue
-    }
+    ): List<String> = if (configValue.isNullOrEmpty()) default else configValue
 
     /**
      * Return the provided configuration value only if it is non-null and not empty,
@@ -320,13 +424,12 @@ object Utils {
     fun getOrDefault(
         configValue: Number?,
         default: Number,
-    ): Number {
-        return if (configValue == null || configValue == -1) {
+    ): Number =
+        if (configValue == null || configValue == -1) {
             default
         } else {
             configValue
         }
-    }
 
     /**
      * Return the provided configuration value only if it is non-null and not empty,
@@ -339,9 +442,7 @@ object Utils {
     fun getOrDefault(
         configValue: Boolean?,
         default: Boolean,
-    ): Boolean {
-        return configValue ?: default
-    }
+    ): Boolean = configValue ?: default
 
     /**
      * Returns the provided comma-separated configuration value as a list of strings.
@@ -353,7 +454,8 @@ object Utils {
         if (configValue == null) {
             return listOf()
         }
-        return configValue.split(",")
+        return configValue
+            .split(",")
             .map { it.trim() }
             .filter { it.isNotBlank() }
             .toList()
@@ -398,13 +500,12 @@ object Utils {
         action: String?,
         connectionQN: String?,
         connection: Connection?,
-    ): String {
-        return if (getOrDefault(action, "REUSE") == "REUSE") {
+    ): String =
+        if (getOrDefault(action, "REUSE") == "REUSE") {
             reuseConnection(client, connectionQN)
         } else {
             createConnection(client, connection)
         }
-    }
 
     /**
      * Create a connection using the details provided.
@@ -416,8 +517,8 @@ object Utils {
     fun createConnection(
         client: AtlanClient,
         connection: Connection?,
-    ): String {
-        return if (connection != null) {
+    ): String =
+        if (connection != null) {
             logger.info { "Attempting to create new connection..." }
             try {
                 val toCreate =
@@ -434,7 +535,6 @@ object Utils {
         } else {
             ""
         }
-    }
 
     /**
      * Calculate the creation handling semantic from a string semantic.
@@ -446,13 +546,12 @@ object Utils {
     fun getCreationHandling(
         semantic: String?,
         default: AssetCreationHandling,
-    ): AssetCreationHandling {
-        return if (semantic == null) {
+    ): AssetCreationHandling =
+        if (semantic == null) {
             default
         } else {
             AssetCreationHandling.fromValue(semantic)
         }
-    }
 
     /**
      * Validate the provided connection exists, and if so return its qualifiedName.
@@ -464,8 +563,8 @@ object Utils {
     fun reuseConnection(
         client: AtlanClient,
         providedConnectionQN: String?,
-    ): String {
-        return providedConnectionQN?.let {
+    ): String =
+        providedConnectionQN?.let {
             try {
                 logger.info { "Attempting to reuse connection: $providedConnectionQN" }
                 Connection.get(client, providedConnectionQN, false)
@@ -475,7 +574,6 @@ object Utils {
                 ""
             }
         } ?: ""
-    }
 
     /**
      * Send an email using the tenant's internal SMTP server.
@@ -494,7 +592,8 @@ object Utils {
         html: String? = null,
     ) {
         val builder =
-            EmailBuilder.startingBlank()
+            EmailBuilder
+                .startingBlank()
                 .from("support@atlan.app")
                 .withRecipients(null, false, recipients, Message.RecipientType.TO)
                 .withSubject(subject)
@@ -506,12 +605,15 @@ object Utils {
             builder.withAttachment(it.name, FileDataSource(it))
         }
         val email = builder.buildEmail()
-        MailerBuilder.withSMTPServer(
-            getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
-            getEnvVar("SMTP_PORT", "587").toInt(),
-            getEnvVar("SMTP_USER"),
-            getEnvVar("SMTP_PASS"),
-        ).buildMailer().sendMail(email).get()
+        MailerBuilder
+            .withSMTPServer(
+                getEnvVar("SMTP_HOST", "smtp.sendgrid.net"),
+                getEnvVar("SMTP_PORT", "587").toInt(),
+                getEnvVar("SMTP_USER"),
+                getEnvVar("SMTP_PASS"),
+            ).buildMailer()
+            .sendMail(email)
+            .get()
     }
 
     /**
@@ -524,9 +626,7 @@ object Utils {
     fun getAssetLink(
         client: AtlanClient,
         guid: String,
-    ): String {
-        return getLink(client, guid, "assets")
-    }
+    ): String = getLink(client, guid, "assets")
 
     /**
      * Return a URL that will link directly to a data product or data domain in Atlan.
@@ -538,9 +638,7 @@ object Utils {
     fun getProductLink(
         client: AtlanClient,
         guid: String,
-    ): String {
-        return getLink(client, guid, "products")
-    }
+    ): String = getLink(client, guid, "products")
 
     private fun getLink(
         client: AtlanClient,
@@ -766,6 +864,42 @@ object Utils {
     }
 
     /**
+     * Unzip the provided zip file into the specified directory.
+     *
+     * @param zipFilePath path to the zip file to unzip
+     * @param destDirPath path to the directory where the files should be unzipped
+     * @return list of absolute paths of the unzipped files
+     */
+    fun unzipFiles(
+        zipFilePath: String,
+        destDirPath: String,
+    ): List<String> {
+        val destDir = File(destDirPath)
+        if (!destDir.exists()) {
+            destDir.mkdirs()
+        }
+
+        ZipInputStream(FileInputStream(zipFilePath)).use { zipInputStream ->
+            var entry: ZipEntry? = zipInputStream.nextEntry
+            while (entry != null) {
+                val newFile = File(destDir, entry.name)
+                if (entry.isDirectory) {
+                    newFile.mkdirs()
+                } else {
+                    newFile.parentFile?.mkdirs()
+                    FileOutputStream(newFile).use { outputStream ->
+                        zipInputStream.copyTo(outputStream)
+                    }
+                }
+                zipInputStream.closeEntry()
+                entry = zipInputStream.nextEntry
+            }
+        }
+
+        return destDir.listFiles()?.map { it.absolutePath } ?: emptyList()
+    }
+
+    /**
      * Upload the provided output file to the object store defined by the credentials available.
      * Note: if no credentials are provided, the default (in-tenant) object store will be used.
      *
@@ -845,8 +979,8 @@ object Utils {
      * @param directory (optional) fallback directory to use on local filesystem if no object store is detected
      * @return object storage syncer for Atlan's backing store
      */
-    fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer {
-        return when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
+    fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer =
+        when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
             "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
             "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
             "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
@@ -859,7 +993,6 @@ object Utils {
             }
             else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
         }
-    }
 
     /**
      * Update the connection cache for the provided assets.

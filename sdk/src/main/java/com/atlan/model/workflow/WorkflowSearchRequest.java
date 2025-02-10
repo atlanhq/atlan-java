@@ -169,7 +169,30 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      */
     public static List<WorkflowSearchResult> findByType(AtlanClient client, AtlanPackageType type, int maxResults)
             throws AtlanException {
-        return findByPrefix(client, type.getValue(), maxResults);
+        String regExBuilder = type.getValue().replace("-", "[-]") + "[-][0-9]{10}";
+        SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
+                .order(SortOrder.Desc)
+                .nested(NestedSortValue.of(v -> v.path("metadata"))))));
+
+        Query term = RegexpQuery.of(t -> t.field("metadata.name.keyword").value(regExBuilder))
+                ._toQuery();
+
+        Query nested = NestedQuery.of(n -> n.path("metadata").query(term))._toQuery();
+
+        Query query = BoolQuery.of(b -> b.filter(nested))._toQuery();
+
+        WorkflowSearchRequest request = WorkflowSearchRequest.builder()
+                .from(0)
+                .size(maxResults)
+                .sortOption(sort)
+                .query(query)
+                .build();
+
+        WorkflowSearchResponse response = client.workflows.search(request);
+        if (response != null && response.getHits() != null) {
+            return response.getHits().getHits();
+        }
+        return null;
     }
 
     /**
@@ -193,43 +216,6 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 && response.getHits() != null
                 && !response.getHits().getHits().isEmpty()) {
             return response.getHits().getHits().get(0);
-        }
-        return null;
-    }
-
-    /**
-     * Find workflows based on their type.
-     *
-     * @param client connectivity to the Atlan tenant on which to find the workflows
-     * @param prefix of the workflow
-     * @param maxResults the maximum number of results to retrieve
-     * @return the list of workflows of the provided type, with the most-recently created first
-     * @throws AtlanException on any API communication issue
-     */
-    private static List<WorkflowSearchResult> findByPrefix(AtlanClient client, String prefix, int maxResults)
-            throws AtlanException {
-
-        SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
-                .order(SortOrder.Desc)
-                .nested(NestedSortValue.of(v -> v.path("metadata"))))));
-
-        Query term = PrefixQuery.of(t -> t.field("metadata.name.keyword").value(prefix))
-                ._toQuery();
-
-        Query nested = NestedQuery.of(n -> n.path("metadata").query(term))._toQuery();
-
-        Query query = BoolQuery.of(b -> b.filter(nested))._toQuery();
-
-        WorkflowSearchRequest request = WorkflowSearchRequest.builder()
-                .from(0)
-                .size(maxResults)
-                .sortOption(sort)
-                .query(query)
-                .build();
-
-        WorkflowSearchResponse response = client.workflows.search(request);
-        if (response != null && response.getHits() != null) {
-            return response.getHits().getHits();
         }
         return null;
     }

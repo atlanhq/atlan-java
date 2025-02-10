@@ -46,9 +46,7 @@ object ConnectionXformer {
     fun encode(
         name: String,
         type: String,
-    ): String {
-        return "$name$CONNECTION_DELIMITER$type"
-    }
+    ): String = "$name$CONNECTION_DELIMITER$type"
 
     /**
      * Decodes (deserializes) a string form into a connection reference object.
@@ -62,13 +60,12 @@ object ConnectionXformer {
         ctx: PackageContext<*>,
         assetRef: String,
         fieldName: String,
-    ): Asset {
-        return when (fieldName) {
+    ): Asset =
+        when (fieldName) {
             "connection" -> {
                 ctx.connectionCache.getByIdentity(assetRef)
-                    ?: throw NoSuchElementException("Connection $assetRef not found (in $fieldName).")
+                    ?: throw NoSuchElementException("Connection not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
-    }
 }

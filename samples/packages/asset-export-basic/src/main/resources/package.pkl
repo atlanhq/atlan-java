@@ -148,6 +148,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store to which to upload the exported file(s)."
+          allowTestAuthentication = false
         }
       }
     }

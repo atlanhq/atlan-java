@@ -56,7 +56,7 @@ class AssetTransformer(
             inputRow: Map<String, String>,
             prefix: String,
         ): String {
-            val connectorType = inputRow["$prefix $CONNECTOR"] ?: ""
+            val connectorType = inputRow["$prefix $CONNECTOR"]?.lowercase() ?: ""
             val connectionName = inputRow["$prefix $CONNECTION"] ?: ""
             val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
             return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
@@ -117,7 +117,7 @@ class AssetTransformer(
                 assetQN,
                 inputRow["$prefix $TYPE"] ?: "",
                 inputRow["$prefix $NAME"] ?: "",
-                inputRow["$prefix $CONNECTOR"] ?: "",
+                inputRow["$prefix $CONNECTOR"]?.lowercase() ?: "",
                 connectionQN,
             )
         } else {

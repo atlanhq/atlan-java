@@ -7,11 +7,10 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.core.AssetMutationResponse
 import com.atlan.pkg.Utils
-import mu.KotlinLogging
 import kotlin.system.exitProcess
 
 object ApiTokenConnectionAdmin {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(ApiTokenConnectionAdmin.javaClass.name)
 
     /**
      * Actually run the logic to add the API token as a connection admin.
@@ -65,7 +64,8 @@ object ApiTokenConnectionAdmin {
     ): Asset {
         logger.info { "Looking up connection details: $connectionQN" }
         val found =
-            Connection.select(client)
+            Connection
+                .select(client)
                 .where(Connection.QUALIFIED_NAME.eq(connectionQN))
                 .includeOnResults(Connection.ADMIN_USERS)
                 .stream()
@@ -103,7 +103,8 @@ object ApiTokenConnectionAdmin {
         }
         try {
             val response =
-                connection.trimToRequired()
+                connection
+                    .trimToRequired()
                     .adminUsers(stillValidAdmins)
                     .adminUser(apiToken)
                     .build()

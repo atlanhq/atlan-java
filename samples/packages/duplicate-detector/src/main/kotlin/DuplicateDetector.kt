@@ -15,14 +15,17 @@ import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import com.atlan.util.ParallelBatch
-import mu.KotlinLogging
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
 
 object DuplicateDetector {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(this.javaClass.name)
 
-    data class AssetKey(val typeName: String, val qualifiedName: String, val guid: String)
+    data class AssetKey(
+        val typeName: String,
+        val qualifiedName: String,
+        val guid: String,
+    )
 
     private val hashToAssetKeys = ConcurrentHashMap<Int, MutableSet<AssetKey>>()
     private val hashToColumns = ConcurrentHashMap<Int, Set<String>>()
@@ -60,7 +63,8 @@ object DuplicateDetector {
         batchSize: Int,
     ) {
         val request =
-            client.assets.select()
+            client.assets
+                .select()
                 .where(Asset.TYPE_NAME.`in`(types))
                 .where(Asset.QUALIFIED_NAME.startsWith(qnPrefix))
                 .pageSize(batchSize)
@@ -69,7 +73,8 @@ object DuplicateDetector {
         val totalAssetCount = request.count()
         val count = AtomicLong(0)
         logger.info { "Comparing a total of $totalAssetCount assets..." }
-        request.stream(true)
+        request
+            .stream(true)
             .forEach { asset ->
                 val columns =
                     when (asset) {
@@ -79,7 +84,8 @@ object DuplicateDetector {
                         else -> setOf()
                     }
                 val columnNames =
-                    columns.stream()
+                    columns
+                        .stream()
                         .map(IColumn::getName)
                         .map { normalize(it) }
                         .toList()
@@ -107,19 +113,19 @@ object DuplicateDetector {
     fun glossaryForDuplicates(
         client: AtlanClient,
         glossaryName: String,
-    ): String {
-        return try {
+    ): String =
+        try {
             Glossary.findByName(client, glossaryName).qualifiedName
         } catch (e: NotFoundException) {
             val glossary =
-                Glossary.creator(glossaryName)
+                Glossary
+                    .creator(glossaryName)
                     .assetIcon(AtlanIcon.COPY)
                     .userDescription("Each term represents a set of potential duplicate assets, based on assets that have the same set of columns (case-insensitive, in any order). The assets that are potential duplicates of each other are all linked to the same term.")
                     .build()
             logger.info { "Creating glossary to hold duplicates." }
             glossary.save(client).getResult(glossary).qualifiedName
         }
-    }
 
     /**
      * Idempotently create (or update) a term for each set of 2 or more potential duplicate assets,
@@ -159,22 +165,24 @@ object DuplicateDetector {
                             GlossaryTerm.findByNameFast(client, termName, glossaryQN)
                         } catch (e: NotFoundException) {
                             val toCreate =
-                                GlossaryTerm.creator(termName, glossaryQN)
+                                GlossaryTerm
+                                    .creator(termName, glossaryQN)
                                     .description(
                                         "Assets with the same set of ${columns?.size} columns:\n" +
                                             columns?.joinToString(
                                                 separator = "\n",
                                             ) { "- $it" },
-                                    )
-                                    .certificateStatus(CertificateStatus.DRAFT)
+                                    ).certificateStatus(CertificateStatus.DRAFT)
                                     .build()
                             toCreate.save(client).getResult(toCreate)
                         }
                     val guids =
-                        keys.stream()
+                        keys
+                            .stream()
                             .map(AssetKey::guid)
                             .toList()
-                    client.assets.select()
+                    client.assets
+                        .select()
                         .where(Asset.GUID.`in`(guids))
                         .includeOnResults(Asset.ASSIGNED_TERMS)
                         .includeOnRelations(Asset.QUALIFIED_NAME)
@@ -184,7 +192,8 @@ object DuplicateDetector {
                             assetCount.getAndIncrement()
                             val existingTerms = asset.assignedTerms
                             batch.add(
-                                asset.trimToRequired()
+                                asset
+                                    .trimToRequired()
                                     .assignedTerms(existingTerms)
                                     .assignedTerm(term)
                                     .build(),
@@ -207,7 +216,5 @@ object DuplicateDetector {
      * @param colName original name of the column
      * @return the normalized name of the column
      */
-    private fun normalize(colName: String): String {
-        return colName.replace("_", "").lowercase()
-    }
+    private fun normalize(colName: String): String = colName.replace("_", "").lowercase()
 }

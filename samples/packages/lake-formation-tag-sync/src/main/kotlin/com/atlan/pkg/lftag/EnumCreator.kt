@@ -4,10 +4,13 @@ package com.atlan.pkg.lftag
 
 import com.atlan.AtlanClient
 import com.atlan.model.typedefs.EnumDef
-import mu.KotlinLogging
+import com.atlan.pkg.Utils
 
-class EnumCreator(private val client: AtlanClient, val tagToMetadataMapper: TagToMetadataMapper) {
-    private val logger = KotlinLogging.logger {}
+class EnumCreator(
+    private val client: AtlanClient,
+    val tagToMetadataMapper: TagToMetadataMapper,
+) {
+    private val logger = Utils.getLogger(this.javaClass.name)
     private val customMetadataCache = client.customMetadataCache
     private val enumCache = client.enumCache
 
@@ -27,7 +30,8 @@ class EnumCreator(private val client: AtlanClient, val tagToMetadataMapper: TagT
                 val missingValues = values.minus(currentValues)
                 if (currentValues.isNotEmpty()) {
                     val response =
-                        EnumDef.updater(client, enumName, missingValues.toList(), false)
+                        EnumDef
+                            .updater(client, enumName, missingValues.toList(), false)
                             .build()
                             .update(client)
                     println(response)

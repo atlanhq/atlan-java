@@ -64,6 +64,12 @@ public interface IAzureServiceBusNamespace {
     /** Application asset containing this Asset. */
     IApplication getApplication();
 
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
@@ -303,6 +309,9 @@ public interface IAzureServiceBusNamespace {
 
     /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
     String getAzureServiceBusNamespaceQualifiedName();
+
+    /** Unique name of the AzureServiceBus Schema in which this asset exists. */
+    String getAzureServiceBusSchemaQualifiedName();
 
     /** AzureServiceBusTopic assets contained within this AzureServiceBusNamespace. */
     SortedSet<IAzureServiceBusTopic> getAzureServiceBusTopics();

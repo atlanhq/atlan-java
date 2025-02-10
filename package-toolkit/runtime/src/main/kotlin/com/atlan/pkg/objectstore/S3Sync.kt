@@ -37,11 +37,13 @@ class S3Sync(
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
             val stsClient =
-                StsClient.builder()
+                StsClient
+                    .builder()
                     .region(Region.of(region))
                     .build()
             val roleRequest =
-                AssumeRoleRequest.builder()
+                AssumeRoleRequest
+                    .builder()
                     .roleArn(roleArn)
                     .roleSessionName("AuthRoleSession")
                     .build()
@@ -55,12 +57,14 @@ class S3Sync(
         }
     private val s3Client =
         if (credential != null) {
-            S3Client.builder()
+            S3Client
+                .builder()
                 .credentialsProvider(StaticCredentialsProvider.create(credential))
                 .region(Region.of(region))
                 .build()
         } else {
-            S3Client.builder()
+            S3Client
+                .builder()
                 .region(Region.of(region))
                 .build()
         }
@@ -73,15 +77,19 @@ class S3Sync(
         logger.info { "Syncing files from s3://$bucketName/$prefix to $localDirectory" }
 
         val request =
-            ListObjectsV2Request.builder()
+            ListObjectsV2Request
+                .builder()
                 .bucket(bucketName)
                 .prefix(prefix)
                 .build()
 
         val localFilesLastModified =
-            File(localDirectory).walkTopDown().filter { it.isFile }.map {
-                it.relativeTo(File(localDirectory)).path to it.lastModified()
-            }.toMap()
+            File(localDirectory)
+                .walkTopDown()
+                .filter { it.isFile }
+                .map {
+                    it.relativeTo(File(localDirectory)).path to it.lastModified()
+                }.toMap()
 
         val s3FilesToDownload = mutableListOf<String>()
         s3Client.listObjectsV2(request).contents().forEach { file ->
@@ -116,7 +124,8 @@ class S3Sync(
         logger.info { "Copying latest $extension file from s3://$bucketName/$prefix to $localDirectory" }
 
         val request =
-            ListObjectsV2Request.builder()
+            ListObjectsV2Request
+                .builder()
                 .bucket(bucketName)
                 .prefix(prefix)
                 .build()
@@ -166,7 +175,11 @@ class S3Sync(
             }
             val objectKey = File(remoteKey).path
             s3Client.getObject(
-                GetObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+                GetObjectRequest
+                    .builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .build(),
                 local.toPath(),
             )
         } catch (e: Exception) {
@@ -183,7 +196,8 @@ class S3Sync(
 
         // val s3Client = S3Client.builder().region(Region.of(region)).build()
         val request =
-            ListObjectsV2Request.builder()
+            ListObjectsV2Request
+                .builder()
                 .bucket(bucketName)
                 .prefix(prefix)
                 .build()
@@ -225,7 +239,11 @@ class S3Sync(
             val local = File(localFile)
             val objectKey = File(remoteKey).path
             s3Client.putObject(
-                PutObjectRequest.builder().bucket(bucketName).key(objectKey).build(),
+                PutObjectRequest
+                    .builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .build(),
                 local.toPath(),
             )
         } catch (e: Exception) {

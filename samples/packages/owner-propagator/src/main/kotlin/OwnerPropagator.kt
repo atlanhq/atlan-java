@@ -6,11 +6,10 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
 import java.util.concurrent.atomic.AtomicLong
 
 object OwnerPropagator {
-    private val logger = KotlinLogging.logger {}
+    private val logger = Utils.getLogger(OwnerPropagator.javaClass.name)
 
     /**
      * Actually run the logic to propagate owners from schema down to children tables.
@@ -38,7 +37,8 @@ object OwnerPropagator {
         batchSize: Int,
     ): List<Asset> {
         val assets = mutableListOf<Asset>()
-        Table.select(client)
+        Table
+            .select(client)
             .where(Table.QUALIFIED_NAME.startsWith(qnPrefix))
             .includeOnResults(Table.SCHEMA)
             .includeOnResults(Table.OWNER_USERS)
@@ -70,7 +70,8 @@ object OwnerPropagator {
                 val table = it as Table
                 val schemaOwners = table.schema.ownerUsers
                 batch.add(
-                    table.trimToRequired()
+                    table
+                        .trimToRequired()
                         .ownerUsers(table.ownerUsers)
                         .ownerUsers(schemaOwners)
                         .build(),

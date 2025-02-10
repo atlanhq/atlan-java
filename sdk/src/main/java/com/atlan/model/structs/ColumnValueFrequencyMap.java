@@ -3,17 +3,20 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about frequently occuring values for a column.
+ * Detailed information representing a column value and it's frequency.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ColumnValueFrequencyMap extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 
@@ -25,16 +28,16 @@ public class ColumnValueFrequencyMap extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Value for the column. */
+    /** Sample value for the column. */
     String columnValue;
 
-    /** Number of records that contain the value. */
+    /** Frequency of the sample value in the column. */
     Long columnValueFrequency;
 
     /**
      * Quickly create a new ColumnValueFrequencyMap.
-     * @param columnValue Value for the column.
-     * @param columnValueFrequency Number of records that contain the value.
+     * @param columnValue Sample value for the column.
+     * @param columnValueFrequency Frequency of the sample value in the column.
      * @return a ColumnValueFrequencyMap with the provided information
      */
     public static ColumnValueFrequencyMap of(String columnValue, Long columnValueFrequency) {

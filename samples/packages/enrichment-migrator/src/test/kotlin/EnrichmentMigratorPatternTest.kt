@@ -8,14 +8,16 @@ import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class EnrichmentMigratorPatternTest : PackageTest("p") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val targetDbName1 = "db_test02"
     private val targetDbName2 = "db_test03"
@@ -34,6 +36,7 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -64,7 +67,8 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             val sch3 = Schema.creator("sch1", db3).build()
             batch.add(sch3)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .userDescription(userDescription)
                     .build()
             batch.add(tbl1)
@@ -93,7 +97,13 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -224,28 +234,48 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        validateFilesExist(
-            listOf(
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName1.csv".replace("/", "_"),
-                "CSA_EM_transformed_${this.targetConnectionQualifiedName}_$targetDbName2.csv".replace("/", "_"),
-            ),
-        )
     }
 
     @Test
     fun userDescriptionOnTarget() {
         this.targetTableQualifiedNamesByName.forEach { entry ->
             val request =
-                Table.select(client)
+                Table
+                    .select(client)
                     .where(Table.QUALIFIED_NAME.eq(entry.value))
                     .includeOnResults(Asset.USER_DESCRIPTION)
                     .toRequest()
             val response = retrySearchUntil(request, 1)
-            response.stream()
+            response
+                .stream()
                 .forEach {
                     assertEquals(userDescription, it.userDescription)
                 }
         }
+    }
+
+    @Test
+    fun userDescriptionInFileForTarget2() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db_test02/sch1/tbl1","Table","tbl1",,,"Some user description"
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun userDescriptionInFileForTarget3() {
+        val targetConnection = Connection.findByName(client, c2, c2Type)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db_test03/sch1/tbl1","Table","tbl1",,,"Some user description"
+                """.trimIndent(),
+        )
     }
 
     @Test

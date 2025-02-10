@@ -9,8 +9,10 @@ import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
-import mu.KotlinLogging
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -19,7 +21,7 @@ import kotlin.test.assertTrue
  * Test migration of asset metadata.
  */
 class EnrichmentMigratorArchivedTest : PackageTest("a") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
     private val connectorType = AtlanConnectorType.AWS_SITE_WISE
@@ -27,11 +29,13 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
     private fun createConnections() {
-        Connection.creator(client, c1, connectorType)
+        Connection
+            .creator(client, c1, connectorType)
             .build()
             .save(client)
             .block()
@@ -45,7 +49,8 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             val sch1 = Schema.creator("sch1", db1).build()
             batch.add(sch1)
             val tbl1 =
-                Table.creator("tbl1", sch1)
+                Table
+                    .creator("tbl1", sch1)
                     .userDescription("Must have some enrichment to be included!")
                     .build()
             batch.add(tbl1)
@@ -56,12 +61,14 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private fun archiveTable() {
         val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(connection))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val guids =
-            response.stream()
+            response
+                .stream()
                 .map { it.guid }
                 .toList()
         client.assets.delete(guids, AtlanDeleteType.SOFT).block()
@@ -81,7 +88,13 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -89,10 +102,23 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     }
 
     @Test
-    fun activeAssetMigrated() {
+    fun activeAssetInFile() {
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","ACTIVE","tbl1",,,"Must have some enrichment to be included!"
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun activeAsset() {
         val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.QUALIFIED_NAME.startsWith(targetConnection.qualifiedName))
                 .includeOnResults(Table.STATUS)
                 .toRequest()
@@ -117,9 +143,6 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
-        val filename = targetConnection.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
 
     @Test

@@ -163,7 +163,8 @@ class FieldImporter(
         val qnDetails = getQualifiedNameDetails(deserializer.row, deserializer.heading, typeNameFilter)
         val parentQN = "$connectionQN/${qnDetails.parentPartialQN}"
         val level = getFieldLevel(deserializer.row, deserializer.heading)
-        return CubeField.creator(name, parentQN)
+        return CubeField
+            .creator(name, parentQN)
             .cubeFieldLevel(level)
             .cubeFieldGeneration(generationToProcess)
             .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())

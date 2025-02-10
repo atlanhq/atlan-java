@@ -1,9 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.xls.ExcelReader
-import mu.KotlinLogging
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
@@ -13,7 +13,7 @@ import java.io.File
  * Test export of only users.
  */
 class ExportUsersTest : PackageTest("u") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
         listOf(
@@ -61,6 +61,9 @@ class ExportUsersTest : PackageTest("u") {
                 // assertFalse(row["Last name"].isNullOrBlank())
                 assertFalse(row["Email address"].isNullOrBlank())
                 assertTrue(row["Email address"]!!.contains('@'))
+                assertTrue((row["Groups"].isNullOrBlank() && row["Group names"].isNullOrBlank()) || row["Groups"]!!.isNotBlank() && row["Group names"]!!.isNotBlank())
+                assertTrue(row["Groups"] != row["Group names"])
+                assertTrue(row["Groups"]!!.split("\n").size == row["Group names"]!!.split("\n").size)
             }
         }
     }

@@ -7,8 +7,8 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
+import com.atlan.pkg.Utils
 import com.atlan.pkg.cache.PersistentConnectionCache
-import mu.KotlinLogging
 import org.testng.Assert
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
@@ -21,7 +21,7 @@ import kotlin.test.assertNotNull
  * Test import of source tag values.
  */
 class ImportSourceTagValuesTest : PackageTest("istv") {
-    override val logger = KotlinLogging.logger {}
+    override val logger = Utils.getLogger(this.javaClass.name)
 
     private val table = makeUnique("t1")
 
@@ -63,7 +63,8 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
 
     override fun teardown() {
         val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
-        Table.select(client)
+        Table
+            .select(client)
             .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
             .where(Table.NAME.eq(table))
             .stream()
@@ -79,7 +80,8 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
         val snowflakeQN = snowflakeConnection.qualifiedName
         // val dbtQN = Connection.findByName("development", AtlanConnectorType.DBT)?.get(0)?.qualifiedName!!
         val request =
-            Table.select(client)
+            Table
+                .select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeQN))
                 .where(Table.NAME.eq(table))
                 .toRequest()

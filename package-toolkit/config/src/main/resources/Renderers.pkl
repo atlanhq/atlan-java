@@ -277,13 +277,13 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 
     [logger_pyatlan]
     level=DEBUG
-    handlers=fileHandler,jsonHandler
+    handlers=
     qualname=pyatlan
-    propagate=0
+    propagate=1
 
     [logger_urllib3]
     level=DEBUG
-    handlers=fileHandler,jsonHandler
+    handlers=
     qualname=urllib3
     propagate=0
 
@@ -311,6 +311,7 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
     [formatter_jsonFormatter]
     format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
     class=pyatlan.utils.JsonFormatter
+
     """
 }
 
@@ -318,15 +319,22 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
 const function getRequirementsPy(): FileOutput = new FileOutput {
   text = """
     pyatlan
+    opentelemetry-api==1.29.0
+    opentelemetry-sdk==1.29.0
+    opentelemetry-instrumentation-logging==0.50b0
+    opentelemetry-exporter-otlp==1.29.0
+
     """
 }
 
 /// Render the baseline requirements-dev.txt for a Python custom package.
 const function getRequirementsDevPy(): FileOutput = new FileOutput {
   text = """
+    black
     pytest
     pytest-order
     nanoid
+
     """
 }
 
@@ -341,7 +349,9 @@ const function getDockerfilePy(pkgName: String): FileOutput = new FileOutput {
           org.opencontainers.image.licenses=Apache-2
 
     COPY requirements.txt requirements.txt
-    ADD \(pkgName) /app/\(pkgName)
+    COPY \(pkgName) /app/\(pkgName)
+    COPY package.pkl /app/package.pkl
+    COPY version.txt /app/version.txt
 
     RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \\
             && chmod +x /usr/local/bin/dumb-init \\
@@ -349,6 +359,7 @@ const function getDockerfilePy(pkgName: String): FileOutput = new FileOutput {
 
     WORKDIR /app
     ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+
     """
 }
 
@@ -361,14 +372,21 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
     from pydantic.v1 import BaseModel, BaseSettings, Field, validator
     from pyatlan.model.assets import Connection
     from pyatlan.pkg.models import ConnectorAndConnection
-    from pyatlan.pkg.utils import validate_connection, validate_multiselect, validate_connector_and_connection
-    from typing import Any, Optional, Union, Dict
+    from pyatlan.pkg.utils import (
+      add_otel_handler,
+      validate_connection,
+      validate_multiselect,
+      validate_connector_and_connection,
+    )
+    from typing import Any, Optional, Union, Dict, List
     import logging.config
 
     PARENT = Path(__file__).parent
     LOGGING_CONF = PARENT / "logging.conf"
     if LOGGING_CONF.exists():
       logging.config.fileConfig(LOGGING_CONF)
+    ROOT_LOGGER = logging.getLogger()
+    add_otel_handler(ROOT_LOGGER, ROOT_LOGGER.level, {})
     LOGGER = logging.getLogger(__name__)
 
     ENV = 'env'
@@ -459,6 +477,7 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
                 if field_value := getattr(self, key):
                     ret_val[value["env"]] = field_value.json()
             return ret_val
+
     """
   }.join("\n")
 }

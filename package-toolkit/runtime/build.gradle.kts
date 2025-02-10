@@ -1,4 +1,18 @@
 // SPDX-License-Identifier: Apache-2.0
+import com.github.jengelman.gradle.plugins.shadow.ShadowStats
+import com.github.jengelman.gradle.plugins.shadow.transformers.CacheableTransformer
+import com.github.jengelman.gradle.plugins.shadow.transformers.DontIncludeResourceTransformer
+import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext
+import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext.Companion.getEntryTimestamp
+import org.apache.commons.io.output.CloseShieldOutputStream
+import org.apache.logging.log4j.core.config.plugins.processor.PluginCache
+import org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor
+import org.apache.tools.zip.ZipEntry
+import org.apache.tools.zip.ZipOutputStream
+import java.net.URL
+import java.util.Collections
+import java.util.Enumeration
+
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarName = "package-toolkit-runtime"
 
@@ -23,6 +37,9 @@ dependencies {
     api(libs.adls)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
+    implementation(libs.log4j.core) // This gives us the OOTB-log4j appenders (that we MUST have for pattern-handling)
+    implementation(libs.bundles.otel)
+    implementation(libs.slf4j)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
     testImplementation(libs.bundles.java.test)
     testImplementation(project(":mocks"))
@@ -53,6 +70,7 @@ tasks {
         dependencies {
             include(dependency("org.jetbrains.kotlin:.*:.*"))
             include(dependency("io.github.microutils:kotlin-logging-jvm:.*"))
+            include(dependency("org.slf4j:slf4j-api:.*"))
             include(dependency("org.apache.logging.log4j:log4j-api:.*"))
             include(dependency("org.apache.logging.log4j:log4j-core:.*"))
             include(dependency("org.apache.logging.log4j:log4j-slf4j2-impl:.*"))
@@ -212,8 +230,35 @@ tasks {
             include(dependency("org.reactivestreams:reactive-streams:.*"))
             // SQLite
             include(dependency("org.xerial:sqlite-jdbc:.*"))
+            // OpenTelemetry
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-log4j-context-data-2.17-autoconfigure:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:.*"))
+            include(dependency("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-api:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-api-incubator:.*"))
+            include(dependency("io.opentelemetry.semconv:opentelemetry-semconv:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-common:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-trace:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-metrics:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-logs:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-otlp:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-otlp-common:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-common:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-exporter-sender-okhttp:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-context:.*"))
+            include(dependency("com.squareup.okhttp3:okhttp:.*"))
+            include(dependency("com.squareup.okio:okio:.*"))
+            include(dependency("com.squareup.okio:okio-jvm:.*"))
         }
         mergeServiceFiles()
+        transform(Log4j2PluginsCustomTransformer())
+        transform(DontIncludeResourceTransformer::class.java) {
+            resource = "LICENSE"
+        }
     }
 
     jar {
@@ -286,4 +331,55 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications["mavenJavaPkgRun"])
+}
+
+/**
+ * Modified from the original, to simplify (and as the original was not working)
+ *
+ * Modified from [org.apache.logging.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer.java](https://github.com/apache/logging-log4j-transform/blob/main/log4j-transform-maven-shade-plugin-extensions/src/main/java/org/apache/logging/log4j/maven/plugins/shade/transformer/Log4j2PluginCacheFileTransformer.java).
+ *
+ * @author Christopher Grote
+ * @author Paul Nelson Baker
+ * @author John Engelman
+ */
+@CacheableTransformer
+open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.shadow.transformers.Transformer {
+    private val temporaryFiles = mutableListOf<File>()
+    private var stats: ShadowStats? = null
+
+    override fun canTransformResource(element: FileTreeElement): Boolean = PluginProcessor.PLUGIN_CACHE_FILE == element.name
+
+    override fun transform(context: TransformerContext) {
+        val temporaryFile = File.createTempFile("Log4j2Plugins", ".dat")
+        temporaryFile.deleteOnExit()
+        temporaryFiles.add(temporaryFile)
+        val fos = temporaryFile.outputStream()
+        context.inputStream.use {
+            it.copyTo(fos)
+        }
+        if (stats == null) {
+            stats = context.stats
+        }
+    }
+
+    override fun hasTransformedResource(): Boolean = temporaryFiles.isNotEmpty()
+
+    override fun modifyOutputStream(
+        os: ZipOutputStream,
+        preserveFileTimestamps: Boolean,
+    ) {
+        val pluginCache = PluginCache()
+        pluginCache.loadCacheFiles(urlEnumeration)
+        val entry = ZipEntry(PluginProcessor.PLUGIN_CACHE_FILE)
+        entry.time = getEntryTimestamp(preserveFileTimestamps, entry.time)
+        os.putNextEntry(entry)
+        pluginCache.writeCache(CloseShieldOutputStream.wrap(os))
+        temporaryFiles.clear()
+    }
+
+    private val urlEnumeration: Enumeration<URL>
+        get() {
+            val urls = temporaryFiles.map { it.toURI().toURL() }
+            return Collections.enumeration(urls)
+        }
 }
