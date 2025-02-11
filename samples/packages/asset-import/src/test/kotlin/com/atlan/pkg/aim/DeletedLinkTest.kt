@@ -75,33 +75,13 @@ class DeletedLinkTest : PackageTest("dlt") {
         return response.getResult(c1)
     }
 
-    private fun createDatabase(connection: Connection): Database {
-        val db = Database.creator(DB_NAME, connection.qualifiedName).build()
-        val response = db.save(client)
-        return response.getResult(db)
-    }
-
     override fun setup() {
         connection = createConnection()
-        createDatabase(connection)
-//        linkGuid = createLink(createDatabase(connection))
         prepFile()
-//        runCustomPackage(
-//            AssetImportCfg(
-//                assetsFile = Paths.get(testDirectory, testFile).toString(),
-//                assetsUpsertSemantic = "upsert",
-//                assetsFailOnErrors = false,
-//                assetsCaseSensitive = true,
-//                assetsTableViewAgnostic = false,
-//                assetsFieldSeparator = ",",
-//                assetsBatchSize = 20,
-//            ),
-//            Importer::main,
-//        )
     }
 
     override fun teardown() {
-        removeLink()
+//        removeLink()
         removeConnection(conn1, conn1Type)
     }
 
@@ -123,25 +103,9 @@ class DeletedLinkTest : PackageTest("dlt") {
         assertEquals(conn1Type, c1.connectorType)
     }
 
-    @Test(groups = ["ai.dl.create"])
-    fun database1Created() {
-//        validateLinkPresent()
-    }
-
     @Test(groups = ["ai.dl.import_1"], dependsOnGroups = ["ai.dl.create"])
     private fun firstImport() {
-        runCustomPackage(
-            AssetImportCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
-                assetsUpsertSemantic = "upsert",
-                assetsFailOnErrors = false,
-                assetsCaseSensitive = true,
-                assetsTableViewAgnostic = false,
-                assetsFieldSeparator = ",",
-                assetsBatchSize = 20,
-            ),
-            Importer::main,
-        )
+        importCsv()
 
         validateLinkPresent()
     }
@@ -149,6 +113,12 @@ class DeletedLinkTest : PackageTest("dlt") {
     @Test(groups = ["ai.dl.import_1"], dependsOnGroups = ["ai.dl.import_1"])
     private fun secondImport() {
         client.assets.delete(linkGuid, AtlanDeleteType.SOFT).block()
+        importCsv()
+
+        validateLinkPresent()
+    }
+
+    private fun importCsv() {
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
@@ -161,8 +131,6 @@ class DeletedLinkTest : PackageTest("dlt") {
             ),
             Importer::main,
         )
-
-        validateLinkPresent()
     }
 
     private fun validateLinkPresent() {
