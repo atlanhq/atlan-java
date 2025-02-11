@@ -264,6 +264,59 @@ class AssetImport extends PublishConfig {
   }.toMap()
 }
 
+/// Use a relational assets builder step as the final publish phase for the package.
+class RelationalAssetsBuilder extends PublishConfig {
+  hidden assetsFile: FrameworkRenderer.NamePathPair? = null
+  hidden assetsUpsertSemantic: ImportSemantic?|String? = null
+  hidden deltaSemantic: DeltaSemantic?|String? = null
+  hidden deltaRemovalType: RemovalType?|String? = null
+  hidden deltaReloadCalculation: ReloadCalculation?|String? = null
+  hidden previousFileDirect: FrameworkRenderer.NamePathPair? = null
+  hidden assetsAttrToOverwrite: Listing<String>?|String? = null
+  hidden assetsFailOnErrors: Boolean?|String? = null
+  hidden assetsFieldSeparator: String? = null
+  hidden assetsBatchSize: Int?|String? = null
+  hidden trackBatches: Boolean?|String? = null
+
+  fixed inputArtifacts {
+    when (assetsFile != null) { assetsFile }
+  }
+  fixed outputs {
+    files {
+      ["debug-logs"] = "/tmp/debug.log"
+      ["transformed_file"] = "/tmp/current-file-transformed.csv"
+    }
+  }
+  fixed containerImage = "ghcr.io/atlanhq/csa-relational-assets-builder:\(versionTag)"
+  fixed containerCommand {
+    "/dumb-init"
+    "--"
+    "java"
+    "com.atlan.pkg.rab.Importer"
+  }
+
+  fixed parameters: Map<String, String> = new Mapping {
+    ["import_type"] = "DIRECT"
+    when (assetsFile != null) { ["assets_file"] = assetsFile.path }
+    when (assetsUpsertSemantic != null) { ["assets_upsert_semantic"] = assetsUpsertSemantic }
+    when (deltaSemantic != null) { ["delta_semantic"] = deltaSemantic.toString() }
+    when (deltaRemovalType != null) { ["delta_removal_type"] = deltaRemovalType.toString() }
+    when (deltaReloadCalculation != null) { ["delta_reload_calculation"] = deltaReloadCalculation.toString() }
+    when (previousFileDirect != null) { ["previous_file_direct"] = previousFileDirect.path }
+    when (assetsAttrToOverwrite != null) {
+      when (assetsAttrToOverwrite is Listing) {
+        ["assets_attr_to_overwrite"] = "[\"" + assetsAttrToOverwrite.join("\",\"") + "\"]"
+      } else {
+        ["assets_attr_to_overwrite"] = assetsAttrToOverwrite
+      }
+    }
+    when (assetsFailOnErrors != null) { ["assets_fail_on_errors"] = assetsFailOnErrors.toString() }
+    when (assetsFieldSeparator != null) { ["assets_field_separator"] = assetsFieldSeparator }
+    when (assetsBatchSize != null) { ["assets_batch_size"] = assetsBatchSize.toString() }
+    when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
+  }.toMap()
+}
+
 /// Configuration for the UI of the custom package.
 ///
 /// | Variable | | Usage |
