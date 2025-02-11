@@ -17,6 +17,7 @@ import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 private const val LINK_NAME = "HP"
 
@@ -81,12 +82,7 @@ class DeletedLinkTest : PackageTest("dlt") {
     }
 
     override fun teardown() {
-//        removeLink()
         removeConnection(conn1, conn1Type)
-    }
-
-    private fun removeLink() {
-        client.assets.delete(linkGuid, AtlanDeleteType.HARD).block()
     }
 
     @Test(groups = ["ai.dl.create"])
@@ -157,6 +153,7 @@ class DeletedLinkTest : PackageTest("dlt") {
         var link = links.elementAt(0)
         assertEquals(LINK_NAME, link.name)
         assertEquals(LINK_URL, link.link)
+        assertTrue { link.qualifiedName.startsWith(db.qualifiedName) }
         link = Link.get(client, link.guid)
         assertEquals(AtlanStatus.ACTIVE, link.status)
         linkGuid = link.guid
