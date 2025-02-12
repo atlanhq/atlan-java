@@ -50,7 +50,7 @@ class CreateThenUpDeltaAIMTest : PackageTest("ctuda") {
             lines.forEach { line ->
                 val revised =
                     line
-                        .replace("iceberg", "ibmdb2")
+                        .replace("{{CTYPE}}", conn1Type.value)
                         .replace("{{CONNECTION}}", connectionQN)
                 output.appendText("$revised\n")
             }

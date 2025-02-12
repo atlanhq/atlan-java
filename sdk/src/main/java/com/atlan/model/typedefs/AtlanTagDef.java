@@ -153,7 +153,26 @@ public class AtlanTagDef extends TypeDef {
         return AtlanTagDef.builder().name(displayName).displayName(displayName).options(options);
     }
 
-    private static AtlanTagDefBuilder<?, ?> setupSourceSynced(AtlanTagDefBuilder<?, ?> builder, boolean sourceSynced) {
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     * @throws AtlanException on any issues uploading the image from the provided URL
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(String displayName, boolean sourceSynced) throws AtlanException {
+        return setupSourceSynced(AtlanTagDef.builder().name(displayName).displayName(displayName), sourceSynced);
+    }
+
+    /**
+     * Configure the builder for the tag to support source-synced attributes.
+     *
+     * @param builder for the tag definition
+     * @param sourceSynced if true, add the necessary structure for source-synced tags, otherwise do nothing
+     * @return the tag builder, modified to handle source-synced tags
+     */
+    public static AtlanTagDefBuilder<?, ?> setupSourceSynced(AtlanTagDefBuilder<?, ?> builder, boolean sourceSynced) {
         if (sourceSynced) {
             builder.attributeDef(AttributeDef.builder()
                     .typeName("array<SourceTagAttachment>")

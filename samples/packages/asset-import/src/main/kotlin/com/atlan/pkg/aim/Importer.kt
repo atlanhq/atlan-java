@@ -38,8 +38,9 @@ object Importer {
         val assetsFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.assetsFile, ctx.config.assetsKey)
         val glossariesFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.glossariesFile, ctx.config.glossariesKey)
         val dataProductsFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.dataProductsFile, ctx.config.dataProductsKey)
-        if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided) {
-            logger.error { "No input file was provided for either data products, glossaries or assets." }
+        val tagFileProvided = Utils.isFileProvided(ctx.config.importType, ctx.config.tagsFile, ctx.config.tagsKey)
+        if (!assetsFileProvided && !glossariesFileProvided && !dataProductsFileProvided && !tagFileProvided) {
+            logger.error { "No input file was provided for either data products, glossaries, assets or tags." }
             exitProcess(1)
         }
 
@@ -115,7 +116,25 @@ object Importer {
             exitProcess(2)
         }
 
-        // 3. Assets (last) -- since these may be related to the other objects loaded above
+        // TODO: 3. Connections (since they must first exist for source-synced tags, but could themselves have terms and / or domains assigned)
+
+        // 4. Tag definitions
+        if (tagFileProvided) {
+            val tagsInput =
+                Utils.getInputFile(
+                    ctx.config.tagsFile,
+                    outputDirectory,
+                    ctx.config.importType == "DIRECT",
+                    ctx.config.tagsPrefix,
+                    ctx.config.tagsKey,
+                )
+            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.tagsFailOnErrors)
+            logger.info { "=== Importing tag definitions... ===" }
+            val tagImporter = AtlanTagImporter(ctx, tagsInput, logger)
+            tagImporter.import()
+        }
+
+        // 5. Assets (last) -- since these may be related to the other objects loaded above
         val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
         val resultsAssets =
             if (assetsFileProvided) {
