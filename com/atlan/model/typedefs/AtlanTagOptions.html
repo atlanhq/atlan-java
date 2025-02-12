@@ -163,10 +163,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Color to use for the Atlan tag.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEmoji()" class="member-name-link">getEmoji</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCreatedFromAtlan()" class="member-name-link">getCreatedFromAtlan</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether this tag was created within the UI (true) or not (false).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEmoji()" class="member-name-link">getEmoji</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If the <code>iconType</code> is emoji, this should hold the emoji character.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHasTag()" class="member-name-link">getHasTag</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether this tag has an associated source-synced tag (true) or not (false).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/AtlanIcon.html" title="enum class in com.atlan.model.enums">AtlanIcon</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIconName()" class="member-name-link">getIconName</a>()</code></div>
@@ -191,14 +201,26 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Provide Atlan tag options that set the color for the tag, using the default tag icon.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AtlanTagOptions.AtlanTagOptionsBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagOptions.AtlanTagOptionsBuilder</a>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withEmoji(java.lang.String)" class="member-name-link">withEmoji</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;emoji)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(com.atlan.model.enums.AtlanTagColor,boolean)" class="member-name-link">of</a><wbr>(<a href="../enums/AtlanTagColor.html" title="enum class in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+ boolean&nbsp;sourceSynced)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Provide Atlan tag options that set the color for the tag, using the default tag icon.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AtlanTagOptions.AtlanTagOptionsBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagOptions.AtlanTagOptionsBuilder</a>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withEmoji(java.lang.String)" class="member-name-link">withEmoji</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;emoji)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Provide Atlan tag options that set the logo for the tag to the provided emoji.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withEmoji(java.lang.String,boolean)" class="member-name-link">withEmoji</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;emoji,
+ boolean&nbsp;sourceSynced)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Provide Atlan tag options that set the logo for the tag to the provided emoji.</div>
 </div>
@@ -209,8 +231,22 @@ loadScripts(document, 'script');</script>
 <div class="block">Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withImage(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">withImage</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor,boolean)" class="member-name-link">withIcon</a><wbr>(<a href="../enums/AtlanIcon.html" title="enum class in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+ <a href="../enums/AtlanTagColor.html" title="enum class in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+ boolean&nbsp;sourceSynced)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withImage(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">withImage</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Provide Atlan tag options that set the image for the tag, using an uploaded image.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withImage(com.atlan.AtlanClient,java.lang.String,boolean)" class="member-name-link">withImage</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url,
+ boolean&nbsp;sourceSynced)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Provide Atlan tag options that set the image for the tag, using an uploaded image.</div>
 </div>
@@ -262,6 +298,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="of(com.atlan.model.enums.AtlanTagColor,boolean)">
+<h3>of</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="../enums/AtlanTagColor.html" title="enum class in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+ boolean&nbsp;sourceSynced)</span></div>
+<div class="block">Provide Atlan tag options that set the color for the tag, using the default tag icon.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>color</code> - to use to represent the Atlan tag</dd>
+<dd><code>sourceSynced</code> - if true, configure this tag as a source-synced tag</dd>
+<dt>Returns:</dt>
+<dd>the necessary options for setting this color for the Atlan tag</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor)">
 <h3>withIcon</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">withIcon</span><wbr><span class="parameters">(<a href="../enums/AtlanIcon.html" title="enum class in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
@@ -271,6 +322,23 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>icon</code> - to use to represent the Atlan tag</dd>
 <dd><code>color</code> - to use to represent the Atlan tag</dd>
+<dt>Returns:</dt>
+<dd>the necessary options for setting this icon and color for the Atlan tag</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor,boolean)">
+<h3>withIcon</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">withIcon</span><wbr><span class="parameters">(<a href="../enums/AtlanIcon.html" title="enum class in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+ <a href="../enums/AtlanTagColor.html" title="enum class in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color,
+ boolean&nbsp;sourceSynced)</span></div>
+<div class="block">Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>icon</code> - to use to represent the Atlan tag</dd>
+<dd><code>color</code> - to use to represent the Atlan tag</dd>
+<dd><code>sourceSynced</code> - if true, configure this tag as a source-synced tag</dd>
 <dt>Returns:</dt>
 <dd>the necessary options for setting this icon and color for the Atlan tag</dd>
 </dl>
@@ -295,6 +363,26 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="withImage(com.atlan.AtlanClient,java.lang.String,boolean)">
+<h3>withImage</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">withImage</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url,
+ boolean&nbsp;sourceSynced)</span>
+                                 throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Provide Atlan tag options that set the image for the tag, using an uploaded image.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>client</code> - connectivity to the Atlan tenant in which the tag is intended to be created</dd>
+<dd><code>url</code> - URL to the image to use for the Atlan tag</dd>
+<dd><code>sourceSynced</code> - if true, configure this tag as a source-synced tag</dd>
+<dt>Returns:</dt>
+<dd>the necessary options for setting this image for the Atlan tag</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues trying to upload the image</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="withEmoji(java.lang.String)">
 <h3>withEmoji</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">withEmoji</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;emoji)</span></div>
@@ -302,6 +390,21 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>emoji</code> - the emoji character to use for the logo</dd>
+<dt>Returns:</dt>
+<dd>the necessary options for setting this emoji character as the logo for the Atlan tag</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="withEmoji(java.lang.String,boolean)">
+<h3>withEmoji</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></span>&nbsp;<span class="element-name">withEmoji</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;emoji,
+ boolean&nbsp;sourceSynced)</span></div>
+<div class="block">Provide Atlan tag options that set the logo for the tag to the provided emoji.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>emoji</code> - the emoji character to use for the logo</dd>
+<dd><code>sourceSynced</code> - if true, configure this tag as a source-synced tag</dd>
 <dt>Returns:</dt>
 <dd>the necessary options for setting this emoji character as the logo for the Atlan tag</dd>
 </dl>
@@ -352,6 +455,20 @@ loadScripts(document, 'script');</script>
 <h3>getImageID</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getImageID</span>()</div>
 <div class="block">Unique identifier (GUID) of an image to use for the tag.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCreatedFromAtlan()">
+<h3>getCreatedFromAtlan</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getCreatedFromAtlan</span>()</div>
+<div class="block">Whether this tag was created within the UI (true) or not (false).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getHasTag()">
+<h3>getHasTag</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getHasTag</span>()</div>
+<div class="block">Whether this tag has an associated source-synced tag (true) or not (false).</div>
 </section>
 </li>
 <li>
