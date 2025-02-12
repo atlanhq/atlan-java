@@ -124,7 +124,7 @@ class AtlanTagImporter(
                 }
                 ctx.client.typeDefs.create(tagDefsToCreate as List<TypeDef>?)
                 ctx.client.typeDefs.update(tagDefsToUpdate as List<TypeDef>?)
-                assets.flush() // TODO: confirm this late-serializes AFTER tags are actually created and cached (above)
+                assets.flush()
                 Utils.logProgress(count, totalRowCount, logger, batchSize)
             }
             reader.close()
@@ -189,7 +189,7 @@ class AtlanTagImporter(
                     ._internal()
                     .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                     .name(tag.name)
-                    .qualifiedName("${tag.connectionQualifiedName}/$tag.name")
+                    .qualifiedName("${tag.connectionQualifiedName}/${tag.name}")
                     .connectorType(AtlanConnectorType.fromValue(tag.connectorType))
                     .connectionQualifiedName(tag.connectionQualifiedName)
                     .connectionName(tag.connectionName)
