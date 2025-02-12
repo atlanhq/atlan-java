@@ -56,6 +56,7 @@ class DeltaTest : PackageTest("aid") {
                 val revised =
                     line
                         .replace("{{CONNECTION}}", conn1QN)
+                        .replace("{{CTYPE}}", conn1Type.value)
                 output.appendText("$revised\n")
             }
         }

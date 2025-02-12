@@ -167,6 +167,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertEquals(attr.getCardinality(), AtlanCustomAttributeCardinality.SET);
 
         // Source tag asset
+        // TODO: replace with generic SourceTag (once available)
         SnowflakeTag toCreate = SnowflakeTag._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(SOURCE_SYNCED)

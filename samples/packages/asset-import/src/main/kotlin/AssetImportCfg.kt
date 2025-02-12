@@ -57,4 +57,11 @@ data class AssetImportCfg(
     @JsonProperty("data_products_fail_on_errors") val dataProductsFailOnErrors: Boolean = true,
     @JsonProperty("data_products_field_separator") val dataProductsFieldSeparator: String = ",",
     @JsonProperty("data_products_batch_size") val dataProductsBatchSize: Number = 20,
+    @JsonProperty("tags_file") val tagsFile: String = "",
+    @JsonProperty("tags_prefix") val tagsPrefix: String = "",
+    @JsonProperty("tags_key") val tagsKey: String = "",
+    @JsonProperty("tags_config") val tagsConfig: String? = null,
+    @JsonProperty("tags_fail_on_errors") val tagsFailOnErrors: Boolean = true,
+    @JsonProperty("tags_field_separator") val tagsFieldSeparator: String = ",",
+    @JsonProperty("tags_batch_size") val tagsBatchSize: Number = 20,
 ) : CustomConfig()

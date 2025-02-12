@@ -121,14 +121,14 @@ object CellXformer {
             throw IOException("Unhandled data type (in $fieldName): $type")
         }
 
-    private fun getDelimitedList(values: List<String>?): String =
+    fun getDelimitedList(values: List<String>?): String =
         if (values.isNullOrEmpty()) {
             ""
         } else {
             values.joinToString(LIST_DELIMITER)
         }
 
-    private fun parseDelimitedList(values: String?): List<String> =
+    fun parseDelimitedList(values: String?): List<String> =
         if (values.isNullOrEmpty()) {
             listOf()
         } else {
