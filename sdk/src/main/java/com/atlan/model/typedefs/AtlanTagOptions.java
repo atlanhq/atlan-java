@@ -12,6 +12,7 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -36,7 +37,18 @@ public class AtlanTagOptions extends AtlanObject {
      * @return the necessary options for setting this color for the Atlan tag
      */
     public static AtlanTagOptions of(AtlanTagColor color) {
-        return withIcon(AtlanIcon.ATLAN_TAG, color);
+        return of(color, false);
+    }
+
+    /**
+     * Provide Atlan tag options that set the color for the tag, using the default tag icon.
+     *
+     * @param color to use to represent the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the necessary options for setting this color for the Atlan tag
+     */
+    public static AtlanTagOptions of(AtlanTagColor color, boolean sourceSynced) {
+        return withIcon(AtlanIcon.ATLAN_TAG, color, sourceSynced);
     }
 
     /**
@@ -47,11 +59,24 @@ public class AtlanTagOptions extends AtlanObject {
      * @return the necessary options for setting this icon and color for the Atlan tag
      */
     public static AtlanTagOptions withIcon(AtlanIcon icon, AtlanTagColor color) {
+        return withIcon(icon, color, false);
+    }
+
+    /**
+     * Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.
+     *
+     * @param icon to use to represent the Atlan tag
+     * @param color to use to represent the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the necessary options for setting this icon and color for the Atlan tag
+     */
+    public static AtlanTagOptions withIcon(AtlanIcon icon, AtlanTagColor color, boolean sourceSynced) {
         return AtlanTagOptions.builder()
                 .color(color.getValue())
                 .iconName(icon)
                 .iconType(TagIconType.ICON)
                 .imageID("")
+                .hasTag(sourceSynced)
                 .build();
     }
 
@@ -64,6 +89,20 @@ public class AtlanTagOptions extends AtlanObject {
      * @throws AtlanException on any API communication issues trying to upload the image
      */
     public static AtlanTagOptions withImage(AtlanClient client, String url) throws AtlanException {
+        return withImage(client, url, false);
+    }
+
+    /**
+     * Provide Atlan tag options that set the image for the tag, using an uploaded image.
+     *
+     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
+     * @param url URL to the image to use for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the necessary options for setting this image for the Atlan tag
+     * @throws AtlanException on any API communication issues trying to upload the image
+     */
+    public static AtlanTagOptions withImage(AtlanClient client, String url, boolean sourceSynced)
+            throws AtlanException {
         try {
             AtlanImage result = client.images.upload(url);
             return AtlanTagOptions.builder()
@@ -71,6 +110,7 @@ public class AtlanTagOptions extends AtlanObject {
                     .imageID(result.getId())
                     .color(AtlanTagColor.GRAY.getValue())
                     .iconName(AtlanIcon.ATLAN_TAG)
+                    .hasTag(sourceSynced)
                     .build();
         } catch (MalformedURLException e) {
             throw new InvalidRequestException(ErrorCode.INVALID_URL, e);
@@ -86,11 +126,23 @@ public class AtlanTagOptions extends AtlanObject {
      * @return the necessary options for setting this emoji character as the logo for the Atlan tag
      */
     public static AtlanTagOptions withEmoji(String emoji) {
+        return withEmoji(emoji, false);
+    }
+
+    /**
+     * Provide Atlan tag options that set the logo for the tag to the provided emoji.
+     *
+     * @param emoji the emoji character to use for the logo
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the necessary options for setting this emoji character as the logo for the Atlan tag
+     */
+    public static AtlanTagOptions withEmoji(String emoji, boolean sourceSynced) {
         return AtlanTagOptions.builder()
                 .iconType(TagIconType.EMOJI)
                 .emoji(emoji)
                 .color(AtlanTagColor.GRAY.getValue())
                 .iconName(AtlanIcon.ATLAN_TAG)
+                .hasTag(sourceSynced)
                 .build();
     }
 
@@ -108,4 +160,11 @@ public class AtlanTagOptions extends AtlanObject {
 
     /** Unique identifier (GUID) of an image to use for the tag. */
     String imageID;
+
+    /** Whether this tag was created within the UI (true) or not (false). */
+    @Builder.Default
+    Boolean createdFromAtlan = false;
+
+    /** Whether this tag has an associated source-synced tag (true) or not (false). */
+    Boolean hasTag;
 }
