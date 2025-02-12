@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/api-token-connection-admin"
@@ -44,6 +44,7 @@ uiConfig {
           title = "API token"
           required = true
           helpText = "Select the API token to add to the connection as an admin."
+          showAll = true
           width = 4
           fallback = ""
         }
