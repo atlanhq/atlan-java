@@ -692,6 +692,13 @@ class Widget {
 
   /// Whether to prevent the Test Authentication button from showing (true) or show it (false) for credential inputs.
   isTestAuthenticationDisabled: Boolean?
+
+  /// Whether to show all API tokens for the APITokenSelector (true) or only those created directly by the user (false).
+  shouldShowAllKeys: Boolean?
+
+  /// If set, only connections with a connector of the type specified will be shown in the ConnectionSelector
+  /// (otherwise all connections will be shown).
+  connectorName: String?|List<String>? = null
 }
 
 /// Widget that allows you to enter arbitrary text into a single-line text input field,
@@ -821,6 +828,9 @@ class ConnectionSelector extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
 
+  /// When set, will limit the connections shown in the drop-down to those with a connector in the provided list.
+  hidden limitToConnectors: String?|List<String>? = null
+
   /// Whether multiple connections can be selected (true) or only a single connection (false).
   hidden multiSelect: Boolean = false
 
@@ -832,6 +842,7 @@ class ConnectionSelector extends UIElement {
     widget = "connectionSelector"
     mode = if (multiSelect) "multiple" else ""
     start = begin
+    connectorName = limitToConnectors
   }
 }
 
@@ -1131,13 +1142,16 @@ class ConnectorTypeSelector extends UIElement {
 /// | `required` | | whether a value must be selected to proceed with the UI setup | `false` |
 /// | `hide` | | whether the widget will be shown in the UI (false) or not (true) | `false` |
 /// | `helpText` | | informational text to place in a hover-over to describe the use of the input | `""` |
+/// | `showAll` | | whether to show all API tokens (true), or only those the user themself created (false) | `false` |
 class APITokenSelector extends UIElement {
   fixed type = "string"
   required: Boolean = false // Necessary for generated Kotlin copy method override
+  hidden showAll = false
 
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "apiTokenSelect"
+    shouldShowAllKeys = showAll
   }
 }
 

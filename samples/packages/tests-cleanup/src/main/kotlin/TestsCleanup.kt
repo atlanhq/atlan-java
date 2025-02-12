@@ -183,18 +183,6 @@ object TestsCleanup {
         client: AtlanClient,
         prefix: String,
     ) {
-        val enums =
-            client.typeDefs
-                .list(AtlanTypeCategory.ENUM)
-                .enumDefs
-                .stream()
-                .filter { it.name.startsWith(prefix) }
-                .map { TypeDefDetails(it.name, it.name) }
-                .toList()
-        enums.forEach { e ->
-            logger.info { "Purging enum: ${e.internalName}" }
-            getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
-        }
         val list =
             client.typeDefs
                 .list(AtlanTypeCategory.CUSTOM_METADATA)
@@ -220,6 +208,18 @@ object TestsCleanup {
             } catch (e: AtlanException) {
                 logger.error(e) { " ... failed to purge: ${cm.name}" }
             }
+        }
+        val enums =
+            client.typeDefs
+                .list(AtlanTypeCategory.ENUM)
+                .enumDefs
+                .stream()
+                .filter { it.name.startsWith(prefix) }
+                .map { TypeDefDetails(it.name, it.name) }
+                .toList()
+        enums.forEach { e ->
+            logger.info { "Purging enum: ${e.internalName}" }
+            getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
         }
     }
 
