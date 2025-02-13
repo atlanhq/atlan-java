@@ -182,27 +182,28 @@ class AtlanTagImporter(
 
     private fun idempotentTagAsset(tag: TagDetails): Asset? {
         return if (tag.sourceSynced) {
-            val assetBuilder = when (tag.connectorType) {
-                "snowflake" -> {
-                    // TODO: actually use a schema for Snowflake, not just a connection
-                    SnowflakeTag.creator(
-                        tag.name,
-                        tag.connectionQualifiedName,
-                        tag.name,
-                        tag.tagIdInSource,
-                        tag.allowedValues,
-                    )
+            val assetBuilder =
+                when (tag.connectorType) {
+                    "snowflake" -> {
+                        // TODO: actually use a schema for Snowflake, not just a connection
+                        SnowflakeTag.creator(
+                            tag.name,
+                            tag.connectionQualifiedName,
+                            tag.name,
+                            tag.tagIdInSource,
+                            tag.allowedValues,
+                        )
+                    }
+                    else -> {
+                        SourceTag.creator(
+                            tag.name,
+                            tag.connectionQualifiedName,
+                            tag.name,
+                            tag.tagIdInSource,
+                            tag.allowedValues,
+                        )
+                    }
                 }
-                else -> {
-                    SourceTag.creator(
-                        tag.name,
-                        tag.connectionQualifiedName,
-                        tag.name,
-                        tag.tagIdInSource,
-                        tag.allowedValues,
-                    )
-                }
-            }
             assetBuilder.build()
         } else {
             null

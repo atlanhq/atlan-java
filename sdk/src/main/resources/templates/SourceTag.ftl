@@ -31,7 +31,7 @@
             .connectionQualifiedName(connectionQualifiedName)
             .mappedAtlanTagName(mappedAtlanTagName)
             .tagId(sourceTagId)
-            .tagAttribute(SourceTagAttribute.of("allowedValues", allowedValuesString, null))
+            .tagAttribute(SourceTagAttribute.builder().tagAttributeKey("allowedValues").tagAttributeValue(allowedValuesString).build())
             .tagAllowedValues(allowedValues);
     }
 

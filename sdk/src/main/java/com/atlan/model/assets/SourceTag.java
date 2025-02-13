@@ -378,7 +378,10 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
                 .connectionQualifiedName(connectionQualifiedName)
                 .mappedAtlanTagName(mappedAtlanTagName)
                 .tagId(sourceTagId)
-                .tagAttribute(SourceTagAttribute.of("allowedValues", allowedValuesString, null))
+                .tagAttribute(SourceTagAttribute.builder()
+                        .tagAttributeKey("allowedValues")
+                        .tagAttributeValue(allowedValuesString)
+                        .build())
                 .tagAllowedValues(allowedValues);
     }
 
@@ -400,7 +403,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * Generate a unique SourceTag name.
      *
      * @param name of the SourceTag
-     * @param connectionQualifiedName unique name of the connection in which this SourceTag exists
+     * @param connectionQualifiedName unique name of the schema in which this SourceTag exists
      * @return a unique name for the SourceTag
      */
     public static String generateQualifiedName(String name, String connectionQualifiedName) {

@@ -553,7 +553,10 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
                 .connectionQualifiedName(connectionQualifiedName)
                 .mappedAtlanTagName(mappedAtlanTagName)
                 .tagId(snowflakeTagId)
-                .tagAttribute(SourceTagAttribute.of("allowedValues", allowedValuesString, null))
+                .tagAttribute(SourceTagAttribute.builder()
+                        .tagAttributeKey("allowedValues")
+                        .tagAttributeValue(allowedValuesString)
+                        .build())
                 .tagAllowedValues(allowedValues);
     }
 
