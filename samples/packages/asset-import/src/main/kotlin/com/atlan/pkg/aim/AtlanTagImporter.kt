@@ -6,7 +6,7 @@ import AssetImportCfg
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.SnowflakeTag
-import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.assets.SourceTag
 import com.atlan.model.enums.AtlanEnum
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -26,7 +26,6 @@ import de.siegmar.fastcsv.reader.CsvRecord
 import mu.KLogger
 import java.io.IOException
 import java.nio.file.Paths
-import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.streams.asSequence
 
@@ -104,6 +103,7 @@ class AtlanTagImporter(
                                 row.getOrElse(TAG_ICON) { "" },
                                 row.getOrElse(TAG_CONNECTION) { "" },
                                 row.getOrElse(TAG_CONNECTOR) { "" }.lowercase(),
+                                row.getOrElse(TAG_SRC_ID) { "" },
                                 CellXformer.parseDelimitedList(row.getOrElse(ALLOWED_VALUES) { "" }),
                             )
 
@@ -181,8 +181,33 @@ class AtlanTagImporter(
     }
 
     private fun idempotentTagAsset(tag: TagDetails): Asset? {
-        // TODO: replace with creator() call, and generic SourceTag — should be idempotent already (?)
         return if (tag.sourceSynced) {
+            val assetBuilder = when (tag.connectorType) {
+                "snowflake" -> {
+                    // TODO: actually use a schema for Snowflake, not just a connection
+                    SnowflakeTag.creator(
+                        tag.name,
+                        tag.connectionQualifiedName,
+                        tag.name,
+                        tag.tagIdInSource,
+                        tag.allowedValues,
+                    )
+                }
+                else -> {
+                    SourceTag.creator(
+                        tag.name,
+                        tag.connectionQualifiedName,
+                        tag.name,
+                        tag.tagIdInSource,
+                        tag.allowedValues,
+                    )
+                }
+            }
+            assetBuilder.build()
+        } else {
+            null
+        }
+        /*return if (tag.sourceSynced) {
             // Source tag asset
             val assetBuilder =
                 SnowflakeTag
@@ -200,7 +225,7 @@ class AtlanTagImporter(
             assetBuilder.build()
         } else {
             null
-        }
+        }*/
     }
 
     companion object {
@@ -209,17 +234,8 @@ class AtlanTagImporter(
         const val TAG_ICON = "Icon"
         const val TAG_CONNECTION = "Synced connection name"
         const val TAG_CONNECTOR = "Synced connector type"
+        const val TAG_SRC_ID = "Tag ID in source"
         const val ALLOWED_VALUES = "Allowed values for tag"
-        val HEADER =
-            listOf(
-                TAG_NAME,
-                TAG_COLOR,
-                TAG_ICON,
-                TAG_CONNECTION,
-                TAG_CONNECTOR,
-                ALLOWED_VALUES,
-            )
-        const val NO_CONNECTION_QN = "NO_CONNECTION_FOUND"
 
         fun getTagName(
             row: List<String>,
@@ -251,6 +267,7 @@ class AtlanTagImporter(
         val icon: String,
         val connectionName: String,
         val connectorType: String,
+        val tagIdInSource: String,
         val allowedValues: List<String>,
     ) {
         val connectionQualifiedName: String

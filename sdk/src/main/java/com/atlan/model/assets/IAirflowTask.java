@@ -565,7 +565,7 @@ public interface IAirflowTask {
     /** Process in which this task exists. */
     ILineageProcess getProcess();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

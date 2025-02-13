@@ -44,6 +44,9 @@ public interface IModeReport {
     /** TBC */
     RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
 
+    /** Whether the report is archived (true) or unarchived (false) */
+    BooleanField MODE_IS_ARCHIVED = new BooleanField("modeIsArchived", "modeIsArchived");
+
     /** TBC */
     BooleanField MODE_IS_PUBLIC = new BooleanField("modeIsPublic", "modeIsPublic");
 
@@ -446,6 +449,9 @@ public interface IModeReport {
     /** TBC */
     String getModeId();
 
+    /** Whether the report is archived (true) or unarchived (false) */
+    Boolean getModeIsArchived();
+
     /** TBC */
     Boolean getModeIsPublic();
 
@@ -521,7 +527,7 @@ public interface IModeReport {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
