@@ -354,7 +354,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * @param connectionQualifiedName unique name of the connection in which to create the SourceTag
      * @param mappedAtlanTagName the human-readable name of the Atlan tag to which this SourceTag should map
      * @param sourceTagId unique identifier for the tag in the source
-     * @param allowedValues the values allowed to be set for this tag in Snowflake
+     * @param allowedValues the values allowed to be set for this tag in the source
      * @return the minimal request necessary to create the SourceTag, as a builder
      */
     public static SourceTagBuilder<?, ?> creator(
