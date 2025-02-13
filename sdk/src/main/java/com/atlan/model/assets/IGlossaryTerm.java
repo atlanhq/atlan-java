@@ -360,6 +360,9 @@ public interface IGlossaryTerm {
     SortedSet<String> getAssetPolicyGUIDs();
 
     /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
+
+    /** TBC */
     Long getAssetSodaCheckCount();
 
     /** TBC */

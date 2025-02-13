@@ -327,6 +327,9 @@ public interface IAsset {
     /** Array of policy ids governing this asset */
     KeywordField ASSET_POLICY_GUIDS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
 
+    /** Array of asset ids that equivalent to this asset. */
+    KeywordField ASSET_REDIRECT_GUIDS = new KeywordField("assetRedirectGUIDs", "assetRedirectGUIDs");
+
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
 
@@ -829,6 +832,9 @@ public interface IAsset {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -964,7 +970,7 @@ public interface IAsset {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -74,6 +74,12 @@ public interface ICatalog {
             case ADLSObject.TYPE_NAME:
                 ref = ADLSObject.refByQualifiedName(qualifiedName);
                 break;
+            case AIApplication.TYPE_NAME:
+                ref = AIApplication.refByQualifiedName(qualifiedName);
+                break;
+            case AIModel.TYPE_NAME:
+                ref = AIModel.refByQualifiedName(qualifiedName);
+                break;
             case APIField.TYPE_NAME:
                 ref = APIField.refByQualifiedName(qualifiedName);
                 break;
@@ -644,6 +650,9 @@ public interface ICatalog {
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);
                 break;
+            case SourceTag.TYPE_NAME:
+                ref = SourceTag.refByQualifiedName(qualifiedName);
+                break;
             case SparkJob.TYPE_NAME:
                 ref = SparkJob.refByQualifiedName(qualifiedName);
                 break;
@@ -966,6 +975,9 @@ public interface ICatalog {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -1125,7 +1137,7 @@ public interface ICatalog {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

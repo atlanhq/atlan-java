@@ -49,6 +49,9 @@ public interface IPowerBIColumn {
     KeywordField POWER_BI_COLUMN_SUMMARIZE_BY =
             new KeywordField("powerBIColumnSummarizeBy", "powerBIColumnSummarizeBy");
 
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    RelationField POWER_BI_MEASURES = new RelationField("powerBIMeasures");
+
     /** Name of a column in the same table to use to order this column. */
     KeywordField POWER_BI_SORT_BY_COLUMN = new KeywordField("powerBISortByColumn", "powerBISortByColumn");
 
@@ -302,6 +305,9 @@ public interface IPowerBIColumn {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -482,13 +488,16 @@ public interface IPowerBIColumn {
     /** Whether this asset is hidden in Power BI (true) or not (false). */
     Boolean getPowerBIIsHidden();
 
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    SortedSet<IPowerBIMeasure> getPowerBIMeasures();
+
     /** Name of a column in the same table to use to order this column. */
     String getPowerBISortByColumn();
 
     /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

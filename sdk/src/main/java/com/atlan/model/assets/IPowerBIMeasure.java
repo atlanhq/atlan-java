@@ -38,6 +38,9 @@ public interface IPowerBIMeasure {
     /** Unique name of the dataset in which this measure exists. */
     TextField DATASET_QUALIFIED_NAME = new TextField("datasetQualifiedName", "datasetQualifiedName");
 
+    /** PowerBI Columns that are associated with this PowerBI Measure. */
+    RelationField POWER_BI_COLUMNS = new RelationField("powerBIColumns");
+
     /** Whether this measure is external (true) or internal (false). */
     BooleanField POWER_BI_IS_EXTERNAL_MEASURE =
             new BooleanField("powerBIIsExternalMeasure", "powerBIIsExternalMeasure");
@@ -295,6 +298,9 @@ public interface IPowerBIMeasure {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -457,6 +463,9 @@ public interface IPowerBIMeasure {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** PowerBI Columns that are associated with this PowerBI Measure. */
+    SortedSet<IPowerBIColumn> getPowerBIColumns();
+
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
 
@@ -475,7 +484,7 @@ public interface IPowerBIMeasure {
     /** Unique name of the Power BI table in which this asset exists. */
     String getPowerBITableQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

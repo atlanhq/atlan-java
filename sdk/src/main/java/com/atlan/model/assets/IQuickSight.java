@@ -285,6 +285,9 @@ public interface IQuickSight {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -444,7 +447,7 @@ public interface IQuickSight {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** TBC */
