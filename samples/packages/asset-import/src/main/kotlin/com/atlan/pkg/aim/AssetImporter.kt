@@ -20,6 +20,7 @@ import com.atlan.model.assets.AzureEventHubConsumerGroup
 import com.atlan.model.assets.AzureServiceBusNamespace
 import com.atlan.model.assets.AzureServiceBusTopic
 import com.atlan.model.assets.BIProcess
+import com.atlan.model.assets.BigqueryTag
 import com.atlan.model.assets.CalculationView
 import com.atlan.model.assets.Cognite3DModel
 import com.atlan.model.assets.CogniteAsset
@@ -56,6 +57,7 @@ import com.atlan.model.assets.DbtModel
 import com.atlan.model.assets.DbtModelColumn
 import com.atlan.model.assets.DbtProcess
 import com.atlan.model.assets.DbtSource
+import com.atlan.model.assets.DbtTag
 import com.atlan.model.assets.DbtTest
 import com.atlan.model.assets.DomoCard
 import com.atlan.model.assets.DomoDashboard
@@ -460,13 +462,14 @@ class AssetImporter(
                 TypeGrouping(
                     "SQL",
                     listOf(
+                        BigqueryTag.TYPE_NAME,
+                        DatabricksUnityCatalogTag.TYPE_NAME,
                         Database.TYPE_NAME,
                         Schema.TYPE_NAME,
+                        SnowflakeTag.TYPE_NAME,
                         Procedure.TYPE_NAME,
                         SnowflakePipe.TYPE_NAME,
                         SnowflakeStream.TYPE_NAME,
-                        SnowflakeTag.TYPE_NAME,
-                        DatabricksUnityCatalogTag.TYPE_NAME,
                         Table.TYPE_NAME,
                         View.TYPE_NAME,
                         MaterializedView.TYPE_NAME,
@@ -814,6 +817,7 @@ class AssetImporter(
                 TypeGrouping(
                     "Dbt",
                     listOf(
+                        DbtTag.TYPE_NAME,
                         DbtModel.TYPE_NAME,
                         DbtSource.TYPE_NAME,
                         DbtMetric.TYPE_NAME,

@@ -3,6 +3,8 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -31,10 +33,12 @@ public class Histogram extends AtlanStruct {
 
     /** Boundaries of the histogram. */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Double> boundaries;
 
     /** Frequencies of the histogram. */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Double> frequencies;
 
     /**
