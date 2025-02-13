@@ -190,6 +190,8 @@ public class S3BucketTest {
             .assetPoliciesCount(123456789L)
             .assetPolicyGUID("String0")
             .assetPolicyGUID("String1")
+            .assetRedirectGUID("String0")
+            .assetRedirectGUID("String1")
             .assetSodaCheckCount(123456789L)
             .assetSodaCheckStatuses("String0")
             .assetSodaDQStatus("String0")

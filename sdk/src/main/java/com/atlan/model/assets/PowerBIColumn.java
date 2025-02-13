@@ -116,6 +116,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     Boolean powerBIIsHidden;
 
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIMeasure> powerBIMeasures;
+
     /** Name of a column in the same table to use to order this column. */
     @Attribute
     String powerBISortByColumn;

@@ -192,6 +192,8 @@ public class ModelEntityTest {
             .assetPoliciesCount(123456789L)
             .assetPolicyGUID("String0")
             .assetPolicyGUID("String1")
+            .assetRedirectGUID("String0")
+            .assetRedirectGUID("String1")
             .assetSodaCheckCount(123456789L)
             .assetSodaCheckStatuses("String0")
             .assetSodaDQStatus("String0")
@@ -449,9 +451,9 @@ public class ModelEntityTest {
             .modelEntityGeneralizationEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityGeneralizationName("String0")
             .modelEntityGeneralizationQualifiedName("String0")
-            .modelEntityImplementedByAsset(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelEntityImplementedByAsset(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityImplementedByAsset(
-                    AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+                    ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .modelEntityMappedFromEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelEntityMappedFromEntity(
                     ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

@@ -309,6 +309,9 @@ public interface IGlossaryCategory {
     SortedSet<String> getAssetPolicyGUIDs();
 
     /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
+
+    /** TBC */
     Long getAssetSodaCheckCount();
 
     /** TBC */

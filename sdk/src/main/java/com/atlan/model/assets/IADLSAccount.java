@@ -83,6 +83,9 @@ public interface IADLSAccount {
     /** Kind of this account. */
     ADLSStorageKind getAdlsAccountKind();
 
+    /** Name of the account for this ADLS asset. */
+    String getAdlsAccountName();
+
     /** Performance of this account. */
     ADLSPerformance getAdlsAccountPerformance();
 
@@ -358,6 +361,9 @@ public interface IADLSAccount {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

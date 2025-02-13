@@ -327,6 +327,9 @@ public interface IAsset {
     /** Array of policy ids governing this asset */
     KeywordField ASSET_POLICY_GUIDS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
 
+    /** Array of asset ids that equivalent to this asset. */
+    KeywordField ASSET_REDIRECT_GUIDS = new KeywordField("assetRedirectGUIDs", "assetRedirectGUIDs");
+
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
 
@@ -828,6 +831,9 @@ public interface IAsset {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

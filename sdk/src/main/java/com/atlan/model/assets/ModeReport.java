@@ -79,6 +79,10 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Attribute
     String modeId;
 
+    /** Whether the report is archived (true) or unarchived (false) */
+    @Attribute
+    Boolean modeIsArchived;
+
     /** TBC */
     @Attribute
     Boolean modeIsPublic;

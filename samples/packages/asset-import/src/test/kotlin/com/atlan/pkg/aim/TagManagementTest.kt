@@ -24,7 +24,7 @@ class TagManagementTest : PackageTest("tm") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
-    private val c1Type = AtlanConnectorType.SNOWFLAKE // TODO: swap to BigID once generic SourceTag is in place
+    private val c1Type = AtlanConnectorType.BIGID
     private val t1 = makeUnique("t1")
     private val t2 = makeUnique("t2")
 

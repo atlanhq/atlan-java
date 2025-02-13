@@ -92,6 +92,11 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** PowerBI Columns that are associated with this PowerBI Measure. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIColumn> powerBIColumns;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;

@@ -44,6 +44,9 @@ public interface IModeReport {
     /** TBC */
     RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
 
+    /** Whether the report is archived (true) or unarchived (false) */
+    BooleanField MODE_IS_ARCHIVED = new BooleanField("modeIsArchived", "modeIsArchived");
+
     /** TBC */
     BooleanField MODE_IS_PUBLIC = new BooleanField("modeIsPublic", "modeIsPublic");
 
@@ -305,6 +308,9 @@ public interface IModeReport {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -442,6 +448,9 @@ public interface IModeReport {
 
     /** TBC */
     String getModeId();
+
+    /** Whether the report is archived (true) or unarchived (false) */
+    Boolean getModeIsArchived();
 
     /** TBC */
     Boolean getModeIsPublic();

@@ -283,6 +283,9 @@ public interface IAtlanCollection {
     SortedSet<String> getAssetPolicyGUIDs();
 
     /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
+
+    /** TBC */
     Long getAssetSodaCheckCount();
 
     /** TBC */

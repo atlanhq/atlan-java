@@ -56,6 +56,10 @@ public class ADLSContainer extends Asset
     @Attribute
     IADLSAccount adlsAccount;
 
+    /** Name of the account for this ADLS asset. */
+    @Attribute
+    String adlsAccountName;
+
     /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;

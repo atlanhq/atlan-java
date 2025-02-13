@@ -56,6 +56,10 @@ public class ADLSObject extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Name of the account for this ADLS asset. */
+    @Attribute
+    String adlsAccountName;
+
     /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;
@@ -67,6 +71,10 @@ public class ADLSObject extends Asset
     /** Container this object exists within. */
     @Attribute
     IADLSContainer adlsContainer;
+
+    /** Name of the container this object exists within. */
+    @Attribute
+    String adlsContainerName;
 
     /** Unique name of the container this object exists within. */
     @Attribute

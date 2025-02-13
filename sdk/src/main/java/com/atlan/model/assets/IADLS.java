@@ -32,9 +32,16 @@ public interface IADLS {
 
     public static final String TYPE_NAME = "ADLS";
 
+    /** Name of the account for this ADLS asset. */
+    KeywordTextField ADLS_ACCOUNT_NAME =
+            new KeywordTextField("adlsAccountName", "adlsAccountName.keyword", "adlsAccountName");
+
     /** Unique name of the account for this ADLS asset. */
     KeywordTextField ADLS_ACCOUNT_QUALIFIED_NAME = new KeywordTextField(
             "adlsAccountQualifiedName", "adlsAccountQualifiedName", "adlsAccountQualifiedName.text");
+
+    /** Name of the account for this ADLS asset. */
+    String getAdlsAccountName();
 
     /** Unique name of the account for this ADLS asset. */
     String getAdlsAccountQualifiedName();
@@ -284,6 +291,9 @@ public interface IADLS {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

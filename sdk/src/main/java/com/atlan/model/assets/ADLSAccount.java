@@ -65,6 +65,10 @@ public class ADLSAccount extends Asset
     @Attribute
     ADLSStorageKind adlsAccountKind;
 
+    /** Name of the account for this ADLS asset. */
+    @Attribute
+    String adlsAccountName;
+
     /** Performance of this account. */
     @Attribute
     ADLSPerformance adlsAccountPerformance;

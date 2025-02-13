@@ -421,6 +421,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetPolicyGUIDs;
 
+    /** Array of asset ids that equivalent to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetRedirectGUIDs;
+
     /** Number of checks done via Soda. */
     @Attribute
     Long assetSodaCheckCount;

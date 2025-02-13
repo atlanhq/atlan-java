@@ -325,6 +325,9 @@ public interface ILineageProcess {
     SortedSet<String> getAssetPolicyGUIDs();
 
     /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
+
+    /** TBC */
     Long getAssetSodaCheckCount();
 
     /** TBC */
