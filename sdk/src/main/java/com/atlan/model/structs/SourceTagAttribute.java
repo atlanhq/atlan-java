@@ -3,6 +3,8 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.Map;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -38,6 +40,7 @@ public class SourceTagAttribute extends AtlanStruct {
 
     /** Properties of the attribute. */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     Map<String, String> tagAttributeProperties;
 
     /**

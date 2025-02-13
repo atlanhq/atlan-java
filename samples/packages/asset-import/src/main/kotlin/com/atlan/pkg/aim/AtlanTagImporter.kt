@@ -5,6 +5,8 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.DatabricksUnityCatalogTag
+import com.atlan.model.assets.DbtTag
 import com.atlan.model.assets.SnowflakeTag
 import com.atlan.model.assets.SourceTag
 import com.atlan.model.enums.AtlanEnum
@@ -105,6 +107,9 @@ class AtlanTagImporter(
                                 row.getOrElse(TAG_CONNECTOR) { "" }.lowercase(),
                                 row.getOrElse(TAG_SRC_ID) { "" },
                                 CellXformer.parseDelimitedList(row.getOrElse(ALLOWED_VALUES) { "" }),
+                                row.getOrElse(DBT_ACCOUNT_ID) { "" },
+                                row.getOrElse(DBT_PROJECT_ID) { "" },
+                                row.getOrElse(SNOWFLAKE_PATH) { "" },
                             )
 
                         // Manage the TypeDefinition for the tag
@@ -180,19 +185,41 @@ class AtlanTagImporter(
         }
     }
 
-    private fun idempotentTagAsset(tag: TagDetails): Asset? {
-        return if (tag.sourceSynced) {
+    private fun idempotentTagAsset(tag: TagDetails): Asset? =
+        if (tag.sourceSynced) {
             val assetBuilder =
                 when (tag.connectorType) {
                     "snowflake" -> {
-                        // TODO: actually use a schema for Snowflake, not just a connection
                         SnowflakeTag.creator(
+                            tag.name,
+                            "${tag.connectionQualifiedName}/${tag.snowflakeSchemaPath}",
+                            tag.name,
+                            tag.tagIdInSource,
+                            tag.allowedValues,
+                        )
+                    }
+                    "databricks" -> {
+                        DatabricksUnityCatalogTag.creator(
                             tag.name,
                             tag.connectionQualifiedName,
                             tag.name,
                             tag.tagIdInSource,
                             tag.allowedValues,
                         )
+                    }
+                    "dbt" -> {
+                        DbtTag.creator(
+                            tag.name,
+                            tag.connectionQualifiedName,
+                            tag.name,
+                            tag.dbtAccountId,
+                            tag.dbtProjectId,
+                            tag.tagIdInSource,
+                            tag.allowedValues,
+                        )
+                    }
+                    "bigquery" -> {
+                        throw IllegalArgumentException("Creation and management of tags for BigQuery is not currently supported.")
                     }
                     else -> {
                         SourceTag.creator(
@@ -208,26 +235,6 @@ class AtlanTagImporter(
         } else {
             null
         }
-        /*return if (tag.sourceSynced) {
-            // Source tag asset
-            val assetBuilder =
-                SnowflakeTag
-                    ._internal()
-                    .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                    .name(tag.name)
-                    .qualifiedName("${tag.connectionQualifiedName}/${tag.name}")
-                    .connectorType(AtlanConnectorType.fromValue(tag.connectorType))
-                    .connectionQualifiedName(tag.connectionQualifiedName)
-                    .connectionName(tag.connectionName)
-                    .mappedAtlanTagName(tag.name)
-            if (tag.allowedValues.isNotEmpty()) {
-                assetBuilder.tagAllowedValues(tag.allowedValues)
-            }
-            assetBuilder.build()
-        } else {
-            null
-        }*/
-    }
 
     companion object {
         const val TAG_NAME = "Atlan tag name"
@@ -237,6 +244,9 @@ class AtlanTagImporter(
         const val TAG_CONNECTOR = "Synced connector type"
         const val TAG_SRC_ID = "Tag ID in source"
         const val ALLOWED_VALUES = "Allowed values for tag"
+        const val DBT_ACCOUNT_ID = "Account ID (dbt)"
+        const val DBT_PROJECT_ID = "Project ID (dbt)"
+        const val SNOWFLAKE_PATH = "Schema path (Snowflake)"
 
         fun getTagName(
             row: List<String>,
@@ -270,6 +280,9 @@ class AtlanTagImporter(
         val connectorType: String,
         val tagIdInSource: String,
         val allowedValues: List<String>,
+        val dbtAccountId: String,
+        val dbtProjectId: String,
+        val snowflakeSchemaPath: String,
     ) {
         val connectionQualifiedName: String
         val sourceSynced: Boolean

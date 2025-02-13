@@ -4,6 +4,8 @@ package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -47,6 +49,7 @@ public class BusinessPolicyRule extends AtlanStruct {
 
     /** value to validate for the operand against the operator for business policy rule. */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     @JsonProperty("bprValue")
     List<String> bprValues;
 
