@@ -69,7 +69,7 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
 
     /** AI applications that are created using this AI model */
     @Attribute
-    @Singular
+    @Singular("aiApplication")
     SortedSet<IAIApplication> applications;
 
     /** Accountability configuration for ensuring the ethical use of an AI asset */

@@ -441,8 +441,8 @@ public class AIModelTest {
             .aiModelDatasetsDSL("String0")
             .aiModelStatus(AIModelStatus.ACTIVE)
             .aiModelVersion("String0")
-            .application(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .application(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .aiApplication(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiApplication(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
