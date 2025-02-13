@@ -3,6 +3,8 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -34,6 +36,7 @@ public class AuthPolicyCondition extends AtlanStruct {
 
     /** TBC */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<String> policyConditionValues;
 
     /**
