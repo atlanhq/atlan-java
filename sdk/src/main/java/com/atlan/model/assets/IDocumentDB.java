@@ -8,12 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.enums.TableType;
-import com.atlan.model.fields.BooleanField;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -23,110 +17,18 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a database table in Atlan.
+ * Base class for DocumentDB assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ITable {
+public interface IDocumentDB {
 
-    public static final String TYPE_NAME = "Table";
-
-    /** Alias for this table. */
-    TextField ALIAS = new TextField("alias", "alias");
-
-    /** Number of columns in this table. */
-    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
-
-    /** Columns that exist within this table. */
-    RelationField COLUMNS = new RelationField("columns");
-
-    /** TBC */
-    RelationField DIMENSIONS = new RelationField("dimensions");
-
-    /** External location of this table, for example: an S3 object location. */
-    TextField EXTERNAL_LOCATION = new TextField("externalLocation", "externalLocation");
-
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
-
-    /** Region of the external location of this table, for example: S3 region. */
-    TextField EXTERNAL_LOCATION_REGION = new TextField("externalLocationRegion", "externalLocationRegion");
-
-    /** TBC */
-    RelationField FACTS = new RelationField("facts");
-
-    /** iceberg table catalog name (can be any user defined name) */
-    KeywordField ICEBERG_CATALOG_NAME = new KeywordField("icebergCatalogName", "icebergCatalogName");
-
-    /** iceberg table catalog type (glue, polaris, snowflake) */
-    KeywordField ICEBERG_CATALOG_SOURCE = new KeywordField("icebergCatalogSource", "icebergCatalogSource");
-
-    /** catalog table name (actual table name on the catalog side). */
-    KeywordField ICEBERG_CATALOG_TABLE_NAME = new KeywordField("icebergCatalogTableName", "icebergCatalogTableName");
-
-    /** catalog table namespace (actual database name on the catalog side). */
-    KeywordField ICEBERG_CATALOG_TABLE_NAMESPACE =
-            new KeywordField("icebergCatalogTableNamespace", "icebergCatalogTableNamespace");
-
-    /** iceberg table base location inside the external volume. */
-    KeywordField ICEBERG_TABLE_BASE_LOCATION = new KeywordField("icebergTableBaseLocation", "icebergTableBaseLocation");
-
-    /** iceberg table type (managed vs unmanaged) */
-    KeywordField ICEBERG_TABLE_TYPE = new KeywordField("icebergTableType", "icebergTableType");
-
-    /** Whether this table is partitioned (true) or not (false). */
-    BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
-
-    /** Whether this table is a sharded table (true) or not (false). */
-    BooleanField IS_SHARDED = new BooleanField("isSharded", "isSharded");
-
-    /** Whether this table is temporary (true) or not (false). */
-    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
-
-    /** Number of partitions in this table. */
-    NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
-
-    /** List of partitions in this table. */
-    TextField PARTITION_LIST = new TextField("partitionList", "partitionList");
-
-    /** Partition strategy for this table. */
-    KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
-
-    /** Partitions that exist within this table. */
-    RelationField PARTITIONS = new RelationField("partitions");
-
-    /** Queries that access this table. */
-    RelationField QUERIES = new RelationField("queries");
-
-    /** Configuration for preview queries. */
-    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
-
-    /** Number of rows in this table. */
-    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
-
-    /** Schema in which this table exists. */
-    RelationField SCHEMA = new RelationField("atlanSchema");
-
-    /** Size of this table, in bytes. */
-    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
-
-    /** external volume name for the table. */
-    KeywordField TABLE_EXTERNAL_VOLUME_NAME = new KeywordField("tableExternalVolumeName", "tableExternalVolumeName");
-
-    /** Data retention time in days. */
-    NumericField TABLE_RETENTION_TIME = new NumericField("tableRetentionTime", "tableRetentionTime");
-
-    /** Type of the table. */
-    KeywordField TABLE_TYPE = new KeywordField("tableType", "tableType");
+    public static final String TYPE_NAME = "DocumentDB";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -136,9 +38,6 @@ public interface ITable {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Alias for this table. */
-    String getAlias();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -404,12 +303,6 @@ public interface ITable {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
-    String getCalculationViewName();
-
-    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
-    String getCalculationViewQualifiedName();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -421,12 +314,6 @@ public interface ITable {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Number of columns in this table. */
-    Long getColumnCount();
-
-    /** Columns that exist within this table. */
-    SortedSet<IColumn> getColumns();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -443,47 +330,17 @@ public interface ITable {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseName();
-
-    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    String getDatabaseQualifiedName();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IDbtTest> getDbtTests();
-
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
-
-    /** TBC */
-    SortedSet<ITable> getDimensions();
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
-
-    /** External location of this table, for example: an S3 object location. */
-    String getExternalLocation();
-
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    String getExternalLocationFormat();
-
-    /** Region of the external location of this table, for example: S3 region. */
-    String getExternalLocationRegion();
-
-    /** TBC */
-    SortedSet<ITable> getFacts();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -493,24 +350,6 @@ public interface ITable {
 
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
-
-    /** iceberg table catalog name (can be any user defined name) */
-    String getIcebergCatalogName();
-
-    /** iceberg table catalog type (glue, polaris, snowflake) */
-    String getIcebergCatalogSource();
-
-    /** catalog table name (actual table name on the catalog side). */
-    String getIcebergCatalogTableName();
-
-    /** catalog table namespace (actual database name on the catalog side). */
-    String getIcebergCatalogTableNamespace();
-
-    /** iceberg table base location inside the external volume. */
-    String getIcebergTableBaseLocation();
-
-    /** iceberg table type (managed vs unmanaged) */
-    String getIcebergTableType();
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
@@ -535,24 +374,6 @@ public interface ITable {
 
     /** TBC */
     Boolean getIsPartial();
-
-    /** Whether this table is partitioned (true) or not (false). */
-    Boolean getIsPartitioned();
-
-    /** Whether this asset has been profiled (true) or not (false). */
-    Boolean getIsProfiled();
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    Boolean getIsQueryPreview();
-
-    /** Whether this table is a sharded table (true) or not (false). */
-    Boolean getIsSharded();
-
-    /** Whether this table is temporary (true) or not (false). */
-    Boolean getIsTemporary();
-
-    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
-    Long getLastProfiledAt();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -590,6 +411,9 @@ public interface ITable {
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    String getNoSQLSchemaDefinition();
+
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
@@ -611,65 +435,20 @@ public interface ITable {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Number of partitions in this table. */
-    Long getPartitionCount();
-
-    /** List of partitions in this table. */
-    String getPartitionList();
-
-    /** Partition strategy for this table. */
-    String getPartitionStrategy();
-
-    /** Partitions that exist within this table. */
-    SortedSet<ITablePartition> getPartitions();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
-    /** Queries that access this table. */
-    SortedSet<IAtlanQuery> getQueries();
-
-    /** Number of times this asset has been queried. */
-    Long getQueryCount();
-
-    /** Time (epoch) at which the query count was last updated, in milliseconds. */
-    Long getQueryCountUpdatedAt();
-
-    /** Configuration for preview queries. */
-    Map<String, String> getQueryPreviewConfig();
-
-    /** Number of unique users who have queried this asset. */
-    Long getQueryUserCount();
-
-    /** Map of unique users who have queried this asset to the number of times they have queried it. */
-    Map<String, Long> getQueryUserMap();
-
     /** README that is linked to this asset. */
     IReadme getReadme();
-
-    /** Number of rows in this table. */
-    Long getRowCount();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
-    /** Schema in which this table exists. */
-    ISchema getSchema();
-
-    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaName();
-
-    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
-    String getSchemaQualifiedName();
-
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
-
-    /** Size of this table, in bytes. */
-    Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
@@ -740,12 +519,6 @@ public interface ITable {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -758,21 +531,6 @@ public interface ITable {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** external volume name for the table. */
-    String getTableExternalVolumeName();
-
-    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableName();
-
-    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
-    String getTableQualifiedName();
-
-    /** Data retention time in days. */
-    Long getTableRetentionTime();
-
-    /** Type of the table. */
-    TableType getTableType();
-
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
@@ -784,12 +542,6 @@ public interface ITable {
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
-
-    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewName();
-
-    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
-    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();

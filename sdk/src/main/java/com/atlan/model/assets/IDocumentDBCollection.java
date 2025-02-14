@@ -11,6 +11,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
@@ -28,105 +29,65 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a database table in Atlan.
+ * Instance of a DocumentDB collection in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ITable {
+public interface IDocumentDBCollection {
 
-    public static final String TYPE_NAME = "Table";
+    public static final String TYPE_NAME = "DocumentDBCollection";
 
-    /** Alias for this table. */
-    TextField ALIAS = new TextField("alias", "alias");
+    /** Average size of an object in the collection. */
+    NumericField DOCUMENT_DB_COLLECTION_AVERAGE_OBJECT_SIZE =
+            new NumericField("documentDBCollectionAverageObjectSize", "documentDBCollectionAverageObjectSize");
 
-    /** Number of columns in this table. */
-    NumericField COLUMN_COUNT = new NumericField("columnCount", "columnCount");
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
+    NumericField DOCUMENT_DB_COLLECTION_EXPIRE_AFTER_SECONDS =
+            new NumericField("documentDBCollectionExpireAfterSeconds", "documentDBCollectionExpireAfterSeconds");
 
-    /** Columns that exist within this table. */
-    RelationField COLUMNS = new RelationField("columns");
+    /** Whether the collection is capped (true) or not (false). */
+    BooleanField DOCUMENT_DB_COLLECTION_IS_CAPPED =
+            new BooleanField("documentDBCollectionIsCapped", "documentDBCollectionIsCapped");
 
-    /** TBC */
-    RelationField DIMENSIONS = new RelationField("dimensions");
+    /** Maximum size allowed in a capped collection. */
+    NumericField DOCUMENT_DB_COLLECTION_MAX_SIZE =
+            new NumericField("documentDBCollectionMaxSize", "documentDBCollectionMaxSize");
 
-    /** External location of this table, for example: an S3 object location. */
-    TextField EXTERNAL_LOCATION = new TextField("externalLocation", "externalLocation");
+    /** Maximum number of documents allowed in a capped collection. */
+    NumericField DOCUMENT_DB_COLLECTION_MAXIMUM_DOCUMENT_COUNT =
+            new NumericField("documentDBCollectionMaximumDocumentCount", "documentDBCollectionMaximumDocumentCount");
 
-    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
-    KeywordField EXTERNAL_LOCATION_FORMAT = new KeywordField("externalLocationFormat", "externalLocationFormat");
+    /** Number of indexes in the collection. */
+    NumericField DOCUMENT_DB_COLLECTION_NUM_INDEXES =
+            new NumericField("documentDBCollectionNumIndexes", "documentDBCollectionNumIndexes");
 
-    /** Region of the external location of this table, for example: S3 region. */
-    TextField EXTERNAL_LOCATION_REGION = new TextField("externalLocationRegion", "externalLocationRegion");
+    /** Number of orphaned documents in the collection. */
+    NumericField DOCUMENT_DB_COLLECTION_NUM_ORPHAN_DOCS =
+            new NumericField("documentDBCollectionNumOrphanDocs", "documentDBCollectionNumOrphanDocs");
 
-    /** TBC */
-    RelationField FACTS = new RelationField("facts");
+    /** Definition of the schema applicable for the collection. */
+    TextField DOCUMENT_DB_COLLECTION_SCHEMA_DEFINITION =
+            new TextField("documentDBCollectionSchemaDefinition", "documentDBCollectionSchemaDefinition");
 
-    /** iceberg table catalog name (can be any user defined name) */
-    KeywordField ICEBERG_CATALOG_NAME = new KeywordField("icebergCatalogName", "icebergCatalogName");
+    /** Subtype of a DocumentDB collection, for example: Capped, Time Series, etc. */
+    KeywordTextField DOCUMENT_DB_COLLECTION_SUBTYPE = new KeywordTextField(
+            "documentDBCollectionSubtype", "documentDBCollectionSubtype.keyword", "documentDBCollectionSubtype");
 
-    /** iceberg table catalog type (glue, polaris, snowflake) */
-    KeywordField ICEBERG_CATALOG_SOURCE = new KeywordField("icebergCatalogSource", "icebergCatalogSource");
+    /** Name of the field containing the date in each time series document. */
+    KeywordField DOCUMENT_DB_COLLECTION_TIME_FIELD =
+            new KeywordField("documentDBCollectionTimeField", "documentDBCollectionTimeField");
 
-    /** catalog table name (actual table name on the catalog side). */
-    KeywordField ICEBERG_CATALOG_TABLE_NAME = new KeywordField("icebergCatalogTableName", "icebergCatalogTableName");
+    /** Closest match to the time span between consecutive incoming measurements. */
+    KeywordField DOCUMENT_DB_COLLECTION_TIME_GRANULARITY =
+            new KeywordField("documentDBCollectionTimeGranularity", "documentDBCollectionTimeGranularity");
 
-    /** catalog table namespace (actual database name on the catalog side). */
-    KeywordField ICEBERG_CATALOG_TABLE_NAMESPACE =
-            new KeywordField("icebergCatalogTableNamespace", "icebergCatalogTableNamespace");
+    /** Total size of all indexes. */
+    NumericField DOCUMENT_DB_COLLECTION_TOTAL_INDEX_SIZE =
+            new NumericField("documentDBCollectionTotalIndexSize", "documentDBCollectionTotalIndexSize");
 
-    /** iceberg table base location inside the external volume. */
-    KeywordField ICEBERG_TABLE_BASE_LOCATION = new KeywordField("icebergTableBaseLocation", "icebergTableBaseLocation");
-
-    /** iceberg table type (managed vs unmanaged) */
-    KeywordField ICEBERG_TABLE_TYPE = new KeywordField("icebergTableType", "icebergTableType");
-
-    /** Whether this table is partitioned (true) or not (false). */
-    BooleanField IS_PARTITIONED = new BooleanField("isPartitioned", "isPartitioned");
-
-    /** Whether preview queries are allowed for this table (true) or not (false). */
-    BooleanField IS_QUERY_PREVIEW = new BooleanField("isQueryPreview", "isQueryPreview");
-
-    /** Whether this table is a sharded table (true) or not (false). */
-    BooleanField IS_SHARDED = new BooleanField("isSharded", "isSharded");
-
-    /** Whether this table is temporary (true) or not (false). */
-    BooleanField IS_TEMPORARY = new BooleanField("isTemporary", "isTemporary");
-
-    /** Number of partitions in this table. */
-    NumericField PARTITION_COUNT = new NumericField("partitionCount", "partitionCount");
-
-    /** List of partitions in this table. */
-    TextField PARTITION_LIST = new TextField("partitionList", "partitionList");
-
-    /** Partition strategy for this table. */
-    KeywordField PARTITION_STRATEGY = new KeywordField("partitionStrategy", "partitionStrategy");
-
-    /** Partitions that exist within this table. */
-    RelationField PARTITIONS = new RelationField("partitions");
-
-    /** Queries that access this table. */
-    RelationField QUERIES = new RelationField("queries");
-
-    /** Configuration for preview queries. */
-    KeywordField QUERY_PREVIEW_CONFIG = new KeywordField("queryPreviewConfig", "queryPreviewConfig");
-
-    /** Number of rows in this table. */
-    NumericField ROW_COUNT = new NumericField("rowCount", "rowCount");
-
-    /** Schema in which this table exists. */
-    RelationField SCHEMA = new RelationField("atlanSchema");
-
-    /** Size of this table, in bytes. */
-    NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
-
-    /** external volume name for the table. */
-    KeywordField TABLE_EXTERNAL_VOLUME_NAME = new KeywordField("tableExternalVolumeName", "tableExternalVolumeName");
-
-    /** Data retention time in days. */
-    NumericField TABLE_RETENTION_TIME = new NumericField("tableRetentionTime", "tableRetentionTime");
-
-    /** Type of the table. */
-    KeywordField TABLE_TYPE = new KeywordField("tableType", "tableType");
+    /** Database in which the collection exists. */
+    RelationField DOCUMENT_DB_DATABASE = new RelationField("documentDBDatabase");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -470,6 +431,45 @@ public interface ITable {
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
+    /** Average size of an object in the collection. */
+    Long getDocumentDBCollectionAverageObjectSize();
+
+    /** Seconds after which documents in a time series collection or clustered collection expire. */
+    Long getDocumentDBCollectionExpireAfterSeconds();
+
+    /** Whether the collection is capped (true) or not (false). */
+    Boolean getDocumentDBCollectionIsCapped();
+
+    /** Maximum size allowed in a capped collection. */
+    Long getDocumentDBCollectionMaxSize();
+
+    /** Maximum number of documents allowed in a capped collection. */
+    Long getDocumentDBCollectionMaximumDocumentCount();
+
+    /** Number of indexes in the collection. */
+    Long getDocumentDBCollectionNumIndexes();
+
+    /** Number of orphaned documents in the collection. */
+    Long getDocumentDBCollectionNumOrphanDocs();
+
+    /** Definition of the schema applicable for the collection. */
+    String getDocumentDBCollectionSchemaDefinition();
+
+    /** Subtype of a DocumentDB collection, for example: Capped, Time Series, etc. */
+    String getDocumentDBCollectionSubtype();
+
+    /** Name of the field containing the date in each time series document. */
+    String getDocumentDBCollectionTimeField();
+
+    /** Closest match to the time span between consecutive incoming measurements. */
+    String getDocumentDBCollectionTimeGranularity();
+
+    /** Total size of all indexes. */
+    Long getDocumentDBCollectionTotalIndexSize();
+
+    /** Database in which the collection exists. */
+    IDocumentDBDatabase getDocumentDBDatabase();
+
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
@@ -589,6 +589,9 @@ public interface ITable {
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
+
+    /** Represents attributes for describing the key schema for the table and indexes. */
+    String getNoSQLSchemaDefinition();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();

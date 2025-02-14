@@ -37,7 +37,7 @@ public interface ITablePartition {
     public static final String TYPE_NAME = "TablePartition";
 
     /** Alias for this partition. */
-    KeywordField ALIAS = new KeywordField("alias", "alias");
+    TextField ALIAS = new TextField("alias", "alias");
 
     /** Partitions that exist within this partition. */
     RelationField CHILD_TABLE_PARTITIONS = new RelationField("childTablePartitions");
