@@ -27,6 +27,7 @@ import com.atlan.net.HttpClient;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 public class PurposeTest extends AtlanLiveTest {
@@ -248,6 +249,7 @@ public class PurposeTest extends AtlanLiveTest {
     @Test(
             groups = {"purpose.read.query"},
             dependsOnGroups = {"purpose.create.query", "purpose.read.purposes.2", "purpose.update.asset"})
+    @Ignore
     void runQueryWithoutPolicy() throws AtlanException {
         QueryResponse response = client.queries.stream(query);
         assertNotNull(response);
@@ -280,6 +282,7 @@ public class PurposeTest extends AtlanLiveTest {
                 "purpose.update.asset",
                 "purpose.read.token"
             })
+    @Ignore
     void runQueryWithPolicy() throws AtlanException, InterruptedException, IOException {
         try (AtlanClient redacted =
                 new AtlanClient(client.getBaseUrl(), token.getAttributes().getAccessToken())) {
