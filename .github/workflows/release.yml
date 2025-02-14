@@ -175,6 +175,7 @@ jobs:
           platforms: linux/amd64
   custom-package-images:
     permissions:
+      contents: read
       packages: write
     strategy:
       matrix:
