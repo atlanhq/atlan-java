@@ -453,10 +453,10 @@ public class AirflowTaskTest {
             .airflowTaskRetryNumber(123456789L)
             .airflowTaskSql("String0")
             .airflowTaskTriggerRule("String0")
-            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

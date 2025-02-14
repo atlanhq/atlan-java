@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class LineageProcessTest {
+public class DocumentDBCollectionTest {
 
-    private static final LineageProcess full = LineageProcess._internal()
+    private static final DocumentDBCollection full = DocumentDBCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,86 @@ public class LineageProcessTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .alias("String0")
+            .columnCount(123456789L)
+            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .externalLocation("String0")
+            .externalLocationFormat("String0")
+            .externalLocationRegion("String0")
+            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .icebergCatalogName("String0")
+            .icebergCatalogSource("String0")
+            .icebergCatalogTableName("String0")
+            .icebergCatalogTableNamespace("String0")
+            .icebergTableBaseLocation("String0")
+            .icebergTableType("String0")
+            .isPartitioned(true)
+            .isQueryPreview(true)
+            .isSharded(true)
+            .isTemporary(true)
+            .partitionCount(123456789L)
+            .partitionList("String0")
+            .partitionStrategy("String0")
+            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .putQueryPreviewConfig("key1", "value1")
+            .putQueryPreviewConfig("key2", "value2")
+            .rowCount(123456789L)
+            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sizeBytes(123456789L)
+            .tableExternalVolumeName("String0")
+            .tableRetentionTime(123456789L)
+            .tableType(TableType.TEMPORARY)
+            .calculationViewName("String0")
+            .calculationViewQualifiedName("String0")
+            .databaseName("String0")
+            .databaseQualifiedName("String0")
+            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isProfiled(true)
+            .lastProfiledAt(123456789L)
+            .queryCount(123456789L)
+            .queryCountUpdatedAt(123456789L)
+            .queryUserCount(123456789L)
+            .putQueryUserMap("key1", 123456L)
+            .putQueryUserMap("key2", 654321L)
+            .schemaName("String0")
+            .schemaQualifiedName("String0")
+            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableName("String0")
+            .tableQualifiedName("String0")
+            .viewName("String0")
+            .viewQualifiedName("String0")
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedAttribute(
+                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -414,38 +494,34 @@ public class LineageProcessTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .additionalEtlContext("String0")
-            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(AirflowDag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
+            .noSQLSchemaDefinition("String0")
+            .documentDBCollectionAverageObjectSize(123456789L)
+            .documentDBCollectionExpireAfterSeconds(123456789L)
+            .documentDBCollectionIsCapped(true)
+            .documentDBCollectionMaxSize(123456789L)
+            .documentDBCollectionMaximumDocumentCount(123456789L)
+            .documentDBCollectionNumIndexes(123456789L)
+            .documentDBCollectionNumOrphanDocs(123456789L)
+            .documentDBCollectionSchemaDefinition("String0")
+            .documentDBCollectionSubtype("String0")
+            .documentDBCollectionTimeField("String0")
+            .documentDBCollectionTimeGranularity("String0")
+            .documentDBCollectionTotalIndexSize(123456789L)
+            .documentDBDatabase(DocumentDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static LineageProcess frodo;
+    private static DocumentDBCollection frodo;
     private static String serialized;
 
-    @Test(groups = {"LineageProcess.builderEquivalency"})
+    @Test(groups = {"DocumentDBCollection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"LineageProcess.serialize"},
-            dependsOnGroups = {"LineageProcess.builderEquivalency"})
+            groups = {"DocumentDBCollection.serialize"},
+            dependsOnGroups = {"DocumentDBCollection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -454,17 +530,17 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"LineageProcess.deserialize"},
-            dependsOnGroups = {"LineageProcess.serialize"})
+            groups = {"DocumentDBCollection.deserialize"},
+            dependsOnGroups = {"DocumentDBCollection.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, LineageProcess.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, DocumentDBCollection.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"LineageProcess.equivalency"},
-            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
+            groups = {"DocumentDBCollection.equivalency"},
+            dependsOnGroups = {"DocumentDBCollection.serialize", "DocumentDBCollection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -473,8 +549,8 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"LineageProcess.equivalency"},
-            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
+            groups = {"DocumentDBCollection.equivalency"},
+            dependsOnGroups = {"DocumentDBCollection.serialize", "DocumentDBCollection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
