@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2022 Atlan Pte. Ltd.
 name: "Merge"
+permissions:
+  contents: read
 
 on:
   push:
@@ -166,6 +168,8 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
   publish-base-image:
+    permissions:
+      packages: write
     needs: merge-build
     runs-on: ubuntu-latest
     name: "Base image"
@@ -198,6 +202,8 @@ jobs:
           context: ./containers/base
           platforms: linux/amd64
   custom-package-images:
+    permissions:
+      packages: write
     strategy:
       matrix:
         package_name:

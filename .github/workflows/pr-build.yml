@@ -1,12 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2022 Atlan Pte. Ltd.
 name: "PR"
+permissions:
+  contents: read
 
 on:
   - pull_request
-
-permissions:
-  contents: read
 
 jobs:
   pr-build:
