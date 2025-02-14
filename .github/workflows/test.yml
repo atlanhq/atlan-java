@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2022 Atlan Pte. Ltd.
 name: "Test"
+permissions:
+  contents: read
 
 on:
   schedule:
