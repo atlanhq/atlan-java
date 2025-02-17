@@ -12,7 +12,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.Database;
-import com.atlan.model.assets.SnowflakeTag;
+import com.atlan.model.assets.SourceTag;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
@@ -24,9 +24,9 @@ import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.AtlanTagOptions;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -44,7 +44,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     private static final String SOURCE_SYNCED = PREFIX + "_synced";
 
     private static Connection connection;
-    private static SnowflakeTag sourceTag;
+    private static SourceTag sourceTag;
 
     /**
      * Create a new Atlan tag with a unique name.
@@ -87,7 +87,7 @@ public class AtlanTagTest extends AtlanLiveTest {
 
     @Test(groups = {"tag.create.connection"})
     void createSyncedConnection() throws AtlanException, InterruptedException {
-        connection = createConnection(client, PREFIX, AtlanConnectorType.SNOWFLAKE);
+        connection = createConnection(client, PREFIX, AtlanConnectorType.TREASURE_DATA);
     }
 
     @Test(groups = {"tag.create.image"})
@@ -143,7 +143,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(
             groups = {"tag.create.synced"},
             dependsOnGroups = {"tag.create.connection"})
-    void createSyncedTag() throws AtlanException {
+    void createSyncedTag() throws AtlanException, InterruptedException {
         // Tag itself
         AtlanTagDef tag = AtlanTagDef.creator(SOURCE_SYNCED, AtlanIcon.RECYCLE, AtlanTagColor.GREEN, true)
                 .build();
@@ -167,33 +167,34 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertEquals(attr.getCardinality(), AtlanCustomAttributeCardinality.SET);
 
         // Source tag asset
-        // TODO: replace with generic SourceTag (once available)
-        SnowflakeTag toCreate = SnowflakeTag._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .name(SOURCE_SYNCED)
-                .qualifiedName(connection.getQualifiedName() + "/" + SOURCE_SYNCED)
-                .connectorType(AtlanConnectorType.SNOWFLAKE)
-                .connectionQualifiedName(connection.getQualifiedName())
-                .connectionName(connection.getName())
-                .mappedAtlanTagName(tag.getName())
-                .tagAllowedValue("A")
-                .tagAllowedValue("B")
-                .tagAllowedValue("C")
+        SourceTag toCreate = SourceTag.creator(
+                        SOURCE_SYNCED, connection.getQualifiedName(), SOURCE_SYNCED, "42", List.of("A", "B", "C"))
                 .build();
         AssetMutationResponse resp = toCreate.save(client);
         assertNotNull(resp);
         assertNotNull(resp.getCreatedAssets());
         assertEquals(resp.getCreatedAssets().size(), 1);
         Asset one = resp.getCreatedAssets().get(0);
-        assertTrue(one instanceof SnowflakeTag);
-        sourceTag = (SnowflakeTag) one;
+        assertTrue(one instanceof SourceTag);
+        sourceTag = (SourceTag) one;
+        int retryCount = 0;
+        Asset src = null;
+        while (src == null && retryCount < (client.getMaxNetworkRetries() * 2)) {
+            Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+            try {
+                src = client.getSourceTagCache().getByName(new SourceTagCache.SourceTagName(client, sourceTag), true);
+            } catch (AtlanException e) {
+                log.info("Source tag '{}' not yet found to cache, retrying...", sourceTag.getName());
+            }
+            retryCount++;
+        }
     }
 
     @Test(
             groups = {"tag.create.asset"},
             dependsOnGroups = {"tag.create.synced"})
     void createAssetWithSourceTag() throws AtlanException {
-        Database database = Database.creator(PREFIX, connection.getQualifiedName())
+        Database db = Database.creator(PREFIX, connection.getQualifiedName())
                 .atlanTag(AtlanTag.of(
                         SOURCE_SYNCED,
                         SourceTagAttachment.byName(
@@ -201,13 +202,13 @@ public class AtlanTagTest extends AtlanLiveTest {
                                 new SourceTagCache.SourceTagName(client, sourceTag),
                                 List.of(SourceTagAttachmentValue.of(null, "A")))))
                 .build();
-        AssetMutationResponse response = database.save(client);
+        AssetMutationResponse response = db.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
-        database = (Database) one;
-        assertNotNull(database.getGuid());
-        assertNotNull(database.getQualifiedName());
-        assertEquals(database.getName(), PREFIX);
+        db = (Database) one;
+        assertNotNull(db.getGuid());
+        assertNotNull(db.getQualifiedName());
+        assertEquals(db.getName(), PREFIX);
     }
 
     @Test(
@@ -234,9 +235,9 @@ public class AtlanTagTest extends AtlanLiveTest {
         SourceTagAttachment sta = one.getSourceTagAttachments().get(0);
         assertNotNull(sta);
         assertEquals(sta.getSourceTagName(), SOURCE_SYNCED);
-        assertEquals(sta.getSourceTagQualifiedName(), connection.getQualifiedName() + "/" + SOURCE_SYNCED);
+        assertEquals(sta.getSourceTagQualifiedName(), sourceTag.getQualifiedName());
         assertEquals(sta.getSourceTagGuid(), sourceTag.getGuid());
-        assertEquals(sta.getSourceTagConnectorName(), AtlanConnectorType.SNOWFLAKE.getValue());
+        assertEquals(sta.getSourceTagConnectorName(), AtlanConnectorType.TREASURE_DATA.getValue());
         assertNotNull(sta.getSourceTagValues());
         assertEquals(sta.getSourceTagValues().size(), 1);
         assertEquals(sta.getSourceTagValues().get(0).getTagAttachmentValue(), "A");
