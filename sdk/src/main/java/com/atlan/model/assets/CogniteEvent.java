@@ -484,7 +484,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
      * @param terms the list of terms to append to the CogniteEvent
      * @return the CogniteEvent that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static CogniteEvent appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (CogniteEvent) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -500,7 +502,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
      * @param terms the list of terms to remove from the CogniteEvent, which must be referenced by GUID
      * @return the CogniteEvent that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static CogniteEvent removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (CogniteEvent) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -516,7 +520,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated CogniteEvent
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static CogniteEvent appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (CogniteEvent) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -535,7 +541,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated CogniteEvent
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static CogniteEvent appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -561,7 +569,9 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
      * @param qualifiedName of the CogniteEvent
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the CogniteEvent
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

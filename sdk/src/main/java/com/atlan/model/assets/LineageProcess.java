@@ -602,7 +602,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param terms the list of terms to append to the LineageProcess
      * @return the LineageProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static LineageProcess appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LineageProcess) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -618,7 +620,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param terms the list of terms to remove from the LineageProcess, which must be referenced by GUID
      * @return the LineageProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static LineageProcess removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LineageProcess) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -634,7 +638,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated LineageProcess
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static LineageProcess appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (LineageProcess) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -653,7 +659,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated LineageProcess
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static LineageProcess appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -679,7 +687,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @param qualifiedName of the LineageProcess
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the LineageProcess
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

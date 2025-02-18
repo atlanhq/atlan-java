@@ -535,7 +535,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 client.getUserCache().getIdForName(userName);
             }
         }
-        return client.assets.save(this, false);
+        return client.assets.save(this);
     }
 
     /**
@@ -548,7 +548,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
+     * @deprecated see {@link #save(AtlanClient)}
      */
+    @Deprecated
     @Override
     public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
@@ -865,7 +867,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param terms the list of terms to append to the Connection
      * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Connection appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Connection) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -881,7 +885,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
      * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Connection removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Connection) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -897,7 +903,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated Connection
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static Connection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Connection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -916,7 +924,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated Connection
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static Connection appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -942,7 +952,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @param qualifiedName of the Connection
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Connection
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

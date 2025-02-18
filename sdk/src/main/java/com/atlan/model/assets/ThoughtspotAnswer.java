@@ -497,7 +497,9 @@ public class ThoughtspotAnswer extends Asset
      * @param terms the list of terms to append to the ThoughtspotAnswer
      * @return the ThoughtspotAnswer that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ThoughtspotAnswer appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ThoughtspotAnswer) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -513,7 +515,9 @@ public class ThoughtspotAnswer extends Asset
      * @param terms the list of terms to remove from the ThoughtspotAnswer, which must be referenced by GUID
      * @return the ThoughtspotAnswer that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ThoughtspotAnswer removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ThoughtspotAnswer) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -529,7 +533,9 @@ public class ThoughtspotAnswer extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ThoughtspotAnswer
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static ThoughtspotAnswer appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (ThoughtspotAnswer) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -548,7 +554,9 @@ public class ThoughtspotAnswer extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ThoughtspotAnswer
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static ThoughtspotAnswer appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -574,7 +582,9 @@ public class ThoughtspotAnswer extends Asset
      * @param qualifiedName of the ThoughtspotAnswer
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ThoughtspotAnswer
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

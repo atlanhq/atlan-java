@@ -494,7 +494,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @param terms the list of terms to append to the BusinessPolicy
      * @return the BusinessPolicy that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static BusinessPolicy appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (BusinessPolicy) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -510,7 +512,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @param terms the list of terms to remove from the BusinessPolicy, which must be referenced by GUID
      * @return the BusinessPolicy that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static BusinessPolicy removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (BusinessPolicy) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -526,7 +530,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated BusinessPolicy
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static BusinessPolicy appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (BusinessPolicy) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -545,7 +551,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated BusinessPolicy
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static BusinessPolicy appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -571,7 +579,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @param qualifiedName of the BusinessPolicy
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the BusinessPolicy
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

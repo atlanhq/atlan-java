@@ -503,7 +503,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @param terms the list of terms to append to the SisenseFolder
      * @return the SisenseFolder that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static SisenseFolder appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SisenseFolder) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -519,7 +521,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @param terms the list of terms to remove from the SisenseFolder, which must be referenced by GUID
      * @return the SisenseFolder that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static SisenseFolder removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SisenseFolder) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -535,7 +539,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated SisenseFolder
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static SisenseFolder appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (SisenseFolder) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -554,7 +560,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated SisenseFolder
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static SisenseFolder appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -580,7 +588,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @param qualifiedName of the SisenseFolder
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the SisenseFolder
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

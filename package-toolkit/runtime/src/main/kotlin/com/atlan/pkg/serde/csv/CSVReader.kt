@@ -11,6 +11,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.util.AssetBatch.AtlanTagHandling
 import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
@@ -148,7 +149,7 @@ class CSVReader
             ParallelBatch(
                 ctx.client,
                 batchSize,
-                includesTags,
+                if (includesTags) AtlanTagHandling.REPLACE else AtlanTagHandling.IGNORE,
                 customMetadataHandling,
                 true,
                 updateOnly,
@@ -160,7 +161,7 @@ class CSVReader
                 ParallelBatch(
                     ctx.client,
                     batchSize,
-                    false,
+                    AtlanTagHandling.IGNORE,
                     CustomMetadataHandling.IGNORE,
                     true,
                     false,

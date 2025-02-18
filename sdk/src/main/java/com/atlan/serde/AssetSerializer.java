@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.CustomEntity;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.relations.Reference;
 import com.atlan.util.StringUtils;
@@ -64,6 +65,8 @@ public class AssetSerializer extends StdSerializer<Asset> {
         Map<String, Object> attributes = new LinkedHashMap<>();
         Map<String, Object> appendRelationships = new LinkedHashMap<>();
         Map<String, Object> removeRelationships = new LinkedHashMap<>();
+        Set<AtlanTag> appendAtlanTags = new LinkedHashSet<>();
+        Set<AtlanTag> removeAtlanTags = new LinkedHashSet<>();
         Map<String, Map<String, Object>> businessAttributes = new LinkedHashMap<>();
 
         gen.writeStartObject();
@@ -158,6 +161,25 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                     if (!replace.isEmpty()) {
                                         attributes.put(serializeName, replace);
                                     }
+                                } else if (first.isPresent() && first.get() instanceof AtlanTag) {
+                                    List<AtlanTag> replace = new ArrayList<>();
+                                    for (Object value : values) {
+                                        AtlanTag tag = (AtlanTag) value;
+                                        switch (tag.getSemantic()) {
+                                            case APPEND:
+                                                appendAtlanTags.add(tag);
+                                                break;
+                                            case REMOVE:
+                                                removeAtlanTags.add(tag);
+                                                break;
+                                            default:
+                                                replace.add(tag);
+                                                break;
+                                        }
+                                    }
+                                    if (!replace.isEmpty()) {
+                                        attributes.put(serializeName, replace);
+                                    }
                                 } else {
                                     attributes.put(serializeName, attrValue);
                                 }
@@ -171,6 +193,21 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                         break;
                                     case REMOVE:
                                         removeRelationships.put(serializeName, attrValue);
+                                        break;
+                                    default:
+                                        attributes.put(serializeName, attrValue);
+                                        break;
+                                }
+                            } else if (attrValue instanceof AtlanTag) {
+                                // If the value is a relationship, put it into the appropriate portion of
+                                // the request based on its semantic
+                                AtlanTag tag = (AtlanTag) attrValue;
+                                switch (tag.getSemantic()) {
+                                    case APPEND:
+                                        appendAtlanTags.add(tag);
+                                        break;
+                                    case REMOVE:
+                                        removeAtlanTags.add(tag);
                                         break;
                                     default:
                                         attributes.put(serializeName, attrValue);
@@ -233,6 +270,12 @@ public class AssetSerializer extends StdSerializer<Asset> {
         }
         if (!removeRelationships.isEmpty()) {
             sp.defaultSerializeField("removeRelationshipAttributes", removeRelationships, gen);
+        }
+        if (!appendAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("addOrUpdateClassifications", appendAtlanTags, gen);
+        }
+        if (!removeAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("removeClassifications", removeAtlanTags, gen);
         }
         if (!businessAttributes.isEmpty()) {
             sp.defaultSerializeField("businessAttributes", businessAttributes, gen);

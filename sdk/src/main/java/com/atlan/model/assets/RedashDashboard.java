@@ -488,7 +488,9 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param terms the list of terms to append to the RedashDashboard
      * @return the RedashDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static RedashDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -504,7 +506,9 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param terms the list of terms to remove from the RedashDashboard, which must be referenced by GUID
      * @return the RedashDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static RedashDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -520,7 +524,9 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated RedashDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static RedashDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (RedashDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -539,7 +545,9 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated RedashDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static RedashDashboard appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -565,7 +573,9 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @param qualifiedName of the RedashDashboard
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the RedashDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

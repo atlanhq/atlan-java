@@ -94,7 +94,8 @@ public interface AtlanEventHandler {
      * @throws AtlanException if there are any problems actually updating the asset in Atlan
      */
     default void saveChanges(AtlanClient client, Collection<Asset> changedAssets, Logger log) throws AtlanException {
-        AssetBatch batch = new AssetBatch(client, 20, false, AssetBatch.CustomMetadataHandling.MERGE);
+        AssetBatch batch =
+                new AssetBatch(client, 20, AssetBatch.AtlanTagHandling.IGNORE, AssetBatch.CustomMetadataHandling.MERGE);
         for (Asset one : changedAssets) {
             batch.add(one);
         }

@@ -461,7 +461,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @param terms the list of terms to append to the AuthService
      * @return the AuthService that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static AuthService appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AuthService) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -477,7 +479,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @param terms the list of terms to remove from the AuthService, which must be referenced by GUID
      * @return the AuthService that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static AuthService removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AuthService) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -493,7 +497,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated AuthService
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static AuthService appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (AuthService) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -512,7 +518,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated AuthService
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static AuthService appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -538,7 +546,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @param qualifiedName of the AuthService
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the AuthService
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

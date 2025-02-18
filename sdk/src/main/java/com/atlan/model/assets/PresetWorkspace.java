@@ -565,7 +565,9 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param terms the list of terms to append to the PresetWorkspace
      * @return the PresetWorkspace that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PresetWorkspace appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PresetWorkspace) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -581,7 +583,9 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param terms the list of terms to remove from the PresetWorkspace, which must be referenced by GUID
      * @return the PresetWorkspace that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PresetWorkspace removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PresetWorkspace) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -597,7 +601,9 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated PresetWorkspace
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static PresetWorkspace appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (PresetWorkspace) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -616,7 +622,9 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated PresetWorkspace
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static PresetWorkspace appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -642,7 +650,9 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @param qualifiedName of the PresetWorkspace
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PresetWorkspace
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

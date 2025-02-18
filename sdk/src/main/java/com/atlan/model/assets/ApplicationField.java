@@ -561,7 +561,9 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @param terms the list of terms to append to the ApplicationField
      * @return the ApplicationField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ApplicationField appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ApplicationField) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -577,7 +579,9 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @param terms the list of terms to remove from the ApplicationField, which must be referenced by GUID
      * @return the ApplicationField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ApplicationField removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ApplicationField) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -593,7 +597,9 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ApplicationField
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static ApplicationField appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (ApplicationField) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -612,7 +618,9 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ApplicationField
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static ApplicationField appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -638,7 +646,9 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @param qualifiedName of the ApplicationField
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ApplicationField
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

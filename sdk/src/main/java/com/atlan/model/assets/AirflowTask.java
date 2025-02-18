@@ -622,7 +622,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @param terms the list of terms to append to the AirflowTask
      * @return the AirflowTask that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static AirflowTask appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AirflowTask) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -638,7 +640,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @param terms the list of terms to remove from the AirflowTask, which must be referenced by GUID
      * @return the AirflowTask that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static AirflowTask removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AirflowTask) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -654,7 +658,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated AirflowTask
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static AirflowTask appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (AirflowTask) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -673,7 +679,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated AirflowTask
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static AirflowTask appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -699,7 +707,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @param qualifiedName of the AirflowTask
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the AirflowTask
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
