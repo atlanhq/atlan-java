@@ -161,25 +161,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                     if (!replace.isEmpty()) {
                                         attributes.put(serializeName, replace);
                                     }
-                                } else if (first.isPresent() && first.get() instanceof AtlanTag) {
-                                    List<AtlanTag> replace = new ArrayList<>();
-                                    for (Object value : values) {
-                                        AtlanTag tag = (AtlanTag) value;
-                                        switch (tag.getSemantic()) {
-                                            case APPEND:
-                                                appendAtlanTags.add(tag);
-                                                break;
-                                            case REMOVE:
-                                                removeAtlanTags.add(tag);
-                                                break;
-                                            default:
-                                                replace.add(tag);
-                                                break;
-                                        }
-                                    }
-                                    if (!replace.isEmpty()) {
-                                        attributes.put(serializeName, replace);
-                                    }
                                 } else {
                                     attributes.put(serializeName, attrValue);
                                 }
@@ -198,21 +179,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                         attributes.put(serializeName, attrValue);
                                         break;
                                 }
-                            } else if (attrValue instanceof AtlanTag) {
-                                // If the value is a relationship, put it into the appropriate portion of
-                                // the request based on its semantic
-                                AtlanTag tag = (AtlanTag) attrValue;
-                                switch (tag.getSemantic()) {
-                                    case APPEND:
-                                        appendAtlanTags.add(tag);
-                                        break;
-                                    case REMOVE:
-                                        removeAtlanTags.add(tag);
-                                        break;
-                                    default:
-                                        attributes.put(serializeName, attrValue);
-                                        break;
-                                }
                             } else {
                                 attributes.put(serializeName, attrValue);
                             }
@@ -223,6 +189,26 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     Map<String, CustomMetadataAttributes> cm = asset.getCustomMetadataSets();
                     if (cm != null && !cm.isEmpty()) {
                         client.getCustomMetadataCache().getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
+                    }
+                } else if (fieldName.equals("atlanTags")) {
+                    Set<AtlanTag> tags = asset.getAtlanTags();
+                    List<AtlanTag> replace = new ArrayList<>();
+                    for (AtlanTag tag : tags) {
+                        switch (tag.getSemantic()) {
+                            case APPEND:
+                                appendAtlanTags.add(tag);
+                                break;
+                            case REMOVE:
+                                removeAtlanTags.add(tag);
+                                break;
+                            default:
+                                replace.add(tag);
+                                break;
+                        }
+                    }
+                    if (!replace.isEmpty()) {
+                        String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                        attributes.put(serializeName, replace);
                     }
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
