@@ -88,7 +88,6 @@ uiConfig {
       whenInputs { ["config_type"] = "advanced" }
       required {
         "fail_on_errors"
-        "field_separator"
         "batch_size"
       }
     }
