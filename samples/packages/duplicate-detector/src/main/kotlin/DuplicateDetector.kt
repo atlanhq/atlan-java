@@ -155,7 +155,7 @@ object DuplicateDetector {
                 ParallelBatch(
                     client,
                     batchSize,
-                    false,
+                    AssetBatch.AtlanTagHandling.IGNORE,
                     AssetBatch.CustomMetadataHandling.MERGE,
                     true,
                 ).use { batch ->
