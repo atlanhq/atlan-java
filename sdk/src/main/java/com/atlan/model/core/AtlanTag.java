@@ -135,13 +135,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      */
     public static AtlanTag of(
             String atlanTagName, Reference.SaveSemantic semantic, String entityGuid, SourceTagAttachment sta) {
-        AtlanTagBuilder<?, ?> builder = AtlanTag.builder()
-                .typeName(atlanTagName)
-                .semantic(semantic)
-                .propagate(true)
-                .removePropagationsOnEntityDelete(true)
-                .restrictPropagationThroughLineage(false)
-                .restrictPropagationThroughHierarchy(false);
+        AtlanTagBuilder<?, ?> builder = AtlanTag.builder().typeName(atlanTagName).semantic(semantic);
         if (entityGuid != null) {
             builder.entityGuid(entityGuid).entityStatus(AtlanStatus.ACTIVE);
         }
@@ -171,25 +165,29 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * Whether to propagate this Atlan tag to other entities related to the entity to which the
      * Atlan tag is attached.
      */
-    Boolean propagate;
+    @Builder.Default
+    Boolean propagate = false;
 
     /**
      * Whether to remove this Atlan tag from other entities to which it has been propagated when
      * the Atlan tag is removed from this entity.
      */
-    Boolean removePropagationsOnEntityDelete;
+    @Builder.Default
+    Boolean removePropagationsOnEntityDelete = true;
 
     /**
      * Whether to prevent this Atlan tag from propagating through lineage (true) or allow it to
      * propagate through lineage (false).
      */
-    Boolean restrictPropagationThroughLineage;
+    @Builder.Default
+    Boolean restrictPropagationThroughLineage = false;
 
     /**
      * Whether to prevent this Atlan tag from propagating through hierarchy (true) or allow it to
      * propagate through hierarchy (false).
      */
-    Boolean restrictPropagationThroughHierarchy;
+    @Builder.Default
+    Boolean restrictPropagationThroughHierarchy = false;
 
     /** List of attachments of this tag to source-specific tags. */
     @Singular
