@@ -4,6 +4,7 @@ package com.atlan.pkg.lb
 
 import LineageBuilderCfg
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.util.AssetResolver
@@ -64,7 +65,8 @@ class AssetTransformer(
             val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
             val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
             if (connectionQN.isBlank()) {
-                logger.warn { "Unable to find connection for the provided details: $connectorType/$connectionName" }
+                val resolvedType = AtlanConnectorType.fromValue(connectorType)
+                logger.warn { "Unable to find connection for the provided details: $connectorType (resolved to ${resolvedType.value})::$connectionName" }
             }
             return connectionQN
         }
