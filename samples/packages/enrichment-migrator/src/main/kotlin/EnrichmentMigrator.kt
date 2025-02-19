@@ -18,6 +18,7 @@ import java.io.File
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
 import kotlin.jvm.optionals.getOrElse
+import kotlin.system.exitProcess
 
 /**
  * Actually run the migrator, taking all settings from environment variables.
@@ -31,6 +32,10 @@ object EnrichmentMigrator {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<EnrichmentMigratorCfg>().use { ctx ->
 
+            if (ctx.config.fieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+                exitProcess(2)
+            }
             val sourceConnectionQN = ctx.config.sourceConnection[0]
             val sourcePrefix = ctx.config.sourceQnPrefix
             val sourceDatabaseName = getSourceDatabaseNames(ctx.client, ctx.config.targetDatabasePattern, sourceConnectionQN, sourcePrefix)

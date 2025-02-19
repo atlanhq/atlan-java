@@ -49,6 +49,10 @@ object Importer {
         ctx: PackageContext<CubeAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
     ): String {
+        if (ctx.config.assetsFieldSeparator.length > 1) {
+            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+            exitProcess(2)
+        }
         val fieldSeparator = ctx.config.assetsFieldSeparator[0]
 
         val assetsFileProvided = Utils.isFileProvided(ctx.config.assetsImportType, ctx.config.assetsFile, ctx.config.assetsKey)

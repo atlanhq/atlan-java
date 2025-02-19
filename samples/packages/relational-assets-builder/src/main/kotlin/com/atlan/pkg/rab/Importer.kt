@@ -71,6 +71,10 @@ object Importer {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
         }
+        if (ctx.config.assetsFieldSeparator.length > 1) {
+            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+            exitProcess(2)
+        }
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
