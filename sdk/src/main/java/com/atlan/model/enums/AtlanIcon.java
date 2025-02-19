@@ -1539,8 +1539,6 @@ public enum AtlanIcon implements AtlanEnum {
     YARN("PhYarn"),
     YIN_YANG("PhYinYang"),
     YOUTUBE_LOGO("PhYoutubeLogo");
-    CRATEDB("CrateDb")
-    KX("Kx")
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
