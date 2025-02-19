@@ -176,7 +176,7 @@ object OpenAPISpecLoader {
         val totalCount = spec.paths?.size!!.toLong()
         if (totalCount > 0) {
             logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
-            AssetBatch(client, batchSize, false, AssetBatch.CustomMetadataHandling.MERGE, true).use { batch ->
+            AssetBatch(client, batchSize, AssetBatch.AtlanTagHandling.IGNORE, AssetBatch.CustomMetadataHandling.MERGE, true).use { batch ->
                 try {
                     val assetCount = AtomicLong(0)
                     for (apiPath in spec.paths.entries) {
