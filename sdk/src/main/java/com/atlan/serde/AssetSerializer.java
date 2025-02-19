@@ -67,6 +67,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
         Map<String, Object> removeRelationships = new LinkedHashMap<>();
         Set<AtlanTag> appendAtlanTags = new LinkedHashSet<>();
         Set<AtlanTag> removeAtlanTags = new LinkedHashSet<>();
+        Set<AtlanTag> replaceAtlanTags = new LinkedHashSet<>();
         Map<String, Map<String, Object>> businessAttributes = new LinkedHashMap<>();
 
         gen.writeStartObject();
@@ -192,7 +193,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     }
                 } else if (fieldName.equals("atlanTags")) {
                     Set<AtlanTag> tags = asset.getAtlanTags();
-                    List<AtlanTag> replace = new ArrayList<>();
                     for (AtlanTag tag : tags) {
                         switch (tag.getSemantic()) {
                             case APPEND:
@@ -202,13 +202,9 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                 removeAtlanTags.add(tag);
                                 break;
                             default:
-                                replace.add(tag);
+                                replaceAtlanTags.add(tag);
                                 break;
                         }
-                    }
-                    if (!replace.isEmpty()) {
-                        String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
-                        attributes.put(serializeName, replace);
                     }
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
@@ -262,6 +258,9 @@ public class AssetSerializer extends StdSerializer<Asset> {
         }
         if (!removeAtlanTags.isEmpty()) {
             sp.defaultSerializeField("removeClassifications", removeAtlanTags, gen);
+        }
+        if (!replaceAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("classifications", replaceAtlanTags, gen);
         }
         if (!businessAttributes.isEmpty()) {
             sp.defaultSerializeField("businessAttributes", businessAttributes, gen);
