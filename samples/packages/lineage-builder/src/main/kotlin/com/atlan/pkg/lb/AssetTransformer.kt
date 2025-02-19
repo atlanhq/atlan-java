@@ -27,6 +27,8 @@ class AssetTransformer(
         logger = logger,
         fieldSeparator = ctx.config.fieldSeparator[0],
     ) {
+    var anyFailures = false
+
     companion object {
         const val TYPE = "Type"
         const val NAME = "Name"
@@ -55,22 +57,28 @@ class AssetTransformer(
             ctx: PackageContext<LineageBuilderCfg>,
             inputRow: Map<String, String>,
             prefix: String,
+            logger: KLogger,
         ): String {
             val connectorType = inputRow["$prefix $CONNECTOR"]?.lowercase() ?: ""
             val connectionName = inputRow["$prefix $CONNECTION"] ?: ""
             val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
-            return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
+            val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
+            if (connectionQN.isBlank()) {
+                logger.warn { "Unable to find connection for the provided details: $connectorType/$connectionName" }
+            }
+            return connectionQN
         }
 
         fun getAssetQN(
             ctx: PackageContext<LineageBuilderCfg>,
             inputRow: Map<String, String>,
             prefix: String,
+            logger: KLogger,
             qnMap: Map<AssetIdentity, String> = mapOf(),
         ): String {
             val assetType = inputRow["$prefix $TYPE"] ?: ""
             val partialQN = inputRow["$prefix $IDENTITY"] ?: ""
-            val connectionQN = getConnectionQN(ctx, inputRow, prefix)
+            val connectionQN = getConnectionQN(ctx, inputRow, prefix, logger)
             if (connectionQN.isBlank()) {
                 // Short-circuit if there is no connection qualifiedName
                 return ""
@@ -88,6 +96,7 @@ class AssetTransformer(
             } else {
                 // Or if none of that is true, short-circuit to a blank qualifiedName as we do
                 // not have a valid qualifiedName
+                logger.warn { "Unable to determine full qualifiedName from provided details: $connectionQN/$partialQN" }
                 ""
             }
         }
@@ -97,7 +106,21 @@ class AssetTransformer(
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val source = mapAsset(inputRow, SOURCE_PREFIX)
         val target = mapAsset(inputRow, TARGET_PREFIX)
-        return listOf(source, target)
+        return if (source != null && target != null) {
+            listOf(source, target)
+        } else if (source != null) {
+            anyFailures = true
+            logger.info { "Unable to map and transform the source asset -- skipped." }
+            listOf(source)
+        } else if (target != null) {
+            anyFailures = true
+            logger.info { "Unable to map and transform the target asset -- skipped." }
+            listOf(target)
+        } else {
+            anyFailures = true
+            logger.info { "Unable to map and transform both the source and target asset -- skipped both." }
+            emptyList()
+        }
     }
 
     /** {@inheritDoc} */
@@ -109,9 +132,14 @@ class AssetTransformer(
     private fun mapAsset(
         inputRow: Map<String, String>,
         prefix: String,
-    ): List<String> {
-        val connectionQN = getConnectionQN(ctx, inputRow, prefix)
-        val assetQN = getAssetQN(ctx, inputRow, prefix)
+    ): List<String>? {
+        val connectionQN = getConnectionQN(ctx, inputRow, prefix, logger)
+        val assetQN =
+            if (connectionQN.isNotBlank()) {
+                getAssetQN(ctx, inputRow, prefix, logger)
+            } else {
+                ""
+            }
         return if (assetQN.isNotBlank()) {
             return listOf(
                 assetQN,
@@ -121,7 +149,7 @@ class AssetTransformer(
                 connectionQN,
             )
         } else {
-            listOf("", "", "", "", "")
+            null
         }
     }
 }
