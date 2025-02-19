@@ -672,7 +672,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
      */
     public void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        addAtlanTags(typeName, qualifiedName, atlanTagNames, true, true, false, null);
+        addAtlanTags(typeName, qualifiedName, atlanTagNames, false, true, false, null);
     }
 
     /**
@@ -688,7 +688,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames, RequestOptions options)
             throws AtlanException {
-        addAtlanTags(typeName, qualifiedName, atlanTagNames, true, true, false, options);
+        addAtlanTags(typeName, qualifiedName, atlanTagNames, false, true, false, options);
     }
 
     /**
