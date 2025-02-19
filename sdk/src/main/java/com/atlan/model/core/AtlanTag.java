@@ -135,7 +135,8 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      */
     public static AtlanTag of(
             String atlanTagName, Reference.SaveSemantic semantic, String entityGuid, SourceTagAttachment sta) {
-        AtlanTagBuilder<?, ?> builder = AtlanTag.builder().typeName(atlanTagName).semantic(semantic);
+        AtlanTagBuilder<?, ?> builder =
+                AtlanTag.builder().typeName(atlanTagName).semantic(semantic);
         if (entityGuid != null) {
             builder.entityGuid(entityGuid).entityStatus(AtlanStatus.ACTIVE);
         }
