@@ -39,6 +39,10 @@ object Loader {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)
         }
+        if (ctx.config.fieldSeparator.length > 1) {
+            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+            exitProcess(2)
+        }
 
         val lineageInput =
             Utils.getInputFile(

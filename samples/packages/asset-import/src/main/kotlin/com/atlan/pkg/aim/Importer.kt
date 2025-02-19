@@ -56,6 +56,10 @@ object Importer {
                         ctx.config.glossariesKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(ctx.config.glossariesFailOnErrors)
+                if (ctx.config.glossariesFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.glossariesFieldSeparator}" }
+                    exitProcess(2)
+                }
                 logger.info { "=== Importing glossaries... ===" }
                 val glossaryImporter = GlossaryImporter(ctx, glossariesInput, logger)
                 val includes = glossaryImporter.preprocess()
@@ -92,6 +96,10 @@ object Importer {
                         ctx.config.dataProductsKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors)
+                if (ctx.config.dataProductsFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.dataProductsFieldSeparator}" }
+                    exitProcess(2)
+                }
                 logger.info { "=== Importing domains... ===" }
                 val domainImporter = DomainImporter(ctx, dataProductsInput, logger)
                 if (domainImporter.preprocess().hasLinks) {
@@ -129,6 +137,10 @@ object Importer {
                     ctx.config.tagsKey,
                 )
             FieldSerde.FAIL_ON_ERRORS.set(ctx.config.tagsFailOnErrors)
+            if (ctx.config.tagsFieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.tagsFieldSeparator}" }
+                exitProcess(2)
+            }
             logger.info { "=== Importing tag definitions... ===" }
             val tagImporter = AtlanTagImporter(ctx, tagsInput, logger)
             tagImporter.import()
@@ -147,6 +159,10 @@ object Importer {
                         ctx.config.assetsKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+                if (ctx.config.assetsFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+                    exitProcess(2)
+                }
                 val previousFileDirect = ctx.config.assetsPreviousFileDirect
                 val preprocessedDetails =
                     AssetImporter

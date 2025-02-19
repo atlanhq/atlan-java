@@ -26,8 +26,8 @@
             schema.getDatabaseQualifiedName(),
             schema.getName(),
             schema.getQualifiedName(),
-            snowflakeTagId,
             mappedAtlanTagName,
+            snowflakeTagId,
             allowedValues
         ).schema(schema.trimToReference());
     }
