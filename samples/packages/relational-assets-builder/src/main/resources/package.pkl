@@ -177,7 +177,7 @@ uiConfig {
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
           required = false
-          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
           fallback = placeholderText
