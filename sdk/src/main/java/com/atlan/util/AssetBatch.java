@@ -420,7 +420,7 @@ public class AssetBatch implements AtlanCloseable {
 
     private Asset handleTags(Asset asset) throws LogicException {
         Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
-        Method setAtlanTags = ReflectionCache.getSetter(assetBuilder.getClass(), Asset.ATLAN_TAGS.getAtlanFieldName());
+        Method setAtlanTags = ReflectionCache.getSetter(assetBuilder.getClass(), "atlanTags");
         try {
             Set<AtlanTag> existing = asset.getAtlanTags();
             Set<AtlanTag> revisedTags = new TreeSet<>();
