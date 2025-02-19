@@ -182,7 +182,7 @@ public class PurposeTest extends AtlanLiveTest {
                         false)
                 .policyMaskType(DataMaskingType.REDACT)
                 .build();
-        AssetMutationResponse response = client.assets.save(List.of(metadata, data), false);
+        AssetMutationResponse response = client.assets.save(List.of(metadata, data));
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -241,8 +241,14 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.update.asset"},
             dependsOnGroups = {"purpose.create.atlantag", "purpose.create.query"})
     void assignTagToAsset() throws AtlanException {
-        Column result =
-                Column.appendAtlanTags(client, columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
+        Column toUpdate = Column.updater(columnQualifiedName, COLUMN_NAME)
+                .appendAtlanTag(ATLAN_TAG_NAME, false, false, false, false)
+                .build();
+        AssetMutationResponse response = client.assets.save(toUpdate);
+        validateSingleUpdate(response);
+        Column result = response.getResult(toUpdate);
+        // Column result =
+        //         Column.appendAtlanTags(client, columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
         assertNotNull(result);
     }
 
@@ -329,7 +335,13 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        Column.removeAtlanTag(client, columnQualifiedName, ATLAN_TAG_NAME);
+        Column toUpdate = Column.updater(columnQualifiedName, COLUMN_NAME)
+                .removeAtlanTag(ATLAN_TAG_NAME)
+                .build();
+        AssetMutationResponse response = client.assets.save(toUpdate);
+        assertNotNull(response);
+        validateSingleUpdate(response);
+        // Column.removeAtlanTag(client, columnQualifiedName, ATLAN_TAG_NAME);
         AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME);
     }
 
