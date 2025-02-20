@@ -73,6 +73,50 @@ uiConfig {
           default = "XLSX"
           fallback = default
         }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
+        ["delivery_type"] = new Radio {
+          title = "Export via"
+          required = true
+          helpText = "Select how you want to receive the exported file."
+          possibleValues {
+            ["DIRECT"] = "Direct download"
+            ["EMAIL"] = "Email"
+            ["CLOUD"] = "Object storage"
+          }
+          default = "DIRECT"
+          fallback = default
+        }
+        ["email_addresses"] = new TextInput {
+          title = "Email address(es)"
+          helpText = "Provide any email addresses you want the extract sent to, separated by commas."
+          required = true
+          placeholderText = "one@example.com,two@example.com"
+        }
+        ["target_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store into which to upload the exported file."
+          placeholderText = "path/to/file"
+          width = 4
+          fallback = ""
+        }
+        ["target_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "admin-export.xlsx"
+          width = 4
+          fallback = ""
+        }
+        ["cloud_target"] = new CredentialInput {
+          title = "Upload export to"
+          required = true
+          credType = "csa-connectors-objectstore"
+          helpText = "Enter details for the object store to which to upload the exported file."
+          allowTestAuthentication = false
+        }
         ["custom_filenames"] = new Radio {
           title = "Custom filenames?"
           required = true
@@ -128,50 +172,6 @@ uiConfig {
         }
       }
     }
-    ["Delivery"] {
-      description = "Where to send"
-      inputs {
-        ["delivery_type"] = new Radio {
-          title = "Export via"
-          required = true
-          helpText = "Select how you want to receive the exported file."
-          possibleValues {
-            ["DIRECT"] = "Direct download"
-            ["EMAIL"] = "Email"
-            ["CLOUD"] = "Object storage"
-          }
-          default = "DIRECT"
-          fallback = default
-        }
-        ["email_addresses"] = new TextInput {
-          title = "Email address(es)"
-          helpText = "Provide any email addresses you want the extract sent to, separated by commas."
-          required = true
-          placeholderText = "one@example.com,two@example.com"
-        }
-        ["target_prefix"] = new TextInput {
-          title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store into which to upload the exported file."
-          placeholderText = "path/to/file"
-          width = 4
-          fallback = ""
-        }
-        ["target_key"] = new TextInput {
-          title = "Object key (filename)"
-          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
-          placeholderText = "admin-export.xlsx"
-          width = 4
-          fallback = ""
-        }
-        ["cloud_target"] = new CredentialInput {
-          title = "Upload export to"
-          required = true
-          credType = "csa-connectors-objectstore"
-          helpText = "Enter details for the object store to which to upload the exported file."
-          allowTestAuthentication = false
-        }
-      }
-    }
   }
   rules {
     new UIRule {
@@ -190,6 +190,7 @@ uiConfig {
         whenInputs {
             ["custom_filenames"] = "TRUE"
             ["file_format"] = "XLSX"
+            ["delivery_type"] = "CLOUD"
         }
         required { "admin_export_filename" }
     }
@@ -197,6 +198,7 @@ uiConfig {
         whenInputs {
             ["custom_filenames"] = "TRUE"
             ["file_format"] = "CSV"
+            ["delivery_type"] = "CLOUD"
         }
         required {
           "users_filename"
