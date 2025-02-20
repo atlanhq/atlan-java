@@ -35,14 +35,23 @@ object AdminExporter {
             val connectionMap = preloadConnectionMap(ctx)
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            val xlsxFile = "$outputDirectory${File.separator}${ctx.config.xlsxFilename}"
-            val usersFile = "$outputDirectory${File.separator}${ctx.config.usersFilename}"
-            val groupsFile = "$outputDirectory${File.separator}${ctx.config.groupsFilename}"
-            val personasFile = "$outputDirectory${File.separator}${ctx.config.personasFilename}"
-            val purposesFile = "$outputDirectory${File.separator}${ctx.config.purposesFilename}"
-            val policiesFile = "$outputDirectory${File.separator}${ctx.config.policiesFilename}"
+            // These names must remain as-is, for Argo to have its outputs
+            val xlsxFile = "$outputDirectory${File.separator}admin-export.xlsx"
+            val usersFile = "$outputDirectory${File.separator}users.csv"
+            val groupsFile = "$outputDirectory${File.separator}groups.csv"
+            val personasFile = "$outputDirectory${File.separator}personas.csv"
+            val purposesFile = "$outputDirectory${File.separator}purposes.csv"
+            val policiesFile = "$outputDirectory${File.separator}policies.csv"
 
-            // Touch every file, just so they exist, to avoid any workflow failures
+            // Check for any custom names provided, and only fallback to default names where there aren't any
+            val xlsxFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.targetKey}", xlsxFile)
+            val usersFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.usersFilename}", usersFile)
+            val groupsFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.groupsFilename}", groupsFile)
+            val personasFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.personasFilename}", personasFile)
+            val purposesFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.purposesFilename}", purposesFile)
+            val policiesFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.policiesFilename}", policiesFile)
+
+            // Touch every file, just so they exist, to avoid any Argo failures
             Paths.get(outputDirectory).toFile().mkdirs()
             Paths.get(xlsxFile).toFile().createNewFile()
             Paths.get(usersFile).toFile().createNewFile()
@@ -54,7 +63,7 @@ object AdminExporter {
             val fileOutputs = mutableListOf<String>()
 
             if (xlsxOutput) {
-                ExcelWriter(xlsxFile).use { xlsx ->
+                ExcelWriter(xlsxFileActual).use { xlsx ->
                     ctx.config.objectsToInclude.forEach { objectName ->
                         when (objectName) {
                             "users" -> Users(ctx, xlsx.createSheet("Users"), logger).export()
@@ -69,14 +78,14 @@ object AdminExporter {
             } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
-                        "users" -> CSVWriter(usersFile).use { csv -> Users(ctx, csv, logger).export() }
-                        "groups" -> CSVWriter(groupsFile).use { csv -> Groups(ctx, csv, logger).export() }
-                        "personas" -> CSVWriter(personasFile).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
-                        "purposes" -> CSVWriter(purposesFile).use { csv -> Purposes(ctx, csv, logger).export() }
-                        "policies" -> CSVWriter(policiesFile).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "users" -> CSVWriter(usersFileActual).use { csv -> Users(ctx, csv, logger).export() }
+                        "groups" -> CSVWriter(groupsFileActual).use { csv -> Groups(ctx, csv, logger).export() }
+                        "personas" -> CSVWriter(personasFileActual).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "purposes" -> CSVWriter(purposesFileActual).use { csv -> Purposes(ctx, csv, logger).export() }
+                        "policies" -> CSVWriter(policiesFileActual).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
                     }
                 }
-                fileOutputs.addAll(listOf(usersFile, groupsFile, personasFile, purposesFile, policiesFile))
+                fileOutputs.addAll(listOf(usersFileActual, groupsFileActual, personasFileActual, purposesFileActual, policiesFileActual))
             }
 
             when (ctx.config.deliveryType) {
@@ -97,7 +106,7 @@ object AdminExporter {
                         Utils.uploadOutputFile(
                             xlsxFile,
                             ctx.config.targetPrefix,
-                            ctx.config.targetKey,
+                            xlsxFileActual,
                         )
                     } else {
                         fileOutputs.forEach {

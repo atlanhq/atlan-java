@@ -24,8 +24,6 @@ data class AdminExportCfg(
     @JsonProperty("target_prefix") val targetPrefix: String = "",
     @JsonProperty("target_key") val targetKey: String = "",
     @JsonProperty("cloud_target") val cloudTarget: String? = null,
-    @JsonProperty("custom_filenames") val customFilenames: String = "FALSE",
-    @JsonProperty("xlsx_filename") val xlsxFilename: String = "admin-export.xlsx",
     @JsonProperty("users_filename") val usersFilename: String = "users.csv",
     @JsonProperty("groups_filename") val groupsFilename: String = "groups.csv",
     @JsonProperty("personas_filename") val personasFilename: String = "personas.csv",
