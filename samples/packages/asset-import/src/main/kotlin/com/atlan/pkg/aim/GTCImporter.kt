@@ -4,7 +4,10 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.model.assets.Asset
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
@@ -43,6 +46,8 @@ abstract class GTCImporter(
         typeNameFilter,
         attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite.toMutableList(), "glossaries", logger),
         updateOnly = ctx.config.glossariesUpsertSemantic == "update",
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.glossariesCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.glossariesTagHandling, AtlanTagHandling.REPLACE),
         batchSize = ctx.config.glossariesBatchSize.toInt(),
         fieldSeparator = ctx.config.glossariesFieldSeparator[0],
         trackBatches = true,

@@ -22,6 +22,8 @@ import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AssetCreationHandling;
+import com.atlan.model.enums.AtlanTagHandling;
+import com.atlan.model.enums.CustomMetadataHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
@@ -44,19 +46,6 @@ public class AssetBatch implements AtlanCloseable {
 
     private static final Set<String> TABLE_LEVEL_ASSETS =
             Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, SnowflakeDynamicTable.TYPE_NAME);
-
-    public enum CustomMetadataHandling {
-        IGNORE,
-        OVERWRITE,
-        MERGE,
-    }
-
-    public enum AtlanTagHandling {
-        IGNORE,
-        APPEND,
-        REPLACE,
-        REMOVE,
-    }
 
     /** Connectivity to an Atlan tenant. */
     private final AtlanClient client;

@@ -5,6 +5,8 @@ import com.atlan.exception.AtlanException
 import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
 import com.atlan.model.core.AssetMutationResponse
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
@@ -176,7 +178,7 @@ object OpenAPISpecLoader {
         val totalCount = spec.paths?.size!!.toLong()
         if (totalCount > 0) {
             logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
-            AssetBatch(client, batchSize, AssetBatch.AtlanTagHandling.IGNORE, AssetBatch.CustomMetadataHandling.MERGE, true).use { batch ->
+            AssetBatch(client, batchSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE, true).use { batch ->
                 try {
                     val assetCount = AtomicLong(0)
                     for (apiPath in spec.paths.entries) {

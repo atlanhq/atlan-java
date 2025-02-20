@@ -174,6 +174,8 @@ class AssetImport extends PublishConfig {
   hidden assetsCaseSensitive: Boolean?|String? = null
   hidden assetsTableViewAgnostic: Boolean?|String? = null
   hidden assetsFieldSeparator: String? = null
+  hidden assetsCmHandling: CustomMetadataSemantic?|String? = null
+  hidden assetsTagHandling: AtlanTagSemantic?|String? = null
   hidden assetsBatchSize: Int?|String? = null
   hidden trackBatches: Boolean?|String? = null
   hidden glossariesFile: FrameworkRenderer.NamePathPair? = null
@@ -182,6 +184,8 @@ class AssetImport extends PublishConfig {
   hidden glossariesAttrToOverwrite: Listing<String>?|String? = null
   hidden glossariesFailOnErrors: Boolean?|String? = null
   hidden glossariesFieldSeparator: String? = null
+  hidden glossariesCmHandling: CustomMetadataSemantic?|String? = null
+  hidden glossariesTagHandling: AtlanTagSemantic?|String? = null
   hidden glossariesBatchSize: Int?|String? = null
   hidden dataProductsFile: FrameworkRenderer.NamePathPair? = null
   hidden dataProductsUpsertSemantic: ImportSemantic?|String? = null
@@ -189,6 +193,8 @@ class AssetImport extends PublishConfig {
   hidden dataProductsAttrToOverwrite: Listing<String>?|String? = null
   hidden dataProductsFailOnErrors: Boolean?|String? = null
   hidden dataProductsFieldSeparator: String? = null
+  hidden dataProductsCmHandling: CustomMetadataSemantic?|String? = null
+  hidden dataProductsTagHandling: AtlanTagSemantic?|String? = null
   hidden dataProductsBatchSize: Int?|String? = null
 
   fixed inputArtifacts {
@@ -232,6 +238,8 @@ class AssetImport extends PublishConfig {
     when (assetsTableViewAgnostic != null) { ["assets_table_view_agnostic"] = assetsTableViewAgnostic.toString() }
     when (assetsFieldSeparator != null) { ["assets_field_separator"] = assetsFieldSeparator }
     when (assetsBatchSize != null) { ["assets_batch_size"] = assetsBatchSize.toString() }
+    when (assetsCmHandling != null) { ["assets_cm_handling"] = assetsCmHandling }
+    when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
 
     when (glossariesFile != null) { ["glossaries_file"] = glossariesFile.path }
@@ -246,6 +254,8 @@ class AssetImport extends PublishConfig {
     }
     when (glossariesFailOnErrors != null) { ["glossaries_fail_on_errors"] = glossariesFailOnErrors.toString() }
     when (glossariesFieldSeparator != null) { ["glossaries_field_separator"] = glossariesFieldSeparator }
+    when (glossariesCmHandling != null) { ["glossaries_cm_handling"] = glossariesCmHandling }
+    when (glossariesTagHandling != null) { ["glossaries_tag_handling"] = glossariesTagHandling }
     when (glossariesBatchSize != null) { ["glossaries_batch_size"] = glossariesBatchSize.toString() }
 
     when (dataProductsFile != null) { ["data_products_file"] = dataProductsFile.path }
@@ -260,6 +270,8 @@ class AssetImport extends PublishConfig {
     }
     when (dataProductsFailOnErrors != null) { ["data_products_fail_on_errors"] = dataProductsFailOnErrors.toString() }
     when (dataProductsFieldSeparator != null) { ["data_products_field_separator"] = dataProductsFieldSeparator }
+    when (dataProductsCmHandling != null) { ["data_products_cm_handling"] = dataProductsCmHandling }
+    when (dataProductsTagHandling != null) { ["data_products_tag_handling"] = dataProductsTagHandling }
     when (dataProductsBatchSize != null) { ["data_products_batch_size"] = dataProductsBatchSize.toString() }
   }.toMap()
 }
@@ -276,6 +288,8 @@ class RelationalAssetsBuilder extends PublishConfig {
   hidden assetsFailOnErrors: Boolean?|String? = null
   hidden assetsFieldSeparator: String? = null
   hidden assetsBatchSize: Int?|String? = null
+  hidden assetsCmHandling: CustomMetadataSemantic?|String? = null
+  hidden assetsTagHandling: AtlanTagSemantic?|String? = null
   hidden trackBatches: Boolean?|String? = null
 
   fixed inputArtifacts {
@@ -313,6 +327,8 @@ class RelationalAssetsBuilder extends PublishConfig {
     when (assetsFailOnErrors != null) { ["assets_fail_on_errors"] = assetsFailOnErrors.toString() }
     when (assetsFieldSeparator != null) { ["assets_field_separator"] = assetsFieldSeparator }
     when (assetsBatchSize != null) { ["assets_batch_size"] = assetsBatchSize.toString() }
+    when (assetsCmHandling != null) { ["assets_cm_handling"] = assetsCmHandling }
+    when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
   }.toMap()
 }
@@ -509,6 +525,12 @@ typealias RemovalType = "archive"|"purge"
 
 /// Options for which assets should be reloaded after calculating a delta.
 typealias ReloadCalculation = "all"|"changes"
+
+/// Options for the semantic to use when loading custom metadata on assets into Atlan.
+typealias CustomMetadataSemantic = "ignore"|"overwrite"|"merge"
+
+/// Options for the semantic to use when loading Atlan tag associations to assets into Atlan.
+typealias AtlanTagSemantic = "ignore"|"append"|"replace"|"remove"
 
 /// Configuration type for a package.
 typealias ConfigType = "default"|"advanced"

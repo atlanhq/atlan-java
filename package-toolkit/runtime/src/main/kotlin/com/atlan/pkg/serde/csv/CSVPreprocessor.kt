@@ -3,7 +3,8 @@
 package com.atlan.pkg.serde.csv
 
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.util.AssetBatch
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import mu.KLogger
 
 /**
@@ -41,7 +42,8 @@ abstract class CSVPreprocessor(
             updateOnly = true,
             trackBatches = false,
             caseSensitive = true,
-            AssetBatch.CustomMetadataHandling.IGNORE,
+            CustomMetadataHandling.IGNORE,
+            AtlanTagHandling.IGNORE,
             AssetCreationHandling.NONE,
             tableViewAgnostic = false,
             fieldSeparator,

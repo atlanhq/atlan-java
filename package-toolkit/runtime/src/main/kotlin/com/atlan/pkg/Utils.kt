@@ -9,6 +9,8 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.model.Credential
 import com.atlan.pkg.objectstore.ADLSCredential
@@ -550,7 +552,41 @@ object Utils {
         if (semantic == null) {
             default
         } else {
-            AssetCreationHandling.fromValue(semantic)
+            AssetCreationHandling.fromValue(semantic.lowercase())
+        }
+
+    /**
+     * Calculate the custom metadata handling semantic from a string semantic.
+     *
+     * @param semantic string input for the semantic from the workflow setup
+     * @param default default semantic to use if no value was specified
+     * @return enumerated semantic
+     */
+    fun getCustomMetadataHandling(
+        semantic: String?,
+        default: CustomMetadataHandling,
+    ): CustomMetadataHandling =
+        if (semantic == null) {
+            default
+        } else {
+            CustomMetadataHandling.fromValue(semantic.lowercase())
+        }
+
+    /**
+     * Calculate the Atlan tag association handling semantic from a string semantic.
+     *
+     * @param semantic string input for the semantic from the workflow setup
+     * @param default default semantic to use if no value was specified
+     * @return enumerated semantic
+     */
+    fun getAtlanTagHandling(
+        semantic: String?,
+        default: AtlanTagHandling,
+    ): AtlanTagHandling =
+        if (semantic == null) {
+            default
+        } else {
+            AtlanTagHandling.fromValue(semantic.lowercase())
         }
 
     /**

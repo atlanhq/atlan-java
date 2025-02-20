@@ -11,9 +11,10 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanIcon
+import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CertificateStatus
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.Utils
-import com.atlan.util.AssetBatch
 import com.atlan.util.ParallelBatch
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
@@ -155,8 +156,8 @@ object DuplicateDetector {
                 ParallelBatch(
                     client,
                     batchSize,
-                    AssetBatch.AtlanTagHandling.IGNORE,
-                    AssetBatch.CustomMetadataHandling.MERGE,
+                    AtlanTagHandling.IGNORE,
+                    CustomMetadataHandling.MERGE,
                     true,
                 ).use { batch ->
                     val termName = "Dup. ($hash)"

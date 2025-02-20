@@ -5,6 +5,8 @@ package com.atlan.events;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
+import com.atlan.model.enums.AtlanTagHandling;
+import com.atlan.model.enums.CustomMetadataHandling;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AtlanEventPayload;
 import com.atlan.model.search.IndexSearchRequest;
@@ -94,8 +96,7 @@ public interface AtlanEventHandler {
      * @throws AtlanException if there are any problems actually updating the asset in Atlan
      */
     default void saveChanges(AtlanClient client, Collection<Asset> changedAssets, Logger log) throws AtlanException {
-        AssetBatch batch =
-                new AssetBatch(client, 20, AssetBatch.AtlanTagHandling.IGNORE, AssetBatch.CustomMetadataHandling.MERGE);
+        AssetBatch batch = new AssetBatch(client, 20, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE);
         for (Asset one : changedAssets) {
             batch.add(one);
         }
