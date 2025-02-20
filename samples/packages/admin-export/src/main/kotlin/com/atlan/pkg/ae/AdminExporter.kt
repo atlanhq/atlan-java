@@ -24,6 +24,14 @@ import java.nio.file.Paths
 object AdminExporter {
     private val logger = Utils.getLogger(this.javaClass.name)
 
+    private const val FILENAME = "admin-export.xlsx"
+
+    private const val USERS_FILE = "users.csv"
+    private const val GROUPS_FILE = "groups.csv"
+    private const val PERSONAS_FILE = "personas.csv"
+    private const val PURPOSES_FILE = "purposes.csv"
+    private const val POLICIES_FILE = "policies.csv"
+
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
@@ -35,30 +43,22 @@ object AdminExporter {
             val connectionMap = preloadConnectionMap(ctx)
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            // These names must remain as-is, for Argo to have its outputs
-            val xlsxFile = "$outputDirectory${File.separator}admin-export.xlsx"
-            val usersFile = "$outputDirectory${File.separator}users.csv"
-            val groupsFile = "$outputDirectory${File.separator}groups.csv"
-            val personasFile = "$outputDirectory${File.separator}personas.csv"
-            val purposesFile = "$outputDirectory${File.separator}purposes.csv"
-            val policiesFile = "$outputDirectory${File.separator}policies.csv"
-
             // Check for any custom names provided, and only fallback to default names where there aren't any
-            val xlsxFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.targetKey}", xlsxFile)
-            val usersFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.usersFilename}", usersFile)
-            val groupsFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.groupsFilename}", groupsFile)
-            val personasFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.personasFilename}", personasFile)
-            val purposesFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.purposesFilename}", purposesFile)
-            val policiesFileActual = Utils.getOrDefault("$outputDirectory${File.separator}${ctx.config.policiesFilename}", policiesFile)
+            val xlsxFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.targetKey, FILENAME)}"
+            val usersFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.usersFilename, USERS_FILE)}"
+            val groupsFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.groupsFilename, GROUPS_FILE)}"
+            val personasFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.personasFilename, PERSONAS_FILE)}"
+            val purposesFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.purposesFilename, PURPOSES_FILE)}"
+            val policiesFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.policiesFilename, POLICIES_FILE)}"
 
             // Touch every file, just so they exist, to avoid any Argo failures
             Paths.get(outputDirectory).toFile().mkdirs()
-            Paths.get(xlsxFile).toFile().createNewFile()
-            Paths.get(usersFile).toFile().createNewFile()
-            Paths.get(groupsFile).toFile().createNewFile()
-            Paths.get(personasFile).toFile().createNewFile()
-            Paths.get(purposesFile).toFile().createNewFile()
-            Paths.get(policiesFile).toFile().createNewFile()
+            Paths.get(outputDirectory, FILENAME).toFile().createNewFile()
+            Paths.get(outputDirectory, USERS_FILE).toFile().createNewFile()
+            Paths.get(outputDirectory, GROUPS_FILE).toFile().createNewFile()
+            Paths.get(outputDirectory, PERSONAS_FILE).toFile().createNewFile()
+            Paths.get(outputDirectory, PURPOSES_FILE).toFile().createNewFile()
+            Paths.get(outputDirectory, POLICIES_FILE).toFile().createNewFile()
 
             val fileOutputs = mutableListOf<String>()
 
@@ -74,7 +74,7 @@ object AdminExporter {
                         }
                     }
                 }
-                fileOutputs.add(xlsxFile)
+                fileOutputs.add(xlsxFileActual)
             } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
@@ -104,7 +104,7 @@ object AdminExporter {
                 "CLOUD" -> {
                     if (xlsxOutput) {
                         Utils.uploadOutputFile(
-                            xlsxFile,
+                            xlsxFileActual,
                             ctx.config.targetPrefix,
                             xlsxFileActual,
                         )
