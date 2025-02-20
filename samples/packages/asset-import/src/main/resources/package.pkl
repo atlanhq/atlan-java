@@ -133,6 +133,14 @@ uiConfig {
           width = 4
           fallback = placeholderText
         }
+        ["glossaries_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+          fallback = placeholderValue
+        }
         ["glossaries_cm_handling"] = new Radio {
           title = "Custom metadata handling"
           required = false
@@ -155,14 +163,6 @@ uiConfig {
           }
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
-        }
-        ["glossaries_batch_size"] = new NumericInput {
-          title = "Batch size"
-          required = false
-          helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderValue = 20
-          width = 4
-          fallback = placeholderValue
         }
       }
     }
@@ -245,6 +245,14 @@ uiConfig {
           width = 4
           fallback = placeholderText
         }
+        ["data_products_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+          fallback = placeholderValue
+        }
         ["data_products_cm_handling"] = new Radio {
           title = "Custom metadata handling"
           required = false
@@ -267,14 +275,6 @@ uiConfig {
           }
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
-        }
-        ["data_products_batch_size"] = new NumericInput {
-          title = "Batch size"
-          required = false
-          helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderValue = 20
-          width = 4
-          fallback = placeholderValue
         }
       }
     }
@@ -311,7 +311,7 @@ uiConfig {
             ["advanced"] = "Advanced"
           }
           default = "default"
-          helpText = "Options to optimize how domains and data products are imported."
+          helpText = "Options to optimize how tag definitions are imported."
         }
         ["tags_fail_on_errors"] = new BooleanInput {
           title = "Fail on errors?"

@@ -161,46 +161,135 @@ abstract class PublishConfig {
 
 /// Use an asset import step as the final publish phase for the package.
 class AssetImport extends PublishConfig {
+
+  /// File containing assets to import, typically passed through using [transferFile()].
   hidden assetsFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Whether to allow the creation of new assets from the input CSV (full or partial assets), or ensure assets are only updated if they already exist in Atlan.
   hidden assetsUpsertSemantic: ImportSemantic?|String? = null
+
+  /// Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets).
   hidden assetsDeltaSemantic: DeltaSemantic?|String? = null
+
+  /// How to delete any assets not found in the latest file.
   hidden assetsDeltaRemovalType: RemovalType?|String? = null
+
+  /// Which assets to reload from the latest input CSV file. Changed assets only will calculate which assets have changed between the files and only attempt to reload those changes.
   hidden assetsDeltaReloadCalculation: ReloadCalculation?|String? = null
+
+  /// Path to a direct file (locally) to use for delta processing.
+  ///
+  /// Note: providing a value for this will ignore any other previously-processed file in the object store,
+  /// so please be sure this is the option you want to use (should be rare).
   hidden assetsPreviousFileDirect: FrameworkRenderer.NamePathPair? = null
+
+  /// Object store prefix in which previous files exist for delta processing.
   hidden assetsPreviousFilePrefix: String? = null
+
+  /// Options to optimize how assets are imported.
   hidden assetsConfig: ConfigType?|String? = null
+
+  /// List of attributes you want to clear (remove) from assets if their value is blank in the provided file.
   hidden assetsAttrToOverwrite: Listing<String>?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
   hidden assetsFailOnErrors: Boolean?|String? = null
+
+  /// Whether to use case-sensitive matching when running in update-only mode (true) or try case-insensitive matching (false).
   hidden assetsCaseSensitive: Boolean?|String? = null
+
+  /// Whether to treat tables, views and materialized views as interchangeable (true) or strictly adhere to specified types in the input (false).
   hidden assetsTableViewAgnostic: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
   hidden assetsFieldSeparator: String? = null
+
+  /// How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata.
   hidden assetsCmHandling: CustomMetadataSemantic?|String? = null
+
+  /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden assetsTagHandling: AtlanTagSemantic?|String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
   hidden assetsBatchSize: Int?|String? = null
+
+  /// Whether to track details about every asset across batches (true) or only counts (false).
   hidden trackBatches: Boolean?|String? = null
+
+  /// File containing glossaries, categories and terms to import; typically passed through using [transferFile()].
   hidden glossariesFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan.
   hidden glossariesUpsertSemantic: ImportSemantic?|String? = null
+
+  /// Options to optimize how glossaries, categories and terms are imported.
   hidden glossariesConfig: ConfigType?|String? = null
+
+  /// List of attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file.
   hidden glossariesAttrToOverwrite: Listing<String>?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
   hidden glossariesFailOnErrors: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
   hidden glossariesFieldSeparator: String? = null
+
+  /// How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata.
   hidden glossariesCmHandling: CustomMetadataSemantic?|String? = null
+
+  /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden glossariesTagHandling: AtlanTagSemantic?|String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
   hidden glossariesBatchSize: Int?|String? = null
+
+  /// File containing data domains and data products to import; typically passed through using [transferFile()].
   hidden dataProductsFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Whether to allow the creation of new domains and data products from the input CSV, or ensure these are only updated if they already exist in Atlan.
   hidden dataProductsUpsertSemantic: ImportSemantic?|String? = null
+
+  /// Options to optimize how domains and data products are imported.
   hidden dataProductsConfig: ConfigType?|String? = null
+
+  /// Select attributes you want to clear (remove) from domains and data products if their value is blank in the provided file.
   hidden dataProductsAttrToOverwrite: Listing<String>?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
   hidden dataProductsFailOnErrors: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
   hidden dataProductsFieldSeparator: String? = null
+
+  /// How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata.
   hidden dataProductsCmHandling: CustomMetadataSemantic?|String? = null
+
+  /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden dataProductsTagHandling: AtlanTagSemantic?|String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
   hidden dataProductsBatchSize: Int?|String? = null
+
+  /// File containing tag definitions to manage; typically passed through using [transferFile()].
+  hidden tagsFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Options to optimize how tag definitions are imported.
+  hidden tagsConfig: ConfigType?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
+  hidden tagsFailOnErrors: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
+  hidden tagsFieldSeparator: String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
+  hidden tagsBatchSize: Int?|String? = null
 
   fixed inputArtifacts {
     when (assetsFile != null) { assetsFile }
     when (glossariesFile != null) { glossariesFile }
     when (dataProductsFile != null) { dataProductsFile }
+    when (tagsFile != null) { tagsFile }
   }
   fixed outputs {
     files {
@@ -273,23 +362,58 @@ class AssetImport extends PublishConfig {
     when (dataProductsCmHandling != null) { ["data_products_cm_handling"] = dataProductsCmHandling }
     when (dataProductsTagHandling != null) { ["data_products_tag_handling"] = dataProductsTagHandling }
     when (dataProductsBatchSize != null) { ["data_products_batch_size"] = dataProductsBatchSize.toString() }
+
+    when (tagsFile != null) { ["tags_file"] = tagsFile.path }
+    when (tagsConfig != null) { ["tags_config"] = tagsConfig }
+    when (tagsFailOnErrors != null) { ["tags_fail_on_errors"] = tagsFailOnErrors.toString() }
+    when (tagsFieldSeparator != null) { ["tags_field_separator"] = tagsFieldSeparator }
+    when (tagsBatchSize != null) { ["tags_batch_size"] = tagsBatchSize.toString() }
   }.toMap()
 }
 
 /// Use a relational assets builder step as the final publish phase for the package.
 class RelationalAssetsBuilder extends PublishConfig {
+
+  /// File containing assets to import, typically passed through using [transferFile()].
   hidden assetsFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Whether to allow the creation of new (full or partial) assets from the input CSV, or ensure assets are only updated if they already exist in Atlan.
   hidden assetsUpsertSemantic: ImportSemantic?|String? = null
+
+  /// Whether to treat the input file as an initial load, full replacement (deleting any existing assets not in the file) or only incremental (no deletion of existing assets).
   hidden deltaSemantic: DeltaSemantic?|String? = null
+
+  /// How to delete any assets not found in the latest file.
   hidden deltaRemovalType: RemovalType?|String? = null
+
+  /// Which assets to reload from the latest input CSV file. Changed assets only will calculate which assets have changed between the files and only attempt to reload those changes.
   hidden deltaReloadCalculation: ReloadCalculation?|String? = null
+
+  /// Path to a direct file (locally) to use for delta processing.
+  ///
+  /// Note: providing a value for this will ignore any other previously-processed file in the object store,
+  /// so please be sure this is the option you want to use (should be rare).
   hidden previousFileDirect: FrameworkRenderer.NamePathPair? = null
+
+  /// List of attributes you want to clear (remove) from assets if their value is blank in the provided file.
   hidden assetsAttrToOverwrite: Listing<String>?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
   hidden assetsFailOnErrors: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
   hidden assetsFieldSeparator: String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
   hidden assetsBatchSize: Int?|String? = null
+
+  /// How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata.
   hidden assetsCmHandling: CustomMetadataSemantic?|String? = null
+
+  /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden assetsTagHandling: AtlanTagSemantic?|String? = null
+
+  /// Whether to track details about every asset across batches (true) or only counts (false).
   hidden trackBatches: Boolean?|String? = null
 
   fixed inputArtifacts {
