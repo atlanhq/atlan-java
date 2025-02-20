@@ -182,13 +182,17 @@ uiConfig {
       }
     }
     new UIRule {
-        whenInputs { ["custom_filenames"] = true }
-        whenInputs { ["file_format"] = "XLSX" }
+        whenInputs {
+            ["custom_filenames"] = true
+            ["file_format"] = "XLSX"
+        }
         required { "admin_export_filename" }
     }
     new UIRule {
-        whenInputs { ["custom_filenames"] = true }
-        whenInputs { ["file_format"] = "CSV" }
+        whenInputs {
+            ["custom_filenames"] = true
+            ["file_format"] = "CSV"
+        }
         required {
           "users_filename"
           "groups_filename"
