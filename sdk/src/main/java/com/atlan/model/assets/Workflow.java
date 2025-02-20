@@ -475,7 +475,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @param terms the list of terms to append to the Workflow
      * @return the Workflow that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Workflow appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Workflow) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -491,7 +493,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @param terms the list of terms to remove from the Workflow, which must be referenced by GUID
      * @return the Workflow that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Workflow removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Workflow) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -507,7 +511,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated Workflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static Workflow appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Workflow) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -526,7 +532,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated Workflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static Workflow appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -552,7 +560,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @param qualifiedName of the Workflow
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Workflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

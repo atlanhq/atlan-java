@@ -741,7 +741,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param terms the list of terms to append to the TablePartition
      * @return the TablePartition that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static TablePartition appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TablePartition) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -757,7 +759,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param terms the list of terms to remove from the TablePartition, which must be referenced by GUID
      * @return the TablePartition that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static TablePartition removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TablePartition) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -773,7 +777,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated TablePartition
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static TablePartition appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (TablePartition) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -792,7 +798,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated TablePartition
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static TablePartition appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -818,7 +826,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @param qualifiedName of the TablePartition
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TablePartition
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

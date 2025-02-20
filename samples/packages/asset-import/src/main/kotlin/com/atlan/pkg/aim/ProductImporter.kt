@@ -6,7 +6,10 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer
@@ -40,6 +43,8 @@ class ProductImporter(
         logger = logger,
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.dataProductsCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.dataProductsTagHandling, AtlanTagHandling.REPLACE),
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
         typeNameFilter = DataProduct.TYPE_NAME,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],

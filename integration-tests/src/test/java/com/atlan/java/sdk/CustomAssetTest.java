@@ -75,7 +75,7 @@ public class CustomAssetTest extends AtlanLiveTest {
                 .customParentEntity(CustomEntity.refByQualifiedName(parent.getQualifiedName()))
                 .customRelatedToEntity(CustomEntity.refByGuid(one.getGuid()))
                 .build();
-        AssetMutationResponse response = client.assets.save(List.of(one, two), false);
+        AssetMutationResponse response = client.assets.save(List.of(one, two));
         assertNotNull(response);
         assertNotNull(response.getUpdatedAssets());
         assertEquals(response.getUpdatedAssets().size(), 1);

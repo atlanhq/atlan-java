@@ -1147,7 +1147,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param terms the list of terms to append to the Column
      * @return the Column that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Column appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Column) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -1163,7 +1165,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param terms the list of terms to remove from the Column, which must be referenced by GUID
      * @return the Column that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Column removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Column) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -1179,7 +1183,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated Column
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static Column appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Column) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -1198,7 +1204,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated Column
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static Column appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -1224,7 +1232,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @param qualifiedName of the Column
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Column
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

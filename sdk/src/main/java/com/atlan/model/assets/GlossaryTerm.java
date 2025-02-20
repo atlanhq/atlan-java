@@ -733,7 +733,9 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated GlossaryTerm
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static GlossaryTerm appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (GlossaryTerm) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -752,7 +754,9 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated GlossaryTerm
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static GlossaryTerm appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -778,7 +782,9 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @param qualifiedName of the GlossaryTerm
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the GlossaryTerm
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

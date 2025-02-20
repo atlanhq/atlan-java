@@ -199,7 +199,9 @@ import com.atlan.model.assets.ThoughtspotView
 import com.atlan.model.assets.ThoughtspotWorksheet
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.AtlanTypeCategory
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
@@ -244,6 +246,8 @@ class AssetImporter(
         batchSize = ctx.config.assetsBatchSize.toInt(),
         caseSensitive = ctx.config.assetsCaseSensitive,
         creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.assetsCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.assetsTagHandling, AtlanTagHandling.REPLACE),
         tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
         trackBatches = ctx.config.trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],

@@ -558,7 +558,9 @@ public class PowerBIDataflow extends Asset
      * @param terms the list of terms to append to the PowerBIDataflow
      * @return the PowerBIDataflow that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PowerBIDataflow appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIDataflow) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -574,7 +576,9 @@ public class PowerBIDataflow extends Asset
      * @param terms the list of terms to remove from the PowerBIDataflow, which must be referenced by GUID
      * @return the PowerBIDataflow that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PowerBIDataflow removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIDataflow) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -590,7 +594,9 @@ public class PowerBIDataflow extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated PowerBIDataflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static PowerBIDataflow appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (PowerBIDataflow) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -609,7 +615,9 @@ public class PowerBIDataflow extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated PowerBIDataflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static PowerBIDataflow appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -635,7 +643,9 @@ public class PowerBIDataflow extends Asset
      * @param qualifiedName of the PowerBIDataflow
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PowerBIDataflow
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
