@@ -83,6 +83,7 @@ object AdminExporter {
                         "policies" -> CSVWriter(policiesFile).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
                     }
                 }
+                fileOutputs.addAll(listOf(usersFile, groupsFile, personasFile, purposesFile, policiesFile))
             }
 
             when (ctx.config.deliveryType) {
