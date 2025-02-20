@@ -73,6 +73,54 @@ uiConfig {
           default = "XLSX"
           fallback = default
         }
+        ["custom_filenames"] = new BooleanInput {
+          title = "Custom filenames?"
+          helpText = "Whether to use custom filenames for the exported files."
+          required = false
+          fallback = false
+        }
+        ["xlsx_filename"] = new TextInput {
+          title = "Filename"
+          helpText = "Enter the name of the exported xlsx file."
+          placeholderText = "admin-export.xlsx"
+          required = false
+          fallback = "admin-export.xlsx"
+        }
+        ["users_filename"] = new TextInput {
+          title = "Users filename"
+          helpText = "Enter the name of the exported users file."
+          placeholderText = "users.csv"
+          required = false
+          fallback = "users.csv"
+        }
+        ["groups_filename"] = new TextInput {
+          title = "Groups filename"
+          helpText = "Enter the name of the exported groups file."
+          placeholderText = "groups.csv"
+          required = false
+          fallback = "groups.csv"
+        }
+        ["personas_filename"] = new TextInput {
+          title = "Personas filename"
+          helpText = "Enter the name of the exported personas file."
+          placeholderText = "personas.csv"
+          required = false
+          fallback = "personas.csv"
+        }
+        ["purposes_filename"] = new TextInput {
+          title = "Purposes filename"
+          helpText = "Enter the name of the exported purposes file."
+          placeholderText = "purposes.csv"
+          required = false
+          fallback = "purposes.csv"
+        }
+        ["policies_filename"] = new TextInput {
+          title = "Policies filename"
+          helpText = "Enter the name of the exported policies file."
+          placeholderText = "policies.csv"
+          required = false
+          fallback = "policies.csv"
+        }
       }
     }
     ["Delivery"] {
@@ -132,6 +180,22 @@ uiConfig {
         "target_key"
         "cloud_target"
       }
+    }
+    new UIRule {
+        whenInputs { ["custom_filenames"] = true }
+        whenInputs { ["file_format"] = "XLSX" }
+        required { "admin_export_filename" }
+    }
+    new UIRule {
+        whenInputs { ["custom_filenames"] = true }
+        whenInputs { ["file_format"] = "CSV" }
+        required {
+          "users_filename"
+          "groups_filename"
+          "personas_filename"
+          "purposes_filename"
+          "policies_filename"
+        }
     }
   }
 }

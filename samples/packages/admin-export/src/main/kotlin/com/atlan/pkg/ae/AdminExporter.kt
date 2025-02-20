@@ -23,13 +23,6 @@ import java.nio.file.Paths
  */
 object AdminExporter {
     private val logger = Utils.getLogger(this.javaClass.name)
-    private const val FILENAME = "admin-export.xlsx"
-
-    private const val USERS_FILE = "users.csv"
-    private const val GROUPS_FILE = "groups.csv"
-    private const val PERSONAS_FILE = "personas.csv"
-    private const val PURPOSES_FILE = "purposes.csv"
-    private const val POLICIES_FILE = "policies.csv"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -42,12 +35,12 @@ object AdminExporter {
             val connectionMap = preloadConnectionMap(ctx)
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
-            val usersFile = "$outputDirectory${File.separator}$USERS_FILE"
-            val groupsFile = "$outputDirectory${File.separator}$GROUPS_FILE"
-            val personasFile = "$outputDirectory${File.separator}$PERSONAS_FILE"
-            val purposesFile = "$outputDirectory${File.separator}$PURPOSES_FILE"
-            val policiesFile = "$outputDirectory${File.separator}$POLICIES_FILE"
+            val xlsxFile = "$outputDirectory${File.separator}${ctx.config.xlsxFilename}"
+            val usersFile = "$outputDirectory${File.separator}${ctx.config.usersFilename}"
+            val groupsFile = "$outputDirectory${File.separator}${ctx.config.groupsFilename}"
+            val personasFile = "$outputDirectory${File.separator}${ctx.config.personasFilename}"
+            val purposesFile = "$outputDirectory${File.separator}${ctx.config.purposesFilename}"
+            val policiesFile = "$outputDirectory${File.separator}${ctx.config.policiesFilename}"
 
             // Touch every file, just so they exist, to avoid any workflow failures
             Paths.get(outputDirectory).toFile().mkdirs()
