@@ -1138,10 +1138,6 @@
         /**
          * Append the specified tags to the asset idempotently, avoiding replacing any existing tags.
          * @param atlanTagNames human-readable names of the tags to append
-         * @param propagate whether to propagate the Atlan tag (true) or not (false)
-         * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-         * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-         * @param restrictHierarchyPropagation whether to avoid propagating through the hierarchy (true) or do propagate through the hierarchy (false)
          * @return the builder with the tags appended
          */
         public B appendAtlanTags(List<String> atlanTagNames) {
@@ -1178,10 +1174,6 @@
         /**
          * Append the specified tag to the asset idempotently, avoiding replacing any existing tag.
          * @param tagName human-readable name of the tag to append
-         * @param propagate whether to propagate the Atlan tag (true) or not (false)
-         * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-         * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-         * @param restrictHierarchyPropagation whether to avoid propagating through the hierarchy (true) or do propagate through the hierarchy (false)
          * @return the builder with the tag appended
          */
         public B appendAtlanTag(String tagName) {
