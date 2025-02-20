@@ -601,7 +601,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @param terms the list of terms to append to the DataDomain
      * @return the DataDomain that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataDomain appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataDomain) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -617,7 +619,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @param terms the list of terms to remove from the DataDomain, which must be referenced by GUID
      * @return the DataDomain that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataDomain removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataDomain) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -633,7 +637,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DataDomain
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DataDomain appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DataDomain) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -652,7 +658,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DataDomain
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DataDomain appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -678,7 +686,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @param qualifiedName of the DataDomain
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataDomain
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

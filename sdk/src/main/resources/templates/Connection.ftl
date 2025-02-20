@@ -130,7 +130,7 @@
                 client.getUserCache().getIdForName(userName);
             }
         }
-        return client.assets.save(this, false);
+        return client.assets.save(this);
     }
 
     /**
@@ -143,7 +143,9 @@
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
+     * @deprecated see {@link #save(AtlanClient)}
      */
+    @Deprecated
     @Override
     public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags)
             throws AtlanException {

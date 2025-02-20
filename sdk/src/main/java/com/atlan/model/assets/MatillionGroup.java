@@ -493,7 +493,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @param terms the list of terms to append to the MatillionGroup
      * @return the MatillionGroup that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static MatillionGroup appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MatillionGroup) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -509,7 +511,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @param terms the list of terms to remove from the MatillionGroup, which must be referenced by GUID
      * @return the MatillionGroup that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static MatillionGroup removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MatillionGroup) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -525,7 +529,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated MatillionGroup
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static MatillionGroup appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (MatillionGroup) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -544,7 +550,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated MatillionGroup
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static MatillionGroup appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -570,7 +578,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @param qualifiedName of the MatillionGroup
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the MatillionGroup
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

@@ -10,6 +10,8 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.enums.AssetCreationHandling;
+import com.atlan.model.enums.AtlanTagHandling;
+import com.atlan.model.enums.CustomMetadataHandling;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -28,11 +30,11 @@ public class ParallelBatch implements AtlanCloseable {
     /** Maximum number of assets to submit in each batch. */
     private final int maxSize;
 
-    /** Whether to replace Atlan tags (true), or ignore them (false). */
-    private final boolean replaceAtlanTags;
+    /** How to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them) */
+    private final AtlanTagHandling atlanTagHandling;
 
     /** How to handle any custom metadata on assets (ignore, replace, or merge). */
-    private final AssetBatch.CustomMetadataHandling customMetadataHandling;
+    private final CustomMetadataHandling customMetadataHandling;
 
     /** Whether to capture details about any failures (true) or throw exceptions for any failures (false). */
     private final boolean captureFailures;
@@ -69,7 +71,7 @@ public class ParallelBatch implements AtlanCloseable {
      * @param maxSize maximum size of each batch that should be processed (per API call)
      */
     public ParallelBatch(AtlanClient client, int maxSize) {
-        this(client, maxSize, false, AssetBatch.CustomMetadataHandling.IGNORE);
+        this(client, maxSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.IGNORE);
     }
 
     /**
@@ -77,15 +79,15 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      */
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, false);
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling) {
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, false);
     }
 
     /**
@@ -93,17 +95,17 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      */
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, false);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, false);
     }
 
     /**
@@ -111,7 +113,7 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -119,11 +121,11 @@ public class ParallelBatch implements AtlanCloseable {
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, true);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, updateOnly, true);
     }
 
     /**
@@ -131,7 +133,7 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -140,12 +142,12 @@ public class ParallelBatch implements AtlanCloseable {
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
             boolean track) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, track, true);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, updateOnly, track, true);
     }
 
     /**
@@ -153,7 +155,7 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -163,8 +165,8 @@ public class ParallelBatch implements AtlanCloseable {
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
             boolean track,
@@ -172,7 +174,7 @@ public class ParallelBatch implements AtlanCloseable {
         this(
                 client,
                 maxSize,
-                replaceAtlanTags,
+                atlanTagHandling,
                 customMetadataHandling,
                 captureFailures,
                 updateOnly,
@@ -186,7 +188,7 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -197,8 +199,8 @@ public class ParallelBatch implements AtlanCloseable {
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
             boolean track,
@@ -207,7 +209,7 @@ public class ParallelBatch implements AtlanCloseable {
         this(
                 client,
                 maxSize,
-                replaceAtlanTags,
+                atlanTagHandling,
                 customMetadataHandling,
                 captureFailures,
                 updateOnly,
@@ -222,7 +224,7 @@ public class ParallelBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -234,8 +236,8 @@ public class ParallelBatch implements AtlanCloseable {
     public ParallelBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
-            AssetBatch.CustomMetadataHandling customMetadataHandling,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
             boolean track,
@@ -244,7 +246,7 @@ public class ParallelBatch implements AtlanCloseable {
             boolean tableViewAgnostic) {
         this.client = client;
         this.maxSize = maxSize;
-        this.replaceAtlanTags = replaceAtlanTags;
+        this.atlanTagHandling = atlanTagHandling;
         this.customMetadataHandling = customMetadataHandling;
         this.creationHandling = creationHandling;
         this.track = track;
@@ -269,7 +271,7 @@ public class ParallelBatch implements AtlanCloseable {
                 k -> new AssetBatch(
                         client,
                         maxSize,
-                        replaceAtlanTags,
+                        atlanTagHandling,
                         customMetadataHandling,
                         captureFailures,
                         updateOnly,

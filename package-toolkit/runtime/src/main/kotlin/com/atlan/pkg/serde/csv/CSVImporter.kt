@@ -6,6 +6,8 @@ import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.PackageContext
@@ -35,6 +37,8 @@ import java.util.stream.Stream
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param customMetadataHandling how to handle custom metadata values (default: merge them with any existing values)
+ * @param atlanTagHandling how to handle any Atlan tag associations (default: replace them, for backwards compatibility)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
@@ -49,6 +53,8 @@ abstract class CSVImporter(
     protected val trackBatches: Boolean = true,
     protected val caseSensitive: Boolean = true,
     protected val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    protected val customMetadataHandling: CustomMetadataHandling = CustomMetadataHandling.MERGE,
+    protected val atlanTagHandling: AtlanTagHandling = AtlanTagHandling.REPLACE,
     protected val tableViewAgnostic: Boolean = false,
     protected val fieldSeparator: Char = ',',
 ) : AssetGenerator,
@@ -79,7 +85,8 @@ abstract class CSVImporter(
             updateOnly,
             trackBatches,
             caseSensitive,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            customMetadataHandling,
+            atlanTagHandling,
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
@@ -102,7 +109,8 @@ abstract class CSVImporter(
             updateOnly,
             trackBatches,
             caseSensitive,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            customMetadataHandling,
+            atlanTagHandling,
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,

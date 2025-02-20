@@ -21,4 +21,6 @@ data class LineageBuilderCfg(
     @JsonProperty("lineage_case_sensitive") val lineageCaseSensitive: Boolean = true,
     @JsonProperty("field_separator") val fieldSeparator: String = ",",
     @JsonProperty("batch_size") val batchSize: Number = 20,
+    @JsonProperty("cm_handling") val cmHandling: String? = null,
+    @JsonProperty("tag_handling") val tagHandling: String? = null,
 ) : CustomConfig()

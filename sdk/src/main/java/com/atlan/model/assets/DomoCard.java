@@ -505,7 +505,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @param terms the list of terms to append to the DomoCard
      * @return the DomoCard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DomoCard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DomoCard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -521,7 +523,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @param terms the list of terms to remove from the DomoCard, which must be referenced by GUID
      * @return the DomoCard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DomoCard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DomoCard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -537,7 +541,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DomoCard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DomoCard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DomoCard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -556,7 +562,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DomoCard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DomoCard appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -582,7 +590,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @param qualifiedName of the DomoCard
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DomoCard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

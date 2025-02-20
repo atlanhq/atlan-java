@@ -54,6 +54,289 @@ uiConfig {
         }
       }
     }
+    ["Glossaries"] {
+      description = "Glossaries to import"
+      inputs {
+        ["glossaries_file"] = new FileUploader {
+          title = "Glossaries file"
+          fileTypes { "text/csv" }
+          required = false
+          helpText = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages."
+          placeholderText = "Select glossaries CSV file"
+          fallback = ""
+        }
+        ["glossaries_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing glossaries, categories and terms."
+          placeholderText = "path/to/file"
+          width = 4
+          fallback = ""
+        }
+        ["glossaries_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "glossaries.csv"
+          width = 4
+          fallback = ""
+        }
+        ["glossaries_upsert_semantic"] = new Radio {
+          title = "Input handling"
+          required = false
+          possibleValues {
+            ["upsert"] = "Create and update"
+            ["update"] = "Update only"
+          }
+          default = "upsert"
+          helpText = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan."
+          fallback = default
+        }
+        ["glossaries_config"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how assets are imported."
+        }
+        ["glossaries_attr_to_overwrite"] = new DropDown {
+          title = "Remove attributes, if empty"
+          required = false
+          possibleValues {
+            ["certificateStatus"] = "Certificate"
+            ["announcementType"] = "Announcement"
+            ["displayName"] = "Display name"
+            ["description"] = "Description (system)"
+            ["userDescription"] = "Description (user)"
+            ["ownerUsers"] = "Owners (users)"
+            ["ownerGroups"] = "Owners (groups)"
+            ["assignedTerms"] = "Assigned terms"
+            ["readme"] = "README"
+          }
+          helpText = "Select attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file."
+          multiSelect = true
+          width = 8
+          fallback = List()
+        }
+        ["glossaries_fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors?"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
+        }
+        ["glossaries_field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+          fallback = placeholderText
+        }
+        ["glossaries_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+          fallback = placeholderValue
+        }
+        ["glossaries_cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "merge"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["glossaries_tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "replace"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
+      }
+    }
+    ["Data products"] {
+      description = "Data products to import"
+      inputs {
+        ["data_products_file"] = new FileUploader {
+          title = "Data products file"
+          fileTypes { "text/csv" }
+          required = false
+          helpText = "Select the file containing domains and data products to import, produced by one of the Asset Export packages."
+          placeholderText = "Select data products CSV file"
+          fallback = ""
+        }
+        ["data_products_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing domains and data products."
+          placeholderText = "path/to/file"
+          width = 4
+          fallback = ""
+        }
+        ["data_products_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "data_products.csv"
+          width = 4
+          fallback = ""
+        }
+        ["data_products_upsert_semantic"] = new Radio {
+          title = "Input handling"
+          required = false
+          possibleValues {
+            ["upsert"] = "Create and update"
+            ["update"] = "Update only"
+          }
+          default = "upsert"
+          helpText = "Whether to allow the creation of new domains and data products from the input CSV, or ensure these are only updated if they already exist in Atlan."
+          fallback = default
+        }
+        ["data_products_config"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how domains and data products are imported."
+        }
+        ["data_products_attr_to_overwrite"] = new DropDown {
+          title = "Remove attributes, if empty"
+          required = false
+          possibleValues {
+            ["certificateStatus"] = "Certificate"
+            ["announcementType"] = "Announcement"
+            ["displayName"] = "Display name"
+            ["description"] = "Description (system)"
+            ["userDescription"] = "Description (user)"
+            ["ownerUsers"] = "Owners (users)"
+            ["ownerGroups"] = "Owners (groups)"
+            ["assignedTerms"] = "Assigned terms"
+            ["readme"] = "README"
+          }
+          helpText = "Select attributes you want to clear (remove) from domains and data products if their value is blank in the provided file."
+          multiSelect = true
+          width = 8
+          fallback = List()
+        }
+        ["data_products_fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors?"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
+        }
+        ["data_products_field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+          fallback = placeholderText
+        }
+        ["data_products_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+          fallback = placeholderValue
+        }
+        ["data_products_cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "merge"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["data_products_tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "replace"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
+      }
+    }
+    ["Tags"] {
+      description = "Tags to manage"
+      inputs {
+        ["tags_file"] = new FileUploader {
+          title = "Tags file"
+          fileTypes { "text/csv" }
+          required = false
+          helpText = "Select the file containing tags to manage."
+          placeholderText = "Select tags CSV file"
+          fallback = ""
+        }
+        ["tags_prefix"] = new TextInput {
+          title = "Prefix (path)"
+          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing tags."
+          placeholderText = "path/to/file"
+          width = 4
+          fallback = ""
+        }
+        ["tags_key"] = new TextInput {
+          title = "Object key (filename)"
+          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
+          placeholderText = "tags.csv"
+          width = 4
+          fallback = ""
+        }
+        ["tags_config"] = new Radio {
+          title = "Options"
+          required = true
+          possibleValues {
+            ["default"] = "Default"
+            ["advanced"] = "Advanced"
+          }
+          default = "default"
+          helpText = "Options to optimize how tag definitions are imported."
+        }
+        ["tags_fail_on_errors"] = new BooleanInput {
+          title = "Fail on errors?"
+          required = false
+          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
+          fallback = true
+        }
+        ["tags_field_separator"] = new TextInput {
+          title = "Field separator"
+          required = false
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
+          placeholderText = ","
+          width = 4
+          fallback = placeholderText
+        }
+        ["tags_batch_size"] = new NumericInput {
+          title = "Batch size"
+          required = false
+          helpText = "Maximum number of rows to process at a time (per API request)."
+          placeholderValue = 20
+          width = 4
+          fallback = placeholderValue
+        }
+      }
+    }
     ["Assets"] {
       description = "Assets to import"
       inputs {
@@ -170,22 +453,24 @@ uiConfig {
           fallback = List()
         }
         ["assets_fail_on_errors"] = new BooleanInput {
-          title = "Fail on errors"
+          title = "Fail on errors?"
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
           fallback = true
         }
         ["assets_case_sensitive"] = new BooleanInput {
-          title = "Case-sensitive match for updates"
+          title = "Case-sensitive match for updates?"
           required = false
           helpText = "Whether to use case-sensitive matching when running in update-only mode (Yes) or try case-insensitive matching (No)."
           fallback = true
+          width = 4
         }
         ["assets_table_view_agnostic"] = new BooleanInput {
           title = "Table/view agnostic?"
           required = false
           helpText = "Whether to treat tables, views and materialized views as interchangeable (Yes) or strictly adhere to specified types in the input (No)."
           fallback = false
+          width = 4
         }
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
@@ -203,8 +488,31 @@ uiConfig {
           width = 4
           fallback = placeholderValue
         }
+        ["assets_cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "merge"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["assets_tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "replace"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
         ["track_batches"] = new BooleanInput {
-          title = "Track asset details"
+          title = "Track asset details?"
           required = false
           hide = true
           defaultSelection = true
@@ -213,252 +521,15 @@ uiConfig {
         }
       }
     }
-    ["Glossaries"] {
-      description = "Glossaries to import"
-      inputs {
-        ["glossaries_file"] = new FileUploader {
-          title = "Glossaries file"
-          fileTypes { "text/csv" }
-          required = false
-          helpText = "Select the file containing glossaries, categories and terms to import, produced by one of the Asset Export packages."
-          placeholderText = "Select glossaries CSV file"
-          fallback = ""
-        }
-        ["glossaries_prefix"] = new TextInput {
-          title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing glossaries, categories and terms."
-          placeholderText = "path/to/file"
-          width = 4
-          fallback = ""
-        }
-        ["glossaries_key"] = new TextInput {
-          title = "Object key (filename)"
-          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
-          placeholderText = "glossaries.csv"
-          width = 4
-          fallback = ""
-        }
-        ["glossaries_upsert_semantic"] = new Radio {
-          title = "Input handling"
-          required = false
-          possibleValues {
-            ["upsert"] = "Create and update"
-            ["update"] = "Update only"
-          }
-          default = "upsert"
-          helpText = "Whether to allow the creation of new glossaries, categories and terms from the input CSV, or ensure these are only updated if they already exist in Atlan."
-          fallback = default
-        }
-        ["glossaries_config"] = new Radio {
-          title = "Options"
-          required = true
-          possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
-          }
-          default = "default"
-          helpText = "Options to optimize how assets are imported."
-        }
-        ["glossaries_attr_to_overwrite"] = new DropDown {
-          title = "Remove attributes, if empty"
-          required = false
-          possibleValues {
-            ["certificateStatus"] = "Certificate"
-            ["announcementType"] = "Announcement"
-            ["displayName"] = "Display name"
-            ["description"] = "Description (system)"
-            ["userDescription"] = "Description (user)"
-            ["ownerUsers"] = "Owners (users)"
-            ["ownerGroups"] = "Owners (groups)"
-            ["assignedTerms"] = "Assigned terms"
-            ["readme"] = "README"
-          }
-          helpText = "Select attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file."
-          multiSelect = true
-          width = 8
-          fallback = List()
-        }
-        ["glossaries_fail_on_errors"] = new BooleanInput {
-          title = "Fail on errors"
-          required = false
-          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
-          fallback = true
-        }
-        ["glossaries_field_separator"] = new TextInput {
-          title = "Field separator"
-          required = false
-          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
-          placeholderText = ","
-          width = 4
-          fallback = placeholderText
-        }
-        ["glossaries_batch_size"] = new NumericInput {
-          title = "Batch size"
-          required = false
-          helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderValue = 20
-          width = 4
-          fallback = placeholderValue
-        }
-      }
-    }
-    ["Data products"] {
-      description = "Data products to import"
-      inputs {
-        ["data_products_file"] = new FileUploader {
-          title = "Data products file"
-          fileTypes { "text/csv" }
-          required = false
-          helpText = "Select the file containing domains and data products to import, produced by one of the Asset Export packages."
-          placeholderText = "Select data products CSV file"
-          fallback = ""
-        }
-        ["data_products_prefix"] = new TextInput {
-          title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing domains and data products."
-          placeholderText = "path/to/file"
-          width = 4
-          fallback = ""
-        }
-        ["data_products_key"] = new TextInput {
-          title = "Object key (filename)"
-          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
-          placeholderText = "data_products.csv"
-          width = 4
-          fallback = ""
-        }
-        ["data_products_upsert_semantic"] = new Radio {
-          title = "Input handling"
-          required = false
-          possibleValues {
-            ["upsert"] = "Create and update"
-            ["update"] = "Update only"
-          }
-          default = "upsert"
-          helpText = "Whether to allow the creation of new domains and data products from the input CSV, or ensure these are only updated if they already exist in Atlan."
-          fallback = default
-        }
-        ["data_products_config"] = new Radio {
-          title = "Options"
-          required = true
-          possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
-          }
-          default = "default"
-          helpText = "Options to optimize how domains and data products are imported."
-        }
-        ["data_products_attr_to_overwrite"] = new DropDown {
-          title = "Remove attributes, if empty"
-          required = false
-          possibleValues {
-            ["certificateStatus"] = "Certificate"
-            ["announcementType"] = "Announcement"
-            ["displayName"] = "Display name"
-            ["description"] = "Description (system)"
-            ["userDescription"] = "Description (user)"
-            ["ownerUsers"] = "Owners (users)"
-            ["ownerGroups"] = "Owners (groups)"
-            ["assignedTerms"] = "Assigned terms"
-            ["readme"] = "README"
-          }
-          helpText = "Select attributes you want to clear (remove) from domains and data products if their value is blank in the provided file."
-          multiSelect = true
-          width = 8
-          fallback = List()
-        }
-        ["data_products_fail_on_errors"] = new BooleanInput {
-          title = "Fail on errors"
-          required = false
-          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
-          fallback = true
-        }
-        ["data_products_field_separator"] = new TextInput {
-          title = "Field separator"
-          required = false
-          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
-          placeholderText = ","
-          width = 4
-          fallback = placeholderText
-        }
-        ["data_products_batch_size"] = new NumericInput {
-          title = "Batch size"
-          required = false
-          helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderValue = 20
-          width = 4
-          fallback = placeholderValue
-        }
-      }
-    }
-    ["Tags"] {
-      description = "Tags to manage"
-      inputs {
-        ["tags_file"] = new FileUploader {
-          title = "Tags file"
-          fileTypes { "text/csv" }
-          required = false
-          helpText = "Select the file containing tags to manage."
-          placeholderText = "Select tags CSV file"
-          fallback = ""
-        }
-        ["tags_prefix"] = new TextInput {
-          title = "Prefix (path)"
-          helpText = "Enter the directory (path) within the object store from which to retrieve the file containing tags."
-          placeholderText = "path/to/file"
-          width = 4
-          fallback = ""
-        }
-        ["tags_key"] = new TextInput {
-          title = "Object key (filename)"
-          helpText = "Enter the object key (filename), including its extension, within the object store and prefix."
-          placeholderText = "tags.csv"
-          width = 4
-          fallback = ""
-        }
-        ["tags_config"] = new Radio {
-          title = "Options"
-          required = true
-          possibleValues {
-            ["default"] = "Default"
-            ["advanced"] = "Advanced"
-          }
-          default = "default"
-          helpText = "Options to optimize how domains and data products are imported."
-        }
-        ["tags_fail_on_errors"] = new BooleanInput {
-          title = "Fail on errors"
-          required = false
-          helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
-          fallback = true
-        }
-        ["tags_field_separator"] = new TextInput {
-          title = "Field separator"
-          required = false
-          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
-          placeholderText = ","
-          width = 4
-          fallback = placeholderText
-        }
-        ["tags_batch_size"] = new NumericInput {
-          title = "Batch size"
-          required = false
-          helpText = "Maximum number of rows to process at a time (per API request)."
-          placeholderValue = 20
-          width = 4
-          fallback = placeholderValue
-        }
-      }
-    }
   }
   rules {
     new UIRule {
       whenInputs { ["import_type"] = "DIRECT" }
-      required { "assets_file" "glossaries_file" "data_products_file" }
+      required { "assets_file" "glossaries_file" "data_products_file" "tags_file" }
     }
     new UIRule {
       whenInputs { ["import_type"] = "CLOUD" }
-      required { "cloud_source" "assets_prefix" "assets_key" "glossaries_prefix" "glossaries_key" "data_products_prefix" "data_products_key" }
+      required { "cloud_source" "assets_prefix" "assets_key" "glossaries_prefix" "glossaries_key" "data_products_prefix" "data_products_key" "tags_prefix" "tags_key" }
     }
     new UIRule {
       whenInputs { ["assets_delta_semantic"] = "full" }
@@ -472,6 +543,8 @@ uiConfig {
         "assets_case_sensitive"
         "assets_table_view_agnostic"
         "assets_field_separator"
+        "assets_cm_handling"
+        "assets_tag_handling"
         "assets_batch_size"
       }
     }
@@ -481,6 +554,8 @@ uiConfig {
         "glossaries_attr_to_overwrite"
         "glossaries_fail_on_errors"
         "glossaries_field_separator"
+        "glossaries_cm_handling"
+        "glossaries_tag_handling"
         "glossaries_batch_size"
       }
     }
@@ -490,6 +565,8 @@ uiConfig {
         "data_products_attr_to_overwrite"
         "data_products_fail_on_errors"
         "data_products_field_separator"
+        "data_products_cm_handling"
+        "data_products_tag_handling"
         "data_products_batch_size"
       }
     }

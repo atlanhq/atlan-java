@@ -228,7 +228,7 @@ public class Suggestions {
          */
         public AssetMutationResponse apply(boolean allowMultiple) throws AtlanException {
             Apply result = _apply(allowMultiple);
-            return result.getAsset().save(client, result.getIncludesTags());
+            return result.getAsset().save(client);
         }
 
         /**

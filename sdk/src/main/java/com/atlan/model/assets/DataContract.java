@@ -566,7 +566,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
      * @param terms the list of terms to append to the DataContract
      * @return the DataContract that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataContract appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataContract) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -582,7 +584,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
      * @param terms the list of terms to remove from the DataContract, which must be referenced by GUID
      * @return the DataContract that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataContract removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataContract) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -598,7 +602,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DataContract
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DataContract appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DataContract) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -617,7 +623,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DataContract
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DataContract appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -643,7 +651,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
      * @param qualifiedName of the DataContract
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataContract
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

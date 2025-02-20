@@ -130,7 +130,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, not updating any of the existing asset's Atlan tags and entirely
+     * Creates / updates any asset, updating any of the existing asset's Atlan tags and entirely
      * ignoring any custom metadata.
      *
      * @param value asset to upsert
@@ -142,16 +142,15 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Creates any asset, not updating any of the existing asset's Atlan tags and entirely
+     * Creates / updates any assets, updating any of the existing assets' Atlan tags and entirely
      * ignoring any custom metadata.
      *
-     * @param value asset to upsert
-     * @param options to override default client settings
+     * @param values assets to upsert
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public AsyncCreationResponse save(Asset value, RequestOptions options) throws AtlanException {
-        return save(value, false, options);
+    public AsyncCreationResponse save(List<Asset> values) throws AtlanException {
+        return save(values, null);
     }
 
     /**
@@ -162,7 +161,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param replaceAtlanTags whether to overwrite any existing Atlan tags (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #save(Asset)}
      */
+    @Deprecated
     public AsyncCreationResponse save(Asset value, boolean replaceAtlanTags) throws AtlanException {
         return save(List.of(value), replaceAtlanTags, null);
     }
@@ -176,7 +177,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #save(Asset, RequestOptions)}
      */
+    @Deprecated
     public AsyncCreationResponse save(Asset value, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         return save(List.of(value), replaceAtlanTags, options);
@@ -190,7 +193,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param replaceAtlanTags whether to overwrite any existing Atlan tags (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #save(List, RequestOptions)}
      */
+    @Deprecated
     public AsyncCreationResponse save(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return save(values, replaceAtlanTags, null);
     }
@@ -204,20 +209,114 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #save(List, RequestOptions)}
      */
+    @Deprecated
     public AsyncCreationResponse save(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        "%s?replaceTags=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
         AsyncCreationResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
         response.setClient(client);
         return response;
+    }
+
+    /**
+     * Creates / updates the assets provided, entirely ignoring any custom metadata.
+     *
+     * @param value asset to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse save(Asset value, RequestOptions options) throws AtlanException {
+        return save(List.of(value), options);
+    }
+
+    /**
+     * Creates / updates the assets provided, entirely ignoring any custom metadata.
+     *
+     * @param values assets to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse save(List<Asset> values, RequestOptions options) throws AtlanException {
+        String tagParams = getTagParameters(values);
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        bulk_endpoint, tagParams));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
+        response.setClient(client);
+        return response;
+    }
+
+    /**
+     * Creates / updates the assets provided, entirely ignoring both custom metadata and tags.
+     *
+     * @param values assets to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveNoTagsNoCM(List<Asset> values, RequestOptions options) throws AtlanException {
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?replaceTags=false&appendTags=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        bulk_endpoint));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
+        response.setClient(client);
+        return response;
+    }
+
+    /**
+     * Calculate how we should apply tags (semantically) and return the correct query parameters to do so.
+     * @param values the set of assets that (possibly) have tags being managed
+     * @return the query parameters set to manage the tags as requested
+     */
+    private String getTagParameters(List<Asset> values) {
+        boolean appendTags = false;
+        boolean replaceTags = false;
+        for (int i = 0; i < values.size() && !(appendTags && replaceTags); i++) {
+            Asset value = values.get(i);
+            replaceTags = replaceTags || value.getNullFields().contains("atlanTags");
+            if (value.getAtlanTags() != null && !value.getAtlanTags().isEmpty()) {
+                for (AtlanTag tag : value.getAtlanTags()) {
+                    switch (tag.getSemantic()) {
+                        case APPEND, REMOVE -> appendTags = true;
+                        case REPLACE -> replaceTags = true;
+                    }
+                }
+            }
+        }
+        if (appendTags && replaceTags) {
+            log.warn(
+                    "Provided list of assets includes mixture of tag semantics, falling back to append-only for safety. To avoid this, ensure you send the same mode for all assets in the list.");
+        }
+        String tagParams;
+        if (appendTags) {
+            tagParams = "replaceTags=false&appendTags=true";
+        } else if (replaceTags) {
+            tagParams = "replaceTags=true&appendTags=false";
+        } else {
+            tagParams = "replaceTags=false&appendTags=false";
+        }
+        return tagParams;
     }
 
     /**
@@ -228,7 +327,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param replaceAtlanTags whether to overwrite any existing Atlan tags (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #saveMergingCM(List)}
      */
+    @Deprecated
     public AsyncCreationResponse saveMergingCM(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return saveMergingCM(values, replaceAtlanTags, null);
     }
@@ -242,15 +343,53 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #saveMergingCM(List, RequestOptions)}
      */
+    @Deprecated
     public AsyncCreationResponse saveMergingCM(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
+                        "%s?replaceTags=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
+        response.setClient(client);
+        return response;
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and merging any
+     * provided custom metadata values (but leaving any existing custom metadata values as-is).
+     *
+     * @param values assets to upsert
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveMergingCM(List<Asset> values) throws AtlanException {
+        return saveMergingCM(values, null);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and merging any
+     * provided custom metadata values (but leaving any existing custom metadata values as-is).
+     *
+     * @param values assets to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveMergingCM(List<Asset> values, RequestOptions options) throws AtlanException {
+        String tagParams = getTagParameters(values);
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
+                        bulk_endpoint, tagParams));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
         AsyncCreationResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
@@ -267,7 +406,9 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param replaceAtlanTags whether to overwrite any existing Atlan tags (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #saveReplacingCM(List)}
      */
+    @Deprecated
     public AsyncCreationResponse saveReplacingCM(List<Asset> values, boolean replaceAtlanTags) throws AtlanException {
         return saveReplacingCM(values, replaceAtlanTags, null);
     }
@@ -282,15 +423,55 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @param options to override default client settings
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
+     * @deprecated see {@link #saveReplacingCM(List, RequestOptions)}
      */
+    @Deprecated
     public AsyncCreationResponse saveReplacingCM(List<Asset> values, boolean replaceAtlanTags, RequestOptions options)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
+                        "%s?replaceTags=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
                         bulk_endpoint, replaceAtlanTags));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        AsyncCreationResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
+        response.setClient(client);
+        return response;
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and replacing all
+     * custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+     * on the asset that is not also provided in the request).
+     *
+     * @param values assets to upsert
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveReplacingCM(List<Asset> values) throws AtlanException {
+        return saveReplacingCM(values, null);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and replacing all
+     * custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+     * on the asset that is not also provided in the request).
+     *
+     * @param values assets to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveReplacingCM(List<Asset> values, RequestOptions options) throws AtlanException {
+        String tagParams = getTagParameters(values);
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
+                        bulk_endpoint, tagParams));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
         AsyncCreationResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, beq, AsyncCreationResponse.class, options);
@@ -413,7 +594,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        "%s?replaceTags=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint));
         List<Asset> culled = new ArrayList<>();
         for (Asset one : values) {
@@ -662,172 +843,6 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        addAtlanTags(typeName, qualifiedName, atlanTagNames, false, true, false, null);
-    }
-
-    /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @param options to override the default client settings
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames, RequestOptions options)
-            throws AtlanException {
-        addAtlanTags(typeName, qualifiedName, atlanTagNames, false, true, false, options);
-    }
-
-    /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        addAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                null);
-    }
-
-    /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            boolean restrictHierarchyPropagation)
-            throws AtlanException {
-        addAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                restrictHierarchyPropagation,
-                null);
-    }
-
-    /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param options to override the default client settings
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            RequestOptions options)
-            throws AtlanException {
-        addAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                false,
-                options);
-    }
-
-    /**
-     * Add one or more Atlan tags to the provided asset.
-     * Note: if one or more of the provided Atlan tags already exists on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-01A}.
-     *
-     * @param typeName type of asset to which to add the Atlan tags
-     * @param qualifiedName of the asset to which to add the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to add to the asset
-     * @param propagate whether to propagate the Atlan tag (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
-     * @param options to override the default client settings
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void addAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            boolean restrictHierarchyPropagation,
-            RequestOptions options)
-            throws AtlanException {
-        modifyTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                restrictHierarchyPropagation,
-                options,
-                ApiResource.RequestMethod.POST);
-    }
-
-    /**
      * Removes a single Atlan tag from the provided asset.
      * Note: if the provided Atlan tag does not exist on the asset, an InvalidRequestException
      * will be thrown with error code {@code ATLAS-400-00-06D}, unless {@code idempotent} is set to true.
@@ -881,189 +896,6 @@ public class AssetEndpoint extends AtlasEndpoint {
                 throw e;
             }
         }
-    }
-
-    /**
-     * Update one or more Atlan tags on the provided asset.
-     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-06D}.
-     *
-     * @param typeName type of asset on which to update the Atlan tags
-     * @param qualifiedName of the asset on which to update the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
-     * @param propagate whether to propagate the Atlan tags (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void updateAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        updateAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                null);
-    }
-
-    /**
-     * Update one or more Atlan tags on the provided asset.
-     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-06D}.
-     *
-     * @param typeName type of asset on which to update the Atlan tags
-     * @param qualifiedName of the asset on which to update the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
-     * @param propagate whether to propagate the Atlan tags (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void updateAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            boolean restrictHierarchyPropagation)
-            throws AtlanException {
-        updateAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                restrictHierarchyPropagation,
-                null);
-    }
-
-    /**
-     * Update one or more Atlan tags on the provided asset.
-     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-06D}.
-     *
-     * @param typeName type of asset on which to update the Atlan tags
-     * @param qualifiedName of the asset on which to update the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
-     * @param propagate whether to propagate the Atlan tags (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param options to override the default client settings
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void updateAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            RequestOptions options)
-            throws AtlanException {
-        updateAtlanTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                false,
-                options);
-    }
-
-    /**
-     * Update one or more Atlan tags on the provided asset.
-     * Note: if one or more of the provided Atlan tags does not exist on the asset, an InvalidRequestException
-     * will be thrown with error code {@code ATLAS-400-00-06D}.
-     *
-     * @param typeName type of asset on which to update the Atlan tags
-     * @param qualifiedName of the asset on which to update the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
-     * @param propagate whether to propagate the Atlan tags (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
-     * @param options to override the default client settings
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    public void updateAtlanTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            boolean restrictHierarchyPropagation,
-            RequestOptions options)
-            throws AtlanException {
-        modifyTags(
-                typeName,
-                qualifiedName,
-                atlanTagNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation,
-                restrictHierarchyPropagation,
-                options,
-                ApiResource.RequestMethod.PUT);
-    }
-
-    /**
-     * Add or update one or more Atlan tags on the provided asset.
-     * The only difference between the two operations is the method of the API call: PUT for an update, POST for an addition.
-     *
-     * @param typeName type of asset on which to update the Atlan tags
-     * @param qualifiedName of the asset on which to update the Atlan tags
-     * @param atlanTagNames human-readable names of the Atlan tags to update on the asset
-     * @param propagate whether to propagate the Atlan tags (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @param restrictHierarchyPropagation whether to avoid propagating through hierarchy (true) or do propagate through hierarchy (false)
-     * @param options to override the default client settings
-     * @param method of the call: PUT for an update, POST for an addition
-     * @throws AtlanException on any API issues, or if any one of the Atlan tags already exists on the asset
-     */
-    private void modifyTags(
-            String typeName,
-            String qualifiedName,
-            List<String> atlanTagNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation,
-            boolean restrictHierarchyPropagation,
-            RequestOptions options,
-            ApiResource.RequestMethod method)
-            throws AtlanException {
-        List<AtlanTag> tags = new ArrayList<>();
-        for (String atlanTagName : atlanTagNames) {
-            // Note: here we need to NOT translate to an ID because the serde of
-            // Atlan tag objects will automatically handle the translation for us
-            tags.add(AtlanTag.builder()
-                    .typeName(atlanTagName)
-                    .propagate(propagate)
-                    .removePropagationsOnEntityDelete(removePropagationsOnDelete)
-                    .restrictPropagationThroughLineage(restrictLineagePropagation)
-                    .restrictPropagationThroughHierarchy(restrictHierarchyPropagation)
-                    .build());
-        }
-        String url = String.format(
-                "%s%s",
-                getBaseUrl(),
-                String.format(
-                        "%s%s/classifications?attr:qualifiedName=%s",
-                        unique_attr_endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
-        ApiResource.request(client, method, url, new AtlanTagList(tags), options);
     }
 
     /**
@@ -1143,28 +975,6 @@ public class AssetEndpoint extends AtlasEndpoint {
                 client, ApiResource.RequestMethod.POST, url, request, LineageListResponse.class, options);
         response.setClient(client);
         return response;
-    }
-
-    /**
-     * Request class for handling Atlan tag additions.
-     */
-    public static class AtlanTagList extends AtlanObject {
-        private static final long serialVersionUID = 2L;
-
-        private final List<AtlanTag> tags;
-
-        public AtlanTagList(List<AtlanTag> tags) {
-            this.tags = tags;
-        }
-
-        @Override
-        public String toJson(AtlanClient client) {
-            try {
-                return client.writeValueAsString(tags);
-            } catch (IOException e) {
-                throw new RuntimeException("Unable to serialize list of Atlan tags.", e);
-            }
-        }
     }
 
     /**

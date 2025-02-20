@@ -66,6 +66,9 @@ public class AtlanError extends AtlanObject {
     /** Path attempted to access for an unauthorized call. */
     String url;
 
+    /** URL to documentation describing the error in more detail. */
+    String doc;
+
     /** Underlying causes noted for the error, if any. */
     List<Cause> causes;
 

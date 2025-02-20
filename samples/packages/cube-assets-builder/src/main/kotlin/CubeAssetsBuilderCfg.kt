@@ -30,5 +30,7 @@ data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_fail_on_errors") val assetsFailOnErrors: Boolean = true,
     @JsonProperty("assets_field_separator") val assetsFieldSeparator: String = ",",
     @JsonProperty("assets_batch_size") val assetsBatchSize: Number = 20,
+    @JsonProperty("assets_cm_handling") val assetsCmHandling: String? = null,
+    @JsonProperty("assets_tag_handling") val assetsTagHandling: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
 ) : CustomConfig()

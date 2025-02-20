@@ -532,7 +532,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param terms the list of terms to append to the QlikDataset
      * @return the QlikDataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static QlikDataset appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikDataset) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -548,7 +550,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param terms the list of terms to remove from the QlikDataset, which must be referenced by GUID
      * @return the QlikDataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static QlikDataset removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikDataset) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -564,7 +568,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated QlikDataset
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static QlikDataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (QlikDataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -583,7 +589,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated QlikDataset
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static QlikDataset appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -609,7 +617,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @param qualifiedName of the QlikDataset
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the QlikDataset
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

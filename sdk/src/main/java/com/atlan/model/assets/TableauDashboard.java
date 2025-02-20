@@ -512,7 +512,9 @@ public class TableauDashboard extends Asset
      * @param terms the list of terms to append to the TableauDashboard
      * @return the TableauDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static TableauDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -528,7 +530,9 @@ public class TableauDashboard extends Asset
      * @param terms the list of terms to remove from the TableauDashboard, which must be referenced by GUID
      * @return the TableauDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static TableauDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -544,7 +548,9 @@ public class TableauDashboard extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated TableauDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static TableauDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (TableauDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -563,7 +569,9 @@ public class TableauDashboard extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated TableauDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static TableauDashboard appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -589,7 +597,9 @@ public class TableauDashboard extends Asset
      * @param qualifiedName of the TableauDashboard
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TableauDashboard
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

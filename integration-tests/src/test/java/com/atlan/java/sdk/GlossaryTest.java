@@ -95,7 +95,7 @@ public class GlossaryTest extends AtlanLiveTest {
     static GlossaryTerm createTerm(AtlanClient client, String name, Glossary glossary) throws AtlanException {
         assertThrows(
                 NotFoundException.class,
-                () -> GlossaryTerm.creator(name, glossary).build().updateMergingCM(client, false));
+                () -> GlossaryTerm.creator(name, glossary).build().updateMergingCM(client));
         GlossaryTerm term = GlossaryTerm.creator(name, glossary).build();
         AssetMutationResponse response = term.save(client);
         assertNotNull(response);
@@ -229,7 +229,7 @@ public class GlossaryTest extends AtlanLiveTest {
         categories.add(top1);
         categories.add(top2);
 
-        AssetMutationResponse response = client.assets.save(categories, false);
+        AssetMutationResponse response = client.assets.save(categories);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -260,7 +260,7 @@ public class GlossaryTest extends AtlanLiveTest {
         categories.add(mid2a);
         categories.add(mid2b);
 
-        response = client.assets.save(categories, false);
+        response = client.assets.save(categories);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 3);
@@ -302,7 +302,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
                 .build());
 
-        response = client.assets.save(categories, false);
+        response = client.assets.save(categories);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 5);
@@ -544,7 +544,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        AssetMutationResponse response = term.updateMergingCM(client, false);
+        AssetMutationResponse response = term.updateMergingCM(client);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), 0);

@@ -521,7 +521,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @param terms the list of terms to append to the ModeChart
      * @return the ModeChart that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModeChart appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeChart) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -537,7 +539,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @param terms the list of terms to remove from the ModeChart, which must be referenced by GUID
      * @return the ModeChart that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModeChart removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeChart) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -553,7 +557,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ModeChart
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static ModeChart appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (ModeChart) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -572,7 +578,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ModeChart
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static ModeChart appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -598,7 +606,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @param qualifiedName of the ModeChart
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ModeChart
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

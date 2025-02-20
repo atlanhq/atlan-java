@@ -6,6 +6,8 @@ import AssetImportCfg
 import LineageBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.LineageProcess
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
@@ -76,6 +78,8 @@ object Loader {
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ctx.config.fieldSeparator,
+                    assetsCmHandling = CustomMetadataHandling.IGNORE.value,
+                    assetsTagHandling = AtlanTagHandling.IGNORE.value,
                 )
             lateinit var qualifiedNameMap: Map<AssetIdentity, String>
             Utils.initializeContext(importConfig, ctx).use { iCtx ->
@@ -123,6 +127,8 @@ object Loader {
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ctx.config.fieldSeparator,
+                    assetsCmHandling = ctx.config.cmHandling,
+                    assetsTagHandling = ctx.config.tagHandling,
                 )
             Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()
