@@ -127,6 +127,11 @@ object Loader {
             Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()
             }
+
+            if (ctx.config.lineageFailOnErrors && (assetXform.anyFailures || lineageXform.anyFailures)) {
+                logger.error { "Errors detected during loading -- failing the workflow." }
+                exitProcess(1)
+            }
         }
     }
 }
