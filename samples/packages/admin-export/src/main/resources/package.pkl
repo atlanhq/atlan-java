@@ -73,11 +73,16 @@ uiConfig {
           default = "XLSX"
           fallback = default
         }
-        ["custom_filenames"] = new BooleanInput {
+        ["custom_filenames"] = new Radio {
           title = "Custom filenames?"
+          required = true
           helpText = "Whether to use custom filenames for the exported files."
-          required = false
-          fallback = false
+          possibleValues {
+            ["TRUE"] = "True"
+            ["FALSE"] = "False"
+          }
+          default = "FALSE"
+          fallback = default
         }
         ["xlsx_filename"] = new TextInput {
           title = "Filename"
@@ -183,14 +188,14 @@ uiConfig {
     }
     new UIRule {
         whenInputs {
-            ["custom_filenames"] = true
+            ["custom_filenames"] = "TRUE"
             ["file_format"] = "XLSX"
         }
         required { "admin_export_filename" }
     }
     new UIRule {
         whenInputs {
-            ["custom_filenames"] = true
+            ["custom_filenames"] = "TRUE"
             ["file_format"] = "CSV"
         }
         required {
