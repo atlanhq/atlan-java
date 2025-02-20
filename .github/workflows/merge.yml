@@ -121,6 +121,8 @@ jobs:
           name: lambda-layer
           path: sdk/build/distributions/sdk-*.zip
   publish-docs:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     name: "JavaDocs"
     steps:
