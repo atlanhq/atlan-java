@@ -3,10 +3,12 @@
 package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.search.AuditDetail;
 import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.serde.AtlanTagDeserializer;
 import com.atlan.serde.AtlanTagSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Comparator;
@@ -38,6 +40,11 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
                             .toString(),
                     stringComparator);
 
+    /** Semantic for how this tag association should be saved, if used in an asset request on which .save() is called. */
+    @JsonIgnore
+    @Builder.Default
+    transient Reference.SaveSemantic semantic = Reference.SaveSemantic.REPLACE;
+
     /**
      * Construct an Atlan tag assignment for an entity that is being created or updated.
      *
@@ -52,11 +59,34 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * Construct an Atlan tag assignment for an entity that is being created or updated.
      *
      * @param atlanTagName human-readable name of the Atlan tag
+     * @param semantic how the tag association with the asset should be managed
+     * @return an Atlan tag assignment with default settings for propagation
+     */
+    public static AtlanTag of(String atlanTagName, Reference.SaveSemantic semantic) {
+        return of(atlanTagName, semantic, (String) null);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for an entity that is being created or updated.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
      * @param sta (optional) source-specific details for the tag
      * @return an Atlan tag assignment with default settings for propagation
      */
     public static AtlanTag of(String atlanTagName, SourceTagAttachment sta) {
-        return of(atlanTagName, null, sta);
+        return of(atlanTagName, (String) null, sta);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for an entity that is being created or updated.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
+     * @param semantic how the tag association with the asset should be managed
+     * @param sta (optional) source-specific details for the tag
+     * @return an Atlan tag assignment with default settings for propagation
+     */
+    public static AtlanTag of(String atlanTagName, Reference.SaveSemantic semantic, SourceTagAttachment sta) {
+        return of(atlanTagName, semantic, null, sta);
     }
 
     /**
@@ -67,7 +97,19 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
      */
     public static AtlanTag of(String atlanTagName, String entityGuid) {
-        return of(atlanTagName, entityGuid, null);
+        return of(atlanTagName, Reference.SaveSemantic.REPLACE, entityGuid);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for a specific entity.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
+     * @param semantic how the tag association with the asset should be managed
+     * @param entityGuid unique identifier (GUID) of the entity to which the Atlan tag is to be assigned
+     * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
+     */
+    public static AtlanTag of(String atlanTagName, Reference.SaveSemantic semantic, String entityGuid) {
+        return of(atlanTagName, semantic, entityGuid, null);
     }
 
     /**
@@ -79,7 +121,22 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
      * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
      */
     public static AtlanTag of(String atlanTagName, String entityGuid, SourceTagAttachment sta) {
-        AtlanTagBuilder<?, ?> builder = AtlanTag.builder().typeName(atlanTagName);
+        return of(atlanTagName, Reference.SaveSemantic.REPLACE, entityGuid, sta);
+    }
+
+    /**
+     * Construct an Atlan tag assignment for a specific entity.
+     *
+     * @param atlanTagName human-readable name of the Atlan tag
+     * @param semantic how the tag association with the asset should be managed
+     * @param entityGuid unique identifier (GUID) of the entity to which the Atlan tag is to be assigned
+     * @param sta (optional) source-specific details for the tag
+     * @return an Atlan tag assignment with default settings for propagation and a specific entity assignment
+     */
+    public static AtlanTag of(
+            String atlanTagName, Reference.SaveSemantic semantic, String entityGuid, SourceTagAttachment sta) {
+        AtlanTagBuilder<?, ?> builder =
+                AtlanTag.builder().typeName(atlanTagName).semantic(semantic);
         if (entityGuid != null) {
             builder.entityGuid(entityGuid).entityStatus(AtlanStatus.ACTIVE);
         }

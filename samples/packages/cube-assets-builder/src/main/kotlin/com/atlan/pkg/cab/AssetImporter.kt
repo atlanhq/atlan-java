@@ -11,6 +11,8 @@ import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.assets.IMultiDimensionalDataset
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.cab.Importer.QN_DELIMITER
@@ -56,6 +58,8 @@ abstract class AssetImporter(
         typeNameFilter = typeNameFilter,
         attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
         creationHandling = creationHandling,
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.assetsCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.assetsTagHandling, AtlanTagHandling.REPLACE),
         batchSize = batchSize,
         trackBatches = trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],

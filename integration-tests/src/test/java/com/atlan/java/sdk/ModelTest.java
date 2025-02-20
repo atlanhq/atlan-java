@@ -154,7 +154,7 @@ public class ModelTest extends AtlanLiveTest {
         ModelAttributeAssociation aa = ModelAttributeAssociation.creator(AA1_NAME, first, second)
                 .modelBusinessDate(future)
                 .build();
-        AssetMutationResponse response = client.assets.save(List.of(entity2, first, second, ea, aa), false);
+        AssetMutationResponse response = client.assets.save(List.of(entity2, first, second, ea, aa));
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset parent = response.getUpdatedAssets().get(0);

@@ -534,7 +534,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @param terms the list of terms to append to the Cube
      * @return the Cube that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Cube appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Cube) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -550,7 +552,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @param terms the list of terms to remove from the Cube, which must be referenced by GUID
      * @return the Cube that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static Cube removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Cube) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -566,7 +570,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated Cube
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static Cube appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (Cube) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -585,7 +591,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated Cube
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static Cube appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -611,7 +619,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @param qualifiedName of the Cube
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Cube
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
