@@ -569,7 +569,7 @@ object Utils {
         if (semantic == null) {
             default
         } else {
-            CustomMetadataHandling.fromValue(semantic.lowercase())
+            CustomMetadataHandling.fromValue(semantic.lowercase()) ?: default
         }
 
     /**
@@ -586,7 +586,7 @@ object Utils {
         if (semantic == null) {
             default
         } else {
-            AtlanTagHandling.fromValue(semantic.lowercase())
+            AtlanTagHandling.fromValue(semantic.lowercase()) ?: default
         }
 
     /**
