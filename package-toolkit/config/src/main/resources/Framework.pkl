@@ -457,6 +457,58 @@ class RelationalAssetsBuilder extends PublishConfig {
   }.toMap()
 }
 
+/// Use a lineage builder step as the final publish phase for the package.
+class LineageBuilder extends PublishConfig {
+
+  /// File containing lineage to import, typically passed through using [transferFile()].
+  hidden lineageFile: FrameworkRenderer.NamePathPair? = null
+
+  /// Whether to allow the creation of new (full or partial) assets from the input CSV, or ensure assets are only updated if they already exist in Atlan.
+  hidden lineageUpsertSemantic: ImportSemantic?|String? = null
+
+  /// Whether an invalid value in a field should cause the import to fail (true) or log a warning, skip that value, and proceed (false).
+  hidden lineageFailOnErrors: Boolean?|String? = null
+
+  /// Single character used to separate fields in the input file (for example, ',' or ';').
+  hidden fieldSeparator: String? = null
+
+  /// Maximum number of rows to process at a time (per API request).
+  hidden batchSize: Int?|String? = null
+
+  /// How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata.
+  hidden cmHandling: CustomMetadataSemantic?|String? = null
+
+  /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
+  hidden tagHandling: AtlanTagSemantic?|String? = null
+
+  fixed inputArtifacts {
+    when (lineageFile != null) { lineageFile }
+  }
+  fixed outputs {
+    files {
+      ["debug-logs"] = "/tmp/debug.log"
+    }
+  }
+  fixed containerImage = "ghcr.io/atlanhq/csa-lineage-builder:\(versionTag)"
+  fixed containerCommand {
+    "/dumb-init"
+    "--"
+    "java"
+    "com.atlan.pkg.lb.Loader"
+  }
+
+  fixed parameters: Map<String, String> = new Mapping {
+    ["import_type"] = "DIRECT"
+    when (lineageFile != null) { ["lineage_file"] = lineageFile.path }
+    when (lineageUpsertSemantic != null) { ["lineage_upsert_semantic"] = lineageUpsertSemantic }
+    when (lineageFailOnErrors != null) { ["lineage_fail_on_errors"] = lineageFailOnErrors.toString() }
+    when (fieldSeparator != null) { ["field_separator"] = fieldSeparator }
+    when (batchSize != null) { ["batch_size"] = batchSize.toString() }
+    when (cmHandling != null) { ["cm_handling"] = cmHandling }
+    when (tagHandling != null) { ["tag_handling"] = tagHandling }
+  }.toMap()
+}
+
 /// Configuration for the UI of the custom package.
 ///
 /// | Variable | | Usage |
