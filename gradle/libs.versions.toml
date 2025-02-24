@@ -80,7 +80,8 @@ jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
 otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otel" }
 otel-instrumentation-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha", version.ref = "otel-instrumentation" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otel" } # , version.ref = "otel"
+otel-api = { module = "io.opentelemetry:opentelemetry-api" }
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" } # , version.ref = "otel"
 otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" } # , version.ref = "otel"
 otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" } # , version.ref = "otel"
 otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17" } # , version.ref = "otel-appender"
@@ -88,7 +89,7 @@ otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
 log4j = [ "log4j-core", "log4j-slf4j2" ]
-otel = [ "otel-sdk", "otel-exporter", "otel-autoconfig", "otel-appender" ]
+otel = [ "otel-api", "otel-sdk", "otel-exporter", "otel-autoconfig", "otel-appender" ]
 poi = [ "apache-poi", "apache-poi-ooxml" ]
 
 [plugins]
