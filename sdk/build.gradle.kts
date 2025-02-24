@@ -13,6 +13,7 @@ plugins {
 }
 
 dependencies {
+    api(platform(libs.otel.bom))
     api(libs.jackson.databind)
     api(libs.jackson.yaml)
     api(libs.slf4j)

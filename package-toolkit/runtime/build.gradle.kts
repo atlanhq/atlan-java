@@ -177,8 +177,6 @@ tasks {
             include(dependency("io.grpc:grpc-services:.*"))
             include(dependency("com.google.re2j:re2j:.*"))
             include(dependency("io.grpc:grpc-rls:.*"))
-            include(dependency("io.opentelemetry:opentelemetry-api:.*"))
-            include(dependency("io.opentelemetry:opentelemetry-context:.*"))
             // ADLS
             include(dependency("com.azure:azure-identity:.*"))
             include(dependency("com.nimbusds:oauth2-oidc-sdk:.*"))
