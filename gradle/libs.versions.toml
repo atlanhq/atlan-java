@@ -9,7 +9,7 @@ log4j = "2.24.3"
 wiremock = "3.12.0"
 jnanoid = "2.0.0"
 awssdk = "2.30.26"
-gcs = "26.51.0"  # was: "26.53.0"
+gcs = "26.55.0"  # was: "26.51.0"
 system-stubs = "2.1.7"
 fastcsv = "3.5.0"
 poi = "5.4.0"
@@ -32,8 +32,9 @@ kotlin-mu = "3.0.5"
 rocksdb = "9.10.0"
 jetty = "12.0.16"
 netty = "4.1.118.Final"
-otel = "1.42.1"  # was: "1.45.0"
-otel-appender = "2.8.0-alpha"  # was: "2.11.0-alpha"
+otel = "1.47.0"  # was: "1.42.1"
+otel-appender = "2.13.1-alpha"  # was: "2.8.0-alpha"
+otel-instrumentation = "2.13.1-alpha"  # was: "2.8.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -77,10 +78,12 @@ kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.r
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
-otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17", version.ref = "otel-appender" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otel" }
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "otel" }
-otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure", version.ref = "otel" }
+otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otel" }
+otel-instrumentation-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha", version.ref = "otel-instrumentation" }
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "otel" } # , version.ref = "otel"
+otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" } # , version.ref = "otel"
+otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" } # , version.ref = "otel"
+otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17" } # , version.ref = "otel-appender"
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
