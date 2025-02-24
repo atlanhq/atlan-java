@@ -38,6 +38,8 @@ dependencies {
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
     implementation(libs.log4j.core) // This gives us the OOTB-log4j appenders (that we MUST have for pattern-handling)
+    implementation(platform(libs.otel.bom))
+    implementation(platform(libs.otel.instrumentation.bom))
     implementation(libs.bundles.otel)
     implementation(libs.slf4j)
     // You would not need the dependencies below in reality, they are to simulate a running tenant
