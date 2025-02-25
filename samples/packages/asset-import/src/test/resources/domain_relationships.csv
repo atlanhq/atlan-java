@@ -1,0 +1,5 @@
+qualifiedName,typeName,name,displayName,description,userDescription,ownerUsers,ownerGroups,certificateStatus,certificateStatusMessage,announcementType,announcementTitle,announcementMessage,assignedTerms,atlanTags,links,readme,starredDetails,domainGUIDs
+{{CONNECTION}}/db1/sch1,Schema,sch1,,,,,,,,,,,,,,,,
+{{CONNECTION}}/db1,Database,db1,,,,,,,,,,,,,,,,
+{{CONNECTION}},Connection,{{CONNECTION_NAME}},,,,,,,,,,,,,,,,
+{{CONNECTION}}/db1/sch1/tbl1,Table,tbl1,,,Export Domain Relationship Test Table Java SDK,,,,,,,,,,,,,{{DOMAIN_NAME}}
