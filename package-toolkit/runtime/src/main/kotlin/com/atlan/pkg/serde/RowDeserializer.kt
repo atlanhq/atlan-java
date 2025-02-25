@@ -105,9 +105,9 @@ class RowDeserializer(
                                     // special handling, otherwise leave it to the special handling
                                     // to set the value (later)
                                     if (fieldName == Asset.DOMAIN_GUIDS.atlanFieldName) {
-                                        if (value is String) {
-                                            val dataDomain = DataDomainXformer.decode(ctx, value, fieldName)
-                                            ReflectionCache.setValue(builder, fieldName, dataDomain.guid)
+                                        if (value is ArrayList<*> && value.isNotEmpty() && value[0] is String) {
+                                            val dataDomain = DataDomainXformer.decode(ctx, value[0] as String, fieldName)
+                                            ReflectionCache.setValue(builder, fieldName, listOf(dataDomain.guid))
                                         }
                                     } else {
                                         ReflectionCache.setValue(builder, fieldName, value)
