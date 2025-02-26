@@ -38,6 +38,7 @@ interface RowPreprocessor {
         Results(
             hasLinks = header.contains(Asset.LINKS.atlanFieldName),
             hasTermAssignments = header.contains("assignedTerms"),
+            hasDomainRelationship = header.contains(Asset.DOMAIN_GUIDS.atlanFieldName),
             outputFile = outputFile,
         )
 
@@ -45,6 +46,7 @@ interface RowPreprocessor {
     open class Results(
         val hasLinks: Boolean,
         val hasTermAssignments: Boolean,
+        val hasDomainRelationship: Boolean,
         val outputFile: String?,
     )
 }

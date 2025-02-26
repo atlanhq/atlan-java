@@ -171,6 +171,9 @@ object Importer {
                 if (preprocessedDetails.hasLinks) {
                     ctx.linkCache.preload()
                 }
+                if (preprocessedDetails.hasDomainRelationship) {
+                    ctx.dataDomainCache.preload()
+                }
                 DeltaProcessor(
                     ctx = ctx,
                     semantic = ctx.config.assetsDeltaSemantic,

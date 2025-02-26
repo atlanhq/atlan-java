@@ -81,6 +81,9 @@ object Importer {
         if (preprocessedDetails.hasTermAssignments) {
             ctx.termCache.preload()
         }
+        if (preprocessedDetails.hasDomainRelationship) {
+            ctx.dataDomainCache.preload()
+        }
 
         ctx.connectionCache.preload()
 
@@ -234,6 +237,7 @@ object Importer {
                 cubeName!!,
                 results.hasLinks,
                 results.hasTermAssignments,
+                results.hasDomainRelationship,
                 filename,
                 connectionIdentity,
                 qualifiedNameToChildCount,
@@ -245,6 +249,7 @@ object Importer {
         assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        hasDomainRelationship: Boolean,
         preprocessedFile: String,
         val connectionIdentity: AssetResolver.ConnectionIdentity?,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
@@ -252,6 +257,7 @@ object Importer {
             assetRootName = assetRootName,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
+            hasDomainRelationship = hasDomainRelationship,
             preprocessedFile = preprocessedFile,
         )
 

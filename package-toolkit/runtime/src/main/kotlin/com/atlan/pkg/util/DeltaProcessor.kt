@@ -226,6 +226,7 @@ class DeltaProcessor(
      * @param assetRootName the unique name of the root-level of all assets (e.g. a connection)
      * @param hasLinks whether there are any links in the input file
      * @param hasTermAssignments whether there are any term assignments in the input file
+     * @param hasDomainRelationship whether there are any domain relationships in the input file
      * @param preprocessedFile full path to the preprocessed input file
      * @param multipleConnections whether multiple connections were present in the input file (true) or only a single connection (false)
      */
@@ -233,11 +234,13 @@ class DeltaProcessor(
         val assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        hasDomainRelationship: Boolean,
         val preprocessedFile: String,
         val multipleConnections: Boolean = false,
     ) : RowPreprocessor.Results(
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
+            hasDomainRelationship = hasDomainRelationship,
             outputFile = preprocessedFile,
         )
 }

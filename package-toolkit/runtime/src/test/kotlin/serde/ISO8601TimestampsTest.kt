@@ -63,33 +63,33 @@ class ISO8601TimestampsTest {
 
     @Test
     fun testEmptyEncode() {
-        val result = CellXformer.encode(ctx, EMPTY, "guid", true)
+        val result = CellXformer.encode(ctx, EMPTY, guid = "guid", dates = true)
         assertTrue(result.isBlank())
     }
 
     @Test
     fun testNullEncode() {
-        val result = CellXformer.encode(ctx, NULL, "guid", true)
+        val result = CellXformer.encode(ctx, NULL, guid = "guid", dates = true)
         assertTrue(result.isBlank())
     }
 
     @Test
     fun testStringValueEncode() {
-        val result = CellXformer.encode(ctx, STRING_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, STRING_VALUE, guid = "guid", dates = true)
         assertNotNull(result)
         assertEquals(STRING_VALUE, result)
     }
 
     @Test
     fun testLongValueEncode() {
-        val result = CellXformer.encode(ctx, LONG_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, LONG_VALUE, guid = "guid", dates = true)
         assertNotNull(result)
         assertEquals(TimestampXformer.encode(LONG_VALUE), result)
     }
 
     @Test
     fun testInvalidValueEncode() {
-        val result = CellXformer.encode(ctx, INVALID_VALUE, "guid", true)
+        val result = CellXformer.encode(ctx, INVALID_VALUE, guid = "guid", dates = true)
         assertEquals(INVALID_VALUE, result)
     }
 }
