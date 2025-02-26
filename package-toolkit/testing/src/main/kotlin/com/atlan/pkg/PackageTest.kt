@@ -470,8 +470,8 @@ abstract class PackageTest(
                 .toList()
         logger.info { " --- Purging glossary $name, ${categories.size} categories, and ${terms.size} terms... ---" }
         try {
-            if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.HARD)
-            if (categories.isNotEmpty()) client.assets.delete(categories, AtlanDeleteType.HARD)
+            if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.PURGE)
+            if (categories.isNotEmpty()) client.assets.delete(categories, AtlanDeleteType.PURGE)
             Glossary.purge(client, glossary.guid)
         } catch (e: Exception) {
             logger.error(e) { "Unable to purge glossary or its contents: $name" }
@@ -497,7 +497,7 @@ abstract class PackageTest(
                 .map { it.guid }
                 .toList()
         try {
-            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
+            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.PURGE)
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove domain: $name" }
         }
@@ -517,7 +517,7 @@ abstract class PackageTest(
                 .map { it.guid }
                 .toList()
         try {
-            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
+            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.PURGE)
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove product: $name" }
         }
@@ -548,7 +548,7 @@ abstract class PackageTest(
                         .map { it.guid }
                         .toList()
                 if (productGuids.isNotEmpty()) {
-                    client.assets.delete(productGuids, AtlanDeleteType.HARD)
+                    client.assets.delete(productGuids, AtlanDeleteType.PURGE)
                 }
 
                 // find all subdomains under the domain
@@ -562,9 +562,9 @@ abstract class PackageTest(
                         .toList()
 
                 subdomains.forEach { subdomain ->
-                    client.assets.delete(subdomain, AtlanDeleteType.HARD)
+                    client.assets.delete(subdomain, AtlanDeleteType.PURGE)
                 }
-                client.assets.delete(domain.guid, AtlanDeleteType.HARD)
+                client.assets.delete(domain.guid, AtlanDeleteType.PURGE)
             }
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove domain: $domainName" }

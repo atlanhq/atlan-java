@@ -7,7 +7,6 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import org.testng.annotations.Test
@@ -20,7 +19,7 @@ class ImportDomainRelationshipTest : PackageTest("idr") {
 
     private val connectionName = makeUnique("c1")
     private val domainName = connectionName
-    private val connectorType = AtlanConnectorType.SNOWFLAKE
+    private val connectorType = AtlanConnectorType.COSMOS
 
     private val testFile = "domain_relationships.csv"
     private val files =
@@ -57,34 +56,9 @@ class ImportDomainRelationshipTest : PackageTest("idr") {
         response.getResult(dmn1)
     }
 
-    private fun archiveTable() {
-        val connection = Connection.findByName(client, connectionName, connectorType)?.get(0)?.qualifiedName!!
-        val request =
-            Table
-                .select(client)
-                .where(Table.QUALIFIED_NAME.startsWith(connection))
-                .toRequest()
-        val response = retrySearchUntil(request, 1)
-        val guids =
-            response
-                .stream()
-                .map { it.guid }
-                .toList()
-        client.assets.delete(guids, AtlanDeleteType.HARD).block()
-        val domain = DataDomain.select(client).where(DataDomain.NAME.startsWith(connectionName)).toRequest()
-        val domainResponse = retrySearchUntil(domain, 1)
-        val domainGuids =
-            domainResponse
-                .stream()
-                .map { it.guid }
-                .toList()
-        client.assets.delete(domainGuids, AtlanDeleteType.HARD).block()
-    }
-
     override fun setup() {
         val connection = createConnection()
         prepFile(connection.qualifiedName)
-//        createAssets()
         createDomain()
         runCustomPackage(
             AssetImportCfg(
@@ -96,8 +70,8 @@ class ImportDomainRelationshipTest : PackageTest("idr") {
     }
 
     override fun teardown() {
-        archiveTable()
         removeConnection(connectionName, connectorType)
+        removeDomain(domainName)
     }
 
     @Test

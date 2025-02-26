@@ -6,7 +6,6 @@ import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
@@ -20,7 +19,7 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
-    private val connectorType = AtlanConnectorType.SNOWFLAKE
+    private val connectorType = AtlanConnectorType.RDS
 
     private val files =
         listOf(
@@ -36,11 +35,14 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
             .block()
     }
 
-    private fun createAssets() {
-        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
+    private fun createDomain(): DataDomain {
         val dmn1 = DataDomain.creator(c1).build()
         val response = dmn1.save(client)
-        val domain = response.getResult(dmn1)
+        return response.getResult(dmn1)
+    }
+
+    private fun createAssets(domainGuid: String) {
+        val connection1 = Connection.findByName(client, c1, connectorType)[0]!!
         AssetBatch(client, 50).use { batch ->
             val db1 = Database.creator("db1", connection1.qualifiedName).build()
             val sch1 = Schema.creator("sch1", db1).build()
@@ -56,40 +58,17 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
             val update =
                 Table
                     .updater(tbl1.qualifiedName, tbl1.name)
-                    .domainGUIDs(listOf(domain.guid))
+                    .domainGUIDs(listOf(domainGuid))
                     .build()
             batch.add(update)
             batch.flush()
         }
     }
 
-    private fun archiveTable() {
-        val connection = Connection.findByName(client, c1, connectorType)?.get(0)?.qualifiedName!!
-        val request =
-            Table
-                .select(client)
-                .where(Table.QUALIFIED_NAME.startsWith(connection))
-                .toRequest()
-        val response = retrySearchUntil(request, 1)
-        val guids =
-            response
-                .stream()
-                .map { it.guid }
-                .toList()
-        client.assets.delete(guids, AtlanDeleteType.HARD).block()
-        val domain = DataDomain.select(client).where(DataDomain.NAME.startsWith(c1)).toRequest()
-        val domainResponse = retrySearchUntil(domain, 1)
-        val domainGuids =
-            domainResponse
-                .stream()
-                .map { it.guid }
-                .toList()
-        client.assets.delete(domainGuids, AtlanDeleteType.HARD).block()
-    }
-
     override fun setup() {
         createConnections()
-        createAssets()
+        val domain = createDomain()
+        createAssets(domain.guid)
         runCustomPackage(
             AssetExportBasicCfg(
                 exportScope = "ALL",
@@ -99,12 +78,11 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
             ),
             Exporter::main,
         )
-        Thread.sleep(15000)
     }
 
     override fun teardown() {
-        archiveTable()
         removeConnection(c1, connectorType)
+        removeDomain(c1)
     }
 
     private fun prepFile() {
