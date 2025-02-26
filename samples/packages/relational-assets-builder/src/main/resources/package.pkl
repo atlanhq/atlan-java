@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/relational-assets-builder"
@@ -21,6 +21,7 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
+    ["transformed_file"] = "/tmp/current-file-transformed.csv"
   }
 }
 keywords {
@@ -28,6 +29,22 @@ keywords {
   "utility"
 }
 preview = true
+
+publishConfig = new AssetImport {
+  versionTag = version.toString()
+  assetsFile = transferFile(outputs, "transformed_file", "current.csv")
+  assetsUpsertSemantic = transferConfigInput(uiConfig, "assets_upsert_semantic")
+  assetsDeltaSemantic = transferConfigInput(uiConfig, "delta_semantic")
+  assetsDeltaRemovalType = transferConfigInput(uiConfig, "delta_removal_type")
+  assetsDeltaReloadCalculation = transferConfigInput(uiConfig, "delta_reload_calculation")
+  assetsPreviousFilePrefix = "csa-relational-assets-builder"
+  assetsFailOnErrors = transferConfigInput(uiConfig, "assets_fail_on_errors")
+  assetsFieldSeparator = transferConfigInput(uiConfig, "assets_field_separator")
+  assetsBatchSize = transferConfigInput(uiConfig, "assets_batch_size")
+  assetsCmHandling = transferConfigInput(uiConfig, "assets_cm_handling")
+  assetsTagHandling = transferConfigInput(uiConfig, "assets_tag_handling")
+  trackBatches = transferConfigInput(uiConfig, "track_batches")
+}
 
 uiConfig {
   tasks {
@@ -70,6 +87,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Select how you want to provide the file containing relational assets to be imported."
+          allowTestAuthentication = false
         }
       }
     }
@@ -161,7 +179,7 @@ uiConfig {
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
           required = false
-          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
           fallback = placeholderText
@@ -173,6 +191,29 @@ uiConfig {
           placeholderValue = 20
           width = 4
           fallback = placeholderValue
+        }
+        ["assets_cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "merge"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["assets_tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "replace"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
         }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details"

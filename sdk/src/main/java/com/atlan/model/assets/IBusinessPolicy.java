@@ -14,6 +14,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.BusinessPolicyRule;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -44,6 +45,9 @@ public interface IBusinessPolicy {
     /** Duration for the business policy to complete review. */
     KeywordField BUSINESS_POLICY_REVIEW_PERIOD =
             new KeywordField("businessPolicyReviewPeriod", "businessPolicyReviewPeriod");
+
+    /** List of rules applied to this business policy. */
+    KeywordField BUSINESS_POLICY_RULES = new KeywordField("businessPolicyRules", "businessPolicyRules");
 
     /** Selected approval workflow id for business policy */
     TextField BUSINESS_POLICY_SELECTED_APPROVAL_WF =
@@ -96,6 +100,12 @@ public interface IBusinessPolicy {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -304,6 +314,9 @@ public interface IBusinessPolicy {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -342,6 +355,9 @@ public interface IBusinessPolicy {
 
     /** Duration for the business policy to complete review. */
     String getBusinessPolicyReviewPeriod();
+
+    /** List of rules applied to this business policy. */
+    List<BusinessPolicyRule> getBusinessPolicyRules();
 
     /** Selected approval workflow id for business policy */
     String getBusinessPolicySelectedApprovalWF();

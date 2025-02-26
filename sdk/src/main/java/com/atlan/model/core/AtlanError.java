@@ -33,6 +33,9 @@ public class AtlanError extends AtlanObject {
     @JsonProperty("error_description")
     String errorDescription;
 
+    /** A human-readable explanation of what caused the error. */
+    String errorCause;
+
     /** Unique ID for the error (from the back-end). */
     String errorId;
 
@@ -63,6 +66,9 @@ public class AtlanError extends AtlanObject {
     /** Path attempted to access for an unauthorized call. */
     String url;
 
+    /** URL to documentation describing the error in more detail. */
+    String doc;
+
     /** Underlying causes noted for the error, if any. */
     List<Cause> causes;
 
@@ -91,7 +97,9 @@ public class AtlanError extends AtlanObject {
      * @return the message
      */
     public String findMessage() {
-        if (errorMessage != null && !errorMessage.isEmpty()) {
+        if (errorCause != null && !errorCause.isEmpty()) {
+            return errorCause;
+        } else if (errorMessage != null && !errorMessage.isEmpty()) {
             return errorMessage;
         } else if (message != null && !message.isEmpty()) {
             if (url != null && !url.isEmpty()) {

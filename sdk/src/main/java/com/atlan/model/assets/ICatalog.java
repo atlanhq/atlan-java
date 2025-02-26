@@ -74,6 +74,12 @@ public interface ICatalog {
             case ADLSObject.TYPE_NAME:
                 ref = ADLSObject.refByQualifiedName(qualifiedName);
                 break;
+            case AIApplication.TYPE_NAME:
+                ref = AIApplication.refByQualifiedName(qualifiedName);
+                break;
+            case AIModel.TYPE_NAME:
+                ref = AIModel.refByQualifiedName(qualifiedName);
+                break;
             case APIField.TYPE_NAME:
                 ref = APIField.refByQualifiedName(qualifiedName);
                 break;
@@ -131,6 +137,9 @@ public interface ICatalog {
             case AnaplanPage.TYPE_NAME:
                 ref = AnaplanPage.refByQualifiedName(qualifiedName);
                 break;
+            case AnaplanSystemDimension.TYPE_NAME:
+                ref = AnaplanSystemDimension.refByQualifiedName(qualifiedName);
+                break;
             case AnaplanView.TYPE_NAME:
                 ref = AnaplanView.refByQualifiedName(qualifiedName);
                 break;
@@ -142,6 +151,9 @@ public interface ICatalog {
                 break;
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
+                break;
+            case ApplicationField.TYPE_NAME:
+                ref = ApplicationField.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -233,6 +245,9 @@ public interface ICatalog {
             case CubeHierarchy.TYPE_NAME:
                 ref = CubeHierarchy.refByQualifiedName(qualifiedName);
                 break;
+            case CustomEntity.TYPE_NAME:
+                ref = CustomEntity.refByQualifiedName(qualifiedName);
+                break;
             case DataContract.TYPE_NAME:
                 ref = DataContract.refByQualifiedName(qualifiedName);
                 break;
@@ -280,6 +295,12 @@ public interface ICatalog {
                 break;
             case DbtTest.TYPE_NAME:
                 ref = DbtTest.refByQualifiedName(qualifiedName);
+                break;
+            case DocumentDBCollection.TYPE_NAME:
+                ref = DocumentDBCollection.refByQualifiedName(qualifiedName);
+                break;
+            case DocumentDBDatabase.TYPE_NAME:
+                ref = DocumentDBDatabase.refByQualifiedName(qualifiedName);
                 break;
             case DomoCard.TYPE_NAME:
                 ref = DomoCard.refByQualifiedName(qualifiedName);
@@ -464,6 +485,9 @@ public interface ICatalog {
             case PowerBIDataflow.TYPE_NAME:
                 ref = PowerBIDataflow.refByQualifiedName(qualifiedName);
                 break;
+            case PowerBIDataflowEntityColumn.TYPE_NAME:
+                ref = PowerBIDataflowEntityColumn.refByQualifiedName(qualifiedName);
+                break;
             case PowerBIDataset.TYPE_NAME:
                 ref = PowerBIDataset.refByQualifiedName(qualifiedName);
                 break;
@@ -632,6 +656,9 @@ public interface ICatalog {
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);
                 break;
+            case SourceTag.TYPE_NAME:
+                ref = SourceTag.refByQualifiedName(qualifiedName);
+                break;
             case SparkJob.TYPE_NAME:
                 ref = SparkJob.refByQualifiedName(qualifiedName);
                 break;
@@ -740,6 +767,12 @@ public interface ICatalog {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -947,6 +980,9 @@ public interface ICatalog {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

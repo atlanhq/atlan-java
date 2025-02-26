@@ -51,7 +51,8 @@ public interface ITableauCalculatedField {
     KeywordField PROJECT_HIERARCHY = new KeywordField("projectHierarchy", "projectHierarchy");
 
     /** Unique name of the project in which this calculated field exists. */
-    TextField PROJECT_QUALIFIED_NAME = new TextField("projectQualifiedName", "projectQualifiedName");
+    KeywordTextField PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("projectQualifiedName", "projectQualifiedName.keyword", "projectQualifiedName");
 
     /** Role of this field, for example: 'dimension', 'measure', or 'unknown'. */
     TextField ROLE = new TextField("role", "role");
@@ -105,6 +106,12 @@ public interface ITableauCalculatedField {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -312,6 +319,9 @@ public interface ITableauCalculatedField {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

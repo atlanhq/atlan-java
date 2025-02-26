@@ -20,6 +20,7 @@ import com.atlan.model.assets.AzureEventHubConsumerGroup
 import com.atlan.model.assets.AzureServiceBusNamespace
 import com.atlan.model.assets.AzureServiceBusTopic
 import com.atlan.model.assets.BIProcess
+import com.atlan.model.assets.BigqueryTag
 import com.atlan.model.assets.CalculationView
 import com.atlan.model.assets.Cognite3DModel
 import com.atlan.model.assets.CogniteAsset
@@ -45,6 +46,8 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.DataDomain
+import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.DataStudioAsset
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.DatabricksUnityCatalogTag
@@ -54,6 +57,7 @@ import com.atlan.model.assets.DbtModel
 import com.atlan.model.assets.DbtModelColumn
 import com.atlan.model.assets.DbtProcess
 import com.atlan.model.assets.DbtSource
+import com.atlan.model.assets.DbtTag
 import com.atlan.model.assets.DbtTest
 import com.atlan.model.assets.DomoCard
 import com.atlan.model.assets.DomoDashboard
@@ -65,6 +69,9 @@ import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
+import com.atlan.model.assets.Glossary
+import com.atlan.model.assets.GlossaryCategory
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.KafkaConsumerGroup
 import com.atlan.model.assets.KafkaTopic
 import com.atlan.model.assets.LineageProcess
@@ -192,7 +199,9 @@ import com.atlan.model.assets.ThoughtspotView
 import com.atlan.model.assets.ThoughtspotWorksheet
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.AtlanTypeCategory
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
@@ -202,7 +211,13 @@ import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.pkg.util.AssetResolver
+import com.atlan.pkg.util.AssetResolver.QualifiedNameDetails
+import com.atlan.pkg.util.DeltaProcessor
+import com.atlan.util.AssetBatch.AssetIdentity
+import com.atlan.util.StringUtils
 import mu.KLogger
+import java.io.IOException
 
 /**
  * Import assets into Atlan from a provided CSV file.
@@ -213,11 +228,13 @@ import mu.KLogger
  * asset in Atlan, then add that column's field to getAttributesToOverwrite.
  *
  * @param ctx context in which the package is running
+ * @param delta the processor containing any details about file deltas
  * @param filename name of the file to import
  * @param logger through which to write log entries
  */
 class AssetImporter(
     ctx: PackageContext<AssetImportCfg>,
+    private val delta: DeltaProcessor?,
     filename: String,
     logger: KLogger,
 ) : CSVImporter(
@@ -229,8 +246,9 @@ class AssetImporter(
         batchSize = ctx.config.assetsBatchSize.toInt(),
         caseSensitive = ctx.config.assetsCaseSensitive,
         creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.assetsCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.assetsTagHandling, AtlanTagHandling.REPLACE),
         tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
-        failOnErrors = ctx.config.assetsFailOnErrors,
         trackBatches = ctx.config.trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
@@ -264,8 +282,7 @@ class AssetImporter(
             .stream()
             .filter { it.endDef1.type == it.endDef2.type }
             .forEach { cyclicalRelationships.getOrPut(it.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(it.name, it.endDef1.name, it.endDef2.name)) }
-        val results = super.preprocess(outputFile, outputHeaders)
-        return results
+        return super.preprocess(outputFile, outputHeaders)
     }
 
     /** {@inheritDoc} */
@@ -391,12 +408,22 @@ class AssetImporter(
         typeIdx: Int,
         qnIdx: Int,
     ): Boolean {
-        return if (updateOnly) {
-            // If we are only updating, process in-parallel, in any order
-            row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
+        val candidateRow =
+            if (updateOnly) {
+                // If we are only updating, process in-parallel, in any order
+                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
+            } else {
+                // If we are doing more than only updates, process the assets in top-down order
+                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
+            }
+        // Only proceed processing this candidate row if we're doing non-delta processing, or we have
+        // detected that it needs to be loaded via the delta processing
+        return if (candidateRow) {
+            delta?.resolveAsset(row, header)?.let { identity ->
+                delta.reloadAsset(identity)
+            } ?: true
         } else {
-            // If we are doing more than only updates, process the assets in top-down order
-            return row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
+            false
         }
     }
 
@@ -405,7 +432,19 @@ class AssetImporter(
         val types: List<String>,
     )
 
-    companion object {
+    companion object : AssetResolver {
+        val GLOSSARY_TYPES =
+            listOf(
+                Glossary.TYPE_NAME,
+                GlossaryTerm.TYPE_NAME,
+                GlossaryCategory.TYPE_NAME,
+            )
+        val DATA_PRODUCT_TYPES =
+            listOf(
+                DataDomain.TYPE_NAME,
+                DataProduct.TYPE_NAME,
+            )
+        const val NO_CONNECTION_QN = "NO_CONNECTION_FOUND"
         private val ordering =
             listOf(
                 TypeGrouping(
@@ -427,13 +466,14 @@ class AssetImporter(
                 TypeGrouping(
                     "SQL",
                     listOf(
+                        BigqueryTag.TYPE_NAME,
+                        DatabricksUnityCatalogTag.TYPE_NAME,
                         Database.TYPE_NAME,
                         Schema.TYPE_NAME,
+                        SnowflakeTag.TYPE_NAME,
                         Procedure.TYPE_NAME,
                         SnowflakePipe.TYPE_NAME,
                         SnowflakeStream.TYPE_NAME,
-                        SnowflakeTag.TYPE_NAME,
-                        DatabricksUnityCatalogTag.TYPE_NAME,
                         Table.TYPE_NAME,
                         View.TYPE_NAME,
                         MaterializedView.TYPE_NAME,
@@ -781,6 +821,7 @@ class AssetImporter(
                 TypeGrouping(
                     "Dbt",
                     listOf(
+                        DbtTag.TYPE_NAME,
                         DbtModel.TYPE_NAME,
                         DbtSource.TYPE_NAME,
                         DbtMetric.TYPE_NAME,
@@ -814,12 +855,42 @@ class AssetImporter(
             types.sortedBy { t ->
                 ordering.flatMap { it.types }.indexOf(t).takeIf { it >= 0 } ?: Int.MAX_VALUE
             }
+
+        /** {@inheritDoc} */
+        override fun resolveAsset(
+            values: List<String>,
+            header: List<String>,
+            connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
+        ): AssetIdentity {
+            val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
+            if (typeIdx < 0) {
+                throw IOException(
+                    "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
+                )
+            }
+            val qnIdx = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
+            if (qnIdx < 0) {
+                throw IOException(
+                    "Unable to find the column 'qualifiedName'. This is a mandatory column in the input CSV.",
+                )
+            }
+            val typeName = CSVXformer.trimWhitespace(values[typeIdx])
+            val qualifiedName = CSVXformer.trimWhitespace(values[qnIdx])
+            return AssetIdentity(typeName, qualifiedName)
+        }
+
+        /** {@inheritDoc} */
+        override fun getQualifiedNameDetails(
+            row: List<String>,
+            header: List<String>,
+            typeName: String,
+        ): QualifiedNameDetails = throw IllegalStateException("This method should never be called. Please raise an issue if you discover this in any log file.")
     }
 
     /** Pre-process the assets import file. */
     private fun preprocess(): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
 
-    private class Preprocessor(
+    class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
@@ -829,6 +900,7 @@ class AssetImporter(
             fieldSeparator = fieldSeparator,
         ) {
         private val typesInFile = mutableSetOf<String>()
+        private var connectionQNs = mutableSetOf<String>()
 
         /** {@inheritDoc} */
         override fun preprocessRow(
@@ -842,6 +914,22 @@ class AssetImporter(
             if (typeName.isNotBlank()) {
                 typesInFile.add(row[typeIdx])
             }
+            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+            if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
+                throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
+            }
+            if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
+                throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
+            }
+            val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+            if (connectionQNFromAsset != null) {
+                connectionQNs.add(connectionQNFromAsset)
+            } else if (typeName == Connection.TYPE_NAME) {
+                // If the qualifiedName comes back as null and the asset itself is a connection, add it
+                connectionQNs.add(qualifiedName)
+            } else {
+                throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+            }
             return row
         }
 
@@ -849,26 +937,34 @@ class AssetImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): DeltaProcessor.Results {
             val results = super.finalize(header, outputFile)
             return Results(
+                connectionQN = if (connectionQNs.isNotEmpty()) connectionQNs.first() else NO_CONNECTION_QN,
+                multipleConnections = connectionQNs.size > 1,
                 hasLinks = results.hasLinks,
                 hasTermAssignments = results.hasTermAssignments,
+                outputFile = outputFile ?: filename,
                 hasDomainRelationship = results.hasDomainRelationship,
                 typesInFile = typesInFile,
             )
         }
     }
 
-    private class Results(
+    class Results(
+        connectionQN: String,
+        multipleConnections: Boolean,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        outputFile: String,
         hasDomainRelationship: Boolean,
         val typesInFile: Set<String>,
-    ) : RowPreprocessor.Results(
+    ) : DeltaProcessor.Results(
+            assetRootName = connectionQN,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
+            multipleConnections = multipleConnections,
+            preprocessedFile = outputFile,
             hasDomainRelationship = hasDomainRelationship,
-            outputFile = null,
         )
 }

@@ -121,12 +121,12 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
+    public String getIdForName(String name, long minimumTime) throws AtlanException {
         if (name != null && isDeletedName(name)) {
             return null;
         }
         try {
-            return super.getIdForName(name, allowRefresh);
+            return super.getIdForName(name, minimumTime);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
             addDeletedName(name);
@@ -136,12 +136,12 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
+    public String getNameForId(String id, long minimumTime) throws AtlanException {
         if (id != null && isDeletedId(id)) {
             return null;
         }
         try {
-            return super.getNameForId(id, allowRefresh);
+            return super.getNameForId(id, minimumTime);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
             addDeletedId(id);
@@ -151,12 +151,12 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public String getSidForName(String name, boolean allowRefresh) throws AtlanException {
+    public String getSidForName(String name, long minimumTime) throws AtlanException {
         if (name != null && isDeletedName(name)) {
             return null;
         }
         try {
-            return super.getSidForName(name, allowRefresh);
+            return super.getSidForName(name, minimumTime);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
             addDeletedName(name);
@@ -166,12 +166,12 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
 
     /** {@inheritDoc} */
     @Override
-    public String getNameForSid(String id, boolean allowRefresh) throws AtlanException {
+    public String getNameForSid(String id, long minimumTime) throws AtlanException {
         if (id != null && isDeletedId(id)) {
             return null;
         }
         try {
-            return super.getNameForSid(id, allowRefresh);
+            return super.getNameForSid(id, minimumTime);
         } catch (NotFoundException e) {
             // If it's not already marked deleted, mark it as deleted
             addDeletedId(id);
@@ -205,23 +205,33 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
      * @throws InvalidRequestException if no ID was provided for the Atlan tag
      */
     public String getSourceTagsAttrId(String id, boolean allowRefresh) throws AtlanException {
-        if (id != null && !id.isEmpty()) {
-            String attrId = getSourceTagsAttrIdFromId(id);
-            if (attrId == null && !isDeletedId(id)) {
-                // If not found, refresh the cache and look again (could be stale)
-                if (allowRefresh) {
-                    refresh();
-                    attrId = getSourceTagsAttrIdFromId(id);
-                }
-                if (attrId == null) {
-                    // If it's still not found after the refresh, mark it as deleted
-                    addDeletedId(id);
-                    throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_ID, id);
-                }
+        return getSourceTagsAttrId(id, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Translate the provided Atlan-internal Atlan tag ID string to the Atlan-internal name of the
+     * attribute that captures tag attachment details (for source-synced tags).
+     *
+     * @param id Atlan-internal ID string of the Atlan tag
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return Atlan-internal ID string of the attribute containing source-synced tag attachment details
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the Atlan tag
+     */
+    public String getSourceTagsAttrId(String id, long minimumTime) throws AtlanException {
+        if (id == null || id.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_ID);
+        String attrId = getSourceTagsAttrIdFromId(id);
+        if (attrId == null && !isDeletedId(id)) {
+            // If not found, refresh the cache and look again (could be stale)
+            refresh(minimumTime);
+            attrId = getSourceTagsAttrIdFromId(id);
+            if (attrId == null) {
+                // If it's still not found after the refresh, mark it as deleted
+                addDeletedId(id);
+                throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_ID, id);
             }
-            return attrId;
-        } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_ID);
         }
+        return attrId;
     }
 }

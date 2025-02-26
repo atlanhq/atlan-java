@@ -4,6 +4,7 @@ package com.atlan.model.typedefs;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -55,7 +56,24 @@ public class AtlanTagDef extends TypeDef {
      * @return the minimal request necessary to create the Atlan tag typedef, as a builder
      */
     public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanTagColor color) {
-        return AtlanTagDef.builder().name(displayName).displayName(displayName).options(AtlanTagOptions.of(color));
+        return creator(displayName, color, false);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition, using the default tag icon.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param color the color to use for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanTagColor color, boolean sourceSynced) {
+        return setupSourceSynced(
+                AtlanTagDef.builder()
+                        .name(displayName)
+                        .displayName(displayName)
+                        .options(AtlanTagOptions.of(color, sourceSynced)),
+                sourceSynced);
     }
 
     /**
@@ -67,10 +85,26 @@ public class AtlanTagDef extends TypeDef {
      * @return the minimal request necessary to create the Atlan tag typedef, as a builder
      */
     public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanIcon icon, AtlanTagColor color) {
-        return AtlanTagDef.builder()
-                .name(displayName)
-                .displayName(displayName)
-                .options(AtlanTagOptions.withIcon(icon, color));
+        return creator(displayName, icon, color, false);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param icon the built-in icon to use for the Atlan tag
+     * @param color the color to use for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(
+            String displayName, AtlanIcon icon, AtlanTagColor color, boolean sourceSynced) {
+        return setupSourceSynced(
+                AtlanTagDef.builder()
+                        .name(displayName)
+                        .displayName(displayName)
+                        .options(AtlanTagOptions.withIcon(icon, color, sourceSynced)),
+                sourceSynced);
     }
 
     /**
@@ -84,10 +118,27 @@ public class AtlanTagDef extends TypeDef {
      */
     public static AtlanTagDefBuilder<?, ?> creator(AtlanClient client, String displayName, String url)
             throws AtlanException {
-        return AtlanTagDef.builder()
-                .name(displayName)
-                .displayName(displayName)
-                .options(AtlanTagOptions.withImage(client, url));
+        return creator(client, displayName, url, false);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
+     * @param displayName the human-readable name for the Atlan tag
+     * @param url URL to an image to use for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     * @throws AtlanException on any issues uploading the image from the provided URL
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(
+            AtlanClient client, String displayName, String url, boolean sourceSynced) throws AtlanException {
+        return setupSourceSynced(
+                AtlanTagDef.builder()
+                        .name(displayName)
+                        .displayName(displayName)
+                        .options(AtlanTagOptions.withImage(client, url, sourceSynced)),
+                sourceSynced);
     }
 
     /**
@@ -100,6 +151,45 @@ public class AtlanTagDef extends TypeDef {
      */
     public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanTagOptions options) throws AtlanException {
         return AtlanTagDef.builder().name(displayName).displayName(displayName).options(options);
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param sourceSynced if true, configure this tag as a source-synced tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     * @throws AtlanException on any issues uploading the image from the provided URL
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(String displayName, boolean sourceSynced) throws AtlanException {
+        return setupSourceSynced(AtlanTagDef.builder().name(displayName).displayName(displayName), sourceSynced);
+    }
+
+    /**
+     * Configure the builder for the tag to support source-synced attributes.
+     *
+     * @param builder for the tag definition
+     * @param sourceSynced if true, add the necessary structure for source-synced tags, otherwise do nothing
+     * @return the tag builder, modified to handle source-synced tags
+     */
+    public static AtlanTagDefBuilder<?, ?> setupSourceSynced(AtlanTagDefBuilder<?, ?> builder, boolean sourceSynced) {
+        if (sourceSynced) {
+            builder.attributeDef(AttributeDef.builder()
+                    .typeName("array<SourceTagAttachment>")
+                    .isOptional(true)
+                    .cardinality(AtlanCustomAttributeCardinality.SET)
+                    .valuesMinCount(0L)
+                    .valuesMaxCount(2147483647L)
+                    .isUnique(false)
+                    .isIndexable(false)
+                    .includeInNotification(false)
+                    .skipScrubbing(false)
+                    .searchWeight(-1L)
+                    .displayName("sourceTagAttachment")
+                    .isDefaultValueNull(false)
+                    .build());
+        }
+        return builder;
     }
 
     /**

@@ -35,6 +35,9 @@ public interface IWorkflow {
 
     public static final String TYPE_NAME = "Workflow";
 
+    /** List of workflow action choices. */
+    KeywordField WORKFLOW_ACTION_CHOICES = new KeywordField("workflowActionChoices", "workflowActionChoices");
+
     /** Details of the workflow. */
     TextField WORKFLOW_CONFIG = new TextField("workflowConfig", "workflowConfig");
 
@@ -88,6 +91,12 @@ public interface IWorkflow {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -295,6 +304,9 @@ public interface IWorkflow {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
@@ -544,6 +556,9 @@ public interface IWorkflow {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** List of workflow action choices. */
+    SortedSet<String> getWorkflowActionChoices();
 
     /** Details of the workflow. */
     String getWorkflowConfig();

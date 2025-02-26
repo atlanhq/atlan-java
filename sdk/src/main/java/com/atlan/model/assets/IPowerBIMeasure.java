@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -37,6 +38,9 @@ public interface IPowerBIMeasure {
     /** Unique name of the dataset in which this measure exists. */
     TextField DATASET_QUALIFIED_NAME = new TextField("datasetQualifiedName", "datasetQualifiedName");
 
+    /** PowerBI Columns that are associated with this PowerBI Measure. */
+    RelationField POWER_BI_COLUMNS = new RelationField("powerBIColumns");
+
     /** Whether this measure is external (true) or internal (false). */
     BooleanField POWER_BI_IS_EXTERNAL_MEASURE =
             new BooleanField("powerBIIsExternalMeasure", "powerBIIsExternalMeasure");
@@ -48,7 +52,8 @@ public interface IPowerBIMeasure {
     RelationField TABLE = new RelationField("table");
 
     /** Unique name of the workspace in which this measure exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    KeywordTextField WORKSPACE_QUALIFIED_NAME =
+            new KeywordTextField("workspaceQualifiedName", "workspaceQualifiedName.keyword", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -79,6 +84,12 @@ public interface IPowerBIMeasure {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -287,6 +298,9 @@ public interface IPowerBIMeasure {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -448,6 +462,9 @@ public interface IPowerBIMeasure {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI Columns that are associated with this PowerBI Measure. */
+    SortedSet<IPowerBIColumn> getPowerBIColumns();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();

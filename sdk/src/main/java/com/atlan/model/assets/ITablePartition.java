@@ -37,7 +37,7 @@ public interface ITablePartition {
     public static final String TYPE_NAME = "TablePartition";
 
     /** Alias for this partition. */
-    KeywordField ALIAS = new KeywordField("alias", "alias");
+    TextField ALIAS = new TextField("alias", "alias");
 
     /** Partitions that exist within this partition. */
     RelationField CHILD_TABLE_PARTITIONS = new RelationField("childTablePartitions");
@@ -125,6 +125,12 @@ public interface ITablePartition {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -332,6 +338,9 @@ public interface ITablePartition {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

@@ -40,6 +40,9 @@ public interface IPowerBIDatasource {
     /** Datasets created by this datasource. */
     RelationField DATASETS = new RelationField("datasets");
 
+    /** PowerBI Dataflows that are associated with this PowerBI Datasource. */
+    RelationField POWER_BI_DATAFLOWS = new RelationField("powerBIDataflows");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -69,6 +72,12 @@ public interface IPowerBIDatasource {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -277,6 +286,9 @@ public interface IPowerBIDatasource {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -441,6 +453,9 @@ public interface IPowerBIDatasource {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI Dataflows that are associated with this PowerBI Datasource. */
+    SortedSet<IPowerBIDataflow> getPowerBIDataflows();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();

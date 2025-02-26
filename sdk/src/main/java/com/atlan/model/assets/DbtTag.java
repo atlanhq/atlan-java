@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -15,9 +16,11 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.SourceTagAttribute;
+import com.atlan.serde.Serde;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -421,6 +424,48 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     }
 
     /**
+     * Builds the minimal object necessary to create a DbtTag.
+     *
+     * @param name of the DbtTag
+     * @param connectionQualifiedName unique name of the connection in which to create the DbtTag
+     * @param mappedAtlanTagName the human-readable name of the Atlan tag to which this DbtTag should map
+     * @param accountId the numeric ID of the dbt account in which the tag exists
+     * @param projectId the numeric ID of the dbt project in which the tag exists
+     * @param sourceId unique identifier for the tag in the source
+     * @param allowedValues the values allowed to be set for this tag in the source
+     * @return the minimal request necessary to create the DbtTag, as a builder
+     */
+    public static DbtTagBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String mappedAtlanTagName,
+            String accountId,
+            String projectId,
+            String sourceId,
+            List<String> allowedValues) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        String allowedValuesString = "";
+        try {
+            allowedValuesString = Serde.allInclusiveMapper.writeValueAsString(allowedValues);
+        } catch (JsonProcessingException e) {
+            log.error("Unable to transform list of allowed values into singular string.", e);
+        }
+        return DbtTag._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName, accountId, projectId))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName)
+                .mappedAtlanTagName(mappedAtlanTagName)
+                .tagId(sourceId)
+                .tagAttribute(SourceTagAttribute.builder()
+                        .tagAttributeKey("allowedValues")
+                        .tagAttributeValue(allowedValuesString)
+                        .build())
+                .tagAllowedValues(allowedValues);
+    }
+
+    /**
      * Builds the minimal object necessary to update a DbtTag.
      *
      * @param qualifiedName of the DbtTag
@@ -432,6 +477,20 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
+    }
+
+    /**
+     * Generate a unique DbtTag name.
+     *
+     * @param name of the DbtTag
+     * @param connectionQualifiedName unique name of the schema in which this DbtTag exists
+     * @param accountId the numeric ID of the dbt account in which the tag exists
+     * @param projectId the numeric ID of the dbt project in which the tag exists
+     * @return a unique name for the DbtTag
+     */
+    public static String generateQualifiedName(
+            String name, String connectionQualifiedName, String accountId, String projectId) {
+        return connectionQualifiedName + "/account/" + accountId + "/project/" + projectId + "/tag/" + name;
     }
 
     /**
@@ -577,7 +636,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param terms the list of terms to append to the DbtTag
      * @return the DbtTag that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DbtTag appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtTag) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -593,7 +654,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param terms the list of terms to remove from the DbtTag, which must be referenced by GUID
      * @return the DbtTag that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DbtTag removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtTag) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -609,7 +672,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DbtTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DbtTag appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DbtTag) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -628,7 +693,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DbtTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DbtTag appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -654,7 +721,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
      * @param qualifiedName of the DbtTag
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DbtTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

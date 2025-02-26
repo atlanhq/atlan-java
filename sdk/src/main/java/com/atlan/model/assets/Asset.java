@@ -112,6 +112,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     IApplication application;
 
+    /** ApplicationField asset containing this Asset. */
+    @Attribute
+    IApplicationField applicationField;
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    @Attribute
+    String applicationFieldQualifiedName;
+
     /** Qualified name of the Application that contains this asset. */
     @Attribute
     String applicationQualifiedName;
@@ -412,6 +420,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<String> assetPolicyGUIDs;
+
+    /** Array of asset ids that equivalent to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetRedirectGUIDs;
 
     /** Number of checks done via Soda. */
     @Attribute
@@ -798,6 +811,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> viewerUsers;
 
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    transient String iconUrl;
+
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
     @Singular
@@ -976,7 +992,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse save(AtlanClient client) throws AtlanException {
-        return client.assets.save(this, false);
+        return client.assets.save(this);
     }
 
     /**
@@ -988,9 +1004,24 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
+     * @deprecated see {@link #save(AtlanClient)}
      */
+    @Deprecated
     public AssetMutationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.save(this, replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method, while also setting
+     * any custom metadata provided.
+     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse saveMergingCM(AtlanClient client) throws AtlanException {
+        return client.assets.saveMergingCM(List.of(this));
     }
 
     /**
@@ -1003,9 +1034,25 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
+     * @deprecated see {@link #saveMergingCM(AtlanClient)}
      */
+    @Deprecated
     public AssetMutationResponse saveMergingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.saveMergingCM(List.of(this), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save(AtlanClient)} method, while also setting
+     * any custom metadata provided.
+     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse saveReplacingCM(AtlanClient client) throws AtlanException {
+        return client.assets.saveReplacingCM(List.of(this));
     }
 
     /**
@@ -1019,9 +1066,27 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
+     * @deprecated see {@link #saveReplacingCM(AtlanClient)}
      */
+    @Deprecated
     public AssetMutationResponse saveReplacingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.saveReplacingCM(List.of(this), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateMergingCM(AtlanClient client) throws AtlanException {
+        // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
+        get(client, this.getTypeName(), this.getQualifiedName(), false);
+        // Otherwise, attempt the update
+        return saveReplacingCM(client);
     }
 
     /**
@@ -1034,7 +1099,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @return details of the updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     * @deprecated see {@link #updateMergingCM(AtlanClient)}
      */
+    @Deprecated
     public AssetMutationResponse updateMergingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
         get(client, this.getTypeName(), this.getQualifiedName(), false);
@@ -1046,6 +1113,23 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * If no asset exists, fails with a NotFoundException.
      * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
      * (wiping out any other custom metadata on an existing asset that is not provided in the request).
+     *
+     * @param client connectivity to the Atlan tenant where this asset should be saved
+     * @return details of the updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     */
+    public AssetMutationResponse updateReplacingCM(AtlanClient client) throws AtlanException {
+        // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
+        get(client, this.getTypeName(), this.getQualifiedName(), false);
+        // Otherwise, attempt the update
+        return saveReplacingCM(client);
+    }
+
+    /**
+     * If no asset exists, fails with a NotFoundException.
+     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
      * If an asset does exist, optionally overwrites any Atlan tags.
      *
      * @param client connectivity to the Atlan tenant where this asset should be saved
@@ -1053,7 +1137,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @return details of the updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws com.atlan.exception.NotFoundException if the asset does not exist (will not create it)
+     * @deprecated see {@link #updateReplacingCM(AtlanClient)}
      */
+    @Deprecated
     public AssetMutationResponse updateReplacingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         // Attempt to retrieve the asset first, and allow this to throw a NotFoundException if it does not exist
         get(client, this.getTypeName(), this.getQualifiedName(), false);
@@ -1268,7 +1354,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param atlanTagNames human-readable names of the Atlan tags to append
      * @return the asset that was updated
      * @throws AtlanException on any API problems
+     * @deprecated see {@link AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     protected static Asset appendAtlanTags(
             AtlanClient client, String typeName, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
@@ -1289,7 +1377,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @return the asset that was updated
      * @throws AtlanException on any API problems
+     * @deprecated see {@link AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     protected static Asset appendAtlanTags(
             AtlanClient client,
             String typeName,
@@ -1342,7 +1432,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param qualifiedName of the asset
      * @param atlanTagName human-readable name of the Atlan tags to remove
      * @throws AtlanException on any API problems, or if any of the Atlan tag does not exist on the asset
+     * @deprecated see {@link AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     protected static void removeAtlanTag(AtlanClient client, String typeName, String qualifiedName, String atlanTagName)
             throws AtlanException {
         client.assets.removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
@@ -1483,13 +1575,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     private static Asset updateAttributes(AtlanClient client, Asset asset) throws AtlanException {
-        AssetMutationResponse response = client.assets.save(asset, false);
+        AssetMutationResponse response = client.assets.saveNoTagsNoCM(List.of(asset), null);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
         return null;
     }
 
+    @Deprecated
     private static Asset replaceAtlanTags(AtlanClient client, Asset asset) throws AtlanException {
         AssetMutationResponse response = client.assets.save(asset, true);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
@@ -1654,7 +1747,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @param terms the list of terms to append to the asset
      * @return the asset that was updated (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     protected static Asset appendTerms(
             AtlanClient client, String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
@@ -1693,7 +1788,9 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @return the asset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @throws InvalidRequestException if any of the passed terms are not valid references by GUID to a term
+     * @deprecated see {@link AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     protected static Asset removeTerms(
             AtlanClient client, String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
@@ -1748,7 +1845,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     private static Asset updateRelationships(AtlanClient client, Asset asset) throws AtlanException {
         String typeNameToUpdate = asset.getTypeName();
-        AssetMutationResponse response = client.assets.save(asset, false);
+        AssetMutationResponse response = client.assets.saveNoTagsNoCM(List.of(asset), null);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             for (Asset result : response.getUpdatedAssets()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
@@ -1797,9 +1894,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
         public B removeAtlanTags() {
             // It is sufficient to simply exclude Atlan tags from a request in order
             // for them to be removed, as long as the "replaceAtlanTags" flag is set to
-            // true (which it must be for any update to work to Atlan tags anyway)
+            // true
             clearAtlanTags();
             clearAtlanTagNames();
+            nullField("atlanTags");
             return self();
         }
 
@@ -1832,6 +1930,123 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
         /** Remove the linked terms from the asset, if any are set on the asset. */
         public B removeAssignedTerms() {
             nullField("assignedTerms");
+            return self();
+        }
+
+        /**
+         * Remove the specified term (only) from the asset, idempotently, avoiding impacting any other existing terms.
+         * @param term the term to be removed from the asset
+         * @return the builder with the term to be removed
+         */
+        public B removeAssignedTerm(GlossaryTerm term) {
+            assignedTerm(term.toBuilder().semantic(SaveSemantic.REMOVE).build());
+            return self();
+        }
+
+        /**
+         * Append the specified term to the asset, idempotently, avoiding impacting any other existing terms.
+         * @param term the term to be appended to the asset
+         * @return the builder with the term appended
+         */
+        public B appendAssignedTerm(GlossaryTerm term) {
+            assignedTerm(term.toBuilder().semantic(SaveSemantic.APPEND).build());
+            return self();
+        }
+
+        /**
+         * Append the specified tags to the asset idempotently, avoiding replacing any existing tags.
+         * @param atlanTagNames human-readable names of the tags to append
+         * @return the builder with the tags appended
+         */
+        public B appendAtlanTags(List<String> atlanTagNames) {
+            appendAtlanTags(atlanTagNames, false, false, false, false);
+            return self();
+        }
+
+        /**
+         * Append the specified tags to the asset idempotently, avoiding replacing any existing tags.
+         * @param atlanTagNames human-readable names of the tags to append
+         * @param propagate whether to propagate the Atlan tag (true) or not (false)
+         * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+         * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+         * @param restrictHierarchyPropagation whether to avoid propagating through the hierarchy (true) or do propagate through the hierarchy (false)
+         * @return the builder with the tags appended
+         */
+        public B appendAtlanTags(
+                List<String> atlanTagNames,
+                boolean propagate,
+                boolean removePropagationsOnDelete,
+                boolean restrictLineagePropagation,
+                boolean restrictHierarchyPropagation) {
+            atlanTagNames.forEach(tagName -> {
+                appendAtlanTag(
+                        tagName,
+                        propagate,
+                        removePropagationsOnDelete,
+                        restrictLineagePropagation,
+                        restrictHierarchyPropagation);
+            });
+            return self();
+        }
+
+        /**
+         * Append the specified tag to the asset idempotently, avoiding replacing any existing tag.
+         * @param tagName human-readable name of the tag to append
+         * @return the builder with the tag appended
+         */
+        public B appendAtlanTag(String tagName) {
+            appendAtlanTag(tagName, false, false, false, false);
+            return self();
+        }
+
+        /**
+         * Append the specified tag to the asset idempotently, avoiding replacing any existing tag.
+         * @param tagName human-readable name of the tag to append
+         * @param propagate whether to propagate the Atlan tag (true) or not (false)
+         * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+         * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+         * @param restrictHierarchyPropagation whether to avoid propagating through the hierarchy (true) or do propagate through the hierarchy (false)
+         * @return the builder with the tag appended
+         */
+        public B appendAtlanTag(
+                String tagName,
+                boolean propagate,
+                boolean removePropagationsOnDelete,
+                boolean restrictLineagePropagation,
+                boolean restrictHierarchyPropagation) {
+            atlanTag(AtlanTag.builder()
+                    .typeName(tagName)
+                    .semantic(SaveSemantic.APPEND)
+                    .propagate(propagate)
+                    .removePropagationsOnEntityDelete(removePropagationsOnDelete)
+                    .restrictPropagationThroughLineage(restrictLineagePropagation)
+                    .restrictPropagationThroughHierarchy(restrictHierarchyPropagation)
+                    .build());
+            return self();
+        }
+
+        /**
+         * Remove the specified tags from the asset idempotently, avoiding removing any other existing tag.
+         * @param tagNames human-readable names of the tags to remove
+         * @return the builder with the tag removed
+         */
+        public B removeAtlanTags(List<String> tagNames) {
+            tagNames.forEach(tagName -> {
+                removeAtlanTag(tagName);
+            });
+            return self();
+        }
+
+        /**
+         * Remove the specified tag from the asset idempotently, avoiding removing any other existing tag.
+         * @param tagName human-readable name of the tag to remove
+         * @return the builder with the tag removed
+         */
+        public B removeAtlanTag(String tagName) {
+            atlanTag(AtlanTag.builder()
+                    .typeName(tagName)
+                    .semantic(SaveSemantic.REMOVE)
+                    .build());
             return self();
         }
     }

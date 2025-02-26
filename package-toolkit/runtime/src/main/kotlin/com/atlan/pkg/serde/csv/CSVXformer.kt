@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicLong
  */
 abstract class CSVXformer(
     private val inputFile: String,
-    private val targetHeader: Iterable<String?>?,
+    val targetHeader: Iterable<String?>?,
     private val logger: KLogger,
     private val fieldSeparator: Char = ',',
 ) : Closeable,
@@ -95,17 +95,23 @@ abstract class CSVXformer(
          *
          * @param header list of header column names
          * @param values list of values, in the same order as the header columns
+         * @param trimValues whether to apply whitespace trimming to values, too
          * @return map from header name to value on that row
          */
         fun getRowByHeader(
             header: List<String>,
             values: List<String>,
+            trimValues: Boolean = false,
         ): Map<String, String> {
             val map = mutableMapOf<String, String>()
             header.forEachIndexed { index, s ->
                 // Explicitly trim all whitespace from headers, including byte order mark (BOM) or zero-width space (ZWSP) characters
                 val trimmed = trimWhitespace(s)
-                map[trimmed] = values.getOrElse(index) { "" }
+                if (trimValues) {
+                    map[trimmed] = trimWhitespace(values.getOrElse(index) { "" })
+                } else {
+                    map[trimmed] = values.getOrElse(index) { "" }
+                }
             }
             return map.toMap()
         }
@@ -139,6 +145,20 @@ abstract class CSVXformer(
     }
 
     /**
+     * Run the transformation and produce the output into the specified file.
+     * Note: when using this method, it is your responsibility to first output the header into the writer.
+     * (No header will ever be included via this method.)
+     *
+     * @param writer CSV writer into which the transformed CSV output will be written.
+     */
+    fun transform(writer: CsvWriter) {
+        val start = System.currentTimeMillis()
+        logger.info { "Transforming $inputFile..." }
+        mapWithoutHeader(writer)
+        logger.info { "Total transformation time: ${System.currentTimeMillis() - start} ms" }
+    }
+
+    /**
      * Actually run the transformation.
      *
      * @param writer into which to write each transformed row of data
@@ -146,6 +166,15 @@ abstract class CSVXformer(
     private fun map(writer: CsvWriter) {
         // Start by outputting the header row in the target CSV file
         writer.writeRecord(targetHeader)
+        mapWithoutHeader(writer)
+    }
+
+    /**
+     * Actually run the transformation, not including any header.
+     *
+     * @param writer into which to write each transformed row of data
+     */
+    private fun mapWithoutHeader(writer: CsvWriter) {
         // Calculate total number of rows that need to be transformed...
         val filteredRowCount = AtomicLong(0)
         counter.stream().skip(1).forEach { row ->

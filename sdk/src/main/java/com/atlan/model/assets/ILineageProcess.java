@@ -112,6 +112,12 @@ public interface ILineageProcess {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */
@@ -317,6 +323,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** TBC */
     Long getAssetSodaCheckCount();

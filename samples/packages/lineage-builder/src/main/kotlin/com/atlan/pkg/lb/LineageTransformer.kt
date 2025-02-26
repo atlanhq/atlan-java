@@ -25,6 +25,8 @@ class LineageTransformer(
         logger = logger,
         fieldSeparator = ctx.config.fieldSeparator[0],
     ) {
+    var anyFailures = false
+
     companion object {
         const val XFORM_PREFIX = "Transformation"
         const val XFORM_CONNECTOR = "$XFORM_PREFIX ${AssetTransformer.CONNECTOR}"
@@ -43,29 +45,29 @@ class LineageTransformer(
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val name = inputRow[XFORM_NAME] ?: ""
-        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, qnMap)
+        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, logger, qnMap)
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
         val source =
             if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
                 FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
             } else {
-                logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$sourceQN" }
+                logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$name" }
                 null
             }
-        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, qnMap)
+        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, logger, qnMap)
         val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
         val target =
             if (targetQN.isNotBlank() && targetType.isNotBlank()) {
                 FieldSerde.getRefByQualifiedName(targetType, targetQN)
             } else {
-                logger.warn { "Unable to translate target into a valid asset reference: $targetType::$targetQN" }
+                logger.warn { "Unable to translate target into a valid asset reference: $targetType::$name" }
                 null
             }
         if (source != null && target != null) {
             if (source !is ICatalog || target !is ICatalog) {
                 logger.warn { "Source and/or target asset are not subtypes of Catalog, and therefore cannot exist in lineage: $inputRow" }
             } else {
-                val xformConnector = inputRow[XFORM_CONNECTOR] ?: ""
+                val xformConnector = inputRow[XFORM_CONNECTOR]?.lowercase() ?: ""
                 val xformConnection = inputRow[XFORM_CONNECTION] ?: ""
                 val connectionId = AssetResolver.ConnectionIdentity(xformConnection, xformConnector)
                 val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
@@ -99,14 +101,9 @@ class LineageTransformer(
                 }
             }
         }
-        // If we fall through, we were unable to define the lineage, so write a blank row
-        val row = mutableListOf("", "", "", "", "", "", "")
-        val extras = lineageHeaders.size - row.size
-        for (i in 0 until extras) {
-            // Pad the row with blanks for every extra column
-            row.add("")
-        }
-        return listOf(row)
+        // If we fall through, we were unable to define the lineage, so return an empty row
+        anyFailures = true
+        return emptyList()
     }
 
     /** {@inheritDoc} */

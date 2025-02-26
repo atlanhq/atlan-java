@@ -8,15 +8,18 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.SourceTagAttribute;
+import com.atlan.serde.Serde;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -439,6 +442,44 @@ public class DatabricksUnityCatalogTag extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a DatabricksUnityCatalogTag.
+     *
+     * @param name of the DatabricksUnityCatalogTag
+     * @param connectionQualifiedName unique name of the connection in which to create the DatabricksUnityCatalogTag
+     * @param mappedAtlanTagName the human-readable name of the Atlan tag to which this DatabricksUnityCatalogTag should map
+     * @param sourceId unique identifier for the tag in the source
+     * @param allowedValues the values allowed to be set for this tag in the source
+     * @return the minimal request necessary to create the DatabricksUnityCatalogTag, as a builder
+     */
+    public static DatabricksUnityCatalogTagBuilder<?, ?> creator(
+            String name,
+            String connectionQualifiedName,
+            String mappedAtlanTagName,
+            String sourceId,
+            List<String> allowedValues) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        String allowedValuesString = "";
+        try {
+            allowedValuesString = Serde.allInclusiveMapper.writeValueAsString(allowedValues);
+        } catch (JsonProcessingException e) {
+            log.error("Unable to transform list of allowed values into singular string.", e);
+        }
+        return DatabricksUnityCatalogTag._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
+                .connectorType(connectorType)
+                .connectionQualifiedName(connectionQualifiedName)
+                .mappedAtlanTagName(mappedAtlanTagName)
+                .tagId(sourceId)
+                .tagAttribute(SourceTagAttribute.builder()
+                        .tagAttributeKey("allowedValues")
+                        .tagAttributeValue(allowedValuesString)
+                        .build())
+                .tagAllowedValues(allowedValues);
+    }
+
+    /**
      * Builds the minimal object necessary to update a DatabricksUnityCatalogTag.
      *
      * @param qualifiedName of the DatabricksUnityCatalogTag
@@ -450,6 +491,17 @@ public class DatabricksUnityCatalogTag extends Asset
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
+    }
+
+    /**
+     * Generate a unique DatabricksUnityCatalogTag name.
+     *
+     * @param name of the DatabricksUnityCatalogTag
+     * @param connectionQualifiedName unique name of the schema in which this DatabricksUnityCatalogTag exists
+     * @return a unique name for the DatabricksUnityCatalogTag
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/tag/" + name;
     }
 
     /**
@@ -598,7 +650,9 @@ public class DatabricksUnityCatalogTag extends Asset
      * @param terms the list of terms to append to the DatabricksUnityCatalogTag
      * @return the DatabricksUnityCatalogTag that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DatabricksUnityCatalogTag appendTerms(
             AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -614,7 +668,9 @@ public class DatabricksUnityCatalogTag extends Asset
      * @param terms the list of terms to remove from the DatabricksUnityCatalogTag, which must be referenced by GUID
      * @return the DatabricksUnityCatalogTag that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DatabricksUnityCatalogTag removeTerms(
             AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -630,7 +686,9 @@ public class DatabricksUnityCatalogTag extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DatabricksUnityCatalogTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DatabricksUnityCatalogTag appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -649,7 +707,9 @@ public class DatabricksUnityCatalogTag extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DatabricksUnityCatalogTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DatabricksUnityCatalogTag appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -675,7 +735,9 @@ public class DatabricksUnityCatalogTag extends Asset
      * @param qualifiedName of the DatabricksUnityCatalogTag
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DatabricksUnityCatalogTag
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
@@ -19,8 +20,10 @@ import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -511,6 +514,23 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     }
 
     /**
+     * Retrieves the assets associated with this data product.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return a stream of the assets related to the data product
+     * @throws AtlanException on any API problems
+     */
+    @JsonIgnore
+    public IndexSearchResponse getAssets(AtlanClient client) throws AtlanException {
+        try {
+            DataProductAssetsDSL dsl = client.readValue(getDataProductAssetsDSL(), DataProductAssetsDSL.class);
+            return client.assets.search(dsl.getQuery());
+        } catch (IOException e) {
+            throw new LogicException(ErrorCode.DATA_PRODUCT_QUERY_ERROR, e);
+        }
+    }
+
+    /**
      * Find a DataProduct by its human-readable name. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the domain, if found.
      *
@@ -730,7 +750,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @param terms the list of terms to append to the DataProduct
      * @return the DataProduct that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataProduct appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataProduct) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -746,7 +768,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @param terms the list of terms to remove from the DataProduct, which must be referenced by GUID
      * @return the DataProduct that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataProduct removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataProduct) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -762,7 +786,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DataProduct
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DataProduct appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DataProduct) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -781,7 +807,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DataProduct
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DataProduct appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -807,7 +835,9 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @param qualifiedName of the DataProduct
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataProduct
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

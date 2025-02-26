@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
+import co.elastic.clients.elasticsearch._types.SortOrder
 import com.atlan.AtlanClient
 import com.atlan.exception.ConflictException
 import com.atlan.model.assets.Asset
@@ -46,7 +47,7 @@ abstract class PackageTest(
     protected abstract val logger: KLogger
 
     private val nanoId = NanoIdUtils.randomNanoId(Random(), ALPHABET, 5)
-    private val sysExit = SystemExit()
+    protected val sysExit = SystemExit()
     protected val client = AtlanClient()
     protected val testDirectory = makeUnique("")
 
@@ -140,6 +141,54 @@ abstract class PackageTest(
     }
 
     /**
+     * Check whether the provided line appears in the specified file.
+     *
+     * @param filename for the file
+     * @param line the line to check the presence of
+     * @param relativeTo (optional) path under which the log file should be present
+     */
+    fun fileHasLine(
+        filename: String,
+        line: String,
+        relativeTo: String = testDirectory,
+    ) {
+        val file = validateFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { candidate ->
+                if (candidate == line) {
+                    // short-circuit
+                    return
+                }
+            }
+        }
+        assertEquals("Transformed file does not contain expected details.", line)
+    }
+
+    /**
+     * Check whether the provided line appears as the start of any line in the specified file.
+     *
+     * @param filename for the file
+     * @param line the line to check any line in the file starts with
+     * @param relativeTo (optional) path under which the log file should be present
+     */
+    fun fileHasLineStartingWith(
+        filename: String,
+        line: String,
+        relativeTo: String = testDirectory,
+    ) {
+        val file = validateFile(filename, relativeTo)
+        file.useLines { lines ->
+            lines.forEach { candidate ->
+                if (candidate.startsWith(line)) {
+                    // short-circuit
+                    return
+                }
+            }
+        }
+        assertEquals("Transformed file does not contain any line starting with expected details.", line)
+    }
+
+    /**
      * Validate (through assertions) that these files exist and are non-empty files.
      *
      * @param files list of filenames
@@ -159,7 +208,7 @@ abstract class PackageTest(
      * Validate (through assertions) that these files exist, but are empty.
      *
      * @param files list of filenames
-     * @param relativeTo (optional) path under whic hthe files should be present
+     * @param relativeTo (optional) path under which the files should be present
      */
     fun validateFileExistsButEmpty(
         files: List<String>,
@@ -471,6 +520,54 @@ abstract class PackageTest(
             if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.HARD)
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove product: $name" }
+        }
+    }
+
+    /**
+     * Remove the provided domain and all its subdomains and products, if they exist
+     *
+     * @param domainName of the domain
+     */
+    fun removeDomainAndChildren(domainName: String) {
+        val domain =
+            DataDomain
+                .select(client)
+                .where(DataDomain.NAME.eq(domainName))
+                .whereNot(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.hasAnyValue())
+                .stream()
+                .toList()
+                .firstOrNull()
+        try {
+            if (domain != null) {
+                // find all the products under the domain
+                val productGuids =
+                    DataProduct
+                        .select(client)
+                        .where(DataProduct.PARENT_DOMAIN_QUALIFIED_NAME.startsWith(domain.qualifiedName))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+                if (productGuids.isNotEmpty()) {
+                    client.assets.delete(productGuids, AtlanDeleteType.HARD)
+                }
+
+                // find all subdomains under the domain
+                val subdomains =
+                    DataDomain
+                        .select(client)
+                        .where(DataDomain.PARENT_DOMAIN_QUALIFIED_NAME.startsWith(domain.qualifiedName))
+                        .sort(DataDomain.QUALIFIED_NAME.order(SortOrder.Desc))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+
+                subdomains.forEach { subdomain ->
+                    client.assets.delete(subdomain, AtlanDeleteType.HARD)
+                }
+                client.assets.delete(domain.guid, AtlanDeleteType.HARD)
+            }
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to remove domain: $domainName" }
         }
     }
 

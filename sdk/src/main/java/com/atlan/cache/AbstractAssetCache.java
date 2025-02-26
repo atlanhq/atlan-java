@@ -230,7 +230,8 @@ public abstract class AbstractAssetCache {
                 guid = name2Guid.get(name);
             }
             if (guid == null) {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, name.toString());
+                throw new NotFoundException(
+                        ErrorCode.ASSET_NOT_FOUND_BY_NAME, this.getClass().getName(), name.toString());
             }
             return getByGuid(guid, false);
         } else {

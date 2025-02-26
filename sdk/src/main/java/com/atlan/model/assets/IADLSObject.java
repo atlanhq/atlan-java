@@ -46,6 +46,10 @@ public interface IADLSObject {
     /** Container this object exists within. */
     RelationField ADLS_CONTAINER = new RelationField("adlsContainer");
 
+    /** Name of the container this object exists within. */
+    KeywordTextField ADLS_CONTAINER_NAME =
+            new KeywordTextField("adlsContainerName", "adlsContainerName.keyword", "adlsContainerName");
+
     /** Unique name of the container this object exists within. */
     KeywordTextField ADLS_CONTAINER_QUALIFIED_NAME = new KeywordTextField(
             "adlsContainerQualifiedName", "adlsContainerQualifiedName", "adlsContainerQualifiedName.text");
@@ -102,6 +106,9 @@ public interface IADLSObject {
     BooleanField ADLS_OBJECT_VERSION_LEVEL_IMMUTABILITY_SUPPORT =
             new BooleanField("adlsObjectVersionLevelImmutabilitySupport", "adlsObjectVersionLevelImmutabilitySupport");
 
+    /** Name of the account for this ADLS asset. */
+    String getAdlsAccountName();
+
     /** Unique name of the account for this ADLS asset. */
     String getAdlsAccountQualifiedName();
 
@@ -110,6 +117,9 @@ public interface IADLSObject {
 
     /** Container this object exists within. */
     IADLSContainer getAdlsContainer();
+
+    /** Name of the container this object exists within. */
+    String getAdlsContainerName();
 
     /** Unique name of the container this object exists within. */
     String getAdlsContainerQualifiedName();
@@ -191,6 +201,12 @@ public interface IADLSObject {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -398,6 +414,9 @@ public interface IADLSObject {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

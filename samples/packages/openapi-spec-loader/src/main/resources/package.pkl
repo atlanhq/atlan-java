@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 import "modulepath:/Connectors.pkl"
 
@@ -83,6 +83,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store from which to retrieve the OpenAPI spec containing metadata to be imported."
+          allowTestAuthentication = false
         }
       }
     }
@@ -109,6 +110,7 @@ uiConfig {
           required = true
           helpText = "Select an existing connection to load assets into."
           width = 4
+          limitToConnectors = Connectors.API.value
         }
       }
     }

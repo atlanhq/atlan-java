@@ -72,6 +72,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store from which to retrieve the file(s) containing lineage details to be imported."
+          allowTestAuthentication = false
         }
       }
     }
@@ -95,17 +96,19 @@ uiConfig {
           required = false
           helpText = "Whether an invalid value in a field should cause the import to fail (Yes) or log a warning, skip that value, and proceed (No)."
           fallback = true
+          width = 4
         }
         ["lineage_case_sensitive"] = new BooleanInput {
           title = "Case-sensitive match for assets"
           required = false
           helpText = "Whether to use case-sensitive matching for assets (Yes) or try case-insensitive matching (No)."
           fallback = true
+          width = 4
         }
         ["field_separator"] = new TextInput {
           title = "Field separator"
           required = false
-          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
           fallback = placeholderText
@@ -117,6 +120,29 @@ uiConfig {
           placeholderValue = 20
           width = 4
           fallback = placeholderValue
+        }
+        ["cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "ignore"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "ignore"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
         }
       }
     }

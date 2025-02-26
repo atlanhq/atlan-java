@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2023 Atlan Pte. Ltd. */
-amends "modulepath:/Config.pkl"
+amends "modulepath:/Framework.pkl"
 import "pkl:semver"
 
 packageId = "@csa/admin-export"
@@ -62,6 +62,11 @@ uiConfig {
           required = false
           fallback = false
         }
+      }
+    }
+    ["Delivery"] {
+      description = "Where to send"
+      inputs {
         ["file_format"] = new Radio {
           title = "File format"
           required = true
@@ -73,11 +78,6 @@ uiConfig {
           default = "XLSX"
           fallback = default
         }
-      }
-    }
-    ["Delivery"] {
-      description = "Where to send"
-      inputs {
         ["delivery_type"] = new Radio {
           title = "Export via"
           required = true
@@ -115,6 +115,42 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store to which to upload the exported file."
+          allowTestAuthentication = false
+        }
+        ["users_filename"] = new TextInput {
+          title = "Users filename"
+          helpText = "Enter the name of the exported users file."
+          placeholderText = "users.csv"
+          required = false
+          fallback = placeholderText
+        }
+        ["groups_filename"] = new TextInput {
+          title = "Groups filename"
+          helpText = "Enter the name of the exported groups file."
+          placeholderText = "groups.csv"
+          required = false
+          fallback = placeholderText
+        }
+        ["personas_filename"] = new TextInput {
+          title = "Personas filename"
+          helpText = "Enter the name of the exported personas file."
+          placeholderText = "personas.csv"
+          required = false
+          fallback = placeholderText
+        }
+        ["purposes_filename"] = new TextInput {
+          title = "Purposes filename"
+          helpText = "Enter the name of the exported purposes file."
+          placeholderText = "purposes.csv"
+          required = false
+          fallback = placeholderText
+        }
+        ["policies_filename"] = new TextInput {
+          title = "Policies filename"
+          helpText = "Enter the name of the exported policies file."
+          placeholderText = "policies.csv"
+          required = false
+          fallback = placeholderText
         }
       }
     }
@@ -128,9 +164,28 @@ uiConfig {
       whenInputs { ["delivery_type"] = "CLOUD" }
       required {
         "target_prefix"
-        "target_key"
         "cloud_target"
       }
+    }
+    new UIRule {
+        whenInputs {
+            ["delivery_type"] = "CLOUD"
+            ["file_format"] = "XLSX"
+        }
+        required { "target_key" }
+    }
+    new UIRule {
+        whenInputs {
+            ["delivery_type"] = "CLOUD"
+            ["file_format"] = "CSV"
+        }
+        required {
+          "users_filename"
+          "groups_filename"
+          "personas_filename"
+          "purposes_filename"
+          "policies_filename"
+        }
     }
   }
 }

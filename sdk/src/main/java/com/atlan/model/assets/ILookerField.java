@@ -86,7 +86,7 @@ public interface ILookerField {
     RelationField MODEL = new RelationField("model");
 
     /** Name of the model in which this field exists. */
-    TextField MODEL_NAME = new TextField("modelName", "modelName");
+    KeywordTextField MODEL_NAME = new KeywordTextField("modelName", "modelName.keyword", "modelName");
 
     /** Project in which this field exists. */
     RelationField PROJECT = new RelationField("project");
@@ -132,6 +132,12 @@ public interface ILookerField {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -339,6 +345,9 @@ public interface ILookerField {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

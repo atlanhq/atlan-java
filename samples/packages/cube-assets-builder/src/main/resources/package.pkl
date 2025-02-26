@@ -72,6 +72,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store from which to retrieve the file(s) containing cube assets to be imported."
+          allowTestAuthentication = false
         }
       }
     }
@@ -162,7 +163,7 @@ uiConfig {
         ["assets_field_separator"] = new TextInput {
           title = "Field separator"
           required = false
-          helpText = "Character used to separate fields in the input file (for example, ',' or ';')."
+          helpText = "Single character used to separate fields in the input file (for example, ',' or ';')."
           placeholderText = ","
           width = 4
           fallback = placeholderText
@@ -174,6 +175,29 @@ uiConfig {
           placeholderValue = 20
           width = 4
           fallback = placeholderValue
+        }
+        ["assets_cm_handling"] = new Radio {
+          title = "Custom metadata handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["merge"] = "Merge"
+            ["overwrite"] = "Overwrite"
+          }
+          default = "merge"
+          helpText = "How custom metadata in the input should be handled: ignore it, merge it with any existing asset custom metadata, or overwrite the existing asset custom metadata."
+        }
+        ["assets_tag_handling"] = new Radio {
+          title = "Atlan tag association handling"
+          required = false
+          possibleValues {
+            ["ignore"] = "Ignore"
+            ["append"] = "Append"
+            ["replace"] = "Replace"
+            ["remove"] = "Remove"
+          }
+          default = "replace"
+          helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
         }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details"

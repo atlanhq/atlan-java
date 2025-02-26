@@ -10,7 +10,9 @@ import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.search.IndexSearchResponse
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.Importer
 import com.atlan.util.AssetBatch
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -27,6 +29,7 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     private val files =
         listOf(
             "asset-export.csv",
+            "transformed-file.csv",
             "debug.log",
         )
 
@@ -85,7 +88,13 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
             ),
             EnrichmentMigrator::main,
         )
-        Thread.sleep(15000)
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = "$testDirectory${File.separator}transformed-file.csv",
+                assetsUpsertSemantic = "update",
+            ),
+            Importer::main,
+        )
     }
 
     override fun teardown() {
@@ -93,7 +102,19 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     }
 
     @Test
-    fun activeAssetMigrated() {
+    fun activeAssetInFile() {
+        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
+        fileHasLineStartingWith(
+            filename = "transformed-file.csv",
+            line =
+                """
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","ACTIVE","tbl1",,,"Must have some enrichment to be included!"
+                """.trimIndent(),
+        )
+    }
+
+    @Test
+    fun activeAsset() {
         val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
         val request =
             Table
@@ -122,9 +143,6 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
     @Test
     fun filesCreated() {
         validateFilesExist(files)
-        val targetConnection = Connection.findByName(client, c1, connectorType)[0]!!
-        val filename = targetConnection.qualifiedName.replace("/", "_")
-        validateFilesExist(listOf("CSA_EM_transformed_$filename.csv"))
     }
 
     @Test

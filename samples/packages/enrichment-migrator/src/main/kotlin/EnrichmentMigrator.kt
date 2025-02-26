@@ -10,10 +10,15 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
-import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.RowSerde
+import de.siegmar.fastcsv.writer.CsvWriter
+import de.siegmar.fastcsv.writer.LineDelimiter
+import de.siegmar.fastcsv.writer.QuoteStrategies
 import java.io.File
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import kotlin.jvm.optionals.getOrElse
+import kotlin.system.exitProcess
 
 /**
  * Actually run the migrator, taking all settings from environment variables.
@@ -27,6 +32,10 @@ object EnrichmentMigrator {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<EnrichmentMigratorCfg>().use { ctx ->
 
+            if (ctx.config.fieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+                exitProcess(2)
+            }
             val sourceConnectionQN = ctx.config.sourceConnection[0]
             val sourcePrefix = ctx.config.sourceQnPrefix
             val sourceDatabaseName = getSourceDatabaseNames(ctx.client, ctx.config.targetDatabasePattern, sourceConnectionQN, sourcePrefix)
@@ -94,52 +103,46 @@ object EnrichmentMigrator {
                     }
                     start.toList()
                 }
-            ctx.config.targetConnection.forEach { targetConnectionQN ->
-                val targetDatabaseNames = getTargetDatabaseName(ctx.client, targetConnectionQN, ctx.config.targetDatabasePattern)
-                targetDatabaseNames.forEach { targetDatabaseName ->
-                    val mCtx =
-                        MigratorContext(
-                            sourceConnectionQN = sourceConnectionQN,
-                            targetConnectionQN = targetConnectionQN,
-                            targetConnectionName = getConnectionName(ctx.client, targetConnectionQN),
-                            includeArchived = ctx.config.includeArchived,
-                            sourceDatabaseName = sourceDatabaseName,
-                            targetDatabaseName = targetDatabaseName,
-                        )
-                    val targetConnectionFilename =
-                        if (targetDatabaseName.isNotBlank()) {
-                            "${targetConnectionQN}_$targetDatabaseName".replace("/", "_")
-                        } else {
-                            targetConnectionQN.replace("/", "_")
-                        }
-                    val transformedFile =
-                        "$outputDirectory${File.separator}CSA_EM_transformed_$targetConnectionFilename.csv"
-                    val transformer =
-                        Transformer(
-                            mCtx,
-                            extractFile,
-                            header.toList(),
-                            logger,
-                            ctx.config.fieldSeparator[0],
-                        )
-                    transformer.transform(transformedFile)
 
-                    // 3. Import the transformed file
-                    val importConfig =
-                        AssetImportCfg(
-                            assetsFile = transformedFile,
-                            assetsUpsertSemantic = "update",
-                            assetsFailOnErrors = ctx.config.failOnErrors,
-                            assetsBatchSize = ctx.config.batchSize,
-                            assetsFieldSeparator = ctx.config.fieldSeparator,
-                            assetsCaseSensitive = ctx.config.caseSensitive,
-                            assetsTableViewAgnostic = ctx.config.tableViewAgnostic,
-                        )
-                    Utils.initializeContext(importConfig, ctx).use { iCtx ->
-                        Importer.import(iCtx, outputDirectory)?.close()
+            val transformedFile = "$outputDirectory${File.separator}transformed-file.csv"
+            CsvWriter
+                .builder()
+                .fieldSeparator(ctx.config.fieldSeparator[0])
+                .quoteCharacter('"')
+                .quoteStrategy(QuoteStrategies.NON_EMPTY)
+                .lineDelimiter(LineDelimiter.PLATFORM)
+                .build(
+                    Paths.get(transformedFile),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE,
+                ).use { writer ->
+                    writer.writeRecord(header.toList())
+
+                    ctx.config.targetConnection.forEach { targetConnectionQN ->
+                        val targetDatabaseNames = getTargetDatabaseName(ctx.client, targetConnectionQN, ctx.config.targetDatabasePattern)
+                        targetDatabaseNames.forEach { targetDatabaseName ->
+                            val mCtx =
+                                MigratorContext(
+                                    sourceConnectionQN = sourceConnectionQN,
+                                    targetConnectionQN = targetConnectionQN,
+                                    targetConnectionName = getConnectionName(ctx.client, targetConnectionQN),
+                                    includeArchived = ctx.config.includeArchived,
+                                    sourceDatabaseName = sourceDatabaseName,
+                                    targetDatabaseName = targetDatabaseName,
+                                )
+                            val transformer =
+                                Transformer(
+                                    mCtx,
+                                    extractFile,
+                                    header.toList(),
+                                    logger,
+                                    ctx.config.fieldSeparator[0],
+                                )
+                            transformer.transform(writer)
+                        }
                     }
                 }
-            }
         }
     }
 

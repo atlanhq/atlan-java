@@ -51,7 +51,7 @@ object GroupXformer {
                         // And if found by alias, return the group name (since that's what we require)
                         return client.groupCache.getNameForId(idFromAlias)
                     } catch (e: NotFoundException) {
-                        throw NoSuchElementException("Group name / alias $groupRef is not known to Atlan (in $fieldName).", e)
+                        throw NoSuchElementException("Group name / alias is not known to Atlan (in $fieldName): $groupRef", e)
                     }
                 }
             }

@@ -6,6 +6,8 @@ import AssetImportCfg
 import LineageBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.LineageProcess
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
@@ -38,6 +40,10 @@ object Loader {
         if (!lineageFileProvided) {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)
+        }
+        if (ctx.config.fieldSeparator.length > 1) {
+            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+            exitProcess(2)
         }
 
         val lineageInput =
@@ -72,6 +78,8 @@ object Loader {
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ctx.config.fieldSeparator,
+                    assetsCmHandling = CustomMetadataHandling.IGNORE.value,
+                    assetsTagHandling = AtlanTagHandling.IGNORE.value,
                 )
             lateinit var qualifiedNameMap: Map<AssetIdentity, String>
             Utils.initializeContext(importConfig, ctx).use { iCtx ->
@@ -119,9 +127,16 @@ object Loader {
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
                     assetsFieldSeparator = ctx.config.fieldSeparator,
+                    assetsCmHandling = ctx.config.cmHandling,
+                    assetsTagHandling = ctx.config.tagHandling,
                 )
             Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()
+            }
+
+            if (ctx.config.lineageFailOnErrors && (assetXform.anyFailures || lineageXform.anyFailures)) {
+                logger.error { "Errors detected during loading -- failing the workflow." }
+                exitProcess(1)
             }
         }
     }

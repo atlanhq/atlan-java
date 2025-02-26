@@ -9,6 +9,8 @@ import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.model.Credential
 import com.atlan.pkg.objectstore.ADLSCredential
@@ -223,23 +225,25 @@ object Utils {
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
         val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
-        when {
-            apiToken.isNotEmpty() -> {
-                logger.info { "Using provided API token for authentication." }
-            }
+        if (reuseCtx?.client == null) {
+            when {
+                apiToken.isNotEmpty() -> {
+                    logger.info { "Using provided API token for authentication." }
+                }
 
-            userId.isNotEmpty() -> {
-                logger.info { "No API token found, attempting to impersonate user: $userId" }
-                client.userId = userId
-                client.apiToken = client.impersonate.user(userId)
-            }
+                userId.isNotEmpty() -> {
+                    logger.info { "No API token found, attempting to impersonate user: $userId" }
+                    client.userId = userId
+                    client.apiToken = client.impersonate.user(userId)
+                }
 
-            else -> {
-                logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                client.apiToken = client.impersonate.escalate()
+                else -> {
+                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
+                    client.apiToken = client.impersonate.escalate()
+                }
             }
+            setWorkflowOpts(client, config.runtime)
         }
-        setWorkflowOpts(client, config.runtime)
         return PackageContext(config, client, reuseCtx?.client != null)
     }
 
@@ -548,7 +552,41 @@ object Utils {
         if (semantic == null) {
             default
         } else {
-            AssetCreationHandling.fromValue(semantic)
+            AssetCreationHandling.fromValue(semantic.lowercase())
+        }
+
+    /**
+     * Calculate the custom metadata handling semantic from a string semantic.
+     *
+     * @param semantic string input for the semantic from the workflow setup
+     * @param default default semantic to use if no value was specified
+     * @return enumerated semantic
+     */
+    fun getCustomMetadataHandling(
+        semantic: String?,
+        default: CustomMetadataHandling,
+    ): CustomMetadataHandling =
+        if (semantic == null) {
+            default
+        } else {
+            CustomMetadataHandling.fromValue(semantic.lowercase()) ?: default
+        }
+
+    /**
+     * Calculate the Atlan tag association handling semantic from a string semantic.
+     *
+     * @param semantic string input for the semantic from the workflow setup
+     * @param default default semantic to use if no value was specified
+     * @return enumerated semantic
+     */
+    fun getAtlanTagHandling(
+        semantic: String?,
+        default: AtlanTagHandling,
+    ): AtlanTagHandling =
+        if (semantic == null) {
+            default
+        } else {
+            AtlanTagHandling.fromValue(semantic.lowercase()) ?: default
         }
 
     /**

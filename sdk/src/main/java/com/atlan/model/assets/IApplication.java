@@ -31,6 +31,9 @@ public interface IApplication {
 
     public static final String TYPE_NAME = "Application";
 
+    /** ApplicationFields contained within this Application. */
+    RelationField APPLICATION_CHILD_FIELDS = new RelationField("applicationChildFields");
+
     /** Assets contained within this Application. */
     RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
 
@@ -66,6 +69,15 @@ public interface IApplication {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationFields contained within this Application. */
+    SortedSet<IApplicationField> getApplicationChildFields();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Assets contained within this Application. */
     SortedSet<IAsset> getApplicationOwnedAssets();
@@ -276,6 +288,9 @@ public interface IApplication {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -48,6 +49,9 @@ public interface IPowerBIColumn {
     KeywordField POWER_BI_COLUMN_SUMMARIZE_BY =
             new KeywordField("powerBIColumnSummarizeBy", "powerBIColumnSummarizeBy");
 
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    RelationField POWER_BI_MEASURES = new RelationField("powerBIMeasures");
+
     /** Name of a column in the same table to use to order this column. */
     KeywordField POWER_BI_SORT_BY_COLUMN = new KeywordField("powerBISortByColumn", "powerBISortByColumn");
 
@@ -55,7 +59,8 @@ public interface IPowerBIColumn {
     RelationField TABLE = new RelationField("table");
 
     /** Unique name of the workspace in which this column exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    KeywordTextField WORKSPACE_QUALIFIED_NAME =
+            new KeywordTextField("workspaceQualifiedName", "workspaceQualifiedName.keyword", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -86,6 +91,12 @@ public interface IPowerBIColumn {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -294,6 +305,9 @@ public interface IPowerBIColumn {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -473,6 +487,9 @@ public interface IPowerBIColumn {
 
     /** Whether this asset is hidden in Power BI (true) or not (false). */
     Boolean getPowerBIIsHidden();
+
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    SortedSet<IPowerBIMeasure> getPowerBIMeasures();
 
     /** Name of a column in the same table to use to order this column. */
     String getPowerBISortByColumn();

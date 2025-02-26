@@ -70,6 +70,12 @@ public interface IAtlanCollection {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */
@@ -275,6 +281,9 @@ public interface IAtlanCollection {
 
     /** TBC */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** TBC */
     Long getAssetSodaCheckCount();

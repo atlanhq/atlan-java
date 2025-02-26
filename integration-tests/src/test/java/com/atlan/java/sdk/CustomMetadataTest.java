@@ -136,6 +136,11 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(groups = {"cm.create.cm.raci"})
     void createCustomMetadataRACI() throws AtlanException {
+        AttributeDef informed =
+                AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
+                        .toBuilder()
+                        .multiValued(true)
+                        .build();
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_RACI)
                 .attributeDef(AttributeDef.of(
                         client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
@@ -143,8 +148,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
                 .attributeDef(AttributeDef.of(
                         client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
-                .attributeDef(AttributeDef.of(
-                        client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
+                .attributeDef(informed)
                 .attributeDef(AttributeDef.of(
                         client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
                 .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
@@ -171,6 +175,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(one.getName());
         assertNotEquals(one.getName(), CM_ATTR_RACI_RESPONSIBLE);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertNotNull(one.getOptions());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.USERS.getValue());
@@ -179,6 +184,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(one.getName());
         assertNotEquals(one.getName(), CM_ATTR_RACI_ACCOUNTABLE);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SINGLE);
         assertNotNull(one.getOptions());
         assertFalse(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.USERS.getValue());
@@ -187,6 +193,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(one.getName());
         assertNotEquals(one.getName(), CM_ATTR_RACI_CONSULTED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertNotNull(one.getOptions());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.GROUPS.getValue());
@@ -195,6 +202,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(one.getName());
         assertNotEquals(one.getName(), CM_ATTR_RACI_INFORMED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertNotNull(one.getOptions());
         assertTrue(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.GROUPS.getValue());
@@ -841,7 +849,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        AssetMutationResponse response = toUpdate.saveReplacingCM(client, false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -867,7 +875,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
-        AssetMutationResponse response = toUpdate.saveReplacingCM(client, false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(client);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -1017,6 +1025,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_RESPONSIBLE);
         assertNotEquals(one.getName(), CM_ATTR_RACI_RESPONSIBLE);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertTrue(one.getOptions().getApplicableAssetTypes().contains(Database.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());
@@ -1025,6 +1034,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_ACCOUNTABLE);
         assertNotEquals(one.getName(), CM_ATTR_RACI_ACCOUNTABLE);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SINGLE);
         assertTrue(one.getOptions().getApplicableAssetTypes().contains(Table.TYPE_NAME));
         assertFalse(one.isArchived());
         assertFalse(one.getOptions().getMultiValueSelect());
@@ -1033,6 +1043,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_CONSULTED);
         assertNotEquals(one.getName(), CM_ATTR_RACI_CONSULTED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertTrue(one.getOptions().getApplicableAssetTypes().contains(Column.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());
@@ -1041,6 +1052,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getDisplayName(), CM_ATTR_RACI_INFORMED);
         assertNotEquals(one.getName(), CM_ATTR_RACI_INFORMED);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+        assertEquals(one.getCardinality(), AtlanCustomAttributeCardinality.SET);
         assertTrue(one.getOptions().getApplicableAssetTypes().contains(MaterializedView.TYPE_NAME));
         assertFalse(one.isArchived());
         assertTrue(one.getOptions().getMultiValueSelect());

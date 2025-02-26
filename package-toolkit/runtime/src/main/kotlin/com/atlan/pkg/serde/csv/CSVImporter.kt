@@ -6,6 +6,8 @@ import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.PackageContext
@@ -16,7 +18,6 @@ import com.atlan.util.AssetBatch
 import mu.KLogger
 import java.lang.reflect.InvocationTargetException
 import java.util.stream.Stream
-import kotlin.system.exitProcess
 
 /**
  * Import assets into Atlan from a provided CSV file.
@@ -36,8 +37,9 @@ import kotlin.system.exitProcess
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param creationHandling if assets are to be created, how they should be created (as full assets or only partial assets)
+ * @param customMetadataHandling how to handle custom metadata values (default: merge them with any existing values)
+ * @param atlanTagHandling how to handle any Atlan tag associations (default: replace them, for backwards compatibility)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
- * @param failOnErrors if true, fail if errors are encountered, otherwise continue processing
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 abstract class CSVImporter(
@@ -51,8 +53,9 @@ abstract class CSVImporter(
     protected val trackBatches: Boolean = true,
     protected val caseSensitive: Boolean = true,
     protected val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
+    protected val customMetadataHandling: CustomMetadataHandling = CustomMetadataHandling.MERGE,
+    protected val atlanTagHandling: AtlanTagHandling = AtlanTagHandling.REPLACE,
     protected val tableViewAgnostic: Boolean = false,
-    protected val failOnErrors: Boolean = true,
     protected val fieldSeparator: Char = ',',
 ) : AssetGenerator,
     RowPreprocessor {
@@ -82,7 +85,8 @@ abstract class CSVImporter(
             updateOnly,
             trackBatches,
             caseSensitive,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            customMetadataHandling,
+            atlanTagHandling,
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
@@ -105,7 +109,8 @@ abstract class CSVImporter(
             updateOnly,
             trackBatches,
             caseSensitive,
-            AssetBatch.CustomMetadataHandling.MERGE,
+            customMetadataHandling,
+            atlanTagHandling,
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
@@ -113,10 +118,6 @@ abstract class CSVImporter(
             val start = System.currentTimeMillis()
             val results = csv.streamRows(ctx, this, batchSize, logger, columnsToSkip)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
-            if (results.anyFailures && failOnErrors) {
-                logger.error { "Some errors detected, failing the workflow." }
-                exitProcess(1)
-            }
             cacheCreated(results.primary.created?.values() ?: Stream.empty())
             return results
         }
@@ -200,36 +201,31 @@ abstract class CSVImporter(
                     Serde.getAssetClassForType(candidate.typeName),
                     field.atlanFieldName,
                 )
-            val value = getter.invoke(candidate)
-            if (value == null ||
-                (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
-            ) {
-                builder.nullField(field.atlanFieldName)
-                return true
+            if (getter == null) {
+                logger.warn {
+                    "Field ${field.atlanFieldName} not known on ${candidate.typeName} -- skipping clearing it."
+                }
+            } else {
+                val value = getter.invoke(candidate)
+                if (value == null ||
+                    (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
+                ) {
+                    builder.nullField(field.atlanFieldName)
+                    return true
+                }
             }
         } catch (e: ClassNotFoundException) {
-            logger.error(
-                "Unknown type {} — cannot clear {}.",
-                candidate.typeName,
-                field.atlanFieldName,
-                e,
-            )
+            logger.error(e) {
+                "Unknown type ${candidate.typeName} — cannot clear ${field.atlanFieldName}."
+            }
         } catch (e: IllegalAccessException) {
-            logger.error(
-                "Unable to clear {} on: {}::{}",
-                field.atlanFieldName,
-                candidate.typeName,
-                candidate.qualifiedName,
-                e,
-            )
+            logger.error(e) {
+                "Unable to clear ${field.atlanFieldName} on: ${candidate.typeName}::${candidate.qualifiedName}"
+            }
         } catch (e: InvocationTargetException) {
-            logger.error(
-                "Unable to clear {} on: {}::{}",
-                field.atlanFieldName,
-                candidate.typeName,
-                candidate.qualifiedName,
-                e,
-            )
+            logger.error(e) {
+                "Unable to clear ${field.atlanFieldName} on: ${candidate.typeName}::${candidate.qualifiedName}"
+            }
         }
         return false
     }

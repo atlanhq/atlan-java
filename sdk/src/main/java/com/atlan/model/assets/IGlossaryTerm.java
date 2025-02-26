@@ -147,6 +147,12 @@ public interface IGlossaryTerm {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */
@@ -352,6 +358,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** TBC */
     Long getAssetSodaCheckCount();

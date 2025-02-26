@@ -1,0 +1,2 @@
+qualifiedName,typeName,name,connectorType,connectionQualifiedName,description,links
+{{CONNECTION}}/DB,Database,DB,iceberg,{{CONNECTION}},,"{""typeName"": ""Link"", ""attributes"": {""name"": ""HP"", ""link"": ""https://hp.com""}}"

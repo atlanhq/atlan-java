@@ -26,7 +26,9 @@ import java.util.Map;
 import java.util.List;
 import java.util.SortedSet;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.Nulls;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -56,7 +58,10 @@ public class ${className} extends AtlanStruct {
 
 <#list attributes as attribute>
     /** ${attribute.description} */
-    <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
+    <#if attribute.singular??>
+    @Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if>
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
+    </#if>
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>

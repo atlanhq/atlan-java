@@ -7,6 +7,8 @@ import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.CustomEntity;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.relations.Reference;
 import com.atlan.util.StringUtils;
@@ -63,6 +65,9 @@ public class AssetSerializer extends StdSerializer<Asset> {
         Map<String, Object> attributes = new LinkedHashMap<>();
         Map<String, Object> appendRelationships = new LinkedHashMap<>();
         Map<String, Object> removeRelationships = new LinkedHashMap<>();
+        Set<AtlanTag> appendAtlanTags = new LinkedHashSet<>();
+        Set<AtlanTag> removeAtlanTags = new LinkedHashSet<>();
+        Set<AtlanTag> replaceAtlanTags = new LinkedHashSet<>();
         Map<String, Map<String, Object>> businessAttributes = new LinkedHashMap<>();
 
         gen.writeStartObject();
@@ -186,6 +191,21 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     if (cm != null && !cm.isEmpty()) {
                         client.getCustomMetadataCache().getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                     }
+                } else if (fieldName.equals("atlanTags")) {
+                    Set<AtlanTag> tags = asset.getAtlanTags();
+                    for (AtlanTag tag : tags) {
+                        switch (tag.getSemantic()) {
+                            case APPEND:
+                                appendAtlanTags.add(tag);
+                                break;
+                            case REMOVE:
+                                removeAtlanTags.add(tag);
+                                break;
+                            default:
+                                replaceAtlanTags.add(tag);
+                                break;
+                        }
+                    }
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
                     // values or empty lists)
@@ -199,6 +219,14 @@ public class AssetSerializer extends StdSerializer<Asset> {
                         sp.defaultSerializeField(serializeName, attrValue, gen);
                     }
                 }
+            }
+
+            // If a URL-based icon has been provided, allow that to be used as the assetIcon.
+            String iconUrl = asset.getIconUrl();
+            if (iconUrl != null
+                    && !iconUrl.isEmpty()
+                    && (asset.getTypeName().equals("Catalog") || asset instanceof CustomEntity)) {
+                attributes.put("assetIcon", iconUrl);
             }
 
         } catch (AtlanException e) {
@@ -224,6 +252,15 @@ public class AssetSerializer extends StdSerializer<Asset> {
         }
         if (!removeRelationships.isEmpty()) {
             sp.defaultSerializeField("removeRelationshipAttributes", removeRelationships, gen);
+        }
+        if (!appendAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("addOrUpdateClassifications", appendAtlanTags, gen);
+        }
+        if (!removeAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("removeClassifications", removeAtlanTags, gen);
+        }
+        if (!replaceAtlanTags.isEmpty()) {
+            sp.defaultSerializeField("classifications", replaceAtlanTags, gen);
         }
         if (!businessAttributes.isEmpty()) {
             sp.defaultSerializeField("businessAttributes", businessAttributes, gen);

@@ -31,6 +31,7 @@ import lombok.Singular;
  */
 public class ApiTokensEndpoint extends HeraclesEndpoint {
 
+    private static final long MAX_VALIDITY = 157680000L;
     private static final String endpoint = "/apikeys";
 
     public ApiTokensEndpoint(AtlanClient client) {
@@ -298,10 +299,10 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
             if (validitySeconds != null) {
                 if (validitySeconds < 0) {
                     // Treat negative numbers as "infinite" (never expire)
-                    this.validitySeconds = 409968000L;
+                    this.validitySeconds = MAX_VALIDITY;
                 } else {
                     // Otherwise use "infinite" as the ceiling for values
-                    this.validitySeconds = Math.min(validitySeconds, 409968000L);
+                    this.validitySeconds = Math.min(validitySeconds, MAX_VALIDITY);
                 }
             }
         }

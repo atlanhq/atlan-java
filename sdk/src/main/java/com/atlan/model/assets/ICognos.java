@@ -93,6 +93,12 @@ public interface ICognos {
     /** Application asset containing this Asset. */
     IApplication getApplication();
 
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
@@ -299,6 +305,9 @@ public interface ICognos {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

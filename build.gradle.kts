@@ -2,7 +2,7 @@
 plugins {
     id("com.atlan.java")
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
-    id("org.owasp.dependencycheck") version "11.1.1"
+    id("org.owasp.dependencycheck") version "12.1.0"
 }
 
 group = providers.gradleProperty("GROUP").get()
@@ -35,8 +35,6 @@ configurations.all {
             libs.commons.io,
             libs.jetty.http,
             libs.netty.common,
-            libs.otel.sdk,
-            libs.otel.exporter,
         )
     }
 }

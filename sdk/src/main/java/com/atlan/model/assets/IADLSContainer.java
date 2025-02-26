@@ -68,6 +68,9 @@ public interface IADLSContainer {
     /** Account in which this container exists. */
     IADLSAccount getAdlsAccount();
 
+    /** Name of the account for this ADLS asset. */
+    String getAdlsAccountName();
+
     /** Unique name of the account for this ADLS asset. */
     String getAdlsAccountQualifiedName();
 
@@ -124,6 +127,12 @@ public interface IADLSContainer {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -331,6 +340,9 @@ public interface IADLSContainer {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

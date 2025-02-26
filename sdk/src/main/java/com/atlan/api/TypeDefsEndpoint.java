@@ -256,34 +256,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @see #create(TypeDef)
      */
     public synchronized TypeDefResponse _create(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
-        TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDefs != null) {
-            for (TypeDef typeDef : typeDefs) {
-                String serviceType = typeDef.getServiceType();
-                if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                    throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-                }
-                switch (typeDef.getCategory()) {
-                    case ATLAN_TAG:
-                        builder.atlanTagDef((AtlanTagDef) typeDef);
-                        break;
-                    case CUSTOM_METADATA:
-                        builder.customMetadataDef((CustomMetadataDef) typeDef);
-                        break;
-                    case ENUM:
-                        builder.enumDef((EnumDef) typeDef);
-                        break;
-                    case STRUCT:
-                        builder.structDef((StructDef) typeDef);
-                        break;
-                    case ENTITY:
-                        builder.entityDef((EntityDef) typeDef);
-                        break;
-                    case RELATIONSHIP:
-                        builder.relationshipDef((RelationshipDef) typeDef);
-                        break;
-                }
-            }
+            TypeDefResponse.TypeDefResponseBuilder builder = buildTypeDefList(typeDefs);
             TypeDefResponse response = _create(builder, options);
             if (response != null) {
                 if (!response.getAtlanTagDefs().isEmpty()) {
@@ -299,7 +273,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
             }
         }
         // If there was no typedef provided, just return an empty response (noop)
-        return builder.build();
+        return TypeDefResponse.builder().build();
     }
 
     private synchronized TypeDefResponse _create(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)
@@ -323,6 +297,19 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     }
 
     /**
+     * Update existing type definitions in Atlan.
+     * Note: only custom metadata and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are updated their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to update
+     * @return the resulting type definition that was updated
+     * @throws AtlanException on any API communication issue
+     */
+    public synchronized TypeDefResponse update(List<TypeDef> typeDefs) throws AtlanException {
+        return update(typeDefs, null);
+    }
+
+    /**
      * Update an existing type definition in Atlan.
      * Note: only custom metadata and Atlan tag type definitions are currently supported.
      * Furthermore, if any of these are updated their respective cache will be force-refreshed.
@@ -333,21 +320,36 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public synchronized TypeDefResponse update(TypeDef typeDef, RequestOptions options) throws AtlanException {
-        TypeDefResponse response = null;
-        if (typeDef != null) {
-            switch (typeDef.getCategory()) {
-                case ATLAN_TAG:
-                case CUSTOM_METADATA:
-                case ENUM:
-                    response = _update(typeDef, options);
-                    break;
-                default:
-                    throw new InvalidRequestException(
-                            ErrorCode.UNABLE_TO_UPDATE_TYPEDEF_CATEGORY,
-                            typeDef.getCategory().getValue());
+        return update(List.of(typeDef), options);
+    }
+
+    /**
+     * Update existing type definitions in Atlan.
+     * Note: only custom metadata and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are updated their respective cache will be force-refreshed.
+     *
+     * @param typeDefs to update
+     * @param options to override default client settings
+     * @return the resulting type definition that was updated
+     * @throws AtlanException on any API communication issue
+     */
+    public synchronized TypeDefResponse update(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
+        if (typeDefs != null) {
+            for (TypeDef typeDef : typeDefs) {
+                switch (typeDef.getCategory()) {
+                    case ATLAN_TAG:
+                    case CUSTOM_METADATA:
+                    case ENUM:
+                        // Do nothing, these are update-able
+                        break;
+                    default:
+                        throw new InvalidRequestException(
+                                ErrorCode.UNABLE_TO_UPDATE_TYPEDEF_CATEGORY,
+                                typeDef.getCategory().getValue());
+                }
             }
         }
-        return response;
+        return _update(typeDefs, options);
     }
 
     /**
@@ -360,46 +362,22 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public synchronized TypeDefResponse _update(TypeDef typeDef) throws AtlanException {
-        return _update(typeDef, null);
+        return _update(List.of(typeDef), null);
     }
 
     /**
-     * Update an existing type definition in Atlan.
+     * Update existing type definitions in Atlan.
      * Note: only custom metadata and Atlan tag type definitions are currently supported.
      * Furthermore, if any Atlan tag, enum or custom metadata is updated their respective cache will be force-refreshed.
      *
-     * @param typeDef to update
+     * @param typeDefs to update
      * @param options to override default client settings
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public synchronized TypeDefResponse _update(TypeDef typeDef, RequestOptions options) throws AtlanException {
-        TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
-        if (typeDef != null) {
-            String serviceType = typeDef.getServiceType();
-            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-            }
-            switch (typeDef.getCategory()) {
-                case ATLAN_TAG:
-                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
-                    break;
-                case CUSTOM_METADATA:
-                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
-                    break;
-                case ENUM:
-                    builder.enumDefs(List.of((EnumDef) typeDef));
-                    break;
-                case STRUCT:
-                    builder.structDefs(List.of((StructDef) typeDef));
-                    break;
-                case ENTITY:
-                    builder.entityDefs(List.of((EntityDef) typeDef));
-                    break;
-                case RELATIONSHIP:
-                    builder.relationshipDefs(List.of((RelationshipDef) typeDef));
-                    break;
-            }
+    public synchronized TypeDefResponse _update(List<TypeDef> typeDefs, RequestOptions options) throws AtlanException {
+        if (typeDefs != null) {
+            TypeDefResponse.TypeDefResponseBuilder builder = buildTypeDefList(typeDefs);
             TypeDefResponse response = _update(builder, options);
             if (response != null) {
                 if (!response.getAtlanTagDefs().isEmpty()) {
@@ -411,10 +389,43 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                 if (!response.getEnumDefs().isEmpty()) {
                     client.getEnumCache().refreshCache();
                 }
+                return response;
             }
         }
         // If there was no typedef provided, just return an empty response (noop)
-        return builder.build();
+        return TypeDefResponse.builder().build();
+    }
+
+    private synchronized TypeDefResponse.TypeDefResponseBuilder buildTypeDefList(List<TypeDef> typeDefs)
+            throws ConflictException {
+        TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
+        for (TypeDef typeDef : typeDefs) {
+            String serviceType = typeDef.getServiceType();
+            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
+            }
+            switch (typeDef.getCategory()) {
+                case ATLAN_TAG:
+                    builder.atlanTagDef((AtlanTagDef) typeDef);
+                    break;
+                case CUSTOM_METADATA:
+                    builder.customMetadataDef((CustomMetadataDef) typeDef);
+                    break;
+                case ENUM:
+                    builder.enumDef((EnumDef) typeDef);
+                    break;
+                case STRUCT:
+                    builder.structDef((StructDef) typeDef);
+                    break;
+                case ENTITY:
+                    builder.entityDef((EntityDef) typeDef);
+                    break;
+                case RELATIONSHIP:
+                    builder.relationshipDef((RelationshipDef) typeDef);
+                    break;
+            }
+        }
+        return builder;
     }
 
     private synchronized TypeDefResponse _update(TypeDefResponse.TypeDefResponseBuilder builder, RequestOptions options)

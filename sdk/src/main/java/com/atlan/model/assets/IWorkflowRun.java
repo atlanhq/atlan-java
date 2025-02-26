@@ -35,6 +35,9 @@ public interface IWorkflowRun {
 
     public static final String TYPE_NAME = "WorkflowRun";
 
+    /** List of workflow run action choices. */
+    KeywordField WORKFLOW_RUN_ACTION_CHOICES = new KeywordField("workflowRunActionChoices", "workflowRunActionChoices");
+
     /** The comment added by the requester */
     TextField WORKFLOW_RUN_COMMENT = new TextField("workflowRunComment", "workflowRunComment");
 
@@ -94,6 +97,12 @@ public interface IWorkflowRun {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -301,6 +310,9 @@ public interface IWorkflowRun {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
@@ -550,6 +562,9 @@ public interface IWorkflowRun {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** List of workflow run action choices. */
+    SortedSet<String> getWorkflowRunActionChoices();
 
     /** The comment added by the requester */
     String getWorkflowRunComment();

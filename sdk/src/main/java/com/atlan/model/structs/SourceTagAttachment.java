@@ -10,6 +10,8 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.ITag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -50,6 +52,7 @@ public class SourceTagAttachment extends AtlanStruct {
 
     /** Value of the tag attachment, from the source. */
     @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     @JsonProperty("sourceTagValue")
     List<SourceTagAttachmentValue> sourceTagValues;
 

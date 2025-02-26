@@ -3,8 +3,6 @@
 package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
-import com.atlan.exception.AtlanException
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
@@ -12,16 +10,21 @@ import com.atlan.model.assets.MaterializedView
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.rab.AssetImporter.Companion.getQualifiedNameDetails
+import com.atlan.pkg.rab.AssetXformer.Companion.BASE_OUTPUT_HEADERS
+import com.atlan.pkg.rab.AssetXformer.Companion.getSQLHierarchyDetails
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
 import com.atlan.pkg.util.DeltaProcessor
+import de.siegmar.fastcsv.writer.CsvWriter
+import de.siegmar.fastcsv.writer.LineDelimiter
+import de.siegmar.fastcsv.writer.QuoteStrategies
+import java.io.File
 import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.exitProcess
 
@@ -47,12 +50,11 @@ object Importer {
      *
      * @param ctx context in which this package is running
      * @param outputDirectory in which to do any data processing
-     * @return the qualifiedName of the connection that was delta-processed, or null if no delta-processing enabled
      */
     fun import(
         ctx: PackageContext<RelationalAssetsBuilderCfg>,
         outputDirectory: String = "tmp",
-    ): String? {
+    ) {
         val assetsUpload = ctx.config.importType == "DIRECT"
         val assetsFilename = ctx.config.assetsFile
         val assetsKey = ctx.config.assetsKey
@@ -69,6 +71,10 @@ object Importer {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
         }
+        if (ctx.config.assetsFieldSeparator.length > 1) {
+            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+            exitProcess(2)
+        }
 
         // Preprocess the CSV file in an initial pass to inject key details,
         // to allow subsequent out-of-order parallel processing
@@ -80,13 +86,47 @@ object Importer {
                 ctx.config.assetsPrefix,
                 assetsKey,
             )
-        val targetHeaders = CSVXformer.getHeader(assetsInput, fieldSeparator).toMutableList()
+
+        ctx.connectionCache.preload()
+
+        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+        logger.info { "=== Importing assets... ===" }
+
+        logger.info { " --- Importing connections... ---" }
+        // Note: we force-track the batches here to ensure any created connections are cached
+        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
+        // with the subsequent processing steps.)
+        // We also need to load these connections first, irrespective of any delta calculation, so that
+        // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
+        val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
+        val connectionResults = connectionImporter.import()
+        if (connectionResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+            logger.error { "Some errors detected while loading connections, failing the workflow." }
+            connectionResults.close()
+            exitProcess(1)
+        }
+        connectionResults?.close()
+
+        transform(ctx, fieldSeparator, assetsInput, "$outputDirectory${File.separator}current-file-transformed.csv")
+
+        if (ctx.config.previousFileDirect.isNotBlank()) {
+            transform(ctx, fieldSeparator, ctx.config.previousFileDirect, "$outputDirectory${File.separator}previous-file-transformed.csv")
+        }
+    }
+
+    private fun transform(
+        ctx: PackageContext<RelationalAssetsBuilderCfg>,
+        fieldSeparator: Char,
+        inputFile: String,
+        outputFile: String,
+    ) {
+        val targetHeaders = getHeader(inputFile, fieldSeparator).toMutableList()
         // Inject two columns at the end that we need for column assets
         targetHeaders.add(Column.ORDER.atlanFieldName)
-        targetHeaders.add(ColumnImporter.COLUMN_PARENT_QN)
-        val revisedFile = Paths.get("$assetsInput.CSA_RAB.csv")
+        targetHeaders.add(ColumnXformer.COLUMN_PARENT_QN)
+        val revisedFile = Paths.get("$inputFile.CSA_RAB.csv")
         val preprocessedDetails =
-            Preprocessor(assetsInput, fieldSeparator, ctx.config.deltaSemantic == "full")
+            Preprocessor(inputFile, fieldSeparator)
                 .preprocess<Results>(
                     outputFile = revisedFile.toString(),
                     outputHeaders = targetHeaders,
@@ -104,96 +144,64 @@ object Importer {
             ctx.dataDomainCache.preload()
         }
 
-        ctx.connectionCache.preload()
+        val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
+        // Determine any non-standard RAB fields in the header and append them to the end of
+        // the list of standard header fields, so they're passed-through to asset import
+        val inputHeaders = getHeader(preprocessedDetails.preprocessedFile, fieldSeparator = fieldSeparator).toMutableList()
+        inputHeaders.removeAll(BASE_OUTPUT_HEADERS)
+        inputHeaders.removeAll(
+            listOf(
+                ColumnXformer.COLUMN_NAME,
+                ColumnXformer.COLUMN_PARENT_QN,
+                ConnectionImporter.CONNECTOR_TYPE,
+                AssetXformer.ENTITY_NAME,
+            ),
+        )
+        inputHeaders.forEach { completeHeaders.add(it) }
 
-        FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
-        logger.info { "=== Importing assets... ===" }
+        CsvWriter
+            .builder()
+            .fieldSeparator(fieldSeparator)
+            .quoteCharacter('"')
+            .quoteStrategy(QuoteStrategies.NON_EMPTY)
+            .lineDelimiter(LineDelimiter.PLATFORM)
+            .build(
+                Paths.get(outputFile),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.WRITE,
+            ).use { writer ->
+                writer.writeRecord(completeHeaders)
 
-        logger.info { " --- Importing connections... ---" }
-        // Note: we force-track the batches here to ensure any created connections are cached
-        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
-        // with the subsequent processing steps.)
-        // We also need to load these connections first, irrespective of any delta calculation, so that
-        // we can be certain we will be able to resolve the cube's qualifiedName (for subsequent processing)
-        val connectionImporter = ConnectionImporter(ctx, preprocessedDetails, logger)
-        connectionImporter.import()?.close()
+                logger.info { " --- Transforming databases... ---" }
+                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                databaseXformer.transform(writer)
 
-        val connectionQN =
-            if (ctx.config.deltaSemantic == "full") {
-                val connectionIdentity = ConnectionIdentity.fromString(preprocessedDetails.assetRootName)
-                try {
-                    val list = Connection.findByName(ctx.client, connectionIdentity.name, AtlanConnectorType.fromValue(connectionIdentity.type))
-                    list[0].qualifiedName
-                } catch (e: AtlanException) {
-                    logger.error(e) { "Unable to find the unique connection in Atlan from the file: $connectionIdentity" }
-                    exitProcess(50)
-                }
-            } else {
-                null
+                logger.info { " --- Transforming schemas... ---" }
+                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                schemaXformer.transform(writer)
+
+                logger.info { " --- Transforming tables... ---" }
+                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                tableXformer.transform(writer)
+
+                logger.info { " --- Transforming views... ---" }
+                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                viewXformer.transform(writer)
+
+                logger.info { " --- Transforming materialized views... ---" }
+                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                materializedViewXformer.transform(writer)
+
+                logger.info { " --- Transforming columns... ---" }
+                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                columnXformer.transform(writer)
             }
-
-        val previousFileDirect = ctx.config.previousFileDirect
-        DeltaProcessor(
-            ctx = ctx,
-            semantic = ctx.config.deltaSemantic,
-            qualifiedNamePrefix = connectionQN,
-            removalType = ctx.config.deltaRemovalType,
-            previousFilesPrefix = PREVIOUS_FILES_PREFIX,
-            resolver = AssetImporter,
-            preprocessedDetails = preprocessedDetails,
-            typesToRemove = listOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, Column.TYPE_NAME),
-            logger = logger,
-            reloadSemantic = ctx.config.deltaReloadCalculation,
-            previousFilePreprocessor =
-                Preprocessor(
-                    previousFileDirect,
-                    fieldSeparator,
-                    true,
-                    outputFile = "$previousFileDirect.transformed.csv",
-                    outputHeaders = targetHeaders,
-                ),
-            outputDirectory = outputDirectory,
-        ).use { delta ->
-
-            delta.calculate()
-
-            logger.info { " --- Importing databases... ---" }
-            val databaseImporter = DatabaseImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val dbResults = databaseImporter.import()
-
-            logger.info { " --- Importing schemas... ---" }
-            val schemaImporter = SchemaImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val schResults = schemaImporter.import()
-
-            logger.info { " --- Importing tables... ---" }
-            val tableImporter = TableImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val tblResults = tableImporter.import()
-
-            logger.info { " --- Importing views... ---" }
-            val viewImporter = ViewImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val viewResults = viewImporter.import()
-
-            logger.info { " --- Importing materialized views... ---" }
-            val materializedViewImporter = MaterializedViewImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val mviewResults = materializedViewImporter.import()
-
-            logger.info { " --- Importing columns... ---" }
-            val columnImporter = ColumnImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            val colResults = columnImporter.import()
-
-            delta.processDeletions()
-
-            ImportResults.getAllModifiedAssets(ctx.client, true, dbResults, schResults, tblResults, viewResults, mviewResults, colResults).use { modifiedAssets ->
-                delta.updateConnectionCache(modifiedAssets)
-            }
-        }
-        return connectionQN
     }
 
     private class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
-        val deltaProcessing: Boolean,
         outputFile: String? = null,
         outputHeaders: List<String>? = null,
     ) : CSVPreprocessor(
@@ -208,7 +216,6 @@ object Importer {
         val qualifiedNameToTableCount = mutableMapOf<String, AtomicInteger>()
         val qualifiedNameToViewCount = mutableMapOf<String, AtomicInteger>()
 
-        var connectionIdentity = ""
         var lastParentQN = ""
         var columnOrder = 1
 
@@ -218,23 +225,9 @@ object Importer {
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
-            if (deltaProcessing) {
-                val connectionNameOnRow = row.getOrNull(header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)) ?: ""
-                val connectionTypeOnRow = row.getOrNull(header.indexOf("connectorType")) ?: ""
-                val connectionIdentityOnRow = ConnectionIdentity(connectionTypeOnRow, connectionNameOnRow).toString()
-                if (connectionIdentity.isBlank()) {
-                    connectionIdentity = connectionIdentityOnRow
-                }
-                if (connectionIdentity != connectionIdentityOnRow) {
-                    logger.error { "Connection changed mid-file: $connectionIdentityOnRow -> $connectionIdentityOnRow" }
-                    logger.error { "This package is designed to only process a single connection per input file when doing delta processing, exiting." }
-                    exitProcess(101)
-                }
-            }
-
             val values = row.toMutableList()
             val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
-            val qnDetails = getQualifiedNameDetails(values, header, typeName)
+            val qnDetails = getSQLHierarchyDetails(CSVXformer.getRowByHeader(header, values), typeName)
             if (typeName !in setOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME)) {
                 if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
                     qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
@@ -285,7 +278,6 @@ object Importer {
         ): Results {
             val results = super.finalize(header, outputFile)
             return Results(
-                connectionIdentity,
                 results.hasLinks,
                 results.hasTermAssignments,
                 results.hasDomainRelationship,
@@ -299,7 +291,6 @@ object Importer {
     }
 
     class Results(
-        assetRootName: String,
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
         hasDomainRelationship: Boolean,
@@ -309,26 +300,10 @@ object Importer {
         val qualifiedNameToTableCount: Map<String, AtomicInteger>,
         val qualifiedNameToViewCount: Map<String, AtomicInteger>,
     ) : DeltaProcessor.Results(
-            assetRootName = assetRootName,
+            assetRootName = "",
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
             hasDomainRelationship = hasDomainRelationship,
             preprocessedFile = preprocessedFile,
         )
-
-    data class ConnectionIdentity(
-        val type: String,
-        val name: String,
-    ) {
-        override fun toString(): String = "$type$DELIMITER$name"
-
-        companion object {
-            const val DELIMITER = "::"
-
-            fun fromString(identity: String): ConnectionIdentity {
-                val tokens = identity.split(DELIMITER)
-                return ConnectionIdentity(tokens[0], tokens[1])
-            }
-        }
-    }
 }

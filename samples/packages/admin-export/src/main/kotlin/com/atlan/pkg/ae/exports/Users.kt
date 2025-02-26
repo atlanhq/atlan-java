@@ -30,6 +30,7 @@ class Users(
                 "Personas" to "Personas assigned to the user",
                 "License type" to "Type of license assigned to the user",
                 "Designation" to "Designation of the user",
+                "Group names" to "Non-technical names of groups the user is assigned to",
             ),
         )
         val request =
@@ -45,26 +46,28 @@ class Users(
                 ctx.client.users
                     .listGroups(user.id)
                     ?.records
-                    ?.joinToString("\n") { it.name ?: "" } ?: ""
+            val technicalNames = groups?.joinToString("\n") { it.name ?: "" } ?: ""
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
+            val nontechnicalNames = groups?.joinToString("\n") { it.alias ?: "" } ?: ""
             writer.writeRecord(
                 listOf(
                     user.username,
                     user.firstName,
                     user.lastName,
                     user.email,
-                    groups,
+                    technicalNames,
                     TimestampXformer.encode(user.createdTimestamp),
                     user.enabled,
                     TimestampXformer.encode(user.lastLoginTime),
                     personas,
                     user.workspaceRole,
                     designation,
+                    nontechnicalNames,
                 ),
             )
         }

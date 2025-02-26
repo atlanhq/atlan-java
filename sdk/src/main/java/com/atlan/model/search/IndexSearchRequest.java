@@ -139,7 +139,7 @@ public class IndexSearchRequest extends AtlanObject {
 
         /** Whether to log this search (true) or not (false). */
         @Builder.Default
-        Boolean saveSearchLog = true;
+        Boolean saveSearchLog = false;
 
         /** Tags to associate with the search request. */
         @Singular

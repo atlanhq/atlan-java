@@ -7,11 +7,12 @@ import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanDeleteType
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
-import com.atlan.util.AssetBatch.CustomMetadataHandling
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
@@ -31,12 +32,13 @@ import java.util.concurrent.atomic.AtomicLong
  *
  * @param path location and filename of the CSV file to read
  * @param updateOnly when true, the reader will first look up assets to ensure they exist (and only update them, never create)
- * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  * @param trackBatches if true, minimal details about every asset created or updated is tracked (if false, only counts of each are tracked)
  * @param caseSensitive (only applies when updateOnly is true) attempt to match assets case-sensitively (true) or case-insensitively (false)
  * @param customMetadataHandling how to handle any custom metadata in the input file
+ * @param atlanTagHandling how to handle any Atlan tag associations in the input file (by default this will replace tags, for backwards-compatibility)
  * @param creationHandling when allowing assets to be created, how they should be created (full or partial)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
+ * @param fieldSeparator character to use to separate fields (for example ',' or ';')
  */
 class CSVReader
     @JvmOverloads
@@ -46,6 +48,7 @@ class CSVReader
         private val trackBatches: Boolean = true,
         private val caseSensitive: Boolean = true,
         private val customMetadataHandling: CustomMetadataHandling = CustomMetadataHandling.MERGE,
+        private val atlanTagHandling: AtlanTagHandling = AtlanTagHandling.REPLACE,
         private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
         private val tableViewAgnostic: Boolean = false,
         fieldSeparator: Char = ',',
@@ -148,7 +151,7 @@ class CSVReader
             ParallelBatch(
                 ctx.client,
                 batchSize,
-                includesTags,
+                if (includesTags) atlanTagHandling else AtlanTagHandling.IGNORE,
                 customMetadataHandling,
                 true,
                 updateOnly,
@@ -160,7 +163,7 @@ class CSVReader
                 ParallelBatch(
                     ctx.client,
                     batchSize,
-                    false,
+                    AtlanTagHandling.IGNORE,
                     CustomMetadataHandling.IGNORE,
                     true,
                     false,
@@ -235,7 +238,7 @@ class CSVReader
                     val totalRestore = primaryBatch.numRestored
                     val totalSkipped = primaryBatch.numSkipped
                     val totalFailures = AtomicLong(0)
-                    someFailure = someFailure || primaryBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (primaryBatch.failures?.isNotEmpty() == true)
                     logFailures(primaryBatch, logger, totalFailures)
                     logSkipped(primaryBatch, logger)
                     logger.info { "Total assets created : $totalCreates" }
@@ -288,7 +291,7 @@ class CSVReader
                     val totalCreatesR = relatedBatch.numCreated
                     val totalUpdatesR = relatedBatch.numUpdated
                     val totalFailuresR = AtomicLong(0)
-                    someFailure = someFailure || relatedBatch.failures.isNotEmpty()
+                    someFailure = someFailure || (relatedBatch.failures?.isNotEmpty() == true)
                     logFailures(relatedBatch, logger, totalFailuresR)
                     logger.info { "Total related assets created: $totalCreatesR" }
                     logger.info { "Total related assets updated: $totalUpdatesR" }
@@ -345,6 +348,7 @@ class CSVReader
                                     primaryBatch.updated,
                                     primaryBatch.restored,
                                     primaryBatch.skipped,
+                                    primaryBatch.failures,
                                     primaryBatch.numCreated,
                                     primaryBatch.numUpdated,
                                     primaryBatch.numRestored,
@@ -360,6 +364,7 @@ class CSVReader
                                     relatedBatch.updated,
                                     relatedBatch.restored,
                                     relatedBatch.skipped,
+                                    relatedBatch.failures,
                                     relatedBatch.numCreated,
                                     relatedBatch.numUpdated,
                                     relatedBatch.numRestored,
@@ -376,11 +381,14 @@ class CSVReader
             logger: KLogger,
             totalFailures: AtomicLong,
         ) {
-            if (b.failures.isNotEmpty()) {
-                for (f in b.failures) {
-                    logger.info { "Failed batch reason: ${f.failureReason}" }
-                    totalFailures.getAndAdd(f.failedAssets.size.toLong())
-                    for (failed in f.failedAssets) {
+            if (b.failures?.isNotEmpty() == true) {
+                for (f in b.failures.entrySet()) {
+                    logger.info { "Failed batch reason: ${f.value.failureReason}" }
+                    totalFailures.getAndAdd(
+                        f.value.failedAssets.size
+                            .toLong(),
+                    )
+                    for (failed in f.value.failedAssets) {
                         logger.info {
                             " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
                         }

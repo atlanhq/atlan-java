@@ -11,6 +11,7 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.IModel
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.serde.Serde
@@ -172,7 +173,12 @@ object AssetRefXformer {
                         if (!found && update == null) {
                             logger.debug { "No match found for : ${related.link} creating new link" }
                             // Otherwise create an entirely new link (idempotently)
-                            update = Link.creator(from, related.name, related.link, true).nullFields(related.nullFields).build()
+                            update =
+                                Link
+                                    .creator(from, related.name, related.link, true)
+                                    .nullFields(related.nullFields)
+                                    .status(AtlanStatus.ACTIVE)
+                                    .build()
                         }
                         if (update != null) {
                             // Only batch it if it won't be a noop, and update the cache with this new link

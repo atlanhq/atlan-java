@@ -61,18 +61,19 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
      */
     @Override
     public Asset deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        return deserialize(parser.getCodec().readTree(parser));
+        return deserialize(parser.getCodec().readTree(parser), Long.MAX_VALUE);
     }
 
     /**
      * Actually do the work of deserializing an asset.
      *
      * @param root of the parsed JSON tree
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
      * @return the deserialized asset
      * @throws IOException on any issues parsing the JSON
      */
     @SuppressWarnings("deprecation") // Suppress deprecation notice on use of atlanTagNames builder
-    Asset deserialize(JsonNode root) throws IOException {
+    Asset deserialize(JsonNode root, long minimumTime) throws IOException {
 
         JsonNode attributes = root.get("attributes");
         JsonNode relationshipGuid = root.get("relationshipGuid");
@@ -206,13 +207,23 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 if (!processedAttributes.contains(deserializeName)) {
                     Method method = ReflectionCache.getSetter(builderClass, deserializeName);
                     if (method != null) {
-                        try {
-                            Object value = Serde.deserialize(client, attributes.get(attrKey), method, deserializeName);
-                            ReflectionCache.setValue(builder, deserializeName, value);
-                        } catch (NoSuchMethodException e) {
-                            throw new IOException("Missing fromValue method for enum.", e);
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new IOException("Failed to deserialize through reflection.", e);
+                        if (deserializeName.equals("assetIcon")
+                                && typeName != null
+                                && (typeName.equals("Catalog") || typeName.equals("CustomEntity"))) {
+                            JsonNode value = attributes.get(attrKey);
+                            if (value != null && !value.isNull()) {
+                                builder.iconUrl(value.asText());
+                            }
+                        } else {
+                            try {
+                                Object value =
+                                        Serde.deserialize(client, attributes.get(attrKey), method, deserializeName);
+                                ReflectionCache.setValue(builder, deserializeName, value);
+                            } catch (NoSuchMethodException e) {
+                                throw new IOException("Missing fromValue method for enum.", e);
+                            } catch (IllegalAccessException | InvocationTargetException e) {
+                                throw new IOException("Failed to deserialize through reflection.", e);
+                            }
                         }
                     } else {
                         // If the setter was not found, still retain it for later processing
@@ -231,7 +242,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (!leftOverAttributes.isEmpty()) {
             // Translate these into custom metadata structure
             try {
-                cm = client.getCustomMetadataCache().getCustomMetadataFromSearchResult(leftOverAttributes);
+                cm = client.getCustomMetadataCache().getCustomMetadataFromSearchResult(leftOverAttributes, minimumTime);
             } catch (AtlanException e) {
                 throw new IOException(e);
             }
@@ -253,7 +264,8 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (businessAttributes != null) {
             // Translate these into custom metadata structure
             try {
-                cm = client.getCustomMetadataCache().getCustomMetadataFromBusinessAttributes(businessAttributes);
+                cm = client.getCustomMetadataCache()
+                        .getCustomMetadataFromBusinessAttributes(businessAttributes, minimumTime);
             } catch (AtlanException e) {
                 throw new IOException(e);
             }
@@ -267,7 +279,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 String tagId = element.asText();
                 String name = null;
                 try {
-                    name = client.getAtlanTagCache().getNameForSid(tagId);
+                    name = client.getAtlanTagCache().getNameForSid(tagId, minimumTime);
                 } catch (NotFoundException e) {
                     log.debug(
                             "Unable to find tag with ID {}, deserializing as {}.",

@@ -703,7 +703,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @param terms the list of terms to append to the ModelAttribute
      * @return the ModelAttribute that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModelAttribute appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModelAttribute) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -719,7 +721,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @param terms the list of terms to remove from the ModelAttribute, which must be referenced by GUID
      * @return the ModelAttribute that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModelAttribute removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModelAttribute) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -735,7 +739,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ModelAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static ModelAttribute appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (ModelAttribute) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -754,7 +760,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ModelAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static ModelAttribute appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -780,7 +788,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @param qualifiedName of the ModelAttribute
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ModelAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

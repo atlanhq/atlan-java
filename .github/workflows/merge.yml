@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2022 Atlan Pte. Ltd.
 name: "Merge"
+permissions:
+  contents: read
 
 on:
   push:
@@ -13,8 +15,8 @@ jobs:
     outputs:
       version: ${{ steps.get_version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12  # v4.7.0
         with:
           java-version: 17
           distribution: temurin
@@ -34,96 +36,98 @@ jobs:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: sdk
           path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: package-toolkit-config
           path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: typedef-toolkit-config
           path: typedef-toolkit/model/build/libs/typedef-toolkit-model-*-jar-with-dependencies.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: package-toolkit-runtime
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: api-token-connection-admin
           path: jars/api-token-connection-admin-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: admin-export
           path: jars/admin-export-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: adoption-export
           path: jars/adoption-export-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: asset-export-basic
           path: jars/asset-export-basic-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: asset-import
           path: jars/asset-import-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: cube-assets-builder
           path: jars/cube-assets-builder-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: custom-metadata-extender
           path: jars/custom-metadata-extender-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: duplicate-detector
           path: jars/duplicate-detector-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: enrichment-migrator
           path: jars/enrichment-migrator-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: lake-formation-tag-sync
           path: jars/lake-formation-tag-sync-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: lineage-builder
           path: jars/lineage-builder-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: metadata-impact-report
           path: jars/metadata-impact-report-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: openapi-spec-loader
           path: jars/openapi-spec-loader-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: owner-propagator
           path: jars/owner-propagator-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: relational-assets-builder
           path: jars/relational-assets-builder-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: tests-cleanup
           path: jars/tests-cleanup-*.jar
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
         with:
           name: lambda-layer
           path: sdk/build/distributions/sdk-*.zip
   publish-docs:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     name: "JavaDocs"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12  # v4.7.0
         with:
           java-version: 17
           distribution: temurin
@@ -142,8 +146,8 @@ jobs:
     runs-on: ubuntu-latest
     name: "Snapshot"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12  # v4.7.0
         with:
           java-version: 17
           distribution: temurin
@@ -166,14 +170,16 @@ jobs:
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
   publish-base-image:
+    permissions:
+      packages: write
     needs: merge-build
     runs-on: ubuntu-latest
     name: "Base image"
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: docker/setup-buildx-action@f7ce87c1d6bead3e36075b2ce75da1f6cc28aaca  # v3.9.0
       - name: Log in to container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567  # v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -181,23 +187,26 @@ jobs:
       - name: Create assembly area
         run: |
           mkdir -p ./containers/base/assembly
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
         with:
           name: sdk
           path: ./containers/base/assembly
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
         with:
           name: package-toolkit-runtime
           path: ./containers/base/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@0adf9959216b96bec444f325f1e493d4aa344497  # v6.14.0
         with:
           push: true
           tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}, ghcr.io/atlanhq/atlan-java:latest
           context: ./containers/base
           platforms: linux/amd64
   custom-package-images:
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         package_name:

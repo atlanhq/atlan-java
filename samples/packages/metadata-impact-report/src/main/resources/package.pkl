@@ -57,21 +57,21 @@ uiConfig {
     ["Outputs"] {
       description = "Report outputs"
       inputs {
-        ["include_glossary"] = new Radio {
-          title = "Generate glossary?"
+        ["include_data_products"] = new Radio {
+          title = "Generate data products?"
           required = true
           possibleValues {
             ["TRUE"] = "Yes"
-            ["FALSE"] = "No (Excel only)"
+            ["FALSE"] = "No"
           }
           default = "TRUE"
-          helpText = "Whether to generate a glossary of metadata metrics used in the report. (An Excel will always be generated.)"
+          helpText = "Whether to generate a list of data products of the metadata metrics used in the report."
           fallback = default
         }
-        ["glossary_name"] = new TextInput {
-          title = "Glossary name"
+        ["data_domain"] = new TextInput {
+          title = "Data domain"
           required = true
-          helpText = "Name of the glossary in which to store the metadata metrics."
+          helpText = "Name of the data domain to which the metadata metrics belong."
           placeholderText = "Metadata metrics"
           fallback = placeholderText
         }
@@ -132,6 +132,7 @@ uiConfig {
           required = true
           credType = "csa-connectors-objectstore"
           helpText = "Enter details for the object store to which to upload the exported file."
+          allowTestAuthentication = false
         }
       }
     }

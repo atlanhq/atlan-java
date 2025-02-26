@@ -31,6 +31,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     private volatile Map<String, Map<String, String>> mapAttrSidToName = new ConcurrentHashMap<>();
     private volatile Map<String, Map<String, String>> mapAttrNameToSid = new ConcurrentHashMap<>();
     private volatile Set<String> archivedAttrSids = ConcurrentHashMap.newKeySet();
+    private volatile Set<String> deletedSids = ConcurrentHashMap.newKeySet();
+    private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -55,6 +57,8 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();
         archivedAttrSids.clear();
+        deletedSids.clear();
+        deletedNames.clear();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
             cache(bmDef.getGuid(), typeId, bmDef.getDisplayName(), bmDef);
@@ -126,6 +130,102 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             return archivedAttrSids.contains(id);
         } finally {
             lock.readLock().unlock();
+        }
+    }
+
+    private boolean isDeletedName(String name) {
+        lock.readLock().lock();
+        try {
+            return deletedNames.contains(name);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private void addDeletedName(String name) {
+        lock.writeLock().lock();
+        try {
+            deletedNames.add(name);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    private boolean isDeletedId(String id) {
+        lock.readLock().lock();
+        try {
+            return deletedSids.contains(id);
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    private void addDeletedId(String id) {
+        lock.writeLock().lock();
+        try {
+            deletedSids.add(id);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getIdForName(String name, long minimumTime) throws AtlanException {
+        if (name != null && isDeletedName(name)) {
+            return null;
+        }
+        try {
+            return super.getIdForName(name, minimumTime);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedName(name);
+            throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getNameForId(String id, long minimumTime) throws AtlanException {
+        if (id != null && isDeletedId(id)) {
+            return null;
+        }
+        try {
+            return super.getNameForId(id, minimumTime);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedId(id);
+            throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getSidForName(String name, long minimumTime) throws AtlanException {
+        if (name != null && isDeletedName(name)) {
+            return null;
+        }
+        try {
+            return super.getSidForName(name, minimumTime);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedName(name);
+            throw e;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getNameForSid(String id, long minimumTime) throws AtlanException {
+        if (id != null && isDeletedId(id)) {
+            return null;
+        }
+        try {
+            return super.getNameForSid(id, minimumTime);
+        } catch (NotFoundException e) {
+            // If it's not already marked deleted, mark it as deleted
+            addDeletedId(id);
+            throw e;
         }
     }
 
@@ -243,6 +343,23 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     }
 
     /**
+     * Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
+     * for the attribute.
+     *
+     * @param setName human-readable name of the custom metadata set
+     * @param attributeName human-readable name of the attribute
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return Atlan-internal ID string for the attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
+     */
+    public String getAttrIdForName(String setName, String attributeName, long minimumTime) throws AtlanException {
+        String setId = getSidForName(setName, minimumTime);
+        return getAttrIdForNameFromSetId(setId, attributeName, minimumTime);
+    }
+
+    /**
      * Retrieve a single custom attribute name to include on search results.
      *
      * @param setName human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name
@@ -271,11 +388,28 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public String getAttributeForSearchResults(String setName, String attributeName, boolean allowRefresh)
             throws AtlanException {
-        String setId = getSidForName(setName, allowRefresh);
+        return getAttributeForSearchResults(setName, attributeName, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Retrieve a single custom attribute name to include on search results.
+     *
+     * @param setName human-readable name of the custom metadata set for which to retrieve the custom metadata attribute name
+     * @param attributeName human-readable name of the attribute
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return the attribute name, strictly useful for inclusion in search results
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
+     * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
+     */
+    public String getAttributeForSearchResults(String setName, String attributeName, long minimumTime)
+            throws AtlanException {
+        String setId = getSidForName(setName, false);
         String attrId = _getAttributeForSearchResults(setId, attributeName);
-        if (attrId == null && allowRefresh) {
+        if (attrId == null) {
             // If we've not found any names, refresh the cache and look again (could be stale)
-            refresh();
+            refresh(minimumTime);
             attrId = _getAttributeForSearchResults(setId, attributeName);
         }
         return attrId;
@@ -307,11 +441,26 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
      */
     public Set<String> getAttributesForSearchResults(String setName, boolean allowRefresh) throws AtlanException {
-        String setId = getSidForName(setName, allowRefresh);
+        return getAttributesForSearchResults(setName, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Retrieve the full set of custom attributes to include on search results.
+     *
+     * @param setName human-readable name of the custom metadata set for which to retrieve a set of attribute names
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return a set of the attribute names, strictly useful for inclusion in search results
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
+     * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
+     */
+    public Set<String> getAttributesForSearchResults(String setName, long minimumTime) throws AtlanException {
+        String setId = getSidForName(setName, false);
         Set<String> dotNames = _getAttributesForSearchResults(setId);
-        if (dotNames == null && allowRefresh) {
+        if (dotNames == null) {
             // If we've not found any names, refresh the cache and look again (could be stale)
-            refresh();
+            refresh(minimumTime);
             dotNames = _getAttributesForSearchResults(setId);
         }
         return dotNames == null ? Collections.emptySet() : Collections.unmodifiableSet(dotNames);
@@ -358,14 +507,26 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public AttributeDef getAttributeDef(String attributeId, boolean allowRefresh) throws AtlanException {
-        if (attributeId == null || attributeId.isEmpty()) {
+        return getAttributeDef(attributeId, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Retrieve a specific custom metadata attribute definition by its unique Atlan-internal ID string.
+     *
+     * @param attributeId Atlan-internal ID string for the custom metadata attribute
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return attribute definition for the custom metadata attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public AttributeDef getAttributeDef(String attributeId, long minimumTime) throws AtlanException {
+        if (attributeId == null || attributeId.isEmpty())
             throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
-        }
         AttributeDef found = getAttrById(attributeId);
-        if (found == null && allowRefresh) {
-            refresh();
+        if (found == null) {
+            refresh(minimumTime);
+            found = getAttrById(attributeId);
         }
-        return getAttrById(attributeId);
+        return found;
     }
 
     /**
@@ -381,36 +542,45 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     private String getAttrIdForNameFromSetId(String setId, String attributeName, boolean allowRefresh)
             throws AtlanException {
-        if (setId != null && !setId.isEmpty()) {
-            Map<String, String> subMap = getAttrIdFromName(setId);
-            if (attributeName != null && !attributeName.isEmpty()) {
-                String attrId = null;
-                if (subMap != null) {
-                    attrId = subMap.get(attributeName);
-                }
-                if (attrId == null) {
-                    // If not found, refresh the cache and look again (could be stale)
-                    if (allowRefresh) {
-                        refresh();
-                        subMap = getAttrIdFromName(setId);
-                    }
-                    if (subMap == null) {
-                        throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
-                    }
-                } else {
-                    return attrId;
-                }
-                attrId = subMap.get(attributeName);
-                if (attrId == null) {
-                    throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_NAME, attributeName, setId);
-                }
-                return attrId;
-            } else {
-                throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_NAME);
+        return getAttrIdForNameFromSetId(setId, attributeName, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Translate the provided human-readable custom metadata attribute name to the Atlan-internal ID string.
+     *
+     * @param setId Atlan-internal ID string for the custom metadata set
+     * @param attributeName human-readable name of the attribute
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return Atlan-internal ID string for the attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the custom metadata property cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the custom metadata property to retrieve
+     */
+    private String getAttrIdForNameFromSetId(String setId, String attributeName, long minimumTime)
+            throws AtlanException {
+        if (setId == null || setId.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
+        if (attributeName == null || attributeName.isEmpty())
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
+        Map<String, String> subMap = getAttrIdFromName(setId);
+        String attrId = null;
+        if (subMap != null) {
+            attrId = subMap.get(attributeName);
+        }
+        if (attrId == null) {
+            // If not found, refresh the cache and look again (could be stale)
+            refresh(minimumTime);
+            subMap = getAttrIdFromName(setId);
+            if (subMap == null) {
+                throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
             }
         } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
+            return attrId;
         }
+        attrId = subMap.get(attributeName);
+        if (attrId == null) {
+            throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_NAME, attributeName, setId);
+        }
+        return attrId;
     }
 
     /**
@@ -418,44 +588,36 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      *
      * @param setId Atlan-internal ID string for the custom metadata set
      * @param attributeId Atlan-internal ID string for the attribute
-     * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
      * @return human-readable name of the attribute
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      * @throws NotFoundException if the custom metadata property cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no ID was provided for the custom metadata property to retrieve
      */
-    private String getAttrNameForIdFromSetId(String setId, String attributeId, boolean allowRefresh)
-            throws AtlanException {
-        if (setId != null && !setId.isEmpty()) {
-            Map<String, String> subMap = getAttrNameFromId(setId);
-            if (attributeId != null && !attributeId.isEmpty()) {
-                String attrName = null;
-                if (subMap != null) {
-                    attrName = subMap.get(attributeId);
-                }
-                if (attrName == null) {
-                    // If not found, refresh the cache and look again (could be stale)
-                    if (allowRefresh) {
-                        refresh();
-                        subMap = getAttrNameFromId(setId);
-                    }
-                    if (subMap == null) {
-                        throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
-                    }
-                } else {
-                    return attrName;
-                }
-                attrName = subMap.get(attributeId);
-                if (attrName == null) {
-                    throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_ID, attributeId, setId);
-                }
-                return attrName;
-            } else {
-                throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
+    private String getAttrNameForIdFromSetId(String setId, String attributeId, long minimumTime) throws AtlanException {
+        if (setId == null || setId.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
+        if (attributeId == null || attributeId.isEmpty())
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
+        Map<String, String> subMap = getAttrNameFromId(setId);
+        String attrName = null;
+        if (subMap != null) {
+            attrName = subMap.get(attributeId);
+        }
+        if (attrName == null) {
+            // If not found, refresh the cache and look again (could be stale)
+            refresh(minimumTime);
+            subMap = getAttrNameFromId(setId);
+            if (subMap == null) {
+                throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
             }
         } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
+            return attrName;
         }
+        attrName = subMap.get(attributeId);
+        if (attrName == null) {
+            throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_ID, attributeId, setId);
+        }
+        return attrName;
     }
 
     /**
@@ -640,14 +802,28 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(
             JsonNode businessAttributes, boolean allowRefresh) throws AtlanException {
+        return getCustomMetadataFromBusinessAttributes(
+                businessAttributes, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Translate the provided business attributes object into a custom metadata object.
+     *
+     * @param businessAttributes business attributes object
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return custom metadata object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(
+            JsonNode businessAttributes, long minimumTime) throws AtlanException {
         Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
         Iterator<String> itrCM = businessAttributes.fieldNames();
         while (itrCM.hasNext()) {
             String cmId = itrCM.next();
             try {
-                String cmName = getNameForSid(cmId, allowRefresh);
+                String cmName = getNameForSid(cmId, minimumTime);
                 JsonNode bmAttrs = businessAttributes.get(cmId);
-                CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs, allowRefresh);
+                CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs, minimumTime);
                 if (!cma.isEmpty()) {
                     map.put(cmName, cma);
                 }
@@ -685,11 +861,25 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public CustomMetadataAttributes getCustomMetadataAttributes(String cmId, JsonNode attributes, boolean allowRefresh)
             throws AtlanException {
+        return getCustomMetadataAttributes(cmId, attributes, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Translate the provided attributes structure into a human-readable map of attribute names to values.
+     *
+     * @param cmId custom metadata hashed-string ID
+     * @param attributes embedded attributes structure with hashed-string IDs
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return deserialized CustomMetadataAttributes object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public CustomMetadataAttributes getCustomMetadataAttributes(String cmId, JsonNode attributes, long minimumTime)
+            throws AtlanException {
         CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
         Iterator<String> itrCMA = attributes.fieldNames();
         while (itrCMA.hasNext()) {
             String attrId = itrCMA.next();
-            String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId, allowRefresh);
+            String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId, minimumTime);
             JsonNode jsonValue = attributes.get(attrId);
             if (jsonValue.isArray()) {
                 Set<Object> values = new HashSet<>();
@@ -747,6 +937,20 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
      */
     public Map<String, CustomMetadataAttributes> getCustomMetadataFromSearchResult(
             Map<String, JsonNode> embeddedAttributes, boolean allowRefresh) throws AtlanException {
+        return getCustomMetadataFromSearchResult(embeddedAttributes, allowRefresh ? Long.MAX_VALUE : Long.MIN_VALUE);
+    }
+
+    /**
+     * Translate the provided search result-embedded custom metadata into a custom metadata object.
+     *
+     * @param embeddedAttributes map of custom metadata that was embedded in search result attributes, keyed
+     *                           by {@code <cmId>.<attrId>} with the value of that custom attribute
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
+     * @return custom metadata object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public Map<String, CustomMetadataAttributes> getCustomMetadataFromSearchResult(
+            Map<String, JsonNode> embeddedAttributes, long minimumTime) throws AtlanException {
 
         Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
 
@@ -757,12 +961,12 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
             if (indexOfDot > 0) {
                 String cmId = compositeId.substring(0, indexOfDot);
                 try {
-                    String cmName = getNameForSid(cmId, allowRefresh);
+                    String cmName = getNameForSid(cmId, minimumTime);
                     if (!builderMap.containsKey(cmName)) {
                         builderMap.put(cmName, CustomMetadataAttributes.builder());
                     }
                     String attrId = compositeId.substring(indexOfDot + 1);
-                    String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId, allowRefresh);
+                    String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId, minimumTime);
                     JsonNode jsonValue = entry.getValue();
                     if (jsonValue.isArray()) {
                         Set<Object> values = new HashSet<>();

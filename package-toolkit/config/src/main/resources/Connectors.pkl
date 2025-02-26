@@ -386,8 +386,12 @@ hidden const SPARK: Type = new {
   category = "elt"
 }
 hidden const APPLICATION: Type = new {
-  value = "application"
-  category = "application"
+  value = "app"
+  category = "app"
+}
+hidden const CUSTOM: Type = new {
+  value = "custom"
+  category = "custom"
 }
 hidden const MPARTICLE: Type = new {
   value = "mparticle"
@@ -425,6 +429,10 @@ hidden const DATA_MODELING: Type = new {
   value = "datamodeling"
   category = "database"
 }
+hidden const DATAVERSE: Type = new {
+  value = "dataverse"
+  category = "SaaS"
+}
 
 class Type {
   value: String
@@ -434,6 +442,7 @@ class Type {
 typealias AtlanConnectionCategory =
   "warehouse"|
   "bi"|
+  "custom"|
   "ObjectStore"|
   "SaaS"|
   "lake"|
@@ -443,4 +452,5 @@ typealias AtlanConnectionCategory =
   "API"|
   "eventbus"|
   "data-quality"|
-  "schema-registry"
+  "schema-registry"|
+  "app"

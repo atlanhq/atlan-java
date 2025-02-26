@@ -10,4 +10,8 @@ updates:
     open-pull-requests-limit: 100
     allow:
       - dependency-type: "all"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: daily
 ...

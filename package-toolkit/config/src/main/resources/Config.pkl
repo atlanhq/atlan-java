@@ -458,6 +458,9 @@ class Widget {
 
   /// SQL query to run to determine the widget's selectable content.
   query: String?
+
+  /// Whether to prevent the Test Authentication button from showing (true) or show it (false) for credential inputs.
+  isTestAuthenticationDisabled: Boolean?
 }
 
 /// Widget that allows you to enter arbitrary text into a single-line text input field,
@@ -965,10 +968,14 @@ class CredentialInput extends UIElement {
   /// Type of credential to be nested within the widget.
   hidden credType: String
 
+  /// Whether to show the button for testing authentication. (Default: true, show it)
+  hidden allowTestAuthentication: Boolean = true
+
   /// (Generated) Internal configuration for the UI's rendering.
   fixed ui {
     widget = "credential"
     credentialType = credType
+    isTestAuthenticationDisabled = !allowTestAuthentication
   }
 }
 

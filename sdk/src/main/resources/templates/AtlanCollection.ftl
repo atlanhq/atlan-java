@@ -87,7 +87,7 @@
      */
     @Override
     public AsyncCreationResponse save(AtlanClient client) throws AtlanException {
-        return client.assets.save(this, false);
+        return client.assets.save(this);
     }
 
     /**
@@ -99,7 +99,9 @@
      * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
+     * @deprecated see {@link #save(AtlanClient)}
      */
+    @Deprecated
     @Override
     public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.save(this, replaceAtlanTags);

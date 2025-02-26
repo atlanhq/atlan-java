@@ -77,7 +77,7 @@ class InvalidEnumTest : PackageTest("ie") {
             }
         assertEquals(
             """
-            class com.atlan.model.enums.CertificateStatus (in field certificateStatus) does not have any matching value for: CERTIFIED
+            No matching value found for class com.atlan.model.enums.CertificateStatus (in field certificateStatus): CERTIFIED
             """.trimIndent(),
             exception.message,
         )

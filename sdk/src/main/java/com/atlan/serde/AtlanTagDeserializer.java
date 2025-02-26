@@ -47,17 +47,18 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
      */
     @Override
     public AtlanTag deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        return deserialize(parser.getCodec().readTree(parser));
+        return deserialize(parser.getCodec().readTree(parser), Long.MAX_VALUE);
     }
 
     /**
      * Actually do the work of deserializing an Atlan tag.
      *
      * @param root of the parsed JSON tree
+     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
      * @return the deserialized Atlan tag
      * @throws IOException on any issues parsing the JSON
      */
-    AtlanTag deserialize(JsonNode root) throws IOException {
+    AtlanTag deserialize(JsonNode root, long minimumTime) throws IOException {
         String clsId = root.get("typeName").asText();
         if (clsId == null) {
             throw new IOException("Unable to deserialize Atlan tag from: " + root);
@@ -66,8 +67,8 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
         String sourceAttachmentsAttrId;
         try {
             // Translate the ID-string to a human-readable name
-            clsName = client.getAtlanTagCache().getNameForSid(clsId);
-            sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId);
+            clsName = client.getAtlanTagCache().getNameForSid(clsId, minimumTime);
+            sourceAttachmentsAttrId = client.getAtlanTagCache().getSourceTagsAttrId(clsId, false);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the Atlan tag was deleted since but the
             // audit record remains

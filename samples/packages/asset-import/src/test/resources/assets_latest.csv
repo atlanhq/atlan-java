@@ -1,0 +1,5 @@
+qualifiedName,typeName,name,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,description,database,schema
+{{CONNECTION}}/DB,Database,DB,{{CTYPE}},{{CONNECTION}},,,,,,,
+{{CONNECTION}}/DB/SCH,Schema,SCH,{{CTYPE}},{{CONNECTION}},{{CONNECTION}}/DB,DB,,,A revised schema,Database@{{CONNECTION}}/DB,
+{{CONNECTION}}/DB/SCH/TBL,Table,TBL,{{CTYPE}},{{CONNECTION}},{{CONNECTION}}/DB,DB,{{CONNECTION}}/DB/SCH,SCH,,,Schema@{{CONNECTION}}/DB/SCH
+{{CONNECTION}}/DB/SCH/MVIEW,MaterialisedView,MVIEW,{{CTYPE}},{{CONNECTION}},{{CONNECTION}}/DB,DB,{{CONNECTION}}/DB/SCH,SCH,,,Schema@{{CONNECTION}}/DB/SCH

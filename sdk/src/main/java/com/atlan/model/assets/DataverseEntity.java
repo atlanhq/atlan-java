@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -347,6 +348,22 @@ public class DataverseEntity extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a Dataverse entity.
+     *
+     * @param name of the Dataverse entity
+     * @param connectionQualifiedName unique name of the connection through which the entity is accessible
+     * @return the minimal object necessary to create the Dataverse entity, as a builder
+     */
+    public static DataverseEntity.DataverseEntityBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return DataverseEntity._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(connectionQualifiedName + "/" + name)
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.DATAVERSE);
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataverseEntity.
      *
      * @param qualifiedName of the DataverseEntity
@@ -506,7 +523,9 @@ public class DataverseEntity extends Asset
      * @param terms the list of terms to append to the DataverseEntity
      * @return the DataverseEntity that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataverseEntity appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataverseEntity) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -522,7 +541,9 @@ public class DataverseEntity extends Asset
      * @param terms the list of terms to remove from the DataverseEntity, which must be referenced by GUID
      * @return the DataverseEntity that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataverseEntity removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataverseEntity) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -538,7 +559,9 @@ public class DataverseEntity extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DataverseEntity
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DataverseEntity appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (DataverseEntity) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -557,7 +580,9 @@ public class DataverseEntity extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DataverseEntity
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DataverseEntity appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -583,7 +608,9 @@ public class DataverseEntity extends Asset
      * @param qualifiedName of the DataverseEntity
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataverseEntity
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

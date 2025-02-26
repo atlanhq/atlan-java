@@ -3,18 +3,23 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed information about a distribution of values.
+ * Detailed information representing a histogram of values.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class Histogram extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 
@@ -26,16 +31,20 @@ public class Histogram extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Boundaries of the histogram. */
+    @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Double> boundaries;
 
-    /** TBC */
+    /** Frequencies of the histogram. */
+    @Singular
+    @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Double> frequencies;
 
     /**
      * Quickly create a new Histogram.
-     * @param boundaries TBC
-     * @param frequencies TBC
+     * @param boundaries Boundaries of the histogram.
+     * @param frequencies Frequencies of the histogram.
      * @return a Histogram with the provided information
      */
     public static Histogram of(List<Double> boundaries, List<Double> frequencies) {

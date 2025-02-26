@@ -6,7 +6,11 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
+import com.atlan.model.enums.AtlanTagHandling
+import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -42,8 +46,9 @@ class DomainImporter(
         typeNameFilter = DataDomain.TYPE_NAME,
         attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
+        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.dataProductsCmHandling, CustomMetadataHandling.MERGE),
+        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.dataProductsTagHandling, AtlanTagHandling.REPLACE),
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
-        failOnErrors = ctx.config.dataProductsFailOnErrors,
         trackBatches = true,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
     ) {
@@ -195,6 +200,11 @@ class DomainImporter(
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank() && typeName !in DATA_PRODUCT_TYPES) {
+                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+                throw IllegalStateException("Found a non-product asset that should be loaded via another file (of type $typeName): $qualifiedName")
+            }
             return row // No-op
         }
     }

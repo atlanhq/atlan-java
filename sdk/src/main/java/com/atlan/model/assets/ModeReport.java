@@ -79,6 +79,10 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Attribute
     String modeId;
 
+    /** Whether the report is archived (true) or unarchived (false) */
+    @Attribute
+    Boolean modeIsArchived;
+
     /** TBC */
     @Attribute
     Boolean modeIsPublic;
@@ -553,7 +557,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @param terms the list of terms to append to the ModeReport
      * @return the ModeReport that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModeReport appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeReport) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -569,7 +575,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @param terms the list of terms to remove from the ModeReport, which must be referenced by GUID
      * @return the ModeReport that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static ModeReport removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeReport) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -585,7 +593,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ModeReport
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static ModeReport appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (ModeReport) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -604,7 +614,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ModeReport
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static ModeReport appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -630,7 +642,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @param qualifiedName of the ModeReport
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ModeReport
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

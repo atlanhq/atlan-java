@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -40,6 +41,9 @@ public interface IPowerBIDataflow {
     /** Child Dataflows to this PowerBI Dataflow. */
     RelationField POWER_BI_DATAFLOW_CHILDREN = new RelationField("powerBIDataflowChildren");
 
+    /** PowerBI Dataflow Entity Columns that exist within this Dataflow. */
+    RelationField POWER_BI_DATAFLOW_ENTITY_COLUMNS = new RelationField("powerBIDataflowEntityColumns");
+
     /** Parent Dataflows to this PowerBI Dataflow. */
     RelationField POWER_BI_DATAFLOW_PARENTS = new RelationField("powerBIDataflowParents");
 
@@ -55,6 +59,9 @@ public interface IPowerBIDataflow {
     KeywordField POWER_BI_DATAFLOW_REFRESH_SCHEDULE_TIMES =
             new KeywordField("powerBIDataflowRefreshScheduleTimes", "powerBIDataflowRefreshScheduleTimes");
 
+    /** PowerBI Datasources that are associated with this Dataflow. */
+    RelationField POWER_BI_DATASOURCES = new RelationField("powerBIDatasources");
+
     /** Lineage process that associates this PowerBI Dataflow. */
     RelationField POWER_BI_PROCESSES = new RelationField("powerBIProcesses");
 
@@ -68,7 +75,8 @@ public interface IPowerBIDataflow {
     RelationField WORKSPACE = new RelationField("workspace");
 
     /** Unique name of the workspace in which this dataflow exists. */
-    TextField WORKSPACE_QUALIFIED_NAME = new TextField("workspaceQualifiedName", "workspaceQualifiedName");
+    KeywordTextField WORKSPACE_QUALIFIED_NAME =
+            new KeywordTextField("workspaceQualifiedName", "workspaceQualifiedName.keyword", "workspaceQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -99,6 +107,12 @@ public interface IPowerBIDataflow {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -307,6 +321,9 @@ public interface IPowerBIDataflow {
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
 
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -472,6 +489,9 @@ public interface IPowerBIDataflow {
     /** Child Dataflows to this PowerBI Dataflow. */
     SortedSet<IPowerBIDataflow> getPowerBIDataflowChildren();
 
+    /** PowerBI Dataflow Entity Columns that exist within this Dataflow. */
+    SortedSet<IPowerBIDataflowEntityColumn> getPowerBIDataflowEntityColumns();
+
     /** Parent Dataflows to this PowerBI Dataflow. */
     SortedSet<IPowerBIDataflow> getPowerBIDataflowParents();
 
@@ -483,6 +503,9 @@ public interface IPowerBIDataflow {
 
     /** Time for the refresh schedule set for a PowerBI Dataflow. */
     SortedSet<String> getPowerBIDataflowRefreshScheduleTimes();
+
+    /** PowerBI Datasources that are associated with this Dataflow. */
+    SortedSet<IPowerBIDatasource> getPowerBIDatasources();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();

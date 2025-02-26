@@ -1,11 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
 version = providers.gradleProperty("VERSION_NAME").get()
+val jarPath = "$rootDir/jars"
 val jarName = "relational-assets-builder"
 
 plugins {
     id("com.atlan.kotlin-custom-package")
+    alias(libs.plugins.shadow)
     `maven-publish`
     signing
+}
+
+dependencies {
+    implementation(project(":samples:packages:asset-import"))
 }
 
 java {
@@ -14,8 +20,22 @@ java {
 }
 
 tasks {
-    jar {
+    shadowJar {
+        isZip64 = true
+        archiveClassifier.set("")
         archiveBaseName.set(jarName)
+        destinationDirectory.set(file(jarPath))
+        dependencies {
+            include(project(":samples:packages:asset-import"))
+        }
+        mergeServiceFiles()
+        dependsOn(":package-toolkit:runtime:genPklConnectors")
+    }
+    jar {
+        // Override the default jar task so we get the shadowed jar
+        // as the only jar output
+        actions = listOf()
+        doLast { shadowJar }
     }
     getByName("sourcesJar") {
         dependsOn("genCustomPkg")

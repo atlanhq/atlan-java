@@ -115,6 +115,12 @@ public interface IAtlanQuery {
     IApplication getApplication();
 
     /** TBC */
+    IApplicationField getApplicationField();
+
+    /** TBC */
+    String getApplicationFieldQualifiedName();
+
+    /** TBC */
     String getApplicationQualifiedName();
 
     /** TBC */
@@ -320,6 +326,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** TBC */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** TBC */
     Long getAssetSodaCheckCount();

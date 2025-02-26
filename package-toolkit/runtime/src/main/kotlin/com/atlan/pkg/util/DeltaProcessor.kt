@@ -54,7 +54,7 @@ class DeltaProcessor(
     private val objectStore = Utils.getBackingStore(outputDirectory)
     private var initialLoad: Boolean = true
     private var delta: FileBasedDelta? = null
-    private var deletedAssets: OffHeapAssetCache? = null
+    var deletedAssets: OffHeapAssetCache? = null
     private val reloadAll = reloadSemantic == "all"
 
     /**
@@ -62,6 +62,14 @@ class DeltaProcessor(
      */
     fun calculate() {
         if (semantic == "full") {
+            if (preprocessedDetails.multipleConnections) {
+                throw IllegalStateException(
+                    """
+                    Assets in multiple connections detected in the input file.
+                    Full delta processing currently only works for a single connection per input file, exiting.
+                    """.trimIndent(),
+                )
+            }
             if (qualifiedNamePrefix.isNullOrBlank()) {
                 logger.warn { "Unable to determine qualifiedName prefix, cannot calculate any delta." }
             } else {
@@ -220,6 +228,7 @@ class DeltaProcessor(
      * @param hasTermAssignments whether there are any term assignments in the input file
      * @param hasDomainRelationship whether there are any domain relationships in the input file
      * @param preprocessedFile full path to the preprocessed input file
+     * @param multipleConnections whether multiple connections were present in the input file (true) or only a single connection (false)
      */
     open class Results(
         val assetRootName: String,
@@ -227,6 +236,7 @@ class DeltaProcessor(
         hasTermAssignments: Boolean,
         hasDomainRelationship: Boolean,
         val preprocessedFile: String,
+        val multipleConnections: Boolean = false,
     ) : RowPreprocessor.Results(
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,

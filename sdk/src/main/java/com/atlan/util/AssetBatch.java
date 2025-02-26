@@ -4,6 +4,7 @@ package com.atlan.util;
 
 import com.atlan.AtlanClient;
 import com.atlan.cache.OffHeapAssetCache;
+import com.atlan.cache.OffHeapFailureCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -19,7 +20,10 @@ import com.atlan.model.assets.View;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.core.AtlanCloseable;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AssetCreationHandling;
+import com.atlan.model.enums.AtlanTagHandling;
+import com.atlan.model.enums.CustomMetadataHandling;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
@@ -30,8 +34,10 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Utility class for managing bulk updates in batches.
@@ -41,20 +47,14 @@ public class AssetBatch implements AtlanCloseable {
     private static final Set<String> TABLE_LEVEL_ASSETS =
             Set.of(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME, SnowflakeDynamicTable.TYPE_NAME);
 
-    public enum CustomMetadataHandling {
-        IGNORE,
-        OVERWRITE,
-        MERGE,
-    }
-
     /** Connectivity to an Atlan tenant. */
     private final AtlanClient client;
 
     /** Maximum number of assets to submit in each batch. */
     private final int maxSize;
 
-    /** Whether to replace Atlan tags (true), or ignore them (false). */
-    private final boolean replaceAtlanTags;
+    /** How to handle any Atlan tags on assets (ignore, append, replace, or remove). */
+    private final AtlanTagHandling atlanTagHandling;
 
     /** How to handle any custom metadata on assets (ignore, replace, or merge). */
     private final CustomMetadataHandling customMetadataHandling;
@@ -116,7 +116,7 @@ public class AssetBatch implements AtlanCloseable {
 
     /** Batches that failed to be committed (only populated when captureFailures is set to true). */
     @Getter
-    private final List<FailedBatch> failures = Collections.synchronizedList(new ArrayList<>());
+    private final OffHeapFailureCache failures;
 
     /** Assets that were skipped, when updateOnly is requested and the asset does not exist in Atlan. */
     @Getter
@@ -141,7 +141,7 @@ public class AssetBatch implements AtlanCloseable {
      * @param maxSize maximum size of each batch that should be processed (per API call)
      */
     public AssetBatch(AtlanClient client, int maxSize) {
-        this(client, maxSize, false, CustomMetadataHandling.IGNORE);
+        this(client, maxSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.IGNORE);
     }
 
     /**
@@ -149,12 +149,15 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      */
     public AssetBatch(
-            AtlanClient client, int maxSize, boolean replaceAtlanTags, CustomMetadataHandling customMetadataHandling) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, false);
+            AtlanClient client,
+            int maxSize,
+            AtlanTagHandling atlanTagHandling,
+            CustomMetadataHandling customMetadataHandling) {
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, false);
     }
 
     /**
@@ -162,17 +165,17 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      */
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, false);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, false);
     }
 
     /**
@@ -180,7 +183,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -188,11 +191,11 @@ public class AssetBatch implements AtlanCloseable {
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, true);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, updateOnly, true);
     }
 
     /**
@@ -200,7 +203,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -209,12 +212,12 @@ public class AssetBatch implements AtlanCloseable {
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
             boolean track) {
-        this(client, maxSize, replaceAtlanTags, customMetadataHandling, captureFailures, updateOnly, track, false);
+        this(client, maxSize, atlanTagHandling, customMetadataHandling, captureFailures, updateOnly, track, false);
     }
 
     /**
@@ -222,7 +225,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -232,7 +235,7 @@ public class AssetBatch implements AtlanCloseable {
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
@@ -241,7 +244,7 @@ public class AssetBatch implements AtlanCloseable {
         this(
                 client,
                 maxSize,
-                replaceAtlanTags,
+                atlanTagHandling,
                 customMetadataHandling,
                 captureFailures,
                 updateOnly,
@@ -255,7 +258,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -266,7 +269,7 @@ public class AssetBatch implements AtlanCloseable {
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
@@ -276,7 +279,7 @@ public class AssetBatch implements AtlanCloseable {
         this(
                 client,
                 maxSize,
-                replaceAtlanTags,
+                atlanTagHandling,
                 customMetadataHandling,
                 captureFailures,
                 updateOnly,
@@ -291,7 +294,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -303,7 +306,7 @@ public class AssetBatch implements AtlanCloseable {
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
@@ -314,7 +317,7 @@ public class AssetBatch implements AtlanCloseable {
         this(
                 client,
                 maxSize,
-                replaceAtlanTags,
+                atlanTagHandling,
                 customMetadataHandling,
                 captureFailures,
                 updateOnly,
@@ -329,7 +332,9 @@ public class AssetBatch implements AtlanCloseable {
                 new OffHeapAssetCache(
                         client, "restored_" + Thread.currentThread().getId()),
                 new OffHeapAssetCache(
-                        client, "skipped_" + Thread.currentThread().getId()));
+                        client, "skipped_" + Thread.currentThread().getId()),
+                new OffHeapFailureCache(
+                        client, "failed_" + Thread.currentThread().getId()));
     }
 
     /**
@@ -337,7 +342,7 @@ public class AssetBatch implements AtlanCloseable {
      *
      * @param client connectivity to Atlan
      * @param maxSize maximum size of each batch that should be processed (per API call)
-     * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
+     * @param atlanTagHandling how to handle Atlan tags (ignore them, append them (leaving any pre-existing), replace them (wiping out any pre-existing), or remove them)
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      * @param captureFailures when true, any failed batches will be captured and retained rather than exceptions being raised (for large amounts of processing this could cause memory issues!)
      * @param updateOnly when true, only attempt to update existing assets and do not create any assets (note: this will incur a performance penalty)
@@ -349,11 +354,12 @@ public class AssetBatch implements AtlanCloseable {
      * @param updated off-heap asset cache tracking assets that have been updated
      * @param restored off-heap asset cache tracking assets that have been restored
      * @param skipped off-heap asset cache tracking assets that have been skipped
+     * @param failed off-heap cache tracking batches of assets that have failed
      */
     public AssetBatch(
             AtlanClient client,
             int maxSize,
-            boolean replaceAtlanTags,
+            AtlanTagHandling atlanTagHandling,
             CustomMetadataHandling customMetadataHandling,
             boolean captureFailures,
             boolean updateOnly,
@@ -364,10 +370,11 @@ public class AssetBatch implements AtlanCloseable {
             OffHeapAssetCache created,
             OffHeapAssetCache updated,
             OffHeapAssetCache restored,
-            OffHeapAssetCache skipped) {
+            OffHeapAssetCache skipped,
+            OffHeapFailureCache failed) {
         this.client = client;
         this.maxSize = maxSize;
-        this.replaceAtlanTags = replaceAtlanTags;
+        this.atlanTagHandling = atlanTagHandling;
         this.customMetadataHandling = customMetadataHandling;
         this.creationHandling = creationHandling;
         this.track = track;
@@ -379,6 +386,7 @@ public class AssetBatch implements AtlanCloseable {
         this.updated = updated;
         this.restored = restored;
         this.skipped = skipped;
+        this.failures = failed;
     }
 
     /**
@@ -389,8 +397,45 @@ public class AssetBatch implements AtlanCloseable {
      * @throws AtlanException on any problems adding the asset to or processing the batch
      */
     public AssetMutationResponse add(Asset single) throws AtlanException {
-        _batch.add(single);
+        if (single != null) {
+            if (single.getAtlanTags() != null && !single.getAtlanTags().isEmpty()) {
+                _batch.add(handleTags(single));
+            } else {
+                _batch.add(single);
+            }
+        }
         return process();
+    }
+
+    private Asset handleTags(Asset asset) throws LogicException {
+        Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+        Method setAtlanTags = ReflectionCache.getSetter(assetBuilder.getClass(), "atlanTags");
+        try {
+            Set<AtlanTag> existing = asset.getAtlanTags();
+            Set<AtlanTag> revisedTags = new TreeSet<>();
+            for (AtlanTag tag : existing) {
+                AtlanTag revised =
+                        switch (atlanTagHandling) {
+                            case APPEND -> tag.toBuilder()
+                                    .semantic(Reference.SaveSemantic.APPEND)
+                                    .build();
+                            case REPLACE -> tag.toBuilder()
+                                    .semantic(Reference.SaveSemantic.REPLACE)
+                                    .build();
+                            case REMOVE -> tag.toBuilder()
+                                    .semantic(Reference.SaveSemantic.REMOVE)
+                                    .build();
+                            default -> null;
+                        };
+                if (revised != null) {
+                    revisedTags.add(revised);
+                }
+            }
+            setAtlanTags.invoke(assetBuilder, revisedTags);
+            return (Asset) assetBuilder.build();
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new LogicException(ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.ATLAN_TAGS.getAtlanFieldName());
+        }
     }
 
     /**
@@ -511,23 +556,16 @@ public class AssetBatch implements AtlanCloseable {
             }
             if (!revised.isEmpty()) {
                 try {
-                    switch (customMetadataHandling) {
-                        case IGNORE:
-                            response = client.assets.save(revised, replaceAtlanTags);
-                            break;
-                        case OVERWRITE:
-                            response = client.assets.saveReplacingCM(revised, replaceAtlanTags);
-                            break;
-                        case MERGE:
-                            response = client.assets.saveMergingCM(revised, replaceAtlanTags);
-                            break;
-                    }
+                    response = switch (customMetadataHandling) {
+                        case IGNORE -> client.assets.save(revised);
+                        case OVERWRITE -> client.assets.saveReplacingCM(revised);
+                        case MERGE -> client.assets.saveMergingCM(revised);};
                     if (response != null) {
                         response.block();
                     }
                 } catch (AtlanException e) {
                     if (captureFailures) {
-                        failures.add(new FailedBatch(_batch, e));
+                        track(failures, _batch, e);
                     } else {
                         throw e;
                     }
@@ -626,6 +664,25 @@ public class AssetBatch implements AtlanCloseable {
         }
     }
 
+    private void track(OffHeapFailureCache tracker, List<Asset> batch, Exception failureReason) {
+        List<Asset> minimal = new ArrayList<>();
+        for (Asset asset : batch) {
+            try {
+                minimal.add(asset.trimToRequired()
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            } catch (InvalidRequestException e) {
+                minimal.add(IndistinctAsset._internal()
+                        .typeName(asset.getTypeName())
+                        .guid(asset.getGuid())
+                        .qualifiedName(asset.getQualifiedName())
+                        .build());
+            }
+        }
+        tracker.put(UUID.randomUUID().toString(), new FailedBatch(minimal, failureReason));
+    }
+
     /**
      * Construct the minimal asset representation necessary for the asset to be included in a
      * persistent connection cache.
@@ -653,12 +710,15 @@ public class AssetBatch implements AtlanCloseable {
      * Internal class to capture batch failures.
      */
     @Getter
+    @Builder
+    @Jacksonized
+    @EqualsAndHashCode
     public static final class FailedBatch {
         private final List<Asset> failedAssets;
         private final Exception failureReason;
 
         public FailedBatch(List<Asset> failedAssets, Exception failureReason) {
-            this.failedAssets = List.copyOf(failedAssets);
+            this.failedAssets = failedAssets;
             this.failureReason = failureReason;
         }
     }

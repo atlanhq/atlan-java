@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
@@ -49,7 +50,7 @@ public interface ILookerLook {
     RelationField MODEL = new RelationField("model");
 
     /** Name of the model in which this Look exists. */
-    TextField MODEL_NAME = new TextField("modelName", "modelName");
+    KeywordTextField MODEL_NAME = new KeywordTextField("modelName", "modelName.keyword", "modelName");
 
     /** Deprecated. */
     RelationField QUERY = new RelationField("query");
@@ -107,6 +108,12 @@ public interface ILookerLook {
 
     /** Application asset containing this Asset. */
     IApplication getApplication();
+
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
@@ -314,6 +321,9 @@ public interface ILookerLook {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

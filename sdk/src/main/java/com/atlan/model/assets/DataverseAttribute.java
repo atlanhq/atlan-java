@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -358,6 +359,71 @@ public class DataverseAttribute extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a DataverseAttribute.
+     *
+     * @param name of the attribute
+     * @param entity in which the attribute should be created, which must have at least
+     *                 a qualifiedName
+     * @return the minimal request necessary to create the attribute, as a builder
+     * @throws InvalidRequestException if the entity provided is without a qualifiedName
+     */
+    public static DataverseAttribute.DataverseAttributeBuilder<?, ?> creator(String name, DataverseEntity entity)
+            throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("entityQualifiedName", entity.getQualifiedName());
+        map.put("entityName", entity.getName());
+        map.put("connectionQualifiedName", entity.getConnectionQualifiedName());
+        validateRelationship(DataverseEntity.TYPE_NAME, map);
+        return creator(name, entity.getConnectionQualifiedName(), entity.getQualifiedName())
+                .dataverseEntity(entity.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataverseAttribute.
+     *
+     * @param name of the attribute
+     * @param entityQualifiedName unique name of the entity in which this attribute exists
+     * @return the minimal request necessary to create the attribute, as a builder
+     */
+    public static DataverseAttribute.DataverseAttributeBuilder<?, ?> creator(String name, String entityQualifiedName) {
+        String entityName = StringUtils.getNameFromQualifiedName(entityQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(entityQualifiedName);
+        return creator(name, connectionQualifiedName, entityQualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DataverseAttribute.
+     *
+     * @param name of the attribute
+     * @param connectionQualifiedName unique name of the connection in which to create the attribute
+     * @param entityQualifiedName unique name of the entity in which to create the attribute
+     * @return the minimal request necessary to create the attribute, as a builder
+     */
+    public static DataverseAttribute.DataverseAttributeBuilder<?, ?> creator(
+            String name, String connectionQualifiedName, String entityQualifiedName) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        return DataverseAttribute._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, entityQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(connectorType)
+                .dataverseEntityQualifiedName(entityQualifiedName)
+                .dataverseEntity(DataverseEntity.refByQualifiedName(entityQualifiedName));
+    }
+
+    /**
+     * Generate a unique attribute name.
+     *
+     * @param name of the attribute
+     * @param entityQualifiedName unique name of the entity in which this attribute exists
+     * @return a unique name for the attribute
+     */
+    public static String generateQualifiedName(String name, String entityQualifiedName) {
+        return entityQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataverseAttribute.
      *
      * @param qualifiedName of the DataverseAttribute
@@ -517,7 +583,9 @@ public class DataverseAttribute extends Asset
      * @param terms the list of terms to append to the DataverseAttribute
      * @return the DataverseAttribute that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataverseAttribute appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataverseAttribute) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -533,7 +601,9 @@ public class DataverseAttribute extends Asset
      * @param terms the list of terms to remove from the DataverseAttribute, which must be referenced by GUID
      * @return the DataverseAttribute that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static DataverseAttribute removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataverseAttribute) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -549,7 +619,9 @@ public class DataverseAttribute extends Asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated DataverseAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static DataverseAttribute appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DataverseAttribute) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -568,7 +640,9 @@ public class DataverseAttribute extends Asset
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated DataverseAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static DataverseAttribute appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -594,7 +668,9 @@ public class DataverseAttribute extends Asset
      * @param qualifiedName of the DataverseAttribute
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DataverseAttribute
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

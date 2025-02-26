@@ -116,6 +116,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     Boolean powerBIIsHidden;
 
+    /** PowerBI Measures that can be associated with this PowerBI Column. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIMeasure> powerBIMeasures;
+
     /** Name of a column in the same table to use to order this column. */
     @Attribute
     String powerBISortByColumn;
@@ -525,7 +530,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param terms the list of terms to append to the PowerBIColumn
      * @return the PowerBIColumn that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PowerBIColumn appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIColumn) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -541,7 +548,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param terms the list of terms to remove from the PowerBIColumn, which must be referenced by GUID
      * @return the PowerBIColumn that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
+    @Deprecated
     public static PowerBIColumn removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIColumn) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
@@ -557,7 +566,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated PowerBIColumn
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
+    @Deprecated
     public static PowerBIColumn appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
         return (PowerBIColumn) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
@@ -576,7 +587,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated PowerBIColumn
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
+    @Deprecated
     public static PowerBIColumn appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
@@ -602,7 +615,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @param qualifiedName of the PowerBIColumn
      * @param atlanTagName human-readable name of the Atlan tag to remove
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PowerBIColumn
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
+    @Deprecated
     public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
             throws AtlanException {
         Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);

@@ -67,6 +67,13 @@ public interface IAsset {
     /** Application asset containing this Asset. */
     RelationField APPLICATION = new RelationField("application");
 
+    /** ApplicationField asset containing this Asset. */
+    RelationField APPLICATION_FIELD = new RelationField("applicationField");
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    KeywordField APPLICATION_FIELD_QUALIFIED_NAME =
+            new KeywordField("applicationFieldQualifiedName", "applicationFieldQualifiedName");
+
     /** Qualified name of the Application that contains this asset. */
     KeywordField APPLICATION_QUALIFIED_NAME = new KeywordField("applicationQualifiedName", "applicationQualifiedName");
 
@@ -319,6 +326,9 @@ public interface IAsset {
 
     /** Array of policy ids governing this asset */
     KeywordField ASSET_POLICY_GUIDS = new KeywordField("assetPolicyGUIDs", "assetPolicyGUIDs");
+
+    /** Array of asset ids that equivalent to this asset. */
+    KeywordField ASSET_REDIRECT_GUIDS = new KeywordField("assetRedirectGUIDs", "assetRedirectGUIDs");
 
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
@@ -609,6 +619,12 @@ public interface IAsset {
     /** Application asset containing this Asset. */
     IApplication getApplication();
 
+    /** ApplicationField asset containing this Asset. */
+    IApplicationField getApplicationField();
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
@@ -815,6 +831,9 @@ public interface IAsset {
 
     /** Array of policy ids governing this asset */
     SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

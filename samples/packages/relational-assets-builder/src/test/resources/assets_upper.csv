@@ -1,0 +1,11 @@
+typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,dataType,displayName,description,certificateStatus,certificateStatusMessage,readme,adminRoles,adminGroups,adminUsers
+Connection,{{CONNECTION1}},SAP-S4-HANA,,,,,,,,,,,$admin,admins,"chris
+{{API_TOKEN_USER}}"
+Database,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,,,,,Test DB,,,,,,,
+Schema,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,
+Table,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,,,
+Column,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_TBL,COL1,NVARCHAR(255),Test column 1,,,,,,,
+Column,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,,,,,,,
+View,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_VIEW,,,Test view,,DRAFT,,<h2>View readme</h2>,,,
+Column,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_VIEW,COL3,Int32,Test column 3,,,,,,,
+Column,{{CONNECTION1}},SAP-S4-HANA,TEST_DB,TEST_SCHEMA,TEST_VIEW,COL4,"decimal(3,5)",Test column 4,,,,,,,

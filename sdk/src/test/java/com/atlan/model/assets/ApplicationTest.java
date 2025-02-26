@@ -91,6 +91,8 @@ public class ApplicationTest {
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .anomaloCheck(AnomaloCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .application(Application.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationField(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationFieldQualifiedName("String0")
             .applicationQualifiedName("String0")
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
@@ -177,6 +179,8 @@ public class ApplicationTest {
             .assetPoliciesCount(123456789L)
             .assetPolicyGUID("String0")
             .assetPolicyGUID("String1")
+            .assetRedirectGUID("String0")
+            .assetRedirectGUID("String1")
             .assetSodaCheckCount(123456789L)
             .assetSodaCheckStatuses("String0")
             .assetSodaDQStatus("String0")
@@ -428,6 +432,9 @@ public class ApplicationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .applicationChildField(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .applicationChildField(
+                    ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .applicationOwnedAsset(Task.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .applicationOwnedAsset(Task.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
