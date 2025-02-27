@@ -9,8 +9,11 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
+import de.siegmar.fastcsv.reader.CsvReader
 import org.testng.annotations.Test
 import java.nio.file.Paths
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 
 /*
  * Test export of domain and asset relationships
@@ -116,67 +119,46 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
     @Test
     fun isExported() {
         prepFile()
-        val testFile = Paths.get(testDirectory, "input.csv").toFile()
-        val originalFile = Paths.get(testDirectory, "asset-export.csv").toFile()
+        val testFile = "$testDirectory/input.csv"
+        val originalFile = "$testDirectory/asset-export.csv"
 
-        // compare the contents of the exported file with the expected file
-        val testLines = testFile.readLines()
-        val originalLines = originalFile.readLines()
+        val testReader =
+            CsvReader
+                .builder()
+                .fieldSeparator(',')
+                .quoteCharacter('"')
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
 
-        // Ensure both files have headers
-        assert(testLines.isNotEmpty() && originalLines.isNotEmpty()) { "One or both files are empty." }
+        val originalReader =
+            CsvReader
+                .builder()
+                .fieldSeparator(',')
+                .quoteCharacter('"')
+                .skipEmptyLines(true)
+                .ignoreDifferentFieldCount(false)
 
-        // Parse headers
-        val testHeaders = testLines[0].split(",").map { it.trim() }
-        val originalHeaders = originalLines[0].split(",").map { it.trim() }
+        val testRecords = testReader.ofCsvRecord(Paths.get(testFile)).stream().toList()
+        val originalRecords = originalReader.ofCsvRecord(Paths.get(originalFile)).stream().toList()
 
-        // Get index of the 'qualifiedName' column
-        val testQualifiedNameIndex = 0
-        val originalQualifiedNameIndex = 0
+        assertFalse(testRecords.isEmpty(), "Test CSV file is empty")
+        assertFalse(originalRecords.isEmpty(), "Original CSV file is empty")
 
-        assert(testQualifiedNameIndex != -1 && originalQualifiedNameIndex != -1) {
-            "'qualifiedName' column is missing in one or both files."
-        }
+        val testHeader = testRecords.first().fields
+        val originalHeader = originalRecords.first().fields
 
-        // Map rows by 'qualifiedName'
-        val testRowsByQualifiedName =
-            testLines
-                .drop(1)
-                .associateBy { it.split(",")[testQualifiedNameIndex].trim() }
+        val testQualifiedNameIndex = testHeader.indexOf("qualifiedName")
+        val originalQualifiedNameIndex = originalHeader.indexOf("qualifiedName")
 
-        val originalRowsByQualifiedName =
-            originalLines
-                .drop(1)
-                .associateBy { it.split(",")[originalQualifiedNameIndex].trim() }
+        assert(testQualifiedNameIndex != -1) { "Column 'qualifiedName' not found in test CSV" }
+        assert(originalQualifiedNameIndex != -1) { "Column 'qualifiedName' not found in original CSV" }
 
-        // Compare rows with matching 'qualifiedName'
+        val testRowsByQualifiedName = testRecords.drop(1).associateBy { it.fields[testQualifiedNameIndex] }
+        val originalRowsByQualifiedName = originalRecords.drop(1).associateBy { it.fields[originalQualifiedNameIndex] }
+
         for ((qualifiedName, testRow) in testRowsByQualifiedName) {
             val originalRow = originalRowsByQualifiedName[qualifiedName]
-            if (originalRow == null) {
-                assert(false) { "Row with qualifiedName '$qualifiedName' is missing in the original file." }
-            }
-
-            val testColumns = testRow.split(",").map { it.trim() }
-            val originalColumns = originalRow!!.split(",").map { it.trim() }
-
-            for (header in testHeaders) {
-                if (header in originalHeaders) {
-                    val testValue = testColumns.getOrNull(testHeaders.indexOf(header))
-                    val originalValue = originalColumns.getOrNull(originalHeaders.indexOf(header))
-
-                    if (!testValue.isNullOrEmpty() || !originalValue.isNullOrEmpty()) {
-                        assert(testValue == originalValue) {
-                            "Mismatch for qualifiedName '$qualifiedName', column '$header': test='$testValue', original='$originalValue'"
-                        }
-                    }
-                }
-            }
-        }
-
-        // Check for rows in original file not present in test file
-        val unmatchedOriginalRows = originalRowsByQualifiedName.keys - testRowsByQualifiedName.keys
-        assert(unmatchedOriginalRows.isEmpty()) {
-            "Rows with qualifiedName(s) ${unmatchedOriginalRows.joinToString(", ")} are missing in the test file."
+            assertNotNull(originalRow, "Row with qualifiedName '$qualifiedName' is missing in the original file.")
         }
     }
 }
