@@ -1,0 +1,3 @@
+qualifiedName,typeName,name,anchor,userDescription,assignedEntities
+,AtlasGlossary,{{GLOSSARY}},,Test glossary for asset import package.,
+,AtlasGlossaryTerm,Term1,{{GLOSSARY}},Test term 1 for asset import package (multiple categories).,Table@default/snowflake/1234567890/DB/SCH/TBL
