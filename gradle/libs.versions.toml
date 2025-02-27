@@ -8,8 +8,8 @@ testng = "7.11.0"
 log4j = "2.24.3"
 wiremock = "3.12.0"
 jnanoid = "2.0.0"
-awssdk = "2.30.28"
-gcs = "26.55.0"  # was: "26.51.0"
+awssdk = "2.30.29"
+gcs = "26.55.0"
 system-stubs = "2.1.7"
 fastcsv = "3.5.0"
 poi = "5.4.0"
@@ -22,7 +22,7 @@ commons-io = "2.18.0"
 sqlite = "3.49.1.0"
 jakarta-mail = "2.1.3"
 angus-mail = "2.0.3"
-pkl = "0.27.2"
+pkl = "0.28.0"
 adls = "12.22.0"
 azure = "1.15.3"
 guava = "33.4.0-jre"
@@ -31,10 +31,9 @@ kotlin = "2.1.10"
 kotlin-mu = "3.0.5"
 rocksdb = "9.10.0"
 jetty = "12.0.16"
-netty = "4.1.118.Final"
-otel = "1.47.0"  # was: "1.42.1"
-otel-appender = "2.13.1-alpha"  # was: "2.8.0-alpha"
-otel-instrumentation = "2.13.1-alpha"  # was: "2.8.0-alpha"
+netty = "4.1.119.Final"
+otel = "1.47.0"
+otel-instrumentation = "2.13.2-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
@@ -81,10 +80,10 @@ netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
 otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otel" }
 otel-instrumentation-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha", version.ref = "otel-instrumentation" }
 otel-api = { module = "io.opentelemetry:opentelemetry-api" }
-otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" } # , version.ref = "otel"
-otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" } # , version.ref = "otel"
-otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" } # , version.ref = "otel"
-otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17" } # , version.ref = "otel-appender"
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk" }
+otel-exporter = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
+otel-autoconfig = { module = "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure" }
+otel-appender = { module = "io.opentelemetry.instrumentation:opentelemetry-log4j-appender-2.17" }
 
 [bundles]
 java-test = [ "jnanoid", "testng", "wiremock" ]
@@ -95,4 +94,4 @@ poi = [ "apache-poi", "apache-poi-ooxml" ]
 [plugins]
 shadow = { id = "com.gradleup.shadow", version = "9.0.0-beta5" }
 git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
-pkl = { id = "org.pkl-lang", version = "0.27.2" }
+pkl = { id = "org.pkl-lang", version = "0.28.0" }
