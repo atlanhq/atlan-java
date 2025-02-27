@@ -34,7 +34,7 @@ jetty = "12.0.16"
 netty = "4.1.118.Final"
 otel = "1.47.0"  # was: "1.42.1"
 otel-appender = "2.13.1-alpha"  # was: "2.8.0-alpha"
-otel-instrumentation = "2.13.1-alpha"  # was: "2.8.0-alpha"
+otel-instrumentation = "2.13.2-alpha"  # was: "2.8.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
