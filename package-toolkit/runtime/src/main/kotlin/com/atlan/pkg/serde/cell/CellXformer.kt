@@ -6,6 +6,7 @@ import com.atlan.cache.ReflectionCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanEnum
+import com.atlan.model.fields.AtlanField
 import com.atlan.model.structs.AtlanStruct
 import com.atlan.pkg.PackageContext
 import java.io.IOException
@@ -19,15 +20,22 @@ object CellXformer {
     fun encode(
         ctx: PackageContext<*>,
         value: Any?,
+        field: AtlanField? = null,
         guid: String? = null,
         dates: Boolean = false,
     ): String {
         return when (value) {
-            is String -> encodeString(value)
+            is String -> {
+                if (field == Asset.DOMAIN_GUIDS) {
+                    DataDomainXformer.encodeFromGuid(ctx, value)
+                } else {
+                    encodeString(value)
+                }
+            }
             is Collection<*> -> {
                 val list = mutableListOf<String>()
                 for (element in value) {
-                    val encoded = encode(ctx, element, guid, dates)
+                    val encoded = encode(ctx, element, field, guid, dates)
                     list.add(encoded)
                 }
                 return getDelimitedList(list)
@@ -35,7 +43,7 @@ object CellXformer {
             is Map<*, *> -> {
                 val list = mutableListOf<String>()
                 for ((key, embeddedValue) in value) {
-                    list.add(key.toString() + "=" + encode(ctx, embeddedValue, guid, dates))
+                    list.add(key.toString() + "=" + encode(ctx, embeddedValue, field, guid, dates))
                 }
                 return getDelimitedList(list)
             }

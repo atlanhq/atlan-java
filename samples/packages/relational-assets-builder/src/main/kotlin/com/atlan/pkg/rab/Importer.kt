@@ -140,6 +140,9 @@ object Importer {
         if (preprocessedDetails.hasTermAssignments) {
             ctx.termCache.preload()
         }
+        if (preprocessedDetails.hasDomainRelationship) {
+            ctx.dataDomainCache.preload()
+        }
 
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
         // Determine any non-standard RAB fields in the header and append them to the end of
@@ -277,6 +280,7 @@ object Importer {
             return Results(
                 results.hasLinks,
                 results.hasTermAssignments,
+                results.hasDomainRelationship,
                 results.outputFile!!,
                 entityQualifiedNameToType,
                 qualifiedNameToChildCount,
@@ -289,6 +293,7 @@ object Importer {
     class Results(
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
+        hasDomainRelationship: Boolean,
         preprocessedFile: String,
         val entityQualifiedNameToType: Map<String, String>,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
@@ -298,6 +303,7 @@ object Importer {
             assetRootName = "",
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
+            hasDomainRelationship = hasDomainRelationship,
             preprocessedFile = preprocessedFile,
         )
 }

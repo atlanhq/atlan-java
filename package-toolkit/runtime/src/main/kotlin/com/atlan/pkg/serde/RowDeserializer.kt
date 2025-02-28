@@ -9,6 +9,7 @@ import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch
@@ -103,7 +104,14 @@ class RowDeserializer(
                                     // Only set the value on the asset directly if it does not require
                                     // special handling, otherwise leave it to the special handling
                                     // to set the value (later)
-                                    ReflectionCache.setValue(builder, fieldName, value)
+                                    if (fieldName == Asset.DOMAIN_GUIDS.atlanFieldName) {
+                                        if (value is ArrayList<*> && value.isNotEmpty() && value[0] is String) {
+                                            val dataDomain = DataDomainXformer.decode(ctx, value[0] as String, fieldName)
+                                            ReflectionCache.setValue(builder, fieldName, listOf(dataDomain.guid))
+                                        }
+                                    } else {
+                                        ReflectionCache.setValue(builder, fieldName, value)
+                                    }
                                 }
                             }
                         }

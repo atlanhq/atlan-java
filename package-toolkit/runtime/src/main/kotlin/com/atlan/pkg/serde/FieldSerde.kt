@@ -51,7 +51,7 @@ object FieldSerde {
             dates = ReflectionCache.isDate(asset.javaClass, field.atlanFieldName)
         }
         return try {
-            CellXformer.encode(ctx, value, asset.guid, dates)
+            CellXformer.encode(ctx, value, field, asset.guid, dates)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e
