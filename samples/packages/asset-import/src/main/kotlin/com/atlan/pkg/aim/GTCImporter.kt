@@ -4,6 +4,7 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
@@ -119,6 +120,17 @@ abstract class GTCImporter(
                 throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
             }
             return row // No-op
+        }
+
+        /** {@inheritDoc} */
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): RowPreprocessor.Results {
+            if (header.contains(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)) {
+                logger.warn { "Found asset assignments in the glossary input file. Due to the order in which files are loaded, term <> asset assignments should only be provided in the assets file. Any found in the glossary file will be skipped." }
+            }
+            return super.finalize(header, outputFile)
         }
     }
 }

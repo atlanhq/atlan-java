@@ -41,6 +41,7 @@ class TermImporter(
             GlossaryTerm.LINKS.atlanFieldName,
             GlossaryTerm.ATLAN_TAGS.atlanFieldName,
             GlossaryTerm.README.atlanFieldName,
+            GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName,
         )
 
     /** {@inheritDoc} */
@@ -49,6 +50,7 @@ class TermImporter(
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
         firstPassSkip.addAll(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
+        firstPassSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
         val firstPassResults = super.import(firstPassSkip)
