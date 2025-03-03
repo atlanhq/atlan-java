@@ -210,6 +210,9 @@ class AssetImport extends PublishConfig {
   /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden assetsTagHandling: AtlanTagSemantic?|String? = null
 
+  /// How linked resources on assets in the input should be updated: based on their unique URL or their unique name.
+  hidden assetsLinkIdempotency: LinkIdempotencyInvariant?|String? = null
+
   /// Maximum number of rows to process at a time (per API request).
   hidden assetsBatchSize: Int?|String? = null
 
@@ -240,6 +243,9 @@ class AssetImport extends PublishConfig {
   /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden glossariesTagHandling: AtlanTagSemantic?|String? = null
 
+  /// How linked resources on glossaries in the input should be updated: based on their unique URL or their unique name.
+  hidden glossariesLinkIdempotency: LinkIdempotencyInvariant?|String? = null
+
   /// Maximum number of rows to process at a time (per API request).
   hidden glossariesBatchSize: Int?|String? = null
 
@@ -266,6 +272,9 @@ class AssetImport extends PublishConfig {
 
   /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden dataProductsTagHandling: AtlanTagSemantic?|String? = null
+
+  /// How linked resources on assets in the input should be updated: based on their unique URL or their unique name.
+  hidden dataProductsLinkIdempotency: LinkIdempotencyInvariant?|String? = null
 
   /// Maximum number of rows to process at a time (per API request).
   hidden dataProductsBatchSize: Int?|String? = null
@@ -329,6 +338,7 @@ class AssetImport extends PublishConfig {
     when (assetsBatchSize != null) { ["assets_batch_size"] = assetsBatchSize.toString() }
     when (assetsCmHandling != null) { ["assets_cm_handling"] = assetsCmHandling }
     when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
+    when (assetsLinkIdempotency != null) { ["assets_link_idempotency"] = assetsLinkIdempotency }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
 
     when (glossariesFile != null) { ["glossaries_file"] = glossariesFile.path }
@@ -345,6 +355,7 @@ class AssetImport extends PublishConfig {
     when (glossariesFieldSeparator != null) { ["glossaries_field_separator"] = glossariesFieldSeparator }
     when (glossariesCmHandling != null) { ["glossaries_cm_handling"] = glossariesCmHandling }
     when (glossariesTagHandling != null) { ["glossaries_tag_handling"] = glossariesTagHandling }
+    when (glossariesLinkIdempotency != null) { ["glossaries_link_idempotency"] = glossariesLinkIdempotency }
     when (glossariesBatchSize != null) { ["glossaries_batch_size"] = glossariesBatchSize.toString() }
 
     when (dataProductsFile != null) { ["data_products_file"] = dataProductsFile.path }
@@ -361,6 +372,7 @@ class AssetImport extends PublishConfig {
     when (dataProductsFieldSeparator != null) { ["data_products_field_separator"] = dataProductsFieldSeparator }
     when (dataProductsCmHandling != null) { ["data_products_cm_handling"] = dataProductsCmHandling }
     when (dataProductsTagHandling != null) { ["data_products_tag_handling"] = dataProductsTagHandling }
+    when (dataProductsLinkIdempotency != null) { ["data_products_link_idempotency"] = dataProductsLinkIdempotency }
     when (dataProductsBatchSize != null) { ["data_products_batch_size"] = dataProductsBatchSize.toString() }
 
     when (tagsFile != null) { ["tags_file"] = tagsFile.path }
@@ -707,6 +719,9 @@ typealias CustomMetadataSemantic = "ignore"|"overwrite"|"merge"
 
 /// Options for the semantic to use when loading Atlan tag associations to assets into Atlan.
 typealias AtlanTagSemantic = "ignore"|"append"|"replace"|"remove"
+
+/// Options for which part of a linked resource should be considered unique, to use for updating a link's details.
+typealias LinkIdempotencyInvariant = "url"|"name"
 
 /// Configuration type for a package.
 typealias ConfigType = "default"|"advanced"
