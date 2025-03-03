@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Asset.AssetBuilder
 import com.atlan.model.core.CustomMetadataAttributes
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.FieldSerde.FAIL_ON_ERRORS
 import com.atlan.pkg.serde.RowSerde.CM_HEADING_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.pkg.serde.cell.DataDomainXformer
@@ -81,7 +82,7 @@ class RowDeserializer(
                 if (!skipColumns.contains(fieldName)) {
                     if (fieldName.isNotEmpty()) {
                         val value = getValue(fieldName)
-                        if (fieldName.contains(CM_HEADING_DELIMITER)) {
+                        if (fieldName.contains(CM_HEADING_DELIMITER) && value != null) {
                             // Custom metadata field...
                             val tokens = fieldName.split(CM_HEADING_DELIMITER)
                             val setName = tokens[0]
@@ -142,13 +143,24 @@ class RowDeserializer(
             val tokens = fieldName.split(CM_HEADING_DELIMITER)
             val setName = tokens[0]
             val attrName = tokens[1]
-            val attrId = cache.getAttrIdForName(setName, attrName)
+            val attrId =
+                try {
+                    cache.getAttrIdForName(setName, attrName)
+                } catch (e: Exception) {
+                    if (FAIL_ON_ERRORS.get()) {
+                        throw e
+                    } else {
+                        logger.warn { "Unable to find specified attribute, will skip its value: $fieldName" }
+                        logger.debug(e) { "Full stack trace:" }
+                    }
+                    null
+                }
             if (attrId != null) {
                 val attrDef = cache.getAttributeDef(attrId)
                 return FieldSerde.getCustomMetadataValueFromString(attrDef, rValue)
             } else {
-                // If we cannot translate via the attribute def, return it as-is
-                rValue
+                // If we cannot translate via the attribute def, return no value
+                null
             }
         } else {
             // "Normal" field...

@@ -87,13 +87,13 @@ object FieldSerde {
         }
         return try {
             val assetClass = setter.declaringClass.enclosingClass
-            CellXformer.decode(ctx, assetClass, value, paramClass, innerClass, fieldName)
+            CellXformer.decode(ctx, assetClass, value, paramClass, innerClass, fieldName, logger)
         } catch (e: Exception) {
             if (FAIL_ON_ERRORS.get()) {
                 throw e
             } else {
-                logger.warn("Unable to decode value from field -- skipping {}: {}", setter.name, value)
-                logger.debug("Full stack trace:", e)
+                logger.warn { "Unable to decode value from field -- skipping ${setter.name}: $value" }
+                logger.debug(e) { "Full stack trace:" }
             }
             null
         }

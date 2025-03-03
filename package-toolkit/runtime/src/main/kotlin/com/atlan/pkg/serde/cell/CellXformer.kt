@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanEnum
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.structs.AtlanStruct
 import com.atlan.pkg.PackageContext
+import mu.KLogger
 import java.io.IOException
 import java.util.SortedSet
 import java.util.TreeSet
@@ -71,6 +72,7 @@ object CellXformer {
         type: Class<*>,
         innerType: Class<*>?,
         fieldName: String,
+        logger: KLogger,
     ): Any? =
         if (value.isNullOrEmpty()) {
             null
@@ -100,7 +102,7 @@ object CellXformer {
             val list = mutableListOf<Any>()
             if (innerType != null) {
                 for (element in values) {
-                    val decoded = decode(ctx, assetClass, element, innerType, null, fieldName)
+                    val decoded = decode(ctx, assetClass, element, innerType, null, fieldName, logger)
                     if (decoded != null) {
                         list.add(decoded)
                     }
@@ -120,7 +122,7 @@ object CellXformer {
         } else if (AtlanStruct::class.java.isAssignableFrom(type)) {
             StructXformer.decode(ctx.client, value, type as Class<AtlanStruct>)
         } else if (AtlanTag::class.java.isAssignableFrom(type)) {
-            AtlanTagXformer.decode(ctx.client, value)
+            AtlanTagXformer.decode(ctx.client, value, logger)
         } else if (type.isInterface) {
             // Relationships between assets are defined via interfaces, so this would mean
             // there should be asset references

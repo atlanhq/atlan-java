@@ -513,7 +513,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private String checkIdForName(String id, String name) throws AtlanException {
         if (id == null) {
-            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_NAME, name);
+            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_NAME, cacheName, name);
         }
         return id;
     }
@@ -573,7 +573,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private String checkIdForSid(String id, String sid) throws AtlanException {
         if (id == null) {
-            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_SID, sid);
+            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_SID, cacheName, sid);
         }
         return id;
     }
@@ -633,7 +633,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private String checkSidForName(String sid, String name) throws AtlanException {
         if (sid == null) {
-            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_NAME, name);
+            throw new NotFoundException(ErrorCode.ID_NOT_FOUND_BY_NAME, cacheName, name);
         }
         return sid;
     }
@@ -693,7 +693,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private String checkNameForId(String name, String id) throws AtlanException {
         if (name == null) {
-            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, id);
+            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, cacheName, id);
         }
         return name;
     }
@@ -753,7 +753,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private String checkNameForSid(String name, String sid) throws AtlanException {
         if (name == null) {
-            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, sid);
+            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, cacheName, sid);
         }
         return name;
     }
@@ -813,7 +813,7 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
 
     private T checkById(T result, String id) throws AtlanException {
         if (result == null) {
-            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, id);
+            throw new NotFoundException(ErrorCode.NAME_NOT_FOUND_BY_ID, cacheName, id);
         }
         return result;
     }
