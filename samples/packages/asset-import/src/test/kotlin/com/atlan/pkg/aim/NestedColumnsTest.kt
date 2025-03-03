@@ -16,6 +16,7 @@ import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 /**
  * Test import of nested columns.
@@ -199,6 +200,31 @@ class NestedColumnsTest : PackageTest("nc") {
                 }
             }
         }
+    }
+
+    @Test
+    fun customAttributesOnColumn() {
+        val c1 = Connection.findByName(client, c1, c1Type, connectionAttrs)[0]!!
+        val request =
+            Column
+                .select(client)
+                .where(Column.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Column.NAME.eq("child_2.1"))
+                .where(Column.PARENT_COLUMN_NAME.eq("child_2"))
+                .includesOnResults(columnAttrs)
+                .includeOnRelations(Asset.NAME)
+                .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
+        assertEquals(1, found.size)
+        val col = found[0] as Column
+        val column = Column.get(client, col.guid)
+        assertNotNull(column)
+        assertNotNull(column.customAttributes)
+        assertEquals(2, column.customAttributes.size)
+        assertEquals(setOf("column_mode", "is_self_referencing"), column.customAttributes.keys)
+        assertEquals("NULLABLE", column.customAttributes["column_mode"])
+        assertEquals("NO", column.customAttributes["is_self_referencing"])
     }
 
     @Test
