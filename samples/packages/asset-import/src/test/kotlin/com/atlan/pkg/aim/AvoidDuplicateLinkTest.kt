@@ -47,10 +47,11 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
         connectionQN: String,
         linkName: String,
         linkURL: String,
+        filename: String,
     ) {
         // Prepare a copy of the file with unique names for connections
         val input = Paths.get("src", "test", "resources", testFile).toFile()
-        val output = Paths.get(testDirectory, testFile).toFile()
+        val output = Paths.get(testDirectory, filename).toFile()
         input.useLines { lines ->
             lines.forEach { line ->
                 val revised =
@@ -116,12 +117,14 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
 
     @Test(groups = ["aim.adl.base"], dependsOnGroups = ["aim.adl.create"])
     private fun baseline() {
+        val filename = "base.csv"
         prepFile(
             connection.qualifiedName,
             LINK_NAME1,
             LINK_URL1,
+            filename,
         )
-        importCsv(LinkIdempotencyInvariant.URL)
+        importCsv(filename, LinkIdempotencyInvariant.URL)
         validateLinkPresent(
             LINK_NAME1,
             LINK_URL1,
@@ -130,12 +133,14 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
 
     @Test(groups = ["aim.adl.name"], dependsOnGroups = ["aim.adl.base"])
     private fun idempotentName() {
+        val filename = "idempotent_name.csv"
         prepFile(
             connection.qualifiedName,
             LINK_NAME1,
             LINK_URL2,
+            filename,
         )
-        importCsv(LinkIdempotencyInvariant.NAME)
+        importCsv(filename, LinkIdempotencyInvariant.NAME)
         validateLinkPresent(
             LINK_NAME1,
             LINK_URL2,
@@ -144,12 +149,14 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
 
     @Test(groups = ["aim.adl.url"], dependsOnGroups = ["aim.adl.name"])
     private fun idempotentURL() {
+        val filename = "idempotent_url.csv"
         prepFile(
             connection.qualifiedName,
             LINK_NAME2,
             LINK_URL2,
+            filename,
         )
-        importCsv(LinkIdempotencyInvariant.URL)
+        importCsv(filename, LinkIdempotencyInvariant.URL)
         validateLinkPresent(
             LINK_NAME2,
             LINK_URL2,
@@ -158,30 +165,37 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
 
     @Test(groups = ["aim.adl.addName"], dependsOnGroups = ["aim.adl.url"])
     private fun idempotentAddName() {
+        val filename = "add_name.csv"
         prepFile(
             connection.qualifiedName,
             LINK_NAME1,
             LINK_URL1,
+            filename,
         )
-        importCsv(LinkIdempotencyInvariant.NAME)
+        importCsv(filename, LinkIdempotencyInvariant.NAME)
         validateTwoLinks()
     }
 
     @Test(groups = ["aim.adl.addURL"], dependsOnGroups = ["aim.adl.addName"])
     private fun idempotentAddURL() {
+        val filename = "add_url.csv"
         prepFile(
             connection.qualifiedName,
             LINK_NAME3,
             LINK_URL3,
+            filename,
         )
-        importCsv(LinkIdempotencyInvariant.URL)
+        importCsv(filename, LinkIdempotencyInvariant.URL)
         validateThreeLinks()
     }
 
-    private fun importCsv(idempotency: LinkIdempotencyInvariant) {
+    private fun importCsv(
+        filename: String,
+        idempotency: LinkIdempotencyInvariant,
+    ) {
         runCustomPackage(
             AssetImportCfg(
-                assetsFile = Paths.get(testDirectory, testFile).toString(),
+                assetsFile = Paths.get(testDirectory, filename).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsFailOnErrors = false,
                 assetsLinkIdempotency = idempotency.value,
