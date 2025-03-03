@@ -19,10 +19,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-private const val LINK_NAME = "HP"
-
-private const val LINK_URL = "https://hp.com"
-
+private const val LINK_NAME = "Example"
+private const val LINK_URL = "https://example.com"
 private const val DB_NAME = "DB"
 
 /**

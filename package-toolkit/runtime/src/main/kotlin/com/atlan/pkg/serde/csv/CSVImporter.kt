@@ -8,6 +8,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.fields.AtlanField
 import com.atlan.model.fields.SearchableField
 import com.atlan.pkg.PackageContext
@@ -41,6 +42,7 @@ import java.util.stream.Stream
  * @param atlanTagHandling how to handle any Atlan tag associations (default: replace them, for backwards compatibility)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param linkIdempotency how to avoid potential duplicate Links on assets, for example by treating their URL as unique or their name as unique
  */
 abstract class CSVImporter(
     protected val ctx: PackageContext<*>,
@@ -57,6 +59,7 @@ abstract class CSVImporter(
     protected val atlanTagHandling: AtlanTagHandling = AtlanTagHandling.REPLACE,
     protected val tableViewAgnostic: Boolean = false,
     protected val fieldSeparator: Char = ',',
+    protected val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
 ) : AssetGenerator,
     RowPreprocessor {
     /** {@inheritDoc} */
@@ -90,6 +93,7 @@ abstract class CSVImporter(
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
+            linkIdempotency,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.preprocess(this, logger, outputFile, outputHeaders)
@@ -114,6 +118,7 @@ abstract class CSVImporter(
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
+            linkIdempotency,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(ctx, this, batchSize, logger, columnsToSkip)

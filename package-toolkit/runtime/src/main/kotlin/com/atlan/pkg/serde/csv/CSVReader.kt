@@ -9,6 +9,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
@@ -39,6 +40,7 @@ import java.util.concurrent.atomic.AtomicLong
  * @param creationHandling when allowing assets to be created, how they should be created (full or partial)
  * @param tableViewAgnostic if true, tables and views will be treated interchangeably (an asset in the batch marked as a table will attempt to match a view if not found as a table, and vice versa)
  * @param fieldSeparator character to use to separate fields (for example ',' or ';')
+ * @param linkIdempotency how to avoid potential duplicate Links on assets, for example by treating their URL as unique or their name as unique
  */
 class CSVReader
     @JvmOverloads
@@ -52,6 +54,7 @@ class CSVReader
         private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
         private val tableViewAgnostic: Boolean = false,
         fieldSeparator: Char = ',',
+        private val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
     ) : Closeable {
         private val reader: CsvReader<CsvRecord>
         private val counter: CsvReader<CsvRecord>
@@ -272,6 +275,7 @@ class CSVReader
                                 totalRelated,
                                 logger,
                                 batchSize,
+                                linkIdempotency,
                             )
                         } else {
                             logger.info { " ... skipped related asset as primary asset was skipped (above)." }

@@ -164,6 +164,16 @@ uiConfig {
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
         }
+        ["glossaries_link_idempotency"] = new Radio {
+          title = "Linked resource idempotency"
+          required = false
+          possibleValues {
+            ["url"] = "URL"
+            ["name"] = "Name"
+          }
+          default = "url"
+          helpText = "How link updates should be determined: by unique URL or by unique name."
+        }
       }
     }
     ["Data products"] {
@@ -275,6 +285,16 @@ uiConfig {
           }
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
+        ["data_products_link_idempotency"] = new Radio {
+          title = "Linked resource idempotency"
+          required = false
+          possibleValues {
+            ["url"] = "URL"
+            ["name"] = "Name"
+          }
+          default = "url"
+          helpText = "How link updates should be determined: by unique URL or by unique name."
         }
       }
     }
@@ -511,6 +531,16 @@ uiConfig {
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
         }
+        ["assets_link_idempotency"] = new Radio {
+          title = "Linked resource idempotency"
+          required = false
+          possibleValues {
+            ["url"] = "URL"
+            ["name"] = "Name"
+          }
+          default = "url"
+          helpText = "How link updates should be determined: by unique URL or by unique name."
+        }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details?"
           required = false
@@ -546,6 +576,7 @@ uiConfig {
         "assets_cm_handling"
         "assets_tag_handling"
         "assets_batch_size"
+        "assets_link_idempotency"
       }
     }
     new UIRule {
@@ -557,6 +588,7 @@ uiConfig {
         "glossaries_cm_handling"
         "glossaries_tag_handling"
         "glossaries_batch_size"
+        "glossaries_link_idempotency"
       }
     }
     new UIRule {
@@ -568,6 +600,7 @@ uiConfig {
         "data_products_cm_handling"
         "data_products_tag_handling"
         "data_products_batch_size"
+        "data_products_link_idempotency"
       }
     }
     new UIRule {

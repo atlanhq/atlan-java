@@ -11,6 +11,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.model.Credential
 import com.atlan.pkg.objectstore.ADLSCredential
@@ -587,6 +588,23 @@ object Utils {
             default
         } else {
             AtlanTagHandling.fromValue(semantic.lowercase()) ?: default
+        }
+
+    /**
+     * Calculate the link idempotency invariant from a string.
+     *
+     * @param invariant string input for the invariant from the workflow setup
+     * @param default default invariant to use if no value was specified
+     * @return enumerated invariant
+     */
+    fun getLinkIdempotency(
+        invariant: String?,
+        default: LinkIdempotencyInvariant,
+    ): LinkIdempotencyInvariant =
+        if (invariant == null) {
+            default
+        } else {
+            LinkIdempotencyInvariant.fromValue(invariant.lowercase()) ?: default
         }
 
     /**

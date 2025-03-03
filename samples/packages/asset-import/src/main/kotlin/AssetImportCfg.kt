@@ -29,6 +29,7 @@ data class AssetImportCfg(
     @JsonProperty("glossaries_batch_size") val glossariesBatchSize: Number = 20,
     @JsonProperty("glossaries_cm_handling") val glossariesCmHandling: String? = null,
     @JsonProperty("glossaries_tag_handling") val glossariesTagHandling: String? = null,
+    @JsonProperty("glossaries_link_idempotency") val glossariesLinkIdempotency: String? = null,
     @JsonProperty("data_products_file") val dataProductsFile: String = "",
     @JsonProperty("data_products_prefix") val dataProductsPrefix: String = "",
     @JsonProperty("data_products_key") val dataProductsKey: String = "",
@@ -42,6 +43,7 @@ data class AssetImportCfg(
     @JsonProperty("data_products_batch_size") val dataProductsBatchSize: Number = 20,
     @JsonProperty("data_products_cm_handling") val dataProductsCmHandling: String? = null,
     @JsonProperty("data_products_tag_handling") val dataProductsTagHandling: String? = null,
+    @JsonProperty("data_products_link_idempotency") val dataProductsLinkIdempotency: String? = null,
     @JsonProperty("tags_file") val tagsFile: String = "",
     @JsonProperty("tags_prefix") val tagsPrefix: String = "",
     @JsonProperty("tags_key") val tagsKey: String = "",
@@ -69,5 +71,6 @@ data class AssetImportCfg(
     @JsonProperty("assets_batch_size") val assetsBatchSize: Number = 20,
     @JsonProperty("assets_cm_handling") val assetsCmHandling: String? = null,
     @JsonProperty("assets_tag_handling") val assetsTagHandling: String? = null,
+    @JsonProperty("assets_link_idempotency") val assetsLinkIdempotency: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
 ) : CustomConfig()
