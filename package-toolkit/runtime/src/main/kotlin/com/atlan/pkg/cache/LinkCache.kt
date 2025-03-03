@@ -105,6 +105,8 @@ class LinkCache(
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = Link.select(client).count()
+        byAssetGuid.clear()
+        placeholderToRandom.clear()
         logger.info { "Caching all $count links, up-front..." }
         Link
             .select(client)
