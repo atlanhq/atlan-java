@@ -116,6 +116,7 @@ class NestedColumnsTest : PackageTest("nc") {
             Column.SUB_TYPE,
             Column.ORDER,
             Column.NESTED_COLUMN_ORDER,
+            Column.CUSTOM_ATTRIBUTES,
         )
 
     @Test
@@ -218,6 +219,11 @@ class NestedColumnsTest : PackageTest("nc") {
         val found = response.assets
         assertEquals(1, found.size)
         val col = found[0] as Column
+        assertNotNull(col.customAttributes)
+        assertEquals(2, col.customAttributes.size)
+        assertEquals(setOf("column_mode", "is_self_referencing"), col.customAttributes.keys)
+        assertEquals("NULLABLE", col.customAttributes["column_mode"])
+        assertEquals("NO", col.customAttributes["is_self_referencing"])
         val column = Column.get(client, col.guid)
         assertNotNull(column)
         assertNotNull(column.customAttributes)
