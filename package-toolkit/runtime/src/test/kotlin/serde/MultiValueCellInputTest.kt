@@ -11,6 +11,7 @@ import com.atlan.model.typedefs.AttributeDef
 import com.atlan.model.typedefs.AttributeDefOptions
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.getLogger
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
 import java.util.SortedSet
@@ -20,6 +21,8 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class MultiValueCellInputTest {
+    private val logger = getLogger(this.javaClass.name)
+
     companion object {
         private val config = Utils.parseConfig<MockConfig>("{}", "{}")
         private val ctx = PackageContext(config, MockAtlanTenant.client, true)
@@ -33,40 +36,40 @@ class MultiValueCellInputTest {
 
     @Test
     fun testEmpty() {
-        val result = CellXformer.decode(ctx, Asset::class.java, EMPTY, SortedSet::class.java, AtlanTag::class.java, "atlanTags")
+        val result = CellXformer.decode(ctx, Asset::class.java, EMPTY, SortedSet::class.java, AtlanTag::class.java, "atlanTags", logger)
         assertNull(result)
     }
 
     @Test
     fun testNull() {
-        val result = CellXformer.decode(ctx, Asset::class.java, NULL, SortedSet::class.java, AtlanTag::class.java, "atlanTags")
+        val result = CellXformer.decode(ctx, Asset::class.java, NULL, SortedSet::class.java, AtlanTag::class.java, "atlanTags", logger)
         assertNull(result)
     }
 
     @Test
     fun testOneValue() {
-        val result = CellXformer.decode(ctx, Asset::class.java, ONE_VALUE, SortedSet::class.java, AtlanTag::class.java, "atlanTags")
+        val result = CellXformer.decode(ctx, Asset::class.java, ONE_VALUE, SortedSet::class.java, AtlanTag::class.java, "atlanTags", logger)
         assertTrue(result is Collection<*>)
         assertTrue(result.isEmpty())
     }
 
     @Test
     fun testMultiValueN() {
-        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_N, SortedSet::class.java, AtlanTag::class.java, "atlanTags")
+        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_N, SortedSet::class.java, AtlanTag::class.java, "atlanTags", logger)
         assertTrue(result is Collection<*>)
         assertTrue(result.isEmpty())
     }
 
     @Test
     fun testMultiValueRN() {
-        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_RN, SortedSet::class.java, AtlanTag::class.java, "atlanTags")
+        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_RN, SortedSet::class.java, AtlanTag::class.java, "atlanTags", logger)
         assertTrue(result is Collection<*>)
         assertTrue(result.isEmpty())
     }
 
     @Test
     fun testMultiValueWithNewlines() {
-        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_WITH_NEWLINES, List::class.java, String::class.java, "Custom::Metadata")
+        val result = CellXformer.decode(ctx, Asset::class.java, MULTI_VALUE_WITH_NEWLINES, List::class.java, String::class.java, "Custom::Metadata", logger)
         assertTrue(result is List<*>)
         assertTrue(result.isNotEmpty())
         assertEquals("Here's something\nwith a newline.", result[0])
