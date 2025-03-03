@@ -163,14 +163,16 @@ object AssetRefXformer {
                                             found = true
                                             break
                                         } else {
-                                            // If the name has changed, update the name on the existing link
+                                            // If the name has changed, update the name AND qualifiedName on the existing link
                                             logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
                                             update =
-                                                Link
-                                                    .updater(link.qualifiedName, related.name)
-                                                    .link(link.link)
-                                                    .nullFields(related.nullFields)
-                                                    .build()
+                                                getLinkWithPotentialNewQN(
+                                                    ctx,
+                                                    from,
+                                                    link,
+                                                    related,
+                                                    logger,
+                                                )
                                             break
                                         }
                                     }
@@ -184,14 +186,16 @@ object AssetRefXformer {
                                             found = true
                                             break
                                         } else {
-                                            // If the URL has changed, update the URL on the existing link
+                                            // If the URL has changed, update the URL on the existing link (and ensure qualifiedName is idempotent)
                                             logger.debug { "URL changed from: ${link.link} to ${related.link} with qualifiedName: ${link.qualifiedName}" }
                                             update =
-                                                Link
-                                                    .updater(link.qualifiedName, link.name)
-                                                    .link(related.link)
-                                                    .nullFields(related.nullFields)
-                                                    .build()
+                                                getLinkWithPotentialNewQN(
+                                                    ctx,
+                                                    from,
+                                                    link,
+                                                    related,
+                                                    logger,
+                                                )
                                             break
                                         }
                                     }
@@ -218,6 +222,36 @@ object AssetRefXformer {
                 }
             }
         }
+    }
+
+    private fun getLinkWithPotentialNewQN(
+        ctx: PackageContext<*>,
+        from: Asset,
+        original: Link,
+        updated: Link,
+        logger: KLogger,
+    ): Link {
+        val guidToUpdate =
+            if (original.guid.startsWith("-")) {
+                // If we have a placeholder GUID, we need to actually look up the link to resolve a real GUID
+                try {
+                    val resolved = Link.get(ctx.client, original.qualifiedName)
+                    // If we get a real GUID, then cache it again
+                    ctx.linkCache.replace(original.guid, resolved)
+                    resolved.guid
+                } catch (e: Exception) {
+                    logger.warn { "Unable to resolve link to a real GUID, falling back to placeholder (may cause duplicates)." }
+                    original.guid
+                }
+            } else {
+                original.guid
+            }
+        return Link
+            .creator(from, updated.name, updated.link, true)
+            .guid(guidToUpdate) // Note: this should allow the qualifiedName to be updated
+            .nullFields(updated.nullFields)
+            .status(AtlanStatus.ACTIVE)
+            .build()
     }
 
     /**
