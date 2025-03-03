@@ -11,6 +11,8 @@ import com.atlan.model.core.AtlanTag
 import com.atlan.model.core.AtlanTag.AtlanTagBuilder
 import com.atlan.model.structs.SourceTagAttachment
 import com.atlan.model.structs.SourceTagAttachmentValue
+import com.atlan.pkg.serde.FieldSerde.FAIL_ON_ERRORS
+import mu.KLogger
 
 object AtlanTagXformer {
     private const val SETTINGS_DELIMITER = ">>"
@@ -49,14 +51,26 @@ object AtlanTagXformer {
     fun decode(
         client: AtlanClient,
         atlanTag: String,
+        logger: KLogger,
     ): AtlanTag? =
         if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
             val builder = AtlanTag.builder()
             val typeName = decodeAttributes(client, tokens[0], builder)
-            builder.typeName(typeName)
-            decodePropagation(tokens, builder)
-            builder.build()
+            try {
+                client.atlanTagCache.getIdForName(typeName)
+                builder.typeName(typeName)
+                decodePropagation(tokens, builder)
+                builder.build()
+            } catch (e: NotFoundException) {
+                if (FAIL_ON_ERRORS.get()) {
+                    throw e
+                } else {
+                    logger.warn { "Unable to find specified tag, will skip associating it: $typeName" }
+                    logger.debug(e) { "Full stack trace:" }
+                }
+                null
+            }
         } else {
             null
         }

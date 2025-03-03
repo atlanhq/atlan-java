@@ -15,14 +15,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 /**
- * Test import of an invalid tag value.
+ * Test import of an invalid custom metadata attribute.
  */
-class InvalidTagTest : PackageTest("it") {
+class InvalidCustomMetadataTest : PackageTest("icm") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val table = makeUnique("t1")
 
-    private val testFile = "invalid_tag.csv"
+    private val testFile = "invalid_cm.csv"
 
     private val files =
         listOf(
@@ -77,13 +77,13 @@ class InvalidTagTest : PackageTest("it") {
                 )
             }
         assertEquals(
-            "ATLAN-JAVA-404-028 Object in tag cache with name NON_EXISTENT_TAG does not exist. Suggestion: Verify the object name provided is a valid object name for the specified cache.",
+            "ATLAN-JAVA-404-028 Object in cm cache with name NON_EXISTENT does not exist. Suggestion: Verify the object name provided is a valid object name for the specified cache.",
             exception.message,
         )
     }
 
     @Test
-    fun runsAndSkipsTag() {
+    fun runsAndSkipsCustomMetadata() {
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
@@ -92,7 +92,7 @@ class InvalidTagTest : PackageTest("it") {
             ),
             Importer::main,
         )
-        // TODO: confirm that the table is created, but no tag associated to it
+        // TODO: confirm that the table is created, but no custom metadata loaded to it
     }
 
     @Test

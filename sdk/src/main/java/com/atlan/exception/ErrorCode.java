@@ -472,13 +472,13 @@ public enum ErrorCode implements ExceptionMessageSet {
     ID_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-028",
-            "Object with name {0} does not exist.",
-            "Verify the object name provided is a valid object name."),
+            "Object in {0} cache with name {1} does not exist.",
+            "Verify the object name provided is a valid object name for the specified cache."),
     NAME_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-029",
-            "Object with internal ID {0} does not exist.",
-            "Verify the internal ID provided is a valid internal ID."),
+            "Object in {0} cache with internal ID {1} does not exist.",
+            "Verify the internal ID provided is a valid internal ID for the specified cache."),
     ID_NOT_FOUND_BY_QUALIFIED_NAME(
             404,
             "ATLAN-JAVA-404-030",
@@ -497,8 +497,8 @@ public enum ErrorCode implements ExceptionMessageSet {
     ID_NOT_FOUND_BY_SID(
             404,
             "ATLAN-JAVA-404-033",
-            "Object with secondary name {0} does not exist.",
-            "Verify the object name provided is a valid secondary object name."),
+            "Object in {0} cache with secondary name {1} does not exist.",
+            "Verify the object name provided is a valid secondary object name for the specified cache."),
 
     CONFLICT_PASSTHROUGH(
             409,
