@@ -33,7 +33,7 @@ rocksdb = "9.10.0"
 jetty = "12.0.16"
 netty = "4.1.119.Final"
 otel = "1.47.0"
-otel-instrumentation = "2.13.2-alpha"
+otel-instrumentation = "2.13.3-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
