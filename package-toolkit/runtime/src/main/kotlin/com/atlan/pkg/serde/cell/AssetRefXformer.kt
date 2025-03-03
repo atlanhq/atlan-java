@@ -12,6 +12,7 @@ import com.atlan.model.assets.IModel
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
 import com.atlan.model.enums.AtlanStatus
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.serde.Serde
@@ -121,6 +122,7 @@ object AssetRefXformer {
      * @param totalRelated the static total number of relationships anticipated
      * @param logger through which to log progress
      * @param batchSize maximum number of relationships / assets to create per API call
+     * @param linkIdempotency how to determine whether a Link should be updated vs created (to avoid duplicates)
      */
     fun buildRelated(
         ctx: PackageContext<*>,
@@ -131,6 +133,7 @@ object AssetRefXformer {
         totalRelated: AtomicLong,
         logger: KLogger,
         batchSize: Int,
+        linkIdempotency: LinkIdempotencyInvariant,
     ) {
         val totalCount = totalRelated.get()
         relatedAssets.forEach { (_, relatives) ->
@@ -150,23 +153,52 @@ object AssetRefXformer {
                         var found = false
                         var update: Link? = null
                         for (link in existingLinks) {
-                            if (link.link == related.link) {
-                                logger.debug { "Found matching link for: ${link.link}" }
-                                if (link.name == related.name) {
-                                    // If the link is identical, skip it
-                                    logger.debug { "Found matching name: ${link.name}" }
-                                    found = true
-                                    break
-                                } else {
-                                    // If the name has changed, update the name on the existing link
-                                    logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
-                                    update =
-                                        Link
-                                            .updater(link.qualifiedName, related.name)
-                                            .link(link.link)
-                                            .nullFields(related.nullFields)
-                                            .build()
-                                    break
+                            when (linkIdempotency) {
+                                LinkIdempotencyInvariant.URL -> {
+                                    if (link.link == related.link) {
+                                        logger.debug { "Found matching link for: ${link.link}" }
+                                        if (link.name == related.name) {
+                                            // If the link is identical, skip it
+                                            logger.debug { "Found matching name: ${link.name}" }
+                                            found = true
+                                            break
+                                        } else {
+                                            // If the name has changed, update the name AND qualifiedName on the existing link
+                                            logger.debug { "Name changed from : ${link.name} to ${related.name} with qualifiedName: ${link.qualifiedName}" }
+                                            update =
+                                                getLinkWithPotentialNewQN(
+                                                    ctx,
+                                                    from,
+                                                    link,
+                                                    related,
+                                                    logger,
+                                                )
+                                            break
+                                        }
+                                    }
+                                }
+                                LinkIdempotencyInvariant.NAME -> {
+                                    if (link.name == related.name) {
+                                        logger.debug { "Found matching name for: ${link.name}" }
+                                        if (link.link == related.link) {
+                                            // If the link is identical, skip it
+                                            logger.debug { "Found matching link: ${link.link}" }
+                                            found = true
+                                            break
+                                        } else {
+                                            // If the URL has changed, update the URL on the existing link (and ensure qualifiedName is idempotent)
+                                            logger.debug { "URL changed from: ${link.link} to ${related.link} with qualifiedName: ${link.qualifiedName}" }
+                                            update =
+                                                getLinkWithPotentialNewQN(
+                                                    ctx,
+                                                    from,
+                                                    link,
+                                                    related,
+                                                    logger,
+                                                )
+                                            break
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -190,6 +222,36 @@ object AssetRefXformer {
                 }
             }
         }
+    }
+
+    private fun getLinkWithPotentialNewQN(
+        ctx: PackageContext<*>,
+        from: Asset,
+        original: Link,
+        updated: Link,
+        logger: KLogger,
+    ): Link {
+        val guidToUpdate =
+            if (original.guid.startsWith("-")) {
+                // If we have a placeholder GUID, we need to actually look up the link to resolve a real GUID
+                try {
+                    val resolved = Link.get(ctx.client, original.qualifiedName)
+                    // If we get a real GUID, then cache it again
+                    ctx.linkCache.replace(original.guid, resolved)
+                    resolved.guid
+                } catch (e: Exception) {
+                    logger.warn { "Unable to resolve link to a real GUID, falling back to placeholder (may cause duplicates)." }
+                    original.guid
+                }
+            } else {
+                original.guid
+            }
+        return Link
+            .creator(from, updated.name, updated.link, true)
+            .guid(guidToUpdate) // Note: this should allow the qualifiedName to be updated
+            .nullFields(updated.nullFields)
+            .status(AtlanStatus.ACTIVE)
+            .build()
     }
 
     /**

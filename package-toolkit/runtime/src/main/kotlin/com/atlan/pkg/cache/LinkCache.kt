@@ -21,6 +21,7 @@ class LinkCache(
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val byAssetGuid: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
+    private val placeholderToRandom: MutableMap<String, String> = ConcurrentHashMap()
 
     private val includesOnResults: List<AtlanField> = listOf(Link.NAME, Link.STATUS, Link.LINK, Link.ASSET)
     private val includesOnRelations: List<AtlanField> = listOf(Asset.GUID)
@@ -48,7 +49,14 @@ class LinkCache(
      */
     fun add(link: Link) {
         link.asset?.let {
-            val linkId = if (link.guid.startsWith("-")) UUID.randomUUID().toString() else link.guid
+            val linkId =
+                if (link.guid.startsWith("-")) {
+                    val uuid = UUID.randomUUID().toString()
+                    placeholderToRandom[link.guid] = uuid
+                    uuid
+                } else {
+                    link.guid
+                }
             val ref = (link.asset as Asset).trimToReference()
             val url = link.link
             val assetGuid = link.asset.guid
@@ -68,12 +76,37 @@ class LinkCache(
         }
     }
 
+    /**
+     * Replace a link in the cache (one we have resolved its real GUID).
+     *
+     * @param originalGuid the original (placeholder) GUID to replace
+     * @param link to replace in the cache
+     */
+    fun replace(
+        originalGuid: String,
+        link: Link,
+    ) {
+        link.asset?.let {
+            val assetGuid = link.asset.guid
+            val linkId =
+                if (originalGuid.startsWith("-")) {
+                    placeholderToRandom.getOrDefault(originalGuid, link.guid)
+                } else {
+                    link.guid
+                }
+            byAssetGuid[assetGuid]?.remove(linkId)
+            add(link)
+        }
+    }
+
     /** {@inheritDoc}  */
     override fun getIdentityForAsset(asset: Link): String = "${asset.name}=${asset.link}@${asset.asset.guid}"
 
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = Link.select(client).count()
+        byAssetGuid.clear()
+        placeholderToRandom.clear()
         logger.info { "Caching all $count links, up-front..." }
         Link
             .select(client)

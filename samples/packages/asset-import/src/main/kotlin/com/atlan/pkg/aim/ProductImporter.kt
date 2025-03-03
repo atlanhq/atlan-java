@@ -8,6 +8,7 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
@@ -49,6 +50,7 @@ class ProductImporter(
         typeNameFilter = DataProduct.TYPE_NAME,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
         trackBatches = ctx.config.trackBatches,
+        linkIdempotency = Utils.getLinkIdempotency(ctx.config.dataProductsLinkIdempotency, LinkIdempotencyInvariant.URL),
     ) {
     private val cache = ctx.dataProductCache
 

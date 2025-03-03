@@ -94,7 +94,7 @@ abstract class AssetCache<T : Asset>(
             val identity = name ?: getIdentityForAsset(asset)
             super.cache(id, identity, asset)
             ignore.remove(id)
-            ignore.remove(name)
+            ignore.remove(identity)
         }
     }
 

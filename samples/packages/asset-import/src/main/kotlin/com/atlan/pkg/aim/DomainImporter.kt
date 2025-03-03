@@ -8,6 +8,7 @@ import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
@@ -51,6 +52,7 @@ class DomainImporter(
         batchSize = ctx.config.dataProductsBatchSize.toInt(),
         trackBatches = true,
         fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
+        linkIdempotency = Utils.getLinkIdempotency(ctx.config.dataProductsLinkIdempotency, LinkIdempotencyInvariant.URL),
     ) {
     // Note: Always track batches (above) for domain importer, to ensure cache is managed
 

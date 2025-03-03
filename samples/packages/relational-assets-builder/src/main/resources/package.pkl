@@ -43,6 +43,7 @@ publishConfig = new AssetImport {
   assetsBatchSize = transferConfigInput(uiConfig, "assets_batch_size")
   assetsCmHandling = transferConfigInput(uiConfig, "assets_cm_handling")
   assetsTagHandling = transferConfigInput(uiConfig, "assets_tag_handling")
+  assetsLinkIdempotency = transferConfigInput(uiConfig, "assets_link_idempotency")
   trackBatches = transferConfigInput(uiConfig, "track_batches")
 }
 
@@ -214,6 +215,16 @@ uiConfig {
           }
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
+        ["assets_link_idempotency"] = new Radio {
+          title = "Linked resource idempotency"
+          required = false
+          possibleValues {
+            ["url"] = "URL"
+            ["name"] = "Name"
+          }
+          default = "url"
+          helpText = "How link updates should be determined: by unique URL or by unique name."
         }
         ["track_batches"] = new BooleanInput {
           title = "Track asset details"

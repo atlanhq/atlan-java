@@ -202,6 +202,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
@@ -251,6 +252,7 @@ class AssetImporter(
         tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
         trackBatches = ctx.config.trackBatches,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
+        linkIdempotency = Utils.getLinkIdempotency(ctx.config.assetsLinkIdempotency, LinkIdempotencyInvariant.URL),
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""

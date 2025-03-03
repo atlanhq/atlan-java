@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
+import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
@@ -52,6 +53,7 @@ abstract class GTCImporter(
         batchSize = ctx.config.glossariesBatchSize.toInt(),
         fieldSeparator = ctx.config.glossariesFieldSeparator[0],
         trackBatches = true,
+        linkIdempotency = Utils.getLinkIdempotency(ctx.config.glossariesLinkIdempotency, LinkIdempotencyInvariant.URL),
     ) {
     // Note: Always track batches (above) for GTC importers, to ensure cache is managed
 
