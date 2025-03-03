@@ -244,8 +244,8 @@ class CSVReader
                     logger.info { "Total assets created : $totalCreates" }
                     logger.info { "Total assets updated : $totalUpdates" }
                     logger.info { "Total assets restored: $totalRestore" }
-                    logger.info { "Total assets skipped : $totalSkipped" }
-                    logger.info { "Total assets failed  : $totalFailures" }
+                    if (totalSkipped > 0) logger.warn { "Total assets skipped : $totalSkipped" } else logger.info { "Total assets skipped : $totalSkipped" }
+                    if (totalFailures.get() > 0) logger.warn { "Total assets failed  : $totalFailures" } else logger.info { "Total assets failed  : $totalFailures" }
 
                     // Step 2: load the deferred related assets (and final-flush the main asset batches, too)
                     val totalRelated = AtomicLong(0)
@@ -295,7 +295,7 @@ class CSVReader
                     logFailures(relatedBatch, logger, totalFailuresR)
                     logger.info { "Total related assets created: $totalCreatesR" }
                     logger.info { "Total related assets updated: $totalUpdatesR" }
-                    logger.info { "Total related assets failed : $totalFailuresR" }
+                    if (totalFailuresR.get() > 0) logger.warn { "Total related assets failed : $totalFailuresR" } else logger.info { "Total related assets failed : $totalFailuresR" }
 
                     // Step 4: bulk-delete any related assets marked for removal
                     val totalToScan = searchAndDelete.size.toLong()
@@ -383,13 +383,13 @@ class CSVReader
         ) {
             if (b.failures?.isNotEmpty() == true) {
                 for (f in b.failures.entrySet()) {
-                    logger.info { "Failed batch reason: ${f.value.failureReason}" }
+                    logger.warn { "Failed batch reason: ${f.value.failureReason}" }
                     totalFailures.getAndAdd(
                         f.value.failedAssets.size
                             .toLong(),
                     )
                     for (failed in f.value.failedAssets) {
-                        logger.info {
+                        logger.warn {
                             " ... included asset: ${failed.typeName}::${failed.qualifiedName}"
                         }
                     }
@@ -402,9 +402,9 @@ class CSVReader
             logger: KLogger,
         ) {
             if (b.skipped != null && b.skipped.isNotEmpty) {
-                logger.info { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
+                logger.warn { "Skipped the following assets as they do not exist in Atlan (running in update-only mode):" }
                 b.skipped?.values()?.forEach {
-                    logger.info { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
+                    logger.warn { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
                 }
             }
         }
