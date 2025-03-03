@@ -637,8 +637,13 @@ object Utils {
         if (!html.isNullOrBlank()) {
             builder.withHTMLText("$html\n\n")
         }
-        attachments?.forEach {
-            builder.withAttachment(it.name, FileDataSource(it))
+        val overallAttachmentSize = attachments?.sumOf { it.length() } ?: 0L
+        if (overallAttachmentSize >= (30 * 1024 * 1024)) {
+            logger.warn { "Maximum attachment size for email distribution is 30 MB, which is exceeded - files will NOT be attached (total size: ${overallAttachmentSize / 1024 / 1024} MB)." }
+        } else {
+            attachments?.forEach {
+                builder.withAttachment(it.name, FileDataSource(it))
+            }
         }
         val email = builder.buildEmail()
         MailerBuilder
