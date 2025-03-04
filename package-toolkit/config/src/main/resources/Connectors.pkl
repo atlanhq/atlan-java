@@ -105,10 +105,6 @@ hidden const PRESET: Type = new {
   value = "preset"
   category = "bi"
 }
-hidden const SUPERSET: Type = new {
-  value = "superset"
-  category = "bi"
-}
 hidden const API: Type = new {
   value = "api"
   category = "API"
@@ -361,6 +357,10 @@ hidden const REDPANDA_KAFKA: Type = new {
   value = "redpanda-kafka"
   category = "eventbus"
 }
+hidden const AMAZON_MSK: Type = new {
+  value = "amazon-msk"
+  category = "eventbus"
+}
 hidden const CONFLUENT_SCHEMA_REGISTRY: Type = new {
   value = "confluent-schema-registry"
   category = "schema-registry"
@@ -385,14 +385,6 @@ hidden const SPARK: Type = new {
   value = "spark"
   category = "elt"
 }
-hidden const APPLICATION: Type = new {
-  value = "app"
-  category = "app"
-}
-hidden const CUSTOM: Type = new {
-  value = "custom"
-  category = "custom"
-}
 hidden const MPARTICLE: Type = new {
   value = "mparticle"
   category = "database"
@@ -413,25 +405,169 @@ hidden const MICROSTRATEGY: Type = new {
   value = "microstrategy"
   category = "bi"
 }
+hidden const AWS_SITE_WISE: Type = new {
+  value = "aws-sitewise"
+  category = "database"
+}
 hidden const AWS_GREENGRASS: Type = new {
   value = "aws-greengrass"
   category = "database"
 }
-hidden const AWS_SITE_WISE: Type = new {
-  value = "aws-sitewise"
-  category = "database"
+hidden const COGNITE: Type = new {
+  value = "cognite"
+  category = "SaaS"
+}
+hidden const SYNDIGO: Type = new {
+  value = "syndigo"
+  category = "SaaS"
+}
+hidden const NETEZZA: Type = new {
+  value = "netezza"
+  category = "warehouse"
+}
+hidden const AZURE_SERVICE_BUS: Type = new {
+  value = "azureservicebus"
+  category = "eventbus"
+}
+hidden const SUPERSET: Type = new {
+  value = "superset"
+  category = "bi"
 }
 hidden const PREFECT: Type = new {
   value = "prefect"
   category = "elt"
 }
-hidden const DATA_MODELING: Type = new {
-  value = "datamodeling"
+hidden const AZURE_DATA_FACTORY: Type = new {
+  value = "azure-data-factory"
+  category = "elt"
+}
+hidden const MODEL: Type = new {
+  value = "model"
   category = "database"
+}
+hidden const IICS: Type = new {
+  value = "iics"
+  category = "elt"
+}
+hidden const ABINITIO: Type = new {
+  value = "abinitio"
+  category = "elt"
+}
+hidden const SAP_S4_HANA: Type = new {
+  value = "sap-s4-hana"
+  category = "warehouse"
+}
+hidden const ANOMALO: Type = new {
+  value = "anomalo"
+  category = "data-quality"
+}
+hidden const INRIVER: Type = new {
+  value = "inriver"
+  category = "database"
+}
+hidden const IBM_DB2: Type = new {
+  value = "ibmdb2"
+  category = "database"
+}
+hidden const AZURE_ACTIVE_DIRECTORY: Type = new {
+  value = "azure-active-directory"
+  category = "SaaS"
+}
+hidden const ADOBE_EXPERIENCE_MANAGER: Type = new {
+  value = "adobe-experience-manager"
+  category = "SaaS"
+}
+hidden const ADOBE_TARGET: Type = new {
+  value = "adobe-target"
+  category = "SaaS"
+}
+hidden const APACHE_PULSAR: Type = new {
+  value = "apache-pulsar"
+  category = "eventbus"
+}
+hidden const TREASURE_DATA: Type = new {
+  value = "treasure-data"
+  category = "SaaS"
+}
+hidden const SAP_GIGYA: Type = new {
+  value = "sap-gigya"
+  category = "SaaS"
+}
+hidden const SAP_HYBRIS: Type = new {
+  value = "sap-hybris"
+  category = "SaaS"
+}
+hidden const BIGID: Type = new {
+  value = "bigid"
+  category = "SaaS"
+}
+hidden const AWS_LAMBDA: Type = new {
+  value = "aws-lambda"
+  category = "elt"
+}
+hidden const AWS_ECS: Type = new {
+  value = "aws-ecs"
+  category = "elt"
+}
+hidden const AWS_BATCH: Type = new {
+  value = "aws-batch"
+  category = "elt"
+}
+hidden const AWS_SAGEMAKER: Type = new {
+  value = "aws-sagemaker"
+  category = "elt"
+}
+hidden const SHARE_POINT: Type = new {
+  value = "share-point"
+  category = "SaaS"
+}
+hidden const RDS: Type = new {
+  value = "rds"
+  category = "warehouse"
+}
+hidden const SHARED_DRIVE: Type = new {
+  value = "shared-drive"
+  category = "ObjectStore"
+}
+hidden const UNKNOWN_CUSTOM: Type = new {
+  value = "(custom)"
+  category = "API"
+}
+hidden const APP: Type = new {
+  value = "app"
+  category = "app"
+}
+hidden const ANAPLAN: Type = new {
+  value = "anaplan"
+  category = "bi"
+}
+hidden const CUSTOM: Type = new {
+  value = "custom"
+  category = "custom"
 }
 hidden const DATAVERSE: Type = new {
   value = "dataverse"
   category = "SaaS"
+}
+hidden const COSMOS: Type = new {
+  value = "cosmos"
+  category = "database"
+}
+hidden const DOMO: Type = new {
+  value = "domo"
+  category = "bi"
+}
+hidden const COGNOS: Type = new {
+  value = "cognos"
+  category = "bi"
+}
+hidden const CRATEDB: Type = new {
+  value = "cratedb"
+  category = "database"
+}
+hidden const KX: Type = new {
+  value = "kx"
+  category = "database"
 }
 
 class Type {
