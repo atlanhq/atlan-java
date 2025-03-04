@@ -94,4 +94,4 @@ poi = [ "apache-poi", "apache-poi-ooxml" ]
 [plugins]
 shadow = { id = "com.gradleup.shadow", version = "9.0.0-beta5" }
 git-publish = { id = "org.ajoberstar.git-publish", version = "4.2.2" }
-pkl = { id = "org.pkl-lang", version = "0.28.0" }
+pkl = { id = "org.pkl-lang", version = "0.28.1" }
