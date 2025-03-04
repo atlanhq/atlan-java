@@ -165,6 +165,23 @@ public abstract class CompoundQuery {
             } else {
                 syncedTagQN = "NON_EXISTENT";
             }
+            return taggedWithValue(atlanTagName, syncedTagQN, value, directly);
+        }
+
+        /**
+         * Returns a query that will match assets that have a specific value for the specified tag
+         * (for source-synced tags).
+         *
+         * @param atlanTagName human-readable name of the Atlan tag
+         * @param sourceTagQualifiedName qualifiedName of the source tag to match (when there are multiple)
+         * @param value the tag should have to match the query
+         * @param directly when true, the asset must have the tag and value directly assigned (otherwise even propagated tags with the value will suffice)
+         * @return a query that will only match assets that have a particular value assigned for the given Atlan tag
+         * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+         */
+        public B taggedWithValue(String atlanTagName, String sourceTagQualifiedName, String value, boolean directly)
+                throws AtlanException {
+            String tagId = client.getAtlanTagCache().getSidForName(atlanTagName);
             List<SpanQuery> littleSpans = new ArrayList<>();
             littleSpans.add(
                     SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentValue"))
@@ -182,7 +199,7 @@ public abstract class CompoundQuery {
                     SpanTermQuery.of(t -> t.field("__classificationsText.text").value(tagId))
                             ._toSpanQuery());
             bigSpans.add(
-                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value(syncedTagQN))
+                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value(sourceTagQualifiedName))
                             ._toSpanQuery());
             Query span = SpanWithinQuery.of(s -> s.little(l -> l.spanNear(
                                     n -> n.clauses(littleSpans).slop(0).inOrder(true)))
