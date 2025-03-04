@@ -32,5 +32,6 @@ data class RelationalAssetsBuilderCfg(
     @JsonProperty("assets_batch_size") val assetsBatchSize: Number = 20,
     @JsonProperty("assets_cm_handling") val assetsCmHandling: String? = null,
     @JsonProperty("assets_tag_handling") val assetsTagHandling: String? = null,
+    @JsonProperty("assets_link_idempotency") val assetsLinkIdempotency: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
 ) : CustomConfig()
