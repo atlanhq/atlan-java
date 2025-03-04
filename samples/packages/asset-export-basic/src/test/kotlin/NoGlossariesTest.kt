@@ -23,7 +23,7 @@ class NoGlossariesTest : PackageTest("ng") {
         runCustomPackage(
             AssetExportBasicCfg(
                 exportScope = "ALL",
-                qnPrefix = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)?.qualifiedName!!,
+                qnPrefix = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)?.get(0)?.qualifiedName!!,
                 includeGlossaries = false,
             ),
             Exporter::main,
