@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
@@ -14,6 +15,7 @@ import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
@@ -49,9 +51,21 @@ public class SearchTest extends AtlanLiveTest {
 
     @Test(groups = {"search."})
     void findSourceSyncedAssets() throws AtlanException {
+        List<Connection> connections = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE);
+        assertNotNull(connections);
+        assertEquals(connections.size(), 1);
+        Connection snowflake = connections.get(0);
+        assertNotNull(snowflake.getQualifiedName());
         List<Asset> tables =
-                Table.select(client).taggedWithValue(EXISTING_SOURCE_SYNCED_TAG, "Highly Restricted").stream()
-                        .toList();
+                Table
+                    .select(client)
+                    .taggedWithValue(
+                        EXISTING_SOURCE_SYNCED_TAG,
+                        snowflake.getQualifiedName() + "/ANALYTICS/WIDE_WORLD_IMPORTERS",
+                        "Highly Restricted",
+                        false)
+                    .stream()
+                    .toList();
         assertNotNull(tables);
         assertFalse(tables.isEmpty());
         for (Asset one : tables) {
