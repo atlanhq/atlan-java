@@ -56,16 +56,14 @@ public class SearchTest extends AtlanLiveTest {
         assertEquals(connections.size(), 1);
         Connection snowflake = connections.get(0);
         assertNotNull(snowflake.getQualifiedName());
-        List<Asset> tables =
-                Table
-                    .select(client)
-                    .taggedWithValue(
+        List<Asset> tables = Table.select(client)
+                .taggedWithValue(
                         EXISTING_SOURCE_SYNCED_TAG,
-                        snowflake.getQualifiedName() + "/ANALYTICS/WIDE_WORLD_IMPORTERS",
+                        snowflake.getQualifiedName() + "/ANALYTICS/WIDE_WORLD_IMPORTERS/CONFIDENTIAL",
                         "Highly Restricted",
                         false)
-                    .stream()
-                    .toList();
+                .stream()
+                .toList();
         assertNotNull(tables);
         assertFalse(tables.isEmpty());
         for (Asset one : tables) {
