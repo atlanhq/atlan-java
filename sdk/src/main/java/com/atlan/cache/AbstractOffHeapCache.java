@@ -239,12 +239,9 @@ public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
             File file = backingStore.toFile();
             if (file.exists() && file.isDirectory()) {
                 deleteDirectory(backingStore);
-                log.debug(" ... cache deleted.");
-            } else {
-                log.debug(" ... cache already deleted.");
             }
         } catch (IOException e) {
-            log.info("Unable to remove backing store for off-heap cache -- leaving it behind.");
+            log.warn("Unable to remove backing store for off-heap cache -- leaving it behind.");
             log.debug("Full details: ", e);
         } finally {
             lock.writeLock().unlock();
