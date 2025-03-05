@@ -185,6 +185,14 @@ object Utils {
         System.getProperties().forEach { (k, v) ->
             logger.debug { " ... $k = $v" }
         }
+        // logClasspathDetails()
+    }
+
+    /**
+     * Output details about the class path (including ordering) of the executing JVM.
+     * (Should rarely be necessary, but here in case it is in the future.)
+     */
+    fun logClasspathDetails() {
         val classpath = System.getProperty("java.class.path")
         var count = 1
         classpath.split(separator).forEach { p ->
