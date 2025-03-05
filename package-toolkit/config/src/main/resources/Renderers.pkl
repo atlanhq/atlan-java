@@ -378,7 +378,7 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
       validate_multiselect,
       validate_connector_and_connection,
     )
-    from typing import Any, Optional, Union, Dict, List
+    from typing import Any, List, Optional, Union, Dict
     import logging.config
 
     PARENT = Path(__file__).parent
@@ -475,7 +475,9 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
             ret_val: Dict[str, Any] = {}
             for key, value in RuntimeConfig.Config.fields.items():
                 if field_value := getattr(self, key):
-                    ret_val[value["env"]] = field_value.json()
+                    ret_val[value["env"]] = field_value.json(
+                        by_alias=True, exclude_unset=True
+                    )
             return ret_val
 
     """

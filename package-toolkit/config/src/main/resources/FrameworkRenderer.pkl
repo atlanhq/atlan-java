@@ -344,6 +344,7 @@ const function getLoggingConfPy(): FileOutput = new FileOutput {
     [formatter_jsonFormatter]
     format=%(asctime)s - %(name)s - %(levelname)s - %(message)s
     class=pyatlan.utils.JsonFormatter
+
     """
 }
 
@@ -355,6 +356,7 @@ const function getRequirementsPy(): FileOutput = new FileOutput {
     opentelemetry-sdk==1.29.0
     opentelemetry-instrumentation-logging==0.50b0
     opentelemetry-exporter-otlp==1.29.0
+
     """
 }
 
@@ -364,6 +366,7 @@ const function getRequirementsDevPy(): FileOutput = new FileOutput {
     pytest
     pytest-order
     nanoid
+
     """
 }
 
@@ -388,6 +391,7 @@ const function getDockerfilePy(pkgName: String): FileOutput = new FileOutput {
 
     WORKDIR /app
     ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+
     """
 }
 
@@ -406,7 +410,7 @@ const function getConfigClassPy(m: Framework): FileOutput = new FileOutput {
         validate_multiselect,
         validate_connector_and_connection,
       )
-      from typing import Any, Optional, Union, Dict
+      from typing import Any, List, Optional, Union, Dict
       import logging.config
 
       PARENT = Path(__file__).parent
@@ -503,7 +507,9 @@ const function getConfigClassPy(m: Framework): FileOutput = new FileOutput {
               ret_val: Dict[str, Any] = {}
               for key, value in RuntimeConfig.Config.fields.items():
                   if field_value := getattr(self, key):
-                      ret_val[value["env"]] = field_value.json()
+                      ret_val[value["env"]] = field_value.json(
+                          by_alias=True, exclude_unset=True
+                      )
               return ret_val
       """
   }.join("\n")
