@@ -475,7 +475,9 @@ const function getConfigClassPy(m: Config): FileOutput = new FileOutput {
             ret_val: Dict[str, Any] = {}
             for key, value in RuntimeConfig.Config.fields.items():
                 if field_value := getattr(self, key):
-                    ret_val[value["env"]] = field_value.json(by_alias=True, exclude_unset=True)
+                    ret_val[value["env"]] = field_value.json(
+                        by_alias=True, exclude_unset=True
+                    )
             return ret_val
 
     """
