@@ -213,7 +213,7 @@ class CSVReader
                                 .quoteCharacter('"')
                                 .skipEmptyLines(true)
                                 .ignoreDifferentFieldCount(false)
-                                .build(CsvRecordHandler(), f)
+                                .build(CsvRecordHandler.of(), f)
                         reader.stream().forEach { r: CsvRecord ->
                             val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)
                             if (assets != null) {

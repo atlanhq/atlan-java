@@ -1,0 +1,2 @@
+qualifiedName,typeName,name,atlanTags,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName
+{{CONNECTION}}/{{DB}},Database,{{DB}},,snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB}},{{DB}}
