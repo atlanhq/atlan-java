@@ -14,6 +14,7 @@ import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.AtlanTagHandling;
 import com.atlan.model.lineage.LineageListRequest;
 import com.atlan.model.lineage.LineageListResponse;
 import com.atlan.model.search.*;
@@ -150,7 +151,19 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse save(List<Asset> values) throws AtlanException {
-        return save(values, null);
+        return save(values, (RequestOptions) null);
+    }
+
+    /**
+     * Creates / updates the assets provided, entirely ignoring any custom metadata.
+     *
+     * @param values assets to upsert
+     * @param tagHandling semantic for how tags should be managed as part of this save request
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse save(List<Asset> values, AtlanTagHandling tagHandling) throws AtlanException {
+        return save(values, tagHandling, null);
     }
 
     /**
@@ -248,7 +261,22 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse save(List<Asset> values, RequestOptions options) throws AtlanException {
-        String tagParams = getTagParameters(values);
+        AtlanTagHandling tagHanding = getTagHandling(values);
+        return save(values, tagHanding, options);
+    }
+
+    /**
+     * Creates / updates the assets provided, entirely ignoring any custom metadata.
+     *
+     * @param values assets to upsert
+     * @param tagHandling semantic for how tags should be managed as part of this save request
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse save(List<Asset> values, AtlanTagHandling tagHandling, RequestOptions options)
+            throws AtlanException {
+        String tagParams = getTagParameters(tagHandling);
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
@@ -285,11 +313,11 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
-     * Calculate how we should apply tags (semantically) and return the correct query parameters to do so.
+     * Calculate how we should apply tags (semantically) across the provided assets.
      * @param values the set of assets that (possibly) have tags being managed
-     * @return the query parameters set to manage the tags as requested
+     * @return the overall tag handling semantic to use
      */
-    private String getTagParameters(List<Asset> values) {
+    private AtlanTagHandling getTagHandling(List<Asset> values) {
         boolean appendTags = false;
         boolean replaceTags = false;
         for (int i = 0; i < values.size() && !(appendTags && replaceTags); i++) {
@@ -308,13 +336,28 @@ public class AssetEndpoint extends AtlasEndpoint {
             log.warn(
                     "Provided list of assets includes mixture of tag semantics, falling back to append-only for safety. To avoid this, ensure you send the same mode for all assets in the list.");
         }
-        String tagParams;
+        AtlanTagHandling atlanTagHandling;
         if (appendTags) {
-            tagParams = "replaceTags=false&appendTags=true";
+            atlanTagHandling = AtlanTagHandling.APPEND;
         } else if (replaceTags) {
-            tagParams = "replaceTags=true&appendTags=false";
+            atlanTagHandling = AtlanTagHandling.REPLACE;
         } else {
-            tagParams = "replaceTags=false&appendTags=false";
+            atlanTagHandling = AtlanTagHandling.IGNORE;
+        }
+        return atlanTagHandling;
+    }
+
+    /**
+     * Calculate the query parameters to apply for tag handling.
+     * @param atlanTagHandling the semantic to use for tag handling
+     * @return the query parameters set to manage the tags as requested
+     */
+    private String getTagParameters(AtlanTagHandling atlanTagHandling) {
+        String tagParams;
+        switch (atlanTagHandling) {
+            case APPEND, REMOVE -> tagParams = "replaceTags=false&appendTags=true";
+            case REPLACE -> tagParams = "replaceTags=true&appendTags=false";
+            default -> tagParams = "replaceTags=false&appendTags=false";
         }
         return tagParams;
     }
@@ -370,7 +413,21 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse saveMergingCM(List<Asset> values) throws AtlanException {
-        return saveMergingCM(values, null);
+        return saveMergingCM(values, (RequestOptions) null);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and merging any
+     * provided custom metadata values (but leaving any existing custom metadata values as-is).
+     *
+     * @param values assets to upsert
+     * @param atlanTagHandling the semantic to use for tag handling
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveMergingCM(List<Asset> values, AtlanTagHandling atlanTagHandling)
+            throws AtlanException {
+        return saveMergingCM(values, atlanTagHandling, null);
     }
 
     /**
@@ -383,7 +440,23 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse saveMergingCM(List<Asset> values, RequestOptions options) throws AtlanException {
-        String tagParams = getTagParameters(values);
+        AtlanTagHandling tagHandling = getTagHandling(values);
+        return saveMergingCM(values, tagHandling, options);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and merging any
+     * provided custom metadata values (but leaving any existing custom metadata values as-is).
+     *
+     * @param values assets to upsert
+     * @param atlanTagHandling the semantic to use for tag handling
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveMergingCM(
+            List<Asset> values, AtlanTagHandling atlanTagHandling, RequestOptions options) throws AtlanException {
+        String tagParams = getTagParameters(atlanTagHandling);
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
@@ -451,7 +524,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse saveReplacingCM(List<Asset> values) throws AtlanException {
-        return saveReplacingCM(values, null);
+        return saveReplacingCM(values, (RequestOptions) null);
     }
 
     /**
@@ -465,7 +538,39 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AsyncCreationResponse saveReplacingCM(List<Asset> values, RequestOptions options) throws AtlanException {
-        String tagParams = getTagParameters(values);
+        AtlanTagHandling tagHandling = getTagHandling(values);
+        return saveReplacingCM(values, tagHandling, options);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and replacing all
+     * custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+     * on the asset that is not also provided in the request).
+     *
+     * @param values assets to upsert
+     * @param atlanTagHandling the semantic to use for tag handling
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveReplacingCM(List<Asset> values, AtlanTagHandling atlanTagHandling)
+            throws AtlanException {
+        return saveReplacingCM(values, atlanTagHandling, null);
+    }
+
+    /**
+     * Creates / updates any assets, including the assets' Atlan tags and replacing all
+     * custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+     * on the asset that is not also provided in the request).
+     *
+     * @param values assets to upsert
+     * @param atlanTagHandling the semantic to use for tag handling
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AsyncCreationResponse saveReplacingCM(
+            List<Asset> values, AtlanTagHandling atlanTagHandling, RequestOptions options) throws AtlanException {
+        String tagParams = getTagParameters(atlanTagHandling);
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),

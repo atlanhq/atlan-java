@@ -557,9 +557,9 @@ public class AssetBatch implements AtlanCloseable {
             if (!revised.isEmpty()) {
                 try {
                     response = switch (customMetadataHandling) {
-                        case IGNORE -> client.assets.save(revised);
-                        case OVERWRITE -> client.assets.saveReplacingCM(revised);
-                        case MERGE -> client.assets.saveMergingCM(revised);};
+                        case IGNORE -> client.assets.save(revised, atlanTagHandling);
+                        case OVERWRITE -> client.assets.saveReplacingCM(revised, atlanTagHandling);
+                        case MERGE -> client.assets.saveMergingCM(revised, atlanTagHandling);};
                     if (response != null) {
                         response.block();
                     }
