@@ -2,7 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
@@ -45,14 +44,14 @@ object UserXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    ctx.client.userCache.getIdForName(userRef, ctx.startTS)
+                    ctx.client.userCache.getIdForName(userRef)
                     return userRef
                 } catch (e: NotFoundException) {
                     try {
                         // Try again, this time looking up the user by email
-                        val idFromEmail = ctx.client.userCache.getIdForEmail(userRef, ctx.startTS)
+                        val idFromEmail = ctx.client.userCache.getIdForEmail(userRef)
                         // And if found by email, return the username (since that's what we require)
-                        return ctx.client.userCache.getNameForId(idFromEmail, ctx.startTS)
+                        return ctx.client.userCache.getNameForId(idFromEmail)
                     } catch (e: NotFoundException) {
                         throw NoSuchElementException("Username / email address is not known to Atlan (in $fieldName): $userRef", e)
                     }

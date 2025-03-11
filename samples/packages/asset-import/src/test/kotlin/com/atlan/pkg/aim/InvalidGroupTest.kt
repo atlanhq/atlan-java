@@ -65,7 +65,7 @@ class InvalidGroupTest : PackageTest("ig") {
     @Test
     fun failsWithMeaningfulError() {
         val exception =
-            assertFailsWith<IllegalArgumentException> {
+            assertFailsWith<NoSuchElementException> {
                 runCustomPackage(
                     AssetImportCfg(
                         assetsFile = Paths.get(testDirectory, testFile).toString(),
@@ -77,7 +77,7 @@ class InvalidGroupTest : PackageTest("ig") {
             }
         assertEquals(
             """
-            No matching value found for class com.atlan.model.enums.CertificateStatus (in field certificateStatus): CERTIFIED
+            Group name / alias is not known to Atlan (in adminGroups): NON_EXISTENT_GROUP
             """.trimIndent(),
             exception.message,
         )
