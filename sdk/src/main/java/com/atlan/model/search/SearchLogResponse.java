@@ -485,7 +485,6 @@ public class SearchLogResponse extends ApiResource implements Iterable<SearchLog
     private static class SearchLogResponseBulkIterator implements Iterator<SearchLogEntry> {
 
         private SearchLogResponse response;
-        // TODO: Consider optimizing memory using UUID.fromString() to store UUIDs rather than Strings
         private final Set<Integer> processedHashes;
         private int i;
 

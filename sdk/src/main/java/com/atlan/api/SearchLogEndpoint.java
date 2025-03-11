@@ -52,7 +52,7 @@ public class SearchLogEndpoint extends AtlasEndpoint {
             for (SortOptions option : request.getDsl().getSort()) {
                 if (option.isField()) {
                     String fieldName = option.field().field();
-                    if (SearchLogEntry.SEARCHED_AT.getNumericFieldName().equals(fieldName)) {
+                    if (SearchLogEntry.LOGGED_AT.getNumericFieldName().equals(fieldName)) {
                         missingTimeSort = false;
                         break;
                     }
@@ -66,7 +66,7 @@ public class SearchLogEndpoint extends AtlasEndpoint {
             // there is full bi-temporal support in the search index, or time machines are invented...)
             request = request.toBuilder()
                     .dsl(request.getDsl().toBuilder()
-                            .sortOption(SearchLogEntry.SEARCHED_AT.order(SortOrder.Asc))
+                            .sortOption(SearchLogEntry.LOGGED_AT.order(SortOrder.Asc))
                             .build())
                     .build();
         }
