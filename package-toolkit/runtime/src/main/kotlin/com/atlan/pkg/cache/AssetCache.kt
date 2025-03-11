@@ -136,7 +136,7 @@ abstract class AssetCache<T : Asset>(
     @Synchronized
     fun preload() {
         if (!preloaded.get()) {
-            refresh()
+            refreshIfNeeded()
             preloaded.set(true)
         }
     }

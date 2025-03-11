@@ -2,9 +2,9 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
-import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 
 /**
  * Static object to transform (really to validate) role references.
@@ -32,7 +32,7 @@ object RoleXformer {
      * @return the role GUID corresponding to the string
      */
     fun decode(
-        client: AtlanClient,
+        ctx: PackageContext<*>,
         roleRef: String,
         fieldName: String,
     ): String {
@@ -40,7 +40,7 @@ object RoleXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    return client.roleCache.getIdForName(roleRef)
+                    return ctx.client.roleCache.getIdForName(roleRef)
                 } catch (e: NotFoundException) {
                     throw NoSuchElementException("Role name is not known to Atlan (in $fieldName): $roleRef", e)
                 }

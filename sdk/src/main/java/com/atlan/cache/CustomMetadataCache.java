@@ -24,15 +24,13 @@ import lombok.extern.slf4j.Slf4j;
  * custom metadata (including attributes).
  */
 @Slf4j
-public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
+public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadataDef> {
 
     private volatile Map<String, AttributeDef> attrCacheBySid = new ConcurrentHashMap<>();
 
     private volatile Map<String, Map<String, String>> mapAttrSidToName = new ConcurrentHashMap<>();
     private volatile Map<String, Map<String, String>> mapAttrNameToSid = new ConcurrentHashMap<>();
     private volatile Set<String> archivedAttrSids = ConcurrentHashMap.newKeySet();
-    private volatile Set<String> deletedSids = ConcurrentHashMap.newKeySet();
-    private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -57,8 +55,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();
         archivedAttrSids.clear();
-        deletedSids.clear();
-        deletedNames.clear();
+        super.refreshCache();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
             cache(bmDef.getGuid(), typeId, bmDef.getDisplayName(), bmDef);
@@ -133,102 +130,6 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
         }
     }
 
-    private boolean isDeletedName(String name) {
-        lock.readLock().lock();
-        try {
-            return deletedNames.contains(name);
-        } finally {
-            lock.readLock().unlock();
-        }
-    }
-
-    private void addDeletedName(String name) {
-        lock.writeLock().lock();
-        try {
-            deletedNames.add(name);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    private boolean isDeletedId(String id) {
-        lock.readLock().lock();
-        try {
-            return deletedSids.contains(id);
-        } finally {
-            lock.readLock().unlock();
-        }
-    }
-
-    private void addDeletedId(String id) {
-        lock.writeLock().lock();
-        try {
-            deletedSids.add(id);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getIdForName(String name, long minimumTime) throws AtlanException {
-        if (name != null && isDeletedName(name)) {
-            return null;
-        }
-        try {
-            return super.getIdForName(name, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedName(name);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNameForId(String id, long minimumTime) throws AtlanException {
-        if (id != null && isDeletedId(id)) {
-            return null;
-        }
-        try {
-            return super.getNameForId(id, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedId(id);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSidForName(String name, long minimumTime) throws AtlanException {
-        if (name != null && isDeletedName(name)) {
-            return null;
-        }
-        try {
-            return super.getSidForName(name, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedName(name);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNameForSid(String id, long minimumTime) throws AtlanException {
-        if (id != null && isDeletedId(id)) {
-            return null;
-        }
-        try {
-            return super.getNameForSid(id, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedId(id);
-            throw e;
-        }
-    }
-
     /**
      * Retrieve all the (active) custom metadata attributes. The map will be keyed by custom metadata set
      * name, and the value will be a listing of all the (active) attributes within that set (with all the details
@@ -268,7 +169,7 @@ public class CustomMetadataCache extends AbstractMassCache<CustomMetadataDef> {
     public Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
             throws AtlanException {
         if (isEmpty() || forceRefresh) {
-            refresh();
+            forceRefresh();
         }
         Map<String, List<AttributeDef>> map = new HashMap<>();
         Stream<Map.Entry<String, CustomMetadataDef>> entrySet = entrySet();

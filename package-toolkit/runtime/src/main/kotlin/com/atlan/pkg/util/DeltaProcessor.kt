@@ -169,7 +169,6 @@ class DeltaProcessor(
 
     /** {@inheritDoc} */
     override fun close() {
-        uploadStateToBackingStore()
         AtlanCloseable.close(delta)
         AtlanCloseable.close(deletedAssets)
     }

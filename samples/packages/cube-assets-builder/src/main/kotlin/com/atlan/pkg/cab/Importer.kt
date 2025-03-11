@@ -167,6 +167,7 @@ object Importer {
             ImportResults.getAllModifiedAssets(ctx.client, true, cubeImporterResults, dimResults, hierResults, fieldResults).use { modifiedAssets ->
                 delta.updateConnectionCache(modifiedAssets)
             }
+            delta.uploadStateToBackingStore()
         }
         return cubeQN
     }

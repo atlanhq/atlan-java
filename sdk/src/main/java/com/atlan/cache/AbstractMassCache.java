@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Stream;
 import lombok.Getter;
@@ -27,8 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractMassCache<T extends AtlanObject> implements Closeable {
 
-    // Allow up to 5 minutes of skew when doing time-based refreshes
-    private static final long SKEW = 300000L;
     protected final AtlanClient client;
     private final String cacheName;
 
@@ -39,13 +38,13 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     private volatile OffHeapObjectCache<T> mapIdToObject;
 
     protected final ReadWriteLock lock = new ReentrantReadWriteLock();
+    protected final ReentrantLock refreshLock = new ReentrantLock();
+    protected final AtomicBoolean needsRefresh = new AtomicBoolean(true);
+    protected final AtomicLong lastRefresh = new AtomicLong(Long.MIN_VALUE);
 
     /** Whether to refresh the cache by retrieving all objects up-front (true) or lazily, on-demand (false). */
     @Getter
     protected AtomicBoolean bulkRefresh = new AtomicBoolean(true);
-
-    /** Epoch-based time at which this cache was last refreshed. */
-    private AtomicLong lastRefresh = new AtomicLong(Long.MIN_VALUE);
 
     /**
      * Define a new mass cache with the provided details.
@@ -69,40 +68,59 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     }
 
     /**
-     * Wraps the cache refresh with necessary concurrency controls.
+     * Wraps the cache refresh with necessary concurrency controls, and forces a refresh.
      * Always call this method to actually update a cache, not the directly-implemented, cache-specific
      * {@code refreshCache}.
      *
      * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
      */
-    public void refresh() throws AtlanException {
-        refresh(Long.MAX_VALUE);
+    public void forceRefresh() throws AtlanException {
+        refreshIfNeeded(true);
     }
 
     /**
-     * Wraps the cache refresh with necessary concurrency controls, but only does the bulk refresh of the
-     * cache if the time it was last refreshed was before the provided time.
-     * Always call this method to actually update a cache, not the directly-implemented, cache-specific
-     * {@code refreshCache}.
+     * Wraps the cache refresh with necessary concurrency controls, but only refreshes the cache if it
+     * has not already been refreshed.
      *
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
      * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
      */
-    public void refresh(long minimumTime) throws AtlanException {
-        lock.writeLock().lock();
-        try {
-            if (minimumTime == Long.MAX_VALUE || lastRefresh.get() < (minimumTime + SKEW)) {
+    public void refreshIfNeeded() throws AtlanException {
+        refreshIfNeeded(false);
+    }
+
+    /**
+     * Actually handle refreshing the cache, blocking all concurrent reads or writes while it is being refreshed.
+     * @param force if true, force the cache to be refreshed
+     *
+     * @throws AtlanException on any error communicating with Atlan to refresh the cache of objects
+     */
+    private void refreshIfNeeded(boolean force) throws AtlanException {
+        if (force || needsRefresh.compareAndSet(true, false)) {
+            refreshLock.lock();
+            try {
                 long now = System.currentTimeMillis();
-                mapIdToName.clear();
-                mapNameToId.clear();
-                mapIdToSid.clear();
-                mapSidToId.clear();
-                resetOffHeap();
-                refreshCache();
+                lock.writeLock().lock();
+                try {
+                    mapIdToName.clear();
+                    mapNameToId.clear();
+                    mapIdToSid.clear();
+                    mapSidToId.clear();
+                    resetOffHeap();
+                    refreshCache();
+                } finally {
+                    lock.writeLock().unlock();
+                }
                 lastRefresh.set(now);
+            } finally {
+                refreshLock.unlock();
             }
-        } finally {
-            lock.writeLock().unlock();
+        } else {
+            refreshLock.lock();
+            try {
+                // Just wait until the first thread refreshes the cache before proceeding
+            } finally {
+                refreshLock.unlock();
+            }
         }
     }
 
@@ -113,19 +131,8 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      * @throws AtlanException on any error communicating with Atlan
      */
     public void cacheById(String id) throws AtlanException {
-        cacheById(id, Long.MAX_VALUE);
-    }
-
-    /**
-     * Wraps a single object lookup for the cache with necessary concurrency controls.
-     *
-     * @param id unique internal identifier for the object
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    public void cacheById(String id, long minimumTime) throws AtlanException {
         if (bulkRefresh.get()) {
-            refresh(minimumTime);
+            refreshIfNeeded();
         } else {
             lock.writeLock().lock();
             try {
@@ -143,19 +150,8 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      * @throws AtlanException on any error communicating with Atlan
      */
     public void cacheBySid(String sid) throws AtlanException {
-        cacheBySid(sid, Long.MAX_VALUE);
-    }
-
-    /**
-     * Wraps a single object lookup for the cache with necessary concurrency controls.
-     *
-     * @param sid unique secondary internal identifier for the object
-     * @param mininumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    public void cacheBySid(String sid, long mininumTime) throws AtlanException {
         if (bulkRefresh.get()) {
-            refresh(mininumTime);
+            refreshIfNeeded();
         } else {
             lock.writeLock().lock();
             try {
@@ -173,19 +169,8 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      * @throws AtlanException on any error communicating with Atlan
      */
     public void cacheByName(String name) throws AtlanException {
-        cacheByName(name, Long.MAX_VALUE);
-    }
-
-    /**
-     * Wraps a single object lookup for the cache with necessary concurrency controls.
-     *
-     * @param name unique name for the object
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @throws AtlanException on any error communicating with Atlan
-     */
-    public void cacheByName(String name, long minimumTime) throws AtlanException {
         if (bulkRefresh.get()) {
-            refresh(minimumTime);
+            refreshIfNeeded();
         } else {
             lock.writeLock().lock();
             try {
@@ -484,31 +469,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public String getIdForName(String name, boolean allowRefresh) throws AtlanException {
         if (name == null || name.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_NAME);
         if (allowRefresh) {
-            return getIdForName(name, Long.MAX_VALUE);
+            String id = getIdFromName(name);
+            if (id == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheByName(name);
+                id = getIdFromName(name);
+            }
+            return checkIdForName(id, name);
         } else {
             return checkIdForName(getIdFromName(name), name);
         }
-    }
-
-    /**
-     * Translate the provided human-readable name to its Atlan-internal ID string.
-     *
-     * @param name human-readable name of the object
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return unique Atlan-internal ID string for the object
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public String getIdForName(String name, long minimumTime) throws AtlanException {
-        if (name == null || name.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_NAME);
-        String id = getIdFromName(name);
-        if (id == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheByName(name, minimumTime);
-            id = getIdFromName(name);
-        }
-        return checkIdForName(id, name);
     }
 
     private String checkIdForName(String id, String name) throws AtlanException {
@@ -544,31 +514,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public String getIdForSid(String sid, boolean allowRefresh) throws AtlanException {
         if (sid == null || sid.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
         if (allowRefresh) {
-            return getIdForSid(sid, Long.MAX_VALUE);
+            String id = getIdFromSid(sid);
+            if (id == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheBySid(sid);
+                id = getIdFromSid(sid);
+            }
+            return checkIdForSid(id, sid);
         } else {
             return checkIdForSid(getIdFromSid(sid), sid);
         }
-    }
-
-    /**
-     * Translate the provided Atlan-internal secondary ID to its Atlan-internal ID string.
-     *
-     * @param sid Atlan-internal secondary ID
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return unique Atlan-internal ID string for the object
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public String getIdForSid(String sid, long minimumTime) throws AtlanException {
-        if (sid == null || sid.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
-        String id = getIdFromSid(sid);
-        if (id == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheBySid(sid, minimumTime);
-            id = getIdFromSid(sid);
-        }
-        return checkIdForSid(id, sid);
     }
 
     private String checkIdForSid(String id, String sid) throws AtlanException {
@@ -604,31 +559,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public String getSidForName(String name, boolean allowRefresh) throws AtlanException {
         if (name == null || name.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_NAME);
         if (allowRefresh) {
-            return getSidForName(name, Long.MAX_VALUE);
+            String sid = getSidFromName(name);
+            if (sid == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheByName(name);
+                sid = getSidFromName(name);
+            }
+            return checkSidForName(sid, name);
         } else {
             return checkSidForName(getSidFromName(name), name);
         }
-    }
-
-    /**
-     * Translate the provided human-readable name to its Atlan-internal secondary ID string.
-     *
-     * @param name human-readable name of the object
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return unique Atlan-internal secondary ID string for the object
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public String getSidForName(String name, long minimumTime) throws AtlanException {
-        if (name == null || name.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_NAME);
-        String sid = getSidFromName(name);
-        if (sid == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheByName(name, minimumTime);
-            sid = getSidFromName(name);
-        }
-        return checkSidForName(sid, name);
     }
 
     private String checkSidForName(String sid, String name) throws AtlanException {
@@ -664,31 +604,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public String getNameForId(String id, boolean allowRefresh) throws AtlanException {
         if (id == null || id.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
         if (allowRefresh) {
-            return getNameForId(id, Long.MAX_VALUE);
+            String name = getNameFromId(id);
+            if (name == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheById(id);
+                name = getNameFromId(id);
+            }
+            return checkNameForId(name, id);
         } else {
             return checkNameForId(getNameFromId(id), id);
         }
-    }
-
-    /**
-     * Translate the provided Atlan-internal ID string to the human-readable name for the object.
-     *
-     * @param id Atlan-internal ID string
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return human-readable name of the object
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public String getNameForId(String id, long minimumTime) throws AtlanException {
-        if (id == null || id.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
-        String name = getNameFromId(id);
-        if (name == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheById(id, minimumTime);
-            name = getNameFromId(id);
-        }
-        return checkNameForId(name, id);
     }
 
     private String checkNameForId(String name, String id) throws AtlanException {
@@ -724,31 +649,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public String getNameForSid(String sid, boolean allowRefresh) throws AtlanException {
         if (sid == null || sid.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
         if (allowRefresh) {
-            return getNameForSid(sid, Long.MAX_VALUE);
+            String name = getNameFromSid(sid);
+            if (name == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheBySid(sid);
+                name = getNameFromSid(sid);
+            }
+            return checkNameForSid(name, sid);
         } else {
             return checkNameForSid(getNameFromSid(sid), sid);
         }
-    }
-
-    /**
-     * Translate the provided Atlan-internal secondary ID string to the human-readable name for the object.
-     *
-     * @param sid Atlan-internal secondary ID string
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return human-readable name of the object
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public String getNameForSid(String sid, long minimumTime) throws AtlanException {
-        if (sid == null || sid.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
-        String name = getNameFromSid(sid);
-        if (name == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheBySid(sid, minimumTime);
-            name = getNameFromSid(sid);
-        }
-        return checkNameForSid(name, sid);
     }
 
     private String checkNameForSid(String name, String sid) throws AtlanException {
@@ -784,31 +694,16 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     public T getById(String id, boolean allowRefresh) throws AtlanException {
         if (id == null || id.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
         if (allowRefresh) {
-            return getById(id, Long.MAX_VALUE);
+            T result = getObjectById(id);
+            if (result == null) {
+                // If not found, refresh the cache and look again (could be stale)
+                cacheById(id);
+                result = getObjectById(id);
+            }
+            return checkById(result, id);
         } else {
             return checkById(getObjectById(id), id);
         }
-    }
-
-    /**
-     * Retrieve the actual object by Atlan-internal ID string.
-     *
-     * @param id Atlan-internal ID string
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return the object with that ID
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no ID was provided for the object to retrieve
-     */
-    public T getById(String id, long minimumTime) throws AtlanException {
-        if (id == null || id.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_ID);
-        T result = getObjectById(id);
-        if (result == null) {
-            // If not found, refresh the cache and look again (could be stale)
-            cacheById(id, minimumTime);
-            result = getObjectById(id);
-        }
-        return checkById(result, id);
     }
 
     private T checkById(T result, String id) throws AtlanException {
@@ -847,21 +742,6 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
     }
 
     /**
-     * Retrieve the actual object by Atlan-internal secondary ID string.
-     *
-     * @param sid Atlan-internal secondary ID string
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return the object with that secondary ID
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no ID was provided for the object to retrieve
-     */
-    public T getBySid(String sid, long minimumTime) throws AtlanException {
-        String id = getIdForSid(sid, minimumTime);
-        return getById(id, false);
-    }
-
-    /**
      * Retrieve the actual object by human-readable name.
      *
      * @param name human-readable name of the object
@@ -886,21 +766,6 @@ public abstract class AbstractMassCache<T extends AtlanObject> implements Closea
      */
     public T getByName(String name, boolean allowRefresh) throws AtlanException {
         String id = getIdForName(name, allowRefresh);
-        return getById(id, false);
-    }
-
-    /**
-     * Retrieve the actual object by human-readable name.
-     *
-     * @param name human-readable name of the object
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return the object with that name
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the object cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the object to retrieve
-     */
-    public T getByName(String name, long minimumTime) throws AtlanException {
-        String id = getIdForName(name, minimumTime);
         return getById(id, false);
     }
 

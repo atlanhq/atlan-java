@@ -25,6 +25,7 @@ class PackageContext<T : CustomConfig>(
     val client: AtlanClient,
     private val reusedClient: Boolean = false,
 ) : AtlanCloseable {
+    val startTS = System.currentTimeMillis()
     val glossaryCache = GlossaryCache(this)
     val termCache = TermCache(this)
     val categoryCache = CategoryCache(this)
