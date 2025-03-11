@@ -56,7 +56,7 @@ class FileBasedDelta(
 ) : AtlanCloseable {
     val assetsToReload = ChecksumCache("changes")
     val assetsToDelete = ChecksumCache("deletes")
-    private lateinit var guidsToDeleteToDetails: OffHeapAssetCache
+    private var guidsToDeleteToDetails: OffHeapAssetCache? = null
 
     companion object {
         private const val QUERY_BATCH = 50
@@ -123,7 +123,8 @@ class FileBasedDelta(
     fun deleteAssets(client: AtlanClient): OffHeapAssetCache {
         guidsToDeleteToDetails = OffHeapAssetCache(client, "delete")
         translateToGuids(client)
-        return deleteAssetsByGuid(client)
+        deleteAssetsByGuid(client)
+        return guidsToDeleteToDetails!!
     }
 
     /**
@@ -256,7 +257,7 @@ class FileBasedDelta(
     private fun validateResult(asset: Asset) {
         val candidate = AssetIdentity(asset.typeName, asset.qualifiedName)
         if (assetsToDelete.containsKey(candidate)) {
-            guidsToDeleteToDetails.add(asset)
+            guidsToDeleteToDetails?.add(asset)
         }
     }
 
@@ -264,13 +265,12 @@ class FileBasedDelta(
      * Delete all assets we have identified for deletion, in batches of 20 at a time.
      *
      * @param client connectivity to the Atlan tenant
-     * @return a list of the assets that were deleted
      */
-    private fun deleteAssetsByGuid(client: AtlanClient): OffHeapAssetCache {
-        if (guidsToDeleteToDetails.isNotEmpty) {
+    private fun deleteAssetsByGuid(client: AtlanClient) {
+        if (guidsToDeleteToDetails?.isNotEmpty == true) {
             val deletionType = if (purge) AtlanDeleteType.PURGE else AtlanDeleteType.SOFT
-            val guidList = guidsToDeleteToDetails.entrySet()
-            val totalToDelete = guidsToDeleteToDetails.size
+            val guidList = guidsToDeleteToDetails!!.entrySet()
+            val totalToDelete = guidsToDeleteToDetails!!.size
             if (removeTypes.isNotEmpty()) {
                 logger.info { " --- Deleting ($deletionType) $totalToDelete assets (limited to types: $removeTypes)... ---" }
             } else {
@@ -297,13 +297,14 @@ class FileBasedDelta(
                     }
             }
         }
-        return guidsToDeleteToDetails
     }
 
     /** {@inheritDoc} */
     override fun close() {
         AtlanCloseable.close(assetsToReload)
         AtlanCloseable.close(assetsToDelete)
-        AtlanCloseable.close(guidsToDeleteToDetails)
+        if (guidsToDeleteToDetails != null) {
+            AtlanCloseable.close(guidsToDeleteToDetails)
+        }
     }
 }

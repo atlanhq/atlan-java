@@ -103,7 +103,7 @@ class SameNameCategoriesTest : PackageTest("snc") {
 
     @Test
     fun categoriesProperlyCached() {
-        ctx.categoryCache.refresh() // Note: refresh to ensure that loading the cache from scratch it still resolves properly
+        ctx.categoryCache.forceRefresh() // Note: refresh to ensure that loading the cache from scratch it still resolves properly
         val cat1 = ctx.categoryCache.getByIdentity("root@c1@same@@@$glossaryName")
         assertNotNull(cat1)
         val cat2 = ctx.categoryCache.getByIdentity("root@c2@same@@@$glossaryName")

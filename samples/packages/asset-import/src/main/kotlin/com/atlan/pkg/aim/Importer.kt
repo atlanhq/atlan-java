@@ -209,6 +209,7 @@ object Importer {
                     ImportResults.getAllModifiedAssets(ctx.client, false, importedAssets).use { modifiedAssets ->
                         delta.updateConnectionCache(modifiedAssets)
                     }
+                    delta.uploadStateToBackingStore()
                     importedAssets
                 }
             } else {
