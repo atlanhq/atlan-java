@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.AtlanClient
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 
 /**
  * Static object to transform (really to validate) group references.
@@ -28,13 +29,13 @@ object GroupXformer {
     /**
      * Decodes (deserializes) a string form into a validated group name.
      *
-     * @param client connectivity to the Atlan tenant
+     * @param ctx context of the running package
      * @param groupRef the string form to be decoded
      * @param fieldName the name of the field containing the string-encoded value
      * @return the group name corresponding to the string
      */
     fun decode(
-        client: AtlanClient,
+        ctx: PackageContext<*>,
         groupRef: String,
         fieldName: String,
     ): String {
@@ -42,14 +43,14 @@ object GroupXformer {
             in FIELDS -> {
                 try {
                     // Try to look up the user reference by username
-                    client.groupCache.getIdForName(groupRef)
+                    ctx.client.groupCache.getIdForName(groupRef, ctx.startTS)
                     return groupRef
                 } catch (e: NotFoundException) {
                     try {
                         // Try again, this time looking up the group by its alias
-                        val idFromAlias = client.groupCache.getIdForAlias(groupRef)
+                        val idFromAlias = ctx.client.groupCache.getIdForAlias(groupRef, ctx.startTS)
                         // And if found by alias, return the group name (since that's what we require)
-                        return client.groupCache.getNameForId(idFromAlias)
+                        return ctx.client.groupCache.getNameForId(idFromAlias, ctx.startTS)
                     } catch (e: NotFoundException) {
                         throw NoSuchElementException("Group name / alias is not known to Atlan (in $fieldName): $groupRef", e)
                     }
