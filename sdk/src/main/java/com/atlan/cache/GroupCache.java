@@ -65,20 +65,6 @@ public class GroupCache extends AbstractMassCache<AtlanGroup> {
     }
 
     /**
-     * Translate the provided human-readable group name to its GUID.
-     *
-     * @param alias name of the group as it appears in the UI
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return unique identifier (GUID) of the group
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the group to retrieve
-     */
-    public String getIdForAlias(String alias, long minimumTime) throws AtlanException {
-        return getIdForSid(alias, minimumTime);
-    }
-
-    /**
      * Translate the provided human-readable group name to the internal group name.
      *
      * @param alias name of the group as it appears in the UI

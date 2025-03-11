@@ -106,20 +106,6 @@ public class UserCache extends AbstractMassCache<AtlanUser> {
      * Translate the provided email address to its GUID.
      *
      * @param email email address of the user
-     * @param minimumTime epoch-based time (in milliseconds) to compare against the time the cache was last refreshed
-     * @return unique identifier (GUID) of the user
-     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the user cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the user to retrieve
-     */
-    public String getIdForEmail(String email, long minimumTime) throws AtlanException {
-        return getIdForSid(email, minimumTime);
-    }
-
-    /**
-     * Translate the provided email address to its GUID.
-     *
-     * @param email email address of the user
      * @param allowRefresh whether to allow a refresh of the cache (true) or not (false)
      * @return unique identifier (GUID) of the user
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed

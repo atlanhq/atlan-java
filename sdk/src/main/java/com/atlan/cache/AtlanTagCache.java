@@ -18,11 +18,9 @@ import lombok.extern.slf4j.Slf4j;
  * Atlan tags.
  */
 @Slf4j
-public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
+public class AtlanTagCache extends AbstractMassTrackingCache<AtlanTagDef> {
 
     private volatile Map<String, String> mapSidToSourceTagsAttrSid = new ConcurrentHashMap<>();
-    private volatile Set<String> deletedSids = ConcurrentHashMap.newKeySet();
-    private volatile Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -44,8 +42,7 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
         }
         List<AtlanTagDef> tags = response.getAtlanTagDefs();
         mapSidToSourceTagsAttrSid.clear();
-        deletedSids.clear();
-        deletedNames.clear();
+        super.refreshCache();
         for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
             cache(clsDef.getGuid(), typeId, clsDef.getDisplayName(), clsDef);
@@ -80,102 +77,6 @@ public class AtlanTagCache extends AbstractMassCache<AtlanTagDef> {
             return mapSidToSourceTagsAttrSid.get(id);
         } finally {
             lock.readLock().unlock();
-        }
-    }
-
-    private boolean isDeletedName(String name) {
-        lock.readLock().lock();
-        try {
-            return deletedNames.contains(name);
-        } finally {
-            lock.readLock().unlock();
-        }
-    }
-
-    private void addDeletedName(String name) {
-        lock.writeLock().lock();
-        try {
-            deletedNames.add(name);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    private boolean isDeletedId(String id) {
-        lock.readLock().lock();
-        try {
-            return deletedSids.contains(id);
-        } finally {
-            lock.readLock().unlock();
-        }
-    }
-
-    private void addDeletedId(String id) {
-        lock.writeLock().lock();
-        try {
-            deletedSids.add(id);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getIdForName(String name, long minimumTime) throws AtlanException {
-        if (name != null && isDeletedName(name)) {
-            return null;
-        }
-        try {
-            return super.getIdForName(name, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedName(name);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNameForId(String id, long minimumTime) throws AtlanException {
-        if (id != null && isDeletedId(id)) {
-            return null;
-        }
-        try {
-            return super.getNameForId(id, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedId(id);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getSidForName(String name, long minimumTime) throws AtlanException {
-        if (name != null && isDeletedName(name)) {
-            return null;
-        }
-        try {
-            return super.getSidForName(name, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedName(name);
-            throw e;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNameForSid(String id, long minimumTime) throws AtlanException {
-        if (id != null && isDeletedId(id)) {
-            return null;
-        }
-        try {
-            return super.getNameForSid(id, minimumTime);
-        } catch (NotFoundException e) {
-            // If it's not already marked deleted, mark it as deleted
-            addDeletedId(id);
-            throw e;
         }
     }
 
