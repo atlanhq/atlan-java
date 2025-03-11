@@ -72,8 +72,10 @@ loadScripts(document, 'script');</script>
 <h1 title="Class CustomMetadataCache" class="title">Class CustomMetadataCache</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="AbstractMassCache.html" title="class in com.atlan.cache">com.atlan.cache.AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;
+<div class="inheritance"><a href="AbstractMassCache.html" title="class in com.atlan.cache">com.atlan.cache.AbstractMassCache</a>&lt;T&gt;
+<div class="inheritance"><a href="AbstractMassTrackingCache.html" title="class in com.atlan.cache">com.atlan.cache.AbstractMassTrackingCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;
 <div class="inheritance">com.atlan.cache.CustomMetadataCache</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -83,7 +85,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CustomMetadataCache</span>
-<span class="extends-implements">extends <a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</span></div>
+<span class="extends-implements">extends <a href="AbstractMassTrackingCache.html" title="class in com.atlan.cache">AbstractMassTrackingCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</span></div>
 <div class="block">Lazily-loaded cache for translating between Atlan-internal ID strings and human-readable names for
  custom metadata (including attributes).</div>
 </section>
@@ -95,7 +97,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.cache.AbstractMassCache">Fields inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></h3>
-<code><a href="AbstractMassCache.html#bulkRefresh">bulkRefresh</a>, <a href="AbstractMassCache.html#client">client</a>, <a href="AbstractMassCache.html#lock">lock</a></code></div>
+<code><a href="AbstractMassCache.html#bulkRefresh">bulkRefresh</a>, <a href="AbstractMassCache.html#client">client</a>, <a href="AbstractMassCache.html#lastRefresh">lastRefresh</a>, <a href="AbstractMassCache.html#lock">lock</a>, <a href="AbstractMassCache.html#needsRefresh">needsRefresh</a>, <a href="AbstractMassCache.html#refreshLock">refreshLock</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -313,44 +315,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdForName(java.lang.String,long)" class="member-name-link">getIdForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- long&nbsp;minimumTime)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Translate the provided human-readable name to its Atlan-internal ID string.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map)" class="member-name-link">getIdMapFromNameMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;customMetadataName,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map)" class="member-name-link">getIdMapFromNameMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;customMetadataName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;nameToValue,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;idToValue)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map,boolean)" class="member-name-link">getIdMapFromNameMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;customMetadataName,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map,boolean)" class="member-name-link">getIdMapFromNameMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;customMetadataName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;nameToValue,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;idToValue,
  boolean&nbsp;allowRefresh)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameForId(java.lang.String,long)" class="member-name-link">getNameForId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- long&nbsp;minimumTime)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Translate the provided Atlan-internal ID string to the human-readable name for the object.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameForSid(java.lang.String,long)" class="member-name-link">getNameForSid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- long&nbsp;minimumTime)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Translate the provided Atlan-internal secondary ID string to the human-readable name for the object.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSidForName(java.lang.String,long)" class="member-name-link">getSidForName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- long&nbsp;minimumTime)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Translate the provided human-readable name to its Atlan-internal secondary ID string.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lookupById(java.lang.String)" class="member-name-link">lookupById</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
@@ -371,8 +349,11 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.atlan.cache.AbstractMassTrackingCache">Methods inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassTrackingCache.html" title="class in com.atlan.cache">AbstractMassTrackingCache</a></h3>
+<code><a href="AbstractMassTrackingCache.html#addDeletedId(java.lang.String)">addDeletedId</a>, <a href="AbstractMassTrackingCache.html#addDeletedName(java.lang.String)">addDeletedName</a>, <a href="AbstractMassTrackingCache.html#getIdForName(java.lang.String,long)">getIdForName</a>, <a href="AbstractMassTrackingCache.html#getNameForId(java.lang.String,long)">getNameForId</a>, <a href="AbstractMassTrackingCache.html#getNameForSid(java.lang.String,long)">getNameForSid</a>, <a href="AbstractMassTrackingCache.html#getSidForName(java.lang.String,long)">getSidForName</a>, <a href="AbstractMassTrackingCache.html#isDeletedId(java.lang.String)">isDeletedId</a>, <a href="AbstractMassTrackingCache.html#isDeletedName(java.lang.String)">isDeletedName</a>, <a href="AbstractMassTrackingCache.html#refresh(long)">refresh</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.atlan.cache.AbstractMassCache">Methods inherited from class&nbsp;com.atlan.cache.<a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a></h3>
-<code><a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#cacheById(java.lang.String)">cacheById</a>, <a href="AbstractMassCache.html#cacheById(java.lang.String,long)">cacheById</a>, <a href="AbstractMassCache.html#cacheByName(java.lang.String)">cacheByName</a>, <a href="AbstractMassCache.html#cacheByName(java.lang.String,long)">cacheByName</a>, <a href="AbstractMassCache.html#cacheBySid(java.lang.String)">cacheBySid</a>, <a href="AbstractMassCache.html#cacheBySid(java.lang.String,long)">cacheBySid</a>, <a href="AbstractMassCache.html#close()">close</a>, <a href="AbstractMassCache.html#entrySet()">entrySet</a>, <a href="AbstractMassCache.html#getBulkRefresh()">getBulkRefresh</a>, <a href="AbstractMassCache.html#getById(java.lang.String)">getById</a>, <a href="AbstractMassCache.html#getById(java.lang.String,boolean)">getById</a>, <a href="AbstractMassCache.html#getById(java.lang.String,long)">getById</a>, <a href="AbstractMassCache.html#getByName(java.lang.String)">getByName</a>, <a href="AbstractMassCache.html#getByName(java.lang.String,boolean)">getByName</a>, <a href="AbstractMassCache.html#getByName(java.lang.String,long)">getByName</a>, <a href="AbstractMassCache.html#getBySid(java.lang.String)">getBySid</a>, <a href="AbstractMassCache.html#getBySid(java.lang.String,boolean)">getBySid</a>, <a href="AbstractMassCache.html#getBySid(java.lang.String,long)">getBySid</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForSid(java.lang.String)">getIdForSid</a>, <a href="AbstractMassCache.html#getIdForSid(java.lang.String,boolean)">getIdForSid</a>, <a href="AbstractMassCache.html#getIdForSid(java.lang.String,long)">getIdForSid</a>, <a href="AbstractMassCache.html#getIdFromName(java.lang.String)">getIdFromName</a>, <a href="AbstractMassCache.html#getIdFromSid(java.lang.String)">getIdFromSid</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForSid(java.lang.String)">getNameForSid</a>, <a href="AbstractMassCache.html#getNameForSid(java.lang.String,boolean)">getNameForSid</a>, <a href="AbstractMassCache.html#getNameFromId(java.lang.String)">getNameFromId</a>, <a href="AbstractMassCache.html#getNameFromId(java.lang.String,boolean)">getNameFromId</a>, <a href="AbstractMassCache.html#getNameFromSid(java.lang.String)">getNameFromSid</a>, <a href="AbstractMassCache.html#getObjectById(java.lang.String)">getObjectById</a>, <a href="AbstractMassCache.html#getSidForName(java.lang.String)">getSidForName</a>, <a href="AbstractMassCache.html#getSidForName(java.lang.String,boolean)">getSidForName</a>, <a href="AbstractMassCache.html#getSidFromId(java.lang.String)">getSidFromId</a>, <a href="AbstractMassCache.html#getSidFromName(java.lang.String)">getSidFromName</a>, <a href="AbstractMassCache.html#isEmpty()">isEmpty</a>, <a href="AbstractMassCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractMassCache.html#isNameKnown(java.lang.String)">isNameKnown</a>, <a href="AbstractMassCache.html#lookupBySid(java.lang.String)">lookupBySid</a>, <a href="AbstractMassCache.html#refresh()">refresh</a>, <a href="AbstractMassCache.html#refresh(long)">refresh</a></code></div>
+<code><a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#cache(java.lang.String,java.lang.String,T)">cache</a>, <a href="AbstractMassCache.html#cacheById(java.lang.String)">cacheById</a>, <a href="AbstractMassCache.html#cacheByName(java.lang.String)">cacheByName</a>, <a href="AbstractMassCache.html#cacheBySid(java.lang.String)">cacheBySid</a>, <a href="AbstractMassCache.html#close()">close</a>, <a href="AbstractMassCache.html#entrySet()">entrySet</a>, <a href="AbstractMassCache.html#forceRefresh()">forceRefresh</a>, <a href="AbstractMassCache.html#getBulkRefresh()">getBulkRefresh</a>, <a href="AbstractMassCache.html#getById(java.lang.String)">getById</a>, <a href="AbstractMassCache.html#getById(java.lang.String,boolean)">getById</a>, <a href="AbstractMassCache.html#getByName(java.lang.String)">getByName</a>, <a href="AbstractMassCache.html#getByName(java.lang.String,boolean)">getByName</a>, <a href="AbstractMassCache.html#getBySid(java.lang.String)">getBySid</a>, <a href="AbstractMassCache.html#getBySid(java.lang.String,boolean)">getBySid</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForName(java.lang.String,boolean)">getIdForName</a>, <a href="AbstractMassCache.html#getIdForSid(java.lang.String)">getIdForSid</a>, <a href="AbstractMassCache.html#getIdForSid(java.lang.String,boolean)">getIdForSid</a>, <a href="AbstractMassCache.html#getIdFromName(java.lang.String)">getIdFromName</a>, <a href="AbstractMassCache.html#getIdFromSid(java.lang.String)">getIdFromSid</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForId(java.lang.String,boolean)">getNameForId</a>, <a href="AbstractMassCache.html#getNameForSid(java.lang.String)">getNameForSid</a>, <a href="AbstractMassCache.html#getNameForSid(java.lang.String,boolean)">getNameForSid</a>, <a href="AbstractMassCache.html#getNameFromId(java.lang.String)">getNameFromId</a>, <a href="AbstractMassCache.html#getNameFromId(java.lang.String,boolean)">getNameFromId</a>, <a href="AbstractMassCache.html#getNameFromSid(java.lang.String)">getNameFromSid</a>, <a href="AbstractMassCache.html#getObjectById(java.lang.String)">getObjectById</a>, <a href="AbstractMassCache.html#getSidForName(java.lang.String)">getSidForName</a>, <a href="AbstractMassCache.html#getSidForName(java.lang.String,boolean)">getSidForName</a>, <a href="AbstractMassCache.html#getSidFromId(java.lang.String)">getSidFromId</a>, <a href="AbstractMassCache.html#getSidFromName(java.lang.String)">getSidFromName</a>, <a href="AbstractMassCache.html#isEmpty()">isEmpty</a>, <a href="AbstractMassCache.html#isIdKnown(java.lang.String)">isIdKnown</a>, <a href="AbstractMassCache.html#isNameKnown(java.lang.String)">isNameKnown</a>, <a href="AbstractMassCache.html#lookupBySid(java.lang.String)">lookupBySid</a>, <a href="AbstractMassCache.html#refreshIfNeeded()">refreshIfNeeded</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -408,8 +389,8 @@ loadScripts(document, 'script');</script>
                      throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
 <div class="block">Logic to refresh a specific cache en-masse (must be implemented).</div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="AbstractMassCache.html#refreshCache()">refreshCache</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="AbstractMassTrackingCache.html#refreshCache()">refreshCache</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassTrackingCache.html" title="class in com.atlan.cache">AbstractMassTrackingCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with Atlan to refresh the cache of objects</dd>
 </dl>
@@ -438,94 +419,6 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="AbstractMassCache.html#lookupById(java.lang.String)">lookupById</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>id</code> - unique internal identifier for the object</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getIdForName(java.lang.String,long)">
-<h3>getIdForName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getIdForName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- long&nbsp;minimumTime)</span>
-                    throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Translate the provided human-readable name to its Atlan-internal ID string.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="AbstractMassCache.html#getIdForName(java.lang.String,long)">getIdForName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
-<dt>Parameters:</dt>
-<dd><code>name</code> - human-readable name of the object</dd>
-<dd><code>minimumTime</code> - epoch-based time (in milliseconds) to compare against the time the cache was last refreshed</dd>
-<dt>Returns:</dt>
-<dd>unique Atlan-internal ID string for the object</dd>
-<dt>Throws:</dt>
-<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
-<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the object cannot be found (does not exist) in Atlan</dd>
-<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the object to retrieve</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getNameForId(java.lang.String,long)">
-<h3>getNameForId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getNameForId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- long&nbsp;minimumTime)</span>
-                    throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Translate the provided Atlan-internal ID string to the human-readable name for the object.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="AbstractMassCache.html#getNameForId(java.lang.String,long)">getNameForId</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
-<dt>Parameters:</dt>
-<dd><code>id</code> - Atlan-internal ID string</dd>
-<dd><code>minimumTime</code> - epoch-based time (in milliseconds) to compare against the time the cache was last refreshed</dd>
-<dt>Returns:</dt>
-<dd>human-readable name of the object</dd>
-<dt>Throws:</dt>
-<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
-<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the object cannot be found (does not exist) in Atlan</dd>
-<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the object to retrieve</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getSidForName(java.lang.String,long)">
-<h3>getSidForName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSidForName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- long&nbsp;minimumTime)</span>
-                     throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Translate the provided human-readable name to its Atlan-internal secondary ID string.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="AbstractMassCache.html#getSidForName(java.lang.String,long)">getSidForName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
-<dt>Parameters:</dt>
-<dd><code>name</code> - human-readable name of the object</dd>
-<dd><code>minimumTime</code> - epoch-based time (in milliseconds) to compare against the time the cache was last refreshed</dd>
-<dt>Returns:</dt>
-<dd>unique Atlan-internal secondary ID string for the object</dd>
-<dt>Throws:</dt>
-<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
-<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the object cannot be found (does not exist) in Atlan</dd>
-<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the object to retrieve</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getNameForSid(java.lang.String,long)">
-<h3>getNameForSid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getNameForSid</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- long&nbsp;minimumTime)</span>
-                     throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Translate the provided Atlan-internal secondary ID string to the human-readable name for the object.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="AbstractMassCache.html#getNameForSid(java.lang.String,long)">getNameForSid</a></code>&nbsp;in class&nbsp;<code><a href="AbstractMassCache.html" title="class in com.atlan.cache">AbstractMassCache</a>&lt;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&gt;</code></dd>
-<dt>Parameters:</dt>
-<dd><code>id</code> - Atlan-internal secondary ID string</dd>
-<dd><code>minimumTime</code> - epoch-based time (in milliseconds) to compare against the time the cache was last refreshed</dd>
-<dt>Returns:</dt>
-<dd>human-readable name of the object</dd>
-<dt>Throws:</dt>
-<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication problem if the cache needs to be refreshed</dd>
-<dd><code><a href="../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the object cannot be found (does not exist) in Atlan</dd>
-<dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no name was provided for the object to retrieve</dd>
 </dl>
 </section>
 </li>

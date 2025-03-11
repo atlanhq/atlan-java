@@ -99,73 +99,80 @@ loadScripts(document, 'script');</script>
 <div class="block">Base class for reusable components that are common to all caches, where
  a cache is populated en-masse through batch refreshing.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractOffHeapCache.html" title="class in com.atlan.cache">AbstractOffHeapCache</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractMassTrackingCache.html" title="class in com.atlan.cache">AbstractMassTrackingCache</a>&lt;T extends <a href="../model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Base class for reusable components that are common to all caches, where
+ a cache is populated en-masse through batch refreshing and furthermore
+ where any cache misses are also tracked (to avoid attempting to refresh
+ the cache unnecessarily).</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractOffHeapCache.html" title="class in com.atlan.cache">AbstractOffHeapCache</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Generic class through which to cache any key-value pairs efficiently, off-heap, to avoid
  risking extreme memory usage.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AtlanTagCache.html" title="class in com.atlan.cache">AtlanTagCache</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AtlanTagCache.html" title="class in com.atlan.cache">AtlanTagCache</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating between Atlan-internal ID strings and human-readable names for
  Atlan tags.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConnectionCache.html" title="class in com.atlan.cache">ConnectionCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConnectionCache.html" title="class in com.atlan.cache">ConnectionCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating between a connection's simplified name its details.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConnectionCache.ConnectionName.html" title="class in com.atlan.cache">ConnectionCache.ConnectionName</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConnectionCache.ConnectionName.html" title="class in com.atlan.cache">ConnectionCache.ConnectionName</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Unique identity for a connection, in the form: {{type}}/{{name}}
  For example: snowflake/development</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating between Atlan-internal ID strings and human-readable names for
  custom metadata (including attributes).</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EnumCache.html" title="class in com.atlan.cache">EnumCache</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EnumCache.html" title="class in com.atlan.cache">EnumCache</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for accessing details of an enumeration.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="GroupCache.html" title="class in com.atlan.cache">GroupCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GroupCache.html" title="class in com.atlan.cache">GroupCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating Atlan-internal groups into their various IDs.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ObjectName.html" title="interface in com.atlan.cache">ObjectName</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="ObjectName.html" title="interface in com.atlan.cache">ObjectName</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">Unique name of an object in Atlan in a fully constructable way,
  without relying on any specifics of an Atlan tenant.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OffHeapAssetCache.html" title="class in com.atlan.cache">OffHeapAssetCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Generic class through which to cache any assets efficiently, off-heap, to avoid risking extreme
  memory usage.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="OffHeapFailureCache.html" title="class in com.atlan.cache">OffHeapFailureCache</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Generic class through which to cache any batch failures efficiently, off-heap, to avoid risking extreme
  memory usage.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ReflectionCache.html" title="class in com.atlan.cache">ReflectionCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ReflectionCache.html" title="class in com.atlan.cache">ReflectionCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for Java reflection-based operations across the Atlan data model.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RoleCache.html" title="class in com.atlan.cache">RoleCache</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RoleCache.html" title="class in com.atlan.cache">RoleCache</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating Atlan-internal roles into their various IDs.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SourceTagCache.html" title="class in com.atlan.cache">SourceTagCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SourceTagCache.html" title="class in com.atlan.cache">SourceTagCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating between source-synced tags and the qualifiedName of such
  tags.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SourceTagCache.SourceTagName.html" title="class in com.atlan.cache">SourceTagCache.SourceTagName</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SourceTagCache.SourceTagName.html" title="class in com.atlan.cache">SourceTagCache.SourceTagName</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Unique identity for a source tag, in the form: {{connectorType}}/{{connectorName}}@@DB/SCHEMA/TAG_NAME
  For example: snowflake/development@@DB/SCHEMA/TAG_NAME</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserCache.html" title="class in com.atlan.cache">UserCache</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserCache.html" title="class in com.atlan.cache">UserCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Lazily-loaded cache for translating Atlan-internal users into their various IDs.</div>
 </div>
 </div>
