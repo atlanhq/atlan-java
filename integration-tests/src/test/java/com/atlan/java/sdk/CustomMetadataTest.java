@@ -4,6 +4,7 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
+import com.atlan.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
@@ -32,7 +33,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static final String CM_RACI = makeUnique("RACI");
     private static final String CM_IPR = makeUnique("IPR");
     private static final String CM_QUALITY = makeUnique("DQ");
-
     private static final String CM_ATTR_RACI_RESPONSIBLE = "Responsible"; // user
     private static final String CM_ATTR_RACI_ACCOUNTABLE = "Accountable"; // user
     private static final String CM_ATTR_RACI_CONSULTED = "Consulted"; // group
@@ -134,28 +134,27 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertFalse(one.getOptions().getMultiValueSelect());
     }
 
-    @Test(groups = {"cm.create.cm.raci"})
-    void createCustomMetadataRACI() throws AtlanException {
+    public static void createCustomMetadataRACI(String name, AtlanClient client) throws AtlanException {
         AttributeDef informed =
-                AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
-                        .toBuilder()
-                        .multiValued(true)
-                        .build();
-        CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_RACI)
-                .attributeDef(AttributeDef.of(
-                        client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
-                .attributeDef(AttributeDef.of(
-                        client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
-                .attributeDef(AttributeDef.of(
-                        client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
-                .attributeDef(informed)
-                .attributeDef(AttributeDef.of(
-                        client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
-                .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
+            AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
+                .toBuilder()
+                .multiValued(true)
                 .build();
+        CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(name)
+            .attributeDef(AttributeDef.of(
+                client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
+            .attributeDef(AttributeDef.of(
+                client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
+            .attributeDef(AttributeDef.of(
+                client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
+            .attributeDef(informed)
+            .attributeDef(AttributeDef.of(
+                client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
+            .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
+            .build();
         TypeDefResponse typeDefResponse = client.typeDefs.create(
-                customMetadataDef,
-                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+            customMetadataDef,
+            RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
         assertNotNull(typeDefResponse);
         assertNotNull(typeDefResponse.getCustomMetadataDefs());
         assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
@@ -213,6 +212,11 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
         assertNotNull(one.getOptions());
         assertFalse(one.getOptions().getMultiValueSelect());
+    }
+
+    @Test(groups = {"cm.create.cm.raci"})
+    void createCustomMetadataRACI() throws AtlanException {
+        createCustomMetadataRACI(CM_RACI, client);
     }
 
     @Test(groups = {"cm.create.cm.dq"})
