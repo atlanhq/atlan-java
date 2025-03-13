@@ -4,6 +4,7 @@ package com.atlan.java.sdk;
 
 import static org.testng.Assert.*;
 
+import com.atlan.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
@@ -12,11 +13,12 @@ import com.atlan.model.enums.*;
 import com.atlan.model.fields.*;
 import com.atlan.model.search.*;
 import com.atlan.model.structs.*;
-import com.atlan.model.typedefs.*;
+import com.atlan.util.*;
 import java.util.*;
 import java.util.concurrent.*;
 import lombok.extern.slf4j.*;
 import org.testng.annotations.Test;
+import org.testng.util.*;
 
 /**
  * Tests validation of table attributes through IndexSearch.
@@ -37,21 +39,14 @@ public class TableSearchTest extends AtlanLiveTest {
     private Column column2 = null;
     public static final String COLUMN_NAME1 = PREFIX + "_col1";
     public static final String COLUMN_NAME2 = PREFIX + "_col2";
-    private static final String CM_ATTR_RACI_RESPONSIBLE = "Responsible"; // user
-    private static final String CM_ATTR_RACI_ACCOUNTABLE = "Accountable"; // user
-    private static final String CM_ATTR_RACI_INFORMED = "Informed";
-    private static CustomMetadataField CM_RACI_RESPONSIBLE = null;
-    private static CustomMetadataField CM_RACI_ACCOUNTABLE = null;
-    private static CustomMetadataField CM_RACI_INFORMED = null;
     private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.CLICKHOUSE;
     private static final String CONNECTION_PREFIX = makeUnique("SQL");
 
-    public static final String CONNECTION_NAME = CONNECTION_PREFIX;
-    public static final String DATABASE_NAME = CONNECTION_PREFIX + "_db";
-    public static final String SCHEMA_NAME = CONNECTION_PREFIX + "_schema";
+    private static final String CONNECTION_NAME = CONNECTION_PREFIX;
+    private static final String DATABASE_NAME = CONNECTION_PREFIX + "_db";
+    private static final String SCHEMA_NAME = CONNECTION_PREFIX + "_schema";
     private static AtlanGroup group1 = null;
     private static AtlanGroup group2 = null;
-    public static final String CM_RACI = makeUnique("RACII");
     private static Table table = null;
 
     @Test(groups = {"table.create"})
@@ -59,12 +54,8 @@ public class TableSearchTest extends AtlanLiveTest {
         connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
         database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
         schema = SQLAssetTest.createSchema(client, SCHEMA_NAME, database);
-        CustomMetadataTest.createCustomMetadataRACI(CM_RACI, client);
         group1 = AdminTest.createGroup(client, GROUP_NAME1);
         group2 = AdminTest.createGroup(client, GROUP_NAME2);
-        CM_RACI_RESPONSIBLE = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_RESPONSIBLE);
-        CM_RACI_ACCOUNTABLE = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_ACCOUNTABLE);
-        CM_RACI_INFORMED = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_INFORMED);
         table = Table._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -128,13 +119,6 @@ public class TableSearchTest extends AtlanLiveTest {
                         .assetStarredBy("user1")
                         .assetStarredAt(123456789L)
                         .build())
-                .customMetadata(
-                        CM_RACI,
-                        CustomMetadataAttributes.builder()
-                                .attribute(CM_ATTR_RACI_RESPONSIBLE, List.of(FIXED_USER, "user2"))
-                                .attribute(CM_ATTR_RACI_ACCOUNTABLE, FIXED_USER)
-                                .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
-                                .build())
                 .columnCount(2L)
                 .build();
         AssetMutationResponse response = table.save(client);
@@ -225,33 +209,6 @@ public class TableSearchTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"table.search.business.attributes"},
-            dependsOnGroups = {"table.search.consistent"})
-    void searchBusinessAttributes() throws AtlanException {
-        Set<AtlanField> fields = Set.of(CM_RACI_RESPONSIBLE, CM_RACI_ACCOUNTABLE, CM_RACI_INFORMED);
-        IndexSearchRequest request = Table.select(client)
-                .where(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
-                .includesOnResults(fields)
-                .toRequest();
-        IndexSearchResponse response = request.search(client);
-        assertNotNull(response);
-        assertEquals(response.getApproximateCount(), 1L);
-        List<Asset> results = response.getAssets();
-        assertEquals(results.size(), 1);
-        Table found = (Table) results.get(0);
-        Map<String, CustomMetadataAttributes> sets = found.getCustomMetadataSets();
-        assertNotNull(sets);
-        assertEquals(sets.size(), 1);
-        CustomMetadataAttributes attrs = sets.get(CM_RACI);
-        assertNotNull(attrs);
-        Map<String, Object> attributes = attrs.getAttributes();
-        assertNotNull(attributes);
-        assertEquals(attributes.get(CM_ATTR_RACI_RESPONSIBLE), Set.of(FIXED_USER, "user2"));
-        assertEquals(attributes.get(CM_ATTR_RACI_ACCOUNTABLE), FIXED_USER);
-        assertEquals(attributes.get(CM_ATTR_RACI_INFORMED), Set.of(group1.getName(), group2.getName()));
-    }
-
-    @Test(
             groups = {"table.search.complex"},
             dependsOnGroups = {"table.search.consistent"})
     void searchComplexTypes() throws AtlanException {
@@ -332,21 +289,35 @@ public class TableSearchTest extends AtlanLiveTest {
                 "table.search.collections",
                 "table.search.complex",
                 "table.search.relations",
-                "table.search.business.attributes"
             },
             alwaysRun = true)
     void deleteTestData() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
-        CustomMetadataDef.purge(client, CM_RACI);
         AdminTest.deleteGroup(client, group1.getId());
         AdminTest.deleteGroup(client, group2.getId());
-        if (table != null) {
-            AssetDeletionResponse deleted = Asset.delete(client, table.getGuid());
-            assertNotNull(deleted);
+        deleteAndValidateAssets(
+                client,
+                List.of(
+                        schema.getGuid(),
+                        database.getGuid(),
+                        connection.getGuid(),
+                        table.getGuid(),
+                        column1.getGuid(),
+                        column2.getGuid()));
+    }
+
+    private void deleteAndValidateAssets(AtlanClient client, List<String> guids) throws AtlanException {
+        for (String guid : guids) {
+            if (Strings.isNullOrEmpty(guid)) {
+                continue;
+            }
+            AssetMutationResponse response = Asset.delete(client, guid);
+            assertNotNull(response);
+            assertEquals(response.getCreatedAssets().size(), 0);
+            assertEquals(response.getUpdatedAssets().size(), 0);
+            List<Asset> entities = response.getDeletedAssets();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
         }
-        AssetMutationResponse response = Asset.delete(client, column1.getGuid()).block();
-        assertNotNull(response);
-        response = Asset.delete(client, column2.getGuid()).block();
-        assertNotNull(response);
     }
 }

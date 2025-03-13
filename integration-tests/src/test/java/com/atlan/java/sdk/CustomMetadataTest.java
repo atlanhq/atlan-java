@@ -9,17 +9,18 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.core.*;
 import com.atlan.model.enums.*;
-import com.atlan.model.fields.CustomMetadataField;
+import com.atlan.model.fields.*;
 import com.atlan.model.search.*;
-import com.atlan.model.structs.BadgeCondition;
+import com.atlan.model.structs.*;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.RequestOptions;
 import java.util.*;
+import java.util.concurrent.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
+import org.testng.util.*;
 
 /**
  * Test management of custom metadata.
@@ -52,8 +53,24 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static final List<String> DQ_TYPE_LIST =
             List.of("Accuracy", "Completeness", "Consistency", "Timeliness", "Validity", "Uniqueness");
 
+    private static CustomMetadataField CM_RACI_RESPONSIBLE = null;
+    private static CustomMetadataField CM_RACI_ACCOUNTABLE = null;
+    private static CustomMetadataField CM_RACI_INFORMED = null;
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
+
+    private static Table table = null;
+    private Connection connection = null;
+    private Database database = null;
+    private Schema schema = null;
+    private static final String TABLE_PREFIX = makeUnique("TABLE_ATTR");
+    private static final String TABLE_NAME = TABLE_PREFIX + "_name";
+    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.CLICKHOUSE;
+    private static final String CONNECTION_PREFIX = makeUnique("SQL");
+
+    public static final String CONNECTION_NAME = CONNECTION_PREFIX;
+    public static final String DATABASE_NAME = CONNECTION_PREFIX + "_db";
+    public static final String SCHEMA_NAME = CONNECTION_PREFIX + "_schema";
 
     private static Glossary glossary = null;
     private static GlossaryTerm term = null;
@@ -134,13 +151,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertFalse(one.getOptions().getMultiValueSelect());
     }
 
-    public static void createCustomMetadataRACI(String name, AtlanClient client) throws AtlanException {
+    @Test(groups = {"cm.create.cm.raci"})
+    void createCustomMetadataRACI() throws AtlanException {
         AttributeDef informed =
                 AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
                         .toBuilder()
                         .multiValued(true)
                         .build();
-        CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(name)
+        CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_RACI)
                 .attributeDef(AttributeDef.of(
                         client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
                 .attributeDef(AttributeDef.of(
@@ -212,11 +230,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
         assertNotNull(one.getOptions());
         assertFalse(one.getOptions().getMultiValueSelect());
-    }
-
-    @Test(groups = {"cm.create.cm.raci"})
-    void createCustomMetadataRACI() throws AtlanException {
-        createCustomMetadataRACI(CM_RACI, client);
     }
 
     @Test(groups = {"cm.create.cm.dq"})
@@ -948,7 +961,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"cm.purge.cm"},
-            dependsOnGroups = {"cm.purge.badges"},
+            dependsOnGroups = {"table.cleanup", "cm.purge.badges"},
             alwaysRun = true)
     void purgeCustomMetadata() throws AtlanException {
         CustomMetadataDef.purge(client, CM_RACI);
@@ -1281,5 +1294,120 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(t.getGuid(), term.getGuid());
         assertTrue(
                 t.getCustomMetadataSets() == null || t.getCustomMetadataSets().isEmpty());
+    }
+
+    @Test(
+            groups = {"table.create"},
+            dependsOnGroups = {"cm.create.cm.raci"})
+    public void createTable() throws AtlanException, InterruptedException {
+        connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
+        database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
+        schema = SQLAssetTest.createSchema(client, SCHEMA_NAME, database);
+        CM_RACI_RESPONSIBLE = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_RESPONSIBLE);
+        CM_RACI_ACCOUNTABLE = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_ACCOUNTABLE);
+        CM_RACI_INFORMED = new CustomMetadataField(client, CM_RACI, CM_ATTR_RACI_INFORMED);
+        table = Table._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(TABLE_NAME)
+                .qualifiedName(Table.generateQualifiedName(TABLE_NAME, schema.getQualifiedName()))
+                .connectorType(CONNECTOR_TYPE)
+                .schemaName(SCHEMA_NAME)
+                .schemaQualifiedName(schema.getQualifiedName())
+                .schema(Schema.refByQualifiedName(schema.getQualifiedName()))
+                .databaseName(DATABASE_NAME)
+                .databaseQualifiedName(database.getQualifiedName())
+                .connectionQualifiedName(connection.getQualifiedName())
+                .customMetadata(
+                        CM_RACI,
+                        CustomMetadataAttributes.builder()
+                                .attribute(CM_ATTR_RACI_RESPONSIBLE, List.of(FIXED_USER, "user2"))
+                                .attribute(CM_ATTR_RACI_ACCOUNTABLE, FIXED_USER)
+                                .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
+                                .build())
+                .columnCount(2L)
+                .build();
+        AssetMutationResponse response = table.save(client);
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Schema);
+        Schema updated = (Schema) one;
+        assertEquals(updated.getQualifiedName(), schema.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Table);
+        table = (Table) one;
+        assertNotNull(table.getGuid());
+        assertNotNull(table.getQualifiedName());
+        assertEquals(table.getName(), TABLE_NAME);
+        assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"table.search.business.attributes"},
+            dependsOnGroups = {"table.search.consistent"})
+    void searchBusinessAttributes() throws AtlanException {
+        Set<AtlanField> fields = Set.of(CM_RACI_RESPONSIBLE, CM_RACI_ACCOUNTABLE, CM_RACI_INFORMED);
+        IndexSearchRequest request = Table.select(client)
+                .where(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
+                .includesOnResults(fields)
+                .toRequest();
+        IndexSearchResponse response = request.search(client);
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount(), 1L);
+        List<Asset> results = response.getAssets();
+        assertEquals(results.size(), 1);
+        Table found = (Table) results.get(0);
+        Map<String, CustomMetadataAttributes> sets = found.getCustomMetadataSets();
+        assertNotNull(sets);
+        assertEquals(sets.size(), 1);
+        CustomMetadataAttributes attrs = sets.get(CM_RACI);
+        assertNotNull(attrs);
+        Map<String, Object> attributes = attrs.getAttributes();
+        assertNotNull(attributes);
+        assertEquals(attributes.get(CM_ATTR_RACI_RESPONSIBLE), Set.of(FIXED_USER, "user2"));
+        assertEquals(attributes.get(CM_ATTR_RACI_ACCOUNTABLE), FIXED_USER);
+        assertEquals(attributes.get(CM_ATTR_RACI_INFORMED), Set.of(group1.getName(), group2.getName()));
+    }
+
+    @Test(
+            groups = {"table.search.consistent"},
+            dependsOnGroups = {"table.create"})
+    void waitForConsistency() throws AtlanException, InterruptedException {
+        IndexSearchRequest index = Table.select(client)
+                .where(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
+                .toRequest();
+        IndexSearchResponse response = retrySearchUntil(index, 1L);
+        assertEquals(response.getApproximateCount(), 1L);
+    }
+
+    @Test(
+            groups = {"table.cleanup"},
+            dependsOnGroups = {
+                "table.create",
+                "table.search.consistent",
+                "table.search.business.attributes",
+            },
+            alwaysRun = true)
+    void purgeTableData() throws AtlanException, InterruptedException {
+        ConnectionTest.deleteConnection(client, connection.getQualifiedName(), log);
+        deleteAndValidateAssets(
+                client, List.of(schema.getGuid(), database.getGuid(), connection.getGuid(), table.getGuid()));
+    }
+
+    private void deleteAndValidateAssets(AtlanClient client, List<String> guids) throws AtlanException {
+        for (String guid : guids) {
+            if (Strings.isNullOrEmpty(guid)) {
+                continue;
+            }
+            AssetMutationResponse response = Asset.delete(client, guid);
+            assertNotNull(response);
+            assertEquals(response.getCreatedAssets().size(), 0);
+            assertEquals(response.getUpdatedAssets().size(), 0);
+            List<Asset> entities = response.getDeletedAssets();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+        }
     }
 }
