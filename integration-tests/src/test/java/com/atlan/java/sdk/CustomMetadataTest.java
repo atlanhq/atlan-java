@@ -136,25 +136,25 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     public static void createCustomMetadataRACI(String name, AtlanClient client) throws AtlanException {
         AttributeDef informed =
-            AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
-                .toBuilder()
-                .multiValued(true)
-                .build();
+                AttributeDef.of(client, CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, false)
+                        .toBuilder()
+                        .multiValued(true)
+                        .build();
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(name)
-            .attributeDef(AttributeDef.of(
-                client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
-            .attributeDef(AttributeDef.of(
-                client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
-            .attributeDef(AttributeDef.of(
-                client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
-            .attributeDef(informed)
-            .attributeDef(AttributeDef.of(
-                client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
-            .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
-            .build();
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_RESPONSIBLE, AtlanCustomAttributePrimitiveType.USERS, null, true))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_ACCOUNTABLE, AtlanCustomAttributePrimitiveType.USERS, null, false))
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_CONSULTED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
+                .attributeDef(informed)
+                .attributeDef(AttributeDef.of(
+                        client, CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                .options(CustomMetadataOptions.withIcon(AtlanIcon.USERS_THREE, AtlanTagColor.GRAY))
+                .build();
         TypeDefResponse typeDefResponse = client.typeDefs.create(
-            customMetadataDef,
-            RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
+                customMetadataDef,
+                RequestOptions.from(client).maxNetworkRetries(MAX_CM_RETRIES).build());
         assertNotNull(typeDefResponse);
         assertNotNull(typeDefResponse.getCustomMetadataDefs());
         assertEquals(typeDefResponse.getCustomMetadataDefs().size(), 1);
