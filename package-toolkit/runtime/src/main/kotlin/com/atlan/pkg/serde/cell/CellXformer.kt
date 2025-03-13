@@ -78,9 +78,9 @@ object CellXformer {
             null
         } else if (String::class.java.isAssignableFrom(type)) {
             when (fieldName) {
-                in UserXformer.FIELDS -> UserXformer.decode(ctx.client, value, fieldName)
-                in GroupXformer.FIELDS -> GroupXformer.decode(ctx.client, value, fieldName)
-                in RoleXformer.FIELDS -> RoleXformer.decode(ctx.client, value, fieldName)
+                in UserXformer.FIELDS -> UserXformer.decode(ctx, value, fieldName)
+                in GroupXformer.FIELDS -> GroupXformer.decode(ctx, value, fieldName)
+                in RoleXformer.FIELDS -> RoleXformer.decode(ctx, value, fieldName)
                 in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
                 else -> decodeString(value)
             }

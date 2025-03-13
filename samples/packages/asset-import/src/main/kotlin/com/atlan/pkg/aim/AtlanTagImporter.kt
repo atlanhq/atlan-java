@@ -77,7 +77,7 @@ class AtlanTagImporter(
      * Actually import the tags.
      */
     fun import(): ImportResults? {
-        ctx.client.atlanTagCache.refresh()
+        ctx.client.atlanTagCache.refreshIfNeeded()
         val filteredRowCount = AtomicLong(0)
         counter.stream().skip(1).forEach { row ->
             val tagName = getTagName(row.fields, header)
