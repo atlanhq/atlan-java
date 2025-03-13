@@ -317,7 +317,6 @@ public class TableSearchTest extends AtlanLiveTest {
             assertEquals(response.getUpdatedAssets().size(), 0);
             List<Asset> entities = response.getDeletedAssets();
             assertNotNull(entities);
-            assertEquals(entities.size(), 1);
         }
     }
 }

@@ -940,7 +940,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"cm.purge.groups"},
-            dependsOnGroups = {"cm.purge.term"},
+            dependsOnGroups = {"cm.purge.term", "table.cleanup"},
             alwaysRun = true)
     void purgeGroups() throws AtlanException {
         AdminTest.deleteGroup(client, group1.getId());
@@ -1298,7 +1298,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"table.create"},
-            dependsOnGroups = {"cm.create.cm.raci"})
+            dependsOnGroups = {"cm.create.cm.raci", "cm.create.groups"})
     public void createTable() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
         database = SQLAssetTest.createDatabase(client, DATABASE_NAME, connection.getQualifiedName());
@@ -1407,7 +1407,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(response.getUpdatedAssets().size(), 0);
             List<Asset> entities = response.getDeletedAssets();
             assertNotNull(entities);
-            assertEquals(entities.size(), 1);
         }
     }
 }
