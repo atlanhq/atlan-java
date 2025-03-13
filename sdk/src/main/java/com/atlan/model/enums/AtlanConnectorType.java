@@ -151,7 +151,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     COGNOS("cognos", AtlanConnectionCategory.BI),
     CRATEDB("cratedb", AtlanConnectionCategory.DATABASE),
     KX("kx", AtlanConnectionCategory.DATABASE),
-    DOCUMENTDB("document", AtlanConnectionCategory.DATABASE);
+    DOCUMENTDB("documentdb", AtlanConnectionCategory.DATABASE);
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
