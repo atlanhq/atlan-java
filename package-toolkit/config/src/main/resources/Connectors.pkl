@@ -569,7 +569,7 @@ hidden const KX: Type = new {
   value = "kx"
   category = "database"
 }
-hidden const MONGODB: Type = new {
+hidden const DOCUMENTDB: Type = new {
   value = "documentdb"
   category = "database"
 }
