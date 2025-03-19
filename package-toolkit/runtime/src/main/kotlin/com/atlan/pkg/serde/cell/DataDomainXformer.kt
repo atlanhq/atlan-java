@@ -71,7 +71,7 @@ object DataDomainXformer {
     ): Asset =
         when (fieldName) {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName, Asset.DOMAIN_GUIDS.atlanFieldName -> {
-                ctx.dataDomainCache.getByIdentity(assetRef)?.trimToReference()
+                ctx.dataDomainCache.getByGuid(assetRef)?.trimToReference()
                     ?: throw NoSuchElementException("Domain not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)

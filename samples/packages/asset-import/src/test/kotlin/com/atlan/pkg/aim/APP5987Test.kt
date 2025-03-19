@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.Database
@@ -38,7 +39,7 @@ class APP5987Test : PackageTest("idd") {
         return response.getResult(c1)
     }
 
-    private fun createDatabase(connection: Connection): Database {
+    private fun createDatabase(): Database {
         val d1 = Database.creator("DB", connection.qualifiedName).build()
         val response = d1.save(client)
         return response.getResult(d1)
@@ -104,9 +105,9 @@ class APP5987Test : PackageTest("idd") {
 
     override fun setup() {
         connection = createConnection()
-        val database = createDatabase(connection)
+        val database = createDatabase()
         val schema = createSchema(database)
-        val table = createTable(schema)
+        createTable(schema)
         d1 = createDomain()
         prepFile()
         runCustomPackage(
@@ -130,24 +131,13 @@ class APP5987Test : PackageTest("idd") {
         val request =
             Table
                 .select(client)
-                .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .includesOnResults(tableAttrs)
-                .includeOnRelations(Schema.NAME)
+                .where(Asset.DOMAIN_GUIDS.eq(d1.guid))
+                .where(Asset.TYPE_NAME.eq(Table.TYPE_NAME))
+                .where(Asset.NAME.eq("TBL"))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val tbl = found[0] as Table
-    }
-
-    override fun teardown() {
-        removeDomain(dataDomain1)
-        removeConnection(connectionName, connectorType)
-    }
-
-    @Test
-    fun domain1Created() {
-        assertEquals(dataDomain1, d1.name)
     }
 
     @Test
@@ -158,5 +148,10 @@ class APP5987Test : PackageTest("idd") {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
+    }
+
+    override fun teardown() {
+        removeConnection(connectionName, connectorType)
+        removeDomain(dataDomain1)
     }
 }
