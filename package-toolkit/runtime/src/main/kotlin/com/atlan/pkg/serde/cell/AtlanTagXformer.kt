@@ -9,6 +9,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.ITag
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.core.AtlanTag.AtlanTagBuilder
+import com.atlan.model.relations.Reference.SaveSemantic
 import com.atlan.model.structs.SourceTagAttachment
 import com.atlan.model.structs.SourceTagAttachmentValue
 import com.atlan.pkg.serde.FieldSerde.FAIL_ON_ERRORS
@@ -20,6 +21,8 @@ object AtlanTagXformer {
     private const val ATTACHMENT_DELIMITER = "##"
     private const val VALUE_SEPARATOR = "??"
     private const val VALUE_DELIMITER = "&&"
+    private const val APPEND_PREFIX = "++"
+    private const val REMOVE_PREFIX = "--"
 
     enum class PropagationType {
         FULL,
@@ -55,12 +58,21 @@ object AtlanTagXformer {
     ): AtlanTag? =
         if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
+            val (frontMatter, tagSemantic) =
+                if (tokens[0].startsWith(APPEND_PREFIX)) {
+                    Pair(tokens[0].removePrefix(APPEND_PREFIX), SaveSemantic.APPEND)
+                } else if (tokens[0].endsWith(REMOVE_PREFIX)) {
+                    Pair(tokens[0].removePrefix(REMOVE_PREFIX), SaveSemantic.REMOVE)
+                } else {
+                    Pair(tokens[0], SaveSemantic.REPLACE)
+                }
             val builder = AtlanTag.builder()
-            val typeName = decodeAttributes(client, tokens[0], builder)
+            val typeName = decodeAttributes(client, frontMatter, builder)
             try {
                 client.atlanTagCache.getIdForName(typeName)
                 builder.typeName(typeName)
                 decodePropagation(tokens, builder)
+                builder.semantic(tagSemantic)
                 builder.build()
             } catch (e: NotFoundException) {
                 if (FAIL_ON_ERRORS.get()) {
