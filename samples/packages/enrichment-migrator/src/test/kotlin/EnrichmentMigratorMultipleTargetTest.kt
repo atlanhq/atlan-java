@@ -87,6 +87,8 @@ class EnrichmentMigratorMultipleTargetTest : PackageTest("mt") {
                 failOnErrors = false,
                 limitType = "INCLUDE",
                 attributesList = listOf("description"),
+                cmLimitType = "INCLUDE",
+                customMetadata = "",
             ),
             EnrichmentMigrator::main,
         )

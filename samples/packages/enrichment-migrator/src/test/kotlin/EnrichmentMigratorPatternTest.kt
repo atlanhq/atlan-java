@@ -94,6 +94,8 @@ class EnrichmentMigratorPatternTest : PackageTest("p") {
                 targetDatabasePattern = dbNamePattern,
                 failOnErrors = false,
                 limitType = "EXCLUDE",
+                cmLimitType = "INCLUDE",
+                customMetadata = "",
             ),
             EnrichmentMigrator::main,
         )
