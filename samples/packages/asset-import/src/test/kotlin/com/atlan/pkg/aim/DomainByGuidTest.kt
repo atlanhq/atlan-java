@@ -7,25 +7,22 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.Database
-import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class APP5987Test : PackageTest("idd") {
+class DomainByGuidTest : PackageTest("dbg") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val connectionName = makeUnique("c1")
-    private val connectorType = AtlanConnectorType.ORACLE
     private lateinit var connection: Connection
     private val dataDomain1 = makeUnique("d1")
+    private val db = makeUnique("db1")
     private lateinit var d1: DataDomain
-    private val testFile = "asset-import-domain.csv"
+    private val testFile = "domain-by-guid.csv"
 
     private val files =
         listOf(
@@ -33,57 +30,11 @@ class APP5987Test : PackageTest("idd") {
             "debug.log",
         )
 
-    private fun createConnection(): Connection {
-        val c1 = Connection.creator(client, connectionName, connectorType).build()
-        val response = c1.save(client).block()
-        return response.getResult(c1)
-    }
-
-    private fun createDatabase(): Database {
-        val d1 = Database.creator("DB", connection.qualifiedName).build()
-        val response = d1.save(client)
-        return response.getResult(d1)
-    }
-
-    private fun createSchema(database: Database): Schema {
-        val s1 = Schema.creator("SCH", database.qualifiedName).build()
-        val response = s1.save(client)
-        return response.getResult(s1)
-    }
-
-    private fun createTable(schema: Schema): Table {
-        val t1 = Table.creator("TBL", schema.qualifiedName).build()
-        val response = t1.save(client)
-        return response.getResult(t1)
-    }
-
     private fun createDomain(): DataDomain {
         val d1 = DataDomain.creator(dataDomain1).build()
         val response = d1.save(client)
         return response.getResult(d1)
     }
-
-    private val connectionAttrs: List<AtlanField> =
-        listOf(
-            Connection.NAME,
-            Connection.CONNECTOR_TYPE,
-            Connection.ADMIN_ROLES,
-            Connection.ADMIN_GROUPS,
-            Connection.ADMIN_USERS,
-        )
-
-    private val tableAttrs: List<AtlanField> =
-        listOf(
-            Table.NAME,
-            Table.STATUS,
-            Table.CONNECTION_QUALIFIED_NAME,
-            Table.CONNECTOR_TYPE,
-            Table.DATABASE_NAME,
-            Table.DATABASE_QUALIFIED_NAME,
-            Table.SCHEMA_NAME,
-            Table.SCHEMA_QUALIFIED_NAME,
-            Table.SCHEMA,
-        )
 
     private fun prepFile(
         connectionQN: String = connection.qualifiedName,
@@ -98,16 +49,13 @@ class APP5987Test : PackageTest("idd") {
                     line
                         .replace("{{DATADOMAIN_GUID}}", dataDomainGuid)
                         .replace("{{CONNECTION}}", connectionQN)
+                        .replace("{{DB}}", db)
                 output.appendText("$revised\n")
             }
         }
     }
 
     override fun setup() {
-        connection = createConnection()
-        val database = createDatabase()
-        val schema = createSchema(database)
-        createTable(schema)
         d1 = createDomain()
         prepFile()
         runCustomPackage(
@@ -121,19 +69,27 @@ class APP5987Test : PackageTest("idd") {
         )
     }
 
-    @Test
-    fun tableUpdated() {
-        validateTable()
+    override fun teardown() {
+        val snowflake = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        Database
+            .select(client)
+            .where(Database.CONNECTION_QUALIFIED_NAME.eq(snowflake.qualifiedName))
+            .where(Database.NAME.eq(db))
+            .stream()
+            .findFirst()
+            .ifPresent {
+                Database.purge(client, it.guid)
+            }
+        removeDomain(dataDomain1)
     }
 
-    private fun validateTable() {
-        val c1 = Connection.findByName(client, connectionName, connectorType, connectionAttrs)[0]!!
+    @Test
+    fun tableUpdated() {
         val request =
             Table
                 .select(client)
                 .where(Asset.DOMAIN_GUIDS.eq(d1.guid))
-                .where(Asset.TYPE_NAME.eq(Table.TYPE_NAME))
-                .where(Asset.NAME.eq("TBL"))
+                .where(Asset.NAME.eq(db))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
@@ -148,10 +104,5 @@ class APP5987Test : PackageTest("idd") {
     @Test
     fun errorFreeLog() {
         validateErrorFreeLog()
-    }
-
-    override fun teardown() {
-        removeConnection(connectionName, connectorType)
-        removeDomain(dataDomain1)
     }
 }
