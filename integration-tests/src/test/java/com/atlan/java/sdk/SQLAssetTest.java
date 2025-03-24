@@ -1422,7 +1422,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(client, column5.getGuid(), 50).build();
 
-        AuditSearchResponse response = retrySearchUntil(request, 28L);
+        AuditSearchResponse response = retrySearchUntil(request, 29L);
 
         validateAudits(response.getEntityAudits());
 
@@ -1430,7 +1430,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
                 .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
                 .pageSize(10);
-        assertEquals(builder.count(), 28);
+        assertEquals(builder.count(), 29);
         validateAudits(builder.stream().collect(Collectors.toList()));
     }
 
@@ -1441,14 +1441,14 @@ public class SQLAssetTest extends AtlanLiveTest {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
                 .build();
-        AuditSearchResponse response = retrySearchUntil(request, 28L);
+        AuditSearchResponse response = retrySearchUntil(request, 29L);
         validateAudits(response.getEntityAudits());
     }
 
     private void validateAudits(List<EntityAudit> audits) {
-        assertEquals(audits.size(), 28);
+        assertEquals(audits.size(), 29);
 
-        EntityAudit one = audits.get(27);
+        EntityAudit one = audits.get(28);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_CREATE);
         AuditDetail detail = one.getDetail();
@@ -1462,6 +1462,15 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(parent.getGuid(), mview.getGuid());
         assertNull(column.getCertificateStatus());
         assertNull(column.getAnnouncementType());
+
+        // TODO: there seems to be a (spurious?) entity update here for nothing at all (?)
+        one = audits.get(27);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        // column = (Column) detail;
+        // log.info("Full change at 27: {}", column.toJson(client));
 
         one = audits.get(26);
         assertNotNull(one);
@@ -1635,14 +1644,6 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         Set<AtlanTag> tagsDeleted = new HashSet<>();
 
-        // TODO: one of these DELETEs goes away...
-        /*one = audits.get(13);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
-        detail = one.getDetail();
-        assertTrue(detail instanceof AtlanTag);
-        tagsDeleted.add((AtlanTag) detail);*/
-
         one = audits.get(10);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
@@ -1654,7 +1655,6 @@ public class SQLAssetTest extends AtlanLiveTest {
                 tagsDeleted.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
         assertEquals(tagsDeleted.size(), 1);
         assertEquals(tagsDeletedNames.size(), 1);
-        // assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME1));
         assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME2));
 
         // TODO: there seems to be a (spurious?) entity update here for ATLAN_TAG_NAME1
@@ -1672,14 +1672,6 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         tagsAdded = new HashSet<>();
 
-        // TODO: one of these ADDs goes away
-        /*one = audits.get(11);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
-        detail = one.getDetail();
-        assertTrue(detail instanceof AtlanTag);
-        tagsAdded.add((AtlanTag) detail);*/
-
         one = audits.get(8);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
@@ -1693,7 +1685,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(tagsAddedGuids.size(), 1);
         assertTrue(tagsAddedGuids.contains(column5.getGuid()));
         assertEquals(tagsAddedNames.size(), 1);
-        // assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME1));
         assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME2));
 
         one = audits.get(7);

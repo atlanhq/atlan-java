@@ -914,7 +914,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void readTermAuditByGuid() throws AtlanException, InterruptedException {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(client, term.getGuid(), 40).build();
-        AuditSearchResponse response = retrySearchUntil(request, 13L);
+        AuditSearchResponse response = retrySearchUntil(request, 14L);
         validateAudits(response.getEntityAudits());
     }
 
@@ -925,7 +925,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
                 .build();
-        AuditSearchResponse response = retrySearchUntil(request, 13L);
+        AuditSearchResponse response = retrySearchUntil(request, 14L);
         validateAudits(response.getEntityAudits());
     }
 
@@ -1092,7 +1092,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     private void validateAudits(List<EntityAudit> audits) {
         assertNotNull(audits);
-        assertTrue(audits.size() >= 13);
+        assertTrue(audits.size() >= 14);
 
         int numEntries = audits.size();
         // Last one in the list should always be the creation of the entity
@@ -1108,8 +1108,17 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(t.getAnchor());
         assertEquals(t.getAnchor().getGuid(), glossary.getGuid());
 
-        // Then adding RACI
+        // TODO: there seems to be a (spurious?) entity update here for nothing at all (?)
         one = audits.get(numEntries - 2);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof GlossaryTerm);
+        // t = (GlossaryTerm) detail;
+        // log.info("Full change at -2: {}", t.toJson(client));
+
+        // Then adding RACI
+        one = audits.get(numEntries - 3);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -1119,7 +1128,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         validateRACIAttributes(cmad.getAttributes());
 
         // Then adding IPR
-        one = audits.get(numEntries - 3);
+        one = audits.get(numEntries - 4);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -1129,7 +1138,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         validateIPRAttributes(cmad.getAttributes(), true);
 
         // Then adding DQ
-        one = audits.get(numEntries - 4);
+        one = audits.get(numEntries - 5);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -1139,7 +1148,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         validateDQAttributes(cmad.getAttributes());
 
         // Then updating IPR
-        one = audits.get(numEntries - 5);
+        one = audits.get(numEntries - 6);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -1153,7 +1162,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(attributes.get(CM_ATTR_IPR_MANDATORY), false);
 
         // Then replacing RACI
-        int nextIdx = numEntries - 6;
+        int nextIdx = numEntries - 7;
         do {
             one = audits.get(nextIdx);
             assertNotNull(one);

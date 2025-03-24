@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.cell.AssetRefXformer.getSemantic
 
 /**
  * Static object to transform category references.
@@ -51,11 +52,23 @@ object GlossaryCategoryXformer {
     ): Asset =
         when (fieldName) {
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName -> {
-                ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
+                val (ref, semantic) = getSemantic(assetRef)
+                ctx.categoryCache
+                    .getByIdentity(ref)
+                    ?.trimToReference()
+                    ?.toBuilder()
+                    ?.semantic(semantic)
+                    ?.build()
                     ?: throw NoSuchElementException("Parent category not found (in $fieldName): $assetRef")
             }
             GlossaryTerm.CATEGORIES.atlanFieldName -> {
-                ctx.categoryCache.getByIdentity(assetRef)?.trimToReference()
+                val (ref, semantic) = getSemantic(assetRef)
+                ctx.categoryCache
+                    .getByIdentity(assetRef)
+                    ?.trimToReference()
+                    ?.toBuilder()
+                    ?.semantic(semantic)
+                    ?.build()
                     ?: throw NoSuchElementException("Category relationship not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
