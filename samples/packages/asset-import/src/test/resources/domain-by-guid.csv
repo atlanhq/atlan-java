@@ -1,0 +1,2 @@
+typeName,qualifiedName,name,connectionQualifiedName,domainGUIDs
+Database,{{CONNECTION}}/{{DB}},{{DB}},{{CONNECTION}},{{DOMAIN_GUID}}
