@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 class DomainByGuidTest : PackageTest("dbg") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private lateinit var connection: Connection
+    private val snowflake = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
     private val dataDomain1 = makeUnique("d1")
     private val db = makeUnique("db1")
     private lateinit var d1: DataDomain
@@ -37,7 +37,6 @@ class DomainByGuidTest : PackageTest("dbg") {
     }
 
     private fun prepFile(
-        connectionQN: String = connection.qualifiedName,
         dataDomainGuid: String = d1.guid,
     ) {
         // Prepare a copy of the file with unique names for domains and products
@@ -48,7 +47,7 @@ class DomainByGuidTest : PackageTest("dbg") {
                 val revised =
                     line
                         .replace("{{DATADOMAIN_GUID}}", dataDomainGuid)
-                        .replace("{{CONNECTION}}", connectionQN)
+                        .replace("{{CONNECTION}}", snowflake.qualifiedName)
                         .replace("{{DB}}", db)
                 output.appendText("$revised\n")
             }
@@ -70,7 +69,6 @@ class DomainByGuidTest : PackageTest("dbg") {
     }
 
     override fun teardown() {
-        val snowflake = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
         Database
             .select(client)
             .where(Database.CONNECTION_QUALIFIED_NAME.eq(snowflake.qualifiedName))
