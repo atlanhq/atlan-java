@@ -5,6 +5,8 @@ package com.atlan.util;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
+import com.atlan.model.assets.Connection;
+import com.atlan.model.enums.AtlanConnectorType;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -17,8 +19,10 @@ import java.util.regex.Pattern;
  * Utilities for working with strings.
  */
 public final class StringUtils {
+    private static final String connectionQualifiedName = "default/[a-z0-9-]+/[0-9]{10}";
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
-    private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
+    private static final Pattern connectionQN = Pattern.compile(connectionQualifiedName);
+    private static final Pattern connectionQNPrefix = Pattern.compile("(" + connectionQualifiedName + ")/.*");
     private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+/super)/.*");
     private static final Pattern uuidPattern =
             Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
@@ -205,6 +209,21 @@ public final class StringUtils {
      */
     public static boolean isUUID(String str) {
         return str != null && uuidPattern.matcher(str).find();
+    }
+
+    /**
+     * Checks whether a string is a valid connection qualifiedName or not.
+     *
+     * @param qn the string to check.
+     * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
+     */
+    public static boolean isValidConnectionQN(String qn) {
+        if (qn == null || qn.isEmpty()) return false;
+        if (connectionQN.matcher(qn).matches()) {
+            AtlanConnectorType type = Connection.getConnectorTypeFromQualifiedName(qn);
+            return (type != null && type != AtlanConnectorType.UNKNOWN_CUSTOM);
+        }
+        return false;
     }
 
     /**

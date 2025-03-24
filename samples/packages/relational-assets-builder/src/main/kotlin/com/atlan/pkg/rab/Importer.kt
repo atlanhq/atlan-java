@@ -18,6 +18,7 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.DeltaProcessor
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
@@ -92,21 +93,6 @@ object Importer {
         FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
         logger.info { "=== Importing assets... ===" }
 
-        logger.info { " --- Importing connections... ---" }
-        // Note: we force-track the batches here to ensure any created connections are cached
-        // (without tracking, any connections created will NOT be cached, either, which will then cause issues
-        // with the subsequent processing steps.)
-        // We also need to load these connections first, irrespective of any delta calculation, so that
-        // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
-        val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
-        val connectionResults = connectionImporter.import()
-        if (connectionResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
-            logger.error { "Some errors detected while loading connections, failing the workflow." }
-            connectionResults.close()
-            exitProcess(1)
-        }
-        connectionResults?.close()
-
         transform(ctx, fieldSeparator, assetsInput, "$outputDirectory${File.separator}current-file-transformed.csv")
 
         if (ctx.config.previousFileDirect.isNotBlank()) {
@@ -144,6 +130,8 @@ object Importer {
             ctx.dataDomainCache.preload()
         }
 
+        val deferredConnectionCache = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
+
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
         // Determine any non-standard RAB fields in the header and append them to the end of
         // the list of standard header fields, so they're passed-through to asset import
@@ -153,7 +141,7 @@ object Importer {
             listOf(
                 ColumnXformer.COLUMN_NAME,
                 ColumnXformer.COLUMN_PARENT_QN,
-                ConnectionImporter.CONNECTOR_TYPE,
+                ConnectionXformer.CONNECTOR_TYPE,
                 AssetXformer.ENTITY_NAME,
             ),
         )
@@ -173,28 +161,32 @@ object Importer {
             ).use { writer ->
                 writer.writeRecord(completeHeaders)
 
+                logger.info { " --- Transforming connections... ---" }
+                val connectionXformer = ConnectionXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                connectionXformer.transform(writer)
+
                 logger.info { " --- Transforming databases... ---" }
-                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 databaseXformer.transform(writer)
 
                 logger.info { " --- Transforming schemas... ---" }
-                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 schemaXformer.transform(writer)
 
                 logger.info { " --- Transforming tables... ---" }
-                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 tableXformer.transform(writer)
 
                 logger.info { " --- Transforming views... ---" }
-                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 viewXformer.transform(writer)
 
                 logger.info { " --- Transforming materialized views... ---" }
-                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 materializedViewXformer.transform(writer)
 
                 logger.info { " --- Transforming columns... ---" }
-                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
+                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
                 columnXformer.transform(writer)
             }
     }
