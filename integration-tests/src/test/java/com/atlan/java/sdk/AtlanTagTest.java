@@ -16,6 +16,7 @@ import com.atlan.model.assets.SourceTag;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.model.structs.SourceTagAttachment;
@@ -27,6 +28,8 @@ import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -45,6 +48,7 @@ public class AtlanTagTest extends AtlanLiveTest {
 
     private static Connection connection;
     private static SourceTag sourceTag;
+    private static Database database;
 
     /**
      * Create a new Atlan tag with a unique name.
@@ -205,7 +209,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         AssetMutationResponse response = db.save(client);
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
-        db = (Database) one;
+        database = (Database) one;
         assertNotNull(db.getGuid());
         assertNotNull(db.getQualifiedName());
         assertEquals(db.getName(), PREFIX);
@@ -215,6 +219,118 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset"},
             dependsOnGroups = {"tag.create.asset"})
     void readAssetWithSourceTag() throws AtlanException, InterruptedException {
+        validateSingleTag();
+    }
+
+    @Test(
+            groups = {"tag.manage.append"},
+            dependsOnGroups = {"tag.read.asset"})
+    void appendTagToAsset() throws AtlanException {
+        Database db = Database.updater(database.getQualifiedName(), database.getName())
+                .atlanTag(AtlanTag.of(TAG_WITH_ICON, Reference.SaveSemantic.APPEND))
+                .build();
+        AssetMutationResponse response = db.save(client);
+        Asset one = validateSingleUpdate(response);
+        assertTrue(one instanceof Database);
+        db = (Database) one;
+        assertEquals(db.getGuid(), database.getGuid());
+    }
+
+    @Test(
+            groups = {"tag.read.asset2"},
+            dependsOnGroups = {"tag.manage.append"})
+    void readAssetWithTwoTags() throws AtlanException, InterruptedException {
+        IndexSearchRequest request = Database.select(client)
+                .tagged(List.of(TAG_WITH_ICON))
+                .includeOnResults(Asset.ATLAN_TAGS)
+                .toRequest();
+        IndexSearchResponse response = retrySearchUntil(request, 1L);
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount(), 1);
+        assertEquals(response.getAssets().size(), 1);
+        Asset db = response.getAssets().get(0);
+        assertTrue(db instanceof Database);
+        assertNotNull(db.getAtlanTags());
+        assertEquals(db.getAtlanTags().size(), 2);
+        assertEquals(
+                db.getAtlanTags().stream().map(AtlanTag::getTypeName).collect(Collectors.toSet()),
+                Set.of(SOURCE_SYNCED, TAG_WITH_ICON));
+        db.getAtlanTags().forEach(atlanTag -> {
+            if (atlanTag.getTypeName().equals(SOURCE_SYNCED)) {
+                assertEquals(atlanTag.getTypeName(), SOURCE_SYNCED);
+                assertNotNull(atlanTag.getSourceTagAttachments());
+                assertEquals(atlanTag.getSourceTagAttachments().size(), 1);
+                SourceTagAttachment sta = atlanTag.getSourceTagAttachments().get(0);
+                assertNotNull(sta);
+                assertEquals(sta.getSourceTagName(), SOURCE_SYNCED);
+                assertEquals(sta.getSourceTagQualifiedName(), sourceTag.getQualifiedName());
+                assertEquals(sta.getSourceTagGuid(), sourceTag.getGuid());
+                assertEquals(sta.getSourceTagConnectorName(), AtlanConnectorType.TREASURE_DATA.getValue());
+                assertNotNull(sta.getSourceTagValues());
+                assertEquals(sta.getSourceTagValues().size(), 1);
+                assertEquals(sta.getSourceTagValues().get(0).getTagAttachmentValue(), "A");
+                assertNull(sta.getSourceTagValues().get(0).getTagAttachmentKey());
+            }
+        });
+    }
+
+    @Test(
+            groups = {"tag.manage.remove"},
+            dependsOnGroups = {"tag.read.asset2"})
+    void removeTagFromAsset() throws AtlanException {
+        Database db = Database.updater(database.getQualifiedName(), database.getName())
+                .atlanTag(AtlanTag.of(TAG_WITH_ICON, Reference.SaveSemantic.REMOVE))
+                .build();
+        AssetMutationResponse response = db.save(client);
+        Asset one = validateSingleUpdate(response);
+        assertTrue(one instanceof Database);
+        db = (Database) one;
+        assertEquals(db.getGuid(), database.getGuid());
+    }
+
+    @Test(
+            groups = {"tag.read.asset3"},
+            dependsOnGroups = {"tag.manage.remove"})
+    void readAssetWithoutTag() throws AtlanException, InterruptedException {
+        validateSingleTag();
+    }
+
+    @Test(
+            groups = {"tag.manage.replace"},
+            dependsOnGroups = {"tag.read.asset3"})
+    void replaceTagOnAsset() throws AtlanException {
+        Database db = Database.updater(database.getQualifiedName(), database.getName())
+                .atlanTag(AtlanTag.of(TAG_WITH_EMOJI))
+                .build();
+        AssetMutationResponse response = db.save(client);
+        Asset one = validateSingleUpdate(response);
+        assertTrue(one instanceof Database);
+        db = (Database) one;
+        assertEquals(db.getGuid(), database.getGuid());
+    }
+
+    @Test(
+            groups = {"tag.read.asset4"},
+            dependsOnGroups = {"tag.manage.replace"})
+    void readAssetWithReplacedTag() throws AtlanException, InterruptedException {
+        IndexSearchRequest request = Database.select(client)
+                .tagged(List.of(TAG_WITH_EMOJI))
+                .includeOnResults(Asset.ATLAN_TAGS)
+                .toRequest();
+        IndexSearchResponse response = retrySearchUntil(request, 1L);
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount(), 1);
+        assertEquals(response.getAssets().size(), 1);
+        Asset db = response.getAssets().get(0);
+        assertTrue(db instanceof Database);
+        assertNotNull(db.getAtlanTags());
+        assertEquals(db.getAtlanTags().size(), 1);
+        AtlanTag one = db.getAtlanTags().first();
+        assertNotNull(one);
+        assertEquals(one.getTypeName(), TAG_WITH_EMOJI);
+    }
+
+    private void validateSingleTag() throws AtlanException, InterruptedException {
         IndexSearchRequest request = Database.select(client)
                 .taggedWithValue(SOURCE_SYNCED, "A", true)
                 .includeOnResults(Asset.ATLAN_TAGS)

@@ -409,13 +409,19 @@ public class AssetBatch implements AtlanCloseable {
 
     private Asset handleTags(Asset asset) throws LogicException {
         Reference.ReferenceBuilder<?, ?> assetBuilder = asset.toBuilder();
+        Method clearAtlanTags = ReflectionCache.getSetter(assetBuilder.getClass(), "clearAtlanTags");
         Method setAtlanTags = ReflectionCache.getSetter(assetBuilder.getClass(), "atlanTags");
         try {
             Set<AtlanTag> existing = asset.getAtlanTags();
             Set<AtlanTag> revisedTags = new TreeSet<>();
-            for (AtlanTag tag : existing) {
-                AtlanTag revised =
-                        switch (atlanTagHandling) {
+            if (atlanTagHandling != AtlanTagHandling.IGNORE) {
+                for (AtlanTag tag : existing) {
+                    AtlanTag revised = tag;
+                    // Compare whether the existing semantic is REPLACE (as this is the fallback, default)
+                    // ... and if it is, but tag handling suggests doing something else, instead use the tag handling
+                    // setting
+                    if (tag.getSemantic() == Reference.SaveSemantic.REPLACE) {
+                        revised = switch (atlanTagHandling) {
                             case APPEND -> tag.toBuilder()
                                     .semantic(Reference.SaveSemantic.APPEND)
                                     .build();
@@ -425,13 +431,19 @@ public class AssetBatch implements AtlanCloseable {
                             case REMOVE -> tag.toBuilder()
                                     .semantic(Reference.SaveSemantic.REMOVE)
                                     .build();
-                            default -> null;
-                        };
-                if (revised != null) {
-                    revisedTags.add(revised);
+                            default -> null;};
+                    }
+                    if (revised != null) {
+                        revisedTags.add(revised);
+                    }
                 }
             }
-            setAtlanTags.invoke(assetBuilder, revisedTags);
+            // Clear out the atlanTags first, or no difference is found between them and the
+            // set is not updated (so we just retain the original, default REPLACE)...
+            clearAtlanTags.invoke(assetBuilder);
+            if (atlanTagHandling != AtlanTagHandling.IGNORE) {
+                setAtlanTags.invoke(assetBuilder, revisedTags);
+            }
             return (Asset) assetBuilder.build();
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new LogicException(ErrorCode.ASSET_MODIFICATION_ERROR, e, Asset.ATLAN_TAGS.getAtlanFieldName());

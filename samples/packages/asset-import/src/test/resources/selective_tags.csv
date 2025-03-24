@@ -1,0 +1,4 @@
+qualifiedName,typeName,name,atlanTags,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName
+{{CONNECTION}}/{{DB1}},Database,{{DB1}},++{{TAG2}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB1}},{{DB1}}
+{{CONNECTION}}/{{DB2}},Database,{{DB2}},--{{TAG2}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB2}},{{DB2}}
+{{CONNECTION}}/{{DB3}},Database,{{DB3}},{{TAG2}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB3}},{{DB3}}

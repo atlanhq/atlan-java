@@ -59,7 +59,7 @@ object AtlanTagXformer {
             val (frontMatter, tagSemantic) =
                 if (tokens[0].startsWith(AssetRefXformer.APPEND_PREFIX)) {
                     Pair(tokens[0].removePrefix(AssetRefXformer.APPEND_PREFIX), SaveSemantic.APPEND)
-                } else if (tokens[0].endsWith(AssetRefXformer.REMOVE_PREFIX)) {
+                } else if (tokens[0].startsWith(AssetRefXformer.REMOVE_PREFIX)) {
                     Pair(tokens[0].removePrefix(AssetRefXformer.REMOVE_PREFIX), SaveSemantic.REMOVE)
                 } else {
                     Pair(tokens[0], SaveSemantic.REPLACE)
