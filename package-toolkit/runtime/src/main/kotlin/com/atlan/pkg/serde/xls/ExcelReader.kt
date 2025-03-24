@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.xls
 
 import org.apache.poi.openxml4j.opc.OPCPackage
 import org.apache.poi.ss.usermodel.DataFormatter
+import org.apache.poi.util.XMLHelper
 import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable
 import org.apache.poi.xssf.eventusermodel.XSSFReader
 import org.apache.poi.xssf.eventusermodel.XSSFReader.SheetIterator
@@ -14,7 +15,6 @@ import org.xml.sax.InputSource
 import java.io.Closeable
 import java.io.IOException
 import java.io.InputStream
-import javax.xml.parsers.SAXParserFactory
 
 /**
  * Utility class for parsing and reading the contents of Excel files, using Apache POI.
@@ -110,22 +110,22 @@ class ExcelReader(
         headerRow: Int,
     ): List<Map<String, String>> {
         val allRows = mutableListOf<Map<String, String>>()
-        val rowHandler = RowHandler(headerRow)
-        val factory = SAXParserFactory.newInstance()
-        val parser = factory.newSAXParser().xmlReader
+        val sheetParser = XMLHelper.newXMLReader()
+        val sheetHandler = SheetHandler(headerRow)
         val handler =
             XSSFSheetXMLHandler(
                 styles,
+                null,
                 strings,
-                rowHandler,
+                sheetHandler,
                 formatter,
                 false,
             )
-        parser.contentHandler = handler
+        sheetParser.contentHandler = handler
         val source = InputSource(data)
-        parser.parse(source)
-        val header = rowHandler.header
-        for (row in rowHandler.rows) {
+        sheetParser.parse(source)
+        val header = sheetHandler.header
+        for (row in sheetHandler.rows) {
             val rowMapping = mutableMapOf<String, String>()
             header.forEachIndexed { idx, colName ->
                 rowMapping[colName] = row.getOrNull(idx) ?: ""
@@ -147,7 +147,7 @@ class ExcelReader(
      * Memory-efficient event-based streaming reader for an Excel file (without loading the entire, heavy
      * structure into memory).
      */
-    private class RowHandler(
+    private class SheetHandler(
         val headerIdx: Int = 0,
     ) : SheetContentsHandler {
         private var currentRow = mutableListOf<String>()
