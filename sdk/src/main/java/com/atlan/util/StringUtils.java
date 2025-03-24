@@ -215,7 +215,7 @@ public final class StringUtils {
      * Checks whether a string is a valid connection qualifiedName or not.
      *
      * @param qn the string to check.
-     * @return {@code true} if the string is a valid connection qualifiedNAme; otherwise, {@code false}.
+     * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
      */
     public static boolean isValidConnectionQN(String qn) {
         if (qn == null || qn.isEmpty()) return false;
