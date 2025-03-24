@@ -855,9 +855,9 @@ class AssetImporter(
          * @return an ordered (top-down) list of types
          */
         fun getLoadOrder(types: Set<String>): List<String> =
-            types.sortedBy { t ->
+            types.filter { it != Connection.TYPE_NAME }.sortedBy { t ->
                 ordering
-                    .flatMap { it.types.filter { typeName -> typeName != Connection.TYPE_NAME } }
+                    .flatMap { it.types }
                     .indexOf(t)
                     .takeIf { it >= 0 }
                     ?: Int.MAX_VALUE

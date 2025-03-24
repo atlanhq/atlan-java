@@ -16,8 +16,8 @@ import kotlin.test.assertEquals
 class OrderingTest {
     @Test
     fun test() {
-        val types = setOf(AtlanCollection.TYPE_NAME, Column.TYPE_NAME, Table.TYPE_NAME, "xyz", Connection.TYPE_NAME)
+        val types = setOf("xyz", Column.TYPE_NAME, AtlanCollection.TYPE_NAME, Table.TYPE_NAME, Connection.TYPE_NAME)
         val order = AssetImporter.getLoadOrder(types)
-        assertEquals(listOf(Connection.TYPE_NAME, AtlanCollection.TYPE_NAME, Table.TYPE_NAME, Column.TYPE_NAME, "xyz"), order)
+        assertEquals(listOf(AtlanCollection.TYPE_NAME, Table.TYPE_NAME, Column.TYPE_NAME, "xyz"), order)
     }
 }
