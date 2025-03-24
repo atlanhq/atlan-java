@@ -23,6 +23,7 @@ abstract class AssetXformer(
     completeHeaders: List<String>,
     val typeNameFilter: String,
     val preprocessedDetails: Importer.Results,
+    val deferredConnectionCache: MutableMap<ConnectionIdentity, String>,
     private val logger: KLogger,
 ) : CSVXformer(
         inputFile = preprocessedDetails.preprocessedFile,
@@ -48,6 +49,18 @@ abstract class AssetXformer(
     override fun includeRow(inputRow: Map<String, String>): Boolean = trimWhitespace(inputRow.getOrElse(Asset.TYPE_NAME.atlanFieldName) { "" }) == typeNameFilter
 
     abstract fun mapAsset(inputRow: Map<String, String>): Map<String, String>
+
+    fun getConnectionQN(
+        ctx: PackageContext<RelationalAssetsBuilderCfg>,
+        inputRow: Map<String, String>,
+    ): String {
+        val connectorType = getConnectorType(inputRow)
+        val connectionName = trimWhitespace(inputRow.getOrElse(Asset.CONNECTION_NAME.atlanFieldName) { "" })
+        val connectionId = ConnectionIdentity(connectionName, connectorType)
+        return deferredConnectionCache.getOrElse(connectionId) {
+            ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
+        }
+    }
 
     companion object {
         const val ENTITY_NAME = "entityName"
@@ -83,16 +96,6 @@ abstract class AssetXformer(
                 RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
             )
 
-        fun getConnectionQN(
-            ctx: PackageContext<RelationalAssetsBuilderCfg>,
-            inputRow: Map<String, String>,
-        ): String {
-            val connectorType = getConnectorType(inputRow)
-            val connectionName = trimWhitespace(inputRow.getOrElse(Asset.CONNECTION_NAME.atlanFieldName) { "" })
-            val connectionId = ConnectionIdentity(connectionName, connectorType)
-            return ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
-        }
-
         fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" }).lowercase()
 
         /**
@@ -115,7 +118,7 @@ abstract class AssetXformer(
             when (typeName) {
                 Connection.TYPE_NAME -> {
                     val connection = trimWhitespace(row.getOrElse(Asset.CONNECTION_NAME.atlanFieldName) { "" })
-                    val connector = trimWhitespace(row.getOrElse(ConnectionImporter.CONNECTOR_TYPE) { "" }).lowercase()
+                    val connector = trimWhitespace(row.getOrElse(ConnectionXformer.CONNECTOR_TYPE) { "" }).lowercase()
                     current = ConnectionIdentity(connection, connector).toString()
                     parent = null
                 }

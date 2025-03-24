@@ -67,8 +67,8 @@ class ImportURLTest : PackageTest("u") {
         val one = results[0] as APISpec
         assertEquals("Swagger Petstore - OpenAPI 3.0", one.name)
         assertEquals("3.0.4", one.apiSpecType)
-        assertEquals("http://www.apache.org/licenses/LICENSE-2.0.html", one.apiSpecLicenseURL)
-        assertEquals("http://swagger.io/terms/", one.apiSpecTermsOfServiceURL)
+        assertEquals("https://www.apache.org/licenses/LICENSE-2.0.html", one.apiSpecLicenseURL)
+        assertEquals("https://swagger.io/terms/", one.apiSpecTermsOfServiceURL)
         assertFalse(one.apiIsAuthOptional)
         assertTrue(one.qualifiedName.startsWith(connectionQN))
     }

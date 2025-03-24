@@ -7,6 +7,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Table
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde
+import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
 import mu.KLogger
 
 abstract class ContainerXformer(
@@ -14,12 +15,14 @@ abstract class ContainerXformer(
     completeHeaders: List<String>,
     typeNameFilter: String,
     preprocessedDetails: Importer.Results,
+    deferredConnectionCache: MutableMap<ConnectionIdentity, String>,
     private val logger: KLogger,
 ) : AssetXformer(
         ctx = ctx,
         completeHeaders = completeHeaders,
         typeNameFilter = typeNameFilter,
         preprocessedDetails = preprocessedDetails,
+        deferredConnectionCache = deferredConnectionCache,
         logger = logger,
     ) {
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {

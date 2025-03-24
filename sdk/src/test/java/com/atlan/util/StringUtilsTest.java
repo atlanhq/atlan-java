@@ -97,4 +97,28 @@ public class StringUtilsTest {
         String snakeCaseL = StringUtils.getLowerSnakeCase(test);
         assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
     }
+
+    @Test
+    void validConnectionQN() {
+        final String test = "default/snowflake/1234567890";
+        assertTrue(StringUtils.isValidConnectionQN(test));
+    }
+
+    @Test
+    void invalidConnectionQN_tooShort() {
+        final String test = "default/snowflake/123456789";
+        assertFalse(StringUtils.isValidConnectionQN(test));
+    }
+
+    @Test
+    void invalidConnectionQN_invalidType() {
+        final String test = "default/xyz/1234567890";
+        assertFalse(StringUtils.isValidConnectionQN(test));
+    }
+
+    @Test
+    void invalidConnectionQN_justWrong() {
+        final String test = "MyConnection";
+        assertFalse(StringUtils.isValidConnectionQN(test));
+    }
 }

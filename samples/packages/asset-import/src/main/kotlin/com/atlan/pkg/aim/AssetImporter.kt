@@ -410,10 +410,11 @@ class AssetImporter(
         typeIdx: Int,
         qnIdx: Int,
     ): Boolean {
+        // Note: skip all Connection asset types, since they will be loaded up-front
         val candidateRow =
             if (updateOnly) {
                 // If we are only updating, process in-parallel, in any order
-                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).isNotBlank()
+                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).let { typeName -> typeName.isNotBlank() && typeName != Connection.TYPE_NAME }
             } else {
                 // If we are doing more than only updates, process the assets in top-down order
                 row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
@@ -855,7 +856,11 @@ class AssetImporter(
          */
         fun getLoadOrder(types: Set<String>): List<String> =
             types.sortedBy { t ->
-                ordering.flatMap { it.types }.indexOf(t).takeIf { it >= 0 } ?: Int.MAX_VALUE
+                ordering
+                    .flatMap { it.types.filter { typeName -> typeName != Connection.TYPE_NAME } }
+                    .indexOf(t)
+                    .takeIf { it >= 0 }
+                    ?: Int.MAX_VALUE
             }
 
         /** {@inheritDoc} */
@@ -902,7 +907,7 @@ class AssetImporter(
             fieldSeparator = fieldSeparator,
         ) {
         private val typesInFile = mutableSetOf<String>()
-        private var connectionQNs = mutableSetOf<String>()
+        private val connectionQNs = mutableSetOf<String>()
 
         /** {@inheritDoc} */
         override fun preprocessRow(
@@ -928,7 +933,13 @@ class AssetImporter(
                 connectionQNs.add(connectionQNFromAsset)
             } else if (typeName == Connection.TYPE_NAME) {
                 // If the qualifiedName comes back as null and the asset itself is a connection, add it
-                connectionQNs.add(qualifiedName)
+                if (StringUtils.isValidConnectionQN(qualifiedName)) {
+                    connectionQNs.add(qualifiedName)
+                } else {
+                    throw IllegalStateException(
+                        "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
+                    )
+                }
             } else {
                 throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
             }
