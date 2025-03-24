@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.cell.AssetRefXformer.getSemantic
 
 /**
  * Static object to transform glossary assignment references.
@@ -51,7 +52,13 @@ object GlossaryXformer {
     ): Asset =
         when (fieldName) {
             GlossaryTerm.ANCHOR.atlanFieldName -> {
-                ctx.glossaryCache.getByIdentity(assetRef)?.trimToReference()
+                val (ref, semantic) = getSemantic(assetRef)
+                ctx.glossaryCache
+                    .getByIdentity(ref)
+                    ?.trimToReference()
+                    ?.toBuilder()
+                    ?.semantic(semantic)
+                    ?.build()
                     ?: throw NoSuchElementException("Parent glossary not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)

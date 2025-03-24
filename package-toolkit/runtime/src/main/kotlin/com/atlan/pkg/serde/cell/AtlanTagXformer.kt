@@ -21,8 +21,6 @@ object AtlanTagXformer {
     private const val ATTACHMENT_DELIMITER = "##"
     private const val VALUE_SEPARATOR = "??"
     private const val VALUE_DELIMITER = "&&"
-    private const val APPEND_PREFIX = "++"
-    private const val REMOVE_PREFIX = "--"
 
     enum class PropagationType {
         FULL,
@@ -59,10 +57,10 @@ object AtlanTagXformer {
         if (!atlanTag.endsWith("$PROPAGATED_DELIMITER${PropagationType.PROPAGATED.name}")) {
             val tokens = atlanTag.split(SETTINGS_DELIMITER)
             val (frontMatter, tagSemantic) =
-                if (tokens[0].startsWith(APPEND_PREFIX)) {
-                    Pair(tokens[0].removePrefix(APPEND_PREFIX), SaveSemantic.APPEND)
-                } else if (tokens[0].endsWith(REMOVE_PREFIX)) {
-                    Pair(tokens[0].removePrefix(REMOVE_PREFIX), SaveSemantic.REMOVE)
+                if (tokens[0].startsWith(AssetRefXformer.APPEND_PREFIX)) {
+                    Pair(tokens[0].removePrefix(AssetRefXformer.APPEND_PREFIX), SaveSemantic.APPEND)
+                } else if (tokens[0].endsWith(AssetRefXformer.REMOVE_PREFIX)) {
+                    Pair(tokens[0].removePrefix(AssetRefXformer.REMOVE_PREFIX), SaveSemantic.REMOVE)
                 } else {
                     Pair(tokens[0], SaveSemantic.REPLACE)
                 }

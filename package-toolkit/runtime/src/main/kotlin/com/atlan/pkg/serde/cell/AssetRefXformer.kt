@@ -13,6 +13,7 @@ import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.LinkIdempotencyInvariant
+import com.atlan.model.relations.Reference.SaveSemantic
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.serde.Serde
@@ -25,6 +26,24 @@ import java.util.concurrent.atomic.AtomicLong
  */
 object AssetRefXformer {
     const val TYPE_QN_DELIMITER = "@"
+    const val APPEND_PREFIX = "++"
+    const val REMOVE_PREFIX = "--"
+
+    /**
+     * Translate the provided asset reference into a reference and save semantic pair.
+     *
+     * @param assetRef the asset reference to translate
+     * @return a pair of the asset reference and semantic (separated out)
+     */
+    fun getSemantic(assetRef: String): Pair<String, SaveSemantic> {
+        val (ref, semantic) =
+            when {
+                assetRef.startsWith(APPEND_PREFIX) -> Pair(assetRef.substringAfter(APPEND_PREFIX), SaveSemantic.APPEND)
+                assetRef.startsWith(REMOVE_PREFIX) -> Pair(assetRef.substringAfter(REMOVE_PREFIX), SaveSemantic.REMOVE)
+                else -> Pair(assetRef, SaveSemantic.REPLACE)
+            }
+        return Pair(ref, semantic)
+    }
 
     /**
      * Encodes (serializes) an asset reference into a string form.
@@ -79,7 +98,11 @@ object AssetRefXformer {
     ): Asset {
         return when (fieldName) {
             Asset.README.atlanFieldName -> Readme._internal().description(assetRef).build()
-            Asset.LINKS.atlanFieldName -> ctx.client.readValue(assetRef, Link::class.java)
+            Asset.LINKS.atlanFieldName -> {
+                val (linkJson, semantic) = getSemantic(assetRef)
+                val link = ctx.client.readValue(linkJson, Link::class.java)
+                link.toBuilder().semantic(semantic).build()
+            }
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
             GlossaryTerm.CATEGORIES.atlanFieldName,
             -> GlossaryCategoryXformer.decode(ctx, assetRef, fieldName)
@@ -88,9 +111,10 @@ object AssetRefXformer {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, assetRef, fieldName)
             in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, assetRef, fieldName)
             else -> {
-                val typeName = assetRef.substringBefore(TYPE_QN_DELIMITER)
-                val qualifiedName = assetRef.substringAfter(TYPE_QN_DELIMITER)
-                return getRefByQN(typeName, qualifiedName)
+                val (ref, semantic) = getSemantic(assetRef)
+                val typeName = ref.substringBefore(TYPE_QN_DELIMITER)
+                val qualifiedName = ref.substringAfter(TYPE_QN_DELIMITER)
+                return getRefByQN(typeName, qualifiedName, semantic)
             }
         }
     }
@@ -100,15 +124,17 @@ object AssetRefXformer {
      *
      * @param typeName of the asset
      * @param qualifiedName of the asset
+     * @param semantic to use when persisting the relationship (append, remove, or replace)
      * @return the asset reference represented by the parameters
      */
     fun getRefByQN(
         typeName: String,
         qualifiedName: String,
+        semantic: SaveSemantic = SaveSemantic.REPLACE,
     ): Asset {
         val assetClass = Serde.getAssetClassForType(typeName)
-        val method = assetClass.getMethod("refByQualifiedName", String::class.java)
-        return method.invoke(null, qualifiedName) as Asset
+        val method = assetClass.getMethod("refByQualifiedName", String::class.java, SaveSemantic::class.java)
+        return method.invoke(null, qualifiedName, semantic) as Asset
     }
 
     /**

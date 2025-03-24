@@ -6,6 +6,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.cell.AssetRefXformer.getSemantic
 
 /**
  * Static object to transform data domain references.
@@ -71,7 +72,13 @@ object DataDomainXformer {
     ): Asset =
         when (fieldName) {
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName, Asset.DOMAIN_GUIDS.atlanFieldName -> {
-                ctx.dataDomainCache.getByIdentity(assetRef)?.trimToReference()
+                val (ref, semantic) = getSemantic(assetRef)
+                ctx.dataDomainCache
+                    .getByIdentity(ref)
+                    ?.trimToReference()
+                    ?.toBuilder()
+                    ?.semantic(semantic)
+                    ?.build()
                     ?: throw NoSuchElementException("Domain not found (in $fieldName): $assetRef")
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
