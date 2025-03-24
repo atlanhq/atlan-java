@@ -2,15 +2,19 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.xls
 
-import org.apache.poi.ss.usermodel.CellType
-import org.apache.poi.ss.usermodel.Row
-import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.openxml4j.opc.OPCPackage
+import org.apache.poi.ss.usermodel.DataFormatter
+import org.apache.poi.util.XMLHelper
+import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable
+import org.apache.poi.xssf.eventusermodel.XSSFReader
+import org.apache.poi.xssf.eventusermodel.XSSFReader.SheetIterator
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler
+import org.apache.poi.xssf.usermodel.XSSFComment
+import org.xml.sax.InputSource
 import java.io.Closeable
-import java.io.FileInputStream
 import java.io.IOException
-import java.math.BigDecimal
+import java.io.InputStream
 
 /**
  * Utility class for parsing and reading the contents of Excel files, using Apache POI.
@@ -20,19 +24,26 @@ import java.math.BigDecimal
 class ExcelReader(
     private val fileLocation: String,
 ) : Closeable {
-    private val workbook: Workbook
-
-    init {
-        val file = FileInputStream(fileLocation)
-        workbook = XSSFWorkbook(file)
-    }
+    private val pkg: OPCPackage = OPCPackage.open(fileLocation)
+    private val reader: XSSFReader = XSSFReader(pkg)
+    private val strings = ReadOnlySharedStringsTable(pkg)
+    private val styles = reader.stylesTable
+    private val formatter = DataFormatter()
 
     /**
      * Indicates whether the file has the specified sheet within it (true) or not (false).
      *
      * @return boolean indicating whether the sheet is present (true) or not (false)
      */
-    fun hasSheet(name: String): Boolean = workbook.getSheet(name) != null
+    fun hasSheet(name: String): Boolean {
+        val sheets = reader.sheetsData as SheetIterator
+        while (sheets.hasNext()) {
+            sheets.next().use {
+                if (name == sheets.sheetName) return true
+            }
+        }
+        return false
+    }
 
     /**
      * Retrieve all rows from the specified sheet of the Excel workbook, by default using the
@@ -45,7 +56,20 @@ class ExcelReader(
     fun getRowsFromSheet(
         index: Int,
         headerRow: Int = 0,
-    ): List<Map<String, String>> = getRowsFromSheet(workbook.getSheetAt(index), headerRow)
+    ): List<Map<String, String>> {
+        var currentIdx = 0
+        var content: List<Map<String, String>>? = null
+        val sheets = reader.sheetsData as SheetIterator
+        while (sheets.hasNext() && currentIdx <= index) {
+            sheets.next().use {
+                if (currentIdx == index) {
+                    content = getRowsFromSheet(it, headerRow)
+                }
+                currentIdx++
+            }
+        }
+        return content ?: emptyList()
+    }
 
     /**
      * Retrieve all rows from the specified sheet of the Excel workbook, by default using the
@@ -61,10 +85,17 @@ class ExcelReader(
         name: String,
         headerRow: Int = 0,
     ): List<Map<String, String>> {
-        val sheet =
-            workbook.getSheet(name)
-                ?: throw IOException("Could not find sheet with name '$name' in the provided Excel file.")
-        return getRowsFromSheet(sheet, headerRow)
+        var content: List<Map<String, String>>? = null
+        val sheets = reader.sheetsData as SheetIterator
+        while (sheets.hasNext() && content == null) {
+            sheets.next().use {
+                if (sheets.sheetName == name) {
+                    content = getRowsFromSheet(it, headerRow)
+                }
+            }
+        }
+        return content
+            ?: throw IOException("Could not find sheet with name '$name' in the provided Excel file.")
     }
 
     /**
@@ -75,57 +106,78 @@ class ExcelReader(
      * @return a list of rows, each being a mapping from column name to its value
      */
     private fun getRowsFromSheet(
-        data: Sheet,
+        data: InputStream,
         headerRow: Int,
     ): List<Map<String, String>> {
         val allRows = mutableListOf<Map<String, String>>()
-        val header = getHeaders(data.getRow(headerRow))
-        for (row in data) {
-            val rowIdx = row.rowNum
-            if (rowIdx > headerRow) {
-                val rowMapping = mutableMapOf<String, String>()
-                for (cell in row) {
-                    val colIdx = cell.columnIndex
-                    val colName = header[colIdx]
-                    val value =
-                        when (cell.cellType) {
-                            CellType.NUMERIC -> BigDecimal("" + cell.numericCellValue).toPlainString()
-                            CellType.BOOLEAN -> "" + cell.booleanCellValue
-                            CellType.FORMULA -> cell.cellFormula
-                            CellType.STRING -> cell.richStringCellValue.string
-                            else -> cell.richStringCellValue.string
-                        }
-                    rowMapping[colName] = value
-                }
-                if (rowMapping.isNotEmpty()) {
-                    allRows.add(rowMapping)
-                }
+        val sheetParser = XMLHelper.newXMLReader()
+        val sheetHandler = SheetHandler(headerRow)
+        val handler =
+            XSSFSheetXMLHandler(
+                styles,
+                null,
+                strings,
+                sheetHandler,
+                formatter,
+                false,
+            )
+        sheetParser.contentHandler = handler
+        val source = InputSource(data)
+        sheetParser.parse(source)
+        val header = sheetHandler.header
+        for (row in sheetHandler.rows) {
+            val rowMapping = mutableMapOf<String, String>()
+            header.forEachIndexed { idx, colName ->
+                rowMapping[colName] = row.getOrNull(idx) ?: ""
+            }
+            if (rowMapping.isNotEmpty()) {
+                allRows.add(rowMapping)
             }
         }
         return allRows
     }
 
-    /**
-     * Create a list of header names. The position of the name in the list is the column index of the header
-     * in the spreadsheet itself.
-     *
-     * @param header row of header data
-     * @return the list of header names, positional based on the column in which they appear in the spreadsheet
-     */
-    private fun getHeaders(header: Row): List<String> {
-        val columns = mutableListOf<String>()
-        for (cell in header) {
-            val name = cell.richStringCellValue.string
-            if (name != null) {
-                columns.add(name)
-            }
-        }
-        return columns
-    }
-
     /** {@inheritDoc}  */
     @Throws(IOException::class)
     override fun close() {
-        workbook.close()
+        pkg.close()
+    }
+
+    /**
+     * Memory-efficient event-based streaming reader for an Excel file (without loading the entire, heavy
+     * structure into memory).
+     */
+    private class SheetHandler(
+        val headerIdx: Int = 0,
+    ) : SheetContentsHandler {
+        private var currentRow = mutableListOf<String>()
+        private var currentRowNum = -1
+        val header = mutableListOf<String>()
+        val rows = mutableListOf<List<String>>()
+
+        /** {@inheritDoc} */
+        override fun startRow(rowNum: Int) {
+            currentRowNum = rowNum
+            currentRow = mutableListOf()
+        }
+
+        /** {@inheritDoc} */
+        override fun cell(
+            cellReference: String?,
+            formattedValue: String?,
+            comment: XSSFComment?,
+        ) {
+            currentRow.add(formattedValue ?: "")
+        }
+
+        /** {@inheritDoc} */
+        override fun endRow(rowNum: Int) {
+            // Process the completed row
+            if (rowNum == headerIdx) {
+                header.addAll(currentRow)
+            } else if (rowNum > headerIdx && currentRow.isNotEmpty()) {
+                rows.add(currentRow.toList())
+            }
+        }
     }
 }

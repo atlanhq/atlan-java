@@ -85,6 +85,8 @@ class EnrichmentMigratorArchivedTest : PackageTest("a") {
                 targetConnection = listOf(connection),
                 failOnErrors = false,
                 includeArchived = true,
+                cmLimitType = "INCLUDE",
+                customMetadata = "",
             ),
             EnrichmentMigrator::main,
         )
