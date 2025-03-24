@@ -17,6 +17,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer.TYPE_QN_DELIMITER
 import com.atlan.pkg.serde.cell.AssetRefXformer.getRefByQN
+import com.atlan.pkg.serde.cell.AssetRefXformer.getSemantic
 
 /**
  * Static object to transform model asset references.
@@ -84,8 +85,9 @@ object ModelAssetXformer {
         assetRef: String,
         fieldName: String,
     ): Asset {
-        val typeName = assetRef.substringBefore(TYPE_QN_DELIMITER)
-        val qualifiedName = assetRef.substringAfter(TYPE_QN_DELIMITER)
+        val (ref, _) = getSemantic(assetRef)
+        val typeName = ref.substringBefore(TYPE_QN_DELIMITER)
+        val qualifiedName = ref.substringAfter(TYPE_QN_DELIMITER)
         return when (fieldName) {
             in MODEL_ASSET_MULTI_VERSIONED_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
@@ -117,7 +119,7 @@ object ModelAssetXformer {
      * @param qualifiedName of the asset
      * @return the asset reference represented by the parameters
      */
-    fun getModelRefByQN(
+    private fun getModelRefByQN(
         ctx: PackageContext<*>,
         typeName: String,
         qualifiedName: String,

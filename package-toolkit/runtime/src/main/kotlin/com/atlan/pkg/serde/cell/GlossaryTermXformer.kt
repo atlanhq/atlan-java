@@ -5,6 +5,7 @@ package com.atlan.pkg.serde.cell
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.serde.cell.AssetRefXformer.getSemantic
 import com.atlan.pkg.serde.cell.GlossaryXformer.GLOSSARY_DELIMITER
 
 /**
@@ -68,9 +69,16 @@ object GlossaryTermXformer {
     ): Asset =
         when (fieldName) {
             "assignedTerms", in TERM_TO_TERM_FIELDS,
-            ->
-                ctx.termCache.getByIdentity(assetRef)?.trimToReference()
+            -> {
+                val (ref, semantic) = getSemantic(assetRef)
+                ctx.termCache
+                    .getByIdentity(ref)
+                    ?.trimToReference()
+                    ?.toBuilder()
+                    ?.semantic(semantic)
+                    ?.build()
                     ?: throw NoSuchElementException("Term not found (in $fieldName): $assetRef")
+            }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
 }
