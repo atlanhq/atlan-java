@@ -3,11 +3,9 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.Database
-import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
@@ -36,9 +34,7 @@ class DomainByGuidTest : PackageTest("dbg") {
         return response.getResult(d1)
     }
 
-    private fun prepFile(
-        dataDomainGuid: String = d1.guid,
-    ) {
+    private fun prepFile(dataDomainGuid: String = d1.guid) {
         // Prepare a copy of the file with unique names for domains and products
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
@@ -46,7 +42,7 @@ class DomainByGuidTest : PackageTest("dbg") {
             lines.forEach { line ->
                 val revised =
                     line
-                        .replace("{{DATADOMAIN_GUID}}", dataDomainGuid)
+                        .replace("{{DOMAIN_GUID}}", dataDomainGuid)
                         .replace("{{CONNECTION}}", snowflake.qualifiedName)
                         .replace("{{DB}}", db)
                 output.appendText("$revised\n")
@@ -82,12 +78,13 @@ class DomainByGuidTest : PackageTest("dbg") {
     }
 
     @Test
-    fun tableUpdated() {
+    fun databaseWithDomain() {
         val request =
-            Table
+            Database
                 .select(client)
-                .where(Asset.DOMAIN_GUIDS.eq(d1.guid))
-                .where(Asset.NAME.eq(db))
+                .where(Database.CONNECTION_QUALIFIED_NAME.eq(snowflake.qualifiedName))
+                .where(Database.NAME.eq(db))
+                .where(Database.DOMAIN_GUIDS.eq(d1.guid))
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets

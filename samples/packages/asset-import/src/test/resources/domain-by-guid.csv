@@ -1,2 +1,2 @@
-typeName,qualifiedName,name,domainGUIDs
-Database,{{CONNECTION}}/{{DB}},{{DB}},{{DATADOMAIN_GUID}}
+typeName,qualifiedName,name,connectionQualifiedName,domainGUIDs
+Database,{{CONNECTION}}/{{DB}},{{DB}},{{CONNECTION}},{{DOMAIN_GUID}}
