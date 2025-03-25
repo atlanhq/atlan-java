@@ -106,7 +106,7 @@ object AdminExporter {
                         Utils.uploadOutputFile(
                             xlsxFileActual,
                             ctx.config.targetPrefix,
-                            xlsxFileActual,
+                            Paths.get(xlsxFileActual).fileName.toString(),
                         )
                     } else {
                         fileOutputs.forEach {
