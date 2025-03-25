@@ -9,10 +9,10 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
+import java.time.Instant
 
 class Personas(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val ts: String,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, AdminExporter.ConnectionId>,
@@ -36,6 +36,7 @@ class Personas(
                 "Extracted on" to "Date and time when the persona was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         Persona
             .select(ctx.client)
             .includeOnResults(Persona.NAME)

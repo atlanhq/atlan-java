@@ -17,7 +17,6 @@ import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import java.io.File
 import java.nio.file.Paths
-import java.time.Instant
 
 /**
  * Actually run the export of admin objects.
@@ -37,9 +36,6 @@ object AdminExporter {
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdminExportCfg>().use { ctx ->
-
-            // Date of the extract
-            val extractTimestamp = Instant.now().toString()
 
             // Before we start processing, will pre-cache all glossaries,
             // so we can resolve them to meaningful names
@@ -70,11 +66,11 @@ object AdminExporter {
                 ExcelWriter(xlsxFileActual).use { xlsx ->
                     ctx.config.objectsToInclude.forEach { objectName ->
                         when (objectName) {
-                            "users" -> Users(ctx, extractTimestamp, xlsx.createSheet("Users"), logger).export()
-                            "groups" -> Groups(ctx, extractTimestamp, xlsx.createSheet("Groups"), logger).export()
-                            "personas" -> Personas(ctx, extractTimestamp, xlsx.createSheet("Personas"), glossaryMap, connectionMap, logger).export()
-                            "purposes" -> Purposes(ctx, extractTimestamp, xlsx.createSheet("Purposes"), logger).export()
-                            "policies" -> Policies(ctx, extractTimestamp, xlsx.createSheet("Policies"), glossaryMap, connectionMap, logger).export()
+                            "users" -> Users(ctx, xlsx.createSheet("Users"), logger).export()
+                            "groups" -> Groups(ctx, xlsx.createSheet("Groups"), logger).export()
+                            "personas" -> Personas(ctx, xlsx.createSheet("Personas"), glossaryMap, connectionMap, logger).export()
+                            "purposes" -> Purposes(ctx, xlsx.createSheet("Purposes"), logger).export()
+                            "policies" -> Policies(ctx, xlsx.createSheet("Policies"), glossaryMap, connectionMap, logger).export()
                         }
                     }
                 }
@@ -82,11 +78,11 @@ object AdminExporter {
             } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
-                        "users" -> CSVWriter(usersFileActual).use { csv -> Users(ctx, extractTimestamp, csv, logger).export() }
-                        "groups" -> CSVWriter(groupsFileActual).use { csv -> Groups(ctx, extractTimestamp, csv, logger).export() }
-                        "personas" -> CSVWriter(personasFileActual).use { csv -> Personas(ctx, extractTimestamp, csv, glossaryMap, connectionMap, logger).export() }
-                        "purposes" -> CSVWriter(purposesFileActual).use { csv -> Purposes(ctx, extractTimestamp, csv, logger).export() }
-                        "policies" -> CSVWriter(policiesFileActual).use { csv -> Policies(ctx, extractTimestamp, csv, glossaryMap, connectionMap, logger).export() }
+                        "users" -> CSVWriter(usersFileActual).use { csv -> Users(ctx, csv, logger).export() }
+                        "groups" -> CSVWriter(groupsFileActual).use { csv -> Groups(ctx, csv, logger).export() }
+                        "personas" -> CSVWriter(personasFileActual).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "purposes" -> CSVWriter(purposesFileActual).use { csv -> Purposes(ctx, csv, logger).export() }
+                        "policies" -> CSVWriter(policiesFileActual).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
                     }
                 }
                 fileOutputs.addAll(listOf(usersFileActual, groupsFileActual, personasFileActual, purposesFileActual, policiesFileActual))

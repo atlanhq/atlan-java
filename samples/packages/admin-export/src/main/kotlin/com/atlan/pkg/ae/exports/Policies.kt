@@ -12,10 +12,10 @@ import com.atlan.pkg.ae.AdminExporter.ConnectionId
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.serde.Serde
 import mu.KLogger
+import java.time.Instant
 
 class Policies(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val ts: String,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, ConnectionId>,
@@ -35,6 +35,7 @@ class Policies(
                 "Extracted on" to "Date and time when the policy was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         AuthPolicy
             .select(ctx.client)
             .includeOnResults(AuthPolicy.NAME)

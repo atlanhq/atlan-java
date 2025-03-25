@@ -7,10 +7,10 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
 import mu.KLogger
+import java.time.Instant
 
 class Groups(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val ts: String,
     private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
@@ -29,6 +29,7 @@ class Groups(
                 "Extracted on" to "Date and time when the group was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         ctx.client.groups.list().forEach { group ->
             val createdAt =
                 group.attributes

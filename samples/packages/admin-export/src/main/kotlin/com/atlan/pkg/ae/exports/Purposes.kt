@@ -8,10 +8,10 @@ import com.atlan.model.assets.Purpose
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
+import java.time.Instant
 
 class Purposes(
     private val ctx: PackageContext<AdminExportCfg>,
-    private val ts: String,
     private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
@@ -29,6 +29,7 @@ class Purposes(
                 "Extracted on" to "Date and time when the purpose was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         Purpose
             .select(ctx.client)
             .includeOnResults(Purpose.NAME)
