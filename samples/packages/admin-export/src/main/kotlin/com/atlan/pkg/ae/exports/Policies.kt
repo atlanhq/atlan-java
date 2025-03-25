@@ -25,12 +25,14 @@ class Policies(
         logger.info { "Exporting policies, ${ if (ctx.config.includeNativePolicies) "including" else "excluding" } out-of-the-box..." }
         writer.writeHeader(
             mapOf(
+                "Policy active" to "Whether the policy is active (true) or deactivated (false)",
                 "Policy name" to "",
                 "Description" to "",
                 "Parent type" to "Type of parent access control mechanism that owns the policy",
                 "Parent name" to "Name of parent access control mechanism that owns the policy",
                 "Kind" to "Kind of policy",
                 "Type" to "Type of the policy",
+                "Actions" to "Actions covered by the policy",
                 "Resources" to "Resources the policy controls",
                 "Extracted on" to "Date and time when the policy was extracted",
             ),
@@ -44,6 +46,8 @@ class Policies(
             .includeOnResults(AuthPolicy.POLICY_RESOURCES)
             .includeOnResults(AuthPolicy.POLICY_SUB_CATEGORY)
             .includeOnResults(AuthPolicy.POLICY_TYPE)
+            .includeOnResults(AuthPolicy.IS_POLICY_ENABLED)
+            .includeOnResults(AuthPolicy.POLICY_ACTIONS)
             .includeOnRelations(Asset.NAME)
             .stream()
             .forEach { policy ->
@@ -52,12 +56,14 @@ class Policies(
                     val resources = getResources(ctx.client, policy)
                     writer.writeRecord(
                         listOf(
+                            policy.isPolicyEnabled,
                             policy.name,
                             policy.description,
                             policy.accessControl?.typeName ?: "",
                             policy.accessControl?.name ?: "",
                             policy.policySubCategory,
                             policy.policyType,
+                            policy.policyActions?.joinToString("\n") ?: "",
                             resources,
                             ts,
                         ),
