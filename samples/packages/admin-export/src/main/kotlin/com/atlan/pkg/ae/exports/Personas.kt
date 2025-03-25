@@ -12,6 +12,7 @@ import mu.KLogger
 
 class Personas(
     private val ctx: PackageContext<AdminExportCfg>,
+    private val ts: String,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, AdminExporter.ConnectionId>,
@@ -32,6 +33,7 @@ class Personas(
                 "Connections" to "Connections controlled by the policies on this persona",
                 "Glossaries" to "Glossaries controlled by the policies on this persona",
                 "Domains" to "Domains controlled by the policies on this persona",
+                "Extracted on" to "Date and time when the persona was extracted",
             ),
         )
         Persona
@@ -101,6 +103,7 @@ class Personas(
                         connections.joinToString("\n"),
                         glossaries.joinToString("\n"),
                         domains.joinToString("\n"),
+                        ts,
                     ),
                 )
             }

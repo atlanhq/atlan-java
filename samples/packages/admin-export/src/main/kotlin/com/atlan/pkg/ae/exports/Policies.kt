@@ -15,6 +15,7 @@ import mu.KLogger
 
 class Policies(
     private val ctx: PackageContext<AdminExportCfg>,
+    private val ts: String,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
     private val connectionMap: Map<String, ConnectionId>,
@@ -31,6 +32,7 @@ class Policies(
                 "Kind" to "Kind of policy",
                 "Type" to "Type of the policy",
                 "Resources" to "Resources the policy controls",
+                "Extracted on" to "Date and time when the policy was extracted",
             ),
         )
         AuthPolicy
@@ -56,6 +58,7 @@ class Policies(
                             policy.policySubCategory,
                             policy.policyType,
                             resources,
+                            ts,
                         ),
                     )
                 }

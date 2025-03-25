@@ -12,6 +12,7 @@ import mu.KLogger
 
 class Users(
     private val ctx: PackageContext<AdminExportCfg>,
+    private val ts: String,
     private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
@@ -31,6 +32,7 @@ class Users(
                 "License type" to "Type of license assigned to the user",
                 "Designation" to "Designation of the user",
                 "Group names" to "Non-technical names of groups the user is assigned to",
+                "Extracted on" to "Date and time when the user was extracted",
             ),
         )
         val request =
@@ -68,6 +70,7 @@ class Users(
                     user.workspaceRole,
                     designation,
                     nontechnicalNames,
+                    ts,
                 ),
             )
         }

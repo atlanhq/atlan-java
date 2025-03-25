@@ -11,6 +11,7 @@ import mu.KLogger
 
 class Purposes(
     private val ctx: PackageContext<AdminExportCfg>,
+    private val ts: String,
     private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
@@ -25,6 +26,7 @@ class Purposes(
                 "Data policies" to "",
                 "Groups" to "Groups to which these policies are applied",
                 "Users" to "Users to which these policies are applied",
+                "Extracted on" to "Date and time when the purpose was extracted",
             ),
         )
         Purpose
@@ -68,6 +70,7 @@ class Purposes(
                         dataPolicyCount,
                         groups.joinToString("\n"),
                         users.joinToString("\n"),
+                        ts,
                     ),
                 )
             }

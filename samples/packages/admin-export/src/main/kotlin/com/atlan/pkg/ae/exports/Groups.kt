@@ -10,6 +10,7 @@ import mu.KLogger
 
 class Groups(
     private val ctx: PackageContext<AdminExportCfg>,
+    private val ts: String,
     private val writer: TabularWriter,
     private val logger: KLogger,
 ) {
@@ -25,6 +26,7 @@ class Groups(
                 "Created by" to "User who created the group",
                 "Updated at" to "Date and time when the group was last updated",
                 "Updated by" to "User who last updated the group",
+                "Extracted on" to "Date and time when the group was extracted",
             ),
         )
         ctx.client.groups.list().forEach { group ->
@@ -48,6 +50,7 @@ class Groups(
                     group.attributes?.createdBy?.get(0) ?: "",
                     if (updatedAt > 0) TimestampXformer.encode(updatedAt) else "",
                     group.attributes?.updatedBy?.get(0) ?: "",
+                    ts,
                 ),
             )
         }
