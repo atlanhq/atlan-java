@@ -12,6 +12,7 @@ import com.atlan.pkg.ae.AdminExporter.ConnectionId
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.serde.Serde
 import mu.KLogger
+import java.time.Instant
 
 class Policies(
     private val ctx: PackageContext<AdminExportCfg>,
@@ -31,8 +32,10 @@ class Policies(
                 "Kind" to "Kind of policy",
                 "Type" to "Type of the policy",
                 "Resources" to "Resources the policy controls",
+                "Extracted on" to "Date and time when the policy was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         AuthPolicy
             .select(ctx.client)
             .includeOnResults(AuthPolicy.NAME)
@@ -56,6 +59,7 @@ class Policies(
                             policy.policySubCategory,
                             policy.policyType,
                             resources,
+                            ts,
                         ),
                     )
                 }

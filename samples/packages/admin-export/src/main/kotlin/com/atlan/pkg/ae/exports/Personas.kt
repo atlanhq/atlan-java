@@ -9,6 +9,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.TabularWriter
 import mu.KLogger
+import java.time.Instant
 
 class Personas(
     private val ctx: PackageContext<AdminExportCfg>,
@@ -32,8 +33,10 @@ class Personas(
                 "Connections" to "Connections controlled by the policies on this persona",
                 "Glossaries" to "Glossaries controlled by the policies on this persona",
                 "Domains" to "Domains controlled by the policies on this persona",
+                "Extracted on" to "Date and time when the persona was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         Persona
             .select(ctx.client)
             .includeOnResults(Persona.NAME)
@@ -101,6 +104,7 @@ class Personas(
                         connections.joinToString("\n"),
                         glossaries.joinToString("\n"),
                         domains.joinToString("\n"),
+                        ts,
                     ),
                 )
             }

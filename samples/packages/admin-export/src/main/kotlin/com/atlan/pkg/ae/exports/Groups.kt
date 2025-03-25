@@ -7,6 +7,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
 import mu.KLogger
+import java.time.Instant
 
 class Groups(
     private val ctx: PackageContext<AdminExportCfg>,
@@ -25,8 +26,10 @@ class Groups(
                 "Created by" to "User who created the group",
                 "Updated at" to "Date and time when the group was last updated",
                 "Updated by" to "User who last updated the group",
+                "Extracted on" to "Date and time when the group was extracted",
             ),
         )
+        val ts = Instant.now().toString()
         ctx.client.groups.list().forEach { group ->
             val createdAt =
                 group.attributes
@@ -48,6 +51,7 @@ class Groups(
                     group.attributes?.createdBy?.get(0) ?: "",
                     if (updatedAt > 0) TimestampXformer.encode(updatedAt) else "",
                     group.attributes?.updatedBy?.get(0) ?: "",
+                    ts,
                 ),
             )
         }

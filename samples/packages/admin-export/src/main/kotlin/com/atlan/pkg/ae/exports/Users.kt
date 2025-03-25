@@ -9,6 +9,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
 import mu.KLogger
+import java.time.Instant
 
 class Users(
     private val ctx: PackageContext<AdminExportCfg>,
@@ -31,6 +32,7 @@ class Users(
                 "License type" to "Type of license assigned to the user",
                 "Designation" to "Designation of the user",
                 "Group names" to "Non-technical names of groups the user is assigned to",
+                "Extracted on" to "Date and time when the user was extracted",
             ),
         )
         val request =
@@ -40,6 +42,7 @@ class Users(
                 .column("profileRole")
                 .column("profileRoleOther")
                 .build()
+        val ts = Instant.now().toString()
         ctx.client.users.list(request).forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
             val groups =
@@ -68,6 +71,7 @@ class Users(
                     user.workspaceRole,
                     designation,
                     nontechnicalNames,
+                    ts,
                 ),
             )
         }
