@@ -68,13 +68,17 @@ class SelectiveRelationshipsTest : PackageTest("sr") {
 
     private fun createDatabasesAndQueries() {
         val collection = AtlanCollection.creator(client, col1).build()
-        val q1 = AtlanQuery.creator(query1, collection).build()
-        val q2 = AtlanQuery.creator(query2, collection).build()
-        val q3 = AtlanQuery.creator(query3, collection).build()
-        val responseQ = client.assets.save(listOf(collection, q1, q2, q3))
+        val responseC = client.assets.save(collection)
+        assertNotNull(responseC)
+        assertEquals(1, responseC.createdAssets.size)
+        val collectionR = responseC.getResult(collection)
+        collectionQN = collectionR.qualifiedName
+        val q1 = AtlanQuery.creator(query1, collectionR).build()
+        val q2 = AtlanQuery.creator(query2, collectionR).build()
+        val q3 = AtlanQuery.creator(query3, collectionR).build()
+        val responseQ = client.assets.save(listOf(q1, q2, q3))
         assertNotNull(responseQ)
-        assertEquals(4, responseQ.createdAssets.size)
-        collectionQN = responseQ.getResult(collection).qualifiedName
+        assertEquals(3, responseQ.createdAssets.size)
         query1QN = responseQ.getResult(q1).qualifiedName
         query2QN = responseQ.getResult(q2).qualifiedName
         query3QN = responseQ.getResult(q3).qualifiedName
@@ -116,11 +120,26 @@ class SelectiveRelationshipsTest : PackageTest("sr") {
             AtlanQuery
                 .select(client)
                 .where(AtlanQuery.COLLECTION_QUALIFIED_NAME.eq(collectionQN))
+                .includeOnResults(AtlanQuery.COLLECTION_QUALIFIED_NAME)
+                .includeOnResults(AtlanQuery.PARENT_QUALIFIED_NAME)
                 .stream()
                 .map { it.guid }
                 .toList()
-        logger.info { " ... purging ${guidsQ.size} queries..." }
-        client.assets.delete(guidsQ, AtlanDeleteType.PURGE)
+        if (guidsQ.isNotEmpty()) {
+            logger.info { " ... purging ${guidsQ.size} queries..." }
+            client.assets.delete(guidsQ, AtlanDeleteType.PURGE)
+        }
+        val guidC =
+            AtlanCollection
+                .select(client)
+                .where(Asset.QUALIFIED_NAME.eq(collectionQN))
+                .stream()
+                .map { it.guid }
+                .toList()
+        if (guidC.isNotEmpty()) {
+            logger.info { " ... purging ${guidC.size} collections..." }
+            client.assets.delete(guidC, AtlanDeleteType.PURGE)
+        }
         val guids =
             client.assets
                 .select()
