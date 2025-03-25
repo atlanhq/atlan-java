@@ -1,0 +1,4 @@
+qualifiedName,typeName,name,queries,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,schema
+{{CONNECTION}}/{{DB}}/{{SCH}}/{{TBL1}},Table,{{TBL1}},++Query@{{Q2}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB}},{{DB}},{{CONNECTION}}/{{DB}}/{{SCH}},{{SCH}},Schema@{{CONNECTION}}/{{DB}}/{{SCH}}
+{{CONNECTION}}/{{DB}}/{{SCH}}/{{TBL2}},Table,{{TBL2}},--Query@{{Q2}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB}},{{DB}},{{CONNECTION}}/{{DB}}/{{SCH}},{{SCH}},Schema@{{CONNECTION}}/{{DB}}/{{SCH}}
+{{CONNECTION}}/{{DB}}/{{SCH}}/{{TBL3}},Table,{{TBL3}},Query@{{Q3}},snowflake,{{CONNECTION}},{{CONNECTION}}/{{DB}},{{DB}},{{CONNECTION}}/{{DB}}/{{SCH}},{{SCH}},Schema@{{CONNECTION}}/{{DB}}/{{SCH}}
