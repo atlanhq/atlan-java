@@ -28,8 +28,11 @@ class TagManagementTest : PackageTest("tm") {
     private val t1 = makeUnique("t1")
     private val t2 = makeUnique("t2")
 
+    private lateinit var connection: Connection
+
     private val assetsFile = "assets.csv"
     private val tagsFile = "tags.csv"
+    private val revisedFile = "revised.csv"
 
     private val files =
         listOf(
@@ -38,7 +41,7 @@ class TagManagementTest : PackageTest("tm") {
             "debug.log",
         )
 
-    private fun prepFiles(connectionQN: String) {
+    private fun prepFiles() {
         // Prepare copies of the files with unique names for objects
         val tagsIn = Paths.get("src", "test", "resources", tagsFile).toFile()
         val tagsOut = Paths.get(testDirectory, tagsFile).toFile()
@@ -62,12 +65,35 @@ class TagManagementTest : PackageTest("tm") {
                 } else {
                     val revised =
                         line
-                            .replace("{{CONNECTION}}", connectionQN)
+                            .replace("{{CONNECTION}}", connection.qualifiedName)
                             .replace("{{CTYPE}}", c1Type.value)
                     if (revised.contains("Table")) {
                         assetsOut.appendText("$revised,$t2\n")
                     } else if (revised.contains("View")) {
                         assetsOut.appendText("$revised,$t1 {{${c1Type.value}/$c1@@$t1??=Y}}\n")
+                    } else {
+                        assetsOut.appendText("$revised,\n")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun modifyFiles() {
+        // Prepare copies of the files with unique names for objects
+        val assetsIn = Paths.get("src", "test", "resources", assetsFile).toFile()
+        val assetsOut = Paths.get(testDirectory, revisedFile).toFile()
+        assetsIn.useLines { lines ->
+            lines.forEachIndexed { idx, line ->
+                if (idx == 0) {
+                    assetsOut.appendText("$line,atlanTags\n")
+                } else {
+                    val revised =
+                        line
+                            .replace("{{CONNECTION}}", connection.qualifiedName)
+                            .replace("{{CTYPE}}", c1Type.value)
+                    if (revised.contains("View")) {
+                        assetsOut.appendText("$revised,++$t1 {{${c1Type.value}/$c1@@$t1??=Z}}\n")
                     } else {
                         assetsOut.appendText("$revised,\n")
                     }
@@ -83,8 +109,8 @@ class TagManagementTest : PackageTest("tm") {
     }
 
     override fun setup() {
-        val connection = createConnection()
-        prepFiles(connection.qualifiedName)
+        connection = createConnection()
+        prepFiles()
         runCustomPackage(
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, assetsFile).toString(),
@@ -109,13 +135,68 @@ class TagManagementTest : PackageTest("tm") {
             Table.ATLAN_TAGS,
         )
 
-    @Test
+    @Test(groups = ["aim.tm.create"])
     fun tagOnTable() {
-        val c1 = Connection.findByName(client, c1, c1Type)[0]!!
+        validateTable()
+    }
+
+    @Test(groups = ["aim.tm.create"])
+    fun tagOnView() {
+        validateView("Y")
+    }
+
+    @Test(groups = ["aim.tm.create"])
+    fun tableFindableByTag() {
+        findTable()
+    }
+
+    @Test(groups = ["aim.tm.create"])
+    fun viewFindableByTagValue() {
+        findView("Y")
+    }
+
+    @Test(groups = ["aim.tm.runUpdate"], dependsOnGroups = ["aim.tm.create"])
+    fun upsertRevisions() {
+        modifyFiles()
+        runCustomPackage(
+            AssetImportCfg(
+                assetsFile = Paths.get(testDirectory, revisedFile).toString(),
+                assetsUpsertSemantic = "update",
+                assetsFailOnErrors = true,
+                assetsDeltaSemantic = "full",
+                assetsDeltaReloadCalculation = "changes",
+                assetsPreviousFileDirect = Paths.get(testDirectory, assetsFile).toString(),
+                assetsTagHandling = "APPEND",
+            ),
+            Importer::main,
+        )
+    }
+
+    @Test(groups = ["aim.tm.update"], dependsOnGroups = ["aim.tm.runUpdate"])
+    fun tagStillOnTable() {
+        validateTable()
+    }
+
+    @Test(groups = ["aim.tm.update"], dependsOnGroups = ["aim.tm.runUpdate"])
+    fun tagUpdatedOnView() {
+        validateView("Z")
+    }
+
+    @Test(groups = ["aim.tm.update"], dependsOnGroups = ["aim.tm.runUpdate"])
+    fun tableStillFindableByTag() {
+        findTable()
+    }
+
+    @Test(groups = ["aim.tm.update"], dependsOnGroups = ["aim.tm.runUpdate"])
+    fun viewFindableByUpdatedTagValue() {
+        findView("Z")
+    }
+
+    private fun validateTable() {
         val request =
             Table
                 .select(client)
-                .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(Table.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
@@ -127,13 +208,24 @@ class TagManagementTest : PackageTest("tm") {
         assertEquals(t2, tbl.atlanTags.first().typeName)
     }
 
-    @Test
-    fun tagOnView() {
-        val c1 = Connection.findByName(client, c1, c1Type)[0]!!
+    private fun findTable() {
+        val request =
+            Table
+                .select(client)
+                .where(Table.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .tagged(listOf(t2))
+                .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val found = response.assets
+        assertEquals(1, found.size)
+        assertTrue(found.first() is Table)
+    }
+
+    private fun validateView(tagValue: String) {
         val request =
             View
                 .select(client)
-                .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
+                .where(View.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .includesOnResults(tableAttrs)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
@@ -150,36 +242,19 @@ class TagManagementTest : PackageTest("tm") {
         assertNotNull(sta)
         assertEquals(t1, sta.sourceTagName)
         assertEquals(c1Type.value, sta.sourceTagConnectorName)
-        assertEquals("${c1.qualifiedName}/$t1", sta.sourceTagQualifiedName)
+        assertEquals("${connection.qualifiedName}/$t1", sta.sourceTagQualifiedName)
         assertNotNull(sta.sourceTagValues)
         assertEquals(1, sta.sourceTagValues.size)
-        assertEquals("Y", sta.sourceTagValues.first().tagAttachmentValue)
+        assertEquals(tagValue, sta.sourceTagValues.first().tagAttachmentValue)
         assertNull(sta.sourceTagValues.first().tagAttachmentKey)
     }
 
-    @Test
-    fun tableFindableByTag() {
-        val c1 = Connection.findByName(client, c1, c1Type)[0]!!
-        val request =
-            Table
-                .select(client)
-                .where(Table.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .tagged(listOf(t2))
-                .toRequest()
-        val response = retrySearchUntil(request, 1)
-        val found = response.assets
-        assertEquals(1, found.size)
-        assertTrue(found.first() is Table)
-    }
-
-    @Test
-    fun viewFindableByTagValue() {
-        val c1 = Connection.findByName(client, c1, c1Type)[0]!!
+    private fun findView(tagValue: String) {
         val request =
             View
                 .select(client)
-                .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .taggedWithValue(t1, "Y", true)
+                .where(View.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .taggedWithValue(t1, tagValue, true)
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val found = response.assets
