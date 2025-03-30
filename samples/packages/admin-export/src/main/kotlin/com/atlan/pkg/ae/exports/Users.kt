@@ -4,9 +4,7 @@ package com.atlan.pkg.ae.exports
 
 import AdminExportCfg
 import com.atlan.api.UsersEndpoint
-import com.atlan.model.admin.KeycloakEventRequest
 import com.atlan.model.admin.UserRequest
-import com.atlan.model.enums.KeycloakEventType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.cell.TimestampXformer
@@ -30,7 +28,7 @@ class Users(
                 "Created" to "Date and time when the user was invited to Atlan",
                 "Enabled" to "Whether the user is allowed to login (true) or not (false)",
                 "Last login" to "Last date and time when the user logged into Atlan",
-                "Total logins" to "Total number of times the user has logged into Atlan",
+                // "Total logins" to "Total number of times the user has logged into Atlan",
                 "Personas" to "Personas assigned to the user",
                 "License type" to "Type of license assigned to the user",
                 "Designation" to "Designation of the user",
@@ -60,7 +58,7 @@ class Users(
                     user.attributes?.profileRole?.get(0)
                 }
             val nontechnicalNames = groups?.joinToString("\n") { it.alias ?: "" } ?: ""
-            val loginCount =
+            /*val loginCount =
                 ctx.client.logs
                     .getEvents(
                         KeycloakEventRequest
@@ -68,7 +66,7 @@ class Users(
                             .type(KeycloakEventType.LOGIN)
                             .userId(user.id)
                             .build(),
-                    ).count()
+                    ).count()*/
             writer.writeRecord(
                 listOf(
                     user.username,
@@ -79,7 +77,7 @@ class Users(
                     TimestampXformer.encode(user.createdTimestamp),
                     user.enabled,
                     TimestampXformer.encode(user.lastLoginTime),
-                    loginCount,
+                    // loginCount,
                     personas,
                     user.workspaceRole,
                     designation,
