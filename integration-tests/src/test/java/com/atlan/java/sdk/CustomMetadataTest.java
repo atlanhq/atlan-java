@@ -913,7 +913,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByGuid() throws AtlanException, InterruptedException {
         AuditSearchRequest request =
-                AuditSearchRequest.byGuid(client, term.getGuid(), 40).build();
+                AuditSearchRequest.byGuid(client, term.getGuid(), 100).build();
         AuditSearchResponse response = retrySearchUntil(request, 14L);
         validateAudits(response.getEntityAudits());
     }
@@ -923,7 +923,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByQN() throws AtlanException, InterruptedException {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
-                        client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
+                        client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 100)
                 .build();
         AuditSearchResponse response = retrySearchUntil(request, 14L);
         validateAudits(response.getEntityAudits());
@@ -1281,7 +1281,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
             cmad = (CustomMetadataAttributesAuditDetail) detail;
             nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_RACI));
+        } while (!cmad.getTypeName().equals(CM_RACI) && nextIdx >= 0);
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 5);
