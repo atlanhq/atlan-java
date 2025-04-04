@@ -31,7 +31,7 @@ kotlin = "2.1.20"
 kotlin-mu = "3.0.5"
 rocksdb = "9.10.0"
 jetty = "12.0.18"
-netty = "4.1.119.Final"
+netty = "4.2.0.Final"
 otel = "1.48.0"
 otel-instrumentation = "2.14.0-alpha"
 
