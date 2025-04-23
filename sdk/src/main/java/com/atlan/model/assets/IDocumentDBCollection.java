@@ -11,7 +11,6 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
@@ -29,7 +28,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a DocumentDB collection in Atlan.
+ * Instance of a DocumentDBCollection in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -70,9 +69,9 @@ public interface IDocumentDBCollection {
     TextField DOCUMENT_DB_COLLECTION_SCHEMA_DEFINITION =
             new TextField("documentDBCollectionSchemaDefinition", "documentDBCollectionSchemaDefinition");
 
-    /** Subtype of a DocumentDB collection, for example: Capped, Time Series, etc. */
-    KeywordTextField DOCUMENT_DB_COLLECTION_SUBTYPE = new KeywordTextField(
-            "documentDBCollectionSubtype", "documentDBCollectionSubtype.keyword", "documentDBCollectionSubtype");
+    /** Subtype of a DocumentDBCollection, for example: Capped, Time Series, etc. */
+    KeywordField DOCUMENT_DB_COLLECTION_SUBTYPE =
+            new KeywordField("documentDBCollectionSubtype", "documentDBCollectionSubtype");
 
     /** Name of the field containing the date in each time series document. */
     KeywordField DOCUMENT_DB_COLLECTION_TIME_FIELD =
@@ -455,7 +454,7 @@ public interface IDocumentDBCollection {
     /** Definition of the schema applicable for the collection. */
     String getDocumentDBCollectionSchemaDefinition();
 
-    /** Subtype of a DocumentDB collection, for example: Capped, Time Series, etc. */
+    /** Subtype of a DocumentDBCollection, for example: Capped, Time Series, etc. */
     String getDocumentDBCollectionSubtype();
 
     /** Name of the field containing the date in each time series document. */
@@ -628,6 +627,9 @@ public interface IDocumentDBCollection {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
