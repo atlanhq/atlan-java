@@ -259,10 +259,14 @@
                 if (parent != null) {
                     String parentGuid = parent.getGuid();
                     GlossaryCategory fullParent = map.getOrDefault(parentGuid, stubMap.get(parentGuid));
-                    SortedSet<IGlossaryCategory> children = new TreeSet<>(fullParent.getChildrenCategories());
-                    children.add(category);
-                    fullParent.setChildrenCategories(children);
-                    map.put(parent.getGuid(), fullParent);
+                    if (fullParent != null) {
+                        SortedSet<IGlossaryCategory> children = new TreeSet<>(fullParent.getChildrenCategories());
+                        children.add(category);
+                        fullParent.setChildrenCategories(children);
+                        map.put(parent.getGuid(), fullParent);
+                    } else {
+                        log.warn("Unable to find referenced parent category '{}', skipping it in the hierarchy traversal.", parentGuid);
+                    }
                 }
                 map.put(category.getGuid(), category);
             }
