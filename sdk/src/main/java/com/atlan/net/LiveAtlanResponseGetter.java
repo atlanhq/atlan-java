@@ -279,7 +279,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         try {
             error = Serde.allInclusiveMapper.readValue(response.body(), AtlanError.class);
         } catch (IOException e) {
-            raiseMalformedJsonError(response.body(), response.code(), e);
+            // If the response cannot be parsed, let's set it as plain text
+            error = new AtlanError();
+            error.setCode((long) response.code());
+            error.setErrorMessage(response.body());
         }
         if (error == null) {
             raiseMalformedJsonError(response.body(), response.code(), null);
