@@ -15,6 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class Constraint extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

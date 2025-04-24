@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AssetDeserializer extends StdDeserializer<Asset> {
 
     private static final long serialVersionUID = 2L;
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AssetDeserializer(AtlanClient client) {
         this(Asset.class, client);

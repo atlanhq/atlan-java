@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LookerField extends Asset implements ILookerField, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -101,6 +102,10 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /** Unique name of the look in which this field is used. */
     @Attribute
     String lookerLookQualifiedName;
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    @Attribute
+    String lookerSlug;
 
     /** Unique name of the tile in which this field is used. */
     @Attribute

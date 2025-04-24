@@ -32,6 +32,7 @@ import javax.annotation.processing.Generated;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AttributeDefOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

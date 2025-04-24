@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class AnomaloCheck extends Asset
         implements IAnomaloCheck, IAnomalo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
@@ -96,6 +97,10 @@ public class AnomaloCheck extends Asset
     /** Type of check in Anomalo */
     @Attribute
     String anomaloCheckType;
+
+    /** Whether this data quality is part of contract (true) or not (false). */
+    @Attribute
+    Boolean dqIsPartOfContract;
 
     /** Tasks to which this asset provides input. */
     @Attribute

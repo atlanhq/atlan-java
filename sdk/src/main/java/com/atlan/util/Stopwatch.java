@@ -15,6 +15,7 @@ public class Stopwatch {
     private long startTimeStamp;
 
     /** Initializes a new instance of the {@link Stopwatch} class. */
+    @SuppressWarnings("this-escape")
     public Stopwatch() {
         this.reset();
     }

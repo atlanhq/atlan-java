@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -79,6 +80,14 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     Integer lookId;
 
+    /** Identifier of the query for the Look, from Looker. */
+    @Attribute
+    String lookerQueryID;
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    @Attribute
+    String lookerSlug;
+
     /** Identifier for the LoomML link. */
     @Attribute
     String lookmlLinkId;
@@ -120,7 +129,7 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Attribute
     ILookerQuery query;
 
-    /** Identifier for the query used to build this tile, from Looker. */
+    /** (Deprecated) Please use lookerQueryID instead. */
     @Attribute
     Integer queryID;
 

@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class AzureServiceBusNamespace extends Asset
         implements IAzureServiceBusNamespace, IAzureServiceBus, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

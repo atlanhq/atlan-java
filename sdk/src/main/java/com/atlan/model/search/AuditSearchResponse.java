@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class AuditSearchResponse extends ApiResource implements Iterable<EntityAudit> {
     private static final long serialVersionUID = 2L;
     private static final long MASS_EXTRACT_THRESHOLD = 10000L - DEFAULT_PAGE_SIZE;

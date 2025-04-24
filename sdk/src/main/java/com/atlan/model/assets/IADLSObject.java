@@ -77,6 +77,9 @@ public interface IADLSObject {
     /** Content type of this object. */
     TextField ADLS_OBJECT_CONTENT_TYPE = new TextField("adlsObjectContentType", "adlsObjectContentType");
 
+    /** Key of this object, in ADLS. */
+    KeywordTextField ADLS_OBJECT_KEY = new KeywordTextField("adlsObjectKey", "adlsObjectKey", "adlsObjectKey.text");
+
     /** State of this object's lease. */
     KeywordField ADLS_OBJECT_LEASE_STATE = new KeywordField("adlsObjectLeaseState", "adlsObjectLeaseState");
 
@@ -144,6 +147,9 @@ public interface IADLSObject {
 
     /** Content type of this object. */
     String getAdlsObjectContentType();
+
+    /** Key of this object, in ADLS. */
+    String getAdlsObjectKey();
 
     /** State of this object's lease. */
     ADLSLeaseState getAdlsObjectLeaseState();
@@ -577,6 +583,9 @@ public interface IADLSObject {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -586,7 +595,10 @@ public interface IADLSObject {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

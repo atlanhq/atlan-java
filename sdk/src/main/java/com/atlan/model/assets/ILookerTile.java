@@ -45,6 +45,9 @@ public interface ILookerTile {
     /** Identifier of the Look used to create this tile, from Looker. */
     NumericField LOOK_ID = new NumericField("lookId", "lookId");
 
+    /** Identifier of the query for the Look, from Looker. */
+    TextField LOOKER_QUERY_ID = new TextField("lookerQueryID", "lookerQueryID");
+
     /** Identifier for the LoomML link. */
     TextField LOOKML_LINK_ID = new TextField("lookmlLinkId", "lookmlLinkId");
 
@@ -57,7 +60,7 @@ public interface ILookerTile {
     /** Deprecated. */
     RelationField QUERY = new RelationField("query");
 
-    /** Identifier for the query used to build this tile, from Looker. */
+    /** (Deprecated) Please use lookerQueryID instead. */
     NumericField QUERY_ID = new NumericField("queryID", "queryID");
 
     /** Identifier of the ResultMarkerLookup entry, from Looker. */
@@ -441,6 +444,12 @@ public interface ILookerTile {
     /** Identifier of the Look used to create this tile, from Looker. */
     Integer getLookId();
 
+    /** Identifier of the query for the Look, from Looker. */
+    String getLookerQueryID();
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    String getLookerSlug();
+
     /** Identifier for the LoomML link. */
     String getLookmlLinkId();
 
@@ -483,6 +492,9 @@ public interface ILookerTile {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -492,13 +504,16 @@ public interface ILookerTile {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** Deprecated. */
     ILookerQuery getQuery();
 
-    /** Identifier for the query used to build this tile, from Looker. */
+    /** (Deprecated) Please use lookerQueryID instead. */
     Integer getQueryID();
 
     /** README that is linked to this asset. */

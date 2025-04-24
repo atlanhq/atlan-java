@@ -14,6 +14,7 @@ import lombok.ToString;
 @JsonDeserialize(using = SessionResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class SessionResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

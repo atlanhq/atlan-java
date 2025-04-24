@@ -16,7 +16,7 @@ import java.util.Set;
 public class SetToStringSerializer extends StdSerializer<Set<String>> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public SetToStringSerializer(AtlanClient client) {
         this(null, client);

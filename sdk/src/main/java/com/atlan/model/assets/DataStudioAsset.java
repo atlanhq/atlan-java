@@ -42,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class DataStudioAsset extends Asset
         implements IDataStudioAsset, IDataStudio, IGoogle, IBI, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;

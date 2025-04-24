@@ -17,6 +17,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 @Builder
+@SuppressWarnings("serial")
 public class SuggestionResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

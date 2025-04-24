@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 

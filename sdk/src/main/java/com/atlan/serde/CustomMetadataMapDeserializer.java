@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataMapDeserializer extends StdDeserializer<Map<String, CustomMetadataAttributes>> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public CustomMetadataMapDeserializer(AtlanClient client) {
         super(CustomMetadataMapDeserializer.class);

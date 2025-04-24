@@ -40,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class KafkaConsumerGroup extends Asset
         implements IKafkaConsumerGroup, IKafka, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

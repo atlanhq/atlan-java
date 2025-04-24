@@ -33,6 +33,7 @@ import lombok.ToString;
 @JsonDeserialize(using = AdminEventResponse.AdminEventResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AdminEventResponse extends ApiResource implements Iterable<AdminEvent> {
     private static final long serialVersionUID = 2L;
 

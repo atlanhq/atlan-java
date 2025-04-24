@@ -26,6 +26,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = StructDef.class, name = "STRUCT"),
 })
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public abstract class TypeDef extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

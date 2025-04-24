@@ -19,7 +19,7 @@ import java.lang.reflect.Modifier;
 public class ClientAwareSerializerProvider extends DefaultSerializerProvider {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public ClientAwareSerializerProvider(AtlanClient client) {
         super();

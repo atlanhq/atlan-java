@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +30,9 @@ import javax.annotation.processing.Generated;
 public interface ILooker {
 
     public static final String TYPE_NAME = "Looker";
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    KeywordField LOOKER_SLUG = new KeywordField("lookerSlug", "lookerSlug");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -393,6 +397,9 @@ public interface ILooker {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    String getLookerSlug();
+
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -426,6 +433,9 @@ public interface ILooker {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -435,7 +445,10 @@ public interface ILooker {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

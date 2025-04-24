@@ -19,6 +19,7 @@ public class KeywordTextStemmedField extends SearchableField
     private final String textFieldName;
     private final String stemmedFieldName;
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
 
     /**

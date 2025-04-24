@@ -457,6 +457,9 @@ public interface IAsset {
     /** Data products for which this asset is an output port. */
     RelationField OUTPUT_PORT_DATA_PRODUCTS = new RelationField("outputPortDataProducts");
 
+    /** Array of product guids which have this asset as outputPort */
+    KeywordField OUTPUT_PRODUCT_GUIDS = new KeywordField("outputProductGUIDs", "outputProductGUIDs");
+
     /** List of groups who own this asset. */
     KeywordField OWNER_GROUPS = new KeywordField("ownerGroups", "ownerGroups");
 
@@ -466,6 +469,9 @@ public interface IAsset {
     /** Popularity score for this asset. */
     NumericRankField POPULARITY_SCORE =
             new NumericRankField("popularityScore", "popularityScore", "popularityScore.rank_feature");
+
+    /** Array of product guids linked to this asset */
+    KeywordField PRODUCT_GUIDS = new KeywordField("productGUIDs", "productGUIDs");
 
     /** README that is linked to this asset. */
     SearchableRelationship README = new SearchableRelationship("readme", "asset_readme");
@@ -961,6 +967,9 @@ public interface IAsset {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -970,7 +979,10 @@ public interface IAsset {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

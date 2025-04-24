@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 

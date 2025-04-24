@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
     private static final long MASS_EXTRACT_THRESHOLD = 100000L - DEFAULT_PAGE_SIZE;

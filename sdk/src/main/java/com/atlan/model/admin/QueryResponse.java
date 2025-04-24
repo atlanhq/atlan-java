@@ -21,6 +21,7 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class QueryResponse extends ApiEventStreamResource {
     private static final long serialVersionUID = 2L;
 

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetadataAttributesAuditDetail> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public CustomMetadataAuditDeserializer(AtlanClient client) {
         super(CustomMetadataAttributesAuditDetail.class);

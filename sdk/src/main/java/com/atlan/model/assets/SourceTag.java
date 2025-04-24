@@ -34,7 +34,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a source-system-imported tag in Atlan.
+ * Instance of a source system-imported tag in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -42,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -51,10 +52,6 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** Specifies custom configuration elements based on the system the tag is being sourced from. */
-    @Attribute
-    String customConfiguration;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -110,6 +107,10 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     @Attribute
     @Singular
     List<SourceTagAttribute> tagAttributes;
+
+    /** Specifies custom configuration elements based on the system the tag is being imported from. */
+    @Attribute
+    String tagCustomConfiguration;
 
     /** Unique identifier of the tag in the source system. */
     @Attribute

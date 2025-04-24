@@ -19,7 +19,7 @@ import java.lang.reflect.Modifier;
 public class ClientAwareDeserializationContext extends DefaultDeserializationContext {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public ClientAwareDeserializationContext(DeserializerFactory df, DeserializerCache cache, AtlanClient client) {
         super(df, cache);

@@ -10,6 +10,7 @@ import com.atlan.model.lineage.LineageFilterFieldBoolean;
  */
 public class BooleanField extends SearchableField implements IBooleanSearchable {
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldBoolean inLineage = new LineageFilterFieldBoolean(this);
 
     /**

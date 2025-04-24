@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a source-system-imported tag in Atlan.
+ * Instance of a source system-imported tag in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -32,8 +32,8 @@ public interface ISourceTag {
 
     public static final String TYPE_NAME = "SourceTag";
 
-    /** Specifies custom configuration elements based on the system the tag is being sourced from. */
-    KeywordField CUSTOM_CONFIGURATION = new KeywordField("customConfiguration", "customConfiguration");
+    /** Specifies custom configuration elements based on the system the tag is being imported from. */
+    KeywordField TAG_CUSTOM_CONFIGURATION = new KeywordField("tagCustomConfiguration", "tagCustomConfiguration");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -329,9 +329,6 @@ public interface ISourceTag {
     /** Type of the connector through which this asset is accessible. */
     AtlanConnectorType getConnectorType();
 
-    /** Specifies custom configuration elements based on the system the tag is being sourced from. */
-    String getCustomConfiguration();
-
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
 
@@ -437,6 +434,9 @@ public interface ISourceTag {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -446,7 +446,10 @@ public interface ISourceTag {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -544,6 +547,9 @@ public interface ISourceTag {
 
     /** Attributes associated with the tag in the source system. */
     List<SourceTagAttribute> getTagAttributes();
+
+    /** Specifies custom configuration elements based on the system the tag is being imported from. */
+    String getTagCustomConfiguration();
 
     /** Unique identifier of the tag in the source system. */
     String getTagId();

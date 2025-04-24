@@ -84,7 +84,20 @@ public class GeneratorConfig {
             Map.entry("supersetChartFormData", "putSupersetChartFormData"),
             Map.entry("columnHierarchy", "putColumnHierarchy"),
             Map.entry("bigqueryTagHierarchy", "putBigqueryTagHierarchy"),
-            Map.entry("applications", "aiApplication"));
+            Map.entry("applications", "aiApplication"),
+            Map.entry("sapErpFunctionExceptionList", "sapErpFunctionException"),
+            Map.entry("cassandraViewCaching", "putCassandraViewCaching"),
+            Map.entry("cassandraViewCompaction", "putCassandraViewCompaction"),
+            Map.entry("cassandraTableCaching", "putCassandraTableCaching"),
+            Map.entry("cassandraTableCompaction", "putCassandraTableCompaction"),
+            Map.entry("cassandraTableCompression", "putCassandraTableCompression"),
+            Map.entry("cassandraKeyspaceReplication", "putCassandraKeyspaceReplication"),
+            Map.entry("responseValueArrString", "addResponseValueString"),
+            Map.entry("responseValueArrInt", "addResponseValueInt"),
+            Map.entry("responseValueArrBoolean", "addResponseValueBoolean"),
+            Map.entry("responseValueArrJson", "addResponseValueJson"),
+            Map.entry("responseValueArrLong", "addResponseValueLong"),
+            Map.entry("responseValueArrDate", "addResponseValueDate"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("connectorName", "connectorType"),

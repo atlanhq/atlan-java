@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AwsEventWrapper extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -69,6 +70,7 @@ public class AwsEventWrapper extends AtlanObject {
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
+    @SuppressWarnings("serial")
     public static final class AwsRequestContext extends AtlanObject {
         private static final long serialVersionUID = 2L;
 

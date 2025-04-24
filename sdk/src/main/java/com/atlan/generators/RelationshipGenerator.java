@@ -30,6 +30,7 @@ public class RelationshipGenerator extends TypeGenerator implements Comparable<R
     private String endDef1AttrName;
     private String endDef2AttrName = null;
 
+    @SuppressWarnings("this-escape")
     public RelationshipGenerator(AtlanClient client, RelationshipDef relationshipDef, GeneratorConfig cfg) {
         super(client, relationshipDef, cfg);
         this.relationshipDef = relationshipDef;

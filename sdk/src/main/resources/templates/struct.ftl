@@ -44,7 +44,7 @@ import javax.annotation.processing.Generated;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-<#if mapContainers??>@SuppressWarnings("cast")</#if>
+<#if mapContainers??>@SuppressWarnings({"cast", "serial"})<#else>@SuppressWarnings("serial")</#if>
 public class ${className} extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 

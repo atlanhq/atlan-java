@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AggregationBucketResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 

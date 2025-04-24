@@ -1,4 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 val jarPath = "$rootDir/jars"
 
 plugins {
@@ -100,6 +102,9 @@ configurations.all {
 
 kotlin {
     jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 spotless {

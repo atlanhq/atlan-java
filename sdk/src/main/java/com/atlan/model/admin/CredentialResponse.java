@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class CredentialResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
@@ -37,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -54,6 +56,10 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
+
+    /** Dataset type for AI Model - dataset process. */
+    @Attribute
+    AIDatasetType aiDatasetType;
 
     /** Tasks that exist within this process. */
     @Attribute

@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class DocumentDBDatabase extends Asset
         implements IDocumentDBDatabase, IDocumentDB, IDatabase, INoSQL, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;

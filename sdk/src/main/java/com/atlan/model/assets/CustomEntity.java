@@ -38,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -48,12 +49,16 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Custom entities contained within this entity. */
+    /** Custom entities contained within the parent entity. */
     @Attribute
     @Singular
     SortedSet<ICustomEntity> customChildEntities;
 
-    /** Custom entity that contains this entity. */
+    /** Label of the children column for this asset type. */
+    @Attribute
+    String customChildrenSubtype;
+
+    /** Custom entity in which the child entities are contained. */
     @Attribute
     ICustomEntity customParentEntity;
 

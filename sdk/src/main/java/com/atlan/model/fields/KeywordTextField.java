@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class KeywordTextField extends SearchableField implements IKeywordSearchable, ITextSearchable {
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
 
     private final String textFieldName;

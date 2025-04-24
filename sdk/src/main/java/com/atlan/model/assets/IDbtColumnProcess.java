@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -50,6 +51,9 @@ public interface IDbtColumnProcess {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Dataset type for AI Model - dataset process. */
+    AIDatasetType getAiDatasetType();
 
     /** Tasks that exist within this process. */
     SortedSet<IAirflowTask> getAirflowTasks();
@@ -519,6 +523,9 @@ public interface IDbtColumnProcess {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** Assets that are outputs from this task. */
     SortedSet<ICatalog> getOutputs();
 
@@ -537,7 +544,10 @@ public interface IDbtColumnProcess {
     /** Process in which this task exists. */
     ILineageProcess getProcess();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -23,7 +23,7 @@ public class AtlanPolicyActionDeserializer extends StdDeserializer<AtlanPolicyAc
 
     private static final long serialVersionUID = 2L;
 
-    private final JsonDeserializer<?> defaultDeserializer;
+    private final transient JsonDeserializer<?> defaultDeserializer;
 
     public AtlanPolicyActionDeserializer(JsonDeserializer<?> defaultDeserializer) {
         super(AtlanPolicyAction.class);

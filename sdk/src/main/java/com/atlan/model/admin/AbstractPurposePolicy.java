@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public abstract class AbstractPurposePolicy extends AbstractPolicy {
     private static final long serialVersionUID = 2L;
 

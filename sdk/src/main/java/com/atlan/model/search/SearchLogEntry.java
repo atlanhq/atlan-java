@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class SearchLogEntry extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

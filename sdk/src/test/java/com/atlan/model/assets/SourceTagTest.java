@@ -247,11 +247,15 @@ public class SourceTagTest {
             .nonCompliantAssetPolicyGUID("String1")
             .outputPortDataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputPortDataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputProductGUID("String0")
+            .outputProductGUID("String1")
             .ownerGroup("String0")
             .ownerGroup("String1")
             .ownerUser("String0")
             .ownerUser("String1")
             .popularityScore(123.456)
+            .productGUID("String0")
+            .productGUID("String1")
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sampleDataUrl("String0")
             .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -445,7 +449,7 @@ public class SourceTagTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .customConfiguration("String0")
+            .tagCustomConfiguration("String0")
             .build();
 
     private static final int hash = full.hashCode();

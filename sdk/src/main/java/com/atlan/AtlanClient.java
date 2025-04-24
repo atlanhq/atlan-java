@@ -215,6 +215,7 @@ public class AtlanClient implements AtlanCloseable {
      * @param baseURL of the tenant, including {@code https://}
      * @param apiToken API token to use for accessing the tenant
      */
+    @SuppressWarnings("this-escape")
     public AtlanClient(final String baseURL, final String apiToken) {
         extraHeaders = new ConcurrentHashMap<>();
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);

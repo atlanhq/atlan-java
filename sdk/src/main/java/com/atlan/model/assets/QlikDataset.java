@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -114,6 +115,10 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     /** Identifier of this asset, from Qlik. */
     @Attribute
     String qlikId;
+
+    /** Whether the Qlik dataset is an implicit dataset */
+    @Attribute
+    Boolean qlikIsImplicit;
 
     /** Whether this asset is published in Qlik (true) or not (false). */
     @Attribute

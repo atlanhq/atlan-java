@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class TypeDefResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

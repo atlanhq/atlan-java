@@ -422,6 +422,9 @@ public interface ILookerModel {
     /** Look that exists for this model. */
     ILookerLook getLook();
 
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    String getLookerSlug();
+
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -455,6 +458,9 @@ public interface ILookerModel {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -464,13 +470,16 @@ public interface ILookerModel {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
     /** Project in which this model exists. */
     ILookerProject getProject();
 
     /** Name of the project in which the model exists. */
     String getProjectName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Deprecated. */

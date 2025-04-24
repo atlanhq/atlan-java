@@ -26,7 +26,7 @@ public class StructDeserializer extends StdDeserializer<AtlanStruct> implements 
 
     private static final long serialVersionUID = 2L;
 
-    private final JsonDeserializer<?> defaultDeserializer;
+    private final transient JsonDeserializer<?> defaultDeserializer;
 
     public StructDeserializer(JsonDeserializer<?> defaultDeserializer) {
         super(AtlanStruct.class);

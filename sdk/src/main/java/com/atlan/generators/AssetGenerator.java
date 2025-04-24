@@ -34,6 +34,7 @@ public class AssetGenerator extends TypeGenerator implements Comparable<AssetGen
     private List<String> mapContainers = null;
     private final Set<String> superTypes;
 
+    @SuppressWarnings("this-escape")
     public AssetGenerator(AtlanClient client, EntityDef entityDef, GeneratorConfig cfg) {
         super(client, entityDef, cfg);
         this.entityDef = entityDef;

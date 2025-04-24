@@ -19,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class WorkflowParameters extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

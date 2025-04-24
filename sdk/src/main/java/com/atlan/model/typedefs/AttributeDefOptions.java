@@ -31,6 +31,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AttributeDefOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -82,6 +83,11 @@ public class AttributeDefOptions extends AtlanObject {
             BusinessPolicyIncident.TYPE_NAME,
             BusinessPolicyLog.TYPE_NAME,
             CalculationView.TYPE_NAME,
+            CassandraColumn.TYPE_NAME,
+            CassandraIndex.TYPE_NAME,
+            CassandraKeyspace.TYPE_NAME,
+            CassandraTable.TYPE_NAME,
+            CassandraView.TYPE_NAME,
             Cognite3DModel.TYPE_NAME,
             CogniteAsset.TYPE_NAME,
             CogniteEvent.TYPE_NAME,
@@ -132,6 +138,7 @@ public class AttributeDefOptions extends AtlanObject {
             DynamoDBTable.TYPE_NAME,
             FivetranConnector.TYPE_NAME,
             Folder.TYPE_NAME,
+            Form.TYPE_NAME,
             Function.TYPE_NAME,
             GCSBucket.TYPE_NAME,
             GCSObject.TYPE_NAME,
@@ -219,6 +226,7 @@ public class AttributeDefOptions extends AtlanObject {
             RedashDashboard.TYPE_NAME,
             RedashQuery.TYPE_NAME,
             RedashVisualization.TYPE_NAME,
+            Response.TYPE_NAME,
             S3Bucket.TYPE_NAME,
             S3Object.TYPE_NAME,
             SalesforceDashboard.TYPE_NAME,
@@ -226,6 +234,13 @@ public class AttributeDefOptions extends AtlanObject {
             SalesforceObject.TYPE_NAME,
             SalesforceOrganization.TYPE_NAME,
             SalesforceReport.TYPE_NAME,
+            SapErpAbapProgram.TYPE_NAME,
+            SapErpColumn.TYPE_NAME,
+            SapErpComponent.TYPE_NAME,
+            SapErpFunctionModule.TYPE_NAME,
+            SapErpTable.TYPE_NAME,
+            SapErpTransactionCode.TYPE_NAME,
+            SapErpView.TYPE_NAME,
             Schema.TYPE_NAME,
             SchemaRegistrySubject.TYPE_NAME,
             SigmaDataElement.TYPE_NAME,

@@ -26,7 +26,7 @@ import java.util.List;
 public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AtlanTagDeserializer(AtlanClient client) {
         super(AtlanTag.class);

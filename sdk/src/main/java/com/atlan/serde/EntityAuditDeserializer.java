@@ -22,7 +22,7 @@ public class EntityAuditDeserializer extends StdDeserializer<EntityAudit> {
 
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public EntityAuditDeserializer(AtlanClient client) {
         this(AuditDetail.class, client);

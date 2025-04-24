@@ -356,6 +356,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      */
     @Getter
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     private static final class BulkRequest extends ApiResource {
         private static final long serialVersionUID = 2L;
 
@@ -431,7 +432,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     private static class WrappedRequestSerializer extends StdSerializer<WrappedRequest> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedRequestSerializer(AtlanClient client) {
@@ -495,7 +496,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     private static class WrappedStringSerializer extends StdSerializer<WrappedString> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedStringSerializer(AtlanClient client) {

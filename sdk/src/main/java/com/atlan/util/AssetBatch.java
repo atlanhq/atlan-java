@@ -422,16 +422,20 @@ public class AssetBatch implements AtlanCloseable {
                     // setting
                     if (tag.getSemantic() == Reference.SaveSemantic.REPLACE) {
                         revised = switch (atlanTagHandling) {
-                            case APPEND -> tag.toBuilder()
-                                    .semantic(Reference.SaveSemantic.APPEND)
-                                    .build();
-                            case REPLACE -> tag.toBuilder()
-                                    .semantic(Reference.SaveSemantic.REPLACE)
-                                    .build();
-                            case REMOVE -> tag.toBuilder()
-                                    .semantic(Reference.SaveSemantic.REMOVE)
-                                    .build();
-                            default -> null;};
+                            case APPEND ->
+                                tag.toBuilder()
+                                        .semantic(Reference.SaveSemantic.APPEND)
+                                        .build();
+                            case REPLACE ->
+                                tag.toBuilder()
+                                        .semantic(Reference.SaveSemantic.REPLACE)
+                                        .build();
+                            case REMOVE ->
+                                tag.toBuilder()
+                                        .semantic(Reference.SaveSemantic.REMOVE)
+                                        .build();
+                            default -> null;
+                        };
                     }
                     if (revised != null) {
                         revisedTags.add(revised);
@@ -571,7 +575,8 @@ public class AssetBatch implements AtlanCloseable {
                     response = switch (customMetadataHandling) {
                         case IGNORE -> client.assets.save(revised, atlanTagHandling);
                         case OVERWRITE -> client.assets.saveReplacingCM(revised, atlanTagHandling);
-                        case MERGE -> client.assets.saveMergingCM(revised, atlanTagHandling);};
+                        case MERGE -> client.assets.saveMergingCM(revised, atlanTagHandling);
+                    };
                     if (response != null) {
                         response.block();
                     }

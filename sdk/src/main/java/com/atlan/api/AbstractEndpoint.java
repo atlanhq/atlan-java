@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 public abstract class AbstractEndpoint {
-    protected final AtlanClient client;
+    protected final transient AtlanClient client;
 
     protected AbstractEndpoint(AtlanClient client) {
         this.client = client;

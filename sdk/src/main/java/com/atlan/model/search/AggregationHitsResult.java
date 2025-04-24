@@ -19,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AggregationHitsResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 
@@ -28,6 +29,7 @@ public class AggregationHitsResult extends AggregationResult {
     Hits hits;
 
     @Getter
+    @SuppressWarnings("serial")
     public static final class Hits {
         Stats total;
 
@@ -47,6 +49,7 @@ public class AggregationHitsResult extends AggregationResult {
     }
 
     @Getter
+    @SuppressWarnings("serial")
     public static final class Details {
         /** Elastic index against which the hits were found. */
         @JsonProperty("_index")

@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AtlanTagSerializer(AtlanClient client) {
         this(AtlanTag.class, client);

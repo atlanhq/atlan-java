@@ -293,7 +293,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     private static class WrappedWorkflowSerializer extends StdSerializer<WrappedWorkflow> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedWorkflowSerializer(AtlanClient client) {

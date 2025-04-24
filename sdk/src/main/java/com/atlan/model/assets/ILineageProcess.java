@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -38,6 +39,9 @@ public interface ILineageProcess {
 
     /** TBC */
     RelationField ADF_ACTIVITY = new RelationField("adfActivity");
+
+    /** TBC */
+    KeywordField AI_DATASET_TYPE = new KeywordField("aiDatasetType", "aiDatasetType");
 
     /** TBC */
     RelationField AIRFLOW_TASKS = new RelationField("airflowTasks");
@@ -86,6 +90,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
+
+    /** TBC */
+    AIDatasetType getAiDatasetType();
 
     /** TBC */
     SortedSet<IAirflowTask> getAirflowTasks();
@@ -472,6 +479,9 @@ public interface ILineageProcess {
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
+    SortedSet<String> getOutputProductGUIDs();
+
+    /** TBC */
     SortedSet<ICatalog> getOutputs();
 
     /** TBC */
@@ -485,6 +495,9 @@ public interface ILineageProcess {
 
     /** TBC */
     IPowerBIDataflow getPowerBIDataflow();
+
+    /** TBC */
+    SortedSet<String> getProductGUIDs();
 
     /** TBC */
     String getQualifiedName();

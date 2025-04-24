@@ -11,6 +11,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataProductCriticality;
+import com.atlan.model.enums.DataProductLineageStatus;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.enums.DataProductVisibility;
@@ -47,6 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -65,6 +67,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     @Singular
     SortedSet<String> daapInputPortGuids;
+
+    /** Status of this data product lineage. */
+    @Attribute
+    DataProductLineageStatus daapLineageStatus;
 
     /** Output ports guids for this data product. */
     @Attribute
