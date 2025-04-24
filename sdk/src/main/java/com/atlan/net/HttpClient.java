@@ -241,7 +241,10 @@ public abstract class HttpClient {
         }
 
         if (response != null) {
-            if (response.code() == 401) {
+            if (response.code() == 302) {
+                // Retry on a redirect (with back-off), rather than actually redirecting
+                log.debug(" ... redirect received, will retry: {}", response.body());
+            } else if (response.code() == 401) {
                 // Retry authentication on an authentication failure (token could have expired)
                 String userId = request.client().getUserId();
                 if (userId != null) {
@@ -291,7 +294,10 @@ public abstract class HttpClient {
                     log.debug(" ... internal server error, will retry: {}", response.body());
                 }
             }
-            return (response.code() == 403 || response.code() == 429 || response.code() >= 500);
+            return (response.code() == 302
+                    || response.code() == 403
+                    || response.code() == 429
+                    || response.code() >= 500);
         }
         return false;
     }
