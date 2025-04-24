@@ -520,6 +520,9 @@ public interface IMaterializedView {
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
+    SortedSet<String> getOutputProductGUIDs();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
@@ -527,6 +530,9 @@ public interface IMaterializedView {
 
     /** TBC */
     Double getPopularityScore();
+
+    /** TBC */
+    SortedSet<String> getProductGUIDs();
 
     /** TBC */
     String getQualifiedName();

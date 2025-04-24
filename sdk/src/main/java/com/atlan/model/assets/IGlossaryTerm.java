@@ -507,6 +507,9 @@ public interface IGlossaryTerm {
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
+    SortedSet<String> getOutputProductGUIDs();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
@@ -520,6 +523,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<IGlossaryTerm> getPreferredToTerms();
+
+    /** TBC */
+    SortedSet<String> getProductGUIDs();
 
     /** TBC */
     String getQualifiedName();

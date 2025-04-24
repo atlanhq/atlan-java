@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +30,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a DocumentDB collection in Atlan.
+ * Instance of a DocumentDBCollection in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -39,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class DocumentDBCollection extends Asset
         implements IDocumentDBCollection, ITable, IDocumentDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
     private static final long serialVersionUID = 2L;
@@ -132,7 +131,7 @@ public class DocumentDBCollection extends Asset
     @Attribute
     String documentDBCollectionSchemaDefinition;
 
-    /** Subtype of a DocumentDB collection, for example: Capped, Time Series, etc. */
+    /** Subtype of a DocumentDBCollection, for example: Capped, Time Series, etc. */
     @Attribute
     String documentDBCollectionSubtype;
 
@@ -600,6 +599,79 @@ public class DocumentDBCollection extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a DocumentDBCollection.
+     *
+     * @param name of the DocumentDBCollection
+     * @param documentDBDatabase in which the DocumentDBCollection should be created, which must have at least
+     *                a qualifiedName
+     * @return the minimal request necessary to create the DocumentDBCollection, as a builder
+     * @throws InvalidRequestException if the DocumentDBDatabase provided is without a qualifiedName
+     */
+    public static DocumentDBCollectionBuilder<?, ?> creator(String name, DocumentDBDatabase documentDBDatabase)
+            throws InvalidRequestException {
+        validateRelationship(
+                DocumentDBDatabase.TYPE_NAME, Map.of("qualifiedName", documentDBDatabase.getQualifiedName()));
+        return creator(name, documentDBDatabase.getQualifiedName())
+                .documentDBDatabase(documentDBDatabase.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DocumentDBCollection.
+     *
+     * @param name unique name of the DocumentDBCollection
+     * @param databaseQualifiedName unique name of the DocumentDBDatabase in which this collection exists
+     * @return the minimal object necessary to create the DocumentDBCollection, as a builder
+     */
+    public static DocumentDBCollectionBuilder<?, ?> creator(String name, String databaseQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        String[] fields = databaseQualifiedName.split("/");
+        String databaseName = fields.length > 0 ? fields[fields.length - 1] : null;
+
+        return DocumentDBCollection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(databaseQualifiedName + "/" + name)
+                .name(name)
+                .databaseName(databaseName)
+                .databaseQualifiedName(databaseQualifiedName)
+                .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+    }
+
+    /**
+     * Builds the minimal object necessary to create a DocumentDBCollection.
+     *
+     * @param name of the DocumentDBCollection
+     * @param databaseQualifiedName unique name of the database in which this collection exists
+     * @param databaseName simple name of the database in which this collection exists (optional, if not provided it will be derived from the databaseQualifiedName)
+     * @param connectionQualifiedName unique name of the connection through which the collection is accessible (optional, if not provided it will be derived from the databaseQualifiedName)
+     * @return the minimal object necessary to create the DocumentDBCollection, as a builder
+     */
+    public static DocumentDBCollectionBuilder<?, ?> creator(
+            String name, String databaseQualifiedName, String databaseName, String connectionQualifiedName) {
+        if (connectionQualifiedName == null) {
+            connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        }
+
+        if (databaseName == null) {
+            String[] fields = databaseQualifiedName.split("/");
+            databaseName = fields.length > 0 ? fields[fields.length - 1] : null;
+        }
+
+        String qualifiedName = databaseQualifiedName + "/" + name;
+
+        return DocumentDBCollection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .databaseName(databaseName)
+                .databaseQualifiedName(databaseQualifiedName)
+                .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+    }
+
+    /**
      * Builds the minimal object necessary to update a DocumentDBCollection.
      *
      * @param qualifiedName of the DocumentDBCollection
@@ -622,10 +694,11 @@ public class DocumentDBCollection extends Asset
      */
     @Override
     public DocumentDBCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

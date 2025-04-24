@@ -179,6 +179,21 @@ public interface ICatalog {
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
                 break;
+            case CassandraColumn.TYPE_NAME:
+                ref = CassandraColumn.refByQualifiedName(qualifiedName);
+                break;
+            case CassandraIndex.TYPE_NAME:
+                ref = CassandraIndex.refByQualifiedName(qualifiedName);
+                break;
+            case CassandraKeyspace.TYPE_NAME:
+                ref = CassandraKeyspace.refByQualifiedName(qualifiedName);
+                break;
+            case CassandraTable.TYPE_NAME:
+                ref = CassandraTable.refByQualifiedName(qualifiedName);
+                break;
+            case CassandraView.TYPE_NAME:
+                ref = CassandraView.refByQualifiedName(qualifiedName);
+                break;
             case Cognite3DModel.TYPE_NAME:
                 ref = Cognite3DModel.refByQualifiedName(qualifiedName);
                 break;
@@ -601,6 +616,27 @@ public interface ICatalog {
                 break;
             case SalesforceReport.TYPE_NAME:
                 ref = SalesforceReport.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpAbapProgram.TYPE_NAME:
+                ref = SapErpAbapProgram.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpColumn.TYPE_NAME:
+                ref = SapErpColumn.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpComponent.TYPE_NAME:
+                ref = SapErpComponent.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpFunctionModule.TYPE_NAME:
+                ref = SapErpFunctionModule.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpTable.TYPE_NAME:
+                ref = SapErpTable.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpTransactionCode.TYPE_NAME:
+                ref = SapErpTransactionCode.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpView.TYPE_NAME:
+                ref = SapErpView.refByQualifiedName(qualifiedName);
                 break;
             case Schema.TYPE_NAME:
                 ref = Schema.refByQualifiedName(qualifiedName);
@@ -1134,6 +1170,9 @@ public interface ICatalog {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -1143,7 +1182,10 @@ public interface ICatalog {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

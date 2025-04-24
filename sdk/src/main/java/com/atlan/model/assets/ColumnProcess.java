@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
@@ -38,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class ColumnProcess extends Asset implements IColumnProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -55,6 +57,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
+
+    /** Dataset type for AI Model - dataset process. */
+    @Attribute
+    AIDatasetType aiDatasetType;
 
     /** Tasks that exist within this process. */
     @Attribute

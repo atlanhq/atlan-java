@@ -33,6 +33,7 @@ public class CustomMetadataField extends SearchableField {
      * @param attributeName human-readable name of the custom metadata attribute
      * @throws AtlanException on any issues communicating with the API, or if the custom metadata (attribute) does not exist
      */
+    @SuppressWarnings("this-escape")
     public CustomMetadataField(AtlanClient client, String setName, String attributeName) throws AtlanException {
         super(
                 client.getCustomMetadataCache().getAttributeForSearchResults(setName, attributeName),

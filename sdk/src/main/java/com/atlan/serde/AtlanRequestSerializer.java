@@ -27,7 +27,7 @@ import java.util.Map;
 public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AtlanRequestSerializer(AtlanClient client) {
         this(AtlanRequest.class, client);

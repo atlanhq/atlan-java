@@ -16,7 +16,7 @@ import java.util.Set;
 public class StringToSetDeserializer extends StdDeserializer<Set<String>> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public StringToSetDeserializer(AtlanClient client) {
         this(null, client);

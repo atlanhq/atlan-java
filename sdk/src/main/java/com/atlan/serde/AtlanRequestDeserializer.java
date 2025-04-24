@@ -24,7 +24,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
 
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AtlanRequestDeserializer(AtlanClient client) {
         this(AtlanRequest.class, client);

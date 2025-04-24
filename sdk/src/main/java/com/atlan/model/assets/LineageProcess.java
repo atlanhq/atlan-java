@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
@@ -42,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LineageProcess extends Asset implements ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -59,6 +61,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     /** TBC */
     @Attribute
     IAdfActivity adfActivity;
+
+    /** TBC */
+    @Attribute
+    AIDatasetType aiDatasetType;
 
     /** TBC */
     @Attribute

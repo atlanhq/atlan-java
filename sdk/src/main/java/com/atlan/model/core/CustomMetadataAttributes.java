@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class CustomMetadataAttributes extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

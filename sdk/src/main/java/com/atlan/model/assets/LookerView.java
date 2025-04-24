@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -66,6 +67,10 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    @Attribute
+    String lookerSlug;
 
     /** File name of this view. */
     @Attribute

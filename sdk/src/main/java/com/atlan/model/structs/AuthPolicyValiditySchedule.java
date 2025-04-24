@@ -17,6 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AuthPolicyValiditySchedule extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 

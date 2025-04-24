@@ -28,6 +28,7 @@ import lombok.experimental.FieldDefaults;
 @EqualsAndHashCode
 @ToString
 @Accessors(fluent = true)
+@SuppressWarnings("serial")
 public class AtlanRequest {
     /** Connectivity to the Atlan tenant. */
     AtlanClient client;

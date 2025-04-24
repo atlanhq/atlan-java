@@ -19,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class LineageFilter extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

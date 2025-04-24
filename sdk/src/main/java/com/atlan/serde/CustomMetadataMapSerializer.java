@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataMapSerializer extends StdSerializer<Map<String, CustomMetadataAttributes>> {
     private static final long serialVersionUID = 2L;
 
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     // TODO: Pass the Map<String, CustomMetadataAttributes> to the other constructor, rather than null
     public CustomMetadataMapSerializer(AtlanClient client) {

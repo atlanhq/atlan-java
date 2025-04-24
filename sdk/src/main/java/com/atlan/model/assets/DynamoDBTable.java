@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class DynamoDBTable extends Asset
         implements IDynamoDBTable, ITable, IDynamoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
     private static final long serialVersionUID = 2L;

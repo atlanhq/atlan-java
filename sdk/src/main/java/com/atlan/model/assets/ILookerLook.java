@@ -46,6 +46,9 @@ public interface ILookerLook {
     /** Name of the folder in which the Look is organized. */
     TextField FOLDER_NAME = new TextField("folderName", "folderName");
 
+    /** Identifier of the query for the Look, from Looker. */
+    TextField LOOKER_SOURCE_QUERY_ID = new TextField("lookerSourceQueryId", "lookerSourceQueryId");
+
     /** Model in which this Look exists. */
     RelationField MODEL = new RelationField("model");
 
@@ -64,7 +67,7 @@ public interface ILookerLook {
     /** Time (epoch) when the Look was last viewed by a user, in milliseconds. */
     NumericField SOURCE_LAST_VIEWED_AT = new NumericField("sourceLastViewedAt", "sourceLastViewedAt");
 
-    /** Identifier of the query for the Look, from Looker. */
+    /** (Deprecated) Please use lookerSourceQueryId instead. */
     NumericField SOURCE_QUERY_ID = new NumericField("sourceQueryId", "sourceQueryId");
 
     /** Identifier of the user who created the Look, from Looker. */
@@ -454,6 +457,12 @@ public interface ILookerLook {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    String getLookerSlug();
+
+    /** Identifier of the query for the Look, from Looker. */
+    String getLookerSourceQueryId();
+
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -493,6 +502,9 @@ public interface ILookerLook {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -502,7 +514,10 @@ public interface ILookerLook {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** Deprecated. */
@@ -553,7 +568,7 @@ public interface ILookerLook {
     /** List of most expensive warehouse names. */
     SortedSet<String> getSourceQueryComputeCosts();
 
-    /** Identifier of the query for the Look, from Looker. */
+    /** (Deprecated) Please use lookerSourceQueryId instead. */
     Integer getSourceQueryId();
 
     /** Total count of all read operations at source. */

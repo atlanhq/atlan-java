@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 

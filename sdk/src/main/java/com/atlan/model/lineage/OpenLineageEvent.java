@@ -41,6 +41,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class OpenLineageEvent extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

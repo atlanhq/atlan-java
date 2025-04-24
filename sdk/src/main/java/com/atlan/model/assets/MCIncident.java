@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class MCIncident extends Asset
         implements IMCIncident, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
@@ -47,6 +48,10 @@ public class MCIncident extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Whether this data quality is part of contract (true) or not (false). */
+    @Attribute
+    Boolean dqIsPartOfContract;
 
     /** Tasks to which this asset provides input. */
     @Attribute

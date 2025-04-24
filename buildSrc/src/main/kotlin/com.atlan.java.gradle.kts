@@ -23,14 +23,14 @@ java {
 
 spotless {
     java {
-        palantirJavaFormat("2.9.0")
+        palantirJavaFormat("2.63.0")
         removeUnusedImports()
         licenseHeaderFile("$rootDir/LICENSE_HEADER")
     }
 }
 
 lombok {
-    version.set("1.18.30")
+    version.set("1.18.38")
 }
 
 tasks.delombok {
@@ -40,8 +40,7 @@ tasks.delombok {
 }
 
 dependencies {
-    errorprone("com.google.errorprone:error_prone_core:2.23.0")
-    errorproneJavac("com.google.errorprone:javac:9+181-r4173-1")
+    errorprone("com.google.errorprone:error_prone_core:2.38.0")
 }
 
 tasks.withType<JavaCompile> {
@@ -73,6 +72,13 @@ tasks.withType<JavaCompile> {
 
         // Disabled as we know how it works and it does what we want
         disable("StringSplitter")
+
+        // Disabled as we will not (yet) use these newer Java features
+        disable("StatementSwitchToExpressionSwitch")
+        disable("PatternMatchingInstanceof")
+
+        // We use this pattern to simplify paging...
+        disable("AssignmentExpression")
 
         // This check is disabled because of how we have object-based inheritance setup, and the
         // inability of Lombok to generate Overrides on its generated builder-related methods.

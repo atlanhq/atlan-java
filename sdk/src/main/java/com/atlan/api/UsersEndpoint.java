@@ -684,6 +684,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     static final class CreateUserRequest extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -714,6 +715,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     static final class AddToGroupsRequest extends AtlanObject {
         private static final long serialVersionUID = 2L;
         List<String> groups;

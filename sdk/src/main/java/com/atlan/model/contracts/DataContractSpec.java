@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = DCS_V_0_0_2.class, name = "0.0.2"),
 })
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 @Slf4j
 public class DataContractSpec extends AtlanObject {
     private static final long serialVersionUID = 2L;

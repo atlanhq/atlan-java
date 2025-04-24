@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -70,6 +71,10 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     /** Folder in which this subfolder exists. */
     @Attribute
     ILookerFolder lookerParentFolder;
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    @Attribute
+    String lookerSlug;
 
     /** Subfolders that exist within this folder. */
     @Attribute

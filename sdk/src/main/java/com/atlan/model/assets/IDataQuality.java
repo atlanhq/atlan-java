@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,7 +22,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for data auality assets.
+ * Base class for data quality assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -29,6 +30,9 @@ import javax.annotation.processing.Generated;
 public interface IDataQuality {
 
     public static final String TYPE_NAME = "DataQuality";
+
+    /** Whether this data quality is part of contract (true) or not (false). */
+    BooleanField DQ_IS_PART_OF_CONTRACT = new BooleanField("dqIsPartOfContract", "dqIsPartOfContract");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -342,6 +346,9 @@ public interface IDataQuality {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Whether this data quality is part of contract (true) or not (false). */
+    Boolean getDqIsPartOfContract();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 
@@ -426,6 +433,9 @@ public interface IDataQuality {
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -435,7 +445,10 @@ public interface IDataQuality {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

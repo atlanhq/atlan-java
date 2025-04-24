@@ -19,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class CreateGroupResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

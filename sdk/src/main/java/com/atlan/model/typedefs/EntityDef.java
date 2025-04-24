@@ -24,6 +24,7 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @JsonPropertyOrder({"name", "description", "typeVersion", "serviceType", "superTypes", "attributeDefs"})
+@SuppressWarnings("serial")
 public class EntityDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 

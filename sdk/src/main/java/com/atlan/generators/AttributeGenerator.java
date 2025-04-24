@@ -22,6 +22,7 @@ public class AttributeGenerator extends TypeGenerator {
         super(client, cfg);
     }
 
+    @SuppressWarnings("this-escape")
     public AttributeGenerator(AtlanClient client, String className, AttributeDef attributeDef, GeneratorConfig cfg) {
         super(client, cfg);
         super.className = className;

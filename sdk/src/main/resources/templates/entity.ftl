@@ -144,7 +144,7 @@ import javax.annotation.processing.Generated;
 </#if>
 @ToString(callSuper = true)
 @Slf4j
-<#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
+<#if mapContainers?? || className == "Asset">@SuppressWarnings({"cast", "serial"})<#else>@SuppressWarnings("serial")</#if>
 public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#if className == "TableauCalculatedField" || className == "TableauDatasourceField">ITableauField, </#if>I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
     private static final long serialVersionUID = 2L;
 

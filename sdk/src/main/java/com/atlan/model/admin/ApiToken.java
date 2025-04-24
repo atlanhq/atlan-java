@@ -169,6 +169,7 @@ public class ApiToken extends AtlanObject {
     @Builder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
+    @SuppressWarnings("serial")
     public static final class ApiTokenAttributes extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -303,7 +304,7 @@ public class ApiToken extends AtlanObject {
     static class ApiTokenAttributesDeserializer extends StdDeserializer<ApiTokenAttributes> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         public ApiTokenAttributesDeserializer(AtlanClient client) {
             super(ApiToken.class);

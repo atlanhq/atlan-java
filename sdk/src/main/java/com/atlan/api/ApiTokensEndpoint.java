@@ -266,6 +266,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      */
     @Getter
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     private static final class ApiTokenRequest extends ApiResource {
         private static final long serialVersionUID = 2L;
 
@@ -349,7 +350,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     private static class WrappedApiTokenSerializer extends StdSerializer<WrappedApiToken> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedApiTokenSerializer(AtlanClient client) {

@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 

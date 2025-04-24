@@ -17,7 +17,6 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -29,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a DocumentDB database in Atlan.
+ * Instance of a DocumentDBDatabase in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -37,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public class DocumentDBDatabase extends Asset
         implements IDocumentDBDatabase, IDocumentDB, IDatabase, INoSQL, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
@@ -437,6 +436,22 @@ public class DocumentDBDatabase extends Asset
     }
 
     /**
+     * Builds the minimal object necessary to create a DocumentDBDatabase.
+     *
+     * @param name of the DocumentDBDatabase
+     * @param connectionQualifiedName unique name of the connection through which the database is accessible
+     * @return the minimal object necessary to create the DocumentDBDatabase, as a builder
+     */
+    public static DocumentDBDatabaseBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return DocumentDBDatabase._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(connectionQualifiedName + "/" + name)
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+    }
+
+    /**
      * Builds the minimal object necessary to update a DocumentDBDatabase.
      *
      * @param qualifiedName of the DocumentDBDatabase
@@ -459,10 +474,11 @@ public class DocumentDBDatabase extends Asset
      */
     @Override
     public DocumentDBDatabaseBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
+        validateRequired(
+                TYPE_NAME,
+                Map.of(
+                        "qualifiedName", this.getQualifiedName(),
+                        "name", this.getName()));
         return updater(this.getQualifiedName(), this.getName());
     }
 

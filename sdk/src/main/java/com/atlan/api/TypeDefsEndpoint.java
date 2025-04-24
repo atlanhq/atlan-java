@@ -521,7 +521,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     private static class WrappedTypeDefSerializer extends StdSerializer<WrappedTypeDef> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedTypeDefSerializer(AtlanClient client) {

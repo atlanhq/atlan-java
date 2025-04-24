@@ -33,6 +33,7 @@ import lombok.ToString;
 @JsonDeserialize(using = KeycloakEventResponse.KeycloakEventResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class KeycloakEventResponse extends ApiResource implements Iterable<KeycloakEvent> {
     private static final long serialVersionUID = 2L;
 

@@ -1,6 +1,6 @@
-import gradle.kotlin.dsl.accessors._1556352cbeb84f78cb898b2e746d5156.versionCatalogs
-
 /* SPDX-License-Identifier: Apache-2.0 */
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("jvm")
     id("com.diffplug.spotless")
@@ -49,6 +49,9 @@ configurations.all {
 
 kotlin {
     jvmToolchain(17)
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 spotless {

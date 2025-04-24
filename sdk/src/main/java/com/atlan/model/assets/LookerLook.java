@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -78,6 +79,14 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Attribute
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
+    @Attribute
+    String lookerSlug;
+
+    /** Identifier of the query for the Look, from Looker. */
+    @Attribute
+    String lookerSourceQueryId;
 
     /** Model in which this Look exists. */
     @Attribute
@@ -130,7 +139,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Date
     Long sourceLastViewedAt;
 
-    /** Identifier of the query for the Look, from Looker. */
+    /** (Deprecated) Please use lookerSourceQueryId instead. */
     @Attribute
     Integer sourceQueryId;
 

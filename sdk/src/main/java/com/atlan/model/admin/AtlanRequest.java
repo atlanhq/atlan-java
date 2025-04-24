@@ -31,6 +31,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = CustomMetadataRequest.class, name = CustomMetadataRequest.REQUEST_TYPE),
 })
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public abstract class AtlanRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

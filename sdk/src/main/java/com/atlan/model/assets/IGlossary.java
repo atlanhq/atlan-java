@@ -447,6 +447,9 @@ public interface IGlossary {
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
     /** TBC */
+    SortedSet<String> getOutputProductGUIDs();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
@@ -454,6 +457,9 @@ public interface IGlossary {
 
     /** TBC */
     Double getPopularityScore();
+
+    /** TBC */
+    SortedSet<String> getProductGUIDs();
 
     /** TBC */
     String getQualifiedName();

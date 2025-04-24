@@ -11,6 +11,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class ApiTokenResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

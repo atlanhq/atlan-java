@@ -10,6 +10,7 @@ import com.atlan.model.lineage.LineageFilterFieldString;
  */
 public class TextField extends SearchableField implements ITextSearchable {
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldString inLineage = new LineageFilterFieldString(this);
 
     /**

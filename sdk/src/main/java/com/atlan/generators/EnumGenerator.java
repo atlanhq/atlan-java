@@ -18,6 +18,7 @@ public class EnumGenerator extends TypeGenerator {
     private final EnumDef enumDef;
     private List<ValidValue> values;
 
+    @SuppressWarnings("this-escape")
     public EnumGenerator(AtlanClient client, EnumDef enumDef, GeneratorConfig cfg) {
         super(client, enumDef, cfg);
         this.enumDef = enumDef;

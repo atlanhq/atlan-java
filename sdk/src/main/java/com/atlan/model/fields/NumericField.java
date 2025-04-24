@@ -11,6 +11,7 @@ import com.atlan.model.lineage.LineageFilterFieldNumeric;
  */
 public class NumericField extends SearchableField implements INumericallySearchable {
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldNumeric inLineage = new LineageFilterFieldNumeric(this);
 
     /**

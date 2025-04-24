@@ -295,6 +295,7 @@ public class SSOEndpoint extends HeraclesEndpoint {
     @JsonSerialize(using = WrappedMappingSerializer.class)
     @JsonDeserialize(using = WrappedMappingDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     private static final class WrappedMapping extends ApiResource {
         private static final long serialVersionUID = 2L;
 
@@ -329,7 +330,7 @@ public class SSOEndpoint extends HeraclesEndpoint {
     private static class WrappedMappingSerializer extends StdSerializer<WrappedMapping> {
         private static final long serialVersionUID = 2L;
 
-        private final AtlanClient client;
+        private final transient AtlanClient client;
 
         @SuppressWarnings("UnusedMethod")
         public WrappedMappingSerializer(AtlanClient client) {

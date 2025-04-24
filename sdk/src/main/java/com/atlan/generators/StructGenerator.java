@@ -21,6 +21,7 @@ public class StructGenerator extends TypeGenerator {
     private List<Attribute> attributes;
     private List<String> mapContainers = null;
 
+    @SuppressWarnings("this-escape")
     public StructGenerator(AtlanClient client, StructDef structDef, GeneratorConfig cfg) {
         super(client, structDef, cfg);
         this.structDef = structDef;

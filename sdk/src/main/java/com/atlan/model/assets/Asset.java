@@ -63,7 +63,7 @@ import lombok.extern.slf4j.Slf4j;
         defaultImpl = IndistinctAsset.class)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("cast")
+@SuppressWarnings({"cast", "serial"})
 public abstract class Asset extends Reference implements IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -613,6 +613,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IDataProduct> outputPortDataProducts;
 
+    /** Array of product guids which have this asset as outputPort */
+    @Attribute
+    @Singular
+    SortedSet<String> outputProductGUIDs;
+
     /** List of groups who own this asset. */
     @Attribute
     @Singular
@@ -627,7 +632,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Double popularityScore;
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    @Attribute
+    @Singular
+    SortedSet<String> productGUIDs;
+
+    /** TBC */
     @Attribute
     String qualifiedName;
 

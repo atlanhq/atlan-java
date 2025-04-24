@@ -1148,6 +1148,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
+    @SuppressWarnings("serial")
     static class BulkEntityRequest extends AtlanObject {
         private static final long serialVersionUID = 2L;
 

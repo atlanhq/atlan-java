@@ -44,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -66,6 +67,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     @Attribute
     @Singular
     SortedSet<AssetFilterGroup> denyAssetFilters;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyAssetMetadataTypes;
 
     /** TBC */
     @Attribute

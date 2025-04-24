@@ -18,6 +18,7 @@ public class AssetDocGenerator extends AssetTestGenerator {
 
     private final Set<String> superTypes;
 
+    @SuppressWarnings("this-escape")
     public AssetDocGenerator(AssetGenerator asset, GeneratorConfig cfg) {
         super(asset, cfg);
         this.superTypes = cache.getAllSuperTypesForType(getOriginalName());

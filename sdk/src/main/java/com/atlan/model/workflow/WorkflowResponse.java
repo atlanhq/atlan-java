@@ -19,6 +19,7 @@ import org.slf4j.event.Level;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class WorkflowResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

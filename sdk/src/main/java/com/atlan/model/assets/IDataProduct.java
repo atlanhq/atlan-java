@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataProductCriticality;
+import com.atlan.model.enums.DataProductLineageStatus;
 import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.enums.DataProductVisibility;
@@ -43,6 +44,9 @@ public interface IDataProduct {
 
     /** Input ports guids for this data product. */
     KeywordField DAAP_INPUT_PORT_GUIDS = new KeywordField("daapInputPortGuids", "daapInputPortGuids");
+
+    /** Status of this data product lineage. */
+    KeywordField DAAP_LINEAGE_STATUS = new KeywordField("daapLineageStatus", "daapLineageStatus");
 
     /** Output ports guids for this data product. */
     KeywordField DAAP_OUTPUT_PORT_GUIDS = new KeywordField("daapOutputPortGuids", "daapOutputPortGuids");
@@ -397,6 +401,9 @@ public interface IDataProduct {
     /** Input ports guids for this data product. */
     SortedSet<String> getDaapInputPortGuids();
 
+    /** Status of this data product lineage. */
+    DataProductLineageStatus getDaapLineageStatus();
+
     /** Output ports guids for this data product. */
     SortedSet<String> getDaapOutputPortGuids();
 
@@ -550,6 +557,9 @@ public interface IDataProduct {
     /** Output ports for this data product. */
     SortedSet<IAsset> getOutputPorts();
 
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -562,7 +572,10 @@ public interface IDataProduct {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

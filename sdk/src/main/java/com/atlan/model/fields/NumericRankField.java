@@ -14,6 +14,7 @@ public class NumericRankField extends SearchableField implements INumericallySea
 
     private final String rankFieldName;
 
+    @SuppressWarnings("this-escape")
     public final LineageFilterFieldNumeric inLineage = new LineageFilterFieldNumeric(this);
 
     /**

@@ -29,6 +29,7 @@ import lombok.extern.jackson.Jacksonized;
     "name", "description", "typeVersion", "relationshipCategory", "relationshipLabel",
     "serviceType", "endDef1", "endDef2", "propagateTags", "relationshipAttributeDefs"
 })
+@SuppressWarnings("serial")
 public class RelationshipDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 

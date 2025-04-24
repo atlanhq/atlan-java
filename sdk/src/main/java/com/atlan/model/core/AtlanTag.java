@@ -26,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @JsonDeserialize(using = AtlanTagDeserializer.class)
 @JsonSerialize(using = AtlanTagSerializer.class)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<AtlanTag> {
     private static final long serialVersionUID = 2L;
 

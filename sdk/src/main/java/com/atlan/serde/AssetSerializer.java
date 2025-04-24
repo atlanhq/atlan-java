@@ -31,7 +31,7 @@ import java.util.*;
  */
 public class AssetSerializer extends StdSerializer<Asset> {
     private static final long serialVersionUID = 2L;
-    private final AtlanClient client;
+    private final transient AtlanClient client;
 
     public AssetSerializer(AtlanClient client) {
         this(Asset.class, client);

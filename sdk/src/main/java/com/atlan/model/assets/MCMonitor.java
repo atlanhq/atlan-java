@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
+@SuppressWarnings("serial")
 public class MCMonitor extends Asset
         implements IMCMonitor, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
@@ -49,6 +50,10 @@ public class MCMonitor extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Whether this data quality is part of contract (true) or not (false). */
+    @Attribute
+    Boolean dqIsPartOfContract;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -107,6 +112,11 @@ public class MCMonitor extends Asset
     /** Namespace of this monitor. */
     @Attribute
     String mcMonitorNamespace;
+
+    /** Channels through which notifications are sent for this monitor (e.g., email, slack, webhook). */
+    @Attribute
+    @Singular
+    SortedSet<String> mcMonitorNotificationChannels;
 
     /** Priority of this monitor. */
     @Attribute

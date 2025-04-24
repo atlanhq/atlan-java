@@ -23,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class AuditSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
