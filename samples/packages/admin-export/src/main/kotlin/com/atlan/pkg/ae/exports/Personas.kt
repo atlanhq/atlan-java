@@ -33,6 +33,13 @@ class Personas(
                 "Connections" to "Connections controlled by the policies on this persona",
                 "Glossaries" to "Glossaries controlled by the policies on this persona",
                 "Domains" to "Domains controlled by the policies on this persona",
+                "Navigation" to "Default landing page",
+                "Hide asset types" to "Asset types that should be hidden",
+                "Hide sidebar tabs" to "Sidebar tabs that should be hidden",
+                "Hide asset filters" to "Asset search filters that should be hidden",
+                "Hide asset metadata" to "Asset metadata that should be hidden",
+                "Display preferences" to "Specific preferences on displaying assets",
+                "Custom metadata to hide" to "Custom metadata tabs that should be hidden",
                 "Extracted on" to "Date and time when the persona was extracted",
             ),
         )
@@ -44,6 +51,14 @@ class Personas(
             .includeOnResults(Persona.PERSONA_USERS)
             .includeOnResults(Persona.PERSONA_GROUPS)
             .includeOnResults(Persona.POLICIES)
+            .includeOnResults(Persona.DEFAULT_NAVIGATION)
+            .includeOnResults(Persona.DENY_ASSET_FILTERS)
+            .includeOnResults(Persona.DENY_ASSET_METADATA_TYPES)
+            .includeOnResults(Persona.DENY_ASSET_TABS)
+            .includeOnResults(Persona.DENY_ASSET_TYPES)
+            .includeOnResults(Persona.DENY_CUSTOM_METADATA_GUIDS)
+            .includeOnResults(Persona.DENY_NAVIGATION_PAGES)
+            .includeOnResults(Persona.DISPLAY_PREFERENCES)
             .includeOnRelations(AuthPolicy.NAME)
             .includeOnRelations(AuthPolicy.POLICY_TYPE)
             .includeOnRelations(AuthPolicy.POLICY_SUB_CATEGORY)
@@ -59,6 +74,7 @@ class Personas(
                 val connections = mutableSetOf<AdminExporter.ConnectionId>()
                 val glossaries = mutableSetOf<String>()
                 val domains = mutableSetOf<String>()
+                val denyCustomMetadata = mutableSetOf<String>()
                 persona.policies.forEach { policy ->
                     when (policy.policySubCategory) {
                         "metadata" -> {
@@ -91,6 +107,12 @@ class Personas(
                         }
                     }
                 }
+                persona.denyCustomMetadataGuids.forEach { cmGuid ->
+                    val cmName = ctx.client.customMetadataCache.getNameForId(cmGuid) ?: ""
+                    if (cmName.isNotBlank()) {
+                        denyCustomMetadata.add(cmName)
+                    }
+                }
                 writer.writeRecord(
                     listOf(
                         persona.name,
@@ -104,6 +126,13 @@ class Personas(
                         connections.joinToString("\n"),
                         glossaries.joinToString("\n"),
                         domains.joinToString("\n"),
+                        persona.defaultNavigation,
+                        persona.denyAssetTypes.joinToString("\n"),
+                        persona.denyAssetTabs.joinToString("\n") { it.value },
+                        persona.denyAssetFilters.joinToString("\n") { it.value },
+                        persona.denyAssetMetadataTypes.joinToString("\n"),
+                        persona.displayPreferences.joinToString("\n"),
+                        denyCustomMetadata.joinToString("\n"),
                         ts,
                     ),
                 )
