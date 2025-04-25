@@ -33,7 +33,10 @@ public enum AssetSidebarTab implements AtlanEnum {
     PROPERTIES("Properties"),
     MONTE_CARLO("Monte Carlo"),
     DBT_TEST("dbt Test"),
-    SODA("Soda");
+    SODA("Soda"),
+    ANOMALO("Anomalo"),
+    LAYERS("Layers"),
+    PARTITIONS("Partitions");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
