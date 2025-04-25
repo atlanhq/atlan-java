@@ -96,10 +96,15 @@ public class FluentSearch extends CompoundQuery {
         }
         // As long as there is a client, build the search request for just a single result (with count)
         // and then just return the count
-        IndexSearchRequest request = IndexSearchRequest.builder(
-                        _dsl().size(1).clearAggregations().build())
-                .build();
-        return request.search(client).getApproximateCount();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> rb =
+                IndexSearchRequest.builder(_dsl().size(1).clearAggregations().build());
+        if (restrictByPersona != null && !restrictByPersona.isEmpty()) {
+            rb.persona(restrictByPersona);
+        }
+        if (restrictByPurpose != null && !restrictByPurpose.isEmpty()) {
+            rb.purpose(restrictByPurpose);
+        }
+        return rb.build().search(client).getApproximateCount();
     }
 
     /**
