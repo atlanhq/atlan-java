@@ -68,6 +68,12 @@ public class FluentSearch extends CompoundQuery {
     /** Whether to include relationship attributes on each relationship in the results. */
     Boolean includeRelationshipAttributes;
 
+    /** Qualified name of a persona through which to restrict the results. */
+    String restrictByPersona;
+
+    /** Qualified name of a purpose through which to restrict the results. */
+    String restrictByPurpose;
+
     /**
      * Translate the Atlan fluent search into an Atlan search request.
      *
@@ -90,10 +96,15 @@ public class FluentSearch extends CompoundQuery {
         }
         // As long as there is a client, build the search request for just a single result (with count)
         // and then just return the count
-        IndexSearchRequest request = IndexSearchRequest.builder(
-                        _dsl().size(1).clearAggregations().build())
-                .build();
-        return request.search(client).getApproximateCount();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> rb =
+                IndexSearchRequest.builder(_dsl().size(1).clearAggregations().build());
+        if (restrictByPersona != null && !restrictByPersona.isEmpty()) {
+            rb.persona(restrictByPersona);
+        }
+        if (restrictByPurpose != null && !restrictByPurpose.isEmpty()) {
+            rb.purpose(restrictByPurpose);
+        }
+        return rb.build().search(client).getApproximateCount();
     }
 
     /**
@@ -199,6 +210,12 @@ public class FluentSearch extends CompoundQuery {
         }
         if (includeRelationshipAttributes != null) {
             request.requestRelationshipAttrsForSearch(includeRelationshipAttributes);
+        }
+        if (restrictByPersona != null && !restrictByPersona.isEmpty()) {
+            request.persona(restrictByPersona);
+        }
+        if (restrictByPurpose != null && !restrictByPurpose.isEmpty()) {
+            request.purpose(restrictByPurpose);
         }
         return request;
     }

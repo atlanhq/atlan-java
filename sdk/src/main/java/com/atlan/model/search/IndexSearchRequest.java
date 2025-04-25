@@ -120,6 +120,12 @@ public class IndexSearchRequest extends AtlanObject {
     @Builder.Default
     Boolean showHighlights = false;
 
+    /** Qualified name of a persona through which to restrict the results of the search. */
+    String persona;
+
+    /** Qualified name of a purpose through which to restrict the results of the search. */
+    String purpose;
+
     /**
      * Run the search.
      *

@@ -12,6 +12,8 @@ import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.IReferenceable;
+import com.atlan.model.assets.Persona;
+import com.atlan.model.assets.Purpose;
 import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
@@ -38,6 +40,8 @@ public class SearchTest extends AtlanLiveTest {
     private static final String PREFIX = makeUnique("SRCH");
 
     private static final String EXISTING_SOURCE_SYNCED_TAG = "Confidential";
+    private static final String EXISTING_PERSONA_NAME = "Business Definitions";
+    private static final String EXISTING_PURPOSE_NAME = "Known Issues";
 
     private static Glossary glossary = null;
     private static GlossaryCategory category1 = null;
@@ -48,6 +52,36 @@ public class SearchTest extends AtlanLiveTest {
     private static GlossaryTerm term3 = null;
     private static GlossaryTerm term4 = null;
     private static GlossaryTerm term5 = null;
+
+    @Test(groups = {"search."})
+    void findPersonaRestrictedAssets() throws AtlanException {
+        List<Persona> list = Persona.findByName(client, EXISTING_PERSONA_NAME);
+        assertNotNull(list);
+        assertEquals(list.size(), 1);
+        Persona existing = list.get(0);
+        long withoutPersona = client.assets.select().pageSize(0).count();
+        long withPersona = client.assets
+                .select()
+                .pageSize(0)
+                .restrictByPersona(existing.getQualifiedName())
+                .count();
+        assertTrue(withoutPersona > withPersona);
+    }
+
+    @Test(groups = {"search."})
+    void findPurposeRestrictedAssets() throws AtlanException {
+        List<Purpose> list = Purpose.findByName(client, EXISTING_PURPOSE_NAME);
+        assertNotNull(list);
+        assertEquals(list.size(), 1);
+        Purpose existing = list.get(0);
+        long withoutPurpose = client.assets.select().pageSize(0).count();
+        long withPurpose = client.assets
+                .select()
+                .pageSize(0)
+                .restrictByPurpose(existing.getQualifiedName())
+                .count();
+        assertTrue(withoutPurpose > withPurpose);
+    }
 
     @Test(groups = {"search."})
     void findSourceSyncedAssets() throws AtlanException {
