@@ -12,6 +12,8 @@ import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.IReferenceable;
+import com.atlan.model.assets.Persona;
+import com.atlan.model.assets.Purpose;
 import com.atlan.model.assets.Table;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
