@@ -26,6 +26,11 @@ class Purposes(
                 "Data policies" to "",
                 "Groups" to "Groups to which these policies are applied",
                 "Users" to "Users to which these policies are applied",
+                "Navigation" to "Default landing page",
+                "Hide asset types" to "Asset types that should be hidden",
+                "Hide sidebar tabs" to "Sidebar tabs that should be hidden",
+                "Hide asset filters" to "Asset search filters that should be hidden",
+                "Custom metadata to hide" to "Custom metadata tabs that should be hidden",
                 "Extracted on" to "Date and time when the purpose was extracted",
             ),
         )
@@ -36,6 +41,11 @@ class Purposes(
             .includeOnResults(Purpose.DESCRIPTION)
             .includeOnResults(Purpose.PURPOSE_ATLAN_TAGS)
             .includeOnResults(Purpose.POLICIES)
+            .includeOnResults(Purpose.DEFAULT_NAVIGATION)
+            .includeOnResults(Purpose.DENY_ASSET_TYPES)
+            .includeOnResults(Purpose.DENY_ASSET_TABS)
+            .includeOnResults(Purpose.DENY_ASSET_FILTERS)
+            .includeOnResults(Purpose.DENY_CUSTOM_METADATA_GUIDS)
             .includeOnRelations(AuthPolicy.NAME)
             .includeOnRelations(AuthPolicy.POLICY_TYPE)
             .includeOnRelations(AuthPolicy.POLICY_SUB_CATEGORY)
@@ -48,6 +58,7 @@ class Purposes(
                 var dataPolicyCount = 0
                 val groups = mutableSetOf<String>()
                 val users = mutableSetOf<String>()
+                val denyCustomMetadata = mutableSetOf<String>()
                 purpose.policies.forEach { policy ->
                     when (policy.policySubCategory) {
                         "metadata" -> {
@@ -62,6 +73,12 @@ class Purposes(
                         }
                     }
                 }
+                purpose.denyCustomMetadataGuids.forEach { cmGuid ->
+                    val cmName = ctx.client.customMetadataCache.getNameForId(cmGuid) ?: ""
+                    if (cmName.isNotBlank()) {
+                        denyCustomMetadata.add(cmName)
+                    }
+                }
                 writer.writeRecord(
                     listOf(
                         purpose.name,
@@ -71,6 +88,11 @@ class Purposes(
                         dataPolicyCount,
                         groups.joinToString("\n"),
                         users.joinToString("\n"),
+                        purpose.defaultNavigation,
+                        purpose.denyAssetTypes.joinToString("\n"),
+                        purpose.denyAssetTabs.joinToString(separator = "\n") { it.value },
+                        purpose.denyAssetFilters.joinToString(separator = "\n") { it.value },
+                        denyCustomMetadata.joinToString("\n"),
                         ts,
                     ),
                 )
