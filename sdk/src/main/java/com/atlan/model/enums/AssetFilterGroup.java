@@ -11,6 +11,7 @@ public enum AssetFilterGroup implements AtlanEnum {
     USAGE("usage"),
     TAGS("__traitNames"),
     PROPERTIES("properties"),
+    DOCUMENTS("documents"),
     CERTIFICATE("certificateStatus");
 
     @JsonValue
