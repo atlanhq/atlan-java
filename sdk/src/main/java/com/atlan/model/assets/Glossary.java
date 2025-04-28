@@ -473,30 +473,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(AtlanClient client, Collection<String> attributes) throws AtlanException {
-        if (qualifiedName == null) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
-        }
-        Set<String> topCategories = new LinkedHashSet<>();
-        Map<String, GlossaryCategory> categoryMap = new HashMap<>();
-        GlossaryCategory.select(client)
-                .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
-                .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
-                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
-                .stream()
-                .filter(a -> a instanceof GlossaryCategory)
-                .forEach(c -> {
-                    GlossaryCategory category = (GlossaryCategory) c;
-                    categoryMap.put(category.getGuid(), category);
-                    if (category.getParentCategory() == null) {
-                        topCategories.add(category.getGuid());
-                    }
-                });
-        if (topCategories.isEmpty()) {
-            throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
-        }
-        return new CategoryHierarchy(topCategories, categoryMap);
+        return _getHierarchy(client, attributes, null);
     }
 
     /**
@@ -532,16 +509,28 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public CategoryHierarchy getHierarchy(
             AtlanClient client, List<AtlanField> attributes, List<AtlanField> relatedAttributes) throws AtlanException {
+        List<String> stringAttributes = new ArrayList<>();
+        if (attributes != null) {
+            stringAttributes =
+                    attributes.stream().map(AtlanField::getAtlanFieldName).collect(Collectors.toList());
+        }
+        return _getHierarchy(client, stringAttributes, relatedAttributes);
+    }
+
+    private CategoryHierarchy _getHierarchy(
+            AtlanClient client, Collection<String> attributes, List<AtlanField> relatedAttributes)
+            throws AtlanException {
         if (qualifiedName == null) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
         }
         Set<String> topCategories = new LinkedHashSet<>();
         Map<String, GlossaryCategory> categoryMap = new HashMap<>();
+
         GlossaryCategory.select(client)
                 .where(GlossaryCategory.ANCHOR.eq(getQualifiedName()))
                 .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
-                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .includesOnRelations(relatedAttributes == null ? Collections.emptyList() : relatedAttributes)
                 .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
                 .stream()
@@ -556,7 +545,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
         if (topCategories.isEmpty()) {
             throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
         }
-        return new CategoryHierarchy(topCategories, categoryMap);
+        return new CategoryHierarchy(client, topCategories, categoryMap, attributes, relatedAttributes);
     }
 
     /**
@@ -564,11 +553,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static class CategoryHierarchy {
 
+        private final transient AtlanClient client;
+        private final Collection<String> attributes;
+        private final List<AtlanField> relatedAttributes;
         private final Set<String> topLevel;
         private final List<GlossaryCategory> rootCategories;
         private final Map<String, GlossaryCategory> map;
 
-        private CategoryHierarchy(Set<String> topLevel, Map<String, GlossaryCategory> stubMap) {
+        private CategoryHierarchy(
+                AtlanClient client,
+                Set<String> topLevel,
+                Map<String, GlossaryCategory> stubMap,
+                Collection<String> attributes,
+                List<AtlanField> relatedAttributes) {
+            this.client = client;
+            this.attributes = attributes;
+            this.relatedAttributes = relatedAttributes;
             this.topLevel = topLevel;
             this.rootCategories = new ArrayList<>();
             this.map = new LinkedHashMap<>();
@@ -588,9 +588,32 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                         fullParent.setChildrenCategories(children);
                         map.put(parent.getGuid(), fullParent);
                     } else {
-                        log.warn(
-                                "Unable to find referenced parent category '{}', skipping it in the hierarchy traversal.",
+                        log.debug(
+                                "Unable to find referenced parent category '{}', could be in a different glossary.",
                                 parentGuid);
+                        try {
+                            GlossaryCategory.select(client)
+                                    .where(GlossaryCategory.GUID.eq(parentGuid))
+                                    .includeOnResults(GlossaryCategory.PARENT_CATEGORY)
+                                    ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                                    .includesOnRelations(
+                                            relatedAttributes == null ? Collections.emptyList() : relatedAttributes)
+                                    .sort(GlossaryCategory.NAME.order(SortOrder.Asc))
+                                    .stream()
+                                    .filter(a -> a instanceof GlossaryCategory)
+                                    .forEach(c -> {
+                                        GlossaryCategory fetched = (GlossaryCategory) c;
+                                        map.put(fetched.getGuid(), fetched);
+                                        if (fetched.getParentCategory() == null) {
+                                            topLevel.add(fetched.getGuid());
+                                        }
+                                    });
+                        } catch (AtlanException e) {
+                            log.warn(
+                                    "Unable to find reference parent category '{}', skipping it in traversal.",
+                                    parentGuid);
+                            log.debug("Full details: ", e);
+                        }
                     }
                 }
                 map.put(category.getGuid(), category);
