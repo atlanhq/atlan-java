@@ -287,7 +287,7 @@
                                     });
                         } catch (AtlanException e) {
                             log.warn(
-                                    "Unable to find reference parent category '{}', skipping it in traversal.",
+                                    "Unable to find referenced parent category '{}', skipping it in traversal.",
                                     parentGuid);
                             log.debug("Full details: ", e);
                         }
