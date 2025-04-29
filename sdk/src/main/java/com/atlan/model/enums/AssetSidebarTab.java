@@ -4,7 +4,9 @@ package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public enum AssetSidebarTab implements AtlanEnum {
     OVERVIEW("Overview"),
     COLUMNS("Columns"),
@@ -36,7 +38,9 @@ public enum AssetSidebarTab implements AtlanEnum {
     SODA("Soda"),
     ANOMALO("Anomalo"),
     LAYERS("Layers"),
-    PARTITIONS("Partitions");
+    PARTITIONS("Partitions"),
+    ATTRIBUTES("Attributes"),
+    UNMAPPED("(unmapped)");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
@@ -47,11 +51,15 @@ public enum AssetSidebarTab implements AtlanEnum {
     }
 
     public static AssetSidebarTab fromValue(String value) {
+        if (value == null || value.isEmpty()) {
+            return null;
+        }
         for (AssetSidebarTab b : AssetSidebarTab.values()) {
             if (b.value.equals(value)) {
                 return b;
             }
         }
-        return null;
+        log.warn("Found an unmapped sidebar tab, please raise a ticket to get this added: {}", value);
+        return UNMAPPED;
     }
 }
