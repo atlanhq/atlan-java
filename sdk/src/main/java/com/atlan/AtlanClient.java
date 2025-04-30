@@ -221,6 +221,8 @@ public class AtlanClient implements AtlanCloseable {
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);
         if (baseURL == null) {
             throw new IllegalStateException(Atlan.INVALID_CLIENT_MSG);
+        } else if (baseURL.isEmpty()) {
+            throw new IllegalStateException(Atlan.BLANK_CLIENT_MSG);
         } else if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;

@@ -22,6 +22,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             "This operation can only be used within the Atlan cluster.",
             "You cannot use this operation from any external call to Atlan, it can only be done within the back-end cluster."),
 
+    BLANK_BASE_URL(
+            -1,
+            "ATLAN-JAVA--1-004",
+            "Attempted to configure a blank base URL in the SDK.",
+            "You must specify a non-blank URL for your tenant, before running any operation that makes an underlying API call."),
+
     INVALID_REQUEST_PASSTHROUGH(
             400,
             "ATLAN-JAVA-400-000",
