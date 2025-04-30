@@ -118,7 +118,7 @@ class DomainImporter(
             return false
         }
         val domainLevel =
-            if (row[parentIdx].isBlank()) {
+            if (parentIdx < 0 || row[parentIdx].isBlank()) {
                 1
             } else {
                 row[parentIdx].split(DATA_DOMAIN_DELIMITER).size + 1
