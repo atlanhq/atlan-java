@@ -20,7 +20,7 @@ jobs:
           java-version: 21
           distribution: temurin
       - name: Compile
-        uses: burrunan/gradle-cache-action@c15634bb25b7284dc084f38dff4e838048b7feaf  # v2
+        uses: burrunan/gradle-cache-action@663fbad34e03c8f12b27f4999ac46e3d90f87eca  # v3.0.1
         with:
           arguments: assemble shadowJar test
       # - name: Upload build artifacts
@@ -65,7 +65,7 @@ jobs:
           java-version: 21
           distribution: temurin
       - name: Integration tests
-        uses: burrunan/gradle-cache-action@c15634bb25b7284dc084f38dff4e838048b7feaf  # v2
+        uses: burrunan/gradle-cache-action@663fbad34e03c8f12b27f4999ac46e3d90f87eca  # v3.0.1
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
@@ -119,7 +119,7 @@ jobs:
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
-        uses: burrunan/gradle-cache-action@c15634bb25b7284dc084f38dff4e838048b7feaf  # v2
+        uses: burrunan/gradle-cache-action@663fbad34e03c8f12b27f4999ac46e3d90f87eca  # v3.0.1
         with:
           arguments: |
             -PpackageTests
