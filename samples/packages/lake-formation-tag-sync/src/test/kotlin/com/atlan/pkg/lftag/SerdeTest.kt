@@ -13,6 +13,7 @@ import org.testng.annotations.Test
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 private const val TAG_KEY = "privacy_sensitivity"
 private const val CATALOG_ID = "614518280298"
@@ -76,6 +77,20 @@ class SerdeTest {
             """.trimIndent()
         val table = mapper.readValue(json, LFTable::class.java)
         assertEquals("614518280298", table.catalogId)
+        assertEquals("dev_atlan_dev", table.databaseName)
+        assertEquals("stg_customer_categories", table.name)
+    }
+    @Test
+    fun whenDeserializableTableMissingCatalogIdThenSuccess() {
+        val json =
+            """
+            {
+                "DatabaseName": "dev_atlan_dev",
+                "Name": "stg_customer_categories"
+            }
+            """.trimIndent()
+        val table = mapper.readValue(json, LFTable::class.java)
+        assertNull(table.catalogId)
         assertEquals("dev_atlan_dev", table.databaseName)
         assertEquals("stg_customer_categories", table.name)
     }
