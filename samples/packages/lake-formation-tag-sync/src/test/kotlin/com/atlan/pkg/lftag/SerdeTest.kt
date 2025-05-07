@@ -80,6 +80,7 @@ class SerdeTest {
         assertEquals("dev_atlan_dev", table.databaseName)
         assertEquals("stg_customer_categories", table.name)
     }
+
     @Test
     fun whenDeserializableTableMissingCatalogIdThenSuccess() {
         val json =
