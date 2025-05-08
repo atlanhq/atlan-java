@@ -147,7 +147,6 @@ import java.util.regex.Pattern;
         } else {
             builder.qualifiedName(generateQualifiedName(name, hierarchyQualifiedName));
         }
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return builder.guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .cubeName(cubeName)
             .cubeQualifiedName(cubeQualifiedName)
@@ -156,7 +155,6 @@ import java.util.regex.Pattern;
             .cubeHierarchyName(hierarchyName)
             .cubeHierarchyQualifiedName(hierarchyQualifiedName)
             .cubeHierarchy(CubeHierarchy.refByQualifiedName(hierarchyQualifiedName))
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);
     }
 

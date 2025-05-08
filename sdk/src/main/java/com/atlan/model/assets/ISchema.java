@@ -59,6 +59,9 @@ public interface ISchema {
     /** Snowflake pipes that exist within this schema. */
     RelationField SNOWFLAKE_PIPES = new RelationField("snowflakePipes");
 
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    RelationField SNOWFLAKE_STAGES = new RelationField("snowflakeStages");
+
     /** Snowflake streams that exist within this schema. */
     RelationField SNOWFLAKE_STREAMS = new RelationField("snowflakeStreams");
 
@@ -533,7 +536,7 @@ public interface ISchema {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */
@@ -568,6 +571,9 @@ public interface ISchema {
 
     /** Snowflake pipes that exist within this schema. */
     SortedSet<ISnowflakePipe> getSnowflakePipes();
+
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    SortedSet<ISnowflakeStage> getSnowflakeStages();
 
     /** Snowflake streams that exist within this schema. */
     SortedSet<ISnowflakeStream> getSnowflakeStreams();

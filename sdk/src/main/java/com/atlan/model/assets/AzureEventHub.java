@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KafkaTopicCleanupPolicy;
 import com.atlan.model.enums.KafkaTopicCompressionType;
@@ -386,8 +385,7 @@ public class AzureEventHub extends Asset
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.AZURE_EVENT_HUB);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

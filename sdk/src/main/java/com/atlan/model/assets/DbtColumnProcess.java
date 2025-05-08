@@ -17,6 +17,7 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.DbtJobRun;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -222,6 +223,12 @@ public class DbtColumnProcess extends Asset
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    @JsonProperty("parentConnectionProcessQualifiedName")
+    SortedSet<String> parentConnectionProcessQualifiedNames;
 
     /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute

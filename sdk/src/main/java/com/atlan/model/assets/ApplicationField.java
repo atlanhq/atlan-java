@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -380,13 +379,11 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      */
     public static ApplicationField.ApplicationFieldBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String applicationQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ApplicationField._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(connectorType)
                 .applicationParentQualifiedName(applicationQualifiedName)
                 .applicationParent(Application.refByQualifiedName(applicationQualifiedName));
     }

@@ -475,7 +475,7 @@ public interface ITableauDashboard {
     /** Unique name of the project in which this dashboard exists. */
     String getProjectQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

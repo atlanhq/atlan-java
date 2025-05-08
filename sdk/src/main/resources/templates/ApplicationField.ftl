@@ -40,13 +40,11 @@
      */
     public static ApplicationField.ApplicationFieldBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String applicationQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ApplicationField._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, applicationQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(connectorType)
                 .applicationParentQualifiedName(applicationQualifiedName)
                 .applicationParent(Application.refByQualifiedName(applicationQualifiedName));
     }

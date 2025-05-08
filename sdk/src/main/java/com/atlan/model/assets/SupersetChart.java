@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -384,12 +383,10 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      */
     public static SupersetChartBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String dashboardQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return SupersetChart._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(dashboardQualifiedName + "/" + name)
-                .connectorType(connectorType)
                 .supersetDashboardQualifiedName(dashboardQualifiedName)
                 .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);

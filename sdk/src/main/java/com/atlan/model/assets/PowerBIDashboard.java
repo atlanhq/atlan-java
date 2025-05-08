@@ -90,6 +90,11 @@ public class PowerBIDashboard extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** PowerBI App that is associated with this PowerBI Dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIApp> powerBIApps;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;

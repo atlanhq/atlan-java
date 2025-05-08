@@ -23,6 +23,34 @@
     }
 
     /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String qualifiedName) {
+        String[] tokens = qualifiedName.split("/");
+        AtlanConnectorType ct = getConnectorTypeFromQualifiedName(tokens);
+        if (ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
+            return getConnectorFromQualifiedName(tokens);
+        }
+        return ct.getValue();
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param tokens of the qualifiedName, from which to determine the connector type
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String[] tokens) {
+        if (tokens.length > 1) {
+            return tokens[1].toLowerCase();
+        }
+        return null;
+    }
+
+    /**
      * Builds the minimal object necessary to create a connection, using "All Admins" as the default
      * set of connection admins.
      *

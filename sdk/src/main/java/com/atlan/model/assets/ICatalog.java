@@ -491,6 +491,9 @@ public interface ICatalog {
             case MongoDBDatabase.TYPE_NAME:
                 ref = MongoDBDatabase.refByQualifiedName(qualifiedName);
                 break;
+            case PowerBIApp.TYPE_NAME:
+                ref = PowerBIApp.refByQualifiedName(qualifiedName);
+                break;
             case PowerBIColumn.TYPE_NAME:
                 ref = PowerBIColumn.refByQualifiedName(qualifiedName);
                 break;
@@ -620,6 +623,9 @@ public interface ICatalog {
             case SapErpAbapProgram.TYPE_NAME:
                 ref = SapErpAbapProgram.refByQualifiedName(qualifiedName);
                 break;
+            case SapErpCdsView.TYPE_NAME:
+                ref = SapErpCdsView.refByQualifiedName(qualifiedName);
+                break;
             case SapErpColumn.TYPE_NAME:
                 ref = SapErpColumn.refByQualifiedName(qualifiedName);
                 break;
@@ -682,6 +688,9 @@ public interface ICatalog {
                 break;
             case SnowflakePipe.TYPE_NAME:
                 ref = SnowflakePipe.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeStage.TYPE_NAME:
+                ref = SnowflakeStage.refByQualifiedName(qualifiedName);
                 break;
             case SnowflakeStream.TYPE_NAME:
                 ref = SnowflakeStream.refByQualifiedName(qualifiedName);
@@ -1185,7 +1194,7 @@ public interface ICatalog {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

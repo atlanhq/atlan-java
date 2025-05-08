@@ -1064,10 +1064,7 @@
             if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
                 connectorType(ct);
             } else {
-                String[] tokens = qualifiedName.split("/");
-                if (tokens.length > 1) {
-                    customConnectorType(tokens[1]);
-                }
+                customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
             }
             return self();
         }

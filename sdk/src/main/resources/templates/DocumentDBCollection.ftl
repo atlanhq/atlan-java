@@ -43,8 +43,7 @@
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -80,8 +79,7 @@
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

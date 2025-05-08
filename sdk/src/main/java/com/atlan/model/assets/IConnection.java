@@ -13,6 +13,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -72,6 +73,9 @@ public interface IConnection {
     /** Host name of this connection's source. */
     TextField HOST = new TextField("host", "host");
 
+    /** Connection process to which this asset provides input. */
+    RelationField INPUT_TO_CONNECTION_PROCESSES = new RelationField("inputToConnectionProcesses");
+
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     BooleanField IS_SAMPLE_DATA_PREVIEW_ENABLED =
             new BooleanField("isSampleDataPreviewEnabled", "isSampleDataPreviewEnabled");
@@ -79,6 +83,9 @@ public interface IConnection {
     /** Number of rows after which results should be uploaded to storage. */
     NumericField OBJECT_STORAGE_UPLOAD_THRESHOLD =
             new NumericField("objectStorageUploadThreshold", "objectStorageUploadThreshold");
+
+    /** Connection processs from which this asset is produced as output. */
+    RelationField OUTPUT_FROM_CONNECTION_PROCESSES = new RelationField("outputFromConnectionProcesses");
 
     /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     KeywordField POLICY_STRATEGY = new KeywordField("policyStrategy", "policyStrategy");
@@ -486,6 +493,9 @@ public interface IConnection {
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
 
+    /** Connection process to which this asset provides input. */
+    SortedSet<IConnectionProcess> getInputToConnectionProcesses();
+
     /** TBC */
     Boolean getIsAIGenerated();
 
@@ -537,6 +547,9 @@ public interface IConnection {
     /** Number of rows after which results should be uploaded to storage. */
     Long getObjectStorageUploadThreshold();
 
+    /** Connection processs from which this asset is produced as output. */
+    SortedSet<IConnectionProcess> getOutputFromConnectionProcesses();
+
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
 
@@ -570,7 +583,7 @@ public interface IConnection {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Query config for this connection. */

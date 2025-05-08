@@ -24,7 +24,6 @@
      */
     public static AirflowTaskBuilder<?, ?> creator(String name, String airflowDagQualifiedName) {
         String[] tokens = airflowDagQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String airflowDagName = StringUtils.getNameFromQualifiedName(airflowDagQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(airflowDagQualifiedName);
         return AirflowTask._internal()
@@ -34,8 +33,7 @@
                 .airflowDagQualifiedName(airflowDagQualifiedName)
                 .airflowDagName(airflowDagName)
                 .airflowDag(AirflowDag.refByQualifiedName(airflowDagQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

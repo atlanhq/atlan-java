@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -470,7 +469,6 @@ public class S3Object extends Asset
                 .name(name)
                 .s3ObjectKey(objectKey)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3)
                 .s3BucketQualifiedName(bucketQualifiedName)
                 .s3BucketName(bucketName)
                 .bucket(S3Bucket.refByQualifiedName(bucketQualifiedName));
@@ -494,7 +492,6 @@ public class S3Object extends Asset
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3)
                 .awsArn(awsArn)
                 .s3BucketQualifiedName(bucketQualifiedName)
                 .s3BucketName(bucketName)

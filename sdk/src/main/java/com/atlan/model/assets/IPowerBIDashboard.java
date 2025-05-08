@@ -35,6 +35,9 @@ public interface IPowerBIDashboard {
 
     public static final String TYPE_NAME = "PowerBIDashboard";
 
+    /** PowerBI App that is associated with this PowerBI Dashboard. */
+    RelationField POWER_BI_APPS = new RelationField("powerBIApps");
+
     /** Number of tiles in this table. */
     NumericField TILE_COUNT = new NumericField("tileCount", "tileCount");
 
@@ -459,6 +462,9 @@ public interface IPowerBIDashboard {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** PowerBI App that is associated with this PowerBI Dashboard. */
+    SortedSet<IPowerBIApp> getPowerBIApps();
+
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
 
@@ -474,7 +480,7 @@ public interface IPowerBIDashboard {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

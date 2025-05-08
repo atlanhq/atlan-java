@@ -100,6 +100,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     String host;
 
+    /** Connection process to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IConnectionProcess> inputToConnectionProcesses;
+
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     @Attribute
     Boolean isSampleDataPreviewEnabled;
@@ -107,6 +112,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /** Number of rows after which results should be uploaded to storage. */
     @Attribute
     Long objectStorageUploadThreshold;
+
+    /** Connection processs from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<IConnectionProcess> outputFromConnectionProcesses;
 
     /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     @Attribute
@@ -421,6 +431,34 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
         if (tokens.length > 1) {
             return AtlanConnectorType.fromValue(tokens[1]);
+        }
+        return null;
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String qualifiedName) {
+        String[] tokens = qualifiedName.split("/");
+        AtlanConnectorType ct = getConnectorTypeFromQualifiedName(tokens);
+        if (ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
+            return getConnectorFromQualifiedName(tokens);
+        }
+        return ct.getValue();
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param tokens of the qualifiedName, from which to determine the connector type
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String[] tokens) {
+        if (tokens.length > 1) {
+            return tokens[1].toLowerCase();
         }
         return null;
     }

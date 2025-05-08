@@ -53,7 +53,6 @@
             String name, String connectionQualifiedName, String entityName, String entityQualifiedName, String modelType) {
         String modelQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(entityQualifiedName);
         String modelName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelQualifiedName));
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelAttribute._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -64,7 +63,6 @@
                 .modelAttributeEntity(ModelEntity.refByQualifiedName(entityQualifiedName, SaveSemantic.APPEND))
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, entityQualifiedName))
                 .modelType(modelType)
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

@@ -379,8 +379,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

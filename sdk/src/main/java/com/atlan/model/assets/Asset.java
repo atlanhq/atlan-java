@@ -637,7 +637,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> productGUIDs;
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     @Attribute
     String qualifiedName;
 
@@ -1892,10 +1892,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
                 connectorType(ct);
             } else {
-                String[] tokens = qualifiedName.split("/");
-                if (tokens.length > 1) {
-                    customConnectorType(tokens[1]);
-                }
+                customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
             }
             return self();
         }

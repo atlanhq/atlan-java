@@ -47,6 +47,9 @@ public interface IPowerBIReport {
     /** Pages that exist within this report. */
     RelationField PAGES = new RelationField("pages");
 
+    /** PowerBI App that is associated with this PowerBI Report. */
+    RelationField POWER_BI_APPS = new RelationField("powerBIApps");
+
     /** Tiles that exist within this report. */
     RelationField TILES = new RelationField("tiles");
 
@@ -480,6 +483,9 @@ public interface IPowerBIReport {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
+    /** PowerBI App that is associated with this PowerBI Report. */
+    SortedSet<IPowerBIApp> getPowerBIApps();
+
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();
 
@@ -495,7 +501,7 @@ public interface IPowerBIReport {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

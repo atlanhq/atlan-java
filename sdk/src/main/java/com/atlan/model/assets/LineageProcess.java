@@ -9,7 +9,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -17,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -101,6 +101,12 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    @JsonProperty("parentConnectionProcessQualifiedName")
+    SortedSet<String> parentConnectionProcessQualifiedNames;
 
     /** TBC */
     @Attribute
@@ -366,12 +372,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             List<ICatalog> inputs,
             List<ICatalog> outputs,
             LineageProcess parent) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return LineageProcess._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
                 .outputs(outputs);

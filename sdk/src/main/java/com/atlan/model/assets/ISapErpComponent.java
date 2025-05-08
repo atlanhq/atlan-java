@@ -40,6 +40,9 @@ public interface ISapErpComponent {
     /** SAP ERP Component associated with this SAP ERP ABAP Programs. */
     RelationField SAP_ERP_ABAP_PROGRAMS = new RelationField("sapErpAbapPrograms");
 
+    /** SAP ERP Component associated with this SAP ERP CDS Views. */
+    RelationField SAP_ERP_CDS_VIEWS = new RelationField("sapErpCdsViews");
+
     /** SAP ERP Component associated with this SAP ERP Function Modules. */
     RelationField SAP_ERP_FUNCTION_MODULES = new RelationField("sapErpFunctionModules");
 
@@ -469,7 +472,7 @@ public interface ISapErpComponent {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -486,6 +489,9 @@ public interface ISapErpComponent {
 
     /** SAP ERP Component associated with this SAP ERP ABAP Programs. */
     SortedSet<ISapErpAbapProgram> getSapErpAbapPrograms();
+
+    /** SAP ERP Component associated with this SAP ERP CDS Views. */
+    SortedSet<ISapErpCdsView> getSapErpCdsViews();
 
     /** SAP ERP Component associated with this SAP ERP Function Modules. */
     SortedSet<ISapErpFunctionModule> getSapErpFunctionModules();

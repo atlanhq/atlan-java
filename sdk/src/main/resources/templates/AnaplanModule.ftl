@@ -61,13 +61,11 @@
             String modelQualifiedName,
             String workspaceName,
             String workspaceQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return AnaplanModule._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, modelQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(connectorType)
                 .anaplanWorkspaceName(workspaceName)
                 .anaplanWorkspaceQualifiedName(workspaceQualifiedName)
                 .anaplanModelName(modelName)

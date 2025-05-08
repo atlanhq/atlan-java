@@ -46,12 +46,10 @@
      * @return the minimal object necessary to create the chart, as a builder
      */
     public static PresetChartBuilder<?, ?> creator(String name, String connectionQualifiedName, String workspaceQualifiedName, String collectionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return PresetChart._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(collectionQualifiedName + "/" + name)
-            .connectorType(connectorType)
             .presetDashboardQualifiedName(collectionQualifiedName)
             .presetDashboard(PresetDashboard.refByQualifiedName(collectionQualifiedName))
             .presetWorkspaceQualifiedName(workspaceQualifiedName)
