@@ -58,7 +58,7 @@ class Purposes(
                 var dataPolicyCount = 0
                 val groups = mutableSetOf<String>()
                 val users = mutableSetOf<String>()
-                val denyCustomMetadata = mutableSetOf<String>()
+                val denyCustomMetadata = Preferences.getCustomMetadataToDeny(ctx, "purpose", purpose.denyCustomMetadataGuids, logger)
                 purpose.policies.forEach { policy ->
                     when (policy.policySubCategory) {
                         "metadata" -> {
@@ -71,12 +71,6 @@ class Purposes(
                             groups.addAll(policy.policyGroups)
                             users.addAll(policy.policyUsers)
                         }
-                    }
-                }
-                purpose.denyCustomMetadataGuids.forEach { cmGuid ->
-                    val cmName = ctx.client.customMetadataCache.getNameForId(cmGuid) ?: ""
-                    if (cmName.isNotBlank()) {
-                        denyCustomMetadata.add(cmName)
                     }
                 }
                 writer.writeRecord(
