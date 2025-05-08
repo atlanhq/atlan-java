@@ -93,7 +93,8 @@ public class ConnectionTest extends AtlanLiveTest {
             AtlanClient client, String prefix, String connectorName, AtlanConnectionCategory category)
             throws AtlanException, InterruptedException {
         String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
-        Connection connection = Connection.creator(client, prefix, connectorName, category, List.of(adminRoleGuid), List.of(), List.of())
+        Connection connection = Connection.creator(
+                        client, prefix, connectorName, category, List.of(adminRoleGuid), List.of(), List.of())
                 .build();
         AssetMutationResponse response = null;
         int retryCount = 0;
@@ -198,13 +199,13 @@ public class ConnectionTest extends AtlanLiveTest {
     void customConnection() throws AtlanException {
         String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
         Connection connection = Connection.creator(
-                client,
-                PREFIX + "-CUSTOM",
-                CUSTOM_CONNECTOR_TYPE,
-                AtlanConnectionCategory.SAAS,
-                List.of(adminRoleGuid),
-                List.of(),
-                List.of())
+                        client,
+                        PREFIX + "-CUSTOM",
+                        CUSTOM_CONNECTOR_TYPE,
+                        AtlanConnectionCategory.SAAS,
+                        List.of(adminRoleGuid),
+                        List.of(),
+                        List.of())
                 .build();
         assertNotNull(connection);
         assertEquals(connection.getName(), PREFIX + "-CUSTOM");
@@ -214,7 +215,8 @@ public class ConnectionTest extends AtlanLiveTest {
 
     @Test(groups = {"string.connection.create"})
     void createCustomConnection() throws AtlanException, InterruptedException {
-        Connection connection = createCustomConnection(client, PREFIX + "-CUSTOM", CUSTOM_CONNECTOR_TYPE, AtlanConnectionCategory.SAAS);
+        Connection connection =
+                createCustomConnection(client, PREFIX + "-CUSTOM", CUSTOM_CONNECTOR_TYPE, AtlanConnectionCategory.SAAS);
         assertNotNull(connection);
         assertNotNull(connection.getGuid());
         assertEquals(connection.getName(), PREFIX + "-CUSTOM");

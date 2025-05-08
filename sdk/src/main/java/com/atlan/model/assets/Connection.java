@@ -556,13 +556,16 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
      */
     public static ConnectionBuilder<?, ?> creator(
-            AtlanClient client,
-            String name,
-            String connectorName,
-            AtlanConnectionCategory category)
+            AtlanClient client, String name, String connectorName, AtlanConnectionCategory category)
             throws AtlanException {
         return creator(
-                client, name, connectorName, category, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+                client,
+                name,
+                connectorName,
+                category,
+                List.of(client.getRoleCache().getIdForName("$admin")),
+                null,
+                null);
     }
 
     /**
