@@ -1894,6 +1894,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             } else {
                 customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
             }
+            this.connectionQualifiedName = qualifiedName;
             return self();
         }
 

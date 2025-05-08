@@ -1066,6 +1066,7 @@
             } else {
                 customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
             }
+            this.connectionQualifiedName = qualifiedName;
             return self();
         }
 
