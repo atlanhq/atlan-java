@@ -9,6 +9,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;
@@ -213,6 +214,16 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                             JsonNode value = attributes.get(attrKey);
                             if (value != null && !value.isNull()) {
                                 builder.iconUrl(value.asText());
+                            }
+                        } else if (deserializeName.equals("connectorName")) {
+                            JsonNode value = attributes.get(attrKey);
+                            if (value != null && !value.isNull()) {
+                                AtlanConnectorType v = AtlanConnectorType.fromValue(value.asText());
+                                if (v == AtlanConnectorType.UNKNOWN_CUSTOM) {
+                                    builder.customConnectorType(value.asText());
+                                } else {
+                                    builder.connectorType(v);
+                                }
                             }
                         } else {
                             try {
