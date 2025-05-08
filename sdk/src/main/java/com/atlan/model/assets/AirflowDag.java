@@ -381,8 +381,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

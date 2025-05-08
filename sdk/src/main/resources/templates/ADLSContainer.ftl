@@ -47,8 +47,7 @@
             .name(name)
             .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
             .adlsAccountQualifiedName(accountQualifiedName)
-            .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.ADLS);
+            .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

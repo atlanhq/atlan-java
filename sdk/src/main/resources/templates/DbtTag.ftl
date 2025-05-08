@@ -20,7 +20,6 @@
         String sourceId,
         List<String> allowedValues
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String allowedValuesString = "";
         try {
             allowedValuesString = Serde.allInclusiveMapper.writeValueAsString(allowedValues);
@@ -31,7 +30,6 @@
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(generateQualifiedName(name, connectionQualifiedName, accountId, projectId))
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName)
             .mappedAtlanTagName(mappedAtlanTagName)
             .tagId(sourceId)

@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -523,7 +522,6 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
         } else {
             builder.qualifiedName(generateQualifiedName(name, hierarchyQualifiedName));
         }
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return builder.guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .cubeName(cubeName)
                 .cubeQualifiedName(cubeQualifiedName)
@@ -532,7 +530,6 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
                 .cubeHierarchyName(hierarchyName)
                 .cubeHierarchyQualifiedName(hierarchyQualifiedName)
                 .cubeHierarchy(CubeHierarchy.refByQualifiedName(hierarchyQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

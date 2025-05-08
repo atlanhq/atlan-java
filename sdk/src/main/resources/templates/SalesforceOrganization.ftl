@@ -26,8 +26,7 @@
                 .sourceId(salesforceId)
                 .qualifiedName(generateQualifiedName(salesforceId, connectionQualifiedName))
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.SALESFORCE);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

@@ -106,6 +106,11 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Singular
     SortedSet<IPowerBIPage> pages;
 
+    /** PowerBI App that is associated with this PowerBI Report. */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIApp> powerBIApps;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;

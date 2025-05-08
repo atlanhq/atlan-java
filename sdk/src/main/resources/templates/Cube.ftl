@@ -1,6 +1,3 @@
-<#macro imports>
-import com.atlan.model.assets.Connection;
-</#macro>
 <#macro all>
     /**
      * Builds the minimal object necessary to create a Cube.
@@ -10,12 +7,10 @@ import com.atlan.model.assets.Connection;
      * @return the minimal request necessary to create the Cube, as a builder
      */
     public static CubeBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Cube._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

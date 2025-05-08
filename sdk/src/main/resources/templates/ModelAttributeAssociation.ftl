@@ -46,7 +46,6 @@
      */
     public static ModelAttributeAssociationBuilder<?, ?> creator(
         String name, String connectionQualifiedName, String fromQualifiedName, String toQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String qualifiedName = generateQualifiedName(name, fromQualifiedName, toQualifiedName);
         String modelEntityQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(fromQualifiedName);
         String modelEntityName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelEntityQualifiedName));
@@ -57,7 +56,6 @@
             .name(name)
             .qualifiedName(qualifiedName)
             .modelVersionAgnosticQualifiedName(qualifiedName)
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName)
             .modelName(modelName)
             .modelQualifiedName(modelQualifiedName)

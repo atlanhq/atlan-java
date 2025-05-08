@@ -60,12 +60,10 @@
         String schemaName,
         String schemaQualifiedName
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return View._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
-            .connectorType(connectorType)
             .schemaName(schemaName)
             .schemaQualifiedName(schemaQualifiedName)
             .schema(Schema.refByQualifiedName(schemaQualifiedName))

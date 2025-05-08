@@ -78,7 +78,6 @@
             .qualifiedName(generateQualifiedName(salesforceId, organizationQualifiedName))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.SALESFORCE)
             .organization(SalesforceOrganization.refByQualifiedName(organizationQualifiedName))
             .organizationQualifiedName(organizationQualifiedName);
     }

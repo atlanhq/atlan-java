@@ -17,13 +17,11 @@
             List<ICatalog> inputs,
             List<ICatalog> outputs,
             LineageProcess parent) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         ColumnProcessBuilder<?, ?> builder = ColumnProcess._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
-                .connectorType(connectorType)
                 .connectionName(connectionName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)

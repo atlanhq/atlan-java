@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -457,7 +456,6 @@ public class SalesforceField extends Asset
                 .qualifiedName(generateQualifiedName(name, objectQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.SALESFORCE)
                 .organizationQualifiedName(organizationQualifiedName)
                 .object(SalesforceObject.refByQualifiedName(objectQualifiedName))
                 .objectQualifiedName(objectQualifiedName);

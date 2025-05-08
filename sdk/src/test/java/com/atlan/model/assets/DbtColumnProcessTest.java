@@ -496,6 +496,8 @@ public class DbtColumnProcessTest {
             .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .parentConnectionProcessQualifiedName("String0")
+            .parentConnectionProcessQualifiedName("String1")
             .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

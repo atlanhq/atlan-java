@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -414,13 +413,11 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
      */
     public static AnaplanPage.AnaplanPageBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String appQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return AnaplanPage._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, appQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(connectorType)
                 .anaplanAppQualifiedName(appQualifiedName)
                 .anaplanApp(AnaplanApp.refByQualifiedName(appQualifiedName));
     }

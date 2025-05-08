@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -428,7 +427,6 @@ public class AzureEventHubConsumerGroup extends Asset
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, hubNames.get(0)))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.AZURE_EVENT_HUB)
                 .kafkaTopics(hubQualifiedNames.stream()
                         .map(h -> AzureEventHub.refByQualifiedName(h))
                         .collect(Collectors.toList()))

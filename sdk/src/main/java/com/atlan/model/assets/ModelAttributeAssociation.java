@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -456,7 +455,6 @@ public class ModelAttributeAssociation extends Asset
      */
     public static ModelAttributeAssociationBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String fromQualifiedName, String toQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String qualifiedName = generateQualifiedName(name, fromQualifiedName, toQualifiedName);
         String modelEntityQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(fromQualifiedName);
         String modelEntityName = IModel.getNameFromSlug(StringUtils.getNameFromQualifiedName(modelEntityQualifiedName));
@@ -467,7 +465,6 @@ public class ModelAttributeAssociation extends Asset
                 .name(name)
                 .qualifiedName(qualifiedName)
                 .modelVersionAgnosticQualifiedName(qualifiedName)
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName)
                 .modelName(modelName)
                 .modelQualifiedName(modelQualifiedName)

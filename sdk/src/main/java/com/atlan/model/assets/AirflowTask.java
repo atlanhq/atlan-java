@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.fields.AtlanField;
@@ -449,7 +448,6 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      */
     public static AirflowTaskBuilder<?, ?> creator(String name, String airflowDagQualifiedName) {
         String[] tokens = airflowDagQualifiedName.split("/");
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String airflowDagName = StringUtils.getNameFromQualifiedName(airflowDagQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(airflowDagQualifiedName);
         return AirflowTask._internal()
@@ -459,8 +457,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
                 .airflowDagQualifiedName(airflowDagQualifiedName)
                 .airflowDagName(airflowDagName)
                 .airflowDag(AirflowDag.refByQualifiedName(airflowDagQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

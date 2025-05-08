@@ -65,7 +65,6 @@
             .qualifiedName(generateQualifiedName(name, connectionQualifiedName, hubNames.get(0)))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.AZURE_EVENT_HUB)
             .kafkaTopics(hubQualifiedNames.stream().map(h -> AzureEventHub.refByQualifiedName(h)).collect(Collectors.toList()))
             .kafkaTopicNames(hubNames)
             .kafkaTopicQualifiedNames(hubQualifiedNames);

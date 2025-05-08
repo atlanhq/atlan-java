@@ -154,6 +154,18 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, IC
     @Attribute
     String sapDataType;
 
+    /** SAP ERP CDS View in which this column exists. */
+    @Attribute
+    ISapErpCdsView sapErpCdsView;
+
+    /** Simple name of the SAP ERP CDS view in which this column asset exists. */
+    @Attribute
+    String sapErpCdsViewName;
+
+    /** Unique name of the SAP ERP CDS view in which this column asset exists. */
+    @Attribute
+    String sapErpCdsViewQualifiedName;
+
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     @Attribute
     String sapErpColumnDataElement;
