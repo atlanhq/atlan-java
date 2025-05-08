@@ -9,7 +9,6 @@ import com.atlan.pkg.PackageContext
 import mu.KLogger
 
 object Preferences {
-
     /**
      * Retrieve the set of names of custom metadata that should be denied.
      *
@@ -22,8 +21,8 @@ object Preferences {
         ctx: PackageContext<AdminExportCfg>,
         type: String,
         cmGuids: Set<String>,
-        logger: KLogger
-    ) : Set<String> {
+        logger: KLogger,
+    ): Set<String> {
         val denyCustomMetadata = mutableSetOf<String>()
         cmGuids.forEach { cmGuid ->
             try {
