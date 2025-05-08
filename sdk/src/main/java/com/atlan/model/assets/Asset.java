@@ -1890,11 +1890,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             extends Reference.ReferenceBuilder<C, B> {
         /** Set both the connection qualified name of the asset, and its connector type. */
         public B connectionQualifiedName(String qualifiedName) {
-            AtlanConnectorType ct = Connection.getConnectorTypeFromQualifiedName(qualifiedName);
-            if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                connectorType(ct);
-            } else {
-                customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
+            if (qualifiedName != null && !qualifiedName.isEmpty()) {
+                AtlanConnectorType ct = Connection.getConnectorTypeFromQualifiedName(qualifiedName);
+                if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                    connectorType(ct);
+                } else {
+                    customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
+                }
             }
             this.connectionQualifiedName = qualifiedName;
             return self();

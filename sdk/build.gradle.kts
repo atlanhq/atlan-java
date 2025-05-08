@@ -103,6 +103,10 @@ tasks.create<Jar>("javadocJar") {
     from(tasks.javadoc)
 }
 
+testlogger {
+    showFullStackTraces = true
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenJavaSdk") {
