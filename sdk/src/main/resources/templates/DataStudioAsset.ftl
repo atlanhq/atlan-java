@@ -28,7 +28,6 @@
                 .qualifiedName(generateQualifiedName(gdsId, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.DATASTUDIO)
                 .dataStudioAssetType(assetType);
     }
 

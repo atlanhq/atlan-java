@@ -65,7 +65,6 @@
             .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName))
             .kafkaTopics(topicQualifiedNames.stream().map(t -> KafkaTopic.refByQualifiedName(t)).collect(Collectors.toList()))
             .kafkaTopicNames(topicNames)
             .kafkaTopicQualifiedNames(topicQualifiedNames);

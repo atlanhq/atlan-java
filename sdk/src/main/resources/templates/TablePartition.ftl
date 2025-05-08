@@ -56,12 +56,10 @@
         String tableName,
         String tableQualifiedName
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return TablePartition._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
-                .connectorType(connectorType)
                 .parentTable(Table.refByQualifiedName(tableQualifiedName))
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)

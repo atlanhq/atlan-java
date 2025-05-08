@@ -439,6 +439,8 @@ public class PowerBIDashboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .powerBIApp(PowerBIApp.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIApp(PowerBIApp.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .tileCount(123456789L)
             .tile(PowerBITile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .tile(PowerBITile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

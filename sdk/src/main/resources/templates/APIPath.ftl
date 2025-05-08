@@ -31,8 +31,7 @@
                 .name(normalizedURI)
                 .apiPathRawURI(normalizedURI)
                 .apiSpec(APISpec.refByQualifiedName(apiSpecQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.API);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

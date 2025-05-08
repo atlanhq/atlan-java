@@ -68,6 +68,10 @@ public interface ILineageProcess {
     KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
 
     /** TBC */
+    KeywordField PARENT_CONNECTION_PROCESS_QUALIFIED_NAMES =
+            new KeywordField("parentConnectionProcessQualifiedName", "parentConnectionProcessQualifiedName");
+
+    /** TBC */
     RelationField POWER_BI_DATAFLOW = new RelationField("powerBIDataflow");
 
     /** TBC */
@@ -489,6 +493,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
+
+    /** TBC */
+    SortedSet<String> getParentConnectionProcessQualifiedNames();
 
     /** TBC */
     Double getPopularityScore();

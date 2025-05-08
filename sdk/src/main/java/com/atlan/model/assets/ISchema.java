@@ -59,6 +59,9 @@ public interface ISchema {
     /** Snowflake pipes that exist within this schema. */
     RelationField SNOWFLAKE_PIPES = new RelationField("snowflakePipes");
 
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    RelationField SNOWFLAKE_STAGES = new RelationField("snowflakeStages");
+
     /** Snowflake streams that exist within this schema. */
     RelationField SNOWFLAKE_STREAMS = new RelationField("snowflakeStreams");
 
@@ -568,6 +571,9 @@ public interface ISchema {
 
     /** Snowflake pipes that exist within this schema. */
     SortedSet<ISnowflakePipe> getSnowflakePipes();
+
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    SortedSet<ISnowflakeStage> getSnowflakeStages();
 
     /** Snowflake streams that exist within this schema. */
     SortedSet<ISnowflakeStream> getSnowflakeStreams();

@@ -35,6 +35,17 @@ public interface ISapErpColumn {
 
     public static final String TYPE_NAME = "SapErpColumn";
 
+    /** SAP ERP CDS View in which this column exists. */
+    RelationField SAP_ERP_CDS_VIEW = new RelationField("sapErpCdsView");
+
+    /** Simple name of the SAP ERP CDS view in which this column asset exists. */
+    KeywordTextField SAP_ERP_CDS_VIEW_NAME =
+            new KeywordTextField("sapErpCdsViewName", "sapErpCdsViewName.keyword", "sapErpCdsViewName");
+
+    /** Unique name of the SAP ERP CDS view in which this column asset exists. */
+    KeywordTextField SAP_ERP_CDS_VIEW_QUALIFIED_NAME = new KeywordTextField(
+            "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName.text");
+
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     KeywordField SAP_ERP_COLUMN_DATA_ELEMENT = new KeywordField("sapErpColumnDataElement", "sapErpColumnDataElement");
 
@@ -543,6 +554,15 @@ public interface ISapErpColumn {
 
     /** SAP-specific data types */
     String getSapDataType();
+
+    /** SAP ERP CDS View in which this column exists. */
+    ISapErpCdsView getSapErpCdsView();
+
+    /** Simple name of the SAP ERP CDS view in which this column asset exists. */
+    String getSapErpCdsViewName();
+
+    /** Unique name of the SAP ERP CDS view in which this column asset exists. */
+    String getSapErpCdsViewQualifiedName();
 
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     String getSapErpColumnDataElement();

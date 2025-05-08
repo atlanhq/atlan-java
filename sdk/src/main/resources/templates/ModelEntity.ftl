@@ -44,7 +44,6 @@
      */
     public static ModelEntityBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String modelName, String modelQualifiedName, String modelType) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -52,7 +51,6 @@
                 .modelQualifiedName(modelQualifiedName)
                 .modelType(modelType)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
@@ -102,7 +100,6 @@
      * @return the minimal request necessary to create the ModelEntity, as a builder
      */
     public static ModelEntityBuilder<?, ?> creatorForVersion(String name, String connectionQualifiedName, String versionName, String versionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
@@ -110,7 +107,6 @@
             .modelVersionName(versionName)
             .modelVersionQualifiedName(versionQualifiedName)
             .modelVersion(ModelVersion.refByQualifiedName(versionQualifiedName))
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);
     }
 

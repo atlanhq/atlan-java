@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -405,12 +404,10 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
             String connectionQualifiedName,
             String workspaceQualifiedName,
             String collectionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return PresetDataset._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(collectionQualifiedName + "/" + name)
-                .connectorType(connectorType)
                 .presetDashboardQualifiedName(collectionQualifiedName)
                 .presetDashboard(PresetDashboard.refByQualifiedName(collectionQualifiedName))
                 .presetWorkspaceQualifiedName(workspaceQualifiedName)

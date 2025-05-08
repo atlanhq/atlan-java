@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -937,12 +936,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
             String tableName,
             String tableQualifiedName,
             int order) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(parentQualifiedName);
         ColumnBuilder<?, ?> builder = Column._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, parentQualifiedName))
-                .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
                 .databaseName(databaseName)

@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -496,7 +495,6 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
             String modelName,
             String modelQualifiedName,
             String modelType) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -504,7 +502,6 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                 .modelQualifiedName(modelQualifiedName)
                 .modelType(modelType)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
@@ -553,7 +550,6 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      */
     public static ModelEntityBuilder<?, ?> creatorForVersion(
             String name, String connectionQualifiedName, String versionName, String versionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelEntity._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -561,7 +557,6 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                 .modelVersionName(versionName)
                 .modelVersionQualifiedName(versionQualifiedName)
                 .modelVersion(ModelVersion.refByQualifiedName(versionQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

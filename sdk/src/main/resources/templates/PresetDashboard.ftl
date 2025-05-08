@@ -42,12 +42,10 @@
      * @return the minimal object necessary to create the collection, as a builder
      */
     public static PresetDashboardBuilder<?, ?> creator(String name, String connectionQualifiedName, String workspaceQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return PresetDashboard._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(workspaceQualifiedName + "/" + name)
-            .connectorType(connectorType)
             .presetWorkspaceQualifiedName(workspaceQualifiedName)
             .presetWorkspace(PresetWorkspace.refByQualifiedName(workspaceQualifiedName))
             .connectionQualifiedName(connectionQualifiedName);

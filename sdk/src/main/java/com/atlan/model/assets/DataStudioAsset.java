@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.GoogleDataStudioAssetType;
 import com.atlan.model.fields.AtlanField;
@@ -407,7 +406,6 @@ public class DataStudioAsset extends Asset
                 .qualifiedName(generateQualifiedName(gdsId, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.DATASTUDIO)
                 .dataStudioAssetType(assetType);
     }
 

@@ -477,6 +477,8 @@ public class SchemaTest {
                     SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakePipe(SnowflakePipe.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakePipe(SnowflakePipe.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeStage(SnowflakeStage.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeStage(SnowflakeStage.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeStream(SnowflakeStream.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeStream(SnowflakeStream.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeTag(SnowflakeTag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

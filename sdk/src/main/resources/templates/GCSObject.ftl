@@ -50,7 +50,6 @@
             .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.GCS)
             .gcsBucketName(bucketName)
             .gcsBucketQualifiedName(bucketQualifiedName)
             .gcsBucket(GCSBucket.refByQualifiedName(bucketQualifiedName));

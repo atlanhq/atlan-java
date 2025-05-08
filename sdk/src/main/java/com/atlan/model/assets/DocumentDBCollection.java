@@ -634,8 +634,7 @@ public class DocumentDBCollection extends Asset
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -667,8 +666,7 @@ public class DocumentDBCollection extends Asset
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .documentDBDatabase(DocumentDBDatabase.refByQualifiedName(databaseQualifiedName))
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName));
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
