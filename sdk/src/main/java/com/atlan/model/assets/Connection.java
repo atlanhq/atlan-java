@@ -545,6 +545,94 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
+     * Builds the minimal object necessary to create a connection, using "All Admins" as the default
+     * set of connection admins.
+     *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
+     * @param name of the connection
+     * @param connectorName name of the connection's connector (this determines what logo appears for the assets)
+     * @param category category of the connection
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(
+            AtlanClient client,
+            String name,
+            String connectorName,
+            AtlanConnectionCategory category)
+            throws AtlanException {
+        return creator(
+                client, name, connectorName, category, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a connection.
+     * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
+     * provided or an InvalidRequestException will be thrown.
+     *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
+     * @param name of the connection
+     * @param connectorName name of the connection's connector (this determines what logo appears for the assets)
+     * @param category category of the connection
+     * @param adminRoles the GUIDs of the roles that can administer this connection
+     * @param adminGroups the (internal) names of the groups that can administer this connection
+     * @param adminUsers the (internal) names of the users that can administer this connection
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
+     * @throws NotFoundException if a non-existent admin has been defined for the connection
+     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(
+            AtlanClient client,
+            String name,
+            String connectorName,
+            AtlanConnectionCategory category,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers)
+            throws AtlanException {
+        boolean adminFound = false;
+        ConnectionBuilder<?, ?> builder = Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(connectorName))
+                .category(category)
+                .customConnectorType(connectorName);
+        if (adminRoles != null && !adminRoles.isEmpty()) {
+            for (String roleId : adminRoles) {
+                client.getRoleCache().getNameForId(roleId);
+            }
+            adminFound = true;
+            builder.adminRoles(adminRoles);
+        } else {
+            builder.nullField("adminRoles");
+        }
+        if (adminGroups != null && !adminGroups.isEmpty()) {
+            for (String groupAlias : adminGroups) {
+                client.getGroupCache().getIdForName(groupAlias);
+            }
+            adminFound = true;
+            builder.adminGroups(adminGroups);
+        } else {
+            builder.nullField("adminGroups");
+        }
+        if (adminUsers != null && !adminUsers.isEmpty()) {
+            for (String userName : adminUsers) {
+                client.getUserCache().getIdForName(userName);
+            }
+            adminFound = true;
+            builder.adminUsers(adminUsers);
+        } else {
+            builder.nullField("adminUsers");
+        }
+        if (adminFound) {
+            return builder;
+        } else {
+            throw new InvalidRequestException(ErrorCode.NO_CONNECTION_ADMIN);
+        }
+    }
+
+    /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
      * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.

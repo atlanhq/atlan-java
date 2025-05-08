@@ -822,9 +822,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     SortedSet<String> viewerUsers;
 
     /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    @JsonIgnore
     transient String iconUrl;
 
     /** Custom connection type name. */
+    @JsonIgnore
     transient String customConnectorType;
 
     /** Internal tracking of fields that should be serialized with null values. */

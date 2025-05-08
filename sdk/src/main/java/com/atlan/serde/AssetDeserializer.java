@@ -215,7 +215,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                             if (value != null && !value.isNull()) {
                                 builder.iconUrl(value.asText());
                             }
-                        } else if (deserializeName.equals("connectorName")) {
+                        } else if (deserializeName.equals("connectorType")) {
                             JsonNode value = attributes.get(attrKey);
                             if (value != null && !value.isNull()) {
                                 AtlanConnectorType v = AtlanConnectorType.fromValue(value.asText());
