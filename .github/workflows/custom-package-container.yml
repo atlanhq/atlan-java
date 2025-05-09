@@ -33,8 +33,12 @@ jobs:
           mkdir -p ./containers/custom-package/assembly
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
         with:
-          name: "${{inputs.package_name}}"
-          path: ./containers/custom-package/assembly
+          name: "${{inputs.package_name}}-amd64"
+          path: ./containers/custom-package/amd64/assembly
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
+        with:
+          name: "${{inputs.package_name}}-arm64"
+          path: ./containers/custom-package/arm64/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1  # v6.16.0
         with:
@@ -44,4 +48,4 @@ jobs:
           push: true
           tags: ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}}, ghcr.io/atlanhq/csa-${{inputs.package_name}}:latest
           context: ./containers/custom-package
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
