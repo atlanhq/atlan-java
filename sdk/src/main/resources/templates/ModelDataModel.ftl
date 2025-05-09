@@ -11,13 +11,11 @@ import com.atlan.model.enums.DataModelType;
      * @return the minimal request necessary to create the ModelDataModel, as a builder
      */
     public static ModelDataModelBuilder<?, ?> creator(String name, String connectionQualifiedName, DataModelType modelType) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelDataModel._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .modelType(modelType.getValue())
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

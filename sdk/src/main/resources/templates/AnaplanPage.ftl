@@ -42,13 +42,11 @@
      */
     public static AnaplanPage.AnaplanPageBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String appQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return AnaplanPage._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, appQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(connectorType)
                 .anaplanAppQualifiedName(appQualifiedName)
                 .anaplanApp(AnaplanApp.refByQualifiedName(appQualifiedName));
     }

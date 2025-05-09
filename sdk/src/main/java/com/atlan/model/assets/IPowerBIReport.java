@@ -47,6 +47,9 @@ public interface IPowerBIReport {
     /** Pages that exist within this report. */
     RelationField PAGES = new RelationField("pages");
 
+    /** PowerBI App that is associated with this PowerBI Report. */
+    RelationField POWER_BI_APPS = new RelationField("powerBIApps");
+
     /** Tiles that exist within this report. */
     RelationField TILES = new RelationField("tiles");
 
@@ -479,6 +482,9 @@ public interface IPowerBIReport {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI App that is associated with this PowerBI Report. */
+    SortedSet<IPowerBIApp> getPowerBIApps();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();

@@ -127,10 +127,8 @@
         public B withRawQuery(String schemaQualifiedName, String query) {
             String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
             String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-            AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-            return connectionName(connectorType.getValue())
+            return connectionName(Connection.getConnectorFromQualifiedName(connectionQualifiedName))
                     .connectionQualifiedName(connectionQualifiedName)
-                    .connectorType(connectorType)
                     .defaultDatabaseQualifiedName(databaseQualifiedName)
                     .defaultSchemaQualifiedName(schemaQualifiedName)
                     .isVisualQuery(false)

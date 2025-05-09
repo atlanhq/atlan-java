@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -361,12 +360,10 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @return the minimal request necessary to create the Cube, as a builder
      */
     public static CubeBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Cube._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

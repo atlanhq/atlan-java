@@ -9,7 +9,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -17,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -97,6 +97,12 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    @JsonProperty("parentConnectionProcessQualifiedName")
+    SortedSet<String> parentConnectionProcessQualifiedNames;
 
     /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
@@ -366,14 +372,12 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
             List<ICatalog> inputs,
             List<ICatalog> outputs,
             LineageProcess parent) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         ColumnProcessBuilder<?, ?> builder = ColumnProcess._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(LineageProcess.generateQualifiedName(
                         name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
-                .connectorType(connectorType)
                 .connectionName(connectionName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)

@@ -43,7 +43,6 @@ import com.atlan.model.assets.Connection;
         String cubeSlug = StringUtils.getNameFromQualifiedName(cubeQualifiedName);
         String cubeName = IMultiDimensionalDataset.getNameFromSlug(cubeSlug);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(cubeQualifiedName);
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return creator(name, connectionQualifiedName, cubeName, cubeQualifiedName, dimensionName, dimensionQualifiedName);
     }
 
@@ -66,7 +65,6 @@ import com.atlan.model.assets.Connection;
         String dimensionName,
         String dimensionQualifiedName
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return CubeHierarchy._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
@@ -76,7 +74,6 @@ import com.atlan.model.assets.Connection;
             .cubeDimensionName(dimensionName)
             .cubeDimensionQualifiedName(dimensionQualifiedName)
             .cubeDimension(CubeDimension.refByQualifiedName(dimensionQualifiedName))
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);
     }
 

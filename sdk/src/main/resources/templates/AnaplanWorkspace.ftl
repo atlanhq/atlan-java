@@ -11,8 +11,7 @@
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.ANAPLAN);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

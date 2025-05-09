@@ -50,7 +50,6 @@
             .qualifiedName(generateQualifiedName(name, objectQualifiedName))
             .name(name)
             .connectionQualifiedName(connectionQualifiedName)
-            .connectorType(AtlanConnectorType.SALESFORCE)
             .organizationQualifiedName(organizationQualifiedName)
             .object(SalesforceObject.refByQualifiedName(objectQualifiedName))
             .objectQualifiedName(objectQualifiedName);

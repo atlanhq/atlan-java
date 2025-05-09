@@ -445,6 +445,9 @@ public interface IBIProcess {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
+    /** TBC */
+    SortedSet<String> getParentConnectionProcessQualifiedNames();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

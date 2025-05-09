@@ -12,8 +12,7 @@
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -31,7 +30,6 @@
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3)
                 .awsArn(awsArn);
     }
 

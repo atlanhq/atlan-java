@@ -69,7 +69,6 @@
                 .name(name)
                 .s3ObjectKey(objectKey)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3)
                 .s3BucketQualifiedName(bucketQualifiedName)
                 .s3BucketName(bucketName)
                 .bucket(S3Bucket.refByQualifiedName(bucketQualifiedName));
@@ -93,7 +92,6 @@
                 .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.S3)
                 .awsArn(awsArn)
                 .s3BucketQualifiedName(bucketQualifiedName)
                 .s3BucketName(bucketName)

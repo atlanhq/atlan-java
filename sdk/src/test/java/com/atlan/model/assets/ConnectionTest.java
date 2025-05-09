@@ -430,8 +430,14 @@ public class ConnectionTest {
             .defaultCredentialGuid("String0")
             .hasPopularityInsights(true)
             .host("String0")
+            .inputToConnectionProcess(ConnectionProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToConnectionProcess(
+                    ConnectionProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .isSampleDataPreviewEnabled(true)
             .objectStorageUploadThreshold(123456789L)
+            .outputFromConnectionProcess(ConnectionProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromConnectionProcess(
+                    ConnectionProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .policyStrategy("String0")
             .policyStrategyForSamplePreview("String0")
             .popularityInsightsTimeframe(123456789L)

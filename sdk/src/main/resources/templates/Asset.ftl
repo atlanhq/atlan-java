@@ -1,6 +1,11 @@
 <#macro all>
     /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    @JsonIgnore
     transient String iconUrl;
+
+    /** Custom connection type name. */
+    @JsonIgnore
+    transient String customConnectorType;
 
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
@@ -1055,6 +1060,20 @@
 
     public abstract static class AssetBuilder<C extends Asset, B extends Asset.AssetBuilder<C, B>>
             extends Reference.ReferenceBuilder<C, B> {
+        /** Set both the connection qualified name of the asset, and its connector type. */
+        public B connectionQualifiedName(String qualifiedName) {
+            if (qualifiedName != null && !qualifiedName.isEmpty()) {
+                AtlanConnectorType ct = Connection.getConnectorTypeFromQualifiedName(qualifiedName);
+                if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                    connectorType(ct);
+                } else {
+                    customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
+                }
+            }
+            this.connectionQualifiedName = qualifiedName;
+            return self();
+        }
+
         /** Remove the announcement from the asset, if any is set on the asset. */
         public B removeAnnouncement() {
             nullField("announcementType");

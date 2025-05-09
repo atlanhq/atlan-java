@@ -444,6 +444,8 @@ public class PowerBIReportTest {
             .pageCount(123456789L)
             .page(PowerBIPage.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .page(PowerBIPage.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .powerBIApp(PowerBIApp.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .powerBIApp(PowerBIApp.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .tile(PowerBITile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .tile(PowerBITile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .webUrl("String0")

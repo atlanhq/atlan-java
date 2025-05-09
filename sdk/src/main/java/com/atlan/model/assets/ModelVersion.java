@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -438,7 +437,6 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      */
     public static ModelVersionBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String modelName, String modelQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelVersion._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
@@ -446,7 +444,6 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
                 .modelName(modelName)
                 .modelQualifiedName(modelQualifiedName)
                 .modelDataModel(ModelDataModel.refByQualifiedName(modelQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
