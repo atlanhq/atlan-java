@@ -172,7 +172,7 @@ jobs:
           push: true
           tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}
           context: ./containers/base
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
   custom-package-images:
     permissions:
       contents: read
