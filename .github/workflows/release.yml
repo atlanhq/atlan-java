@@ -11,7 +11,15 @@ on:
 
 jobs:
   merge-build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+        include:
+          - arch: amd64
+            os: ubuntu-latest
+          - arch: arm64
+            os: macos-latest
+    runs-on: ${{ matrix.os }}
     name: "Build"
     outputs:
       version: ${{ steps.get_version.outputs.version }}
@@ -35,83 +43,83 @@ jobs:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: sdk
+          name: sdk-${{ matrix.arch }}
           path: sdk/build/libs/atlan-java-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: package-toolkit-config
+          name: package-toolkit-config-${{ matrix.arch }}
           path: package-toolkit/config/build/libs/package-toolkit-config-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: package-toolkit-runtime
+          name: package-toolkit-runtime-${{ matrix.arch }}
           path: package-toolkit/runtime/build/libs/package-toolkit-runtime-*-jar-with-dependencies.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: api-token-connection-admin
+          name: api-token-connection-admin-${{ matrix.arch }}
           path: jars/api-token-connection-admin-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: admin-export
+          name: admin-export-${{ matrix.arch }}
           path: jars/admin-export-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: adoption-export
+          name: adoption-export-${{ matrix.arch }}
           path: jars/adoption-export-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: asset-export-basic
+          name: asset-export-basic-${{ matrix.arch }}
           path: jars/asset-export-basic-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: asset-import
+          name: asset-import-${{ matrix.arch }}
           path: jars/asset-import-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: cube-assets-builder
+          name: cube-assets-builder-${{ matrix.arch }}
           path: jars/cube-assets-builder-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: custom-metadata-extender
+          name: custom-metadata-extender-${{ matrix.arch }}
           path: jars/custom-metadata-extender-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: duplicate-detector
+          name: duplicate-detector-${{ matrix.arch }}
           path: jars/duplicate-detector-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: enrichment-migrator
+          name: enrichment-migrator-${{ matrix.arch }}
           path: jars/enrichment-migrator-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: lake-formation-tag-sync
+          name: lake-formation-tag-sync-${{ matrix.arch }}
           path: jars/lake-formation-tag-sync-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: lineage-builder
+          name: lineage-builder-${{ matrix.arch }}
           path: jars/lineage-builder-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: metadata-impact-report
+          name: metadata-impact-report-${{ matrix.arch }}
           path: jars/metadata-impact-report-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: openapi-spec-loader
+          name: openapi-spec-loader-${{ matrix.arch }}
           path: jars/openapi-spec-loader-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: owner-propagator
+          name: owner-propagator-${{ matrix.arch }}
           path: jars/owner-propagator-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: relational-assets-builder
+          name: relational-assets-builder-${{ matrix.arch }}
           path: jars/relational-assets-builder-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: tests-cleanup
+          name: tests-cleanup-${{ matrix.arch }}
           path: jars/tests-cleanup-*.jar
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
-          name: lambda-layer
+          name: lambda-layer-${{ matrix.arch }}
           path: sdk/build/distributions/sdk-*.zip
   publish-release:
     runs-on: ubuntu-latest
@@ -160,12 +168,20 @@ jobs:
           mkdir -p ./containers/base/assembly
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
         with:
-          name: sdk
-          path: ./containers/base/assembly
+          name: sdk-amd64
+          path: ./containers/base/amd64/assembly
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
         with:
-          name: package-toolkit-runtime
-          path: ./containers/base/assembly
+          name: sdk-arm64
+          path: ./containers/base/arm64/assembly
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
+        with:
+          name: package-toolkit-runtime-amd64
+          path: ./containers/base/amd64/assembly
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4.3.0
+        with:
+          name: package-toolkit-runtime-arm64
+          path: ./containers/base/arm64/assembly
       - name: Build and publish container image
         uses: docker/build-push-action@14487ce63c7a62a4a324b0bfb37086795e31c6c1  # v6.16.0
         with:
