@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -194,6 +193,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<ISnowflakePipe> snowflakePipes;
+
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeStage> snowflakeStages;
 
     /** Snowflake streams that exist within this schema. */
     @Attribute
@@ -524,12 +528,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      */
     public static SchemaBuilder<?, ?> creator(
             String name, String connectionQualifiedName, String databaseName, String databaseQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Schema._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
-                .connectorType(connectorType)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .database(Database.refByQualifiedName(databaseQualifiedName))

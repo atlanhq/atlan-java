@@ -74,7 +74,7 @@ class Personas(
                 val connections = mutableSetOf<AdminExporter.ConnectionId>()
                 val glossaries = mutableSetOf<String>()
                 val domains = mutableSetOf<String>()
-                val denyCustomMetadata = mutableSetOf<String>()
+                val denyCustomMetadata = Preferences.getCustomMetadataToDeny(ctx, "persona", persona.denyCustomMetadataGuids, logger)
                 persona.policies.forEach { policy ->
                     when (policy.policySubCategory) {
                         "metadata" -> {
@@ -105,12 +105,6 @@ class Personas(
                                 domains.add(resource.substringAfter("entity:"))
                             }
                         }
-                    }
-                }
-                persona.denyCustomMetadataGuids.forEach { cmGuid ->
-                    val cmName = ctx.client.customMetadataCache.getNameForId(cmGuid) ?: ""
-                    if (cmName.isNotBlank()) {
-                        denyCustomMetadata.add(cmName)
                     }
                 }
                 writer.writeRecord(

@@ -45,7 +45,6 @@
      * @return the minimal request necessary to create the ModelVersion, as a builder
      */
     public static ModelVersionBuilder<?, ?> creator(String name, String connectionQualifiedName, String modelName, String modelQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return ModelVersion._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
@@ -53,7 +52,6 @@
             .modelName(modelName)
             .modelQualifiedName(modelQualifiedName)
             .modelDataModel(ModelDataModel.refByQualifiedName(modelQualifiedName))
-            .connectorType(connectorType)
             .connectionQualifiedName(connectionQualifiedName);
     }
 

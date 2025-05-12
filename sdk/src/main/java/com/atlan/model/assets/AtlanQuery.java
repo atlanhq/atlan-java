@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -613,10 +612,8 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
         public B withRawQuery(String schemaQualifiedName, String query) {
             String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
             String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-            AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-            return connectionName(connectorType.getValue())
+            return connectionName(Connection.getConnectorFromQualifiedName(connectionQualifiedName))
                     .connectionQualifiedName(connectionQualifiedName)
-                    .connectorType(connectorType)
                     .defaultDatabaseQualifiedName(databaseQualifiedName)
                     .defaultSchemaQualifiedName(schemaQualifiedName)
                     .isVisualQuery(false)

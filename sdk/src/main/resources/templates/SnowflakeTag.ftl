@@ -75,7 +75,6 @@
         String snowflakeTagId,
         List<String> allowedValues
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String allowedValuesString = "";
         try {
             allowedValuesString = Serde.allInclusiveMapper.writeValueAsString(allowedValues);
@@ -86,7 +85,6 @@
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName("abc")
-            .connectorType(connectorType)
             .schemaName(schemaName)
             .schemaQualifiedName(schemaQualifiedName)
             .schema(Schema.refByQualifiedName(schemaQualifiedName))

@@ -45,12 +45,10 @@
             String name,
             String connectionQualifiedName,
             String dashboardQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return SupersetDataset._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(dashboardQualifiedName + "/" + name)
-                .connectorType(connectorType)
                 .supersetDashboardQualifiedName(dashboardQualifiedName)
                 .supersetDashboard(SupersetDashboard.refByQualifiedName(dashboardQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);

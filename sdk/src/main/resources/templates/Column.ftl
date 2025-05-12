@@ -224,12 +224,10 @@
         String tableQualifiedName,
         int order
     ) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(parentQualifiedName);
         ColumnBuilder<?, ?> builder = Column._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(generateQualifiedName(name, parentQualifiedName))
-            .connectorType(connectorType)
             .schemaName(schemaName)
             .schemaQualifiedName(schemaQualifiedName)
             .databaseName(databaseName)

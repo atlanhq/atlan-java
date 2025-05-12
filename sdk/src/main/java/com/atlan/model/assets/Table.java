@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.AtlanField;
@@ -602,12 +601,10 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
             String databaseQualifiedName,
             String schemaName,
             String schemaQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Table._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
-                .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
                 .schema(Schema.refByQualifiedName(schemaQualifiedName))

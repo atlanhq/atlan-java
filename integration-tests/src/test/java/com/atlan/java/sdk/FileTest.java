@@ -49,7 +49,7 @@ public class FileTest extends AtlanLiveTest {
         assertNotNull(file.getQualifiedName());
         assertEquals(file.getQualifiedName(), File.generateQualifiedName(connection.getQualifiedName(), FILE_NAME));
         assertEquals(file.getName(), FILE_NAME);
-        assertNull(file.getConnectorType());
+        assertEquals(file.getConnectorType(), CONNECTOR_TYPE);
         assertEquals(file.getConnectionQualifiedName(), connection.getQualifiedName());
         assertEquals(file.getFileType(), FileType.PDF);
         assertEquals(file.getFilePath(), "https://www.example.com");

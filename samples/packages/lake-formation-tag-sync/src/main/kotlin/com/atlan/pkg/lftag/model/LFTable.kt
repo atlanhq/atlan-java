@@ -5,7 +5,7 @@ package com.atlan.pkg.lftag.model
 import com.fasterxml.jackson.annotation.JsonProperty
 
 class LFTable(
-    @JsonProperty("CatalogId") var catalogId: String,
+    @JsonProperty("CatalogId") var catalogId: String? = null,
     @JsonProperty("DatabaseName") var databaseName: String,
     @JsonProperty("Name") var name: String,
 )

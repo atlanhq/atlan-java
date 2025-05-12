@@ -45,12 +45,10 @@
      * @return the minimal request necessary to create the schema, as a builder
      */
     public static SchemaBuilder<?, ?> creator(String name, String connectionQualifiedName, String databaseName, String databaseQualifiedName) {
-        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return Schema._internal()
             .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
             .name(name)
             .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
-            .connectorType(connectorType)
             .databaseName(databaseName)
             .databaseQualifiedName(databaseQualifiedName)
             .database(Database.refByQualifiedName(databaseQualifiedName))

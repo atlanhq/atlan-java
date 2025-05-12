@@ -13,7 +13,6 @@ import com.atlan.model.enums.ADLSLeaseStatus;
 import com.atlan.model.enums.ADLSObjectArchiveStatus;
 import com.atlan.model.enums.ADLSObjectType;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -46,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class ADLSObject extends Asset
-        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSObject, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
@@ -488,8 +487,7 @@ public class ADLSObject extends Asset
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
                 .adlsAccountQualifiedName(accountQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.ADLS);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**

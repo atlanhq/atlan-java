@@ -35,6 +35,9 @@ public interface IPowerBIDashboard {
 
     public static final String TYPE_NAME = "PowerBIDashboard";
 
+    /** PowerBI App that is associated with this PowerBI Dashboard. */
+    RelationField POWER_BI_APPS = new RelationField("powerBIApps");
+
     /** Number of tiles in this table. */
     NumericField TILE_COUNT = new NumericField("tileCount", "tileCount");
 
@@ -458,6 +461,9 @@ public interface IPowerBIDashboard {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI App that is associated with this PowerBI Dashboard. */
+    SortedSet<IPowerBIApp> getPowerBIApps();
 
     /** Endorsement status of this asset, in Power BI. */
     PowerBIEndorsementType getPowerBIEndorsement();

@@ -29,6 +29,11 @@ public abstract class Atlan {
                     + ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorMessage() + " "
                     + ErrorCode.NO_BASE_URL.getMessageDefinition().getUserAction();
 
+    static final String BLANK_CLIENT_MSG =
+            ErrorCode.BLANK_BASE_URL.getMessageDefinition().getErrorId() + " "
+                    + ErrorCode.BLANK_BASE_URL.getMessageDefinition().getErrorMessage() + " "
+                    + ErrorCode.BLANK_BASE_URL.getMessageDefinition().getUserAction();
+
     static String prepURL(final String baseURL) {
         String prepped = baseURL;
         if (baseURL.endsWith("/")) {

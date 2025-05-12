@@ -100,6 +100,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     String host;
 
+    /** Connection process to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IConnectionProcess> inputToConnectionProcesses;
+
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     @Attribute
     Boolean isSampleDataPreviewEnabled;
@@ -107,6 +112,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /** Number of rows after which results should be uploaded to storage. */
     @Attribute
     Long objectStorageUploadThreshold;
+
+    /** Connection processs from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<IConnectionProcess> outputFromConnectionProcesses;
 
     /** Policy strategy is a configuration that determines whether the Atlan policy will be applied to the results of insight queries and whether the query will be rewritten, applicable for stream api call made from insight screen */
     @Attribute
@@ -426,6 +436,34 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String qualifiedName) {
+        String[] tokens = qualifiedName.split("/");
+        AtlanConnectorType ct = getConnectorTypeFromQualifiedName(tokens);
+        if (ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
+            return getConnectorFromQualifiedName(tokens);
+        }
+        return ct.getValue();
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param tokens of the qualifiedName, from which to determine the connector type
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static String getConnectorFromQualifiedName(String[] tokens) {
+        if (tokens.length > 1) {
+            return tokens[1].toLowerCase();
+        }
+        return null;
+    }
+
+    /**
      * Builds the minimal object necessary to create a connection, using "All Admins" as the default
      * set of connection admins.
      *
@@ -472,6 +510,97 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
                 .connectorType(connectorType);
+        if (adminRoles != null && !adminRoles.isEmpty()) {
+            for (String roleId : adminRoles) {
+                client.getRoleCache().getNameForId(roleId);
+            }
+            adminFound = true;
+            builder.adminRoles(adminRoles);
+        } else {
+            builder.nullField("adminRoles");
+        }
+        if (adminGroups != null && !adminGroups.isEmpty()) {
+            for (String groupAlias : adminGroups) {
+                client.getGroupCache().getIdForName(groupAlias);
+            }
+            adminFound = true;
+            builder.adminGroups(adminGroups);
+        } else {
+            builder.nullField("adminGroups");
+        }
+        if (adminUsers != null && !adminUsers.isEmpty()) {
+            for (String userName : adminUsers) {
+                client.getUserCache().getIdForName(userName);
+            }
+            adminFound = true;
+            builder.adminUsers(adminUsers);
+        } else {
+            builder.nullField("adminUsers");
+        }
+        if (adminFound) {
+            return builder;
+        } else {
+            throw new InvalidRequestException(ErrorCode.NO_CONNECTION_ADMIN);
+        }
+    }
+
+    /**
+     * Builds the minimal object necessary to create a connection, using "All Admins" as the default
+     * set of connection admins.
+     *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
+     * @param name of the connection
+     * @param connectorName name of the connection's connector (this determines what logo appears for the assets)
+     * @param category category of the connection
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(
+            AtlanClient client, String name, String connectorName, AtlanConnectionCategory category)
+            throws AtlanException {
+        return creator(
+                client,
+                name,
+                connectorName,
+                category,
+                List.of(client.getRoleCache().getIdForName("$admin")),
+                null,
+                null);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a connection.
+     * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
+     * provided or an InvalidRequestException will be thrown.
+     *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
+     * @param name of the connection
+     * @param connectorName name of the connection's connector (this determines what logo appears for the assets)
+     * @param category category of the connection
+     * @param adminRoles the GUIDs of the roles that can administer this connection
+     * @param adminGroups the (internal) names of the groups that can administer this connection
+     * @param adminUsers the (internal) names of the users that can administer this connection
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
+     * @throws NotFoundException if a non-existent admin has been defined for the connection
+     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(
+            AtlanClient client,
+            String name,
+            String connectorName,
+            AtlanConnectionCategory category,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers)
+            throws AtlanException {
+        boolean adminFound = false;
+        ConnectionBuilder<?, ?> builder = Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .name(name)
+                .qualifiedName(generateQualifiedName(connectorName))
+                .category(category)
+                .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
                 client.getRoleCache().getNameForId(roleId);

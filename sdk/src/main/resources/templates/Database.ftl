@@ -7,13 +7,10 @@
      * @return the minimal request necessary to create the database, as a builder
      */
     public static DatabaseBuilder<?, ?> creator(String name, String connectionQualifiedName) {
-        AtlanConnectorType connectorType =
-                Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
         return Database._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
-                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

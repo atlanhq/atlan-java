@@ -10,7 +10,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.ADLSLeaseState;
 import com.atlan.model.enums.ADLSLeaseStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -43,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("serial")
 public class ADLSContainer extends Asset
-        implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSContainer, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSContainer";
@@ -430,8 +429,7 @@ public class ADLSContainer extends Asset
                 .name(name)
                 .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
                 .adlsAccountQualifiedName(accountQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorType(AtlanConnectorType.ADLS);
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
