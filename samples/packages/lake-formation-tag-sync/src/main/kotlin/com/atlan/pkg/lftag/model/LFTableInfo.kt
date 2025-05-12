@@ -7,27 +7,31 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 class LFTableInfo(
     @JsonProperty("Table") var table: LFTable,
-    @JsonProperty("LFTagOnDatabase") var lfTagOnDatabase: List<LFTagPair>,
-    @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair>?,
-    @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag>?,
+    @JsonProperty("LFTagOnDatabase") var lfTagOnDatabase: List<LFTagPair> = emptyList(),
+    @JsonProperty("LFTagsOnTable") var lfTagsOnTable: List<LFTagPair> = emptyList(),
+    @JsonProperty("LFTagsOnColumns") var lfTagsOnColumn: List<ColumnLFTag> = emptyList(),
 ) {
     private val logger = Utils.getLogger(this.javaClass.name)
 
     fun getTagValuesByTagKey(tagValuesByTagKey: MutableMap<String, MutableSet<String>>): Map<String, Set<String>> {
-        lfTagOnDatabase.forEach { lfTagPair ->
-            extracted(lfTagPair, tagValuesByTagKey)
-        }
-        if (lfTagsOnTable == null) {
-            logger.warn { "'LFTagsOnTable' missing for Table: ${table.name}." }
+        if (lfTagOnDatabase.isEmpty()) {
+            logger.warn { "'lfTagOnDatabase' missing for Table: ${table.name}." }
         } else {
-            lfTagsOnTable?.forEach { lfTagPair ->
+            lfTagOnDatabase.forEach { lfTagPair ->
                 extracted(lfTagPair, tagValuesByTagKey)
             }
         }
-        if (lfTagsOnColumn == null) {
+        if (lfTagsOnTable.isEmpty()) {
             logger.warn { "'LFTagsOnTable' missing for Table: ${table.name}." }
         } else {
-            lfTagsOnColumn?.forEach { columnLfTags ->
+            lfTagsOnTable.forEach { lfTagPair ->
+                extracted(lfTagPair, tagValuesByTagKey)
+            }
+        }
+        if (lfTagsOnColumn.isEmpty()) {
+            logger.warn { "'LFTagsOnTable' missing for Table: ${table.name}." }
+        } else {
+            lfTagsOnColumn.forEach { columnLfTags ->
                 columnLfTags.lfTags.forEach { lfTagPair ->
                     extracted(lfTagPair, tagValuesByTagKey)
                 }
