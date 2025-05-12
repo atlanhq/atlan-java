@@ -75,6 +75,13 @@
           ]
         }
       ]
+    },
+    {
+      "Table": {
+        "CatalogId": "614518280298",
+        "DatabaseName": "dev_sch",
+        "Name": "sch.tbl1"
+      }
     }
   ]
 }
