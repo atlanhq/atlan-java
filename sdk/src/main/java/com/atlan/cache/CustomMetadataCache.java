@@ -10,6 +10,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.CustomMetadataDef;
 import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.net.HttpClient;
 import com.atlan.serde.Removable;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -45,6 +46,19 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
+        int retryCount = 1;
+        try {
+            while (retryCount < client.getMaxNetworkRetries()
+                    && (response == null
+                            || response.getStructDefs() == null
+                            || response.getStructDefs().isEmpty())) {
+                Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+                response = typeDefsEndpoint.list(List.of(AtlanTypeCategory.CUSTOM_METADATA, AtlanTypeCategory.STRUCT));
+                retryCount++;
+            }
+        } catch (InterruptedException e) {
+            log.warn(" ... retry loop interrupted.", e);
+        }
         if (response == null
                 || response.getStructDefs() == null
                 || response.getStructDefs().isEmpty()) {
