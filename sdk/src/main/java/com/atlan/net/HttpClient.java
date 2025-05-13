@@ -8,10 +8,13 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanTypeCategory;
+import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.util.Stopwatch;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -250,9 +253,26 @@ public abstract class HttpClient {
                 if (userId != null) {
                     try {
                         log.info(" ... authentication failed, attempting to exchange new token for user: {}", userId);
-                        String token = request.client().impersonate.user(userId);
-                        request.client().setApiToken(token);
+                        AtlanClient client = request.client();
+                        String token = client.impersonate.user(userId);
+                        client.setApiToken(token);
                         request.rebuildHeaders();
+                        TypeDefResponse td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
+                        int retryCount = 1;
+                        try {
+                            // Before retrying this particular request, first confirm the refreshed token is "active"
+                            //  (by making and retrying a call that should retrieve details only when truly active)
+                            while (retryCount < client.getMaxNetworkRetries()
+                                    && (td == null
+                                            || td.getStructDefs() == null
+                                            || td.getStructDefs().isEmpty())) {
+                                Thread.sleep(waitTime(retryCount).toMillis());
+                                td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
+                                retryCount++;
+                            }
+                        } catch (InterruptedException e) {
+                            log.warn(" ... retry loop interrupted.", exception);
+                        }
                         return true;
                     } catch (AtlanException e) {
                         log.warn(" ... attempt to impersonate user {} failed, not retrying.", userId, exception);

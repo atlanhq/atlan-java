@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,19 @@ public class AtlanTagCache extends AbstractMassTrackingCache<AtlanTagDef> {
         log.debug("Refreshing cache of Atlan tags...");
         TypeDefResponse response =
                 typeDefsEndpoint.list(List.of(AtlanTypeCategory.ATLAN_TAG, AtlanTypeCategory.STRUCT));
+        int retryCount = 1;
+        try {
+            while (retryCount < client.getMaxNetworkRetries()
+                    && (response == null
+                            || response.getStructDefs() == null
+                            || response.getStructDefs().isEmpty())) {
+                Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+                response = typeDefsEndpoint.list(List.of(AtlanTypeCategory.ATLAN_TAG, AtlanTypeCategory.STRUCT));
+                retryCount++;
+            }
+        } catch (InterruptedException e) {
+            log.warn(" ... retry loop interrupted.", e);
+        }
         if (response == null
                 || response.getStructDefs() == null
                 || response.getStructDefs().isEmpty()) {
