@@ -29,6 +29,7 @@ object LakeTagSynchronizer {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        logger.info { "Starting Lake Tag Synchronization" }
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<LakeFormationTagSyncCfg>().use { ctx ->
             val results = sync(ctx, outputDirectory)
@@ -80,6 +81,7 @@ object LakeTagSynchronizer {
         }
         val csvProducer = CSVProducer(connectionMap, metadataMap)
         tagFileNames.forEach { tagFileName ->
+            logger.info { "Processing $tagFileName." }
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             val lfTagData = createMissingEnums(ctx.client, tagFileName, mapper, metadataMap)
             csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema)

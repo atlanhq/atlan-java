@@ -60,6 +60,16 @@ val TABLE_INFO_JSON =
       ]
     }
     """.trimIndent()
+val TABLE_INFO_JSON_MISSING_OPTIONAL_ELEMENTS =
+    """
+    {
+      "Table": {
+        "CatalogId": "614518280298",
+        "DatabaseName": "dev_atlan_dev",
+        "Name": "stg_customer_categories"
+      }
+    }
+    """.trimIndent()
 private val mapper = jacksonObjectMapper()
 
 class SerdeTest {
@@ -101,12 +111,17 @@ class SerdeTest {
         val tableInfo = mapper.readValue(TABLE_INFO_JSON, LFTableInfo::class.java)
         assertNotNull(tableInfo.table)
         assertEquals(1, tableInfo.lfTagOnDatabase.size)
-        if (tableInfo.lfTagsOnTable != null) {
-            assertEquals(1, tableInfo.lfTagsOnTable!!.size)
-        }
-        if (tableInfo.lfTagsOnColumn != null) {
-            assertEquals(1, tableInfo.lfTagsOnColumn!!.size)
-        }
+        assertEquals(1, tableInfo.lfTagsOnTable.size)
+        assertEquals(1, tableInfo.lfTagsOnColumn.size)
+    }
+
+    @Test
+    fun whenDeserializableTableInfoMissingLfTagsOnDatabaseThenSuccess() {
+        val tableInfo = mapper.readValue(TABLE_INFO_JSON_MISSING_OPTIONAL_ELEMENTS, LFTableInfo::class.java)
+        assertNotNull(tableInfo.table)
+        assertEquals(0, tableInfo.lfTagOnDatabase.size)
+        assertEquals(0, tableInfo.lfTagsOnTable.size)
+        assertEquals(0, tableInfo.lfTagsOnColumn.size)
     }
 
     @Test
@@ -157,6 +172,6 @@ class SerdeTest {
     fun whenDeserializableTagDataThenSuccess() {
         val jsonString: String = File("./src/test/resources/lftag_association_1.json").readText(Charsets.UTF_8)
         val tagData = mapper.readValue(jsonString, LFTagData::class.java)
-        assertEquals(2, tagData.tableList.size)
+        assertEquals(3, tagData.tableList.size)
     }
 }
