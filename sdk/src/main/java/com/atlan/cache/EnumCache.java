@@ -7,6 +7,7 @@ import com.atlan.exception.*;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.EnumDef;
 import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -39,6 +40,19 @@ public class EnumCache {
         try {
             log.debug("Refreshing cache of enumerations...");
             TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
+            int retryCount = 1;
+            try {
+                while (retryCount < typeDefsEndpoint.getClient().getMaxNetworkRetries()
+                        && (response == null
+                                || response.getEnumDefs() == null
+                                || response.getEnumDefs().isEmpty())) {
+                    Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+                    response = typeDefsEndpoint.list(List.of(AtlanTypeCategory.ENUM));
+                    retryCount++;
+                }
+            } catch (InterruptedException e) {
+                log.warn(" ... retry loop interrupted.", e);
+            }
             if (response == null
                     || response.getEnumDefs() == null
                     || response.getEnumDefs().isEmpty()) {
