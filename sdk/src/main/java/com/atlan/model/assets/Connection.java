@@ -843,8 +843,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the connection does not exist
      */
-    public static List<Connection> findByName(AtlanClient client, String name, String type)
-        throws AtlanException {
+    public static List<Connection> findByName(AtlanClient client, String name, String type) throws AtlanException {
         return findByName(client, name, type, (List<AtlanField>) null);
     }
 
@@ -860,16 +859,15 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(
-        AtlanClient client, String name, String type, Collection<String> attributes)
-        throws AtlanException {
+            AtlanClient client, String name, String type, Collection<String> attributes) throws AtlanException {
         List<Connection> results = new ArrayList<>();
         Connection.select(client)
-            .where(Connection.NAME.eq(name))
-            .where(Connection.CONNECTOR_TYPE.eq(type))
-            ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-            .stream()
-            .filter(a -> a instanceof Connection)
-            .forEach(c -> results.add((Connection) c));
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Connection)
+                .forEach(c -> results.add((Connection) c));
         if (results.isEmpty()) {
             throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type);
         }
@@ -887,17 +885,16 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the connection does not exist
      */
-    public static List<Connection> findByName(
-        AtlanClient client, String name, String type, List<AtlanField> attributes)
-        throws AtlanException {
+    public static List<Connection> findByName(AtlanClient client, String name, String type, List<AtlanField> attributes)
+            throws AtlanException {
         List<Connection> results = new ArrayList<>();
         Connection.select(client)
-            .where(Connection.NAME.eq(name))
-            .where(Connection.CONNECTOR_TYPE.eq(type))
-            .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-            .stream()
-            .filter(a -> a instanceof Connection)
-            .forEach(c -> results.add((Connection) c));
+                .where(Connection.NAME.eq(name))
+                .where(Connection.CONNECTOR_TYPE.eq(type))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof Connection)
+                .forEach(c -> results.add((Connection) c));
         if (results.isEmpty()) {
             throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type);
         }
