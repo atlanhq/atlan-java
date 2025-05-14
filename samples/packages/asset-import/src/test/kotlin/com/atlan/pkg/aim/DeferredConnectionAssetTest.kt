@@ -29,7 +29,6 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
 
     private val conn1 = makeUnique("c1")
     private val conn1Type = "custom-db"
-    private lateinit var connection: Connection
 
     private val testFile = "deferred_assets.csv"
 
@@ -39,7 +38,7 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
             "debug.log",
         )
 
-    private fun prepFile(connectionQN: String = connection.qualifiedName) {
+    private fun prepFile() {
         // Prepare a copy of the file with unique names for connections
         val input = Paths.get("src", "test", "resources", testFile).toFile()
         val output = Paths.get(testDirectory, testFile).toFile()
@@ -48,7 +47,7 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
                 val revised =
                     line
                         .replace("{CTYPE}", conn1Type)
-                        .replace("{CNAME}", connectionQN)
+                        .replace("{CNAME}", conn1)
                 output.appendText("$revised\n")
             }
         }

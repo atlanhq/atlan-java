@@ -11,6 +11,7 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
 import mu.KLogger
 import java.util.regex.Pattern
@@ -90,6 +91,13 @@ class ConnectionImporter(
     }
 
     /** {@inheritDoc} */
+    override fun import(columnsToSkip: Set<String>): ImportResults? {
+        val colsToSkip = columnsToSkip.toMutableSet()
+        colsToSkip.add(Connection.QUALIFIED_NAME.atlanFieldName)
+        return super.import(colsToSkip)
+    }
+
+    /** {@inheritDoc} */
     @Suppress("UNCHECKED_CAST")
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.NAME.atlanFieldName)?.let { it as String } ?: ""
@@ -118,10 +126,10 @@ class ConnectionImporter(
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
             val ct = AtlanConnectorType.fromValue(resolvedType)
             if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                Connection.creator(ctx.client, name, ct, roles, groups, users)
+                Connection.creator(ctx.client, resolvedName, ct, roles, groups, users)
             } else {
                 val category = deserializer.getValue(Connection.CATEGORY.atlanFieldName)?.let { it as AtlanConnectionCategory }
-                Connection.creator(ctx.client, name, resolvedType, category, roles, groups, users)
+                Connection.creator(ctx.client, resolvedName, resolvedType, category, roles, groups, users)
             }
         }
     }

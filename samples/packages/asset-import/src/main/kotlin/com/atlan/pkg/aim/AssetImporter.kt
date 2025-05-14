@@ -205,6 +205,7 @@ import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.ConnectionImporter.Companion.getDeferredIdentity
 import com.atlan.pkg.aim.ConnectionImporter.Companion.resolveDeferredQN
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
@@ -934,18 +935,19 @@ class AssetImporter(
                 throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
             }
             val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+            val deferredIdentity = getDeferredIdentity(qualifiedName)
             if (connectionQNFromAsset != null) {
                 connectionQNs.add(connectionQNFromAsset)
             } else if (typeName == Connection.TYPE_NAME) {
                 // If the qualifiedName comes back as null and the asset itself is a connection, add it
                 if (StringUtils.isValidConnectionQN(qualifiedName)) {
                     connectionQNs.add(qualifiedName)
-                } else {
+                } else if (deferredIdentity == null) {
                     throw IllegalStateException(
                         "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
                     )
                 }
-            } else {
+            } else if (deferredIdentity == null) {
                 throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
             }
             return row
