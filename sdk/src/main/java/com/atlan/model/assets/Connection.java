@@ -444,7 +444,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static String getConnectorFromQualifiedName(String qualifiedName) {
         String[] tokens = qualifiedName.split("/");
         AtlanConnectorType ct = getConnectorTypeFromQualifiedName(tokens);
-        if (ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
+        if (ct == null || ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
             return getConnectorFromQualifiedName(tokens);
         }
         return ct.getValue();
