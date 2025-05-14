@@ -496,13 +496,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String connectorName;
 
-    /** Type of the connector through which this asset is accessible. */
-    @Override
-    public String getConnectorName() {
-        if (connectorName != null && !connectorName.isEmpty()) return connectorName;
-        return connectorType == null ? customConnectorType : connectorType.getValue();
-    }
-
     /** Latest version of the data contract (in any status) for this asset. */
     @Attribute
     IDataContract dataContractLatest;
@@ -643,7 +636,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> productGUIDs;
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     @Attribute
     String qualifiedName;
 
@@ -843,6 +836,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonIgnore
     @Singular
     transient Set<String> nullFields;
+
+    /** Type of the connector through which this asset is accessible. */
+    @Override
+    public String getConnectorName() {
+        if (connectorName != null && !connectorName.isEmpty()) return connectorName;
+        return connectorType == null ? customConnectorType : connectorType.getValue();
+    }
 
     /** Retrieve the list of fields to be serialized with null values. */
     @JsonIgnore

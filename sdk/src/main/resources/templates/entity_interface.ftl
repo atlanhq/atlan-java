@@ -91,13 +91,6 @@ public interface I${className} {
     </#if>
     </#if>
     </#list>
-<#if className == "Asset">
-    /** Built-in connector type through which this asset is accessible. */
-    KeywordField CONNECTOR_TYPE = new KeywordField("connectorName", "connectorName");
-
-    /** Custom connector type through which this asset is accessible. */
-    KeywordField CUSTOM_CONNECTOR_TYPE = new KeywordField("connectorName", "connectorName");
-</#if>
 
 <#if interfaceTemplateFile??>
 <#import interfaceTemplateFile as methods>
@@ -109,6 +102,15 @@ public interface I${className} {
     ${attribute.referenceType} get${attribute.renamed?cap_first}();
 
     </#list>
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
+
     /** Name of the type that defines the asset. */
     String getTypeName();
 
