@@ -57,7 +57,9 @@ class ConnectionImporter(
             val matcher = deferredQN.matcher(qualifiedName)
             return if (matcher.matches()) {
                 AssetResolver.ConnectionIdentity(matcher.group(2), matcher.group(1))
-            } else null
+            } else {
+                null
+            }
         }
 
         /**
@@ -76,11 +78,14 @@ class ConnectionImporter(
                 val connectionName = matcher.group(2)
                 val remainder = matcher.group(3) ?: ""
                 val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
-                val resolvedConnectionQN = connectionsMap.getOrElse(connectionId) {
-                    throw IllegalStateException("Unable to resolve deferred connection -- no connection found by name and type: $qualifiedName")
-                }
+                val resolvedConnectionQN =
+                    connectionsMap.getOrElse(connectionId) {
+                        throw IllegalStateException("Unable to resolve deferred connection -- no connection found by name and type: $qualifiedName")
+                    }
                 "$resolvedConnectionQN$remainder"
-            } else qualifiedName
+            } else {
+                qualifiedName
+            }
         }
     }
 
@@ -93,9 +98,12 @@ class ConnectionImporter(
         val cType = deserializer.getValue(Connection.CONNECTOR_TYPE.atlanFieldName)?.let { it as String }
         val customType = deserializer.getValue(Connection.CUSTOM_CONNECTOR_TYPE.atlanFieldName)?.let { it as String }
         val deferredIdentity = getDeferredIdentity(qualifiedName)
-        val resolvedType = if (qualifiedName.isEmpty()) {
-            customType ?: cType ?: cName
-        } else deferredIdentity?.type ?: Connection.getConnectorFromQualifiedName(qualifiedName)
+        val resolvedType =
+            if (qualifiedName.isEmpty()) {
+                customType ?: cType ?: cName
+            } else {
+                deferredIdentity?.type ?: Connection.getConnectorFromQualifiedName(qualifiedName)
+            }
         if (resolvedType == null || resolvedType.isEmpty()) {
             throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $qualifiedName (name: $name)")
         }
