@@ -8124,8 +8124,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Unique name of the connection through which this asset is accessible.</div>
 </li>
 <li class="block-list">
-<h5>connectorType</h5>
-<pre><a href="com/atlan/model/enums/AtlanConnectorType.html" title="enum class in com.atlan.model.enums">AtlanConnectorType</a> connectorType</pre>
+<h5>connectorName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> connectorName</pre>
 <div class="block">Type of the connector through which this asset is accessible.</div>
 </li>
 <li class="block-list">
@@ -12454,6 +12454,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Average length of values in a string column.</div>
 </li>
 <li class="block-list">
+<h5>columnCompression</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> columnCompression</pre>
+<div class="block">Compression type of this column.</div>
+</li>
+<li class="block-list">
 <h5>columnDbtModelColumns</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModelColumn.html" title="interface in com.atlan.model.assets">IDbtModelColumn</a>&gt; columnDbtModelColumns</pre>
 <div class="block">TBC</div>
@@ -12482,6 +12487,11 @@ loadScripts(document, 'script');</script>
 <h5>columnDuplicateValuesCountLong</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> columnDuplicateValuesCountLong</pre>
 <div class="block">Number of rows that contain duplicate values.</div>
+</li>
+<li class="block-list">
+<h5>columnEncoding</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> columnEncoding</pre>
+<div class="block">Encoding type of this column.</div>
 </li>
 <li class="block-list">
 <h5>columnHierarchy</h5>
@@ -13506,32 +13516,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -13759,9 +13769,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -17508,32 +17528,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -17696,9 +17716,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -18447,32 +18477,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -18635,9 +18665,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -18806,32 +18846,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -18994,9 +19034,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -19175,32 +19225,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -19363,9 +19413,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -26811,32 +26871,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -27064,9 +27124,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -33778,6 +33848,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
 </li>
 <li class="block-list">
+<h5>schemaExternalLocation</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaExternalLocation</pre>
+<div class="block">External location of this schema, for example: an S3 object location.</div>
+</li>
+<li class="block-list">
 <h5>schemaName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaName</pre>
 <div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
@@ -35242,32 +35317,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -35425,9 +35500,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -37089,32 +37174,32 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>icebergCatalogName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogName</pre>
-<div class="block">iceberg table catalog name (can be any user defined name)</div>
+<div class="block">Iceberg table catalog name (can be any user defined name)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogSource</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogSource</pre>
-<div class="block">iceberg table catalog type (glue, polaris, snowflake)</div>
+<div class="block">Iceberg table catalog type (glue, polaris, snowflake)</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableName</pre>
-<div class="block">catalog table name (actual table name on the catalog side).</div>
+<div class="block">Catalog table name (actual table name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergCatalogTableNamespace</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergCatalogTableNamespace</pre>
-<div class="block">catalog table namespace (actual database name on the catalog side).</div>
+<div class="block">Catalog table namespace (actual database name on the catalog side).</div>
 </li>
 <li class="block-list">
 <h5>icebergTableBaseLocation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableBaseLocation</pre>
-<div class="block">iceberg table base location inside the external volume.</div>
+<div class="block">Iceberg table base location inside the external volume.</div>
 </li>
 <li class="block-list">
 <h5>icebergTableType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> icebergTableType</pre>
-<div class="block">iceberg table type (managed vs unmanaged)</div>
+<div class="block">Iceberg table type (managed vs unmanaged)</div>
 </li>
 <li class="block-list">
 <h5>inputToAirflowTasks</h5>
@@ -37272,9 +37357,19 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>tableDefinition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
+<div class="block">Definition of the table.</div>
+</li>
+<li class="block-list">
 <h5>tableExternalVolumeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableExternalVolumeName</pre>
-<div class="block">external volume name for the table.</div>
+<div class="block">External volume name for the table.</div>
+</li>
+<li class="block-list">
+<h5>tableImpalaParameters</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; tableImpalaParameters</pre>
+<div class="block">Extra attributes for Impala</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -37513,6 +37608,16 @@ loadScripts(document, 'script');</script>
 <h5>siteQualifiedName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> siteQualifiedName</pre>
 <div class="block">Unique name of the site in which this dashboard exists.</div>
+</li>
+<li class="block-list">
+<h5>tableauEmbeddedDashboards</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a>&gt; tableauEmbeddedDashboards</pre>
+<div class="block">Dashboards that are embedded in this dashboard.</div>
+</li>
+<li class="block-list">
+<h5>tableauParentDashboards</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a>&gt; tableauParentDashboards</pre>
+<div class="block">Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard).</div>
 </li>
 <li class="block-list">
 <h5>topLevelProjectQualifiedName</h5>
