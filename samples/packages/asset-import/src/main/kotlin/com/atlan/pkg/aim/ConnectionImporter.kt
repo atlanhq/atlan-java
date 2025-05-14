@@ -6,6 +6,8 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanConnectionCategory
+import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -60,7 +62,13 @@ class ConnectionImporter(
             val users = deserializer.getValue(Connection.ADMIN_USERS.atlanFieldName)?.let { it as List<String> }
             val groups = deserializer.getValue(Connection.ADMIN_GROUPS.atlanFieldName)?.let { it as List<String> }
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
-            Connection.creator(ctx.client, name, connectorType, roles, groups, users)
+            val ct = AtlanConnectorType.fromValue(connectorType)
+            if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                Connection.creator(ctx.client, name, ct, roles, groups, users)
+            } else {
+                val category = deserializer.getValue(Connection.CATEGORY.atlanFieldName)?.let { it as AtlanConnectionCategory }
+                Connection.creator(ctx.client, name, connectorType, category, roles, groups, users)
+            }
         }
     }
 
