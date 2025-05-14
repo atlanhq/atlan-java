@@ -3,7 +3,6 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -61,23 +60,23 @@ public interface ITable {
     /** TBC */
     RelationField FACTS = new RelationField("facts");
 
-    /** iceberg table catalog name (can be any user defined name) */
+    /** Iceberg table catalog name (can be any user defined name) */
     KeywordField ICEBERG_CATALOG_NAME = new KeywordField("icebergCatalogName", "icebergCatalogName");
 
-    /** iceberg table catalog type (glue, polaris, snowflake) */
+    /** Iceberg table catalog type (glue, polaris, snowflake) */
     KeywordField ICEBERG_CATALOG_SOURCE = new KeywordField("icebergCatalogSource", "icebergCatalogSource");
 
-    /** catalog table name (actual table name on the catalog side). */
+    /** Catalog table name (actual table name on the catalog side). */
     KeywordField ICEBERG_CATALOG_TABLE_NAME = new KeywordField("icebergCatalogTableName", "icebergCatalogTableName");
 
-    /** catalog table namespace (actual database name on the catalog side). */
+    /** Catalog table namespace (actual database name on the catalog side). */
     KeywordField ICEBERG_CATALOG_TABLE_NAMESPACE =
             new KeywordField("icebergCatalogTableNamespace", "icebergCatalogTableNamespace");
 
-    /** iceberg table base location inside the external volume. */
+    /** Iceberg table base location inside the external volume. */
     KeywordField ICEBERG_TABLE_BASE_LOCATION = new KeywordField("icebergTableBaseLocation", "icebergTableBaseLocation");
 
-    /** iceberg table type (managed vs unmanaged) */
+    /** Iceberg table type (managed vs unmanaged) */
     KeywordField ICEBERG_TABLE_TYPE = new KeywordField("icebergTableType", "icebergTableType");
 
     /** Whether this table is partitioned (true) or not (false). */
@@ -119,8 +118,14 @@ public interface ITable {
     /** Size of this table, in bytes. */
     NumericField SIZE_BYTES = new NumericField("sizeBytes", "sizeBytes");
 
-    /** external volume name for the table. */
+    /** Definition of the table. */
+    TextField TABLE_DEFINITION = new TextField("tableDefinition", "tableDefinition");
+
+    /** External volume name for the table. */
     KeywordField TABLE_EXTERNAL_VOLUME_NAME = new KeywordField("tableExternalVolumeName", "tableExternalVolumeName");
+
+    /** Extra attributes for Impala */
+    KeywordField TABLE_IMPALA_PARAMETERS = new KeywordField("tableImpalaParameters", "tableImpalaParameters");
 
     /** Data retention time in days. */
     NumericField TABLE_RETENTION_TIME = new NumericField("tableRetentionTime", "tableRetentionTime");
@@ -435,7 +440,7 @@ public interface ITable {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -494,22 +499,22 @@ public interface ITable {
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
-    /** iceberg table catalog name (can be any user defined name) */
+    /** Iceberg table catalog name (can be any user defined name) */
     String getIcebergCatalogName();
 
-    /** iceberg table catalog type (glue, polaris, snowflake) */
+    /** Iceberg table catalog type (glue, polaris, snowflake) */
     String getIcebergCatalogSource();
 
-    /** catalog table name (actual table name on the catalog side). */
+    /** Catalog table name (actual table name on the catalog side). */
     String getIcebergCatalogTableName();
 
-    /** catalog table namespace (actual database name on the catalog side). */
+    /** Catalog table namespace (actual database name on the catalog side). */
     String getIcebergCatalogTableNamespace();
 
-    /** iceberg table base location inside the external volume. */
+    /** Iceberg table base location inside the external volume. */
     String getIcebergTableBaseLocation();
 
-    /** iceberg table type (managed vs unmanaged) */
+    /** Iceberg table type (managed vs unmanaged) */
     String getIcebergTableType();
 
     /** Data products for which this asset is an input port. */
@@ -632,7 +637,7 @@ public interface ITable {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Queries that access this table. */
@@ -764,8 +769,14 @@ public interface ITable {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** external volume name for the table. */
+    /** Definition of the table. */
+    String getTableDefinition();
+
+    /** External volume name for the table. */
     String getTableExternalVolumeName();
+
+    /** Extra attributes for Impala */
+    Map<String, String> getTableImpalaParameters();
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();

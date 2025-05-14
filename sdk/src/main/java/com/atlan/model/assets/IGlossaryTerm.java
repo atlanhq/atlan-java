@@ -3,7 +3,6 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.AtlasGlossaryTermType;
@@ -417,7 +416,7 @@ public interface IGlossaryTerm {
     String getConnectionQualifiedName();
 
     /** TBC */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** TBC */
     IDataContract getDataContractLatest();

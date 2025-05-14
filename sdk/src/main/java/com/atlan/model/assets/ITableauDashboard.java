@@ -3,7 +3,6 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -44,6 +43,12 @@ public interface ITableauDashboard {
 
     /** Unique name of the site in which this dashboard exists. */
     TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
+
+    /** Dashboards that are embedded in this dashboard. */
+    RelationField TABLEAU_EMBEDDED_DASHBOARDS = new RelationField("tableauEmbeddedDashboards");
+
+    /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
+    RelationField TABLEAU_PARENT_DASHBOARDS = new RelationField("tableauParentDashboards");
 
     /** Unique name of the top-level project in which this dashboard exists. */
     TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
@@ -350,7 +355,7 @@ public interface ITableauDashboard {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -475,7 +480,7 @@ public interface ITableauDashboard {
     /** Unique name of the project in which this dashboard exists. */
     String getProjectQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -570,6 +575,12 @@ public interface ITableauDashboard {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Dashboards that are embedded in this dashboard. */
+    SortedSet<ITableauDashboard> getTableauEmbeddedDashboards();
+
+    /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
+    SortedSet<ITableauDashboard> getTableauParentDashboards();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

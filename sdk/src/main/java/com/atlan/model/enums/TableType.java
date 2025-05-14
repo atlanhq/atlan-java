@@ -10,6 +10,7 @@ import lombok.Getter;
 public enum TableType implements AtlanEnum {
     TEMPORARY("TEMPORARY"),
     ICEBERG("ICEBERG"),
+    KUDU("KUDU"),
     ;
 
     @JsonValue

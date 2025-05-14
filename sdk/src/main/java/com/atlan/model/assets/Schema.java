@@ -176,6 +176,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
+    /** External location of this schema, for example: an S3 object location. */
+    @Attribute
+    String schemaExternalLocation;
+
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;

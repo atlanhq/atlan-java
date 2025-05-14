@@ -3,7 +3,6 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -48,6 +47,9 @@ public interface IColumn {
     /** Average length of values in a string column. */
     NumericField COLUMN_AVERAGE_LENGTH = new NumericField("columnAverageLength", "columnAverageLength");
 
+    /** Compression type of this column. */
+    KeywordField COLUMN_COMPRESSION = new KeywordField("columnCompression", "columnCompression");
+
     /** TBC */
     RelationField COLUMN_DBT_MODEL_COLUMNS = new RelationField("columnDbtModelColumns");
 
@@ -69,6 +71,9 @@ public interface IColumn {
     /** Number of rows that contain duplicate values. */
     NumericField COLUMN_DUPLICATE_VALUES_COUNT_LONG =
             new NumericField("columnDuplicateValuesCountLong", "columnDuplicateValuesCountLong");
+
+    /** Encoding type of this column. */
+    KeywordField COLUMN_ENCODING = new KeywordField("columnEncoding", "columnEncoding");
 
     /** List of top-level upstream nested columns. */
     KeywordField COLUMN_HIERARCHY = new KeywordField("columnHierarchy", "columnHierarchy");
@@ -566,6 +571,9 @@ public interface IColumn {
     /** Average length of values in a string column. */
     Double getColumnAverageLength();
 
+    /** Compression type of this column. */
+    String getColumnCompression();
+
     /** TBC */
     SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
 
@@ -583,6 +591,9 @@ public interface IColumn {
 
     /** Number of rows that contain duplicate values. */
     Long getColumnDuplicateValuesCountLong();
+
+    /** Encoding type of this column. */
+    String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
     List<Map<String, String>> getColumnHierarchy();
@@ -651,7 +662,7 @@ public interface IColumn {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Cosmos collection in which this column exists. */
     ICosmosMongoDBCollection getCosmosMongoDBCollection();
@@ -893,7 +904,7 @@ public interface IColumn {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Queries that access this column. */

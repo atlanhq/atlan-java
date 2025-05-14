@@ -155,27 +155,27 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Singular
     SortedSet<ITable> facts;
 
-    /** iceberg table catalog name (can be any user defined name) */
+    /** Iceberg table catalog name (can be any user defined name) */
     @Attribute
     String icebergCatalogName;
 
-    /** iceberg table catalog type (glue, polaris, snowflake) */
+    /** Iceberg table catalog type (glue, polaris, snowflake) */
     @Attribute
     String icebergCatalogSource;
 
-    /** catalog table name (actual table name on the catalog side). */
+    /** Catalog table name (actual table name on the catalog side). */
     @Attribute
     String icebergCatalogTableName;
 
-    /** catalog table namespace (actual database name on the catalog side). */
+    /** Catalog table namespace (actual database name on the catalog side). */
     @Attribute
     String icebergCatalogTableNamespace;
 
-    /** iceberg table base location inside the external volume. */
+    /** Iceberg table base location inside the external volume. */
     @Attribute
     String icebergTableBaseLocation;
 
-    /** iceberg table type (managed vs unmanaged) */
+    /** Iceberg table type (managed vs unmanaged) */
     @Attribute
     String icebergTableType;
 
@@ -324,9 +324,18 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** external volume name for the table. */
+    /** Definition of the table. */
+    @Attribute
+    String tableDefinition;
+
+    /** External volume name for the table. */
     @Attribute
     String tableExternalVolumeName;
+
+    /** Extra attributes for Impala */
+    @Attribute
+    @Singular
+    Map<String, String> tableImpalaParameters;
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute

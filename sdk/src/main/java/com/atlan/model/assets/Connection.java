@@ -863,7 +863,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         List<Connection> results = new ArrayList<>();
         Connection.select(client)
                 .where(Connection.NAME.eq(name))
-                .where(Connection.CONNECTOR_TYPE.eq(type))
+                .where(Connection.CONNECTOR_NAME.eq(type))
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Connection)
@@ -890,7 +890,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         List<Connection> results = new ArrayList<>();
         Connection.select(client)
                 .where(Connection.NAME.eq(name))
-                .where(Connection.CONNECTOR_TYPE.eq(type))
+                .where(Connection.CONNECTOR_NAME.eq(type))
                 .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .stream()
                 .filter(a -> a instanceof Connection)

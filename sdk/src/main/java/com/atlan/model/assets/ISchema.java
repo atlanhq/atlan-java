@@ -3,7 +3,6 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -52,6 +51,9 @@ public interface ISchema {
 
     /** Stored procedures that exist within this schema. */
     RelationField PROCEDURES = new RelationField("procedures");
+
+    /** External location of this schema, for example: an S3 object location. */
+    KeywordField SCHEMA_EXTERNAL_LOCATION = new KeywordField("schemaExternalLocation", "schemaExternalLocation");
 
     /** Snowflake dynamic tables that exist within this schema. */
     RelationField SNOWFLAKE_DYNAMIC_TABLES = new RelationField("snowflakeDynamicTables");
@@ -381,7 +383,7 @@ public interface ISchema {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -536,7 +538,7 @@ public interface ISchema {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */
@@ -556,6 +558,9 @@ public interface ISchema {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** External location of this schema, for example: an S3 object location. */
+    String getSchemaExternalLocation();
 
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     String getSchemaName();
