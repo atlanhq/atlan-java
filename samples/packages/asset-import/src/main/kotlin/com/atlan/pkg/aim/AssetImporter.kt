@@ -205,6 +205,7 @@ import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.aim.ConnectionImporter.Companion.resolveDeferredQN
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -265,6 +266,7 @@ class AssetImporter(
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
         )
+    private val connectionsMap = ctx.connectionCache.getIdentityMap()
 
     private data class RelationshipEnds(
         val name: String,
@@ -400,7 +402,9 @@ class AssetImporter(
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val typeName = deserializer.typeName
-        return FieldSerde.getBuilderForType(typeName).qualifiedName(deserializer.qualifiedName)
+        val qualifiedName = deserializer.qualifiedName
+        val resolvedQN = resolveDeferredQN(connectionsMap, qualifiedName)
+        return FieldSerde.getBuilderForType(typeName).qualifiedName(resolvedQN)
     }
 
     /** {@inheritDoc} */
@@ -883,7 +887,8 @@ class AssetImporter(
             }
             val typeName = CSVXformer.trimWhitespace(values[typeIdx])
             val qualifiedName = CSVXformer.trimWhitespace(values[qnIdx])
-            return AssetIdentity(typeName, qualifiedName)
+            val resolvedQN = resolveDeferredQN(connectionsMap, qualifiedName)
+            return AssetIdentity(typeName, resolvedQN)
         }
 
         /** {@inheritDoc} */
