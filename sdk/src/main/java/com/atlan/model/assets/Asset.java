@@ -1926,7 +1926,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
         /** Set the name of the connector type for this asset. */
         public B connectorName(String connectorName) {
             AtlanConnectorType ct = AtlanConnectorType.fromValue(connectorName);
-            if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+            if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
                 this.connectorType = ct;
                 this.connectorName = ct.getValue();
             } else {
