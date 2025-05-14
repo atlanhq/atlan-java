@@ -6,7 +6,6 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -49,9 +48,9 @@ class ConnectionImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.NAME.atlanFieldName)?.let { it as String } ?: ""
         val qualifiedName = deserializer.getValue(Connection.QUALIFIED_NAME.atlanFieldName)?.let { it as String } ?: ""
-        val connectorType = Connection.getConnectorTypeFromQualifiedName(qualifiedName)
-        if (connectorType == null || connectorType == AtlanConnectorType.UNKNOWN_CUSTOM) {
-            throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $connectorType")
+        val connectorType = Connection.getConnectorFromQualifiedName(qualifiedName)
+        if (connectorType == null || connectorType.isEmpty()) {
+            throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $qualifiedName")
         }
         val identity = ctx.connectionCache.getIdentityForAsset(name, connectorType)
         val existing = ctx.connectionCache.getByIdentity(identity)

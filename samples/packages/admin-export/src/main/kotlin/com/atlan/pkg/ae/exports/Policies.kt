@@ -8,8 +8,8 @@ import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.ae.AdminExporter.ConnectionId
 import com.atlan.pkg.serde.TabularWriter
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.serde.Serde
 import mu.KLogger
 import java.time.Instant
@@ -18,7 +18,7 @@ class Policies(
     private val ctx: PackageContext<AdminExportCfg>,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
-    private val connectionMap: Map<String, ConnectionId>,
+    private val connectionMap: Map<String, AssetResolver.ConnectionIdentity>,
     private val logger: KLogger,
 ) {
     fun export() {

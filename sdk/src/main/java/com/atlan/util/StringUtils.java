@@ -6,7 +6,6 @@ package com.atlan.util;
 import static java.util.Objects.requireNonNull;
 
 import com.atlan.model.assets.Connection;
-import com.atlan.model.enums.AtlanConnectorType;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -220,8 +219,8 @@ public final class StringUtils {
     public static boolean isValidConnectionQN(String qn) {
         if (qn == null || qn.isEmpty()) return false;
         if (connectionQN.matcher(qn).matches()) {
-            AtlanConnectorType type = Connection.getConnectorTypeFromQualifiedName(qn);
-            return (type != null && type != AtlanConnectorType.UNKNOWN_CUSTOM);
+            String type = Connection.getConnectorFromQualifiedName(qn);
+            return (type != null && !type.isEmpty());
         }
         return false;
     }

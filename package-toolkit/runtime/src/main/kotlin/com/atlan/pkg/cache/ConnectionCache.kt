@@ -39,7 +39,7 @@ class ConnectionCache(
             val name = tokens[0]
             val type = tokens[1]
             try {
-                val found = Connection.findByName(client, name, AtlanConnectorType.fromValue(type), includesOnResults)
+                val found = Connection.findByName(client, name, type, includesOnResults)
                 return found[0]
             } catch (e: NotFoundException) {
                 logger.warn { "Unable to find connection: $identity" }
@@ -95,7 +95,7 @@ class ConnectionCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Connection): String = if (asset.connectorType == null) "" else getIdentityForAsset(asset.name, asset.connectorType)
+    override fun getIdentityForAsset(asset: Connection): String = if (asset.connectorType == null) getIdentityForAsset(asset.name, asset.customConnectorType ?: "") else getIdentityForAsset(asset.name, asset.connectorType)
 
     /**
      * Build a connection identity from its component parts.
@@ -107,7 +107,19 @@ class ConnectionCache(
     fun getIdentityForAsset(
         name: String,
         type: AtlanConnectorType,
-    ): String = ConnectionXformer.encode(name, type.value)
+    ): String = getIdentityForAsset(name, type.value)
+
+    /**
+     * Build a connection identity from its component parts.
+     *
+     * @param name of the connection
+     * @param type of the connector for the connection (as a valid connector type)
+     * @return identity for the connection
+     */
+    fun getIdentityForAsset(
+        name: String,
+        type: String,
+    ): String = if (type.isBlank()) "" else ConnectionXformer.encode(name, type)
 
     /**
      * Get a map of all connections in the cache, indexed by their identity with values
@@ -120,7 +132,7 @@ class ConnectionCache(
         listAll().forEach { (_, connection) ->
             val connectorType =
                 if (connection.connectorType == null) {
-                    "(not enumerated)"
+                    connection.customConnectorType ?: ""
                 } else {
                     connection.connectorType.value
                 }

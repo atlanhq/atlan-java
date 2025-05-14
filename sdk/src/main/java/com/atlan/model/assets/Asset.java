@@ -494,8 +494,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** Type of the connector through which this asset is accessible. */
     @Attribute
-    @JsonProperty("connectorName")
-    AtlanConnectorType connectorType;
+    String connectorName;
 
     /** Latest version of the data contract (in any status) for this asset. */
     @Attribute
@@ -825,7 +824,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonIgnore
     transient String iconUrl;
 
-    /** Custom connection type name. */
+    /** Built-in connector type through which this asset is accessible. */
+    @JsonIgnore
+    transient AtlanConnectorType connectorType;
+
+    /** Custom connector type through which this asset is accessible. */
     @JsonIgnore
     transient String customConnectorType;
 
@@ -1891,14 +1894,36 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
         /** Set both the connection qualified name of the asset, and its connector type. */
         public B connectionQualifiedName(String qualifiedName) {
             if (qualifiedName != null && !qualifiedName.isEmpty()) {
-                AtlanConnectorType ct = Connection.getConnectorTypeFromQualifiedName(qualifiedName);
-                if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                    connectorType(ct);
-                } else {
-                    customConnectorType(Connection.getConnectorFromQualifiedName(qualifiedName));
-                }
+                connectorName(Connection.getConnectorFromQualifiedName(qualifiedName));
             }
             this.connectionQualifiedName = qualifiedName;
+            return self();
+        }
+
+        /** Set the built-in connector type of the asset. */
+        public B connectorType(AtlanConnectorType connectorType) {
+            this.connectorType = connectorType;
+            if (connectorType != null) {
+                this.connectorName = connectorType.getValue();
+            }
+            return self();
+        }
+
+        /** Set the custom connector type of the asset. */
+        public B customConnectorType(String customConnectorType) {
+            this.customConnectorType = customConnectorType;
+            this.connectorName = customConnectorType;
+            return self();
+        }
+
+        /** Set the name of the connector type for this asset. */
+        public B connectorName(String connectorName) {
+            AtlanConnectorType ct = AtlanConnectorType.fromValue(connectorName);
+            if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                connectorType(ct);
+            } else {
+                customConnectorType(connectorName);
+            }
             return self();
         }
 

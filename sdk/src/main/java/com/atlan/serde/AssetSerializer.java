@@ -229,12 +229,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 attributes.put("assetIcon", iconUrl);
             }
 
-            // If a custom connector type has been provided, use that as the connectorName.
-            String customConnector = asset.getCustomConnectorType();
-            if (customConnector != null && !customConnector.isEmpty()) {
-                attributes.put("connectorName", customConnector);
-            }
-
         } catch (AtlanException e) {
             throw new IOException(e);
         }

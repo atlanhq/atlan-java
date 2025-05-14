@@ -5,7 +5,6 @@ package com.atlan.pkg.ae
 import AdminExportCfg
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.ae.exports.Groups
@@ -15,6 +14,7 @@ import com.atlan.pkg.ae.exports.Purposes
 import com.atlan.pkg.ae.exports.Users
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
+import com.atlan.pkg.util.AssetResolver
 import java.io.File
 import java.nio.file.Paths
 
@@ -133,22 +133,19 @@ object AdminExporter {
         return map
     }
 
-    private fun preloadConnectionMap(ctx: PackageContext<AdminExportCfg>): Map<String, ConnectionId> {
-        val map = mutableMapOf<String, ConnectionId>()
+    private fun preloadConnectionMap(ctx: PackageContext<AdminExportCfg>): Map<String, AssetResolver.ConnectionIdentity> {
+        val map = mutableMapOf<String, AssetResolver.ConnectionIdentity>()
         Connection
             .select(ctx.client)
             .includeOnResults(Connection.CONNECTOR_TYPE)
             .stream()
             .forEach {
-                map[it.qualifiedName] = ConnectionId(it.connectorType, it.name)
+                if (it.connectorType != null) {
+                    map[it.qualifiedName] = AssetResolver.ConnectionIdentity(it.name, it.connectorType.value)
+                } else if (!it.customConnectorType.isNullOrBlank()) {
+                    map[it.qualifiedName] = AssetResolver.ConnectionIdentity(it.name, it.customConnectorType)
+                }
             }
         return map
-    }
-
-    data class ConnectionId(
-        val type: AtlanConnectorType,
-        val name: String,
-    ) {
-        override fun toString(): String = "$name (${type.value})"
     }
 }

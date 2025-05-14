@@ -91,6 +91,13 @@ public interface I${className} {
     </#if>
     </#if>
     </#list>
+<#if className == "Asset">
+    /** Built-in connector type through which this asset is accessible. */
+    KeywordField CONNECTOR_TYPE = new KeywordField("connectorName", "connectorName");
+
+    /** Custom connector type through which this asset is accessible. */
+    KeywordField CUSTOM_CONNECTOR_TYPE = new KeywordField("connectorName", "connectorName");
+</#if>
 
 <#if interfaceTemplateFile??>
 <#import interfaceTemplateFile as methods>
