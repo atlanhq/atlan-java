@@ -97,6 +97,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnAverageLength;
 
+    /** Compression type of this column. */
+    @Attribute
+    String columnCompression;
+
     /** TBC */
     @Attribute
     @Singular
@@ -121,6 +125,10 @@ public class GuacamoleColumn extends Asset
     /** TBC */
     @Attribute
     Long columnDuplicateValuesCountLong;
+
+    /** Encoding type of this column. */
+    @Attribute
+    String columnEncoding;
 
     /** List of top-level upstream nested columns. */
     @Attribute

@@ -315,9 +315,18 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Definition of the table. */
+    @Attribute
+    String tableDefinition;
+
     /** external volume name for the table. */
     @Attribute
     String tableExternalVolumeName;
+
+    /** Extra attributes for Impala */
+    @Attribute
+    @Singular
+    Map<String, String> tableImpalaParameters;
 
     /** TBC */
     @Attribute
