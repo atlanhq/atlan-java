@@ -6,7 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.*;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
-import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.fields.AtlanField;
 import java.util.*;
 import lombok.EqualsAndHashCode;
@@ -93,18 +92,18 @@ public class ConnectionCache extends AbstractAssetCache {
     @EqualsAndHashCode
     public static final class ConnectionName implements ObjectName {
         String name;
-        AtlanConnectorType type;
+        String type;
 
         public ConnectionName(Connection connection) {
             this.name = connection.getName();
-            this.type = connection.getConnectorType();
+            this.type = connection.getConnectorName();
         }
 
         public ConnectionName(String identity) {
             if (identity != null && !identity.isEmpty()) {
                 String[] tokens = identity.split("/");
                 if (tokens.length > 1) {
-                    this.type = AtlanConnectorType.fromValue(tokens[0]);
+                    this.type = tokens[0];
                     this.name = identity.substring(tokens[0].length() + 1);
                 }
             }
@@ -113,7 +112,7 @@ public class ConnectionCache extends AbstractAssetCache {
         /** {@inheritDoc} */
         @Override
         public String toString() {
-            return type.getValue() + "/" + name;
+            return type + "/" + name;
         }
     }
 }

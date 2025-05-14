@@ -198,7 +198,7 @@ public class MatillionGroupTest {
             .certificateUpdatedBy("String0")
             .connectionName("String0")
             .connectionQualifiedName("String0")
-            .connectorType(AtlanConnectorType.SNOWFLAKE)
+            .connectorName("String0")
             .dataContractLatest(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dataContractLatestCertified(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtQualifiedName("String0")

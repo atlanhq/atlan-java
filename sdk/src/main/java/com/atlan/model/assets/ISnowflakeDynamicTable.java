@@ -343,7 +343,7 @@ public interface ISnowflakeDynamicTable {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -405,22 +405,22 @@ public interface ISnowflakeDynamicTable {
     /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
-    /** iceberg table catalog name (can be any user defined name) */
+    /** Iceberg table catalog name (can be any user defined name) */
     String getIcebergCatalogName();
 
-    /** iceberg table catalog type (glue, polaris, snowflake) */
+    /** Iceberg table catalog type (glue, polaris, snowflake) */
     String getIcebergCatalogSource();
 
-    /** catalog table name (actual table name on the catalog side). */
+    /** Catalog table name (actual table name on the catalog side). */
     String getIcebergCatalogTableName();
 
-    /** catalog table namespace (actual database name on the catalog side). */
+    /** Catalog table namespace (actual database name on the catalog side). */
     String getIcebergCatalogTableNamespace();
 
-    /** iceberg table base location inside the external volume. */
+    /** Iceberg table base location inside the external volume. */
     String getIcebergTableBaseLocation();
 
-    /** iceberg table type (managed vs unmanaged) */
+    /** Iceberg table type (managed vs unmanaged) */
     String getIcebergTableType();
 
     /** Data products for which this asset is an input port. */
@@ -675,8 +675,14 @@ public interface ISnowflakeDynamicTable {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** external volume name for the table. */
+    /** Definition of the table. */
+    String getTableDefinition();
+
+    /** External volume name for the table. */
     String getTableExternalVolumeName();
+
+    /** Extra attributes for Impala */
+    Map<String, String> getTableImpalaParameters();
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
@@ -716,6 +722,15 @@ public interface ISnowflakeDynamicTable {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

@@ -387,7 +387,7 @@ public interface ITableauDatasource {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -658,6 +658,15 @@ public interface ITableauDatasource {
 
     /** Unique name of the workbook in which this datasource exists. */
     String getWorkbookQualifiedName();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

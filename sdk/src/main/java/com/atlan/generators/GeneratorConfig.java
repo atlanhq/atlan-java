@@ -100,7 +100,6 @@ public class GeneratorConfig {
             Map.entry("responseValueArrDate", "addResponseValueDate"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
-            Map.entry("connectorName", "connectorType"),
             Map.entry("__hasLineage", "hasLineage"),
             Map.entry("viewsCount", "viewCount"),
             Map.entry("materialisedView", "materializedView"),
@@ -130,7 +129,6 @@ public class GeneratorConfig {
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),
-            Map.entry("connectorName", "AtlanConnectorType"),
             Map.entry("category", "AtlanConnectionCategory"),
             Map.entry("policyCategory", "AuthPolicyCategory"),
             Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),

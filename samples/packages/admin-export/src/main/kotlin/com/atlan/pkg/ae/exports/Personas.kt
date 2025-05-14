@@ -6,8 +6,8 @@ import AdminExportCfg
 import com.atlan.model.assets.AuthPolicy
 import com.atlan.model.assets.Persona
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.TabularWriter
+import com.atlan.pkg.util.AssetResolver
 import mu.KLogger
 import java.time.Instant
 
@@ -15,7 +15,7 @@ class Personas(
     private val ctx: PackageContext<AdminExportCfg>,
     private val writer: TabularWriter,
     private val glossaryMap: Map<String, String>,
-    private val connectionMap: Map<String, AdminExporter.ConnectionId>,
+    private val connectionMap: Map<String, AssetResolver.ConnectionIdentity>,
     private val logger: KLogger,
 ) {
     fun export() {
@@ -71,7 +71,7 @@ class Personas(
                 var dataPolicyCount = 0
                 var glossaryPolicyCount = 0
                 var domainPolicyCount = 0
-                val connections = mutableSetOf<AdminExporter.ConnectionId>()
+                val connections = mutableSetOf<AssetResolver.ConnectionIdentity>()
                 val glossaries = mutableSetOf<String>()
                 val domains = mutableSetOf<String>()
                 val denyCustomMetadata = Preferences.getCustomMetadataToDeny(ctx, "persona", persona.denyCustomMetadataGuids, logger)

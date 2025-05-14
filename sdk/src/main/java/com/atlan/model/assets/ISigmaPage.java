@@ -333,7 +333,7 @@ public interface ISigmaPage {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -592,6 +592,15 @@ public interface ISigmaPage {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

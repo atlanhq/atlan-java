@@ -102,6 +102,16 @@ public class TableauDashboard extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Dashboards that are embedded in this dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<ITableauDashboard> tableauEmbeddedDashboards;
+
+    /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
+    @Attribute
+    @Singular
+    SortedSet<ITableauDashboard> tableauParentDashboards;
+
     /** Unique name of the top-level project in which this dashboard exists. */
     @Attribute
     String topLevelProjectQualifiedName;

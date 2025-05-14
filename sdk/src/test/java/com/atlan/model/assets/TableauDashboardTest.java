@@ -197,7 +197,7 @@ public class TableauDashboardTest {
             .certificateUpdatedBy("String0")
             .connectionName("String0")
             .connectionQualifiedName("String0")
-            .connectorType(AtlanConnectorType.SNOWFLAKE)
+            .connectorName("String0")
             .dataContractLatest(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dataContractLatestCertified(DataContract.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtQualifiedName("String0")
@@ -439,6 +439,12 @@ public class TableauDashboardTest {
             .addProjectHierarchy(Map.of("key2", "value2"))
             .projectQualifiedName("String0")
             .siteQualifiedName("String0")
+            .tableauEmbeddedDashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .tableauEmbeddedDashboard(
+                    TableauDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableauParentDashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .tableauParentDashboard(
+                    TableauDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .topLevelProjectQualifiedName("String0")
             .workbook(TableauWorkbook.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .workbookQualifiedName("String0")

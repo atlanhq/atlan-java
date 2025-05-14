@@ -6,6 +6,7 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanConnectionCategory
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
@@ -49,9 +50,9 @@ class ConnectionImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.NAME.atlanFieldName)?.let { it as String } ?: ""
         val qualifiedName = deserializer.getValue(Connection.QUALIFIED_NAME.atlanFieldName)?.let { it as String } ?: ""
-        val connectorType = Connection.getConnectorTypeFromQualifiedName(qualifiedName)
-        if (connectorType == null || connectorType == AtlanConnectorType.UNKNOWN_CUSTOM) {
-            throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $connectorType")
+        val connectorType = Connection.getConnectorFromQualifiedName(qualifiedName)
+        if (connectorType == null || connectorType.isEmpty()) {
+            throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $qualifiedName")
         }
         val identity = ctx.connectionCache.getIdentityForAsset(name, connectorType)
         val existing = ctx.connectionCache.getByIdentity(identity)
@@ -61,7 +62,13 @@ class ConnectionImporter(
             val users = deserializer.getValue(Connection.ADMIN_USERS.atlanFieldName)?.let { it as List<String> }
             val groups = deserializer.getValue(Connection.ADMIN_GROUPS.atlanFieldName)?.let { it as List<String> }
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
-            Connection.creator(ctx.client, name, connectorType, roles, groups, users)
+            val ct = AtlanConnectorType.fromValue(connectorType)
+            if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                Connection.creator(ctx.client, name, ct, roles, groups, users)
+            } else {
+                val category = deserializer.getValue(Connection.CATEGORY.atlanFieldName)?.let { it as AtlanConnectionCategory }
+                Connection.creator(ctx.client, name, connectorType, category, roles, groups, users)
+            }
         }
     }
 

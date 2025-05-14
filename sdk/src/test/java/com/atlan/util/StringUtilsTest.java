@@ -5,6 +5,7 @@ package com.atlan.util;
 import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 
+import com.atlan.model.assets.Connection;
 import java.util.Locale;
 import org.testng.annotations.Test;
 
@@ -111,9 +112,10 @@ public class StringUtilsTest {
     }
 
     @Test
-    void invalidConnectionQN_invalidType() {
+    void validConnectionQN_customType() {
         final String test = "default/xyz/1234567890";
-        assertFalse(StringUtils.isValidConnectionQN(test));
+        assertTrue(StringUtils.isValidConnectionQN(test));
+        assertEquals(Connection.getConnectorFromQualifiedName(test), "xyz");
     }
 
     @Test

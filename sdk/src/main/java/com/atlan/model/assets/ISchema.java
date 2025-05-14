@@ -53,6 +53,9 @@ public interface ISchema {
     /** Stored procedures that exist within this schema. */
     RelationField PROCEDURES = new RelationField("procedures");
 
+    /** External location of this schema, for example: an S3 object location. */
+    KeywordField SCHEMA_EXTERNAL_LOCATION = new KeywordField("schemaExternalLocation", "schemaExternalLocation");
+
     /** Snowflake dynamic tables that exist within this schema. */
     RelationField SNOWFLAKE_DYNAMIC_TABLES = new RelationField("snowflakeDynamicTables");
 
@@ -381,7 +384,7 @@ public interface ISchema {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -557,6 +560,9 @@ public interface ISchema {
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
+    /** External location of this schema, for example: an S3 object location. */
+    String getSchemaExternalLocation();
+
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     String getSchemaName();
 
@@ -712,6 +718,15 @@ public interface ISchema {
 
     /** Views that exist within this schema. */
     SortedSet<IView> getViews();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

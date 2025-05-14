@@ -417,7 +417,7 @@ public interface IGlossaryTerm {
     String getConnectionQualifiedName();
 
     /** TBC */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** TBC */
     IDataContract getDataContractLatest();
@@ -673,6 +673,15 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

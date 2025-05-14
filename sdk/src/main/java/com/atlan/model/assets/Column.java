@@ -71,6 +71,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double columnAverageLength;
 
+    /** Compression type of this column. */
+    @Attribute
+    String columnCompression;
+
     /** TBC */
     @Attribute
     @Singular
@@ -95,6 +99,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Number of rows that contain duplicate values. */
     @Attribute
     Long columnDuplicateValuesCountLong;
+
+    /** Encoding type of this column. */
+    @Attribute
+    String columnEncoding;
 
     /** List of top-level upstream nested columns. */
     @Attribute

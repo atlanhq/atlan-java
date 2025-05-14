@@ -45,6 +45,12 @@ public interface ITableauDashboard {
     /** Unique name of the site in which this dashboard exists. */
     TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
+    /** Dashboards that are embedded in this dashboard. */
+    RelationField TABLEAU_EMBEDDED_DASHBOARDS = new RelationField("tableauEmbeddedDashboards");
+
+    /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
+    RelationField TABLEAU_PARENT_DASHBOARDS = new RelationField("tableauParentDashboards");
+
     /** Unique name of the top-level project in which this dashboard exists. */
     TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
@@ -350,7 +356,7 @@ public interface ITableauDashboard {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
     IDataContract getDataContractLatest();
@@ -571,6 +577,12 @@ public interface ITableauDashboard {
     /** Subtype of this asset. */
     String getSubType();
 
+    /** Dashboards that are embedded in this dashboard. */
+    SortedSet<ITableauDashboard> getTableauEmbeddedDashboards();
+
+    /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
+    SortedSet<ITableauDashboard> getTableauParentDashboards();
+
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
@@ -603,6 +615,15 @@ public interface ITableauDashboard {
 
     /** Worksheets that use this dashboard. */
     SortedSet<ITableauWorksheet> getWorksheets();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

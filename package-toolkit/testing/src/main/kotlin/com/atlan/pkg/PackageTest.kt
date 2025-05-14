@@ -378,6 +378,19 @@ abstract class PackageTest(
         name: String,
         type: AtlanConnectorType,
     ) {
+        removeConnection(name, type.value)
+    }
+
+    /**
+     * Remove the provided connection, if it exists.
+     *
+     * @param name of the connection
+     * @param type of the connector
+     */
+    fun removeConnection(
+        name: String,
+        type: String,
+    ) {
         val results = Connection.findByName(client, name, type)
         if (!results.isNullOrEmpty()) {
             val deletionType = AtlanDeleteType.PURGE

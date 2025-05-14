@@ -48,6 +48,9 @@ public interface IColumn {
     /** Average length of values in a string column. */
     NumericField COLUMN_AVERAGE_LENGTH = new NumericField("columnAverageLength", "columnAverageLength");
 
+    /** Compression type of this column. */
+    KeywordField COLUMN_COMPRESSION = new KeywordField("columnCompression", "columnCompression");
+
     /** TBC */
     RelationField COLUMN_DBT_MODEL_COLUMNS = new RelationField("columnDbtModelColumns");
 
@@ -69,6 +72,9 @@ public interface IColumn {
     /** Number of rows that contain duplicate values. */
     NumericField COLUMN_DUPLICATE_VALUES_COUNT_LONG =
             new NumericField("columnDuplicateValuesCountLong", "columnDuplicateValuesCountLong");
+
+    /** Encoding type of this column. */
+    KeywordField COLUMN_ENCODING = new KeywordField("columnEncoding", "columnEncoding");
 
     /** List of top-level upstream nested columns. */
     KeywordField COLUMN_HIERARCHY = new KeywordField("columnHierarchy", "columnHierarchy");
@@ -566,6 +572,9 @@ public interface IColumn {
     /** Average length of values in a string column. */
     Double getColumnAverageLength();
 
+    /** Compression type of this column. */
+    String getColumnCompression();
+
     /** TBC */
     SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
 
@@ -583,6 +592,9 @@ public interface IColumn {
 
     /** Number of rows that contain duplicate values. */
     Long getColumnDuplicateValuesCountLong();
+
+    /** Encoding type of this column. */
+    String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
     List<Map<String, String>> getColumnHierarchy();
@@ -651,7 +663,7 @@ public interface IColumn {
     String getConnectionQualifiedName();
 
     /** Type of the connector through which this asset is accessible. */
-    AtlanConnectorType getConnectorType();
+    String getConnectorName();
 
     /** Cosmos collection in which this column exists. */
     ICosmosMongoDBCollection getCosmosMongoDBCollection();
@@ -1066,6 +1078,15 @@ public interface IColumn {
 
     /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();
