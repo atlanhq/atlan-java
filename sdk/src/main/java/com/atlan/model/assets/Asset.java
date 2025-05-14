@@ -496,6 +496,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String connectorName;
 
+    /** Type of the connector through which this asset is accessible. */
+    @Override
+    public String getConnectorName() {
+        if (connectorName != null && !connectorName.isEmpty()) return connectorName;
+        return connectorType == null ? customConnectorType : connectorType.getValue();
+    }
+
     /** Latest version of the data contract (in any status) for this asset. */
     @Attribute
     IDataContract dataContractLatest;
@@ -1920,9 +1927,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
         public B connectorName(String connectorName) {
             AtlanConnectorType ct = AtlanConnectorType.fromValue(connectorName);
             if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                connectorType(ct);
+                this.connectorType = ct;
+                this.connectorName = ct.getValue();
             } else {
-                customConnectorType(connectorName);
+                this.connectorName = connectorName;
+                this.customConnectorType = connectorName;
             }
             return self();
         }

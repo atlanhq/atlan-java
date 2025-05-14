@@ -16,6 +16,13 @@
     @Singular
     transient Set<String> nullFields;
 
+    /** Type of the connector through which this asset is accessible. */
+    @Override
+    public String getConnectorName() {
+        if (connectorName != null && !connectorName.isEmpty()) return connectorName;
+        return connectorType == null ? customConnectorType : connectorType.getValue();
+    }
+
     /** Retrieve the list of fields to be serialized with null values. */
     @JsonIgnore
     public Set<String> getNullFields() {
@@ -1093,9 +1100,11 @@
         public B connectorName(String connectorName) {
             AtlanConnectorType ct = AtlanConnectorType.fromValue(connectorName);
             if (ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                 connectorType(ct);
+                this.connectorType = ct;
+                this.connectorName = ct.getValue();
             } else {
-                 customConnectorType(connectorName);
+                this.connectorName = connectorName;
+                this.customConnectorType = connectorName;
             }
             return self();
         }
