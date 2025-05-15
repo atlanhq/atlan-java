@@ -2,14 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.cab
 
+import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
-import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.FileBasedDelta
 import org.testng.Assert.assertTrue
 import java.io.File
@@ -64,11 +65,14 @@ class DeltaTest : PackageTest("cd") {
 
     override fun setup() {
         prepFile()
-        val connectionsMap =
-            mapOf(
-                AssetResolver.ConnectionIdentity(conn1, conn1Type.value) to conn1QN,
+        val ctx =
+            PackageContext(
+                config = CubeAssetsBuilderCfg(),
+                client = client,
+                reusedClient = true,
             )
-        delta = FileBasedDelta(connectionsMap, AssetImporter.Companion, Utils.getLogger(this.javaClass.name), compareChecksums = true)
+        ctx.connectionCache.inject(conn1, conn1Type.value, conn1QN)
+        delta = FileBasedDelta(ctx, AssetImporter.Companion, Utils.getLogger(this.javaClass.name), compareChecksums = true)
         delta!!.calculateDelta(
             Paths.get(testDirectory, currentFile).toString(),
             Paths.get(testDirectory, previousFile).toString(),

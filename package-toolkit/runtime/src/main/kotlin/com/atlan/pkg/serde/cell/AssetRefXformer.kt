@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.cell
 
+import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
@@ -16,10 +17,12 @@ import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.relations.Reference.SaveSemantic
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.util.AssetResolver
 import com.atlan.serde.Serde
 import com.atlan.util.ParallelBatch
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicLong
+import java.util.regex.Pattern
 
 /**
  * Static object to transform asset references.
@@ -28,6 +31,8 @@ object AssetRefXformer {
     const val TYPE_QN_DELIMITER = "@"
     const val APPEND_PREFIX = "++"
     const val REMOVE_PREFIX = "--"
+    const val DEFERRED_QN_PATTERN = "\\{\\{([a-zA-Z0-9-]+)/(.+?)\\}\\}(/.*)?"
+    val deferredQN = Pattern.compile(DEFERRED_QN_PATTERN)!!
 
     /**
      * Translate the provided asset reference into a reference and save semantic pair.
@@ -114,7 +119,7 @@ object AssetRefXformer {
                 val (ref, semantic) = getSemantic(assetRef)
                 val typeName = ref.substringBefore(TYPE_QN_DELIMITER)
                 val qualifiedName = ref.substringAfter(TYPE_QN_DELIMITER)
-                return getRefByQN(typeName, qualifiedName, semantic)
+                return getRefByQN(ctx, typeName, qualifiedName, semantic)
             }
         }
     }
@@ -122,19 +127,22 @@ object AssetRefXformer {
     /**
      * Create a reference by qualifiedName for the given asset.
      *
+     * @param ctx context of the running custom package
      * @param typeName of the asset
      * @param qualifiedName of the asset
      * @param semantic to use when persisting the relationship (append, remove, or replace)
      * @return the asset reference represented by the parameters
      */
     fun getRefByQN(
+        ctx: PackageContext<*>,
         typeName: String,
         qualifiedName: String,
         semantic: SaveSemantic = SaveSemantic.REPLACE,
     ): Asset {
         val assetClass = Serde.getAssetClassForType(typeName)
         val method = assetClass.getMethod("refByQualifiedName", String::class.java, SaveSemantic::class.java)
-        return method.invoke(null, qualifiedName, semantic) as Asset
+        val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
+        return method.invoke(null, resolvedQN, semantic) as Asset
     }
 
     /**
@@ -296,4 +304,49 @@ object AssetRefXformer {
             Asset.README.atlanFieldName -> true
             else -> false
         }
+
+    /**
+     * Parse the connector type from the deferred connection definition.
+     *
+     * @param qualifiedName from which to parse
+     * @return the details of the deferred connector type
+     */
+    fun getDeferredIdentity(qualifiedName: String): AssetResolver.ConnectionIdentity? {
+        val matcher = deferredQN.matcher(qualifiedName)
+        return if (matcher.matches()) {
+            AssetResolver.ConnectionIdentity(matcher.group(2), matcher.group(1))
+        } else {
+            null
+        }
+    }
+
+    /**
+     * Attempt to resolve a qualifiedName that may have deferred connection details.
+     *
+     * @param ctx context of the running package
+     * @param qualifiedName to resolve
+     * @return the qualifiedName, resolved
+     */
+    fun resolveDeferredQN(
+        ctx: PackageContext<*>,
+        qualifiedName: String,
+    ): String {
+        val matcher = deferredQN.matcher(qualifiedName)
+        return if (matcher.matches()) {
+            val connectorType = matcher.group(1)
+            val connectionName = matcher.group(2)
+            val remainder = matcher.group(3) ?: ""
+            val connectionId = ctx.connectionCache.getIdentityForAsset(connectionName, connectorType)
+            try {
+                val resolvedConnectionQN =
+                    ctx.connectionCache.getByIdentity(connectionId)?.qualifiedName
+                        ?: throw IllegalStateException("Unable to resolve deferred connection -- no connection found by name and type: $qualifiedName")
+                "$resolvedConnectionQN$remainder"
+            } catch (e: AtlanException) {
+                throw IllegalStateException("Unable to resolve deferred connection -- no connection found by name and type: $qualifiedName", e)
+            }
+        } else {
+            qualifiedName
+        }
+    }
 }

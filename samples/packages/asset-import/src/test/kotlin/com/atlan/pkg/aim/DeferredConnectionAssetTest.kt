@@ -28,7 +28,7 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
-    private val conn1Type = "custom-db"
+    private val conn1Type = "snowflake" // TODO: change to 'custom-db' once working
 
     private val testFile = "deferred_assets.csv"
 

@@ -7,6 +7,7 @@ import com.atlan.cache.OffHeapAssetCache
 import com.atlan.model.assets.Asset
 import com.atlan.model.core.AtlanCloseable
 import com.atlan.model.enums.AtlanDeleteType
+import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.ChecksumCache
 import com.atlan.pkg.cache.PersistentConnectionCache
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -35,7 +36,7 @@ import kotlin.streams.asSequence
  * This is done entirely independently of any calls to Atlan itself, thereby reducing time to
  * calculate which assets should be removed or updated.
  *
- * @param connectionsMap a mapping from tenant-agnostic connection identity to tenant-specific qualifiedName for the connection
+ * @param ctx context of the running package
  * @param resolver for resolving asset identities entirely from CSV file input (no calls to Atlan)
  * @param logger for tracking status and documenting any errors
  * @param removeTypes names of asset types that should be considered for deletion (default: all)
@@ -45,7 +46,7 @@ import kotlin.streams.asSequence
  * @param fallback directory to use as a fallback backing store (locally) in the absence of an object store
  */
 class FileBasedDelta(
-    private val connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
+    private val ctx: PackageContext<*>,
     private val resolver: AssetResolver,
     private val logger: KLogger,
     private val removeTypes: List<String> = listOf(),
@@ -139,7 +140,7 @@ class FileBasedDelta(
         values: List<String>,
         header: List<String>,
     ): AssetIdentity? {
-        val identity = resolver.resolveAsset(values, header, connectionsMap)
+        val identity = resolver.resolveAsset(ctx, values, header)
         if (identity == null) {
             logger.warn { "Unknown connection used in asset -- skipping: $values" }
         }

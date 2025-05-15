@@ -205,10 +205,10 @@ import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.aim.ConnectionImporter.Companion.getDeferredIdentity
-import com.atlan.pkg.aim.ConnectionImporter.Companion.resolveDeferredQN
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
+import com.atlan.pkg.serde.cell.AssetRefXformer.resolveDeferredQN
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -327,6 +327,7 @@ class AssetImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Asset.GUID.atlanFieldName)
+        colsToSkip.add(Asset.QUALIFIED_NAME.atlanFieldName) // will be resolved later
         if (updateOnly) {
             val cyclicalToSkip = mapToSecondPass.flatMap { it.value }
             // If we're only updating, process as before (in-parallel, any order)
@@ -404,7 +405,7 @@ class AssetImporter(
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val typeName = deserializer.typeName
         val qualifiedName = deserializer.qualifiedName
-        val resolvedQN = resolveDeferredQN(connectionsMap, qualifiedName)
+        val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
         return FieldSerde.getBuilderForType(typeName).qualifiedName(resolvedQN)
     }
 
@@ -870,9 +871,9 @@ class AssetImporter(
 
         /** {@inheritDoc} */
         override fun resolveAsset(
+            ctx: PackageContext<*>,
             values: List<String>,
             header: List<String>,
-            connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
         ): AssetIdentity {
             val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
             if (typeIdx < 0) {
@@ -888,7 +889,7 @@ class AssetImporter(
             }
             val typeName = CSVXformer.trimWhitespace(values[typeIdx])
             val qualifiedName = CSVXformer.trimWhitespace(values[qnIdx])
-            val resolvedQN = resolveDeferredQN(connectionsMap, qualifiedName)
+            val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
             return AssetIdentity(typeName, resolvedQN)
         }
 

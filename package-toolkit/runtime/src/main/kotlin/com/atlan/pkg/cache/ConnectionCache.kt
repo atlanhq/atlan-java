@@ -11,6 +11,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.core.AtlanAsyncMutator.MAX_ASYNC_RETRIES
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.fields.AtlanField
 import com.atlan.net.HttpClient
 import com.atlan.net.RequestOptions
@@ -95,7 +96,7 @@ class ConnectionCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Connection): String = if (asset.connectorType == null) getIdentityForAsset(asset.name, asset.customConnectorType ?: "") else getIdentityForAsset(asset.name, asset.connectorType)
+    override fun getIdentityForAsset(asset: Connection): String = getIdentityForAsset(asset.name, asset.connectorName)
 
     /**
      * Build a connection identity from its component parts.
@@ -130,15 +131,34 @@ class ConnectionCache(
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { (_, connection) ->
-            val connectorType =
-                if (connection.connectorType == null) {
-                    connection.customConnectorType ?: ""
-                } else {
-                    connection.connectorType.value
-                }
-            map[AssetResolver.ConnectionIdentity(connection.name, connectorType)] = connection.qualifiedName
+            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorName)] = connection.qualifiedName
         }
         return map
+    }
+
+    /**
+     * Inject a connection into the cache -- should only be used for testing purposes.
+     *
+     * @param name of the connection
+     * @param type of the connection's connector
+     * @param qualifiedName resolved qualifiedName of the connection
+     */
+    fun inject(
+        name: String,
+        type: String,
+        qualifiedName: String,
+    ) {
+        val connectionId = getIdentityForAsset(name, type)
+        val injected =
+            Connection
+                ._internal()
+                .guid("-1")
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .connectorName(type)
+                .status(AtlanStatus.ACTIVE)
+                .build()
+        cache("-1", connectionId, injected)
     }
 
     /** {@inheritDoc} */

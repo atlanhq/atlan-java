@@ -10,11 +10,10 @@ import com.atlan.model.enums.AtlanConnectionCategory
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.util.AssetResolver
 import mu.KLogger
-import java.util.regex.Pattern
 import java.util.stream.Stream
 
 /**
@@ -46,48 +45,6 @@ class ConnectionImporter(
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
-        const val DEFERRED_QN_PATTERN = "\\{\\{([a-zA-Z0-9-]+)/(.+?)\\}\\}(/.*)?"
-        val deferredQN = Pattern.compile(DEFERRED_QN_PATTERN)!!
-
-        /**
-         * Parse the connector type from the deferred connection definition.
-         * @param qualifiedName from which to parse
-         * @return the details of the deferred connector type
-         */
-        fun getDeferredIdentity(qualifiedName: String): AssetResolver.ConnectionIdentity? {
-            val matcher = deferredQN.matcher(qualifiedName)
-            return if (matcher.matches()) {
-                AssetResolver.ConnectionIdentity(matcher.group(2), matcher.group(1))
-            } else {
-                null
-            }
-        }
-
-        /**
-         * Attempt to resolve a qualifiedName that may have deferred connection details.
-         * @param connectionsMap mapping of existing connections
-         * @param qualifiedName to resolve
-         * @return the qualifiedName, resolved
-         */
-        fun resolveDeferredQN(
-            connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
-            qualifiedName: String,
-        ): String {
-            val matcher = deferredQN.matcher(qualifiedName)
-            return if (matcher.matches()) {
-                val connectorType = matcher.group(1)
-                val connectionName = matcher.group(2)
-                val remainder = matcher.group(3) ?: ""
-                val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
-                val resolvedConnectionQN =
-                    connectionsMap.getOrElse(connectionId) {
-                        throw IllegalStateException("Unable to resolve deferred connection -- no connection found by name and type: $qualifiedName")
-                    }
-                "$resolvedConnectionQN$remainder"
-            } else {
-                qualifiedName
-            }
-        }
     }
 
     /** {@inheritDoc} */
