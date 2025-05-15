@@ -8,10 +8,6 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.util.List;
 import java.util.Map;
-
-import com.atlan.model.admin.KeycloakEventRequest;
-import com.atlan.model.core.AtlanObject;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -51,5 +47,5 @@ public class RequestOptions {
                 .extraHeaders(client.getExtraHeaders());
     }
 
-    public abstract static class RequestOptionsBuilder {}
+    public static class RequestOptionsBuilder {}
 }

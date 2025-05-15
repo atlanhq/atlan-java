@@ -387,6 +387,9 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaPageBuilder<C extends SigmaPage, B extends SigmaPageBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaPage.
      *

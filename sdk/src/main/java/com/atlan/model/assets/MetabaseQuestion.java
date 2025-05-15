@@ -381,6 +381,10 @@ public class MetabaseQuestion extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MetabaseQuestionBuilder<
+                    C extends MetabaseQuestion, B extends MetabaseQuestionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MetabaseQuestion.
      *

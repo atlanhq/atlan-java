@@ -54,4 +54,7 @@ public class Histogram extends AtlanStruct {
                 .frequencies(frequencies)
                 .build();
     }
+
+    public abstract static class HistogramBuilder<C extends Histogram, B extends HistogramBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

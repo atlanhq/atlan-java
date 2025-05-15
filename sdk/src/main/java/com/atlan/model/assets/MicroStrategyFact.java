@@ -412,6 +412,10 @@ public class MicroStrategyFact extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MicroStrategyFactBuilder<
+                    C extends MicroStrategyFact, B extends MicroStrategyFactBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MicroStrategyFact.
      *

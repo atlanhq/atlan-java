@@ -510,6 +510,10 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
         return results;
     }
 
+    public abstract static class AtlanCollectionBuilder<
+                    C extends AtlanCollection, B extends AtlanCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AtlanCollection.
      *

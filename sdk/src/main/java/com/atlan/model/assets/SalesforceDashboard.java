@@ -472,6 +472,10 @@ public class SalesforceDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SalesforceDashboardBuilder<
+                    C extends SalesforceDashboard, B extends SalesforceDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SalesforceDashboard.
      *

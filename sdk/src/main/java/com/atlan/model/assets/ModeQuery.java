@@ -403,6 +403,9 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModeQueryBuilder<C extends ModeQuery, B extends ModeQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModeQuery.
      *

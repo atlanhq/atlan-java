@@ -58,4 +58,8 @@ public class KafkaTopicConsumption extends AtlanStruct {
                 .topicCurrentOffset(topicCurrentOffset)
                 .build();
     }
+
+    public abstract static class KafkaTopicConsumptionBuilder<
+                    C extends KafkaTopicConsumption, B extends KafkaTopicConsumptionBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

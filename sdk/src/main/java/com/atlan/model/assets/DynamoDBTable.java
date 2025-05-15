@@ -625,6 +625,9 @@ public class DynamoDBTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DynamoDBTableBuilder<C extends DynamoDBTable, B extends DynamoDBTableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DynamoDBTable.
      *

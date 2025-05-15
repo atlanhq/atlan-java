@@ -628,6 +628,10 @@ public class DynamoDBLocalSecondaryIndex extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DynamoDBLocalSecondaryIndexBuilder<
+                    C extends DynamoDBLocalSecondaryIndex, B extends DynamoDBLocalSecondaryIndexBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DynamoDBLocalSecondaryIndex.
      *

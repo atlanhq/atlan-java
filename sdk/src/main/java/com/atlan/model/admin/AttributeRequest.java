@@ -8,9 +8,6 @@ import com.atlan.model.assets.Asset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.atlan.model.core.AtlanObject;
-import com.atlan.model.search.IndexSearchRequest;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -84,6 +81,7 @@ public class AttributeRequest extends AtlanRequest {
                 .destinationValue(value);
     }
 
-    public abstract static class AttributeRequestBuilder<C extends AttributeRequest, B extends AttributeRequestBuilder<C, B>>
-        extends AtlanRequest.AtlanRequestBuilder<C, B> {}
+    public abstract static class AttributeRequestBuilder<
+                    C extends AttributeRequest, B extends AttributeRequestBuilder<C, B>>
+            extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

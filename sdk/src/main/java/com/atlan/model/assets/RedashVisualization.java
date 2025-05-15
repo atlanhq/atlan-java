@@ -372,6 +372,10 @@ public class RedashVisualization extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class RedashVisualizationBuilder<
+                    C extends RedashVisualization, B extends RedashVisualizationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a RedashVisualization.
      *

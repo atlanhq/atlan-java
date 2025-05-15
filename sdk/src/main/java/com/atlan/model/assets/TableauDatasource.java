@@ -421,6 +421,10 @@ public class TableauDatasource extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauDatasourceBuilder<
+                    C extends TableauDatasource, B extends TableauDatasourceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauDatasource.
      *

@@ -397,6 +397,10 @@ public class SapErpAbapProgram extends Asset implements ISapErpAbapProgram, ISAP
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpAbapProgramBuilder<
+                    C extends SapErpAbapProgram, B extends SapErpAbapProgramBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpAbapProgram.
      *

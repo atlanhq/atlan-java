@@ -396,6 +396,9 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikSpaceBuilder<C extends QlikSpace, B extends QlikSpaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikSpace.
      *

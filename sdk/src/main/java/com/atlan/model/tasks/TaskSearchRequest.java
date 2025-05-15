@@ -54,4 +54,8 @@ public class TaskSearchRequest extends AtlanObject {
     public TaskSearchResponse search(AtlanClient client) throws AtlanException {
         return client.tasks.search(this);
     }
+
+    public abstract static class TaskSearchRequestBuilder<
+                    C extends TaskSearchRequest, B extends TaskSearchRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

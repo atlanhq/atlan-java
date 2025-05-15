@@ -44,5 +44,5 @@ public class StructDef extends TypeDef {
     }
 
     public abstract static class StructDefBuilder<C extends StructDef, B extends StructDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

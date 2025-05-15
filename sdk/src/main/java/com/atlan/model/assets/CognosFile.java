@@ -390,6 +390,9 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CognosFileBuilder<C extends CognosFile, B extends CognosFileBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CognosFile.
      *

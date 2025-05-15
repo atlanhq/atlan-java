@@ -403,6 +403,9 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class APIFieldBuilder<C extends APIField, B extends APIFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a APIField.
      *

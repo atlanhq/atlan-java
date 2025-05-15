@@ -393,6 +393,9 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AdfPipelineBuilder<C extends AdfPipeline, B extends AdfPipelineBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AdfPipeline.
      *

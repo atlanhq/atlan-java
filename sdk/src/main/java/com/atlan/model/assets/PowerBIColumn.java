@@ -401,6 +401,9 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIColumnBuilder<C extends PowerBIColumn, B extends PowerBIColumnBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIColumn.
      *

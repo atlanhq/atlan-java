@@ -5,7 +5,6 @@ package com.atlan.model.search;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.KeycloakEventRequest;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.UTMTags;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -157,6 +156,7 @@ public class IndexSearchRequest extends AtlanObject {
         String searchInput;
     }
 
-    public abstract static class IndexSearchRequestBuilder<C extends IndexSearchRequest, B extends IndexSearchRequestBuilder<C, B>>
-        extends AtlanObject.AtlanObjectBuilder<C, B> {}
+    public abstract static class IndexSearchRequestBuilder<
+                    C extends IndexSearchRequest, B extends IndexSearchRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

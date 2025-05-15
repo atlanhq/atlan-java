@@ -389,6 +389,10 @@ public class QuickSightFolder extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QuickSightFolderBuilder<
+                    C extends QuickSightFolder, B extends QuickSightFolderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QuickSightFolder.
      *

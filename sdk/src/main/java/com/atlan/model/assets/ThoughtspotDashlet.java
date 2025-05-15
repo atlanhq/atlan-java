@@ -380,6 +380,10 @@ public class ThoughtspotDashlet extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ThoughtspotDashletBuilder<
+                    C extends ThoughtspotDashlet, B extends ThoughtspotDashletBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ThoughtspotDashlet.
      *

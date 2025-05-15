@@ -410,6 +410,9 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikAppBuilder<C extends QlikApp, B extends QlikAppBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikApp.
      *

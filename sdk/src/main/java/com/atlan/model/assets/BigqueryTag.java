@@ -478,6 +478,9 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BigqueryTagBuilder<C extends BigqueryTag, B extends BigqueryTagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BigqueryTag.
      *

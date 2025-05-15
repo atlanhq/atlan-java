@@ -386,6 +386,10 @@ public class MetabaseCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MetabaseCollectionBuilder<
+                    C extends MetabaseCollection, B extends MetabaseCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MetabaseCollection.
      *

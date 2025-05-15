@@ -6,7 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.serde.SetToStringSerializer;
 import com.atlan.serde.StringToSetDeserializer;
@@ -579,6 +578,7 @@ public class AttributeDefOptions extends AtlanObject {
         return this;
     }
 
-    public abstract static class AttributeDefOptionsBuilder<C extends AttributeDefOptions, B extends AttributeDefOptionsBuilder<C, B>>
-        extends AtlanObject.AtlanObjectBuilder<C, B> {}
+    public abstract static class AttributeDefOptionsBuilder<
+                    C extends AttributeDefOptions, B extends AttributeDefOptionsBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

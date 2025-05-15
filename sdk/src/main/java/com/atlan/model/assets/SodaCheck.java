@@ -385,6 +385,9 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SodaCheckBuilder<C extends SodaCheck, B extends SodaCheckBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SodaCheck.
      *

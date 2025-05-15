@@ -532,6 +532,10 @@ public class ModelAttributeAssociation extends Asset
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelAttributeAssociationBuilder<
+                    C extends ModelAttributeAssociation, B extends ModelAttributeAssociationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelAttributeAssociation.
      *

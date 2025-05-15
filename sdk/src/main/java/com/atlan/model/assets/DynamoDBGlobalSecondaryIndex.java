@@ -628,6 +628,10 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DynamoDBGlobalSecondaryIndexBuilder<
+                    C extends DynamoDBGlobalSecondaryIndex, B extends DynamoDBGlobalSecondaryIndexBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DynamoDBGlobalSecondaryIndex.
      *

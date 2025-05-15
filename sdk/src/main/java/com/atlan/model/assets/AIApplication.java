@@ -400,6 +400,9 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AIApplicationBuilder<C extends AIApplication, B extends AIApplicationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AIApplication.
      *

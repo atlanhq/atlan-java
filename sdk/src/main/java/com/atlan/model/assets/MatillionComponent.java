@@ -398,6 +398,10 @@ public class MatillionComponent extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MatillionComponentBuilder<
+                    C extends MatillionComponent, B extends MatillionComponentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MatillionComponent.
      *

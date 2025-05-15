@@ -375,6 +375,10 @@ public class QuickSightAnalysisVisual extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QuickSightAnalysisVisualBuilder<
+                    C extends QuickSightAnalysisVisual, B extends QuickSightAnalysisVisualBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QuickSightAnalysisVisual.
      *

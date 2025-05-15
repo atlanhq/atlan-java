@@ -47,4 +47,7 @@ public class StarredDetails extends AtlanStruct {
                 .assetStarredAt(assetStarredAt)
                 .build();
     }
+
+    public abstract static class StarredDetailsBuilder<C extends StarredDetails, B extends StarredDetailsBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

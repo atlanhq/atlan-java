@@ -185,5 +185,5 @@ public class EnumDef extends TypeDef {
     }
 
     public abstract static class EnumDefBuilder<C extends EnumDef, B extends EnumDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

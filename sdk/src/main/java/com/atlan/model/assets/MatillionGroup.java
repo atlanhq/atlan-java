@@ -364,6 +364,9 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MatillionGroupBuilder<C extends MatillionGroup, B extends MatillionGroupBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MatillionGroup.
      *

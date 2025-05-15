@@ -396,6 +396,10 @@ public class AnaplanSystemDimension extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanSystemDimensionBuilder<
+                    C extends AnaplanSystemDimension, B extends AnaplanSystemDimensionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanSystemDimension.
      *

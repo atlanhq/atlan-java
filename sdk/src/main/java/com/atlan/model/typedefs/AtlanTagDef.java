@@ -4,8 +4,6 @@ package com.atlan.model.typedefs;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Meaning;
-import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
@@ -225,5 +223,5 @@ public class AtlanTagDef extends TypeDef {
     }
 
     public abstract static class AtlanTagDefBuilder<C extends AtlanTagDef, B extends AtlanTagDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

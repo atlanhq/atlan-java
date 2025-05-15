@@ -84,5 +84,5 @@ public class EntityDef extends TypeDef {
     }
 
     public abstract static class EntityDefBuilder<C extends EntityDef, B extends EntityDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

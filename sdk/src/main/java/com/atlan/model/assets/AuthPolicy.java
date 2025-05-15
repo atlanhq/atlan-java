@@ -395,6 +395,9 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
         throw new InvalidRequestException(ErrorCode.FULL_UPDATE_ONLY, "AuthPolicy");
     }
 
+    public abstract static class AuthPolicyBuilder<C extends AuthPolicy, B extends AuthPolicyBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a AuthPolicy, without replacing existing Atlan tags linked to the AuthPolicy.
      * Note: this operation must make two API calls — one to retrieve the AuthPolicy's existing Atlan tags,

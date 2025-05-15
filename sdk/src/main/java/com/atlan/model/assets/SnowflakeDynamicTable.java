@@ -586,6 +586,10 @@ public class SnowflakeDynamicTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SnowflakeDynamicTableBuilder<
+                    C extends SnowflakeDynamicTable, B extends SnowflakeDynamicTableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SnowflakeDynamicTable.
      *

@@ -429,6 +429,9 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
         return assetName + " Readme";
     }
 
+    public abstract static class ReadmeBuilder<C extends Readme, B extends ReadmeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Readme.
      *

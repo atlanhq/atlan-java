@@ -434,6 +434,10 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
         return connectionQualifiedName + "/" + name;
     }
 
+    public abstract static class PresetWorkspaceBuilder<
+                    C extends PresetWorkspace, B extends PresetWorkspaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PresetWorkspace.
      *

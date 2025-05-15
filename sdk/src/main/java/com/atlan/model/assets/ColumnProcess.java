@@ -418,6 +418,9 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ColumnProcessBuilder<C extends ColumnProcess, B extends ColumnProcessBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ColumnProcess.
      *

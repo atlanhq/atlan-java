@@ -91,6 +91,7 @@ public class TermLinkRequest extends AtlanRequest {
                 .sourceQualifiedName(termQualifiedName);
     }
 
-    public abstract static class TermLinkRequestBuilder<C extends TermLinkRequest, B extends TermLinkRequestBuilder<C, B>>
-        extends AtlanRequest.AtlanRequestBuilder<C, B> {}
+    public abstract static class TermLinkRequestBuilder<
+                    C extends TermLinkRequest, B extends TermLinkRequestBuilder<C, B>>
+            extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

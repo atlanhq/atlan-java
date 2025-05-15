@@ -477,6 +477,9 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanListBuilder<C extends AnaplanList, B extends AnaplanListBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanList.
      *

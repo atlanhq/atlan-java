@@ -88,6 +88,7 @@ public class CustomMetadataDef extends TypeDef {
         client.typeDefs.purge(internalName);
     }
 
-    public abstract static class CustomMetadataDefBuilder<C extends CustomMetadataDef, B extends CustomMetadataDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+    public abstract static class CustomMetadataDefBuilder<
+                    C extends CustomMetadataDef, B extends CustomMetadataDefBuilder<C, B>>
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

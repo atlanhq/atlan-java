@@ -103,4 +103,7 @@ public class DbtJobRun extends AtlanStruct {
                 .dbtCompiledCode(dbtCompiledCode)
                 .build();
     }
+
+    public abstract static class DbtJobRunBuilder<C extends DbtJobRun, B extends DbtJobRunBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

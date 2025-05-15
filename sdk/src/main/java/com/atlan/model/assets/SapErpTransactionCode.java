@@ -388,6 +388,10 @@ public class SapErpTransactionCode extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpTransactionCodeBuilder<
+                    C extends SapErpTransactionCode, B extends SapErpTransactionCodeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpTransactionCode.
      *

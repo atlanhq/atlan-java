@@ -360,6 +360,9 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class WorkflowRunBuilder<C extends WorkflowRun, B extends WorkflowRunBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a WorkflowRun.
      *

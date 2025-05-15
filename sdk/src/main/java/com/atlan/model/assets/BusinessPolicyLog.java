@@ -334,6 +334,10 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BusinessPolicyLogBuilder<
+                    C extends BusinessPolicyLog, B extends BusinessPolicyLogBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BusinessPolicyLog.
      *

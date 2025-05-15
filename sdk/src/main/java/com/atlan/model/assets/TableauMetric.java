@@ -372,6 +372,9 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauMetricBuilder<C extends TableauMetric, B extends TableauMetricBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauMetric.
      *

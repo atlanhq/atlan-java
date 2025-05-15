@@ -31,6 +31,7 @@ public class CustomMetadataRequest extends AtlanRequest {
     /** Custom metadata attributes and values that were requested. */
     CustomMetadataPayload payload;
 
-    public abstract static class CustomMetadataRequestBuilder<C extends CustomMetadataRequest, B extends CustomMetadataRequestBuilder<C, B>>
-        extends AtlanRequest.AtlanRequestBuilder<C, B> {}
+    public abstract static class CustomMetadataRequestBuilder<
+                    C extends CustomMetadataRequest, B extends CustomMetadataRequestBuilder<C, B>>
+            extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

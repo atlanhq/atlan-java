@@ -6,8 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
-
-import com.atlan.model.core.CustomMetadataAttributes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -58,5 +56,5 @@ public class UserRequest extends AtlanObject {
     }
 
     public abstract static class UserRequestBuilder<C extends UserRequest, B extends UserRequestBuilder<C, B>>
-        extends AtlanObject.AtlanObjectBuilder<C, B> {}
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

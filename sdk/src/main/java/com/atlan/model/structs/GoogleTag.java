@@ -47,4 +47,7 @@ public class GoogleTag extends AtlanStruct {
                 .googleTagValue(googleTagValue)
                 .build();
     }
+
+    public abstract static class GoogleTagBuilder<C extends GoogleTag, B extends GoogleTagBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

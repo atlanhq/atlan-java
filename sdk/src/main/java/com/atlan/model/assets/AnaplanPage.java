@@ -463,6 +463,9 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanPageBuilder<C extends AnaplanPage, B extends AnaplanPageBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanPage.
      *

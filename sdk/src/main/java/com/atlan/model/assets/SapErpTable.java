@@ -396,6 +396,9 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpTableBuilder<C extends SapErpTable, B extends SapErpTableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpTable.
      *

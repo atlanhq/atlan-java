@@ -408,6 +408,9 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CubeBuilder<C extends Cube, B extends CubeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Cube.
      *

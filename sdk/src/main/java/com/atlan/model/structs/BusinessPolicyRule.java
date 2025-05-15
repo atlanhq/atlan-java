@@ -86,4 +86,8 @@ public class BusinessPolicyRule extends AtlanStruct {
                 .bprQuery(bprQuery)
                 .build();
     }
+
+    public abstract static class BusinessPolicyRuleBuilder<
+                    C extends BusinessPolicyRule, B extends BusinessPolicyRuleBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

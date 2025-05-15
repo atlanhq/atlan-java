@@ -396,6 +396,9 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikStreamBuilder<C extends QlikStream, B extends QlikStreamBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikStream.
      *

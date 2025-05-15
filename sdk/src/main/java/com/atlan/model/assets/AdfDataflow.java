@@ -393,6 +393,9 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AdfDataflowBuilder<C extends AdfDataflow, B extends AdfDataflowBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AdfDataflow.
      *

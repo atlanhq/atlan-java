@@ -429,6 +429,9 @@ public class AzureEventHub extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AzureEventHubBuilder<C extends AzureEventHub, B extends AzureEventHubBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AzureEventHub.
      *

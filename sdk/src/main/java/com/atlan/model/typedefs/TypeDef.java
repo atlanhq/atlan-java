@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.model.assets.Meaning;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -72,5 +71,5 @@ public abstract class TypeDef extends AtlanObject {
     String displayName;
 
     public abstract static class TypeDefBuilder<C extends TypeDef, B extends TypeDefBuilder<C, B>>
-        extends AtlanObject.AtlanObjectBuilder<C, B> {}
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

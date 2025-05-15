@@ -574,6 +574,9 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ViewBuilder<C extends View, B extends ViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a View.
      *

@@ -466,6 +466,9 @@ public class CassandraTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CassandraTableBuilder<C extends CassandraTable, B extends CassandraTableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CassandraTable.
      *

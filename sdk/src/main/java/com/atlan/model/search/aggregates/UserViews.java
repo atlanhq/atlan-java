@@ -21,4 +21,6 @@ public class UserViews {
 
     /** When the user most recently viewed the asset (epoch-style), in milliseconds. */
     Long mostRecentView;
+
+    public static class UserViewsBuilder {}
 }

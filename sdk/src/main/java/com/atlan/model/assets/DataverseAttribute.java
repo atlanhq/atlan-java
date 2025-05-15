@@ -451,6 +451,10 @@ public class DataverseAttribute extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DataverseAttributeBuilder<
+                    C extends DataverseAttribute, B extends DataverseAttributeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DataverseAttribute.
      *

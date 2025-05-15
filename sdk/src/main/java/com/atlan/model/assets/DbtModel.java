@@ -513,6 +513,9 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtModelBuilder<C extends DbtModel, B extends DbtModelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtModel.
      *

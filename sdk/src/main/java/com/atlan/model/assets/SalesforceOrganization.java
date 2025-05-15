@@ -421,6 +421,10 @@ public class SalesforceOrganization extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SalesforceOrganizationBuilder<
+                    C extends SalesforceOrganization, B extends SalesforceOrganizationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SalesforceOrganization.
      *

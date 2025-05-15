@@ -482,6 +482,9 @@ public class DbtMetric extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtMetricBuilder<C extends DbtMetric, B extends DbtMetricBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtMetric.
      *

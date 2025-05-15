@@ -7,7 +7,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanRequestStatus;
-import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.serde.AtlanRequestDeserializer;
 import com.atlan.serde.AtlanRequestSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -239,5 +238,5 @@ public abstract class AtlanRequest extends AtlanObject {
     }
 
     public abstract static class AtlanRequestBuilder<C extends AtlanRequest, B extends AtlanRequestBuilder<C, B>>
-        extends AtlanObject.AtlanObjectBuilder<C, B> {}
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

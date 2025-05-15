@@ -502,6 +502,9 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanViewBuilder<C extends AnaplanView, B extends AnaplanViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanView.
      *

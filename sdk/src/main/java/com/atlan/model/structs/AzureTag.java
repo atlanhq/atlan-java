@@ -47,4 +47,7 @@ public class AzureTag extends AtlanStruct {
                 .azureTagValue(azureTagValue)
                 .build();
     }
+
+    public abstract static class AzureTagBuilder<C extends AzureTag, B extends AzureTagBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

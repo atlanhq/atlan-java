@@ -399,6 +399,9 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class APIQueryBuilder<C extends APIQuery, B extends APIQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a APIQuery.
      *

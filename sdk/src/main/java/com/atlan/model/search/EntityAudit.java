@@ -74,4 +74,7 @@ public class EntityAudit extends AtlanObject {
 
     /** Headers detailing how the action was taken, if not by a user. */
     final Map<String, String> headers;
+
+    public abstract static class EntityAuditBuilder<C extends EntityAudit, B extends EntityAuditBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

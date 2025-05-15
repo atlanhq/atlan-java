@@ -374,6 +374,9 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ReadmeTemplateBuilder<C extends ReadmeTemplate, B extends ReadmeTemplateBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ReadmeTemplate.
      *

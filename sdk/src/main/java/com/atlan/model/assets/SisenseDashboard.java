@@ -374,6 +374,10 @@ public class SisenseDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SisenseDashboardBuilder<
+                    C extends SisenseDashboard, B extends SisenseDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SisenseDashboard.
      *

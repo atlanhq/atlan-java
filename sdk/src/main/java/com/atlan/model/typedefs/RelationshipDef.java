@@ -109,6 +109,7 @@ public class RelationshipDef extends TypeDef {
                 .category(null);
     }
 
-    public abstract static class RelationshipDefBuilder<C extends RelationshipDef, B extends RelationshipDefBuilder<C, B>>
-        extends TypeDef.TypeDefBuilder<C, B> {}
+    public abstract static class RelationshipDefBuilder<
+                    C extends RelationshipDef, B extends RelationshipDefBuilder<C, B>>
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

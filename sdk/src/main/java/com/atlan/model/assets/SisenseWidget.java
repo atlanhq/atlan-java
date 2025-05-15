@@ -384,6 +384,9 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SisenseWidgetBuilder<C extends SisenseWidget, B extends SisenseWidgetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SisenseWidget.
      *

@@ -52,4 +52,8 @@ public class AuthPolicyCondition extends AtlanStruct {
                 .policyConditionValues(policyConditionValues)
                 .build();
     }
+
+    public abstract static class AuthPolicyConditionBuilder<
+                    C extends AuthPolicyCondition, B extends AuthPolicyConditionBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

@@ -395,6 +395,9 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpViewBuilder<C extends SapErpView, B extends SapErpViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpView.
      *
