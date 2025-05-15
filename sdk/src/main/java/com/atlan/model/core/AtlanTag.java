@@ -6,6 +6,8 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.search.AuditDetail;
 import com.atlan.model.structs.SourceTagAttachment;
+import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.model.typedefs.TypeDef;
 import com.atlan.serde.AtlanTagDeserializer;
 import com.atlan.serde.AtlanTagSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -205,4 +207,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
         if (o == null) return -1;
         return atlanTagComparator.compare(this, o);
     }
+
+    public abstract static class AtlanTagBuilder<C extends AtlanTag, B extends AtlanTagBuilder<C, B>>
+        extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

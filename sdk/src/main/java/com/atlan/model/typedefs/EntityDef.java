@@ -82,4 +82,7 @@ public class EntityDef extends TypeDef {
                 .superTypes(superTypes)
                 .category(null);
     }
+
+    public abstract static class EntityDefBuilder<C extends EntityDef, B extends EntityDefBuilder<C, B>>
+        extends TypeDef.TypeDefBuilder<C, B> {}
 }

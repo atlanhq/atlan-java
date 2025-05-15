@@ -34,4 +34,7 @@ public abstract class AtlanStruct extends AtlanObject {
 
     /** Name of the type that defines the struct. */
     String typeName;
+
+    public abstract static class AtlanStructBuilder<C extends AtlanStruct, B extends AtlanStructBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

@@ -9,6 +9,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.AtlanImage;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -167,4 +168,7 @@ public class AtlanTagOptions extends AtlanObject {
 
     /** Whether this tag has an associated source-synced tag (true) or not (false). */
     Boolean hasTag;
+
+    public abstract static class AtlanTagOptionsBuilder<C extends AtlanTagOptions, B extends AtlanTagOptionsBuilder<C, B>>
+        extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

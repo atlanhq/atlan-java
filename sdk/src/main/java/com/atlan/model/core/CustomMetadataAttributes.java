@@ -3,6 +3,9 @@
 package com.atlan.model.core;
 
 import java.util.Map;
+
+import com.atlan.model.admin.AtlanRequest;
+import com.atlan.model.admin.AtlanTagRequest;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
@@ -41,4 +44,7 @@ public class CustomMetadataAttributes extends AtlanObject {
     public boolean isEmpty() {
         return attributes.isEmpty();
     }
+
+    public abstract static class CustomMetadataAttributesBuilder<C extends CustomMetadataAttributes, B extends CustomMetadataAttributesBuilder<C, B>>
+        extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

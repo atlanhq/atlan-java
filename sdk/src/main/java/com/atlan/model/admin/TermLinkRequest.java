@@ -90,4 +90,7 @@ public class TermLinkRequest extends AtlanRequest {
                 .sourceGuid(termGuid)
                 .sourceQualifiedName(termQualifiedName);
     }
+
+    public abstract static class TermLinkRequestBuilder<C extends TermLinkRequest, B extends TermLinkRequestBuilder<C, B>>
+        extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

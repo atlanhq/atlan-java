@@ -7,6 +7,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.KeycloakEventType;
 import java.util.List;
+
+import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.model.typedefs.TypeDef;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -55,4 +58,7 @@ public class KeycloakEventRequest extends AtlanObject {
     public KeycloakEventResponse search(AtlanClient client) throws AtlanException {
         return client.logs.getEvents(this);
     }
+
+    public abstract static class KeycloakEventRequestBuilder<C extends KeycloakEventRequest, B extends KeycloakEventRequestBuilder<C, B>>
+        extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

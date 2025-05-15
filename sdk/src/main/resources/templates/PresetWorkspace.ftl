@@ -54,4 +54,7 @@
     private static String generateQualifiedName(String connectionQualifiedName, String name) {
         return connectionQualifiedName + "/" + name;
     }
+
+    public abstract static class ${className}Builder<C extends ${className}, B extends ${className}Builder<C, B>>
+            extends ${parentClassName}.${parentClassName}Builder<C, B> {}
 </#macro>
