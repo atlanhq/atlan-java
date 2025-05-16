@@ -42,4 +42,7 @@ public class Meaning extends AtlanObject implements Comparable<Meaning> {
     public int compareTo(Meaning o) {
         return meaningComparator.compare(this, o);
     }
+
+    public abstract static class MeaningBuilder<C extends Meaning, B extends MeaningBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

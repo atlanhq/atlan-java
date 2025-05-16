@@ -21,4 +21,6 @@ public class AssetViews {
 
     /** Number of distinct users that have viewed the asset. */
     Long distinctUsers;
+
+    public static class AssetViewsBuilder {}
 }

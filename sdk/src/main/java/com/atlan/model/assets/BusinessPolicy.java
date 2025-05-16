@@ -365,6 +365,9 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BusinessPolicyBuilder<C extends BusinessPolicy, B extends BusinessPolicyBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BusinessPolicy.
      *

@@ -397,6 +397,10 @@ public class SisenseDatamodel extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SisenseDatamodelBuilder<
+                    C extends SisenseDatamodel, B extends SisenseDatamodelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SisenseDatamodel.
      *

@@ -401,6 +401,9 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class FolderBuilder<C extends Folder, B extends FolderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Folder.
      *

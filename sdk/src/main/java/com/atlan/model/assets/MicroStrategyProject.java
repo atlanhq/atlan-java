@@ -438,6 +438,10 @@ public class MicroStrategyProject extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MicroStrategyProjectBuilder<
+                    C extends MicroStrategyProject, B extends MicroStrategyProjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MicroStrategyProject.
      *

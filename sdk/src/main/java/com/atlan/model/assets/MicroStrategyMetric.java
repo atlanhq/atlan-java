@@ -466,6 +466,10 @@ public class MicroStrategyMetric extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MicroStrategyMetricBuilder<
+                    C extends MicroStrategyMetric, B extends MicroStrategyMetricBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MicroStrategyMetric.
      *

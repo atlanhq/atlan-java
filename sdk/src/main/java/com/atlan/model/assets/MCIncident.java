@@ -403,6 +403,9 @@ public class MCIncident extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MCIncidentBuilder<C extends MCIncident, B extends MCIncidentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MCIncident.
      *

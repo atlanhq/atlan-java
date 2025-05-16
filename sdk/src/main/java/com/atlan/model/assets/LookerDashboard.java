@@ -404,6 +404,10 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerDashboardBuilder<
+                    C extends LookerDashboard, B extends LookerDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerDashboard.
      *

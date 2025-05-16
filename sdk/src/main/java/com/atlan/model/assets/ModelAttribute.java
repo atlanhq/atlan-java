@@ -571,6 +571,9 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelAttributeBuilder<C extends ModelAttribute, B extends ModelAttributeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelAttribute.
      *

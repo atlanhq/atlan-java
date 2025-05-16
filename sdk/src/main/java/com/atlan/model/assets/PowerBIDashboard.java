@@ -395,6 +395,10 @@ public class PowerBIDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIDashboardBuilder<
+                    C extends PowerBIDashboard, B extends PowerBIDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIDashboard.
      *

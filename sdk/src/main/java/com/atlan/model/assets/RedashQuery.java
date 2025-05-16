@@ -386,6 +386,9 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class RedashQueryBuilder<C extends RedashQuery, B extends RedashQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a RedashQuery.
      *

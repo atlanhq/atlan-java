@@ -454,6 +454,9 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelDataModelBuilder<C extends ModelDataModel, B extends ModelDataModelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelDataModel.
      *

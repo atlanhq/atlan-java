@@ -58,4 +58,8 @@ public class SourceTagAttribute extends AtlanStruct {
                 .tagAttributeProperties(tagAttributeProperties)
                 .build();
     }
+
+    public abstract static class SourceTagAttributeBuilder<
+                    C extends SourceTagAttribute, B extends SourceTagAttributeBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

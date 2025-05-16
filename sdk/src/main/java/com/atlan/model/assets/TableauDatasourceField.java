@@ -429,6 +429,10 @@ public class TableauDatasourceField extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauDatasourceFieldBuilder<
+                    C extends TableauDatasourceField, B extends TableauDatasourceFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauDatasourceField.
      *

@@ -47,4 +47,8 @@ public class SourceTagAttachmentValue extends AtlanStruct {
                 .tagAttachmentValue(tagAttachmentValue)
                 .build();
     }
+
+    public abstract static class SourceTagAttachmentValueBuilder<
+                    C extends SourceTagAttachmentValue, B extends SourceTagAttachmentValueBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

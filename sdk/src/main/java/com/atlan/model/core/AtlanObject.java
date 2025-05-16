@@ -71,4 +71,6 @@ public abstract class AtlanObject implements Serializable {
     public void setRawJsonObject(JsonNode rawJsonObject) {
         this.rawJsonObject = rawJsonObject;
     }
+
+    public abstract static class AtlanObjectBuilder<C extends AtlanObject, B extends AtlanObjectBuilder<C, B>> {}
 }

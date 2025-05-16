@@ -29,4 +29,9 @@ public class CustomMetadataAttributesAuditDetail extends CustomMetadataAttribute
      * typically true when the custom metadata has since been deleted from Atlan.
      */
     Boolean empty;
+
+    public abstract static class CustomMetadataAttributesAuditDetailBuilder<
+                    C extends CustomMetadataAttributesAuditDetail,
+                    B extends CustomMetadataAttributesAuditDetailBuilder<C, B>>
+            extends CustomMetadataAttributes.CustomMetadataAttributesBuilder<C, B> {}
 }

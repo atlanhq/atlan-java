@@ -404,6 +404,9 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModeCollectionBuilder<C extends ModeCollection, B extends ModeCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModeCollection.
      *

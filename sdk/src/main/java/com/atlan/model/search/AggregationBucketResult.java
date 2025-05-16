@@ -39,4 +39,6 @@ public class AggregationBucketResult extends AggregationResult {
 
     /** List of the top buckets that resulted from the aggregation. */
     List<AggregationBucketDetails> buckets;
+
+    public static class AggregationBucketResultBuilder {}
 }

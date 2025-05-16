@@ -80,4 +80,8 @@ public class AtlanTagRequest extends AtlanRequest {
                 .entityType(assetType)
                 .payload(atlanTagDetails);
     }
+
+    public abstract static class AtlanTagRequestBuilder<
+                    C extends AtlanTagRequest, B extends AtlanTagRequestBuilder<C, B>>
+            extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

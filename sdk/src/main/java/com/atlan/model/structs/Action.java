@@ -61,4 +61,7 @@ public class Action extends AtlanStruct {
                 .taskActionDisplayText(taskActionDisplayText)
                 .build();
     }
+
+    public abstract static class ActionBuilder<C extends Action, B extends ActionBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

@@ -396,6 +396,9 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauProjectBuilder<C extends TableauProject, B extends TableauProjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauProject.
      *

@@ -408,6 +408,10 @@ public class AnaplanWorkspace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanWorkspaceBuilder<
+                    C extends AnaplanWorkspace, B extends AnaplanWorkspaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanWorkspace.
      *

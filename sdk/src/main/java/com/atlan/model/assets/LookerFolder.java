@@ -390,6 +390,9 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerFolderBuilder<C extends LookerFolder, B extends LookerFolderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerFolder.
      *

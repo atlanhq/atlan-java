@@ -41,4 +41,8 @@ public class CustomMetadataAttributes extends AtlanObject {
     public boolean isEmpty() {
         return attributes.isEmpty();
     }
+
+    public abstract static class CustomMetadataAttributesBuilder<
+                    C extends CustomMetadataAttributes, B extends CustomMetadataAttributesBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

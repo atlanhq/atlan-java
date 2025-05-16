@@ -388,6 +388,10 @@ public class SigmaDataElementField extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaDataElementFieldBuilder<
+                    C extends SigmaDataElementField, B extends SigmaDataElementFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaDataElementField.
      *

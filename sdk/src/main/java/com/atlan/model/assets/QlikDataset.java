@@ -407,6 +407,9 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikDatasetBuilder<C extends QlikDataset, B extends QlikDatasetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikDataset.
      *

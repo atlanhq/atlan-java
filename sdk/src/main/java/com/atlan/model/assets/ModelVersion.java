@@ -488,6 +488,9 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelVersionBuilder<C extends ModelVersion, B extends ModelVersionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelVersion.
      *

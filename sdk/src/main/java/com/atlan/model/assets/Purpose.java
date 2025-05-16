@@ -621,6 +621,9 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         return (Purpose) Asset.removeUserDescription(client, updater(qualifiedName, name, isEnabled));
     }
 
+    public abstract static class PurposeBuilder<C extends Purpose, B extends PurposeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a Purpose, without replacing existing Atlan tags linked to the Purpose.
      * Note: this operation must make two API calls — one to retrieve the Purpose's existing Atlan tags,

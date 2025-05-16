@@ -392,6 +392,9 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class APIObjectBuilder<C extends APIObject, B extends APIObjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a APIObject.
      *

@@ -319,6 +319,9 @@ public class Form extends Asset implements IForm, IAsset, IReferenceable {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class FormBuilder<C extends Form, B extends FormBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Form.
      *

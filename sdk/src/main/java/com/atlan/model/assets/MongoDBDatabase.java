@@ -466,6 +466,10 @@ public class MongoDBDatabase extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MongoDBDatabaseBuilder<
+                    C extends MongoDBDatabase, B extends MongoDBDatabaseBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MongoDBDatabase.
      *

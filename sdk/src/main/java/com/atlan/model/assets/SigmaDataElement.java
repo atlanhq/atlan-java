@@ -397,6 +397,10 @@ public class SigmaDataElement extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaDataElementBuilder<
+                    C extends SigmaDataElement, B extends SigmaDataElementBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaDataElement.
      *

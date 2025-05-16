@@ -1025,6 +1025,9 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ColumnBuilder<C extends Column, B extends ColumnBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Column.
      *

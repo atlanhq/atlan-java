@@ -391,6 +391,10 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CognosDashboardBuilder<
+                    C extends CognosDashboard, B extends CognosDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CognosDashboard.
      *

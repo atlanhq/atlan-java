@@ -504,6 +504,9 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtProcessBuilder<C extends DbtProcess, B extends DbtProcessBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtProcess.
      *

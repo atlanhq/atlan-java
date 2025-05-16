@@ -321,6 +321,10 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ConnectionProcessBuilder<
+                    C extends ConnectionProcess, B extends ConnectionProcessBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ConnectionProcess.
      *

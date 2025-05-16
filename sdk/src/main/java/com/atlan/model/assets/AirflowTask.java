@@ -490,6 +490,9 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AirflowTaskBuilder<C extends AirflowTask, B extends AirflowTaskBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AirflowTask.
      *

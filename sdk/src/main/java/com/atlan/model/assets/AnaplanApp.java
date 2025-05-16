@@ -398,6 +398,9 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnaplanAppBuilder<C extends AnaplanApp, B extends AnaplanAppBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnaplanApp.
      *

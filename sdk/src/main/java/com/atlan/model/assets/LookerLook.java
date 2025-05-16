@@ -421,6 +421,9 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerLookBuilder<C extends LookerLook, B extends LookerLookBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerLook.
      *

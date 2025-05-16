@@ -31,4 +31,7 @@
     public AuthPolicyBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         throw new InvalidRequestException(ErrorCode.FULL_UPDATE_ONLY, "AuthPolicy");
     }
+
+    public abstract static class ${className}Builder<C extends ${className}, B extends ${className}Builder<C, B>>
+            extends ${parentClassName}.${parentClassName}Builder<C, B> {}
 </#macro>

@@ -507,6 +507,9 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtTagBuilder<C extends DbtTag, B extends DbtTagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtTag.
      *

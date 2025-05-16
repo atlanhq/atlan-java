@@ -437,6 +437,9 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DataContractBuilder<C extends DataContract, B extends DataContractBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DataContract.
      *

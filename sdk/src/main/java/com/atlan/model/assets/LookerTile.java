@@ -403,6 +403,9 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerTileBuilder<C extends LookerTile, B extends LookerTileBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerTile.
      *

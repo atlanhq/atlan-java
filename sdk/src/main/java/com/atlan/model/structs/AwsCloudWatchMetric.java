@@ -47,4 +47,8 @@ public class AwsCloudWatchMetric extends AtlanStruct {
                 .awsCloudWatchMetricScope(awsCloudWatchMetricScope)
                 .build();
     }
+
+    public abstract static class AwsCloudWatchMetricBuilder<
+                    C extends AwsCloudWatchMetric, B extends AwsCloudWatchMetricBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

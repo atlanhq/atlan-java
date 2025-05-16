@@ -470,6 +470,10 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SnowflakeStreamBuilder<
+                    C extends SnowflakeStream, B extends SnowflakeStreamBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SnowflakeStream.
      *

@@ -429,6 +429,9 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModeReportBuilder<C extends ModeReport, B extends ModeReportBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModeReport.
      *

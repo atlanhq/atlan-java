@@ -440,6 +440,10 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AdfLinkedserviceBuilder<
+                    C extends AdfLinkedservice, B extends AdfLinkedserviceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AdfLinkedservice.
      *

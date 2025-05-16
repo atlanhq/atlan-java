@@ -331,6 +331,9 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AuthServiceBuilder<C extends AuthService, B extends AuthServiceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AuthService.
      *

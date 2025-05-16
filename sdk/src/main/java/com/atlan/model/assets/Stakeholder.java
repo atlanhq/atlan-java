@@ -395,6 +395,9 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class StakeholderBuilder<C extends Stakeholder, B extends StakeholderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Stakeholder.
      *

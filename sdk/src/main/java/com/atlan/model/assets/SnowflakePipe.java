@@ -461,6 +461,9 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SnowflakePipeBuilder<C extends SnowflakePipe, B extends SnowflakePipeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SnowflakePipe.
      *

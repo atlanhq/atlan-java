@@ -628,6 +628,10 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
         return (GlossaryCategory) Asset.removeAnnouncement(client, updater(qualifiedName, name, glossaryGuid));
     }
 
+    public abstract static class GlossaryCategoryBuilder<
+                    C extends GlossaryCategory, B extends GlossaryCategoryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a GlossaryCategory, without replacing existing Atlan tags linked to the GlossaryCategory.
      * Note: this operation must make two API calls — one to retrieve the GlossaryCategory's existing Atlan tags,

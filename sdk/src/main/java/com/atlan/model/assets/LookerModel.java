@@ -382,6 +382,9 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerModelBuilder<C extends LookerModel, B extends LookerModelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerModel.
      *

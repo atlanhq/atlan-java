@@ -155,4 +155,8 @@ public class IndexSearchRequest extends AtlanObject {
         /** Input in the searchbar when the search was run. */
         String searchInput;
     }
+
+    public abstract static class IndexSearchRequestBuilder<
+                    C extends IndexSearchRequest, B extends IndexSearchRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

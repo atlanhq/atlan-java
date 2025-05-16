@@ -61,4 +61,8 @@ public class DbtMetricFilter extends AtlanStruct {
                 .dbtMetricFilterValue(dbtMetricFilterValue)
                 .build();
     }
+
+    public abstract static class DbtMetricFilterBuilder<
+                    C extends DbtMetricFilter, B extends DbtMetricFilterBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

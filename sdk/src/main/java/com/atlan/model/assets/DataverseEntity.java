@@ -392,6 +392,10 @@ public class DataverseEntity extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DataverseEntityBuilder<
+                    C extends DataverseEntity, B extends DataverseEntityBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DataverseEntity.
      *

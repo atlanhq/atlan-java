@@ -73,4 +73,8 @@ public class MCRuleComparison extends AtlanStruct {
                 .mcRuleComparisonIsThresholdRelative(mcRuleComparisonIsThresholdRelative)
                 .build();
     }
+
+    public abstract static class MCRuleComparisonBuilder<
+                    C extends MCRuleComparison, B extends MCRuleComparisonBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

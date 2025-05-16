@@ -655,6 +655,10 @@ public class CosmosMongoDBCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CosmosMongoDBCollectionBuilder<
+                    C extends CosmosMongoDBCollection, B extends CosmosMongoDBCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CosmosMongoDBCollection.
      *

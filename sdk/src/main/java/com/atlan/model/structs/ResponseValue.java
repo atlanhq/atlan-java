@@ -139,4 +139,7 @@ public class ResponseValue extends AtlanStruct {
                 .responseValueOptions(responseValueOptions)
                 .build();
     }
+
+    public abstract static class ResponseValueBuilder<C extends ResponseValue, B extends ResponseValueBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

@@ -443,6 +443,9 @@ public class S3Bucket extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class S3BucketBuilder<C extends S3Bucket, B extends S3BucketBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a S3Bucket.
      *

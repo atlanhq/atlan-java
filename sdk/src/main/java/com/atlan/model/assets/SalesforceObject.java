@@ -450,6 +450,10 @@ public class SalesforceObject extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SalesforceObjectBuilder<
+                    C extends SalesforceObject, B extends SalesforceObjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SalesforceObject.
      *

@@ -414,6 +414,9 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AirflowDagBuilder<C extends AirflowDag, B extends AirflowDagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AirflowDag.
      *

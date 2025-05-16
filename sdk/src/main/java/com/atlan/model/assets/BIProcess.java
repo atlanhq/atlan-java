@@ -379,6 +379,9 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BIProcessBuilder<C extends BIProcess, B extends BIProcessBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BIProcess.
      *

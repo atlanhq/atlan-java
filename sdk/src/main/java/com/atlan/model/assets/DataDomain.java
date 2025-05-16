@@ -473,6 +473,9 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
         return results;
     }
 
+    public abstract static class DataDomainBuilder<C extends DataDomain, B extends DataDomainBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DataDomain.
      *

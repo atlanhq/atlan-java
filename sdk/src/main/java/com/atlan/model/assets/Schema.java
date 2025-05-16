@@ -583,6 +583,9 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SchemaBuilder<C extends Schema, B extends SchemaBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Schema.
      *
