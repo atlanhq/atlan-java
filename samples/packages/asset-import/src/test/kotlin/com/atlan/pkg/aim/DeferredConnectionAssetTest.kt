@@ -199,12 +199,11 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
             View
-                .select(client, true)
+                .select(client)
                 .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .where(View.STATUS.eq(AtlanStatus.ACTIVE))
                 .includesOnResults(tableAttrs)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, true)
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
         val view = found[0] as View
