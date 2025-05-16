@@ -207,6 +207,8 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
+import com.atlan.pkg.serde.cell.AssetRefXformer.resolveDeferredQN
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -265,6 +267,7 @@ class AssetImporter(
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
         )
+    private val connectionsMap = ctx.connectionCache.getIdentityMap()
 
     private data class RelationshipEnds(
         val name: String,
@@ -324,6 +327,7 @@ class AssetImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Asset.GUID.atlanFieldName)
+        colsToSkip.add(Asset.QUALIFIED_NAME.atlanFieldName) // will be resolved later
         if (updateOnly) {
             val cyclicalToSkip = mapToSecondPass.flatMap { it.value }
             // If we're only updating, process as before (in-parallel, any order)
@@ -400,7 +404,9 @@ class AssetImporter(
     /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val typeName = deserializer.typeName
-        return FieldSerde.getBuilderForType(typeName).qualifiedName(deserializer.qualifiedName)
+        val qualifiedName = deserializer.qualifiedName
+        val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
+        return FieldSerde.getBuilderForType(typeName).qualifiedName(resolvedQN)
     }
 
     /** {@inheritDoc} */
@@ -865,9 +871,9 @@ class AssetImporter(
 
         /** {@inheritDoc} */
         override fun resolveAsset(
+            ctx: PackageContext<*>,
             values: List<String>,
             header: List<String>,
-            connectionsMap: Map<AssetResolver.ConnectionIdentity, String>,
         ): AssetIdentity {
             val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
             if (typeIdx < 0) {
@@ -883,7 +889,8 @@ class AssetImporter(
             }
             val typeName = CSVXformer.trimWhitespace(values[typeIdx])
             val qualifiedName = CSVXformer.trimWhitespace(values[qnIdx])
-            return AssetIdentity(typeName, qualifiedName)
+            val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
+            return AssetIdentity(typeName, resolvedQN)
         }
 
         /** {@inheritDoc} */
@@ -929,18 +936,19 @@ class AssetImporter(
                 throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
             }
             val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+            val deferredIdentity = getDeferredIdentity(qualifiedName)
             if (connectionQNFromAsset != null) {
                 connectionQNs.add(connectionQNFromAsset)
             } else if (typeName == Connection.TYPE_NAME) {
                 // If the qualifiedName comes back as null and the asset itself is a connection, add it
                 if (StringUtils.isValidConnectionQN(qualifiedName)) {
                     connectionQNs.add(qualifiedName)
-                } else {
+                } else if (deferredIdentity == null) {
                     throw IllegalStateException(
                         "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
                     )
                 }
-            } else {
+            } else if (deferredIdentity == null) {
                 throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
             }
             return row

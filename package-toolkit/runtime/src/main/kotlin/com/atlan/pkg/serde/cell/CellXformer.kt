@@ -82,7 +82,7 @@ object CellXformer {
                 in GroupXformer.FIELDS -> GroupXformer.decode(ctx, value, fieldName)
                 in RoleXformer.FIELDS -> RoleXformer.decode(ctx, value, fieldName)
                 in DataTypeXformer.FIELDS -> DataTypeXformer.decode(value, fieldName)
-                else -> decodeString(value)
+                else -> decodeString(ctx, value)
             }
         } else if (Boolean::class.java.isAssignableFrom(type) || java.lang.Boolean::class.java.isAssignableFrom(type)) {
             decodeBoolean(value)
@@ -152,11 +152,16 @@ object CellXformer {
             value
         }
 
-    fun decodeString(value: String): String =
+    fun decodeString(
+        ctx: PackageContext<*>,
+        value: String,
+    ): String =
         if (value.contains(NEWLINE_SENTINEL)) {
             value.replace(NEWLINE_SENTINEL, LIST_DELIMITER)
         } else {
-            value
+            // Attempt to resolve the string as a deferred qualifiedName
+            // (if not a qualifiedName will just return the original string as-is)
+            AssetRefXformer.resolveDeferredQN(ctx, value)
         }
 
     fun decodeBoolean(value: String): Boolean = value.toBoolean()

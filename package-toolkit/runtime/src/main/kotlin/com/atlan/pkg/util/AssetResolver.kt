@@ -2,7 +2,9 @@
    Copyright 2024 Atlan Pte. Ltd. */
 package com.atlan.pkg.util
 
+import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
+import com.atlan.pkg.PackageContext
 import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.IOException
 
@@ -56,16 +58,16 @@ interface AssetResolver {
     /**
      * Resolve the asset represented by a row of values in a CSV to an asset identity.
      *
+     * @param ctx context of the running package
      * @param values row of values for that asset from the CSV
      * @param header order of column names in the CSV file being processed
-     * @param connectionsMap cache of connection qualifiedNames, keyed by connection identity
      * @return a unique asset identity for that row of the CSV
      */
     @Throws(IOException::class)
     fun resolveAsset(
+        ctx: PackageContext<*>,
         values: List<String>,
         header: List<String>,
-        connectionsMap: Map<ConnectionIdentity, String>,
     ): AssetIdentity? {
         val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         if (typeIdx < 0) {
@@ -77,10 +79,21 @@ interface AssetResolver {
         val qnDetails = getQualifiedNameDetails(values, header, typeName)
         val agnosticQN = qnDetails.uniqueQN
         val connectionIdentity = getConnectionIdentityFromQN(agnosticQN)
-        if (connectionIdentity != null && connectionsMap.containsKey(connectionIdentity)) {
-            val qualifiedName =
-                agnosticQN.replaceFirst(connectionIdentity.toString(), connectionsMap[connectionIdentity]!!)
-            return AssetIdentity(typeName, qualifiedName)
+        if (connectionIdentity != null) {
+            val connectionId = ctx.connectionCache.getIdentityForAsset(connectionIdentity.name, connectionIdentity.type)
+            try {
+                val connection = ctx.connectionCache.getByIdentity(connectionId)
+                if (connection != null) {
+                    val qualifiedName =
+                        agnosticQN.replaceFirst(connectionIdentity.toString(), connection.qualifiedName)
+                    return AssetIdentity(typeName, qualifiedName)
+                }
+            } catch (e: AtlanException) {
+                throw IOException(
+                    "Unable to resolve connection from identity, cannot uniquely identify the asset: $agnosticQN",
+                    e,
+                )
+            }
         }
         return null
     }

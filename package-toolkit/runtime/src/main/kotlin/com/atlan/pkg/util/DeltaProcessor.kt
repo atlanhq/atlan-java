@@ -87,7 +87,7 @@ class DeltaProcessor(
                     initialLoad = false
                     delta =
                         FileBasedDelta(
-                            ctx.connectionCache.getIdentityMap(),
+                            ctx,
                             resolver,
                             logger,
                             typesToRemove.toList(),

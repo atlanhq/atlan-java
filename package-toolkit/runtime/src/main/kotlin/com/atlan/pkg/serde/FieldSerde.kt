@@ -103,33 +103,37 @@ object FieldSerde {
      * Deserialize a single field's value from a row of tabular data, when that field
      * is stored as custom metadata.
      *
+     * @param ctx context in which the package is running
      * @param attrDef attribute definition of the field
      * @param value the single field's value
      * @return the deserialized form of that field's value
      */
     fun getCustomMetadataValueFromString(
+        ctx: PackageContext<*>,
         attrDef: AttributeDef,
         value: String?,
     ): Any? =
         if (value.isNullOrEmpty()) {
             null
         } else if (attrDef.options?.multiValueSelect == true) {
-            getMultiValuedCustomMetadata(attrDef, value)
+            getMultiValuedCustomMetadata(ctx, attrDef, value)
         } else {
-            getSingleValuedCustomMetadata(attrDef, value)
+            getSingleValuedCustomMetadata(ctx, attrDef, value)
         }
 
     private fun getMultiValuedCustomMetadata(
+        ctx: PackageContext<*>,
         attrDef: AttributeDef,
         value: String?,
     ): List<String> =
         if (value.isNullOrEmpty()) {
             listOf()
         } else {
-            value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(attrDef, it.trim()).toString() }
+            value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(ctx, attrDef, it.trim()).toString() }
         }
 
     private fun getSingleValuedCustomMetadata(
+        ctx: PackageContext<*>,
         attrDef: AttributeDef,
         value: String?,
     ): Any? {
@@ -142,7 +146,7 @@ object FieldSerde {
             "date" -> TimestampXformer.decode(value, "unused")
             "long" -> CellXformer.decodeLong(value)
             "float" -> CellXformer.decodeDouble(value)
-            else -> CellXformer.decodeString(value)
+            else -> CellXformer.decodeString(ctx, value)
         }
     }
 

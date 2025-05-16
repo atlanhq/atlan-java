@@ -124,7 +124,7 @@ object ModelAssetXformer {
         typeName: String,
         qualifiedName: String,
     ): Asset.AssetBuilder<*, *> {
-        val modelRef = getRefByQN(typeName, qualifiedName).toBuilder()
+        val modelRef = getRefByQN(ctx, typeName, qualifiedName).toBuilder()
         val versionAgnostic = ReflectionCache.getSetter(modelRef.javaClass, "modelVersionAgnosticQualifiedName")
         if (versionAgnostic != null) {
             FieldSerde.getValueFromCell(ctx, qualifiedName, versionAgnostic, logger)

@@ -1,0 +1,6 @@
+qualifiedName,typeName,name,connectorName,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,description,database,schema,category,adminRoles
+{{{CTYPE}/{CNAME}}}/DB,Database,DB,{CTYPE},{{{CTYPE}/{CNAME}}},,,,,,,,,
+{{{CTYPE}/{CNAME}}}/DB/SCH,Schema,SCH,{CTYPE},{{{CTYPE}/{CNAME}}},{{{CTYPE}/{CNAME}}}/DB,DB,,,A schema,Database@{{{CTYPE}/{CNAME}}}/DB,,,
+{{{CTYPE}/{CNAME}}}/DB/SCH/TBL,Table,TBL,{CTYPE},{{{CTYPE}/{CNAME}}},{{{CTYPE}/{CNAME}}}/DB,DB,{{{CTYPE}/{CNAME}}}/DB/SCH,SCH,,,Schema@{{{CTYPE}/{CNAME}}}/DB/SCH,,
+{{{CTYPE}/{CNAME}}}/DB/SCH/VIEW,View,VIEW,{CTYPE},{{{CTYPE}/{CNAME}}},{{{CTYPE}/{CNAME}}}/DB,DB,{{{CTYPE}/{CNAME}}}/DB/SCH,SCH,,,Schema@{{{CTYPE}/{CNAME}}}/DB/SCH,,
+{{{CTYPE}/{CNAME}}},Connection,{CNAME},{CTYPE},,,,,,,,,database,$admin
