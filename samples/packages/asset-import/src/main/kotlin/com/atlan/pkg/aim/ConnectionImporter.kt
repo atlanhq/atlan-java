@@ -45,6 +45,7 @@ class ConnectionImporter(
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
+        const val CUSTOM_CONNECTOR_TYPE = "customConnectorType"
     }
 
     /** {@inheritDoc} */
@@ -58,14 +59,16 @@ class ConnectionImporter(
     @Suppress("UNCHECKED_CAST")
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.NAME.atlanFieldName)?.let { it as String } ?: ""
-        val qualifiedName = deserializer.getValue(Connection.QUALIFIED_NAME.atlanFieldName)?.let { it as String } ?: ""
+        // Note: we need the UNPROCESSED qualifiedName here (otherwise it'll try to resolve a potentially-deferred
+        //  QN before we've had any chance to see whether it exists or not)
+        val qualifiedName = deserializer.qualifiedName
         val cName = deserializer.getValue(Connection.CONNECTOR_NAME.atlanFieldName)?.let { it as String }
-        val cType = deserializer.getValue(Connection.CONNECTOR_TYPE.atlanFieldName)?.let { it as String }
-        val customType = deserializer.getValue(Connection.CUSTOM_CONNECTOR_TYPE.atlanFieldName)?.let { it as String }
+        val cType = deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
+        val customType = deserializer.getValue(CUSTOM_CONNECTOR_TYPE)?.let { it as String }
         val deferredIdentity = getDeferredIdentity(qualifiedName)
         val resolvedType =
             if (qualifiedName.isEmpty()) {
-                customType ?: cType ?: cName
+                customType ?: if (cType == null || cType == AtlanConnectorType.UNKNOWN_CUSTOM) cName else cType.value
             } else {
                 deferredIdentity?.type ?: Connection.getConnectorFromQualifiedName(qualifiedName)
             }

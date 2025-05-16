@@ -28,7 +28,7 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
-    private val conn1Type = "snowflake" // TODO: change to 'custom-db' once working
+    private val conn1Type = "custom-db"
 
     private val testFile = "deferred_assets.csv"
 
@@ -201,18 +201,14 @@ class DeferredConnectionAssetTest : PackageTest("dca") {
             View
                 .select(client, true)
                 .where(View.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .where(View.STATUS.eq(AtlanStatus.DELETED))
+                .where(View.STATUS.eq(AtlanStatus.ACTIVE))
                 .includesOnResults(tableAttrs)
                 .toRequest()
         val response = retrySearchUntil(request, 1, true)
         val found = response.assets
         assertEquals(1, found.size)
         val view = found[0] as View
-        if (view.status != AtlanStatus.DELETED) {
-            logger.error { "Exact request: ${request.toJson(client)}" }
-            logger.error { "Exact response: ${response.rawJsonObject}" }
-        }
-        assertEquals(AtlanStatus.DELETED, view.status)
+        assertEquals(AtlanStatus.ACTIVE, view.status)
     }
 
     @Test
