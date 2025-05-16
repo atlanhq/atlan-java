@@ -356,6 +356,9 @@ public class Cognite3DModel extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class Cognite3DModelBuilder<C extends Cognite3DModel, B extends Cognite3DModelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Cognite3DModel.
      *

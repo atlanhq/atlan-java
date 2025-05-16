@@ -387,6 +387,9 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauFlowBuilder<C extends TableauFlow, B extends TableauFlowBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauFlow.
      *

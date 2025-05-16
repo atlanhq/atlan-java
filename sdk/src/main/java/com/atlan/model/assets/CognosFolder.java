@@ -434,6 +434,9 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CognosFolderBuilder<C extends CognosFolder, B extends CognosFolderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CognosFolder.
      *

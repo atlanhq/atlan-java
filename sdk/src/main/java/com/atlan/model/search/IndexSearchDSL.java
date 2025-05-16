@@ -78,4 +78,7 @@ public class IndexSearchDSL extends AtlanObject {
     @JsonProperty("search_after")
     @Singular
     List<Object> pageOffsets;
+
+    public abstract static class IndexSearchDSLBuilder<C extends IndexSearchDSL, B extends IndexSearchDSLBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

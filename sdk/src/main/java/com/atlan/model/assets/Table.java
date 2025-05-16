@@ -663,6 +663,9 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableBuilder<C extends Table, B extends TableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Table.
      *

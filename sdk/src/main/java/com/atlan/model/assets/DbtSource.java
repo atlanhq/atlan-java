@@ -455,6 +455,9 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtSourceBuilder<C extends DbtSource, B extends DbtSourceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtSource.
      *

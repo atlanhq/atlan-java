@@ -389,6 +389,9 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CustomEntityBuilder<C extends CustomEntity, B extends CustomEntityBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CustomEntity.
      *

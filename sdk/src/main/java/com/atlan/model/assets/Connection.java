@@ -914,6 +914,9 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .collect(Collectors.toList());
     }
 
+    public abstract static class ConnectionBuilder<C extends Connection, B extends ConnectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Connection.
      *

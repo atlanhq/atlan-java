@@ -383,6 +383,10 @@ public class QuickSightDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QuickSightDashboardBuilder<
+                    C extends QuickSightDashboard, B extends QuickSightDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QuickSightDashboard.
      *

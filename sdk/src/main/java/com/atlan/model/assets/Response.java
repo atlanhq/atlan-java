@@ -323,6 +323,9 @@ public class Response extends Asset implements IResponse, IAsset, IReferenceable
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ResponseBuilder<C extends Response, B extends ResponseBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Response.
      *

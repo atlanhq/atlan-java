@@ -393,6 +393,9 @@ public class CassandraIndex extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CassandraIndexBuilder<C extends CassandraIndex, B extends CassandraIndexBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CassandraIndex.
      *

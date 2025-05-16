@@ -396,6 +396,9 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModeWorkspaceBuilder<C extends ModeWorkspace, B extends ModeWorkspaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModeWorkspace.
      *

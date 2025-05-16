@@ -428,6 +428,10 @@ public class CosmosMongoDBAccount extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CosmosMongoDBAccountBuilder<
+                    C extends CosmosMongoDBAccount, B extends CosmosMongoDBAccountBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CosmosMongoDBAccount.
      *

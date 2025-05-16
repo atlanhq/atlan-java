@@ -391,6 +391,9 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CognosModuleBuilder<C extends CognosModule, B extends CognosModuleBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CognosModule.
      *

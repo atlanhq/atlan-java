@@ -379,6 +379,9 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DomoCardBuilder<C extends DomoCard, B extends DomoCardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DomoCard.
      *

@@ -723,6 +723,9 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
         return (GlossaryTerm) Asset.removeAnnouncement(client, updater(qualifiedName, name, glossaryGuid));
     }
 
+    public abstract static class GlossaryTermBuilder<C extends GlossaryTerm, B extends GlossaryTermBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a GlossaryTerm, without replacing existing Atlan tags linked to the GlossaryTerm.
      * Note: this operation must make two API calls — one to retrieve the GlossaryTerm's existing Atlan tags,

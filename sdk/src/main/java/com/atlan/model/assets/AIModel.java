@@ -402,6 +402,9 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AIModelBuilder<C extends AIModel, B extends AIModelBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AIModel.
      *

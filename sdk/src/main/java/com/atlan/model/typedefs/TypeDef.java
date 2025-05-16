@@ -69,4 +69,7 @@ public abstract class TypeDef extends AtlanObject {
 
     /** Human-readable name of the type definition. */
     String displayName;
+
+    public abstract static class TypeDefBuilder<C extends TypeDef, B extends TypeDefBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

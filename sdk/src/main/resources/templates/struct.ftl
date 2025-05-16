@@ -369,4 +369,7 @@ public class ${className} extends AtlanStruct {
             .build();
     }
 </#if>
+
+    public abstract static class ${className}Builder<C extends ${className}, B extends ${className}Builder<C, B>>
+        extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

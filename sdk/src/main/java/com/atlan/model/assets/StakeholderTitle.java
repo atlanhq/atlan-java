@@ -321,6 +321,10 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class StakeholderTitleBuilder<
+                    C extends StakeholderTitle, B extends StakeholderTitleBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a StakeholderTitle.
      *

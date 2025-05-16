@@ -471,6 +471,9 @@ public class GCSBucket extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class GCSBucketBuilder<C extends GCSBucket, B extends GCSBucketBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a GCSBucket.
      *

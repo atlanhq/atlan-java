@@ -349,6 +349,9 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class InsightBuilder<C extends Insight, B extends InsightBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Insight.
      *

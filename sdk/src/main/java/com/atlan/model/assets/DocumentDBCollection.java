@@ -709,6 +709,10 @@ public class DocumentDBCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DocumentDBCollectionBuilder<
+                    C extends DocumentDBCollection, B extends DocumentDBCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DocumentDBCollection.
      *

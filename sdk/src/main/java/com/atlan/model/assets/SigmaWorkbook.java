@@ -384,6 +384,9 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaWorkbookBuilder<C extends SigmaWorkbook, B extends SigmaWorkbookBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaWorkbook.
      *

@@ -349,6 +349,9 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class WorkflowBuilder<C extends Workflow, B extends WorkflowBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Workflow.
      *

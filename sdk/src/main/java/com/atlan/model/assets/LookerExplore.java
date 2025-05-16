@@ -388,6 +388,9 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerExploreBuilder<C extends LookerExplore, B extends LookerExploreBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerExplore.
      *

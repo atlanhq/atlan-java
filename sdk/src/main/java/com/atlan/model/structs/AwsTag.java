@@ -44,4 +44,7 @@ public class AwsTag extends AtlanStruct {
     public static AwsTag of(String awsTagKey, String awsTagValue) {
         return AwsTag.builder().awsTagKey(awsTagKey).awsTagValue(awsTagValue).build();
     }
+
+    public abstract static class AwsTagBuilder<C extends AwsTag, B extends AwsTagBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

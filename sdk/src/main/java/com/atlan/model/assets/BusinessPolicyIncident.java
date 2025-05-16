@@ -330,6 +330,10 @@ public class BusinessPolicyIncident extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BusinessPolicyIncidentBuilder<
+                    C extends BusinessPolicyIncident, B extends BusinessPolicyIncidentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BusinessPolicyIncident.
      *

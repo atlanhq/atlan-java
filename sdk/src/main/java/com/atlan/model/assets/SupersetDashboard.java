@@ -420,6 +420,10 @@ public class SupersetDashboard extends Asset
         return connectionQualifiedName + "/" + name;
     }
 
+    public abstract static class SupersetDashboardBuilder<
+                    C extends SupersetDashboard, B extends SupersetDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SupersetDashboard.
      *

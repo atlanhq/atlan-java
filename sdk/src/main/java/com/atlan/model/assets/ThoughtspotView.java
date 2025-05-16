@@ -373,6 +373,10 @@ public class ThoughtspotView extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ThoughtspotViewBuilder<
+                    C extends ThoughtspotView, B extends ThoughtspotViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ThoughtspotView.
      *

@@ -517,6 +517,10 @@ public class DatabricksUnityCatalogTag extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DatabricksUnityCatalogTagBuilder<
+                    C extends DatabricksUnityCatalogTag, B extends DatabricksUnityCatalogTagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DatabricksUnityCatalogTag.
      *

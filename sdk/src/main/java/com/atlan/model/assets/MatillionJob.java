@@ -389,6 +389,9 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MatillionJobBuilder<C extends MatillionJob, B extends MatillionJobBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MatillionJob.
      *

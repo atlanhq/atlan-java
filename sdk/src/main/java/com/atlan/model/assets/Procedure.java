@@ -549,6 +549,9 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ProcedureBuilder<C extends Procedure, B extends ProcedureBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Procedure.
      *

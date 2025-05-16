@@ -318,6 +318,9 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TagAttachmentBuilder<C extends TagAttachment, B extends TagAttachmentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TagAttachment.
      *

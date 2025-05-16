@@ -221,4 +221,7 @@ public class AtlanTagDef extends TypeDef {
         String internalName = client.getAtlanTagCache().getSidForName(displayName);
         client.typeDefs.purge(internalName);
     }
+
+    public abstract static class AtlanTagDefBuilder<C extends AtlanTagDef, B extends AtlanTagDefBuilder<C, B>>
+            extends TypeDef.TypeDefBuilder<C, B> {}
 }

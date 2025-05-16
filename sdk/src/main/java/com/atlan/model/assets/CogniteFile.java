@@ -355,6 +355,9 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CogniteFileBuilder<C extends CogniteFile, B extends CogniteFileBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CogniteFile.
      *

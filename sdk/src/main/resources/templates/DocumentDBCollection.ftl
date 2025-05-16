@@ -114,4 +114,7 @@
         ));
         return updater(this.getQualifiedName(), this.getName());
     }
+
+    public abstract static class ${className}Builder<C extends ${className}, B extends ${className}Builder<C, B>>
+            extends ${parentClassName}.${parentClassName}Builder<C, B> {}
 </#macro> 

@@ -392,6 +392,10 @@ public class TableauWorksheet extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauWorksheetBuilder<
+                    C extends TableauWorksheet, B extends TableauWorksheetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauWorksheet.
      *

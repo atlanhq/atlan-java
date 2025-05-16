@@ -466,6 +466,9 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AdfActivityBuilder<C extends AdfActivity, B extends AdfActivityBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AdfActivity.
      *

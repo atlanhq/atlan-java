@@ -219,4 +219,8 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
         }
         return null;
     }
+
+    public abstract static class WorkflowSearchRequestBuilder<
+                    C extends WorkflowSearchRequest, B extends WorkflowSearchRequestBuilder<C, B>>
+            extends IndexSearchDSL.IndexSearchDSLBuilder<C, B> {}
 }

@@ -386,6 +386,10 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MatillionProjectBuilder<
+                    C extends MatillionProject, B extends MatillionProjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MatillionProject.
      *

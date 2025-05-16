@@ -55,4 +55,8 @@ public class AuthPolicyValiditySchedule extends AtlanStruct {
                 .policyValidityScheduleTimezone(policyValidityScheduleTimezone)
                 .build();
     }
+
+    public abstract static class AuthPolicyValidityScheduleBuilder<
+                    C extends AuthPolicyValiditySchedule, B extends AuthPolicyValidityScheduleBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

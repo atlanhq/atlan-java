@@ -47,4 +47,7 @@ public class GoogleLabel extends AtlanStruct {
                 .googleLabelValue(googleLabelValue)
                 .build();
     }
+
+    public abstract static class GoogleLabelBuilder<C extends GoogleLabel, B extends GoogleLabelBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

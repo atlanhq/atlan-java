@@ -373,6 +373,10 @@ public class ThoughtspotLiveboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ThoughtspotLiveboardBuilder<
+                    C extends ThoughtspotLiveboard, B extends ThoughtspotLiveboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ThoughtspotLiveboard.
      *

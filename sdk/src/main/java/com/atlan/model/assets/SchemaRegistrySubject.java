@@ -392,6 +392,10 @@ public class SchemaRegistrySubject extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SchemaRegistrySubjectBuilder<
+                    C extends SchemaRegistrySubject, B extends SchemaRegistrySubjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SchemaRegistrySubject.
      *

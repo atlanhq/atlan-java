@@ -638,6 +638,10 @@ public class MongoDBCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MongoDBCollectionBuilder<
+                    C extends MongoDBCollection, B extends MongoDBCollectionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MongoDBCollection.
      *

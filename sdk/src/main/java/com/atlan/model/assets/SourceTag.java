@@ -424,6 +424,9 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SourceTagBuilder<C extends SourceTag, B extends SourceTagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SourceTag.
      *

@@ -393,6 +393,9 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIMeasureBuilder<C extends PowerBIMeasure, B extends PowerBIMeasureBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIMeasure.
      *

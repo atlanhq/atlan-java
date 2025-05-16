@@ -385,6 +385,9 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerProjectBuilder<C extends LookerProject, B extends LookerProjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerProject.
      *

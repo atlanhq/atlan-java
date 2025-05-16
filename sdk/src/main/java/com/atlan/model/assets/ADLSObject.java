@@ -531,6 +531,9 @@ public class ADLSObject extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ADLSObjectBuilder<C extends ADLSObject, B extends ADLSObjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ADLSObject.
      *

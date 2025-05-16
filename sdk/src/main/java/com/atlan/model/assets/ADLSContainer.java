@@ -473,6 +473,9 @@ public class ADLSContainer extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ADLSContainerBuilder<C extends ADLSContainer, B extends ADLSContainerBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ADLSContainer.
      *

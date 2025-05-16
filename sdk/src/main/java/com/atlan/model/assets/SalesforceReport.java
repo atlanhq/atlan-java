@@ -474,6 +474,10 @@ public class SalesforceReport extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SalesforceReportBuilder<
+                    C extends SalesforceReport, B extends SalesforceReportBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SalesforceReport.
      *

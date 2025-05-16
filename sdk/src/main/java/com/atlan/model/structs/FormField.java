@@ -74,4 +74,7 @@ public class FormField extends AtlanStruct {
                 .formFieldOptions(formFieldOptions)
                 .build();
     }
+
+    public abstract static class FormFieldBuilder<C extends FormField, B extends FormFieldBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

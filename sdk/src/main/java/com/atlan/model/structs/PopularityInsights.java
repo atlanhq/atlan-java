@@ -98,4 +98,8 @@ public class PopularityInsights extends AtlanStruct {
                 .recordWarehouse(recordWarehouse)
                 .build();
     }
+
+    public abstract static class PopularityInsightsBuilder<
+                    C extends PopularityInsights, B extends PopularityInsightsBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

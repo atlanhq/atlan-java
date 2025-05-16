@@ -405,6 +405,9 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIDatasetBuilder<C extends PowerBIDataset, B extends PowerBIDatasetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIDataset.
      *

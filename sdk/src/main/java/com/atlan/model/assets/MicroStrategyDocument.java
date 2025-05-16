@@ -402,6 +402,10 @@ public class MicroStrategyDocument extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MicroStrategyDocumentBuilder<
+                    C extends MicroStrategyDocument, B extends MicroStrategyDocumentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MicroStrategyDocument.
      *

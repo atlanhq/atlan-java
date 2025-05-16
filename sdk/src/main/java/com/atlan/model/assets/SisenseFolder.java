@@ -374,6 +374,9 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SisenseFolderBuilder<C extends SisenseFolder, B extends SisenseFolderBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SisenseFolder.
      *

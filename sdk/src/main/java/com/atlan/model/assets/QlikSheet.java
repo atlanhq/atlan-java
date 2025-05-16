@@ -395,6 +395,9 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikSheetBuilder<C extends QlikSheet, B extends QlikSheetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikSheet.
      *

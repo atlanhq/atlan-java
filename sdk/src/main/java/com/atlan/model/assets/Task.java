@@ -367,6 +367,9 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TaskBuilder<C extends Task, B extends TaskBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Task.
      *

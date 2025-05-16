@@ -356,6 +356,9 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauSiteBuilder<C extends TableauSite, B extends TableauSiteBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauSite.
      *

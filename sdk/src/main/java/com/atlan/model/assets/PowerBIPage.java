@@ -380,6 +380,9 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIPageBuilder<C extends PowerBIPage, B extends PowerBIPageBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIPage.
      *

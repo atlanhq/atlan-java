@@ -47,4 +47,8 @@ public class ColumnValueFrequencyMap extends AtlanStruct {
                 .columnValueFrequency(columnValueFrequency)
                 .build();
     }
+
+    public abstract static class ColumnValueFrequencyMapBuilder<
+                    C extends ColumnValueFrequencyMap, B extends ColumnValueFrequencyMapBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

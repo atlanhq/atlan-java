@@ -502,6 +502,10 @@ public class SalesforceField extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SalesforceFieldBuilder<
+                    C extends SalesforceField, B extends SalesforceFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SalesforceField.
      *

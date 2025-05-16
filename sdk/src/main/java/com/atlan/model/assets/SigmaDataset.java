@@ -384,6 +384,9 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaDatasetBuilder<C extends SigmaDataset, B extends SigmaDatasetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaDataset.
      *

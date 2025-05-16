@@ -482,6 +482,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
         }
     }
 
+    public abstract static class LineageProcessBuilder<C extends LineageProcess, B extends LineageProcessBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LineageProcess.
      *

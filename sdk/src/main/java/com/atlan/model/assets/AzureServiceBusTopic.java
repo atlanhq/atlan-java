@@ -373,6 +373,10 @@ public class AzureServiceBusTopic extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AzureServiceBusTopicBuilder<
+                    C extends AzureServiceBusTopic, B extends AzureServiceBusTopicBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AzureServiceBusTopic.
      *

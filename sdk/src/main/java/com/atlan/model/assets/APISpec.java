@@ -434,6 +434,9 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class APISpecBuilder<C extends APISpec, B extends APISpecBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a APISpec.
      *

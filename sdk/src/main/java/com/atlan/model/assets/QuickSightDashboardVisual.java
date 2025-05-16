@@ -375,6 +375,10 @@ public class QuickSightDashboardVisual extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QuickSightDashboardVisualBuilder<
+                    C extends QuickSightDashboardVisual, B extends QuickSightDashboardVisualBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QuickSightDashboardVisual.
      *
