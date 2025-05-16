@@ -79,7 +79,7 @@ class MultiValueCellInputTest {
     @Test
     fun testMultiValueNewlineCustomMetadata() {
         val attrDef = AttributeDef.of(ctx.client, "Test", AtlanCustomAttributePrimitiveType.STRING, null, true, AttributeDefOptions.builder().build())
-        val result = FieldSerde.getCustomMetadataValueFromString(attrDef, MULTI_VALUE_WITH_NEWLINES)
+        val result = FieldSerde.getCustomMetadataValueFromString(ctx, attrDef, MULTI_VALUE_WITH_NEWLINES)
         assertTrue(result is List<*>)
         assertTrue(result.isNotEmpty())
         assertEquals("Here's something\nwith a newline.", result[0])
