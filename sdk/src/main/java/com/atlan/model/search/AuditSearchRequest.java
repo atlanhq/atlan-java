@@ -142,4 +142,8 @@ public class AuditSearchRequest extends AtlanObject {
                 .sort(LATEST_FIRST)
                 .toRequestBuilder();
     }
+
+    public abstract static class AuditSearchRequestBuilder<
+                    C extends AuditSearchRequest, B extends AuditSearchRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

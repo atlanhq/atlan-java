@@ -402,6 +402,9 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QlikChartBuilder<C extends QlikChart, B extends QlikChartBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QlikChart.
      *

@@ -607,6 +607,9 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
         return (Persona) Asset.removeUserDescription(client, updater(qualifiedName, name, isEnabled));
     }
 
+    public abstract static class PersonaBuilder<C extends Persona, B extends PersonaBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a Persona, without replacing existing Atlan tags linked to the Persona.
      * Note: this operation must make two API calls — one to retrieve the Persona's existing Atlan tags,

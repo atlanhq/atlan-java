@@ -384,6 +384,10 @@ public class PowerBIDatasource extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIDatasourceBuilder<
+                    C extends PowerBIDatasource, B extends PowerBIDatasourceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIDatasource.
      *

@@ -453,6 +453,9 @@ public class CubeDimension extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CubeDimensionBuilder<C extends CubeDimension, B extends CubeDimensionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CubeDimension.
      *

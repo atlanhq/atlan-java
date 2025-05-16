@@ -481,6 +481,10 @@ public class DocumentDBDatabase extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DocumentDBDatabaseBuilder<
+                    C extends DocumentDBDatabase, B extends DocumentDBDatabaseBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DocumentDBDatabase.
      *

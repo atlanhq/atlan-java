@@ -588,6 +588,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MaterializedViewBuilder<
+                    C extends MaterializedView, B extends MaterializedViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MaterializedView.
      *

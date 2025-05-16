@@ -391,6 +391,9 @@ public class PowerBIApp extends Asset implements IPowerBIApp, IPowerBI, IBI, ICa
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIAppBuilder<C extends PowerBIApp, B extends PowerBIAppBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIApp.
      *

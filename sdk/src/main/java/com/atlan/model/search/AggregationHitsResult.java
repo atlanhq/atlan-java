@@ -71,4 +71,6 @@ public class AggregationHitsResult extends AggregationResult {
         @JsonProperty("_source")
         Map<String, Object> source;
     }
+
+    public static class AggregationHitsResultBuilder {}
 }

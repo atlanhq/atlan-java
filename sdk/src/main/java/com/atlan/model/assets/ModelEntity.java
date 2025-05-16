@@ -615,6 +615,9 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelEntityBuilder<C extends ModelEntity, B extends ModelEntityBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelEntity.
      *

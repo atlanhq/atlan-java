@@ -373,6 +373,10 @@ public class ThoughtspotWorksheet extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ThoughtspotWorksheetBuilder<
+                    C extends ThoughtspotWorksheet, B extends ThoughtspotWorksheetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ThoughtspotWorksheet.
      *

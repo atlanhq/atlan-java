@@ -377,6 +377,10 @@ public class QuickSightDatasetField extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class QuickSightDatasetFieldBuilder<
+                    C extends QuickSightDatasetField, B extends QuickSightDatasetFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a QuickSightDatasetField.
      *

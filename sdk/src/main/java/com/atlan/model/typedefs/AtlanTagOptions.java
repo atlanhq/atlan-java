@@ -167,4 +167,8 @@ public class AtlanTagOptions extends AtlanObject {
 
     /** Whether this tag has an associated source-synced tag (true) or not (false). */
     Boolean hasTag;
+
+    public abstract static class AtlanTagOptionsBuilder<
+                    C extends AtlanTagOptions, B extends AtlanTagOptionsBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

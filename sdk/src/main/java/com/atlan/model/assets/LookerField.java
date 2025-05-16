@@ -435,6 +435,9 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerFieldBuilder<C extends LookerField, B extends LookerFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerField.
      *

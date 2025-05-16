@@ -391,6 +391,9 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ApplicationBuilder<C extends Application, B extends ApplicationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Application.
      *

@@ -418,6 +418,10 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpComponentBuilder<
+                    C extends SapErpComponent, B extends SapErpComponentBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpComponent.
      *

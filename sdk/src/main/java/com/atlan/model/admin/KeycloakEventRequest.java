@@ -55,4 +55,8 @@ public class KeycloakEventRequest extends AtlanObject {
     public KeycloakEventResponse search(AtlanClient client) throws AtlanException {
         return client.logs.getEvents(this);
     }
+
+    public abstract static class KeycloakEventRequestBuilder<
+                    C extends KeycloakEventRequest, B extends KeycloakEventRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

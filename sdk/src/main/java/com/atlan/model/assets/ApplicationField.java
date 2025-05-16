@@ -429,6 +429,10 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ApplicationFieldBuilder<
+                    C extends ApplicationField, B extends ApplicationFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ApplicationField.
      *

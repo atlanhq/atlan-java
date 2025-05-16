@@ -555,6 +555,10 @@ public class ModelEntityAssociation extends Asset
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
+    public abstract static class ModelEntityAssociationBuilder<
+                    C extends ModelEntityAssociation, B extends ModelEntityAssociationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModelEntityAssociation.
      *

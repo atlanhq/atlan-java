@@ -61,4 +61,7 @@ public class MCRuleSchedule extends AtlanStruct {
                 .mcRuleScheduleCrontab(mcRuleScheduleCrontab)
                 .build();
     }
+
+    public abstract static class MCRuleScheduleBuilder<C extends MCRuleSchedule, B extends MCRuleScheduleBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

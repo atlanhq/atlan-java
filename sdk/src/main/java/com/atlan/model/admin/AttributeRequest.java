@@ -80,4 +80,8 @@ public class AttributeRequest extends AtlanRequest {
                 .entityType(assetType)
                 .destinationValue(value);
     }
+
+    public abstract static class AttributeRequestBuilder<
+                    C extends AttributeRequest, B extends AttributeRequestBuilder<C, B>>
+            extends AtlanRequest.AtlanRequestBuilder<C, B> {}
 }

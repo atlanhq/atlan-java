@@ -375,6 +375,9 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerViewBuilder<C extends LookerView, B extends LookerViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerView.
      *

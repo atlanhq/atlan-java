@@ -800,6 +800,9 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                 client, _internal().qualifiedName(qualifiedName).name(name));
     }
 
+    public abstract static class GlossaryBuilder<C extends Glossary, B extends GlossaryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Add Atlan tags to a Glossary, without replacing existing Atlan tags linked to the Glossary.
      * Note: this operation must make two API calls — one to retrieve the Glossary's existing Atlan tags,

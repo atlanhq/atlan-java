@@ -394,6 +394,9 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ModeChartBuilder<C extends ModeChart, B extends ModeChartBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ModeChart.
      *

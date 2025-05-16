@@ -385,6 +385,9 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DomoDatasetBuilder<C extends DomoDataset, B extends DomoDatasetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DomoDataset.
      *

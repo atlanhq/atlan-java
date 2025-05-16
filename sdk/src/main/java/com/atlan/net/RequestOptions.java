@@ -46,4 +46,6 @@ public class RequestOptions {
                 .proxyCredential(client.getProxyCredential())
                 .extraHeaders(client.getExtraHeaders());
     }
+
+    public static class RequestOptionsBuilder {}
 }

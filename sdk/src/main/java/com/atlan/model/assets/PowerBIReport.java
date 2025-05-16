@@ -407,6 +407,9 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBIReportBuilder<C extends PowerBIReport, B extends PowerBIReportBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBIReport.
      *

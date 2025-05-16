@@ -373,6 +373,10 @@ public class MetabaseDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MetabaseDashboardBuilder<
+                    C extends MetabaseDashboard, B extends MetabaseDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MetabaseDashboard.
      *

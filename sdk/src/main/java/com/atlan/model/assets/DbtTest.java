@@ -482,6 +482,9 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtTestBuilder<C extends DbtTest, B extends DbtTestBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtTest.
      *

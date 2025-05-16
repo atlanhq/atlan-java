@@ -400,6 +400,9 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpCdsViewBuilder<C extends SapErpCdsView, B extends SapErpCdsViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpCdsView.
      *

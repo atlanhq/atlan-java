@@ -577,4 +577,8 @@ public class AttributeDefOptions extends AtlanObject {
         }
         return this;
     }
+
+    public abstract static class AttributeDefOptionsBuilder<
+                    C extends AttributeDefOptions, B extends AttributeDefOptionsBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

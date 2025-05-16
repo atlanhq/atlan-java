@@ -588,6 +588,9 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CubeFieldBuilder<C extends CubeField, B extends CubeFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CubeField.
      *

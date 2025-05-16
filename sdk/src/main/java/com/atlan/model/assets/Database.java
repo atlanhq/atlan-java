@@ -476,6 +476,9 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DatabaseBuilder<C extends Database, B extends DatabaseBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Database.
      *

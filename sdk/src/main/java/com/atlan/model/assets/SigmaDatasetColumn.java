@@ -388,6 +388,10 @@ public class SigmaDatasetColumn extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SigmaDatasetColumnBuilder<
+                    C extends SigmaDatasetColumn, B extends SigmaDatasetColumnBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SigmaDatasetColumn.
      *

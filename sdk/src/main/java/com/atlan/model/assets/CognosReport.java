@@ -391,6 +391,9 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CognosReportBuilder<C extends CognosReport, B extends CognosReportBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CognosReport.
      *

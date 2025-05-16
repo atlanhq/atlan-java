@@ -456,6 +456,9 @@ public class ADLSAccount extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ADLSAccountBuilder<C extends ADLSAccount, B extends ADLSAccountBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ADLSAccount.
      *

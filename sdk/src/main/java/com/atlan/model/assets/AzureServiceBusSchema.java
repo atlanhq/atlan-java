@@ -369,6 +369,10 @@ public class AzureServiceBusSchema extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AzureServiceBusSchemaBuilder<
+                    C extends AzureServiceBusSchema, B extends AzureServiceBusSchemaBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AzureServiceBusSchema.
      *

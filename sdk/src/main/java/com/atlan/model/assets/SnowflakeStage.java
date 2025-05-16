@@ -463,6 +463,9 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SnowflakeStageBuilder<C extends SnowflakeStage, B extends SnowflakeStageBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SnowflakeStage.
      *

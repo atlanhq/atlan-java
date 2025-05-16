@@ -253,4 +253,8 @@ public class SourceTagAttachment extends AtlanStruct {
                 .sourceTagSyncError(sourceTagSyncError)
                 .build();
     }
+
+    public abstract static class SourceTagAttachmentBuilder<
+                    C extends SourceTagAttachment, B extends SourceTagAttachmentBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

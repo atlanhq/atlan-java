@@ -535,6 +535,9 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SapErpColumnBuilder<C extends SapErpColumn, B extends SapErpColumnBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SapErpColumn.
      *

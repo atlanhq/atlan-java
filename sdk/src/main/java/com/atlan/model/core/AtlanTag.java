@@ -205,4 +205,7 @@ public class AtlanTag extends AtlanObject implements AuditDetail, Comparable<Atl
         if (o == null) return -1;
         return atlanTagComparator.compare(this, o);
     }
+
+    public abstract static class AtlanTagBuilder<C extends AtlanTag, B extends AtlanTagBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

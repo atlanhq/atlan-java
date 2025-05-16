@@ -356,6 +356,10 @@ public class CogniteSequence extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CogniteSequenceBuilder<
+                    C extends CogniteSequence, B extends CogniteSequenceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CogniteSequence.
      *

@@ -598,6 +598,9 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class SnowflakeTagBuilder<C extends SnowflakeTag, B extends SnowflakeTagBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a SnowflakeTag.
      *

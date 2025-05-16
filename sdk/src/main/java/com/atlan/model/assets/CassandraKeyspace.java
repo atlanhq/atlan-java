@@ -403,6 +403,10 @@ public class CassandraKeyspace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CassandraKeyspaceBuilder<
+                    C extends CassandraKeyspace, B extends CassandraKeyspaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CassandraKeyspace.
      *

@@ -333,6 +333,10 @@ public class BusinessPolicyException extends Asset implements IBusinessPolicyExc
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BusinessPolicyExceptionBuilder<
+                    C extends BusinessPolicyException, B extends BusinessPolicyExceptionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a BusinessPolicyException.
      *

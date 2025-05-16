@@ -227,4 +227,7 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
         if (o == null) return -1;
         return referenceComparator.compare(this, o);
     }
+
+    public abstract static class ReferenceBuilder<C extends Reference, B extends ReferenceBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

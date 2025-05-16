@@ -421,6 +421,10 @@ public class MicroStrategyVisualization extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MicroStrategyVisualizationBuilder<
+                    C extends MicroStrategyVisualization, B extends MicroStrategyVisualizationBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MicroStrategyVisualization.
      *

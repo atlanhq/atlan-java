@@ -388,6 +388,9 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBITileBuilder<C extends PowerBITile, B extends PowerBITileBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBITile.
      *

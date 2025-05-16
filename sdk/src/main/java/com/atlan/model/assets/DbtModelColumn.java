@@ -462,6 +462,9 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DbtModelColumnBuilder<C extends DbtModelColumn, B extends DbtModelColumnBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DbtModelColumn.
      *

@@ -377,6 +377,9 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DomoDashboardBuilder<C extends DomoDashboard, B extends DomoDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DomoDashboard.
      *

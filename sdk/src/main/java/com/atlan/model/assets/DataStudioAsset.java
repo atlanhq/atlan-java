@@ -450,6 +450,10 @@ public class DataStudioAsset extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class DataStudioAssetBuilder<
+                    C extends DataStudioAsset, B extends DataStudioAssetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a DataStudioAsset.
      *

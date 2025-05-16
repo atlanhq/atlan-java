@@ -422,6 +422,9 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AdfDatasetBuilder<C extends AdfDataset, B extends AdfDatasetBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AdfDataset.
      *

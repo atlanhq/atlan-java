@@ -141,4 +141,7 @@ public class BadgeCondition extends AtlanStruct {
                 .badgeConditionColorhex(color)
                 .build();
     }
+
+    public abstract static class BadgeConditionBuilder<C extends BadgeCondition, B extends BadgeConditionBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }

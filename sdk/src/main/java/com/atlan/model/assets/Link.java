@@ -437,6 +437,9 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
         return UUID.randomUUID().toString();
     }
 
+    public abstract static class LinkBuilder<C extends Link, B extends LinkBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Link.
      *

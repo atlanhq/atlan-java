@@ -407,6 +407,9 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class FileBuilder<C extends File, B extends FileBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a File.
      *

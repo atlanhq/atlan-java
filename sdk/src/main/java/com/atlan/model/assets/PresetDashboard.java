@@ -455,6 +455,10 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PresetDashboardBuilder<
+                    C extends PresetDashboard, B extends PresetDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PresetDashboard.
      *

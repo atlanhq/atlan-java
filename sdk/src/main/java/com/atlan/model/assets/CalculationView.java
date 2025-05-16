@@ -475,6 +475,10 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class CalculationViewBuilder<
+                    C extends CalculationView, B extends CalculationViewBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a CalculationView.
      *

@@ -460,6 +460,9 @@ public class MCMonitor extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class MCMonitorBuilder<C extends MCMonitor, B extends MCMonitorBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a MCMonitor.
      *

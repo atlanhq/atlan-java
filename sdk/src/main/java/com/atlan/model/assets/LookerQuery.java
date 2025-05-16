@@ -386,6 +386,9 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class LookerQueryBuilder<C extends LookerQuery, B extends LookerQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a LookerQuery.
      *

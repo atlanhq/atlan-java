@@ -253,4 +253,7 @@
     public static ${className} removeUserDescription(AtlanClient client, String qualifiedName, String name, boolean isEnabled) throws AtlanException {
         return (${className}) Asset.removeUserDescription(client, updater(qualifiedName, name, isEnabled));
     }
+
+    public abstract static class ${className}Builder<C extends ${className}, B extends ${className}Builder<C, B>>
+            extends ${parentClassName}.${parentClassName}Builder<C, B> {}
 </#macro>

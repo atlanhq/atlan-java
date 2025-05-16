@@ -608,6 +608,9 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TablePartitionBuilder<C extends TablePartition, B extends TablePartitionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TablePartition.
      *

@@ -405,6 +405,9 @@ public class AnomaloCheck extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AnomaloCheckBuilder<C extends AnomaloCheck, B extends AnomaloCheckBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AnomaloCheck.
      *

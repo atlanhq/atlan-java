@@ -413,6 +413,9 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class PowerBITableBuilder<C extends PowerBITable, B extends PowerBITableBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a PowerBITable.
      *

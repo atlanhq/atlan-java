@@ -482,6 +482,9 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class FunctionBuilder<C extends Function, B extends FunctionBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Function.
      *

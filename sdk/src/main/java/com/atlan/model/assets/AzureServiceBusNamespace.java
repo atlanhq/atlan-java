@@ -372,6 +372,10 @@ public class AzureServiceBusNamespace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class AzureServiceBusNamespaceBuilder<
+                    C extends AzureServiceBusNamespace, B extends AzureServiceBusNamespaceBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a AzureServiceBusNamespace.
      *

@@ -236,4 +236,7 @@ public abstract class AtlanRequest extends AtlanObject {
     public static boolean reject(AtlanClient client, String guid, String message) throws AtlanException {
         return client.requests.reject(guid, message);
     }
+
+    public abstract static class AtlanRequestBuilder<C extends AtlanRequest, B extends AtlanRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

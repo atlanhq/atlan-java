@@ -59,4 +59,8 @@ public class SearchLogRequest extends AtlanObject {
     public SearchLogResponse search(AtlanClient client) throws AtlanException {
         return client.searchLog.search(this);
     }
+
+    public abstract static class SearchLogRequestBuilder<
+                    C extends SearchLogRequest, B extends SearchLogRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

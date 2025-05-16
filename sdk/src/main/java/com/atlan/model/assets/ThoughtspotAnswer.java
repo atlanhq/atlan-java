@@ -368,6 +368,10 @@ public class ThoughtspotAnswer extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class ThoughtspotAnswerBuilder<
+                    C extends ThoughtspotAnswer, B extends ThoughtspotAnswerBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a ThoughtspotAnswer.
      *

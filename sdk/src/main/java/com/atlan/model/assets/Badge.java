@@ -353,6 +353,9 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class BadgeBuilder<C extends Badge, B extends BadgeBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a Badge.
      *

@@ -447,6 +447,9 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class APIPathBuilder<C extends APIPath, B extends APIPathBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a APIPath.
      *

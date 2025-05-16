@@ -54,4 +54,7 @@ public class UserRequest extends AtlanObject {
     public UserResponse list(AtlanClient client) throws AtlanException {
         return client.users.list(this);
     }
+
+    public abstract static class UserRequestBuilder<C extends UserRequest, B extends UserRequestBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {}
 }

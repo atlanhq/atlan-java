@@ -407,6 +407,10 @@ public class TableauCalculatedField extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class TableauCalculatedFieldBuilder<
+                    C extends TableauCalculatedField, B extends TableauCalculatedFieldBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a TableauCalculatedField.
      *

@@ -528,6 +528,9 @@ public class S3Object extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class S3ObjectBuilder<C extends S3Object, B extends S3ObjectBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a S3Object.
      *

@@ -359,6 +359,10 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    public abstract static class RedashDashboardBuilder<
+                    C extends RedashDashboard, B extends RedashDashboardBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {}
+
     /**
      * Remove the system description from a RedashDashboard.
      *
