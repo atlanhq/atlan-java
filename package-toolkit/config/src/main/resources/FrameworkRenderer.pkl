@@ -69,6 +69,20 @@ local const function getProcessTemplate(
       name = "credentials"
     }
   } else null
+  tolerations = new Listing {
+    new Toleration {
+      key = "archetype"
+      operator = "Equal"
+      value = "arm64"
+      effect = "NoSchedule"
+    }
+    new Toleration {
+      key = "purpose"
+      operator = "Equal"
+      value = "workflows"
+      effect = "NoSchedule"
+    }
+  }
   initContainers = if (credVariable != null) new Listing {
     new WorkflowContainer {
       name = "fetch-credentials"
@@ -877,6 +891,13 @@ local class WorkflowTemplate {
   hidden template: WorkflowTemplateDefinition
 }
 
+local class Toleration {
+  key: String
+  operator: String
+  value: String
+  effect: String
+}
+
 local class WorkflowTemplateDefinition {
   name: String = "main"
   fixed inputs: WorkflowInputs = new WorkflowInputs {
@@ -888,6 +909,7 @@ local class WorkflowTemplateDefinition {
   }
   outputs: Framework.WorkflowOutputs?
   volumes: Listing<WorkflowVolume>?
+  tolerations: Listing<Toleration>?
   container: WorkflowContainer?
   initContainers: Listing<WorkflowContainer>?
   dag: WorkflowDag?

@@ -60,28 +60,32 @@ object TestsCleanup {
                 .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
                 .toList()
         glossaries.forEach { glossary ->
-            val qn = glossary.qualifiedName
-            val name = glossary.name
-            val terms =
-                GlossaryTerm
-                    .select(client, true)
-                    .where(GlossaryTerm.ANCHOR.eq(qn))
-                    .stream()
-                    .map { it.guid }
-                    .toList()
-            logger.info { "Purging ${terms.size} terms from glossary: $name" }
-            purgeByGuids(client, terms)
-            val categories =
-                GlossaryCategory
-                    .select(client, true)
-                    .where(GlossaryCategory.ANCHOR.eq(qn))
-                    .stream()
-                    .map { it.guid }
-                    .toList()
-            logger.info { "Purging ${categories.size} categories from glossary: $name" }
-            purgeByGuids(client, categories)
-            logger.info { "Purging glossary: $name" }
-            purgeByGuids(client, listOf(glossary.guid))
+            try {
+                val qn = glossary.qualifiedName
+                val name = glossary.name
+                val terms =
+                    GlossaryTerm
+                        .select(client, true)
+                        .where(GlossaryTerm.ANCHOR.eq(qn))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+                logger.info { "Purging ${terms.size} terms from glossary: $name" }
+                purgeByGuids(client, terms)
+                val categories =
+                    GlossaryCategory
+                        .select(client, true)
+                        .where(GlossaryCategory.ANCHOR.eq(qn))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+                logger.info { "Purging ${categories.size} categories from glossary: $name" }
+                purgeByGuids(client, categories)
+                logger.info { "Purging glossary: $name" }
+                purgeByGuids(client, listOf(glossary.guid))
+            } catch (e: Exception) {
+                logger.error(e) { "Unable to purge glossary ${glossary.name} -- proceeding with others." }
+            }
         }
     }
 
@@ -103,7 +107,11 @@ object TestsCleanup {
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} data products." }
-        purgeByGuids(client, list)
+        try {
+            purgeByGuids(client, list)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to purge data products -- proceeding with others." }
+        }
     }
 
     private fun purgeDomains(
@@ -118,7 +126,11 @@ object TestsCleanup {
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} data domains." }
-        purgeByGuids(client, list)
+        try {
+            purgeByGuids(client, list)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to purge data domains -- proceeding with others." }
+        }
     }
 
     private fun purgeAssets(
@@ -133,19 +145,23 @@ object TestsCleanup {
                 .map { AssetDetails(it.name, it.qualifiedName, it.guid) }
                 .toList()
         list.forEach { connection ->
-            val qn = connection.qualifiedName
-            val name = connection.name
-            val assets =
-                client.assets
-                    .select(true)
-                    .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
-                    .stream()
-                    .map { it.guid }
-                    .toList()
-            logger.info { "Purging ${assets.size} assets from connection: $name" }
-            purgeByGuids(client, assets)
-            logger.info { "Purging connection: $name" }
-            purgeByGuids(client, listOf(connection.guid))
+            try {
+                val qn = connection.qualifiedName
+                val name = connection.name
+                val assets =
+                    client.assets
+                        .select(true)
+                        .where(Asset.CONNECTION_QUALIFIED_NAME.eq(qn))
+                        .stream()
+                        .map { it.guid }
+                        .toList()
+                logger.info { "Purging ${assets.size} assets from connection: $name" }
+                purgeByGuids(client, assets)
+                logger.info { "Purging connection: $name" }
+                purgeByGuids(client, listOf(connection.guid))
+            } catch (e: Exception) {
+                logger.error(e) { "Unable to purge connection ${connection.name} -- proceeding with others." }
+            }
         }
     }
 
@@ -161,7 +177,11 @@ object TestsCleanup {
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} purposes." }
-        purgeByGuids(client, list)
+        try {
+            purgeByGuids(client, list)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to purge purposes -- proceeding with others." }
+        }
     }
 
     private fun purgePersonas(
@@ -176,7 +196,11 @@ object TestsCleanup {
                 .map { it.guid }
                 .toList()
         logger.info { "Purging ${list.size} personas." }
-        purgeByGuids(client, list)
+        try {
+            purgeByGuids(client, list)
+        } catch (e: Exception) {
+            logger.error(e) { "Unable to purge personas -- proceeding with others." }
+        }
     }
 
     private fun purgeCustomMetadata(
@@ -219,7 +243,11 @@ object TestsCleanup {
                 .toList()
         enums.forEach { e ->
             logger.info { "Purging enum: ${e.internalName}" }
-            getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
+            try {
+                getPrivilegedClient(client).use { sudo -> sudo.typeDefs.purge(e.internalName) }
+            } catch (ex: Exception) {
+                logger.error(ex) { " ... failed to purge: ${e.internalName} -- proceeding with others." }
+            }
         }
     }
 
