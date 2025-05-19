@@ -40,15 +40,14 @@ object DuplicateDetector {
         Utils.initializeContext<DuplicateDetectorCfg>().use { ctx ->
             val qnPrefix = ctx.config.qnPrefix
             val types = ctx.config.assetTypes
-            val batchSize = 20
 
             logger.info {
                 "Detecting duplicates across $types (for prefix $qnPrefix) on: ${ctx.client.baseUrl}"
             }
-            findAssets(ctx.client, qnPrefix, types, batchSize)
+            findAssets(ctx.client, qnPrefix, types)
 
             val glossaryQN = glossaryForDuplicates(ctx.client, ctx.config.glossaryName)
-            termsForDuplicates(ctx.client, glossaryQN, batchSize)
+            termsForDuplicates(ctx.client, glossaryQN)
         }
     }
 
@@ -64,7 +63,7 @@ object DuplicateDetector {
         client: AtlanClient,
         qnPrefix: String,
         types: Collection<String>,
-        batchSize: Int,
+        batchSize: Int = 300,
     ) {
         val request =
             client.assets
@@ -95,7 +94,8 @@ object DuplicateDetector {
                         .toList()
                         .toSet()
                 val containerKey = AssetKey(asset.typeName, asset.qualifiedName, asset.guid)
-                if (uniqueContainers.put(containerKey, containerKey) == null) {
+                if (columnNames.isNotEmpty() && uniqueContainers.put(containerKey, containerKey) == null) {
+                    // Skip assets with no columns whatsoever
                     val hash = columnNames.hashCode()
                     if (!hashToAssetKeys.containsKey(hash)) {
                         hashToColumns[hash] = columnNames
@@ -142,7 +142,7 @@ object DuplicateDetector {
     fun termsForDuplicates(
         client: AtlanClient,
         glossaryQN: String,
-        batchSize: Int,
+        batchSize: Int = 20,
     ) {
         val termCount = AtomicLong(0)
         val assetCount = AtomicLong(0)
@@ -180,31 +180,32 @@ object DuplicateDetector {
                                     .build()
                             toCreate.save(client).getResult(toCreate)
                         }
+                    val termRef = term.trimToReference()
                     keys
                         .stream()
                         .map(AssetKey::guid)
                         .asSequence()
-                        .chunked(batchSize)
+                        .chunked(300)
                         .toList()
                         .forEach { chunk ->
                             client.assets
                                 .select()
                                 .where(Asset.GUID.`in`(chunk))
                                 .includeOnRelations(Asset.QUALIFIED_NAME)
-                                .pageSize(batchSize)
+                                .pageSize(300)
                                 .stream(true)
                                 .forEach { asset ->
                                     assetCount.getAndIncrement()
                                     batch.add(
                                         asset
                                             .trimToRequired()
-                                            .appendAssignedTerm(term)
+                                            .appendAssignedTerm(termRef)
                                             .build(),
                                     )
                                 }
-                            batch.flush()
-                            Utils.logProgress(termCount, totalSets, logger)
                         }
+                    batch.flush()
+                    Utils.logProgress(termCount, totalSets, logger)
                 }
             }
         }
