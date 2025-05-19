@@ -18,6 +18,9 @@ import com.atlan.pkg.Utils
 import com.atlan.util.ParallelBatch
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.sequences.chunked
+import kotlin.sequences.toList
+import kotlin.streams.asSequence
 
 object DuplicateDetector {
     private val logger = Utils.getLogger(this.javaClass.name)
@@ -177,31 +180,31 @@ object DuplicateDetector {
                                     .build()
                             toCreate.save(client).getResult(toCreate)
                         }
-                    val guids =
-                        keys
-                            .stream()
-                            .map(AssetKey::guid)
-                            .toList()
-                    client.assets
-                        .select()
-                        .where(Asset.GUID.`in`(guids))
-                        .includeOnResults(Asset.ASSIGNED_TERMS)
-                        .includeOnRelations(Asset.QUALIFIED_NAME)
-                        .pageSize(batchSize)
-                        .stream(true)
-                        .forEach { asset ->
-                            assetCount.getAndIncrement()
-                            val existingTerms = asset.assignedTerms
-                            batch.add(
-                                asset
-                                    .trimToRequired()
-                                    .assignedTerms(existingTerms)
-                                    .assignedTerm(term)
-                                    .build(),
-                            )
+                    keys
+                        .stream()
+                        .map(AssetKey::guid)
+                        .asSequence()
+                        .chunked(batchSize)
+                        .toList()
+                        .forEach { chunk ->
+                            client.assets
+                                .select()
+                                .where(Asset.GUID.`in`(chunk))
+                                .includeOnRelations(Asset.QUALIFIED_NAME)
+                                .pageSize(batchSize)
+                                .stream(true)
+                                .forEach { asset ->
+                                    assetCount.getAndIncrement()
+                                    batch.add(
+                                        asset
+                                            .trimToRequired()
+                                            .appendAssignedTerm(term)
+                                            .build(),
+                                    )
+                                }
+                            batch.flush()
+                            Utils.logProgress(termCount, totalSets, logger)
                         }
-                    batch.flush()
-                    Utils.logProgress(termCount, totalSets, logger)
                 }
             }
         }
