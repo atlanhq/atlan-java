@@ -86,7 +86,7 @@ jobs:
       - name: List package tests
         id: test-directories
         run: |
-          pkgs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed -E 's|samples/packages/||' | grep -v 'build' | tr '\n' ' ')
+          pkgs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed -E 's|samples/packages/||' | grep -v '^build$' | tr '\n' ' ')
           json_pkgs=$(echo "${pkgs[@]}" | jq -R -c 'split(" ")[:-1]')
           echo "tests=$json_pkgs" >> $GITHUB_OUTPUT
   package-test:
