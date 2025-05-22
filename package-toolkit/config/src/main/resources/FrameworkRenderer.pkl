@@ -71,7 +71,7 @@ local const function getProcessTemplate(
   } else null
   tolerations = new Listing {
     new Toleration {
-      key = "archetype"
+      key = "archtype"
       operator = "Equal"
       value = "arm64"
       effect = "NoSchedule"
