@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.cache.OffHeapFailureCache
+import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
@@ -44,7 +45,66 @@ object Importer {
             exitProcess(1)
         }
 
-        // 1. Glossaries -- everything else can be linked to terms
+        val assetsInput =
+            if (assetsFileProvided) {
+                if (ctx.config.assetsFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+                    exitProcess(2)
+                }
+                Utils.getInputFile(
+                    ctx.config.assetsFile,
+                    outputDirectory,
+                    ctx.config.importType == "DIRECT",
+                    ctx.config.assetsPrefix,
+                    ctx.config.assetsKey,
+                )
+            } else {
+                null
+            }
+
+        // 0. Connections -- without terms, domains
+        val resultsConnections =
+            if (assetsInput != null) {
+                val colsToSkip =
+                    setOf(
+                        "assignedTerms",
+                        Asset.ASSIGNED_TERMS.atlanFieldName,
+                        Asset.DOMAIN_GUIDS.atlanFieldName,
+                    )
+                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+                logger.info { " === Creating skeletal connections... ===" }
+                // Note: we force-track the batches here to ensure any created connections are cached
+                // (without tracking, any connections created will NOT be cached, either, which will then cause issues
+                // with the subsequent processing steps.)
+                // We also need to load these connections first, irrespective of any delta calculation, so that
+                // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
+                val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
+                connectionImporter.import(colsToSkip)
+            } else {
+                null
+            }
+
+        // 1. Tags -- everything else can be tagged (including terms, products, etc)
+        if (tagFileProvided) {
+            val tagsInput =
+                Utils.getInputFile(
+                    ctx.config.tagsFile,
+                    outputDirectory,
+                    ctx.config.importType == "DIRECT",
+                    ctx.config.tagsPrefix,
+                    ctx.config.tagsKey,
+                )
+            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.tagsFailOnErrors)
+            if (ctx.config.tagsFieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.tagsFieldSeparator}" }
+                exitProcess(2)
+            }
+            logger.info { "=== Importing tag definitions... ===" }
+            val tagImporter = AtlanTagImporter(ctx, tagsInput, logger)
+            tagImporter.import()
+        }
+
+        // 2. Glossaries -- everything else can be linked to terms
         val resultsGTC =
             if (glossariesFileProvided) {
                 val glossariesInput =
@@ -84,7 +144,7 @@ object Importer {
             exitProcess(1)
         }
 
-        // 2. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
+        // 3. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
         val resultsDDP =
             if (dataProductsFileProvided) {
                 val dataProductsInput =
@@ -124,57 +184,12 @@ object Importer {
             exitProcess(2)
         }
 
-        val assetsInput =
-            if (assetsFileProvided) {
-                if (ctx.config.assetsFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
-                    exitProcess(2)
-                }
-                Utils.getInputFile(
-                    ctx.config.assetsFile,
-                    outputDirectory,
-                    ctx.config.importType == "DIRECT",
-                    ctx.config.assetsPrefix,
-                    ctx.config.assetsKey,
-                )
-            } else {
-                null
-            }
-
-        // 3. Connections (since they must first exist for source-synced tags, but could themselves have terms and / or domains assigned)
-        val resultsConnections =
-            if (assetsInput != null) {
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
-                logger.info { " === Importing connections... ===" }
-                // Note: we force-track the batches here to ensure any created connections are cached
-                // (without tracking, any connections created will NOT be cached, either, which will then cause issues
-                // with the subsequent processing steps.)
-                // We also need to load these connections first, irrespective of any delta calculation, so that
-                // we can be certain we will be able to resolve the assets' qualifiedNames (for subsequent processing)
-                val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
-                connectionImporter.import()
-            } else {
-                null
-            }
-
-        // 4. Tag definitions
-        if (tagFileProvided) {
-            val tagsInput =
-                Utils.getInputFile(
-                    ctx.config.tagsFile,
-                    outputDirectory,
-                    ctx.config.importType == "DIRECT",
-                    ctx.config.tagsPrefix,
-                    ctx.config.tagsKey,
-                )
-            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.tagsFailOnErrors)
-            if (ctx.config.tagsFieldSeparator.length > 1) {
-                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.tagsFieldSeparator}" }
-                exitProcess(2)
-            }
-            logger.info { "=== Importing tag definitions... ===" }
-            val tagImporter = AtlanTagImporter(ctx, tagsInput, logger)
-            tagImporter.import()
+        // 4. Connections (this time WITH terms, domains)
+        if (assetsInput != null) {
+            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+            logger.info { " === Updating connections... ===" }
+            val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
+            connectionImporter.import()
         }
 
         // 5. Assets (last) -- since these may be related to the other objects loaded above
@@ -185,7 +200,7 @@ object Importer {
                 val previousFileDirect = ctx.config.assetsPreviousFileDirect
                 val preprocessedDetails =
                     AssetImporter
-                        .Preprocessor(assetsInput, ctx.config.assetsFieldSeparator[0], logger)
+                        .Preprocessor(ctx, assetsInput, ctx.config.assetsFieldSeparator[0], logger)
                         .preprocess<AssetImporter.Results>()
                 if (preprocessedDetails.hasLinks) {
                     ctx.linkCache.preload()
@@ -206,6 +221,7 @@ object Importer {
                     reloadSemantic = ctx.config.assetsDeltaReloadCalculation,
                     previousFilePreprocessor =
                         AssetImporter.Preprocessor(
+                            ctx,
                             previousFileDirect,
                             ctx.config.assetsFieldSeparator[0],
                             logger,
