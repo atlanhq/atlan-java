@@ -7,25 +7,22 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Schema
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde
-import com.atlan.pkg.util.AssetResolver.ConnectionIdentity
 import mu.KLogger
 
 class SchemaXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
     completeHeaders: List<String>,
     preprocessedDetails: Importer.Results,
-    deferredConnectionCache: MutableMap<ConnectionIdentity, String>,
     private val logger: KLogger,
 ) : AssetXformer(
         ctx = ctx,
         completeHeaders = completeHeaders,
         typeNameFilter = Schema.TYPE_NAME,
         preprocessedDetails = preprocessedDetails,
-        deferredConnectionCache = deferredConnectionCache,
         logger = logger,
     ) {
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
-        val connectionQN = getConnectionQN(ctx, inputRow)
+        val connectionQN = getConnectionQN(inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
         val assetQN = "$connectionQN/${details.partialQN}"
         val parentQN = "$connectionQN/${details.parentPartialQN}"
