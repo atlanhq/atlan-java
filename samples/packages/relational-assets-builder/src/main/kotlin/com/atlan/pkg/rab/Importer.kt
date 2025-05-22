@@ -18,7 +18,6 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
-import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.DeltaProcessor
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
@@ -130,8 +129,6 @@ object Importer {
             ctx.dataDomainCache.preload()
         }
 
-        val deferredConnectionCache = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
-
         val completeHeaders = BASE_OUTPUT_HEADERS.toMutableList()
         // Determine any non-standard RAB fields in the header and append them to the end of
         // the list of standard header fields, so they're passed-through to asset import
@@ -162,31 +159,31 @@ object Importer {
                 writer.writeRecord(completeHeaders)
 
                 logger.info { " --- Transforming connections... ---" }
-                val connectionXformer = ConnectionXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val connectionXformer = ConnectionXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 connectionXformer.transform(writer)
 
                 logger.info { " --- Transforming databases... ---" }
-                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val databaseXformer = DatabaseXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 databaseXformer.transform(writer)
 
                 logger.info { " --- Transforming schemas... ---" }
-                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val schemaXformer = SchemaXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 schemaXformer.transform(writer)
 
                 logger.info { " --- Transforming tables... ---" }
-                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val tableXformer = TableXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 tableXformer.transform(writer)
 
                 logger.info { " --- Transforming views... ---" }
-                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val viewXformer = ViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 viewXformer.transform(writer)
 
                 logger.info { " --- Transforming materialized views... ---" }
-                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val materializedViewXformer = MaterializedViewXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 materializedViewXformer.transform(writer)
 
                 logger.info { " --- Transforming columns... ---" }
-                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, deferredConnectionCache, logger)
+                val columnXformer = ColumnXformer(ctx, completeHeaders, preprocessedDetails, logger)
                 columnXformer.transform(writer)
             }
     }

@@ -23,7 +23,6 @@ abstract class AssetXformer(
     completeHeaders: List<String>,
     val typeNameFilter: String,
     val preprocessedDetails: Importer.Results,
-    val deferredConnectionCache: MutableMap<ConnectionIdentity, String>,
     private val logger: KLogger,
 ) : CSVXformer(
         inputFile = preprocessedDetails.preprocessedFile,
@@ -50,16 +49,10 @@ abstract class AssetXformer(
 
     abstract fun mapAsset(inputRow: Map<String, String>): Map<String, String>
 
-    fun getConnectionQN(
-        ctx: PackageContext<RelationalAssetsBuilderCfg>,
-        inputRow: Map<String, String>,
-    ): String {
+    fun getConnectionQN(inputRow: Map<String, String>): String {
         val connectorType = getConnectorType(inputRow)
         val connectionName = trimWhitespace(inputRow.getOrElse(Asset.CONNECTION_NAME.atlanFieldName) { "" })
-        val connectionId = ConnectionIdentity(connectionName, connectorType)
-        return deferredConnectionCache.getOrElse(connectionId) {
-            ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
-        }
+        return "{{$connectorType/$connectionName}}"
     }
 
     companion object {
@@ -96,7 +89,14 @@ abstract class AssetXformer(
                 RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
             )
 
-        fun getConnectorType(inputRow: Map<String, String>): String = trimWhitespace(inputRow.getOrElse("connectorType") { "" }).lowercase()
+        fun getConnectorType(inputRow: Map<String, String>): String =
+            trimWhitespace(
+                inputRow.getOrElse("connectorName") {
+                    inputRow.getOrElse("connectorType") {
+                        inputRow.getOrElse("customConnectorType") { "" }
+                    }
+                },
+            ).lowercase()
 
         /**
          * Attempt to resolve the full SQL hierarchy details of a row (asset).
