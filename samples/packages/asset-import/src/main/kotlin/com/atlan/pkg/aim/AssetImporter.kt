@@ -267,7 +267,6 @@ class AssetImporter(
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
         )
-    private val connectionsMap = ctx.connectionCache.getIdentityMap()
 
     private data class RelationshipEnds(
         val name: String,
@@ -359,7 +358,7 @@ class AssetImporter(
             // Otherwise, we need to do multi-pass loading (at multiple levels):
             //  - Import assets in tiered order, top-to-bottom
             //  - Stop when we have processed all the types in the file
-            val includes = preprocess()
+            val includes = preprocess(ctx)
             if (includes.hasLinks) {
                 ctx.linkCache.preload()
             }
@@ -902,9 +901,10 @@ class AssetImporter(
     }
 
     /** Pre-process the assets import file. */
-    private fun preprocess(): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
+    private fun preprocess(ctx: PackageContext<*>): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     class Preprocessor(
+        private val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
@@ -950,6 +950,9 @@ class AssetImporter(
                 }
             } else if (deferredIdentity == null) {
                 throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+            } else {
+                val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
+                connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
             }
             return row
         }
