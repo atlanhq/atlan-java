@@ -28,6 +28,8 @@ class SchemaXformer(
         val parentQN = "$connectionQN/${details.parentPartialQN}"
         val tableCount = preprocessedDetails.qualifiedNameToTableCount[details.uniqueQN]?.toInt()
         val viewCount = preprocessedDetails.qualifiedNameToViewCount[details.uniqueQN]?.toInt()
+        val tables = if (ctx.config.deltaSemantic == "full") tableCount?.toString() ?: "0" else tableCount?.toString() ?: ""
+        val views = if (ctx.config.deltaSemantic == "full") viewCount?.toString() ?: "0" else viewCount?.toString() ?: ""
         return if (assetQN.isNotBlank()) {
             return mapOf(
                 RowSerde.getHeaderForField(Asset.QUALIFIED_NAME) to assetQN,
@@ -38,8 +40,8 @@ class SchemaXformer(
                 RowSerde.getHeaderForField(Schema.DATABASE_NAME, Schema::class.java) to details.parentName,
                 RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME, Schema::class.java) to parentQN,
                 RowSerde.getHeaderForField(Schema.DATABASE, Schema::class.java) to "Database@$parentQN",
-                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java) to (tableCount?.toString() ?: "0"),
-                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java) to (viewCount?.toString() ?: "0"),
+                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java) to tables,
+                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java) to views,
             )
         } else {
             mapOf()

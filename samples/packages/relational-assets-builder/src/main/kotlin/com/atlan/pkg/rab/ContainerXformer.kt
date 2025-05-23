@@ -28,6 +28,7 @@ abstract class ContainerXformer(
         val assetQN = "$connectionQN/${details.partialQN}"
         val parentQN = "$connectionQN/${details.parentPartialQN}"
         val columnCount = preprocessedDetails.qualifiedNameToChildCount[details.uniqueQN]?.toLong()
+        val columns = if (ctx.config.deltaSemantic == "full") columnCount?.toString() ?: "0" else columnCount?.toString() ?: ""
         return if (assetQN.isNotBlank()) {
             return mapOf(
                 RowSerde.getHeaderForField(Asset.QUALIFIED_NAME) to assetQN,
@@ -40,7 +41,7 @@ abstract class ContainerXformer(
                 RowSerde.getHeaderForField(Table.SCHEMA_NAME, Table::class.java) to details.parentName,
                 RowSerde.getHeaderForField(Table.SCHEMA_QUALIFIED_NAME, Table::class.java) to parentQN,
                 RowSerde.getHeaderForField(Table.SCHEMA, Table::class.java) to "Schema@$parentQN",
-                RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java) to (columnCount?.toString() ?: "0"),
+                RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java) to columns,
             )
         } else {
             mapOf()
