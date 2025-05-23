@@ -40,7 +40,7 @@ abstract class ContainerXformer(
                 RowSerde.getHeaderForField(Table.SCHEMA_NAME, Table::class.java) to details.parentName,
                 RowSerde.getHeaderForField(Table.SCHEMA_QUALIFIED_NAME, Table::class.java) to parentQN,
                 RowSerde.getHeaderForField(Table.SCHEMA, Table::class.java) to "Schema@$parentQN",
-                RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java) to (columnCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Table.COLUMN_COUNT, Table::class.java) to (columnCount?.toString() ?: "0"),
             )
         } else {
             mapOf()

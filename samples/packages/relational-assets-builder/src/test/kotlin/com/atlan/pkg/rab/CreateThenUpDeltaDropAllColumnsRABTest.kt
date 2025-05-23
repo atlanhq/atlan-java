@@ -38,12 +38,13 @@ import kotlin.test.assertNull
 
 /**
  * Test creation of relational assets followed by an upsert of the same relational assets, including calculating a delta.
+ * This test specifically drops all columns (COL1 and COL2) during the update to verify that the table has 0 columns after the update.
  */
-class CreateThenUpDeltaRABTest : PackageTest("ctud") {
+class CreateThenUpDeltaDropAllColumnsRABTest : PackageTest("ctudac") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val conn1 = makeUnique("c1")
-    private val conn1Type = AtlanConnectorType.IMPALA
+    private val conn1Type = AtlanConnectorType.STARBURST_GALAXY
     private val tag1 = makeUnique("t1")
     private val tag2 = makeUnique("t2")
 
@@ -64,7 +65,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
             lines.forEach { line ->
                 val revised =
                     line
-                        .replace("iceberg", "impala")
+                        .replace("iceberg", "starburst-galaxy")
                         .replace("{{CONNECTION1}}", conn1)
                         .replace("{{TAG1}}", tag1)
                         .replace("{{TAG2}}", tag2)
@@ -81,21 +82,21 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         input.useLines { lines ->
             lines.forEach { line ->
                 if (!line.contains("TEST_VIEW")) {
-                    if (!line.contains("COL2")) {
+                    // Drop both COL1 and COL2 entirely to validate that columnCount is updated to 0
+                    if (!line.contains("COL1") && !line.contains("COL2")) {
                         val revised =
                             line
                                 .replace("Test ", "Revised ")
                                 .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                         output.appendText("$revised\n")
                     }
-                    // Note: we'll drop COL2 entirely to validate that columnCount is updated
                 }
             }
         }
         // Create some net-new assets
-        output.appendText("View,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,,,New view,,DRAFT,,,,,,\n")
-        output.appendText("Column,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL5,Int32,Test column 5,,,,,,,,\n")
-        output.appendText("Column,$conn1,impala,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL6,varchar(200),Test column 6,,,,,,,,\n")
+        output.appendText("View,$conn1,starburst-galaxy,TEST_DB,TEST_SCHEMA,TEST_NEW_V,,,New view,,DRAFT,,,,,,\n")
+        output.appendText("Column,$conn1,starburst-galaxy,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL5,Int32,Test column 5,,,,,,,,\n")
+        output.appendText("Column,$conn1,starburst-galaxy,TEST_DB,TEST_SCHEMA,TEST_NEW_V,COL6,varchar(200),Test column 6,,,,,,,,\n")
     }
 
     private fun createTags() {
@@ -217,7 +218,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         removeTag(tag2)
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun connection1Created() {
         validateConnection()
     }
@@ -236,7 +237,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         assertEquals(setOf("admins"), c1.adminGroups)
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun database1Created() {
         validateDatabase("Test DB")
     }
@@ -263,7 +264,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         assertEquals("TEST_SCHEMA", db.schemas.first().name)
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun schema1Created() {
         validateSchema("Test schema")
     }
@@ -299,7 +300,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         }
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun table1Created() {
         validateTable("Test table")
     }
@@ -360,14 +361,14 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 .map(IColumn::getName)
                 .toList()
         assertEquals(columnCount.toInt(), colNames.size)
-        assertTrue(colNames.contains("COL1"))
-        if (columnCount == 2L) {
+        if (columnCount > 0) {
+            assertTrue(colNames.contains("COL1"))
             assertTrue(colNames.contains("COL2"))
         }
         blockForBackgroundTasks(client, listOf(tbl.guid), 60)
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun columnsForTable1Created() {
         validateColumnsForTable1("Test column 1")
     }
@@ -386,43 +387,45 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 .toRequest()
         val response = retrySearchUntil(request, columnCount)
         val found = response.assets
-        assertEquals(columnCount.toInt(), found.size)
-        val colNames = found.stream().map(Asset::getName).toList()
-        assertEquals(columnCount.toInt(), colNames.size)
-        assertTrue(colNames.contains("COL1"))
-        if (columnCount == 2L) {
+        if (columnCount > 0) {
+            assertEquals(columnCount.toInt(), found.size)
+            val colNames = found.stream().map(Asset::getName).toList()
+            assertEquals(columnCount.toInt(), colNames.size)
+            assertTrue(colNames.contains("COL1"))
             assertTrue(colNames.contains("COL2"))
-        }
-        found.forEach { col ->
-            col as Column
-            assertEquals(c1.qualifiedName, col.connectionQualifiedName)
-            assertEquals(conn1Type, col.connectorType)
-            assertEquals("TEST_DB", col.databaseName)
-            assertTrue(col.databaseQualifiedName.endsWith("/TEST_DB"))
-            assertEquals("TEST_SCHEMA", col.schemaName)
-            assertTrue(col.schemaQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA"))
-            assertEquals("TEST_TBL", col.tableName)
-            assertTrue(col.tableQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_TBL"))
-            assertTrue(col.viewName.isNullOrEmpty())
-            assertTrue(col.viewQualifiedName.isNullOrEmpty())
-            when (col.name) {
-                "COL1" -> {
-                    assertEquals("VARCHAR", col.dataType)
-                    assertEquals(1, col.order)
-                    assertEquals(displayCol1, col.displayName)
-                    assertEquals(255, col.maxLength)
-                    assertEquals("NVARCHAR(255)", col.rawDataTypeDefinition)
-                }
-                "COL2" -> {
-                    assertEquals("BIGINT", col.dataType)
-                    assertEquals(2, col.order)
-                    assertEquals("Test column 2", col.displayName)
+            found.forEach { col ->
+                col as Column
+                assertEquals(c1.qualifiedName, col.connectionQualifiedName)
+                assertEquals(conn1Type, col.connectorType)
+                assertEquals("TEST_DB", col.databaseName)
+                assertTrue(col.databaseQualifiedName.endsWith("/TEST_DB"))
+                assertEquals("TEST_SCHEMA", col.schemaName)
+                assertTrue(col.schemaQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA"))
+                assertEquals("TEST_TBL", col.tableName)
+                assertTrue(col.tableQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA/TEST_TBL"))
+                assertTrue(col.viewName.isNullOrEmpty())
+                assertTrue(col.viewQualifiedName.isNullOrEmpty())
+                when (col.name) {
+                    "COL1" -> {
+                        assertEquals("VARCHAR", col.dataType)
+                        assertEquals(1, col.order)
+                        assertEquals(displayCol1, col.displayName)
+                        assertEquals(255, col.maxLength)
+                        assertEquals("NVARCHAR(255)", col.rawDataTypeDefinition)
+                    }
+                    "COL2" -> {
+                        assertEquals("BIGINT", col.dataType)
+                        assertEquals(2, col.order)
+                        assertEquals("Test column 2", col.displayName)
+                    }
                 }
             }
+        } else {
+            assertTrue(found.isNullOrEmpty())
         }
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun view1Created() {
         validateView()
     }
@@ -486,7 +489,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         }
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun columnsForView1Created() {
         validateColumnsForView()
     }
@@ -563,7 +566,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         }
     }
 
-    @Test(groups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.create"])
     fun connectionCacheCreated() {
         validateConnectionCache()
     }
@@ -586,14 +589,14 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
             assertEquals(setOf("COL1", "COL2", "COL3", "COL4"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_VIEW"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         } else {
-            assertEquals(7, assets.size)
-            assertEquals(3, assets.count { it.typeName == Column.TYPE_NAME })
-            assertEquals(setOf("COL1", "COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
+            assertEquals(6, assets.size)
+            assertEquals(2, assets.count { it.typeName == Column.TYPE_NAME })
+            assertEquals(setOf("COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_NEW_V"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         }
     }
 
-    @Test(groups = ["rab.ctud.runUpdate"], dependsOnGroups = ["rab.ctud.create"])
+    @Test(groups = ["rab.ctudac.runUpdate"], dependsOnGroups = ["rab.ctudac.create"])
     fun upsertRevisions() {
         modifyFile()
         runCustomPackage(
@@ -630,45 +633,45 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 .where(Column.DISPLAY_NAME.startsWith("Revised column"))
                 .includesOnResults(columnAttrs)
                 .toRequest()
-        retrySearchUntil(request, 1)
+        retrySearchUntil(request, 0)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun connectionUnchanged() {
         validateConnection()
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun databaseChanged() {
         validateDatabase("Revised DB")
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun schemaChanged() {
         validateSchema("Revised schema")
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun tableChanged() {
-        validateTable("Revised table", 1)
+        validateTable("Revised table", 0)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun columnsForTable1Changed() {
-        validateColumnsForTable1("Revised column 1", 1)
+        validateColumnsForTable1("Revised column 1", 0)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun viewRemoved() {
         validateView(false)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun columnsForView1Removed() {
         validateColumnsForView(false)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun entirelyNewView() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
@@ -703,7 +706,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         blockForBackgroundTasks(client, listOf(view.guid), 60)
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun entirelyNewViewColumns() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
@@ -749,17 +752,17 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         }
     }
 
-    @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
+    @Test(groups = ["rab.ctudac.update"], dependsOnGroups = ["rab.ctudac.runUpdate"])
     fun connectionCacheUpdated() {
         validateConnectionCache(false)
     }
 
-    @Test(dependsOnGroups = ["rab.ctud.*"])
+    @Test(dependsOnGroups = ["rab.ctudac.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["rab.ctud.*"])
+    @Test(dependsOnGroups = ["rab.ctudac.*"])
     fun previousRunFilesCreated() {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val directory = Paths.get(testDirectory, PREVIOUS_FILES_PREFIX, c1.qualifiedName).toFile()
@@ -769,7 +772,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         assertEquals(2, files.size)
     }
 
-    @Test(dependsOnGroups = ["rab.ctud.*"])
+    @Test(dependsOnGroups = ["rab.ctudac.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
