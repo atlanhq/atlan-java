@@ -38,8 +38,8 @@ class SchemaXformer(
                 RowSerde.getHeaderForField(Schema.DATABASE_NAME, Schema::class.java) to details.parentName,
                 RowSerde.getHeaderForField(Schema.DATABASE_QUALIFIED_NAME, Schema::class.java) to parentQN,
                 RowSerde.getHeaderForField(Schema.DATABASE, Schema::class.java) to "Database@$parentQN",
-                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java) to (tableCount?.toString() ?: ""),
-                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java) to (viewCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Schema.TABLE_COUNT, Schema::class.java) to (tableCount?.toString() ?: "0"),
+                RowSerde.getHeaderForField(Schema.VIEW_COUNT, Schema::class.java) to (viewCount?.toString() ?: "0"),
             )
         } else {
             mapOf()

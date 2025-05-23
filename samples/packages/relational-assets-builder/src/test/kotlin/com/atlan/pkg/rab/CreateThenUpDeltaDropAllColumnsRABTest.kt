@@ -387,10 +387,10 @@ class CreateThenUpDeltaDropAllColumnsRABTest : PackageTest("ctudac") {
                 .toRequest()
         val response = retrySearchUntil(request, columnCount)
         val found = response.assets
-        assertEquals(columnCount.toInt(), found.size)
-        val colNames = found.stream().map(Asset::getName).toList()
-        assertEquals(columnCount.toInt(), colNames.size)
         if (columnCount > 0) {
+            assertEquals(columnCount.toInt(), found.size)
+            val colNames = found.stream().map(Asset::getName).toList()
+            assertEquals(columnCount.toInt(), colNames.size)
             assertTrue(colNames.contains("COL1"))
             assertTrue(colNames.contains("COL2"))
             found.forEach { col ->
@@ -420,6 +420,8 @@ class CreateThenUpDeltaDropAllColumnsRABTest : PackageTest("ctudac") {
                     }
                 }
             }
+        } else {
+            assertTrue(found.isNullOrEmpty())
         }
     }
 
@@ -587,7 +589,7 @@ class CreateThenUpDeltaDropAllColumnsRABTest : PackageTest("ctudac") {
             assertEquals(setOf("COL1", "COL2", "COL3", "COL4"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_VIEW"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         } else {
-            assertEquals(5, assets.size)
+            assertEquals(6, assets.size)
             assertEquals(2, assets.count { it.typeName == Column.TYPE_NAME })
             assertEquals(setOf("COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_NEW_V"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())

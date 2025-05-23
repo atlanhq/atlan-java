@@ -33,7 +33,7 @@ class DatabaseXformer(
                 RowSerde.getHeaderForField(Asset.NAME) to details.name,
                 RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE) to getConnectorType(inputRow),
                 RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME) to connectionQN,
-                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java) to (schemaCount?.toString() ?: ""),
+                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java) to (schemaCount?.toString() ?: "0"),
             )
         } else {
             mapOf()
