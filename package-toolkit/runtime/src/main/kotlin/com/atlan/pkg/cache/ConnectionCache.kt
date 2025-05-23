@@ -96,7 +96,7 @@ class ConnectionCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Connection): String = getIdentityForAsset(asset.name, asset.connectorName)
+    override fun getIdentityForAsset(asset: Connection): String = getIdentityForAsset(asset.name, asset.connectorName ?: Connection.getConnectorFromQualifiedName(asset.qualifiedName))
 
     /**
      * Build a connection identity from its component parts.
@@ -131,7 +131,7 @@ class ConnectionCache(
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { (_, connection) ->
-            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorName)] = connection.qualifiedName
+            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorName ?: Connection.getConnectorFromQualifiedName(connection.qualifiedName))] = connection.qualifiedName
         }
         return map
     }
