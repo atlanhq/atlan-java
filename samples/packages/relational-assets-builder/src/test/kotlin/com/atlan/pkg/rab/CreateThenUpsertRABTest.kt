@@ -279,12 +279,13 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
         assertEquals("TEST_DB", sch.databaseName)
         assertTrue(sch.databaseQualifiedName.endsWith("/TEST_DB"))
         assertEquals(1, sch.tableCount)
-        assertEquals(1, sch.viewCount)
         assertEquals(1, sch.tables.size)
         assertEquals("TEST_TBL", sch.tables.first().name)
         if (displayName == "Revised schema") {
+            assertEquals(0, sch.viewCount)
             assertTrue(sch.views.isEmpty())
         } else {
+            assertEquals(1, sch.viewCount)
             assertEquals(1, sch.views.size)
             assertEquals("TEST_VIEW", sch.views.first().name)
         }

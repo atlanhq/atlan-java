@@ -26,6 +26,7 @@ class DatabaseXformer(
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
         val assetQN = "$connectionQN/${details.partialQN}"
         val schemaCount = preprocessedDetails.qualifiedNameToChildCount[details.uniqueQN]?.toInt()
+        val schemas = if (ctx.config.deltaSemantic == "full") schemaCount?.toString() ?: "0" else schemaCount?.toString() ?: ""
         return if (assetQN.isNotBlank()) {
             return mapOf(
                 RowSerde.getHeaderForField(Asset.QUALIFIED_NAME) to assetQN,
@@ -33,7 +34,7 @@ class DatabaseXformer(
                 RowSerde.getHeaderForField(Asset.NAME) to details.name,
                 RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE) to getConnectorType(inputRow),
                 RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME) to connectionQN,
-                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java) to (schemaCount?.toString() ?: "0"),
+                RowSerde.getHeaderForField(Database.SCHEMA_COUNT, Database::class.java) to schemas,
             )
         } else {
             mapOf()
