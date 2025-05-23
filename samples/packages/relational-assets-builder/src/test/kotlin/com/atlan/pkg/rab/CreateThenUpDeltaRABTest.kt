@@ -87,12 +87,8 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                                 .replace("Test ", "Revised ")
                                 .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
                         output.appendText("$revised\n")
-                    } else {
-                        val revised =
-                            line
-                                .replace("{{API_TOKEN_USER}}", client.users.currentUser.username)
-                        output.appendText("$revised\n")
                     }
+                    // Note: we'll drop COL2 entirely to validate that columnCount is updated
                 }
             }
         }
@@ -308,7 +304,10 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         validateTable("Test table")
     }
 
-    private fun validateTable(displayName: String) {
+    private fun validateTable(
+        displayName: String,
+        columnCount: Long = 2,
+    ) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
             Table
@@ -330,7 +329,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         assertTrue(tbl.databaseQualifiedName.endsWith("/TEST_DB"))
         assertEquals("TEST_SCHEMA", tbl.schemaName)
         assertTrue(tbl.schemaQualifiedName.endsWith("/TEST_DB/TEST_SCHEMA"))
-        assertEquals(2, tbl.columnCount)
+        assertEquals(columnCount, tbl.columnCount)
         assertEquals(CertificateStatus.VERIFIED, tbl.certificateStatus)
         assertEquals("Ready to use", tbl.certificateStatusMessage)
         assertEquals("<h1>Table readme</h1>", tbl.readme.description)
@@ -354,25 +353,28 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 }
             }
         }
-        assertEquals(2, tbl.columns.size)
+        assertEquals(columnCount.toInt(), tbl.columns.size)
         val colNames =
             tbl.columns
                 .stream()
                 .map(IColumn::getName)
                 .toList()
+        assertEquals(columnCount.toInt(), colNames.size)
         assertTrue(colNames.contains("COL1"))
-        assertTrue(colNames.contains("COL2"))
+        if (columnCount == 2L) {
+            assertTrue(colNames.contains("COL2"))
+        }
         blockForBackgroundTasks(client, listOf(tbl.guid), 60)
     }
 
     @Test(groups = ["rab.ctud.create"])
     fun columnsForTable1Created() {
-        validateColumnsForTable1("Test column 1", "Test column 2")
+        validateColumnsForTable1("Test column 1")
     }
 
     private fun validateColumnsForTable1(
         displayCol1: String,
-        displayCol2: String,
+        columnCount: Long = 2,
     ) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
@@ -382,12 +384,15 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 .where(Column.TABLE_NAME.eq("TEST_TBL"))
                 .includesOnResults(columnAttrs)
                 .toRequest()
-        val response = retrySearchUntil(request, 2)
+        val response = retrySearchUntil(request, columnCount)
         val found = response.assets
-        assertEquals(2, found.size)
+        assertEquals(columnCount.toInt(), found.size)
         val colNames = found.stream().map(Asset::getName).toList()
+        assertEquals(columnCount.toInt(), colNames.size)
         assertTrue(colNames.contains("COL1"))
-        assertTrue(colNames.contains("COL2"))
+        if (columnCount == 2L) {
+            assertTrue(colNames.contains("COL2"))
+        }
         found.forEach { col ->
             col as Column
             assertEquals(c1.qualifiedName, col.connectionQualifiedName)
@@ -411,7 +416,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 "COL2" -> {
                     assertEquals("BIGINT", col.dataType)
                     assertEquals(2, col.order)
-                    assertEquals(displayCol2, col.displayName)
+                    assertEquals("Test column 2", col.displayName)
                 }
             }
         }
@@ -572,16 +577,18 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         val assets = cache.listAssets()
         assertNotNull(assets)
         assertFalse(assets.isEmpty())
-        assertEquals(8, assets.size)
         assertEquals(setOf(Database.TYPE_NAME, Schema.TYPE_NAME, Table.TYPE_NAME, View.TYPE_NAME, Column.TYPE_NAME), assets.map { it.typeName }.toSet())
-        assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
         assertEquals(1, assets.count { it.typeName == Table.TYPE_NAME })
         assertEquals(1, assets.count { it.typeName == View.TYPE_NAME })
         if (created) {
+            assertEquals(8, assets.size)
+            assertEquals(4, assets.count { it.typeName == Column.TYPE_NAME })
             assertEquals(setOf("COL1", "COL2", "COL3", "COL4"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_VIEW"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         } else {
-            assertEquals(setOf("COL1", "COL2", "COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
+            assertEquals(7, assets.size)
+            assertEquals(3, assets.count { it.typeName == Column.TYPE_NAME })
+            assertEquals(setOf("COL1", "COL5", "COL6"), assets.filter { it.typeName == Column.TYPE_NAME }.map { it.name }.toSet())
             assertEquals(setOf("TEST_NEW_V"), assets.filter { it.typeName == View.TYPE_NAME }.map { it.name }.toSet())
         }
     }
@@ -643,12 +650,12 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
     fun tableChanged() {
-        validateTable("Revised table")
+        validateTable("Revised table", 1)
     }
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
     fun columnsForTable1Changed() {
-        validateColumnsForTable1("Revised column 1", "Test column 2")
+        validateColumnsForTable1("Revised column 1", 1)
     }
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])
