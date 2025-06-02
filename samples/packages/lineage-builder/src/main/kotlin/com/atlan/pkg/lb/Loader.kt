@@ -96,7 +96,7 @@ object Loader {
                     Asset.QUALIFIED_NAME.atlanFieldName,
                     Asset.NAME.atlanFieldName,
                     Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
-                    "connectorType",
+                    Asset.CONNECTOR_NAME.atlanFieldName,
                     LineageProcess.INPUTS.atlanFieldName,
                     LineageProcess.OUTPUTS.atlanFieldName,
                 )
