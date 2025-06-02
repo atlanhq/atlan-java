@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.primaryConstructor
 
@@ -9,6 +10,7 @@ import kotlin.reflect.full.primaryConstructor
  * Base class that must be extended for any configuration, to define the expected contents
  * of the configuration.
  */
+@JsonIgnoreProperties("defaultInstance\$delegate")
 abstract class CustomConfig<T : Any> {
     lateinit var runtime: RuntimeConfig
 
