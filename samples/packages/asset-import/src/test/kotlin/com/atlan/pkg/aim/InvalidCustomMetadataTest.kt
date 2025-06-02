@@ -88,6 +88,7 @@ class InvalidCustomMetadataTest : PackageTest("icm") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
             ),
             Importer::main,

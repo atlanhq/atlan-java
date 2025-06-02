@@ -135,6 +135,7 @@ class SelectiveTagsTest : PackageTest("st") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "update",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
                 assetsTagHandling = AtlanTagHandling.APPEND.value,
             ),

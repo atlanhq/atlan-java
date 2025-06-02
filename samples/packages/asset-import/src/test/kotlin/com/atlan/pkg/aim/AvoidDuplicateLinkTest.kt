@@ -197,6 +197,7 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, filename).toString(),
                 assetsUpsertSemantic = "upsert",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
                 assetsLinkIdempotency = idempotency.value,
             ),

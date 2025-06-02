@@ -97,6 +97,7 @@ class ReplaceTagsTest : PackageTest("rt") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "update",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
                 assetsTagHandling = AtlanTagHandling.REPLACE.value,
             ),
