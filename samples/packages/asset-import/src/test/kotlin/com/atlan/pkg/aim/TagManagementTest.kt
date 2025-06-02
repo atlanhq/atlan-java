@@ -166,6 +166,7 @@ class TagManagementTest : PackageTest("tm") {
                 assetsDeltaSemantic = "full",
                 assetsDeltaReloadCalculation = "changes",
                 assetsPreviousFileDirect = Paths.get(testDirectory, assetsFile).toString(),
+                assetsConfig = "advanced",
                 assetsTagHandling = "APPEND",
             ),
             Importer::main,

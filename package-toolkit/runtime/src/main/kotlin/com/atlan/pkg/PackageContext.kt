@@ -20,7 +20,7 @@ import com.atlan.pkg.cache.TermCache
  * @param client connectivity to the Atlan tenant
  * @param reusedClient whether the client in this context is reused (if so, will not be automatically closed)
  */
-class PackageContext<T : CustomConfig>(
+class PackageContext<T : CustomConfig<T>>(
     val config: T,
     val client: AtlanClient,
     private val reusedClient: Boolean = false,

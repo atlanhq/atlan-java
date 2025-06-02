@@ -37,4 +37,4 @@ data class EnrichmentMigratorCfg(
     @JsonProperty("attributes_list") val attributesList: List<String> = listOf(""),
     @JsonProperty("cm_limit_type") val cmLimitType: String = "EXCLUDE",
     @JsonProperty("custom_metadata") val customMetadata: String = "",
-) : CustomConfig()
+) : CustomConfig<EnrichmentMigratorCfg>()

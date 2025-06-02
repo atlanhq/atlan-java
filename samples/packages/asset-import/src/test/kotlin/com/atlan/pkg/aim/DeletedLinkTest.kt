@@ -117,6 +117,7 @@ class DeletedLinkTest : PackageTest("dlt") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
                 assetsCaseSensitive = true,
                 assetsTableViewAgnostic = false,

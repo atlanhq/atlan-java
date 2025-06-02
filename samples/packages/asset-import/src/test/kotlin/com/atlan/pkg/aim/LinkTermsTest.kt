@@ -119,6 +119,7 @@ class LinkTermsTest : PackageTest("lt") {
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "upsert",
                 assetsAttrToOverwrite = listOf(),
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
             ),
             Importer::main,
@@ -254,6 +255,7 @@ class LinkTermsTest : PackageTest("lt") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, revisedFile).toString(),
                 assetsUpsertSemantic = "update",
+                assetsConfig = "advanced",
                 assetsCaseSensitive = false,
                 assetsFailOnErrors = true,
                 assetsTableViewAgnostic = true,

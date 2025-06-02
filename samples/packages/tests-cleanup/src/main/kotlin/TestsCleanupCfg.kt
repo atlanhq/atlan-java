@@ -12,4 +12,4 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class TestsCleanupCfg(
     @JsonProperty("prefix") val prefix: String = "",
-) : CustomConfig()
+) : CustomConfig<TestsCleanupCfg>()

@@ -46,14 +46,53 @@ abstract class GTCImporter(
         filename,
         logger,
         typeNameFilter,
-        attrsToOverwrite = attributesToClear(ctx.config.glossariesAttrToOverwrite.toMutableList(), "glossaries", logger),
+        attrsToOverwrite =
+            attributesToClear(
+                ctx.config
+                    .getEffectiveValue(
+                        AssetImportCfg::glossariesAttrToOverwrite,
+                        AssetImportCfg::glossariesConfig,
+                    ).toMutableList(),
+                "glossaries",
+                logger,
+            ),
         updateOnly = ctx.config.glossariesUpsertSemantic == "update",
-        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.glossariesCmHandling, CustomMetadataHandling.MERGE),
-        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.glossariesTagHandling, AtlanTagHandling.REPLACE),
-        batchSize = ctx.config.glossariesBatchSize.toInt(),
-        fieldSeparator = ctx.config.glossariesFieldSeparator[0],
+        customMetadataHandling =
+            Utils.getCustomMetadataHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::glossariesCmHandling,
+                    AssetImportCfg::glossariesConfig,
+                ),
+                CustomMetadataHandling.MERGE,
+            ),
+        atlanTagHandling =
+            Utils.getAtlanTagHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::glossariesTagHandling,
+                    AssetImportCfg::glossariesConfig,
+                ),
+                AtlanTagHandling.REPLACE,
+            ),
+        batchSize =
+            ctx.config
+                .getEffectiveValue(
+                    AssetImportCfg::glossariesBatchSize,
+                    AssetImportCfg::glossariesConfig,
+                ).toInt(),
+        fieldSeparator =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::glossariesFieldSeparator,
+                AssetImportCfg::glossariesConfig,
+            )[0],
         trackBatches = true,
-        linkIdempotency = Utils.getLinkIdempotency(ctx.config.glossariesLinkIdempotency, LinkIdempotencyInvariant.URL),
+        linkIdempotency =
+            Utils.getLinkIdempotency(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::glossariesLinkIdempotency,
+                    AssetImportCfg::glossariesConfig,
+                ),
+                LinkIdempotencyInvariant.URL,
+            ),
     ) {
     // Note: Always track batches (above) for GTC importers, to ensure cache is managed
 

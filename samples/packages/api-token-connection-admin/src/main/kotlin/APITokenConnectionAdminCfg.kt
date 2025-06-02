@@ -18,4 +18,4 @@ data class APITokenConnectionAdminCfg(
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
     @JsonProperty("api_token_guid") val apiTokenGuid: String = "",
-) : CustomConfig()
+) : CustomConfig<APITokenConnectionAdminCfg>()

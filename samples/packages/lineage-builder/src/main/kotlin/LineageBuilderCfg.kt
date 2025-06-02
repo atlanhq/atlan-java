@@ -23,4 +23,4 @@ data class LineageBuilderCfg(
     @JsonProperty("batch_size") val batchSize: Number = 20,
     @JsonProperty("cm_handling") val cmHandling: String? = null,
     @JsonProperty("tag_handling") val tagHandling: String? = null,
-) : CustomConfig()
+) : CustomConfig<LineageBuilderCfg>()

@@ -33,4 +33,4 @@ data class CubeAssetsBuilderCfg(
     @JsonProperty("assets_cm_handling") val assetsCmHandling: String? = null,
     @JsonProperty("assets_tag_handling") val assetsTagHandling: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
-) : CustomConfig()
+) : CustomConfig<CubeAssetsBuilderCfg>()

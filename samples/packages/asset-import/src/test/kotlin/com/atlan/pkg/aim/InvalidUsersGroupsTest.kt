@@ -51,6 +51,7 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesAttrToOverwrite = listOf(),
+                glossariesConfig = "advanced",
                 glossariesFailOnErrors = false,
             ),
             Importer::main,

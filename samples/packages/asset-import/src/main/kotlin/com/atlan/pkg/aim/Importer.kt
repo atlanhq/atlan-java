@@ -45,10 +45,13 @@ object Importer {
             exitProcess(1)
         }
 
+        val assetsFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::assetsFieldSeparator, AssetImportCfg::assetsConfig)
+        val assetsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::assetsFailOnErrors, AssetImportCfg::assetsConfig)
+
         val assetsInput =
             if (assetsFileProvided) {
-                if (ctx.config.assetsFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
+                if (assetsFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: $assetsFieldSeparator" }
                     exitProcess(2)
                 }
                 Utils.getInputFile(
@@ -71,7 +74,7 @@ object Importer {
                         Asset.ASSIGNED_TERMS.atlanFieldName,
                         Asset.DOMAIN_GUIDS.atlanFieldName,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+                FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
                 logger.info { " === Creating skeletal connections... ===" }
                 // Note: we force-track the batches here to ensure any created connections are cached
                 // (without tracking, any connections created will NOT be cached, either, which will then cause issues
@@ -84,6 +87,9 @@ object Importer {
                 null
             }
 
+        val tagsFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::tagsFieldSeparator, AssetImportCfg::tagsConfig)
+        val tagsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::tagsFailOnErrors, AssetImportCfg::tagsConfig)
+
         // 1. Tags -- everything else can be tagged (including terms, products, etc)
         if (tagFileProvided) {
             val tagsInput =
@@ -94,15 +100,18 @@ object Importer {
                     ctx.config.tagsPrefix,
                     ctx.config.tagsKey,
                 )
-            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.tagsFailOnErrors)
-            if (ctx.config.tagsFieldSeparator.length > 1) {
-                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.tagsFieldSeparator}" }
+            FieldSerde.FAIL_ON_ERRORS.set(tagsFailOnErrors)
+            if (tagsFieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: $tagsFieldSeparator" }
                 exitProcess(2)
             }
             logger.info { "=== Importing tag definitions... ===" }
             val tagImporter = AtlanTagImporter(ctx, tagsInput, logger)
             tagImporter.import()
         }
+
+        val glossariesFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::glossariesFieldSeparator, AssetImportCfg::glossariesConfig)
+        val glossariesFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::glossariesFailOnErrors, AssetImportCfg::glossariesConfig)
 
         // 2. Glossaries -- everything else can be linked to terms
         val resultsGTC =
@@ -115,9 +124,9 @@ object Importer {
                         ctx.config.glossariesPrefix,
                         ctx.config.glossariesKey,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.glossariesFailOnErrors)
-                if (ctx.config.glossariesFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.glossariesFieldSeparator}" }
+                FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
+                if (glossariesFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: $glossariesFieldSeparator" }
                     exitProcess(2)
                 }
                 logger.info { "=== Importing glossaries... ===" }
@@ -137,12 +146,15 @@ object Importer {
             } else {
                 null
             }
-        if (resultsGTC?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+        if (resultsGTC?.anyFailures == true && glossariesFailOnErrors) {
             logger.error { "Some errors detected while loading glossaries, failing the workflow." }
             createResultsFile(outputDirectory, resultsGTC)
             resultsGTC.close()
             exitProcess(1)
         }
+
+        val dataProductsFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::dataProductsFieldSeparator, AssetImportCfg::dataProductsConfig)
+        val dataProductsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::dataProductsFailOnErrors, AssetImportCfg::dataProductsConfig)
 
         // 3. Data products -- since all other assets can now be direct-linked to domains (and products are only a DSL)
         val resultsDDP =
@@ -155,9 +167,9 @@ object Importer {
                         ctx.config.dataProductsPrefix,
                         ctx.config.dataProductsKey,
                     )
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.dataProductsFailOnErrors)
-                if (ctx.config.dataProductsFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.dataProductsFieldSeparator}" }
+                FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
+                if (dataProductsFieldSeparator.length > 1) {
+                    logger.error { "Field separator must be only a single character. The provided value is too long: $dataProductsFieldSeparator" }
                     exitProcess(2)
                 }
                 logger.info { "=== Importing domains... ===" }
@@ -176,7 +188,7 @@ object Importer {
             } else {
                 null
             }
-        if (resultsDDP?.anyFailures == true && ctx.config.glossariesFailOnErrors) {
+        if (resultsDDP?.anyFailures == true && dataProductsFailOnErrors) {
             logger.error { "Some errors detected while loading data products, failing the workflow." }
             ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP).use { combined ->
                 createResultsFile(outputDirectory, combined)
@@ -186,7 +198,7 @@ object Importer {
 
         // 4. Connections (this time WITH terms, domains)
         if (assetsInput != null) {
-            FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+            FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
             logger.info { " === Updating connections... ===" }
             val connectionImporter = ConnectionImporter(ctx, assetsInput, logger)
             connectionImporter.import()
@@ -196,11 +208,11 @@ object Importer {
         val deletedAssets = OffHeapAssetCache(ctx.client, "deleted")
         val resultsAssets =
             if (assetsInput != null) {
-                FieldSerde.FAIL_ON_ERRORS.set(ctx.config.assetsFailOnErrors)
+                FieldSerde.FAIL_ON_ERRORS.set(assetsFailOnErrors)
                 val previousFileDirect = ctx.config.assetsPreviousFileDirect
                 val preprocessedDetails =
                     AssetImporter
-                        .Preprocessor(ctx, assetsInput, ctx.config.assetsFieldSeparator[0], logger)
+                        .Preprocessor(ctx, assetsInput, assetsFieldSeparator[0], logger)
                         .preprocess<AssetImporter.Results>()
                 if (preprocessedDetails.hasLinks) {
                     ctx.linkCache.preload()
@@ -212,18 +224,28 @@ object Importer {
                     ctx = ctx,
                     semantic = ctx.config.assetsDeltaSemantic,
                     qualifiedNamePrefix = preprocessedDetails.assetRootName,
-                    removalType = ctx.config.assetsDeltaRemovalType,
+                    removalType =
+                        ctx.config.getEffectiveValue(
+                            AssetImportCfg::assetsDeltaRemovalType,
+                            AssetImportCfg::assetsDeltaSemantic,
+                            "full",
+                        ),
                     previousFilesPrefix = ctx.config.assetsPreviousFilePrefix.ifBlank { PREVIOUS_FILES_PREFIX },
                     resolver = AssetImporter,
                     preprocessedDetails = preprocessedDetails,
                     typesToRemove = emptyList(),
                     logger = logger,
-                    reloadSemantic = ctx.config.assetsDeltaReloadCalculation,
+                    reloadSemantic =
+                        ctx.config.getEffectiveValue(
+                            AssetImportCfg::assetsDeltaReloadCalculation,
+                            AssetImportCfg::assetsDeltaSemantic,
+                            "full",
+                        ),
                     previousFilePreprocessor =
                         AssetImporter.Preprocessor(
                             ctx,
                             previousFileDirect,
-                            ctx.config.assetsFieldSeparator[0],
+                            assetsFieldSeparator[0],
                             logger,
                         ),
                     outputDirectory = outputDirectory,
@@ -253,7 +275,7 @@ object Importer {
         val results = ImportResults.combineAll(ctx.client, true, resultsGTC, resultsDDP, resultsConnections, resultsAssets)
         createResultsFile(outputDirectory, results, deletedAssets)
         deletedAssets.close()
-        if (results?.anyFailures == true && ctx.config.assetsFailOnErrors) {
+        if (results?.anyFailures == true && assetsFailOnErrors) {
             logger.error { "Some errors detected while loading assets, failing the workflow." }
             results.close()
             exitProcess(3)

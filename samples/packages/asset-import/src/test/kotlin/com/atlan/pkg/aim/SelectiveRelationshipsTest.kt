@@ -181,6 +181,7 @@ class SelectiveRelationshipsTest : PackageTest("sr") {
             AssetImportCfg(
                 assetsFile = Paths.get(testDirectory, testFile).toString(),
                 assetsUpsertSemantic = "update",
+                assetsConfig = "advanced",
                 assetsFailOnErrors = false,
             ),
             Importer::main,

@@ -25,4 +25,4 @@ data class AssetExportBasicCfg(
     @JsonProperty("email_addresses") val emailAddresses: String? = null,
     @JsonProperty("target_prefix") val targetPrefix: String? = null,
     @JsonProperty("cloud_target") val cloudTarget: String? = null,
-) : CustomConfig()
+) : CustomConfig<AssetExportBasicCfg>()

@@ -168,7 +168,7 @@ object Utils {
      *
      * @return the configuration used to set up the event-processing handler, or null if no configuration was found
      */
-    inline fun <reified T : CustomConfig> setPackageOps(): T {
+    inline fun <reified T : CustomConfig<T>> setPackageOps(): T {
         logDiagnostics()
         logger.info { "Looking for configuration in environment variables..." }
         val config = parseConfigFromEnv<T>()
@@ -223,7 +223,7 @@ object Utils {
      * @param reuseCtx (optional) existing context of a running package to reuse
      * @return connectivity to the Atlan tenant
      */
-    inline fun <reified T : CustomConfig> initializeContext(
+    inline fun <reified T : CustomConfig<T>> initializeContext(
         config: T = setPackageOps<T>(),
         reuseCtx: PackageContext<*>? = null,
     ): PackageContext<T> {
@@ -352,7 +352,7 @@ object Utils {
      *
      * @return the complete configuration for the custom package
      */
-    inline fun <reified T : CustomConfig> parseConfigFromEnv(): T {
+    inline fun <reified T : CustomConfig<T>> parseConfigFromEnv(): T {
         logger.info { "Constructing configuration from environment variables..." }
         val envVar = getEnvVar("NESTED_CONFIG")
         logger.debug { "Raw config from environment variable: $envVar" }
@@ -368,7 +368,7 @@ object Utils {
      * @param runtime the general runtime configuration from the workflow
      * @return the complete configuration for the event-handling pipeline
      */
-    inline fun <reified T : CustomConfig> parseConfig(
+    inline fun <reified T : CustomConfig<T>> parseConfig(
         config: String,
         runtime: String,
     ): T {

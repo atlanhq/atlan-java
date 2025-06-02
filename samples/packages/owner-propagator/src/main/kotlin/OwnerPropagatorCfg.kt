@@ -12,4 +12,4 @@ import javax.annotation.processing.Generated
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class OwnerPropagatorCfg(
     @JsonProperty("qn_prefix") val qnPrefix: String = "default",
-) : CustomConfig()
+) : CustomConfig<OwnerPropagatorCfg>()

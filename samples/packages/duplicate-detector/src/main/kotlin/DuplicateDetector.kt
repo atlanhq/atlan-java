@@ -39,7 +39,7 @@ object DuplicateDetector {
     fun main(args: Array<String>) {
         Utils.initializeContext<DuplicateDetectorCfg>().use { ctx ->
             val qnPrefix = ctx.config.qnPrefix
-            val types = ctx.config.assetTypes
+            val types = ctx.config.getEffectiveValue(DuplicateDetectorCfg::assetTypes, DuplicateDetectorCfg::controlConfigStrategy)
 
             logger.info {
                 "Detecting duplicates across $types (for prefix $qnPrefix) on: ${ctx.client.baseUrl}"

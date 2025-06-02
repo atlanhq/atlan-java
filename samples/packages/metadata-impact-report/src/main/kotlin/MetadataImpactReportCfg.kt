@@ -20,4 +20,4 @@ data class MetadataImpactReportCfg(
     @JsonProperty("target_prefix") val targetPrefix: String? = null,
     @JsonProperty("target_key") val targetKey: String? = null,
     @JsonProperty("cloud_target") val cloudTarget: String? = null,
-) : CustomConfig()
+) : CustomConfig<MetadataImpactReportCfg>()

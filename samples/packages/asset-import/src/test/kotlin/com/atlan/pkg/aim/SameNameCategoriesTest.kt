@@ -53,6 +53,7 @@ class SameNameCategoriesTest : PackageTest("snc") {
             AssetImportCfg(
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
+                glossariesConfig = "advanced",
                 glossariesFailOnErrors = false,
                 trackBatches = true,
             )
