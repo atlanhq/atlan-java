@@ -240,7 +240,7 @@ const function getConfigClassKt(m: Framework, className: String): FileOutput = n
       """
     )}
       """
-      ) : CustomConfig()
+      ) : CustomConfig<\(className)>()
       """
   }.join("\n")
 }

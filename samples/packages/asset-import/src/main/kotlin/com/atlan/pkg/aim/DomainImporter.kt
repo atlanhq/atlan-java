@@ -45,14 +45,53 @@ class DomainImporter(
         filename,
         logger = logger,
         typeNameFilter = DataDomain.TYPE_NAME,
-        attrsToOverwrite = attributesToClear(ctx.config.dataProductsAttrToOverwrite.toMutableList(), "dataProducts", logger),
+        attrsToOverwrite =
+            attributesToClear(
+                ctx.config
+                    .getEffectiveValue(
+                        AssetImportCfg::dataProductsAttrToOverwrite,
+                        AssetImportCfg::dataProductsConfig,
+                    ).toMutableList(),
+                "dataProducts",
+                logger,
+            ),
         updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
-        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.dataProductsCmHandling, CustomMetadataHandling.MERGE),
-        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.dataProductsTagHandling, AtlanTagHandling.REPLACE),
-        batchSize = ctx.config.dataProductsBatchSize.toInt(),
+        customMetadataHandling =
+            Utils.getCustomMetadataHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::dataProductsCmHandling,
+                    AssetImportCfg::dataProductsConfig,
+                ),
+                CustomMetadataHandling.MERGE,
+            ),
+        atlanTagHandling =
+            Utils.getAtlanTagHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::dataProductsTagHandling,
+                    AssetImportCfg::dataProductsConfig,
+                ),
+                AtlanTagHandling.REPLACE,
+            ),
+        batchSize =
+            ctx.config
+                .getEffectiveValue(
+                    AssetImportCfg::dataProductsBatchSize,
+                    AssetImportCfg::dataProductsConfig,
+                ).toInt(),
         trackBatches = true,
-        fieldSeparator = ctx.config.dataProductsFieldSeparator[0],
-        linkIdempotency = Utils.getLinkIdempotency(ctx.config.dataProductsLinkIdempotency, LinkIdempotencyInvariant.URL),
+        fieldSeparator =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::dataProductsFieldSeparator,
+                AssetImportCfg::dataProductsConfig,
+            )[0],
+        linkIdempotency =
+            Utils.getLinkIdempotency(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::dataProductsLinkIdempotency,
+                    AssetImportCfg::dataProductsConfig,
+                ),
+                LinkIdempotencyInvariant.URL,
+            ),
     ) {
     // Note: Always track batches (above) for domain importer, to ensure cache is managed
 

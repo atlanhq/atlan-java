@@ -37,11 +37,24 @@ class ConnectionImporter(
         filename = inputFile,
         logger = logger,
         typeNameFilter = Connection.TYPE_NAME,
-        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
+        attrsToOverwrite =
+            attributesToClear(
+                ctx.config
+                    .getEffectiveValue(
+                        AssetImportCfg::assetsAttrToOverwrite,
+                        AssetImportCfg::assetsConfig,
+                    ).toMutableList(),
+                "assets",
+                logger,
+            ),
         creationHandling = if (ctx.config.assetsUpsertSemantic == "update") AssetCreationHandling.NONE else AssetCreationHandling.FULL,
         batchSize = 1,
         trackBatches = true,
-        fieldSeparator = ctx.config.assetsFieldSeparator[0],
+        fieldSeparator =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::assetsFieldSeparator,
+                AssetImportCfg::assetsConfig,
+            )[0],
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"

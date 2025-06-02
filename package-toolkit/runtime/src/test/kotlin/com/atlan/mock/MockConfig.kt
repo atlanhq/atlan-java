@@ -9,4 +9,4 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class MockConfig(
     @JsonProperty("unused") val unused: String = "UNUSED",
-) : CustomConfig()
+) : CustomConfig<MockConfig>()

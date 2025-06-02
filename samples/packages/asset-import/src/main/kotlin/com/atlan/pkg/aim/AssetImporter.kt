@@ -244,17 +244,68 @@ class AssetImporter(
         ctx,
         filename,
         logger = logger,
-        attrsToOverwrite = attributesToClear(ctx.config.assetsAttrToOverwrite.toMutableList(), "assets", logger),
-        updateOnly = ctx.config.assetsUpsertSemantic == "update",
-        batchSize = ctx.config.assetsBatchSize.toInt(),
-        caseSensitive = ctx.config.assetsCaseSensitive,
+        attrsToOverwrite =
+            attributesToClear(
+                ctx.config
+                    .getEffectiveValue(
+                        AssetImportCfg::assetsAttrToOverwrite,
+                        AssetImportCfg::assetsConfig,
+                    ).toMutableList(),
+                "assets",
+                logger,
+            ),
+        updateOnly =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::assetsUpsertSemantic,
+                AssetImportCfg::assetsConfig,
+            ) == "update",
+        batchSize =
+            ctx.config
+                .getEffectiveValue(
+                    AssetImportCfg::assetsBatchSize,
+                    AssetImportCfg::assetsConfig,
+                ).toInt(),
+        caseSensitive =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::assetsCaseSensitive,
+                AssetImportCfg::assetsConfig,
+            ),
         creationHandling = Utils.getCreationHandling(ctx.config.assetsUpsertSemantic, AssetCreationHandling.NONE),
-        customMetadataHandling = Utils.getCustomMetadataHandling(ctx.config.assetsCmHandling, CustomMetadataHandling.MERGE),
-        atlanTagHandling = Utils.getAtlanTagHandling(ctx.config.assetsTagHandling, AtlanTagHandling.REPLACE),
-        tableViewAgnostic = ctx.config.assetsTableViewAgnostic,
+        customMetadataHandling =
+            Utils.getCustomMetadataHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::assetsCmHandling,
+                    AssetImportCfg::assetsConfig,
+                ),
+                CustomMetadataHandling.MERGE,
+            ),
+        atlanTagHandling =
+            Utils.getAtlanTagHandling(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::assetsTagHandling,
+                    AssetImportCfg::assetsConfig,
+                ),
+                AtlanTagHandling.REPLACE,
+            ),
+        tableViewAgnostic =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::assetsTableViewAgnostic,
+                AssetImportCfg::assetsConfig,
+            ),
         trackBatches = ctx.config.trackBatches,
-        fieldSeparator = ctx.config.assetsFieldSeparator[0],
-        linkIdempotency = Utils.getLinkIdempotency(ctx.config.assetsLinkIdempotency, LinkIdempotencyInvariant.URL),
+        fieldSeparator =
+            ctx.config.getEffectiveValue(
+                AssetImportCfg::assetsFieldSeparator,
+                AssetImportCfg::assetsConfig,
+            )[0],
+        linkIdempotency =
+            Utils.getLinkIdempotency(
+                ctx.config.getEffectiveValue(
+                    AssetImportCfg::assetsLinkIdempotency,
+                    AssetImportCfg::assetsConfig,
+                ),
+                LinkIdempotencyInvariant.URL,
+            ),
     ) {
     private var header = emptyList<String>()
     private var typeToProcess = ""
