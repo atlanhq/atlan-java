@@ -32,8 +32,10 @@ object EnrichmentMigrator {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<EnrichmentMigratorCfg>().use { ctx ->
 
-            if (ctx.config.fieldSeparator.length > 1) {
-                logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+            val fieldSeparator = ctx.config.getEffectiveValue(EnrichmentMigratorCfg::fieldSeparator, EnrichmentMigratorCfg::configType)
+
+            if (fieldSeparator.length > 1) {
+                logger.error { "Field separator must be only a single character. The provided value is too long: $fieldSeparator" }
                 exitProcess(2)
             }
             val sourceConnectionQN = ctx.config.sourceConnection[0]
@@ -107,7 +109,7 @@ object EnrichmentMigrator {
             val transformedFile = "$outputDirectory${File.separator}transformed-file.csv"
             CsvWriter
                 .builder()
-                .fieldSeparator(ctx.config.fieldSeparator[0])
+                .fieldSeparator(fieldSeparator[0])
                 .quoteCharacter('"')
                 .quoteStrategy(QuoteStrategies.NON_EMPTY)
                 .lineDelimiter(LineDelimiter.PLATFORM)
@@ -137,7 +139,7 @@ object EnrichmentMigrator {
                                     extractFile,
                                     header.toList(),
                                     logger,
-                                    ctx.config.fieldSeparator[0],
+                                    fieldSeparator[0],
                                 )
                             transformer.transform(writer)
                         }

@@ -33,7 +33,8 @@ object LakeTagSynchronizer {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<LakeFormationTagSyncCfg>().use { ctx ->
             val results = sync(ctx, outputDirectory)
-            if (!results && ctx.config.failOnErrors) {
+            val failOnErrors = ctx.config.getEffectiveValue(LakeFormationTagSyncCfg::failOnErrors, LakeFormationTagSyncCfg::configType)
+            if (!results && failOnErrors) {
                 logger.error { "Some errors detected, failing the workflow." }
                 exitProcess(1)
             }
@@ -89,8 +90,16 @@ object LakeTagSynchronizer {
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
-                    assetsFailOnErrors = ctx.config.failOnErrors,
-                    assetsBatchSize = ctx.config.batchSize,
+                    assetsFailOnErrors =
+                        ctx.config.getEffectiveValue(
+                            LakeFormationTagSyncCfg::failOnErrors,
+                            LakeFormationTagSyncCfg::configType,
+                        ),
+                    assetsBatchSize =
+                        ctx.config.getEffectiveValue(
+                            LakeFormationTagSyncCfg::batchSize,
+                            LakeFormationTagSyncCfg::configType,
+                        ),
                     assetsFieldSeparator = ",",
                 )
             Utils.initializeContext(importConfig, ctx).use { iCtx ->

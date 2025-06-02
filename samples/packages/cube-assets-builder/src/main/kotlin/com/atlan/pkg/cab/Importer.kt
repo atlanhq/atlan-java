@@ -116,13 +116,23 @@ object Importer {
             ctx = ctx,
             semantic = ctx.config.deltaSemantic,
             qualifiedNamePrefix = cubeQN,
-            removalType = ctx.config.deltaRemovalType,
+            removalType =
+                ctx.config.getEffectiveValue(
+                    CubeAssetsBuilderCfg::deltaRemovalType,
+                    CubeAssetsBuilderCfg::deltaSemantic,
+                    "full",
+                ),
             previousFilesPrefix = PREVIOUS_FILES_PREFIX,
             resolver = AssetImporter,
             preprocessedDetails = preprocessedDetails,
             typesToRemove = listOf(CubeDimension.TYPE_NAME, CubeHierarchy.TYPE_NAME, CubeField.TYPE_NAME),
             logger = logger,
-            reloadSemantic = ctx.config.deltaReloadCalculation,
+            reloadSemantic =
+                ctx.config.getEffectiveValue(
+                    CubeAssetsBuilderCfg::deltaReloadCalculation,
+                    CubeAssetsBuilderCfg::deltaSemantic,
+                    "full",
+                ),
             previousFilePreprocessor = Preprocessor(ctx.config.previousFileDirect, fieldSeparator),
             outputDirectory = outputDirectory,
         ).use { delta ->
