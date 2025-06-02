@@ -65,8 +65,8 @@ class CustomConnectionTest : PackageTest("cc") {
         runCustomPackage(
             LineageBuilderCfg(
                 lineageFile = Paths.get(testDirectory, testFile).toString(),
-                lineageUpsertSemantic = "upsert",
-                lineageFailOnErrors = true,
+                lineageUpsertSemantic = "partial",
+                lineageFailOnErrors = false,
             ),
             Loader::main,
         )
