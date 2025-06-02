@@ -4,10 +4,8 @@ package com.atlan.pkg.lb
 
 import LineageBuilderCfg
 import com.atlan.model.assets.Asset
-import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.util.AssetResolver
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 
@@ -22,7 +20,7 @@ class AssetTransformer(
                 Asset.QUALIFIED_NAME.atlanFieldName,
                 Asset.TYPE_NAME.atlanFieldName,
                 Asset.NAME.atlanFieldName,
-                "connectorType",
+                Asset.CONNECTOR_NAME.atlanFieldName,
                 Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
             ),
         logger = logger,
@@ -62,11 +60,10 @@ class AssetTransformer(
         ): String {
             val connectorType = inputRow["$prefix $CONNECTOR"]?.lowercase() ?: ""
             val connectionName = inputRow["$prefix $CONNECTION"] ?: ""
-            val connectionId = AssetResolver.ConnectionIdentity(connectionName, connectorType)
-            val connectionQN = ctx.connectionCache.getIdentityMap().getOrDefault(connectionId, "")
+            val connectionId = ctx.connectionCache.getIdentityForAsset(connectionName, connectorType)
+            val connectionQN = ctx.connectionCache.getByIdentity(connectionId)?.qualifiedName ?: ""
             if (connectionQN.isBlank()) {
-                val resolvedType = AtlanConnectorType.fromValue(connectorType)
-                logger.warn { "Unable to find connection for the provided details: $connectorType (resolved to ${resolvedType.value})::$connectionName" }
+                logger.warn { "Unable to find connection for the provided details: $connectorType::$connectionName" }
             }
             return connectionQN
         }
