@@ -27,6 +27,7 @@ class GCSSync(
 ) : ObjectStorageSyncer {
     private val storage =
         if (credentials.isNotBlank()) {
+            logger.info { "Authenticating to GCS using provided credentials." }
             StorageOptions
                 .newBuilder()
                 .setProjectId(projectId)
@@ -34,6 +35,7 @@ class GCSSync(
                 .build()
                 .service
         } else {
+            logger.info { "Passing through authentication to backing GCS instance of the tenant." }
             StorageOptions
                 .newBuilder()
                 .setProjectId(projectId)
