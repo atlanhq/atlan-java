@@ -29,4 +29,4 @@ data class AdminExportCfg(
     @JsonProperty("personas_filename") val personasFilename: String = "personas.csv",
     @JsonProperty("purposes_filename") val purposesFilename: String = "purposes.csv",
     @JsonProperty("policies_filename") val policiesFilename: String = "policies.csv",
-) : CustomConfig()
+) : CustomConfig<AdminExportCfg>()

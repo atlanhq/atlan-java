@@ -21,4 +21,4 @@ data class CustomMetadataExtenderCfg(
     @JsonProperty("glossaries") val glossaries: String? = null,
     @JsonProperty("domains") val domains: String = "ALL",
     @JsonProperty("domains_specific") val domainsSpecific: String = "",
-) : CustomConfig()
+) : CustomConfig<CustomMetadataExtenderCfg>()

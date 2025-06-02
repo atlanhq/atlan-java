@@ -17,4 +17,4 @@ data class LakeFormationTagSyncCfg(
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean = true,
     @JsonProperty("batch_size") val batchSize: Number = 20,
-) : CustomConfig()
+) : CustomConfig<LakeFormationTagSyncCfg>()

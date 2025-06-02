@@ -20,4 +20,4 @@ data class DuplicateDetectorCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("asset_types") val assetTypes: List<String> = listOf("Table", "View", "MaterialisedView"),
-) : CustomConfig()
+) : CustomConfig<DuplicateDetectorCfg>()
