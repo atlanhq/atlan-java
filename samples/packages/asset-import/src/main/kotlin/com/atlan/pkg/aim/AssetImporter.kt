@@ -254,11 +254,7 @@ class AssetImporter(
                 "assets",
                 logger,
             ),
-        updateOnly =
-            ctx.config.getEffectiveValue(
-                AssetImportCfg::assetsUpsertSemantic,
-                AssetImportCfg::assetsConfig,
-            ) == "update",
+        updateOnly = ctx.config.assetsUpsertSemantic == "update",
         batchSize =
             ctx.config
                 .getEffectiveValue(
