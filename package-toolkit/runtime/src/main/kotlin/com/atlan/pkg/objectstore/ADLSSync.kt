@@ -37,6 +37,7 @@ class ADLSSync(
 
     init {
         if (tenantId.isNotBlank() && clientId.isNotBlank()) {
+            logger.info { "Authenticating to ADLS using provided tenant and client IDs and secrets." }
             val credential =
                 ClientSecretCredentialBuilder()
                     .tenantId(tenantId)
@@ -50,6 +51,7 @@ class ADLSSync(
                     .buildClient()
             blobContainerClient = null
         } else {
+            logger.info { "Passing through authentication to backing ADLS instance of the tenant." }
             // Fallback to using Atlan's backing store if tenantId or clientId is empty
             // (Note: we must use a blob container client here as the file system client
             //  otherwise cannot do any uploads.)

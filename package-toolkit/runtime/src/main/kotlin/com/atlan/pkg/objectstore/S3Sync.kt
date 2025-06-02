@@ -36,6 +36,7 @@ class S3Sync(
 ) : ObjectStorageSyncer {
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
+            logger.info { "Authenticating to S3 using provided IAM role ARN." }
             val stsClient =
                 StsClient
                     .builder()
@@ -51,8 +52,10 @@ class S3Sync(
             val myCreds = roleResponse.credentials()
             AwsSessionCredentials.create(myCreds.accessKeyId(), myCreds.secretAccessKey(), myCreds.sessionToken())
         } else if (accessKey.isNotBlank()) {
+            logger.info { "Authenticating to S3 using provided access and secret keys." }
             AwsBasicCredentials.create(accessKey, secretKey)
         } else {
+            logger.info { "Passing through authentication to backing S3 instance of the tenant." }
             null
         }
     private val s3Client =
