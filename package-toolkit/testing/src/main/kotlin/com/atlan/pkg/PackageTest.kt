@@ -590,7 +590,7 @@ abstract class PackageTest(
      * @param cfg for the custom package
      */
     fun runCustomPackage(
-        cfg: CustomConfig,
+        cfg: CustomConfig<*>,
         mainMethod: (Array<String>) -> Unit,
     ) {
         cfg.runtime =
