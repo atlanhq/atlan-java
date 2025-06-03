@@ -90,6 +90,7 @@ object LakeTagSynchronizer {
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
+                    assetsConfig = "advanced",
                     assetsFailOnErrors =
                         ctx.config.getEffectiveValue(
                             LakeFormationTagSyncCfg::failOnErrors,

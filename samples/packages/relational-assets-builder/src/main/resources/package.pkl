@@ -33,6 +33,7 @@ preview = true
 publishConfig = new AssetImport {
   versionTag = version.toString()
   assetsFile = transferFile(outputs, "transformed_file", "current.csv")
+  assetsConfig = "advanced"
   assetsUpsertSemantic = transferConfigInput(uiConfig, "assets_upsert_semantic")
   assetsDeltaSemantic = transferConfigInput(uiConfig, "delta_semantic")
   assetsDeltaRemovalType = transferConfigInput(uiConfig, "delta_removal_type")
