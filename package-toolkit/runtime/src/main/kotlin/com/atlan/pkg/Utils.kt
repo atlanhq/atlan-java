@@ -757,7 +757,7 @@ object Utils {
                 when (cred.authType) {
                     "s3" -> {
                         val s3 = S3Credential(cred)
-                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
                         getInputFile(sync, outputDirectory, preppedPath)
                     }
 
@@ -987,7 +987,7 @@ object Utils {
                 when (cred.authType) {
                     "s3" -> {
                         val s3 = S3Credential(cred)
-                        S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey)
+                        S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
                     }
 
                     "gcs" -> {

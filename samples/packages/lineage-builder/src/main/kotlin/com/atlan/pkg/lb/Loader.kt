@@ -73,6 +73,7 @@ object Loader {
             val importConfig =
                 AssetImportCfg(
                     assetsFile = assetsFile,
+                    assetsConfig = "advanced",
                     assetsUpsertSemantic = ctx.config.lineageUpsertSemantic,
                     assetsFailOnErrors = ctx.config.lineageFailOnErrors,
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
@@ -123,6 +124,7 @@ object Loader {
                 AssetImportCfg(
                     assetsFile = lineageFile,
                     assetsUpsertSemantic = "upsert",
+                    assetsConfig = "advanced",
                     assetsFailOnErrors = ctx.config.lineageFailOnErrors,
                     assetsCaseSensitive = ctx.config.lineageCaseSensitive,
                     assetsBatchSize = ctx.config.batchSize,
