@@ -894,7 +894,7 @@ class AssetImporter(
                         FlowProcessGrouping.TYPE_NAME,
                         FlowInterimDataset.TYPE_NAME,
                         FlowInterimField.TYPE_NAME,
-                    )
+                    ),
                 ),
                 TypeGrouping(
                     "Lineage",
