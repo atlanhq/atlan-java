@@ -426,15 +426,6 @@ public interface ILineageProcess {
     SortedSet<String> getDomainGUIDs();
 
     /** TBC */
-    IETLControlFlow getEtlControlFlow();
-
-    /** TBC */
-    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
-
-    /** TBC */
-    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
-
-    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */

@@ -338,18 +338,6 @@ public interface ICatalog {
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
                 break;
-            case ETLControlFlow.TYPE_NAME:
-                ref = ETLControlFlow.refByQualifiedName(qualifiedName);
-                break;
-            case ETLControlFlowOperation.TYPE_NAME:
-                ref = ETLControlFlowOperation.refByQualifiedName(qualifiedName);
-                break;
-            case ETLDataFlowOperation.TYPE_NAME:
-                ref = ETLDataFlowOperation.refByQualifiedName(qualifiedName);
-                break;
-            case ETLExecutableUnit.TYPE_NAME:
-                ref = ETLExecutableUnit.refByQualifiedName(qualifiedName);
-                break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
                 break;
@@ -373,12 +361,6 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
-                break;
-            case InterimDataset.TYPE_NAME:
-                ref = InterimDataset.refByQualifiedName(qualifiedName);
-                break;
-            case InterimField.TYPE_NAME:
-                ref = InterimField.refByQualifiedName(qualifiedName);
                 break;
             case KafkaConsumerGroup.TYPE_NAME:
                 ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
