@@ -55,7 +55,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun connectionExists() {
-        val connection = Connection.findByName(client, "Informatica", "iics")
+        val connection = Connection.findByName(client, c1, "iics")
         assertNotNull(connection)
         assertFalse(connection.isEmpty())
         assertEquals(1, connection.size)
@@ -63,7 +63,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun visibleLineageExists() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val processes =
             LineageProcess
                 .select(client)
@@ -76,7 +76,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappingTasksExist() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val mt =
             FlowProcessGrouping
                 .select(client)
@@ -102,7 +102,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappingsExist() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val mappings =
             FlowProcessGrouping
                 .select(client)
@@ -128,7 +128,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappletExists() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val mapplets =
             FlowProcessGrouping
                 .select(client)
@@ -155,7 +155,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun interimDatasetForMappletReferencesItsMapplet() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val ids =
             FlowInterimDataset
                 .select(client)
@@ -174,7 +174,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun drilldownLineageExists() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val operations =
             FlowDataOperation
                 .select(client)
@@ -194,7 +194,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun interimDatasetsExist() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val ids =
             FlowInterimDataset
                 .select(client)
@@ -217,7 +217,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun flowGroupingsExist() {
-        val connection = Connection.findByName(client, "Informatica", "iics")[0]!!
+        val connection = Connection.findByName(client, c1, "iics")[0]!!
         val groupings =
             FlowProcessGrouping
                 .select(client)
