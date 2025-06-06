@@ -368,15 +368,6 @@ public interface IColumnProcess {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** Control flow that contains this process representing a data flow between data assets. */
-    IETLControlFlow getEtlControlFlow();
-
-    /** Data flow operations that are contained in this process. */
-    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
-
-    /** Executable units that result in creating this process. */
-    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
-
     /** TBC */
     SortedSet<IFile> getFiles();
 
