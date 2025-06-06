@@ -448,6 +448,7 @@ public class TableauDatasourceFieldTest {
             .tableauDatasourceFieldDataType("String0")
             .tableauDatasourceFieldFormula("String0")
             .tableauDatasourceFieldRole("String0")
+            .tableauWorksheetField(TableauWorksheetField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .topLevelProjectQualifiedName("String0")
             .upstreamColumn(Map.of("key1", "value1"))
             .upstreamColumn(Map.of("key2", "value2"))

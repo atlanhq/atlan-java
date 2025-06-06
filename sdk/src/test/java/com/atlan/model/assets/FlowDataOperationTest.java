@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class TableauCalculatedFieldTest {
+public class FlowDataOperationTest {
 
-    private static final TableauCalculatedField full = TableauCalculatedField._internal()
+    private static final FlowDataOperation full = FlowDataOperation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,23 +59,32 @@ public class TableauCalculatedFieldTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedAttribute(
-                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .additionalEtlContext("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiDatasetType(AIDatasetType.TRAINING)
+            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .ast("String0")
+            .code("String0")
+            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowGrouping(FlowProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .parentConnectionProcessQualifiedName("String0")
+            .parentConnectionProcessQualifiedName("String1")
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sql("String0")
+            .flowFinishedAt(123456789L)
+            .flowSchedule("String0")
+            .flowStartedAt(123456789L)
+            .flowStatus("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -435,37 +444,20 @@ public class TableauCalculatedFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataCategory("String0")
-            .datasource(TableauDatasource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .datasourceQualifiedName("String0")
-            .formula("String0")
-            .addProjectHierarchy(Map.of("key1", "value1"))
-            .addProjectHierarchy(Map.of("key2", "value2"))
-            .projectQualifiedName("String0")
-            .role("String0")
-            .siteQualifiedName("String0")
-            .tableauDataType("String0")
-            .tableauWorksheetFields(TableauWorksheetField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .topLevelProjectQualifiedName("String0")
-            .upstreamField(Map.of("key1", "value1"))
-            .upstreamField(Map.of("key2", "value2"))
-            .workbookQualifiedName("String0")
-            .worksheet(TableauWorksheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .worksheet(TableauWorksheet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static TableauCalculatedField frodo;
+    private static FlowDataOperation frodo;
     private static String serialized;
 
-    @Test(groups = {"TableauCalculatedField.builderEquivalency"})
+    @Test(groups = {"FlowDataOperation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.serialize"},
-            dependsOnGroups = {"TableauCalculatedField.builderEquivalency"})
+            groups = {"FlowDataOperation.serialize"},
+            dependsOnGroups = {"FlowDataOperation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -474,17 +466,17 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.deserialize"},
-            dependsOnGroups = {"TableauCalculatedField.serialize"})
+            groups = {"FlowDataOperation.deserialize"},
+            dependsOnGroups = {"FlowDataOperation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauCalculatedField.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowDataOperation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"FlowDataOperation.equivalency"},
+            dependsOnGroups = {"FlowDataOperation.serialize", "FlowDataOperation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -493,8 +485,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"FlowDataOperation.equivalency"},
+            dependsOnGroups = {"FlowDataOperation.serialize", "FlowDataOperation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

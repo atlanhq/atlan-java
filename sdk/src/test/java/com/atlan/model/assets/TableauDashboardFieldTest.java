@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class TableauCalculatedFieldTest {
+public class TableauDashboardFieldTest {
 
-    private static final TableauCalculatedField full = TableauCalculatedField._internal()
+    private static final TableauDashboardField full = TableauDashboardField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -435,37 +435,41 @@ public class TableauCalculatedFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataCategory("String0")
-            .datasource(TableauDatasource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .datasourceQualifiedName("String0")
-            .formula("String0")
-            .addProjectHierarchy(Map.of("key1", "value1"))
-            .addProjectHierarchy(Map.of("key2", "value2"))
-            .projectQualifiedName("String0")
-            .role("String0")
-            .siteQualifiedName("String0")
-            .tableauDataType("String0")
-            .tableauWorksheetFields(TableauWorksheetField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .topLevelProjectQualifiedName("String0")
-            .upstreamField(Map.of("key1", "value1"))
-            .upstreamField(Map.of("key2", "value2"))
-            .workbookQualifiedName("String0")
-            .worksheet(TableauWorksheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .worksheet(TableauWorksheet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableauDashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .tableauDashboardFieldBinSize("String0")
+            .tableauDashboardFieldDataCategory("String0")
+            .tableauDashboardFieldDataType("String0")
+            .tableauDashboardFieldFormula("String0")
+            .tableauDashboardFieldRole("String0")
+            .tableauDashboardFieldType("String0")
+            .tableauDashboardFieldUpstreamColumn(Map.of("key1", "value1"))
+            .tableauDashboardFieldUpstreamColumn(Map.of("key2", "value2"))
+            .tableauDashboardFieldUpstreamField(Map.of("key1", "value1"))
+            .tableauDashboardFieldUpstreamField(Map.of("key2", "value2"))
+            .tableauDashboardQualifiedName("String0")
+            .tableauFullyQualifiedName("String0")
+            .addTableauProjectHierarchy(Map.of("key1", "value1"))
+            .addTableauProjectHierarchy(Map.of("key2", "value2"))
+            .tableauProjectQualifiedName("String0")
+            .tableauSiteQualifiedName("String0")
+            .tableauTopLevelProjectQualifiedName("String0")
+            .tableauUpstreamTable(Map.of("key1", "value1"))
+            .tableauUpstreamTable(Map.of("key2", "value2"))
+            .tableauWorksheetField(TableauWorksheetField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static TableauCalculatedField frodo;
+    private static TableauDashboardField frodo;
     private static String serialized;
 
-    @Test(groups = {"TableauCalculatedField.builderEquivalency"})
+    @Test(groups = {"TableauDashboardField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.serialize"},
-            dependsOnGroups = {"TableauCalculatedField.builderEquivalency"})
+            groups = {"TableauDashboardField.serialize"},
+            dependsOnGroups = {"TableauDashboardField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -474,17 +478,17 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.deserialize"},
-            dependsOnGroups = {"TableauCalculatedField.serialize"})
+            groups = {"TableauDashboardField.deserialize"},
+            dependsOnGroups = {"TableauDashboardField.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauCalculatedField.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, TableauDashboardField.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"TableauDashboardField.equivalency"},
+            dependsOnGroups = {"TableauDashboardField.serialize", "TableauDashboardField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -493,8 +497,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"TableauDashboardField.equivalency"},
+            dependsOnGroups = {"TableauDashboardField.serialize", "TableauDashboardField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

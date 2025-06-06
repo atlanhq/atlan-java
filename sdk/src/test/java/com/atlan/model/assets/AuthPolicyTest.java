@@ -432,6 +432,7 @@ public class AuthPolicyTest {
                     .policyConditionValues(List.of("String0", "String1"))
                     .build())
             .policyDelegateAdmin(true)
+            .policyFilterCriteria("String0")
             .policyGroup("String0")
             .policyGroup("String1")
             .policyMaskType(DataMaskingType.SHOW_FIRST_4)

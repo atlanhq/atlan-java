@@ -96,6 +96,7 @@ public class SnowflakeDynamicTableTest {
             .tableExternalVolumeName("String0")
             .tableImpalaParameter("key1", "value1")
             .tableImpalaParameter("key2", "value2")
+            .tableObjectCount(123456789L)
             .tableRetentionTime(123456789L)
             .tableType(TableType.TEMPORARY)
             .calculationViewName("String0")

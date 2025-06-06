@@ -78,6 +78,8 @@ public class StakeholderTest {
             .denyCustomMetadataGuid("String1")
             .denyNavigationPage("String0")
             .denyNavigationPage("String1")
+            .denySidebarTab("String0")
+            .denySidebarTab("String1")
             .displayPreference("String0")
             .displayPreference("String1")
             .isAccessControlEnabled(true)

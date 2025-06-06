@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class TableauCalculatedFieldTest {
+public class FlowInterimDatasetTest {
 
-    private static final TableauCalculatedField full = TableauCalculatedField._internal()
+    private static final FlowInterimDataset full = FlowInterimDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -76,6 +76,10 @@ public class TableauCalculatedFieldTest {
             .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowFinishedAt(123456789L)
+            .flowSchedule("String0")
+            .flowStartedAt(123456789L)
+            .flowStatus("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -435,37 +439,21 @@ public class TableauCalculatedFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .dataCategory("String0")
-            .datasource(TableauDatasource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .datasourceQualifiedName("String0")
-            .formula("String0")
-            .addProjectHierarchy(Map.of("key1", "value1"))
-            .addProjectHierarchy(Map.of("key2", "value2"))
-            .projectQualifiedName("String0")
-            .role("String0")
-            .siteQualifiedName("String0")
-            .tableauDataType("String0")
-            .tableauWorksheetFields(TableauWorksheetField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .topLevelProjectQualifiedName("String0")
-            .upstreamField(Map.of("key1", "value1"))
-            .upstreamField(Map.of("key2", "value2"))
-            .workbookQualifiedName("String0")
-            .worksheet(TableauWorksheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .worksheet(TableauWorksheet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowDetailedBy(FlowProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static TableauCalculatedField frodo;
+    private static FlowInterimDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"TableauCalculatedField.builderEquivalency"})
+    @Test(groups = {"FlowInterimDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.serialize"},
-            dependsOnGroups = {"TableauCalculatedField.builderEquivalency"})
+            groups = {"FlowInterimDataset.serialize"},
+            dependsOnGroups = {"FlowInterimDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -474,17 +462,17 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.deserialize"},
-            dependsOnGroups = {"TableauCalculatedField.serialize"})
+            groups = {"FlowInterimDataset.deserialize"},
+            dependsOnGroups = {"FlowInterimDataset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauCalculatedField.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowInterimDataset.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"FlowInterimDataset.equivalency"},
+            dependsOnGroups = {"FlowInterimDataset.serialize", "FlowInterimDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -493,8 +481,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
+            groups = {"FlowInterimDataset.equivalency"},
+            dependsOnGroups = {"FlowInterimDataset.serialize", "FlowInterimDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
