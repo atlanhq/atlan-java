@@ -79,6 +79,10 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
 
     /** TBC */
     @Attribute
+    String policyFilterCriteria;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<String> policyGroups;
 

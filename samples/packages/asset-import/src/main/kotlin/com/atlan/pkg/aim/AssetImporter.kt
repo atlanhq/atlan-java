@@ -66,6 +66,10 @@ import com.atlan.model.assets.DomoDatasetColumn
 import com.atlan.model.assets.DynamoDBGlobalSecondaryIndex
 import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
+import com.atlan.model.assets.FlowDataOperation
+import com.atlan.model.assets.FlowInterimDataset
+import com.atlan.model.assets.FlowInterimField
+import com.atlan.model.assets.FlowProcessGrouping
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
@@ -885,6 +889,14 @@ class AssetImporter(
                     ),
                 ),
                 TypeGrouping(
+                    "Flows",
+                    listOf(
+                        FlowProcessGrouping.TYPE_NAME,
+                        FlowInterimDataset.TYPE_NAME,
+                        FlowInterimField.TYPE_NAME,
+                    )
+                ),
+                TypeGrouping(
                     "Lineage",
                     listOf(
                         LineageProcess.TYPE_NAME,
@@ -892,6 +904,7 @@ class AssetImporter(
                         BIProcess.TYPE_NAME,
                         ColumnProcess.TYPE_NAME,
                         DbtColumnProcess.TYPE_NAME,
+                        FlowDataOperation.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
@@ -995,11 +1008,13 @@ class AssetImporter(
                         "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
                     )
                 }
-            } else if (deferredIdentity == null) {
-                throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
-            } else {
-                val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
-                connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
+            } else if (typeName.isNotBlank()) {
+                if (deferredIdentity == null) {
+                    throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+                } else {
+                    val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
+                    connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
+                }
             }
             return row
         }

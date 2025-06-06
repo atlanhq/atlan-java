@@ -70,7 +70,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Attribute
     String cubeFieldMeasureExpression;
 
-    /** Hierarchy in which this field exists. */
+    /** Hierarchy containing the field. */
     @Attribute
     ICubeHierarchy cubeHierarchy;
 
@@ -86,12 +86,12 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Attribute
     String cubeName;
 
-    /** Individual fields nested within this cube field. */
+    /** Individual fields contained in the parent field. */
     @Attribute
     @Singular
     SortedSet<ICubeField> cubeNestedFields;
 
-    /** Parent field in which this field is nested. */
+    /** Parent field containing the field. */
     @Attribute
     ICubeField cubeParentField;
 

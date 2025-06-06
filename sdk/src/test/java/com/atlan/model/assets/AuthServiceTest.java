@@ -418,6 +418,7 @@ public class AuthServiceTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .abacService("String0")
             .putAuthServiceConfig("key1", "value1")
             .putAuthServiceConfig("key2", "value2")
             .authServiceIsEnabled(true)

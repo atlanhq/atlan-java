@@ -91,6 +91,11 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> displayPreferences;
 
     /** TBC */

@@ -53,83 +53,83 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     @Attribute
     String dbtAccountName;
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     @Attribute
     String dbtAlias;
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     @Attribute
     String dbtConnectionContext;
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     @Attribute
     String dbtEnvironmentDbtVersion;
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     @Attribute
     String dbtEnvironmentName;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     @Attribute
     @Date
     Long dbtJobLastRun;
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobName;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     @Attribute
     @Date
     Long dbtJobNextRun;
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     @Attribute
     String dbtJobNextRunHumanized;
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     @Attribute
     @Singular
     List<DbtJobRun> dbtJobRuns;
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobSchedule;
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobScheduleCronHumanized;
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobStatus;
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     @Attribute
     String dbtMeta;
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     @Attribute
     String dbtPackageName;
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     @Attribute
     String dbtProjectName;
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     @Attribute
     String dbtSemanticLayerProxyUrl;
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     @Attribute
     @Singular
     SortedSet<String> dbtTags;
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     @Attribute
     String dbtUniqueId;
 

@@ -35,13 +35,13 @@ public interface IDbtModel {
 
     public static final String TYPE_NAME = "DbtModel";
 
-    /** TBC */
+    /** Compiled SQL of the dbt model. */
     TextField DBT_COMPILED_SQL = new TextField("dbtCompiledSQL", "dbtCompiledSQL");
 
-    /** TBC */
+    /** Error message if any for the dbt model. */
     TextField DBT_ERROR = new TextField("dbtError", "dbtError");
 
-    /** TBC */
+    /** Type of materialization used for the dbt model. */
     TextField DBT_MATERIALIZATION_TYPE = new TextField("dbtMaterializationType", "dbtMaterializationType");
 
     /** Metrics that exist within this model. */
@@ -50,47 +50,47 @@ public interface IDbtModel {
     /** Columns that exist within this dbt model. */
     RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation completed. */
     NumericField DBT_MODEL_COMPILE_COMPLETED_AT =
             new NumericField("dbtModelCompileCompletedAt", "dbtModelCompileCompletedAt");
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation started. */
     NumericField DBT_MODEL_COMPILE_STARTED_AT =
             new NumericField("dbtModelCompileStartedAt", "dbtModelCompileStartedAt");
 
-    /** TBC */
+    /** Timestamp when the dbt model execution completed. */
     NumericField DBT_MODEL_EXECUTE_COMPLETED_AT =
             new NumericField("dbtModelExecuteCompletedAt", "dbtModelExecuteCompletedAt");
 
-    /** TBC */
+    /** Timestamp when the dbt model execution started. */
     NumericField DBT_MODEL_EXECUTE_STARTED_AT =
             new NumericField("dbtModelExecuteStartedAt", "dbtModelExecuteStartedAt");
 
-    /** TBC */
+    /** Execution time of the dbt model. */
     NumericField DBT_MODEL_EXECUTION_TIME = new NumericField("dbtModelExecutionTime", "dbtModelExecutionTime");
 
-    /** TBC */
+    /** Elapsed time of the dbt model run. */
     NumericField DBT_MODEL_RUN_ELAPSED_TIME = new NumericField("dbtModelRunElapsedTime", "dbtModelRunElapsedTime");
 
-    /** TBC */
+    /** Timestamp when the dbt model run was generated. */
     NumericField DBT_MODEL_RUN_GENERATED_AT = new NumericField("dbtModelRunGeneratedAt", "dbtModelRunGeneratedAt");
 
-    /** TBC */
+    /** Model containing the assets. */
     RelationField DBT_MODEL_SQL_ASSETS = new RelationField("dbtModelSqlAssets");
 
-    /** TBC */
+    /** Raw SQL of the dbt model. */
     TextField DBT_RAW_SQL = new TextField("dbtRawSQL", "dbtRawSQL");
 
-    /** TBC */
+    /** Statistics of the dbt model. */
     TextField DBT_STATS = new TextField("dbtStats", "dbtStats");
 
-    /** TBC */
+    /** Status of the dbt model. */
     KeywordField DBT_STATUS = new KeywordField("dbtStatus", "dbtStatus");
 
-    /** TBC */
+    /** Tests related to this model. */
     RelationField DBT_TESTS = new RelationField("dbtTests");
 
-    /** TBC */
+    /** (Deprecated) Assets related to the model. */
     RelationField PRIMARY_SQL_ASSET = new RelationField("sqlAsset");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -120,10 +120,10 @@ public interface IDbtModel {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -156,7 +156,7 @@ public interface IDbtModel {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -393,55 +393,55 @@ public interface IDbtModel {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     String getDbtAccountName();
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     String getDbtAlias();
 
-    /** TBC */
+    /** Compiled SQL of the dbt model. */
     String getDbtCompiledSQL();
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     String getDbtConnectionContext();
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     String getDbtEnvironmentDbtVersion();
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     String getDbtEnvironmentName();
 
-    /** TBC */
+    /** Error message if any for the dbt model. */
     String getDbtError();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     Long getDbtJobLastRun();
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     String getDbtJobName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     Long getDbtJobNextRun();
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     String getDbtJobNextRunHumanized();
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     List<DbtJobRun> getDbtJobRuns();
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     String getDbtJobSchedule();
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     String getDbtJobScheduleCronHumanized();
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     String getDbtJobStatus();
 
-    /** TBC */
+    /** Type of materialization used for the dbt model. */
     String getDbtMaterializationType();
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     String getDbtMeta();
 
     /** Metrics that exist within this model. */
@@ -450,58 +450,58 @@ public interface IDbtModel {
     /** Columns that exist within this dbt model. */
     SortedSet<IDbtModelColumn> getDbtModelColumns();
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation completed. */
     Long getDbtModelCompileCompletedAt();
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation started. */
     Long getDbtModelCompileStartedAt();
 
-    /** TBC */
+    /** Timestamp when the dbt model execution completed. */
     Long getDbtModelExecuteCompletedAt();
 
-    /** TBC */
+    /** Timestamp when the dbt model execution started. */
     Long getDbtModelExecuteStartedAt();
 
-    /** TBC */
+    /** Execution time of the dbt model. */
     Double getDbtModelExecutionTime();
 
-    /** TBC */
+    /** Elapsed time of the dbt model run. */
     Double getDbtModelRunElapsedTime();
 
-    /** TBC */
+    /** Timestamp when the dbt model run was generated. */
     Long getDbtModelRunGeneratedAt();
 
-    /** TBC */
+    /** Model containing the assets. */
     SortedSet<ISQL> getDbtModelSqlAssets();
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     String getDbtPackageName();
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     String getDbtProjectName();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** Raw SQL of the dbt model. */
     String getDbtRawSQL();
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     String getDbtSemanticLayerProxyUrl();
 
-    /** TBC */
+    /** Statistics of the dbt model. */
     String getDbtStats();
 
-    /** TBC */
+    /** Status of the dbt model. */
     String getDbtStatus();
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     SortedSet<String> getDbtTags();
 
-    /** TBC */
+    /** Tests related to this model. */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -543,7 +543,7 @@ public interface IDbtModel {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -609,13 +609,13 @@ public interface IDbtModel {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** (Deprecated) Assets related to the model. */
     ISQL getPrimarySqlAsset();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

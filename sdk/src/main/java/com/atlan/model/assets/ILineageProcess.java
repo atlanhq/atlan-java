@@ -56,7 +56,19 @@ public interface ILineageProcess {
     RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
 
     /** TBC */
+    RelationField ETL_CONTROL_FLOW = new RelationField("etlControlFlow");
+
+    /** TBC */
+    RelationField ETL_DATA_FLOW_OPERATIONS = new RelationField("etlDataFlowOperations");
+
+    /** TBC */
+    RelationField ETL_EXECUTABLE_UNITS = new RelationField("etlExecutableUnits");
+
+    /** TBC */
     RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
+
+    /** TBC */
+    RelationField FLOW_GROUPING = new RelationField("flowGrouping");
 
     /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
@@ -414,10 +426,22 @@ public interface ILineageProcess {
     SortedSet<String> getDomainGUIDs();
 
     /** TBC */
+    IETLControlFlow getEtlControlFlow();
+
+    /** TBC */
+    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
+
+    /** TBC */
+    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */
     IFivetranConnector getFivetranConnector();
+
+    /** TBC */
+    IFlowProcessGrouping getFlowGrouping();
 
     /** TBC */
     Boolean getHasContract();

@@ -338,11 +338,29 @@ public interface ICatalog {
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
                 break;
+            case ETLControlFlow.TYPE_NAME:
+                ref = ETLControlFlow.refByQualifiedName(qualifiedName);
+                break;
+            case ETLControlFlowOperation.TYPE_NAME:
+                ref = ETLControlFlowOperation.refByQualifiedName(qualifiedName);
+                break;
+            case ETLDataFlowOperation.TYPE_NAME:
+                ref = ETLDataFlowOperation.refByQualifiedName(qualifiedName);
+                break;
+            case ETLExecutableUnit.TYPE_NAME:
+                ref = ETLExecutableUnit.refByQualifiedName(qualifiedName);
+                break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
                 break;
             case FivetranConnector.TYPE_NAME:
                 ref = FivetranConnector.refByQualifiedName(qualifiedName);
+                break;
+            case FlowInterimDataset.TYPE_NAME:
+                ref = FlowInterimDataset.refByQualifiedName(qualifiedName);
+                break;
+            case FlowInterimField.TYPE_NAME:
+                ref = FlowInterimField.refByQualifiedName(qualifiedName);
                 break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
@@ -355,6 +373,12 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
+                break;
+            case InterimDataset.TYPE_NAME:
+                ref = InterimDataset.refByQualifiedName(qualifiedName);
+                break;
+            case InterimField.TYPE_NAME:
+                ref = InterimField.refByQualifiedName(qualifiedName);
                 break;
             case KafkaConsumerGroup.TYPE_NAME:
                 ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
@@ -728,6 +752,9 @@ public interface ICatalog {
             case TableauDashboard.TYPE_NAME:
                 ref = TableauDashboard.refByQualifiedName(qualifiedName);
                 break;
+            case TableauDashboardField.TYPE_NAME:
+                ref = TableauDashboardField.refByQualifiedName(qualifiedName);
+                break;
             case TableauDatasource.TYPE_NAME:
                 ref = TableauDatasource.refByQualifiedName(qualifiedName);
                 break;
@@ -751,6 +778,9 @@ public interface ICatalog {
                 break;
             case TableauWorksheet.TYPE_NAME:
                 ref = TableauWorksheet.refByQualifiedName(qualifiedName);
+                break;
+            case TableauWorksheetField.TYPE_NAME:
+                ref = TableauWorksheetField.refByQualifiedName(qualifiedName);
                 break;
             case ThoughtspotAnswer.TYPE_NAME:
                 ref = ThoughtspotAnswer.refByQualifiedName(qualifiedName);
@@ -810,10 +840,10 @@ public interface ICatalog {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -846,7 +876,7 @@ public interface ICatalog {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -1125,7 +1155,7 @@ public interface ICatalog {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -1194,7 +1224,7 @@ public interface ICatalog {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

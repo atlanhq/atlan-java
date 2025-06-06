@@ -117,6 +117,11 @@ public class TableauWorksheet extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Fields that exist within this worksheet. */
+    @Attribute
+    @Singular
+    SortedSet<ITableauWorksheetField> tableauWorksheetFields;
+
     /** Unique name of the top-level project in which this worksheet exists. */
     @Attribute
     String topLevelProjectQualifiedName;

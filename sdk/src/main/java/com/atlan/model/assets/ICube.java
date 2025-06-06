@@ -23,7 +23,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a cube in Atlan.
+ * Instance of a Cube in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -35,7 +35,7 @@ public interface ICube {
     /** Number of dimensions in the cube. */
     NumericField CUBE_DIMENSION_COUNT = new NumericField("cubeDimensionCount", "cubeDimensionCount");
 
-    /** Individual dimensions that make up the cube. */
+    /** Individual dimensions contained in the cube. */
     RelationField CUBE_DIMENSIONS = new RelationField("cubeDimensions");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -65,10 +65,10 @@ public interface ICube {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -101,7 +101,7 @@ public interface ICube {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -341,7 +341,7 @@ public interface ICube {
     /** Unique name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     String getCubeDimensionQualifiedName();
 
-    /** Individual dimensions that make up the cube. */
+    /** Individual dimensions contained in the cube. */
     SortedSet<ICubeDimension> getCubeDimensions();
 
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
@@ -404,7 +404,7 @@ public interface ICube {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -473,7 +473,7 @@ public interface ICube {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

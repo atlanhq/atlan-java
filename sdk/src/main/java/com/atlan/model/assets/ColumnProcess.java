@@ -80,9 +80,27 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** Control flow that contains this process representing a data flow between data assets. */
+    @Attribute
+    IETLControlFlow etlControlFlow;
+
+    /** Data flow operations that are contained in this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLDataFlowOperation> etlDataFlowOperations;
+
+    /** Executable units that result in creating this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLExecutableUnit> etlExecutableUnits;
+
     /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
+
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowProcessGrouping flowGrouping;
 
     /** Assets that are inputs to this process. */
     @Attribute

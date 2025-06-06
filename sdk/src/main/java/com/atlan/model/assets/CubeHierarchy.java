@@ -49,7 +49,7 @@ public class CubeHierarchy extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Dimension in which this hierarchy exists. */
+    /** Dimension containing the hierarchy. */
     @Attribute
     ICubeDimension cubeDimension;
 
@@ -65,7 +65,7 @@ public class CubeHierarchy extends Asset
     @Attribute
     Long cubeFieldCount;
 
-    /** Individual fields that make up the hierarchy. */
+    /** Individual fields contained in the hierarchy. */
     @Attribute
     @Singular
     SortedSet<ICubeField> cubeFields;

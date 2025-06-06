@@ -31,10 +31,10 @@ public class UserDefRelationship extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Name for the relationship when referring from endDef2 asset to endDef1 asset */
+    /** Name for the relationship when referring from endDef2 asset to endDef1 asset. */
     String fromTypeLabel;
 
-    /** Name for the relationship when referring from endDef1 asset to endDef2 asset */
+    /** Name for the relationship when referring from endDef1 asset to endDef2 asset. */
     String toTypeLabel;
 
     /** {@inheritDoc} */

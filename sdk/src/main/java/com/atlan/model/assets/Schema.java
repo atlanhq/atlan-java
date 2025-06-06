@@ -57,7 +57,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String calculationViewQualifiedName;
 
-    /** TBC */
+    /** Calculation views that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ICalculationView> calculationViews;
@@ -74,17 +74,17 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
@@ -213,12 +213,12 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ISnowflakeTag> snowflakeTags;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;

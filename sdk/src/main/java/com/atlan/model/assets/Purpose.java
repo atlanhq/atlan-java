@@ -96,6 +96,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> displayPreferences;
 
     /** TBC */

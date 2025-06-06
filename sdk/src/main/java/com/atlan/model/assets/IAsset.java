@@ -64,10 +64,10 @@ public interface IAsset {
     /** Checks that run on this asset. */
     RelationField ANOMALO_CHECKS = new RelationField("anomaloChecks");
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     RelationField APPLICATION = new RelationField("application");
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     RelationField APPLICATION_FIELD = new RelationField("applicationField");
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -105,7 +105,7 @@ public interface IAsset {
     /** URL of the source in Anomalo. */
     TextField ASSET_ANOMALO_SOURCE_URL = new TextField("assetAnomaloSourceUrl", "assetAnomaloSourceUrl");
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     TextField ASSET_COVER_IMAGE = new TextField("assetCoverImage", "assetCoverImage");
 
     /** Name of the account in which this asset exists in dbt. */
@@ -417,7 +417,7 @@ public interface IAsset {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     BooleanField IS_EDITABLE = new BooleanField("isEditable", "isEditable");
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     BooleanField IS_PARTIAL = new BooleanField("isPartial", "isPartial");
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -628,10 +628,10 @@ public interface IAsset {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -664,7 +664,7 @@ public interface IAsset {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -934,7 +934,7 @@ public interface IAsset {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -988,7 +988,7 @@ public interface IAsset {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

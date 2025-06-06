@@ -138,6 +138,10 @@ public class TableauDatasourceField extends Asset
     @Attribute
     String tableauDatasourceFieldRole;
 
+    /** Worksheet fields that use this datasource field. */
+    @Attribute
+    ITableauWorksheetField tableauWorksheetField;
+
     /** Unique name of the top-level project in which this datasource field exists. */
     @Attribute
     String topLevelProjectQualifiedName;

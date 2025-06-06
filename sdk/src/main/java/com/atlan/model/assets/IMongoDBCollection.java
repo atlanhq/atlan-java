@@ -119,10 +119,10 @@ public interface IMongoDBCollection {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -155,7 +155,7 @@ public interface IMongoDBCollection {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -410,16 +410,16 @@ public interface IMongoDBCollection {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     SortedSet<IDbtModel> getDbtModels();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** Source containing the assets. */
     SortedSet<IDbtSource> getDbtSources();
 
-    /** TBC */
+    /** Tests related to this asset. */
     SortedSet<IDbtTest> getDbtTests();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -494,7 +494,7 @@ public interface IMongoDBCollection {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Whether this table is partitioned (true) or not (false). */
@@ -635,7 +635,7 @@ public interface IMongoDBCollection {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** Queries that access this table. */
@@ -749,10 +749,10 @@ public interface IMongoDBCollection {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();
 
-    /** TBC */
+    /** Assets related to the model. */
     SortedSet<IDbtModel> getSqlDbtModels();
 
     /** Users who have starred this asset. */
@@ -778,6 +778,9 @@ public interface IMongoDBCollection {
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
+
+    /** Number of objects in this table. */
+    Long getTableObjectCount();
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();

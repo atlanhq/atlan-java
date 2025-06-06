@@ -108,11 +108,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IAnomaloCheck> anomaloChecks;
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     @Attribute
     IApplication application;
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     @Attribute
     IApplicationField applicationField;
 
@@ -159,7 +159,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetAnomaloSourceUrl;
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     @Attribute
     String assetCoverImage;
 
@@ -552,7 +552,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Boolean isEditable;
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     @Attribute
     Boolean isPartial;
 
@@ -636,7 +636,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> productGUIDs;
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     @Attribute
     String qualifiedName;
 

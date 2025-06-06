@@ -49,6 +49,10 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
 
     /** TBC */
     @Attribute
+    String abacService;
+
+    /** TBC */
+    @Attribute
     @Singular("putAuthServiceConfig")
     Map<String, String> authServiceConfig;
 

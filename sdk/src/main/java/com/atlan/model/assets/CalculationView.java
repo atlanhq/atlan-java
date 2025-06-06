@@ -91,17 +91,17 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
@@ -173,7 +173,7 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Schema in which this calculation view exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;
@@ -186,12 +186,12 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;

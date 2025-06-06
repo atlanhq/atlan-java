@@ -87,17 +87,17 @@ public class CosmosMongoDBDatabase extends Asset
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
@@ -199,12 +199,12 @@ public class CosmosMongoDBDatabase extends Asset
     @Singular
     SortedSet<ISchema> schemas;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;

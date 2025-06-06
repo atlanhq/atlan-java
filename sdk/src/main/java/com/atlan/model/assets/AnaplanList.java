@@ -48,7 +48,7 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanLineItem assets containing this AnaplanList. */
+    /** Line items related to the list. */
     @Attribute
     @Singular
     SortedSet<IAnaplanLineItem> anaplanLineItems;
@@ -57,15 +57,15 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
     @Attribute
     Long anaplanListItemCount;
 
-    /** AnaplanModel asset containing this AnaplanList. */
+    /** Model containing the list. */
     @Attribute
     IAnaplanModel anaplanModel;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
@@ -81,11 +81,11 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
     @Attribute
     String anaplanSourceId;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 

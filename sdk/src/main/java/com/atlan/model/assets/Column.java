@@ -75,7 +75,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String columnCompression;
 
-    /** TBC */
+    /** Model columns related to this column. */
     @Attribute
     @Singular
     SortedSet<IDbtModelColumn> columnDbtModelColumns;
@@ -113,6 +113,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Histogram columnHistogram;
 
+    /** When true, this column is of type measure/calculated. */
+    @Attribute
+    Boolean columnIsMeasure;
+
     /** Greatest value in a numeric column. */
     @Attribute
     Double columnMax;
@@ -129,6 +133,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Arithmetic mean of the values in a numeric column. */
     @Attribute
     Double columnMean;
+
+    /** The type of measure/calculated column this is, eg: base, calculated, derived. */
+    @Attribute
+    String columnMeasureType;
 
     /** Calculated median of the values in a numeric column. */
     @Attribute
@@ -209,27 +217,27 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** Metrics related to this model column. */
     @Attribute
     @Singular
     SortedSet<IDbtMetric> dbtMetrics;
 
-    /** TBC */
+    /** (Deprecated) Model columns related to this model column. */
     @Attribute
     @Singular
     SortedSet<IDbtModelColumn> dbtModelColumns;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
@@ -427,7 +435,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Raw data type definition of this column. */
     @Attribute
     String rawDataTypeDefinition;
 
@@ -443,12 +451,12 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     ISnowflakeDynamicTable snowflakeDynamicTable;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;

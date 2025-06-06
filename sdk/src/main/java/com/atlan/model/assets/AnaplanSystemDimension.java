@@ -49,11 +49,11 @@ public class AnaplanSystemDimension extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
@@ -69,11 +69,11 @@ public class AnaplanSystemDimension extends Asset
     @Attribute
     String anaplanSourceId;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 

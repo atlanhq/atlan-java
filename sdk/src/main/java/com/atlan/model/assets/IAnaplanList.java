@@ -32,13 +32,13 @@ public interface IAnaplanList {
 
     public static final String TYPE_NAME = "AnaplanList";
 
-    /** AnaplanLineItem assets containing this AnaplanList. */
+    /** Line items related to the list. */
     RelationField ANAPLAN_LINE_ITEMS = new RelationField("anaplanLineItems");
 
     /** Item Count of the AnaplanList from the source system. */
     NumericField ANAPLAN_LIST_ITEM_COUNT = new NumericField("anaplanListItemCount", "anaplanListItemCount");
 
-    /** AnaplanModel asset containing this AnaplanList. */
+    /** Model containing the list. */
     RelationField ANAPLAN_MODEL = new RelationField("anaplanModel");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -50,19 +50,19 @@ public interface IAnaplanList {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
-    /** AnaplanLineItem assets containing this AnaplanList. */
+    /** Line items related to the list. */
     SortedSet<IAnaplanLineItem> getAnaplanLineItems();
 
     /** Item Count of the AnaplanList from the source system. */
     Long getAnaplanListItemCount();
 
-    /** AnaplanModel asset containing this AnaplanList. */
+    /** Model containing the list. */
     IAnaplanModel getAnaplanModel();
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     String getAnaplanModelName();
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     String getAnaplanModelQualifiedName();
 
     /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
@@ -74,10 +74,10 @@ public interface IAnaplanList {
     /** Id/Guid of the Anaplan asset in the source system. */
     String getAnaplanSourceId();
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     String getAnaplanWorkspaceName();
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     String getAnaplanWorkspaceQualifiedName();
 
     /** Detailed message to include in the announcement on this asset. */
@@ -98,10 +98,10 @@ public interface IAnaplanList {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -134,7 +134,7 @@ public interface IAnaplanList {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -413,7 +413,7 @@ public interface IAnaplanList {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -482,7 +482,7 @@ public interface IAnaplanList {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -48,16 +48,16 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unique identifier for the App asset from the source system. */
+    /** Unique identifier for the application asset from the source system. */
     @Attribute
     String appId;
 
-    /** ApplicationFields contained within this Application. */
+    /** ApplicationFields owned by the Application. */
     @Attribute
     @Singular
     SortedSet<IApplicationField> applicationChildFields;
 
-    /** Assets contained within this Application. */
+    /** Assets owned by the Application. */
     @Attribute
     @Singular
     SortedSet<IAsset> applicationOwnedAssets;

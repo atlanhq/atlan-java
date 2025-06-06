@@ -34,10 +34,10 @@ public interface IDbtMetric {
 
     public static final String TYPE_NAME = "DbtMetric";
 
-    /** TBC */
+    /** Model columns related to this metric. */
     RelationField DBT_METRIC_FILTER_COLUMNS = new RelationField("dbtMetricFilterColumns");
 
-    /** TBC */
+    /** Filters applied to the dbt metric. */
     KeywordField DBT_METRIC_FILTERS = new KeywordField("dbtMetricFilters", "dbtMetricFilters");
 
     /** Model in which this metric exists. */
@@ -70,10 +70,10 @@ public interface IDbtMetric {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -106,7 +106,7 @@ public interface IDbtMetric {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -346,73 +346,73 @@ public interface IDbtMetric {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     String getDbtAccountName();
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     String getDbtAlias();
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     String getDbtConnectionContext();
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     String getDbtEnvironmentDbtVersion();
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     String getDbtEnvironmentName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     Long getDbtJobLastRun();
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     String getDbtJobName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     Long getDbtJobNextRun();
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     String getDbtJobNextRunHumanized();
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     List<DbtJobRun> getDbtJobRuns();
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     String getDbtJobSchedule();
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     String getDbtJobScheduleCronHumanized();
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     String getDbtJobStatus();
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     String getDbtMeta();
 
-    /** TBC */
+    /** Model columns related to this metric. */
     SortedSet<IColumn> getDbtMetricFilterColumns();
 
-    /** TBC */
+    /** Filters applied to the dbt metric. */
     List<DbtMetricFilter> getDbtMetricFilters();
 
     /** Model in which this metric exists. */
     IDbtModel getDbtModel();
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     String getDbtPackageName();
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     String getDbtProjectName();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     String getDbtSemanticLayerProxyUrl();
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     SortedSet<String> getDbtTags();
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -457,7 +457,7 @@ public interface IDbtMetric {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -544,7 +544,7 @@ public interface IDbtMetric {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

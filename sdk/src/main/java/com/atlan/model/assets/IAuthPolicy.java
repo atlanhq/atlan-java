@@ -17,6 +17,7 @@ import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AuthPolicyCondition;
@@ -58,6 +59,9 @@ public interface IAuthPolicy {
 
     /** TBC */
     BooleanField POLICY_DELEGATE_ADMIN = new BooleanField("policyDelegateAdmin", "policyDelegateAdmin");
+
+    /** TBC */
+    TextField POLICY_FILTER_CRITERIA = new TextField("policyFilterCriteria", "policyFilterCriteria");
 
     /** TBC */
     KeywordField POLICY_GROUPS = new KeywordField("policyGroups", "policyGroups");
@@ -125,10 +129,10 @@ public interface IAuthPolicy {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -161,7 +165,7 @@ public interface IAuthPolicy {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -431,7 +435,7 @@ public interface IAuthPolicy {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** TBC */
@@ -495,6 +499,9 @@ public interface IAuthPolicy {
     Boolean getPolicyDelegateAdmin();
 
     /** TBC */
+    String getPolicyFilterCriteria();
+
+    /** TBC */
     SortedSet<String> getPolicyGroups();
 
     /** TBC */
@@ -536,7 +543,7 @@ public interface IAuthPolicy {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

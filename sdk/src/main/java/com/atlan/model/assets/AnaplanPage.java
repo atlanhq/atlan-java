@@ -48,7 +48,7 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanApp asset containing this AnaplanPage. */
+    /** App containing the page. */
     @Attribute
     IAnaplanApp anaplanApp;
 
@@ -56,15 +56,15 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Attribute
     String anaplanAppQualifiedName;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** AnaplanModel assets contained within this AnaplanPage. */
+    /** Models related to the page. */
     @Attribute
     @Singular
     SortedSet<IAnaplanModel> anaplanModels;
@@ -77,7 +77,7 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Attribute
     String anaplanModuleQualifiedName;
 
-    /** Category Name of the AnaplanPage from the source system. */
+    /** Category name of the AnaplanPage from the source system. */
     @Attribute
     String anaplanPageCategoryName;
 
@@ -89,11 +89,11 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Attribute
     String anaplanSourceId;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 

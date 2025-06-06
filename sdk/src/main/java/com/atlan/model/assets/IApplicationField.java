@@ -32,10 +32,10 @@ public interface IApplicationField {
 
     public static final String TYPE_NAME = "ApplicationField";
 
-    /** Assets contained within this ApplicationField. */
+    /** Assets owned by the ApplicationField. */
     RelationField APPLICATION_FIELD_OWNED_ASSETS = new RelationField("applicationFieldOwnedAssets");
 
-    /** Application asset containing this ApplicationField. */
+    /** Application owning the ApplicationField. */
     RelationField APPLICATION_PARENT = new RelationField("applicationParent");
 
     /** Unique name of the parent Application asset that contains this ApplicationField asset. */
@@ -69,22 +69,22 @@ public interface IApplicationField {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Unique identifier for the App asset from the source system. */
+    /** Unique identifier for the application asset from the source system. */
     String getAppId();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
-    /** Assets contained within this ApplicationField. */
+    /** Assets owned by the ApplicationField. */
     SortedSet<IAsset> getApplicationFieldOwnedAssets();
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
 
-    /** Application asset containing this ApplicationField. */
+    /** Application owning the ApplicationField. */
     IApplication getApplicationParent();
 
     /** Unique name of the parent Application asset that contains this ApplicationField asset. */
@@ -117,7 +117,7 @@ public interface IApplicationField {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -396,7 +396,7 @@ public interface IApplicationField {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -465,7 +465,7 @@ public interface IApplicationField {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

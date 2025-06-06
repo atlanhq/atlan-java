@@ -97,17 +97,17 @@ public class CosmosMongoDBCollection extends Asset
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
@@ -345,12 +345,12 @@ public class CosmosMongoDBCollection extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
@@ -371,6 +371,10 @@ public class CosmosMongoDBCollection extends Asset
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
+
+    /** Number of objects in this table. */
+    @Attribute
+    Long tableObjectCount;
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute

@@ -126,6 +126,10 @@ public class TableauCalculatedField extends Asset
     @Attribute
     String tableauDataType;
 
+    /** Worksheet fields that use this calculated field. */
+    @Attribute
+    ITableauWorksheetField tableauWorksheetFields;
+
     /** Unique name of the top-level project in which this calculated field exists. */
     @Attribute
     String topLevelProjectQualifiedName;

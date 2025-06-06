@@ -102,6 +102,11 @@ public class TableauDashboard extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Fields that exist within this dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<ITableauDashboardField> tableauDashboardFields;
+
     /** Dashboards that are embedded in this dashboard. */
     @Attribute
     @Singular
