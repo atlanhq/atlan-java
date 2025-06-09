@@ -192,10 +192,13 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .toList()
         assertEquals(10, tables.size)
         tables.forEach { table ->
+            // Note: we need to EXPLICITLY EXCLUDE FlowDataOperation from lineage, if we want to avoid having it
+            //  in the traversals...
             val builder =
                 FluentLineage
                     .builder(client, table.guid)
                     .includeOnResults(Asset.NAME)
+                    .whereAsset(Asset.TYPE_NAME.inLineage.neq(FlowDataOperation.TYPE_NAME))
             val lineage =
                 when (table.name) {
                     "SOURCETABLE", "CUSTOMERS01", "DISNEY_MOVIES", "EMPLOYEES_SR1", "EMPLOYEES_SR" -> {
@@ -250,7 +253,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 3)
+            validateLineage(lineage, 2)
         }
     }
 
@@ -272,36 +275,36 @@ class InformaticaCDITest : PackageTest("cdi") {
                     .builder(client, interim.guid)
                     .includeOnResults(Asset.NAME)
                     .depth(100)
+            var totalExpected = 0
             val lineage =
                 when (interim.name) {
                     "Source" -> {
+                        totalExpected = 3
                         builder
                             .direction(AtlanLineageDirection.DOWNSTREAM)
                             .stream()
                             .toList()
                     }
                     "Mapplet" -> {
-                        val down =
-                            builder
-                                .direction(AtlanLineageDirection.DOWNSTREAM)
-                                .stream()
-                                .toList()
-                        val up =
-                            builder
-                                .direction(AtlanLineageDirection.UPSTREAM)
-                                .stream()
-                                .toList()
-                        down + up
+                        totalExpected = 2
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
                     }
                     "Target" -> {
+                        totalExpected = 3
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
                             .stream()
                             .toList()
                     }
-                    else -> emptyList<Asset>()
+                    else -> {
+                        totalExpected = 0
+                        emptyList<Asset>()
+                    }
                 }
-            validateLineage(lineage, 3)
+            validateLineage(lineage, totalExpected)
         }
     }
 
@@ -323,23 +326,43 @@ class InformaticaCDITest : PackageTest("cdi") {
                     .builder(client, interim.guid)
                     .includeOnResults(Asset.NAME)
                     .depth(100)
+            var totalExpected = 0
             val lineage =
                 when (interim.name) {
                     "Input" -> {
+                        totalExpected = 3
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "Expression" -> {
+                        totalExpected = 2
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "Aggregator" -> {
+                        totalExpected = 1
                         builder
                             .direction(AtlanLineageDirection.DOWNSTREAM)
                             .stream()
                             .toList()
                     }
                     "Output" -> {
+                        totalExpected = 3
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
                             .stream()
                             .toList()
                     }
-                    else -> emptyList<Asset>()
+                    else -> {
+                        totalExpected = 0
+                        emptyList<Asset>()
+                    }
                 }
-            validateLineage(lineage, 5)
+            validateLineage(lineage, totalExpected)
         }
     }
 
