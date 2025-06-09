@@ -6,6 +6,10 @@ import com.atlan.model.assets.FlowDataOperation
 import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowProcessGrouping
 import com.atlan.model.assets.LineageProcess
+import com.atlan.model.assets.Table
+import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanLineageDirection
+import com.atlan.model.lineage.FluentLineage
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
@@ -14,6 +18,7 @@ import org.testng.annotations.Test
 import java.nio.file.Paths
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 /**
  * Test export of detailed view and change information.
@@ -22,6 +27,7 @@ class InformaticaCDITest : PackageTest("cdi") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
+    private val connectorType = "iics"
     val testFile = "iics-cdi-assets.csv"
 
     private fun prepFile() {
@@ -50,12 +56,12 @@ class InformaticaCDITest : PackageTest("cdi") {
     }
 
     override fun teardown() {
-        removeConnection(c1, "iics")
+        removeConnection(c1, connectorType)
     }
 
     @Test
     fun connectionExists() {
-        val connection = Connection.findByName(client, c1, "iics")
+        val connection = Connection.findByName(client, c1, connectorType)
         assertNotNull(connection)
         assertFalse(connection.isEmpty())
         assertEquals(1, connection.size)
@@ -63,7 +69,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun visibleLineageExists() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val processes =
             LineageProcess
                 .select(client)
@@ -76,7 +82,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappingTasksExist() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mt =
             FlowProcessGrouping
                 .select(client)
@@ -102,7 +108,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappingsExist() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mappings =
             FlowProcessGrouping
                 .select(client)
@@ -128,7 +134,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun mappletExists() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mapplets =
             FlowProcessGrouping
                 .select(client)
@@ -155,7 +161,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun interimDatasetForMappletReferencesItsMapplet() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val ids =
             FlowInterimDataset
                 .select(client)
@@ -170,11 +176,179 @@ class InformaticaCDITest : PackageTest("cdi") {
         assertEquals("${connection.qualifiedName}/Mapplet", ids[0].flowDetailedBy.qualifiedName)
     }
 
+    @Test
+    fun dataFlowOpsNotInTopLevelLineage() {
+        val connection = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)[0]!!
+        val tables =
+            Table
+                .select(client)
+                .where(Table.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(Table.DATABASE_NAME.eq("LOGAN_DATA"))
+                .where(Table.SCHEMA_NAME.eq("INFORMATICA_CDI"))
+                .stream()
+                .map { it as Table }
+                .toList()
+        assertEquals(10, tables.size)
+        tables.forEach { table ->
+            val builder =
+                FluentLineage
+                    .builder(client, table.guid)
+                    .includeOnResults(Asset.NAME)
+            val lineage =
+                when (table.name) {
+                    "SOURCETABLE", "CUSTOMERS01", "DISNEY_MOVIES", "EMPLOYEES_SR1", "EMPLOYEES_SR" -> {
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "TARGETTABLE", "CUSTOMER_RESULTANT_JOIN", "MOVIE_DETAILS", "Routersimple02", "Routersimple01" -> {
+                        builder
+                            .direction(AtlanLineageDirection.UPSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    else -> emptyList<Asset>()
+                }
+            validateLineage(lineage, 1)
+        }
+    }
+
+    @Test
+    fun multiMapInnerLineage() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val interims =
+            FlowInterimDataset
+                .select(client)
+                .where(FlowInterimDataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowInterimDataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
+                .stream()
+                .map { it as FlowInterimDataset }
+                .toList()
+        assertEquals(8, interims.size)
+        interims.forEach { interim ->
+            val builder =
+                FluentLineage
+                    .builder(client, interim.guid)
+                    .includeOnResults(Asset.NAME)
+                    .depth(100)
+            val lineage =
+                when (interim.name) {
+                    "Source", "Source1", "Source2", "Source3" -> {
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "Target", "Target1", "Target2", "Target3" -> {
+                        builder
+                            .direction(AtlanLineageDirection.UPSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    else -> emptyList<Asset>()
+                }
+            validateLineage(lineage, 2)
+        }
+    }
+
+    @Test
+    fun complexInnerLineage() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val interims =
+            FlowInterimDataset
+                .select(client)
+                .where(FlowInterimDataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowInterimDataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Complex"))
+                .stream()
+                .map { it as FlowInterimDataset }
+                .toList()
+        assertEquals(3, interims.size)
+        interims.forEach { interim ->
+            val builder =
+                FluentLineage
+                    .builder(client, interim.guid)
+                    .includeOnResults(Asset.NAME)
+                    .depth(100)
+            val lineage =
+                when (interim.name) {
+                    "Source" -> {
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "Target" -> {
+                        builder
+                            .direction(AtlanLineageDirection.UPSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    else -> emptyList<Asset>()
+                }
+            validateLineage(lineage, 2)
+        }
+    }
+
+    @Test
+    fun complexMappletLineage() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val interims =
+            FlowInterimDataset
+                .select(client)
+                .where(FlowInterimDataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowInterimDataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Mapplet"))
+                .stream()
+                .map { it as FlowInterimDataset }
+                .toList()
+        assertEquals(4, interims.size)
+        interims.forEach { interim ->
+            val builder =
+                FluentLineage
+                    .builder(client, interim.guid)
+                    .includeOnResults(Asset.NAME)
+                    .depth(100)
+            val lineage =
+                when (interim.name) {
+                    "Input" -> {
+                        builder
+                            .direction(AtlanLineageDirection.DOWNSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    "Output" -> {
+                        builder
+                            .direction(AtlanLineageDirection.UPSTREAM)
+                            .stream()
+                            .toList()
+                    }
+                    else -> emptyList<Asset>()
+                }
+            validateLineage(lineage, 4)
+        }
+    }
+
     // ... OTHER BASIC TESTS ...
+
+    private fun validateLineage(
+        assetList: List<Asset>,
+        expectedNonProcessAssets: Int,
+    ) {
+        if (expectedNonProcessAssets > 0) {
+            assertFalse(assetList.isEmpty())
+            val nonProcess =
+                assetList
+                    .filter { it !is LineageProcess }
+                    .toList()
+            assertEquals(expectedNonProcessAssets, nonProcess.size)
+        } else {
+            assertTrue(assetList.isEmpty())
+        }
+    }
 
     @Test
     fun drilldownLineageExists() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val operations =
             FlowDataOperation
                 .select(client)
@@ -194,7 +368,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun interimDatasetsExist() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val ids =
             FlowInterimDataset
                 .select(client)
@@ -217,7 +391,7 @@ class InformaticaCDITest : PackageTest("cdi") {
 
     @Test
     fun flowGroupingsExist() {
-        val connection = Connection.findByName(client, c1, "iics")[0]!!
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val groupings =
             FlowProcessGrouping
                 .select(client)
