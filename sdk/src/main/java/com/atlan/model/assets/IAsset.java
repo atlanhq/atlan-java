@@ -354,6 +354,9 @@ public interface IAsset {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     TextField ASSET_THEME_HEX = new TextField("assetThemeHex", "assetThemeHex");
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    KeywordField ASSET_USER_DEFINED_TYPE = new KeywordField("assetUserDefinedType", "assetUserDefinedType");
+
     /** Status of this asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
             new KeywordTextField("certificateStatus", "certificateStatus", "certificateStatus.text");
@@ -870,6 +873,9 @@ public interface IAsset {
 
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
+
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

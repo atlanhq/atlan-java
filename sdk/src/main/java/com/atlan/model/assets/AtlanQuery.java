@@ -84,6 +84,11 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<IDbtSource> dbtSources;
 
     /** TBC */

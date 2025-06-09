@@ -333,6 +333,9 @@ public interface ISchemaRegistrySubject {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** TBC */
     SortedSet<IAsset> getAssets();
 

@@ -88,7 +88,7 @@ class InformaticaCDITest : PackageTest("cdi") {
             FlowProcessGrouping
                 .select(client)
                 .where(FlowProcessGrouping.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowProcessGrouping.SUB_TYPE.eq("Mapping Task"))
+                .where(FlowProcessGrouping.ASSET_USER_DEFINED_TYPE.eq("Mapping Task"))
                 .includeOnResults(FlowProcessGrouping.FLOW_DATA_FLOWS)
                 .includeOnResults(FlowProcessGrouping.NAME)
                 .stream()
@@ -114,7 +114,7 @@ class InformaticaCDITest : PackageTest("cdi") {
             FlowProcessGrouping
                 .select(client)
                 .where(FlowProcessGrouping.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowProcessGrouping.SUB_TYPE.eq("Mapping"))
+                .where(FlowProcessGrouping.ASSET_USER_DEFINED_TYPE.eq("Mapping"))
                 .includeOnResults(FlowProcessGrouping.FLOW_DATA_FLOWS)
                 .includeOnResults(FlowProcessGrouping.NAME)
                 .stream()
@@ -140,7 +140,7 @@ class InformaticaCDITest : PackageTest("cdi") {
             FlowProcessGrouping
                 .select(client)
                 .where(FlowProcessGrouping.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowProcessGrouping.SUB_TYPE.eq("Mapplet"))
+                .where(FlowProcessGrouping.ASSET_USER_DEFINED_TYPE.eq("Mapplet"))
                 .includeOnResults(FlowProcessGrouping.FLOW_DATA_FLOWS)
                 .includeOnResults(FlowProcessGrouping.FLOW_ABSTRACTS)
                 .includeOnResults(FlowProcessGrouping.NAME)

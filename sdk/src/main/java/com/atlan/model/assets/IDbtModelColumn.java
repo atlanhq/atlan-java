@@ -51,6 +51,9 @@ public interface IDbtModelColumn {
     KeywordTextField DBT_MODEL_QUALIFIED_NAME =
             new KeywordTextField("dbtModelQualifiedName", "dbtModelQualifiedName", "dbtModelQualifiedName.text");
 
+    /** Seed in which this dbt column exists. */
+    RelationField DBT_SEED = new RelationField("dbtSeed");
+
     /** Tests related to this model column. */
     RelationField DBT_TESTS = new RelationField("dbtTests");
 
@@ -327,6 +330,9 @@ public interface IDbtModelColumn {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -422,6 +428,9 @@ public interface IDbtModelColumn {
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** Seed in which this dbt column exists. */
+    IDbtSeed getDbtSeed();
 
     /** URL of the semantic layer proxy for this asset in dbt. */
     String getDbtSemanticLayerProxyUrl();

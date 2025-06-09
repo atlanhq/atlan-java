@@ -347,6 +347,9 @@ public interface ITask {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 

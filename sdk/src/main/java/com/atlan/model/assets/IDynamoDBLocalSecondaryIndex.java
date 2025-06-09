@@ -311,6 +311,9 @@ public interface IDynamoDBLocalSecondaryIndex {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -364,6 +367,9 @@ public interface IDynamoDBLocalSecondaryIndex {
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** DBT seeds that materialize the SQL asset. */
+    SortedSet<IDbtSeed> getDbtSeedAssets();
 
     /** Source containing the assets. */
     SortedSet<IDbtSource> getDbtSources();

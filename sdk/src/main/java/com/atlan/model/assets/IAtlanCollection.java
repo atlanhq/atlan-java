@@ -310,6 +310,9 @@ public interface IAtlanCollection {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */

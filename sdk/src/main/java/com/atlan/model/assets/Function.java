@@ -69,6 +69,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
+    /** DBT seeds that materialize the SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
     /** Source containing the assets. */
     @Attribute
     @Singular

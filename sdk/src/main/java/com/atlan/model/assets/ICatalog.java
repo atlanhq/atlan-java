@@ -302,6 +302,9 @@ public interface ICatalog {
             case DbtProcess.TYPE_NAME:
                 ref = DbtProcess.refByQualifiedName(qualifiedName);
                 break;
+            case DbtSeed.TYPE_NAME:
+                ref = DbtSeed.refByQualifiedName(qualifiedName);
+                break;
             case DbtSource.TYPE_NAME:
                 ref = DbtSource.refByQualifiedName(qualifiedName);
                 break;
@@ -1064,6 +1067,9 @@ public interface ICatalog {
 
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
+
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

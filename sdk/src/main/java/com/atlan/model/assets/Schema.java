@@ -79,6 +79,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
+    /** DBT seeds that materialize the SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
     /** Source containing the assets. */
     @Attribute
     @Singular

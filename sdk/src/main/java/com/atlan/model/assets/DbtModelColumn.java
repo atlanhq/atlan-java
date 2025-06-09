@@ -137,6 +137,10 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Attribute
     String dbtProjectName;
 
+    /** Seed in which this dbt column exists. */
+    @Attribute
+    IDbtSeed dbtSeed;
+
     /** URL of the semantic layer proxy for this asset in dbt. */
     @Attribute
     String dbtSemanticLayerProxyUrl;

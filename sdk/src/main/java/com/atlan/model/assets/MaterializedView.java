@@ -86,6 +86,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<IDbtSource> dbtSources;
 
     /** TBC */

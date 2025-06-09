@@ -355,6 +355,9 @@ public interface IAtlanQuery {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -407,6 +410,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSeed> getDbtSeedAssets();
 
     /** TBC */
     SortedSet<IDbtSource> getDbtSources();

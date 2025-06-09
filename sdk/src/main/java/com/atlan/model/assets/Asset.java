@@ -461,6 +461,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetThemeHex;
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    @Attribute
+    String assetUserDefinedType;
+
     /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular

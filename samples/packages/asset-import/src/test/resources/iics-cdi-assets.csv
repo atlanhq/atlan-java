@@ -1,4 +1,4 @@
-qualifiedName,typeName,subType,name,connectionQualifiedName,connectorName,databaseName,databaseQualifiedName,database,schemaName,schemaQualifiedName,atlanSchema,inputs,outputs,flowGrouping,flowDetailedBy,adminRoles,iconUrl,category
+qualifiedName,typeName,assetUserDefinedType,name,connectionQualifiedName,connectorName,databaseName,databaseQualifiedName,database,schemaName,schemaQualifiedName,atlanSchema,inputs,outputs,flowGrouping,flowDetailedBy,adminRoles,iconUrl,category
 {{iics/{CNAME}}},Connection,,{CNAME},,iics,,,,,,,,,,,$admin,http://assets.atlan.com/assets/informatica.png,elt
 {{iics/{CNAME}}}/MultiMap,FlowProcessGrouping,Mapping Task,MultiMap,{{iics/{CNAME}}},iics,,,,,,,,,,,,,
 {{iics/{CNAME}}}/MultiMap/lineage.externalTable.01,Process,,lineage.externalTable.01,{{iics/{CNAME}}},iics,,,,,,,Table@{{snowflake/production}}/LOGAN_DATA/INFORMATICA_CDI/CUSTOMERS01,Table@{{snowflake/production}}/LOGAN_DATA/INFORMATICA_CDI/CUSTOMER_RESULTANT_JOINER,FlowProcessGrouping@{{iics/{CNAME}}}/MultiMap,,,,
