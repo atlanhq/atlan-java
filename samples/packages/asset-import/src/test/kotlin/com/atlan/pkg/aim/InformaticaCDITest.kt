@@ -5,6 +5,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.FlowDataOperation
 import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowProcessGrouping
+import com.atlan.model.assets.ILineageProcess
 import com.atlan.model.assets.LineageProcess
 import com.atlan.model.assets.Table
 import com.atlan.model.enums.AtlanConnectorType
@@ -185,6 +186,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .where(Table.DATABASE_NAME.eq("LOGAN_DATA"))
                 .where(Table.SCHEMA_NAME.eq("INFORMATICA_CDI"))
+                .includeOnResults(Table.NAME)
                 .stream()
                 .map { it as Table }
                 .toList()
@@ -210,7 +212,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 1)
+            validateLineage(lineage, 2)
         }
     }
 
@@ -248,7 +250,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 2)
+            validateLineage(lineage, 3)
         }
     }
 
@@ -278,6 +280,19 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+                    "Mapplet" -> {
+                        val down =
+                            builder
+                                .direction(AtlanLineageDirection.DOWNSTREAM)
+                                .stream()
+                                .toList()
+                        val up =
+                            builder
+                                .direction(AtlanLineageDirection.UPSTREAM)
+                                .stream()
+                                .toList()
+                        down + up
+                    }
                     "Target" -> {
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
@@ -286,7 +301,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 2)
+            validateLineage(lineage, 3)
         }
     }
 
@@ -324,7 +339,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 4)
+            validateLineage(lineage, 5)
         }
     }
 
@@ -338,7 +353,7 @@ class InformaticaCDITest : PackageTest("cdi") {
             assertFalse(assetList.isEmpty())
             val nonProcess =
                 assetList
-                    .filter { it !is LineageProcess }
+                    .filter { it !is ILineageProcess }
                     .toList()
             assertEquals(expectedNonProcessAssets, nonProcess.size)
         } else {
