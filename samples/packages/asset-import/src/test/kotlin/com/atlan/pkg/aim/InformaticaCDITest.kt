@@ -207,7 +207,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
-                    "TARGETTABLE", "CUSTOMER_RESULTANT_JOIN", "MOVIE_DETAILS", "Routersimple02", "Routersimple01" -> {
+                    "TARGETTABLE", "CUSTOMER_RESULTANT_JOINER", "MOVIE_DETAILS", "Routersimple02", "Routersimple01" -> {
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
                             .stream()
