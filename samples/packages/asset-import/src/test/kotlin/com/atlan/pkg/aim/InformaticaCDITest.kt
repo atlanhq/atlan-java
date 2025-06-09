@@ -215,7 +215,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 2)
+            validateLineage(lineage, 1)
         }
     }
 
