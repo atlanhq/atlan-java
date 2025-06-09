@@ -135,6 +135,10 @@ public class GuacamoleColumn extends Asset
     @Singular("putColumnHierarchy")
     List<Map<String, String>> columnHierarchy;
 
+    /** When true, this column is of type measure/calculated. */
+    @Attribute
+    Boolean columnIsMeasure;
+
     /** TBC */
     @Attribute
     Histogram columnHistogram;
@@ -155,6 +159,10 @@ public class GuacamoleColumn extends Asset
     /** TBC */
     @Attribute
     Double columnMean;
+
+    /** The type of measure/calculated column this is, eg: base, calculated, derived. */
+    @Attribute
+    String columnMeasureType;
 
     /** TBC */
     @Attribute

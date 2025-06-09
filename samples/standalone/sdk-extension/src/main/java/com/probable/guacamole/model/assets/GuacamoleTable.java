@@ -332,6 +332,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     String tableName;
 
+    /** Number of objects in this table. */
+    @Attribute
+    Long tableObjectCount;
+
     /** TBC */
     @Attribute
     String tableQualifiedName;
