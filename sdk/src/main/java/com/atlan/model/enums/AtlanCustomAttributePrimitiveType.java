@@ -15,7 +15,8 @@ public enum AtlanCustomAttributePrimitiveType implements AtlanEnum {
     USERS("users"),
     GROUPS("groups"),
     URL("url"),
-    SQL("SQL");
+    SQL("SQL"),
+    LONG("long");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
