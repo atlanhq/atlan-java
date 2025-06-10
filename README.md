@@ -3,8 +3,8 @@
 
 [![Build](https://github.com/atlanhq/atlan-java/workflows/Merge/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/merge.yml?query=workflow%3AMerge)
 [![JavaDocs](https://img.shields.io/badge/javadocs-passing-success)](https://atlanhq.github.io/atlan-java/)
-[![Release](https://img.shields.io/maven-central/v/com.atlan/atlan-java?label=release)](https://s01.oss.sonatype.org/content/repositories/releases/com/atlan/atlan-java/)
-[![Development](https://img.shields.io/nexus/s/com.atlan/atlan-java?label=development&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/atlan/atlan-java/)
+[![Release](https://img.shields.io/maven-central/v/com.atlan/atlan-java?label=release)](https://central.sonatype.com/artifact/com.atlan/atlan-java)
+<!--[![Development](https://img.shields.io/nexus/s/com.atlan/atlan-java?label=development&server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/atlan/atlan-java/) -->
 <!--[![CodeQL](https://github.com/atlanhq/atlan-java/workflows/CodeQL/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/codeql-analysis.yml) -->
 
 # Atlan Java
