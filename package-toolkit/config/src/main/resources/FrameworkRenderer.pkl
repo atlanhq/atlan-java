@@ -69,6 +69,13 @@ local const function getProcessTemplate(
       name = "credentials"
     }
   } else null
+  podSpecPatch = """
+    containers:
+      - name: main
+        resources:
+          requests:
+            memory: "{{inputs.parameters.requests_memory}}"
+    """
   tolerations = new Listing {
     new Toleration {
       key = "archtype"
@@ -906,9 +913,11 @@ local class WorkflowTemplateDefinition {
     fileInputSetup = f
     credentialInjection = (credVariable != null)
     passthroughFiles = directInputFiles
+    templateName = name
   }
   outputs: Framework.WorkflowOutputs?
   volumes: Listing<WorkflowVolume>?
+  podSpecPatch: String?
   tolerations: Listing<Toleration>?
   container: WorkflowContainer?
   initContainers: Listing<WorkflowContainer>?
@@ -922,10 +931,20 @@ local class WorkflowTemplateDefinition {
 }
 
 local class WorkflowInputs {
-  fixed parameters: List<NamedPair> = params.toList()
+  fixed parameters: List<NamedPair> = new Listing {
+    ...params
+    new ConfigMapEntry {
+      name = "requests_memory"
+      configMapName = "atlan-tenant-package-runtime-config"
+      configMapKey = "\(pkgName).\(templateName).params.requests_memory"
+      optional = true
+      default = "0"
+    }
+  }.toList()
   fixed artifacts: List<NamedPair>? = if (fileInputSetup) null else arts.toList()
   hidden config: Framework.UIConfig
   hidden pkgName: String = ""
+  hidden templateName: String = ""
   hidden fileInputSetup: Boolean = false
   hidden credentialInjection: Boolean = false
   hidden passthroughFiles: List<NamedPair>? = null
