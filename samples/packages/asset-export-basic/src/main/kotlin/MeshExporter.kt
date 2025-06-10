@@ -102,6 +102,8 @@ class MeshExporter(
                 DataProduct.DAAP_VISIBILITY,
                 DataProduct.DAAP_VISIBILITY_USERS,
                 DataProduct.DAAP_VISIBILITY_GROUPS,
+                DataProduct.DATA_PRODUCT_SCORE_VALUE,
+                DataProduct.DATA_PRODUCT_SCORE_UPDATED_AT,
             )
         for (cmField in cmFields) {
             attributeList.add(cmField)
