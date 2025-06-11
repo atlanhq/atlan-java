@@ -6,6 +6,8 @@ import AssetImportCfg
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
+import com.atlan.model.assets.APIField
+import com.atlan.model.assets.APIObject
 import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.AirflowDag
@@ -46,6 +48,7 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.CustomEntity
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.DataStudioAsset
@@ -66,6 +69,7 @@ import com.atlan.model.assets.DomoDatasetColumn
 import com.atlan.model.assets.DynamoDBGlobalSecondaryIndex
 import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
+import com.atlan.model.assets.File
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
@@ -550,6 +554,8 @@ class AssetImporter(
                     listOf(
                         APISpec.TYPE_NAME,
                         APIPath.TYPE_NAME,
+                        APIObject.TYPE_NAME,
+                        APIField.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
@@ -883,6 +889,13 @@ class AssetImporter(
                         DbtModelColumn.TYPE_NAME,
                         DbtTest.TYPE_NAME,
                     ),
+                ),
+                TypeGrouping(
+                    "Custom",
+                    listOf(
+                        File.TYPE_NAME,
+                        CustomEntity.TYPE_NAME,
+                    )
                 ),
                 TypeGrouping(
                     "Lineage",
