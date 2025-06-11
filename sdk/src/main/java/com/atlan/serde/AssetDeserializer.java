@@ -175,7 +175,8 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (relationshipGuid != null
                 && !relationshipGuid.isNull()
                 && relationshipAttributes != null
-                && !relationshipAttributes.isNull()) {
+                && !relationshipAttributes.isNull()
+                && relationshipAttributes.has("attributes")) {
             Method method = ReflectionCache.getSetter(builderClass, "relationshipAttributes");
             if (method != null) {
                 try {
