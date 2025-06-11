@@ -133,46 +133,29 @@ class AssetExporter(
             cmFields: List<CustomMetadataField>,
         ): List<AtlanField> {
             val attributeList: MutableList<AtlanField> =
-                if (includeDesc) {
-                    mutableListOf(
-                        Asset.NAME,
-                        Asset.DISPLAY_NAME,
-                        Asset.DESCRIPTION,
-                        Asset.USER_DESCRIPTION,
-                        Asset.OWNER_USERS,
-                        Asset.OWNER_GROUPS,
-                        Asset.CERTIFICATE_STATUS,
-                        Asset.CERTIFICATE_STATUS_MESSAGE,
-                        Asset.ANNOUNCEMENT_TYPE,
-                        Asset.ANNOUNCEMENT_TITLE,
-                        Asset.ANNOUNCEMENT_MESSAGE,
-                        Asset.ASSIGNED_TERMS,
-                        Asset.ATLAN_TAGS,
-                        Asset.LINKS,
-                        Asset.README,
-                        Asset.STARRED_DETAILS,
-                        Asset.DOMAIN_GUIDS,
-                    )
-                } else {
-                    mutableListOf(
-                        Asset.NAME,
-                        Asset.DISPLAY_NAME,
-                        Asset.USER_DESCRIPTION,
-                        Asset.OWNER_USERS,
-                        Asset.OWNER_GROUPS,
-                        Asset.CERTIFICATE_STATUS,
-                        Asset.CERTIFICATE_STATUS_MESSAGE,
-                        Asset.ANNOUNCEMENT_TYPE,
-                        Asset.ANNOUNCEMENT_TITLE,
-                        Asset.ANNOUNCEMENT_MESSAGE,
-                        Asset.ASSIGNED_TERMS,
-                        Asset.ATLAN_TAGS,
-                        Asset.LINKS,
-                        Asset.README,
-                        Asset.STARRED_DETAILS,
-                        Asset.DOMAIN_GUIDS,
-                    )
-                }
+                mutableListOf(
+                    Asset.NAME,
+                    Asset.DISPLAY_NAME,
+                )
+            if (includeDesc) {
+                attributeList.add(Asset.DESCRIPTION)
+            }
+            attributeList.add(Asset.USER_DESCRIPTION)
+            attributeList.add(Asset.OWNER_USERS)
+            attributeList.add(Asset.OWNER_GROUPS)
+            attributeList.add(Asset.CERTIFICATE_STATUS)
+            attributeList.add(Asset.CERTIFICATE_STATUS_MESSAGE)
+            attributeList.add(Asset.ANNOUNCEMENT_TYPE)
+            attributeList.add(Asset.ANNOUNCEMENT_TITLE)
+            attributeList.add(Asset.ANNOUNCEMENT_MESSAGE)
+            attributeList.add(Asset.ASSIGNED_TERMS)
+            attributeList.add(Asset.ATLAN_TAGS)
+            attributeList.add(Asset.LINKS)
+            attributeList.add(Asset.README)
+            attributeList.add(Asset.STARRED_DETAILS)
+            attributeList.add(Asset.DOMAIN_GUIDS)
+            attributeList.add(Asset.PRODUCT_GUIDS)
+            attributeList.add(Asset.SUB_TYPE)
             for (cmField in cmFields) {
                 attributeList.add(cmField)
             }
