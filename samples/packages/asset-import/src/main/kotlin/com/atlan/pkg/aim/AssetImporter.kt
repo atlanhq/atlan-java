@@ -895,7 +895,7 @@ class AssetImporter(
                     listOf(
                         File.TYPE_NAME,
                         CustomEntity.TYPE_NAME,
-                    )
+                    ),
                 ),
                 TypeGrouping(
                     "Lineage",

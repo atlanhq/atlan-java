@@ -172,12 +172,14 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
 
         // If this is a relationship reference, then treat its relationshipAttributes as actual
         // relationship-level attributes (i.e. force them to be parsed as such).
-        if (relationshipGuid != null && !relationshipGuid.isNull() && relationshipAttributes != null && !relationshipAttributes.isNull()) {
+        if (relationshipGuid != null
+                && !relationshipGuid.isNull()
+                && relationshipAttributes != null
+                && !relationshipAttributes.isNull()) {
             Method method = ReflectionCache.getSetter(builderClass, "relationshipAttributes");
             if (method != null) {
                 try {
-                    Object value =
-                        Serde.deserialize(client, relationshipAttributes, method, "relationshipAttributes");
+                    Object value = Serde.deserialize(client, relationshipAttributes, method, "relationshipAttributes");
                     ReflectionCache.setValue(builder, "relationshipAttributes", value);
                 } catch (NoSuchMethodException e) {
                     throw new IOException("Missing fromValue method for enum.", e);
