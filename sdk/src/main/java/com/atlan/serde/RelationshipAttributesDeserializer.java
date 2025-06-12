@@ -68,6 +68,12 @@ public class RelationshipAttributesDeserializer extends StdDeserializer<Relation
 
         JsonNode attributes = root.get("attributes");
 
+        // If there are not actually any attributes to be parsed, then
+        // just short-circuit and return nothing
+        if (attributes == null || attributes.isNull()) {
+            return null;
+        }
+
         RelationshipAttributes.RelationshipAttributesBuilder<?, ?> builder;
         Class<?> relationshipClass;
 

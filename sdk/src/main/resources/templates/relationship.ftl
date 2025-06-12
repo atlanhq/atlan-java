@@ -140,15 +140,17 @@ public class ${className} extends RelationshipAttributes {
          * Build the ${className} relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public I${endDef1TypeName} ${endDef2AttrName}(I${endDef1TypeName} related) throws InvalidRequestException {
+        public I${endDef1TypeName} ${endDef2AttrName}(I${endDef1TypeName} related, Reference.SaveSemantic semantic) throws InvalidRequestException {
             ${className} attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ${endDef2AttrName?cap_first}._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ${endDef2AttrName?cap_first}._internal()
@@ -156,6 +158,7 @@ public class ${className} extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -166,15 +169,17 @@ public class ${className} extends RelationshipAttributes {
          * Build the ${className} relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public I${endDef2TypeName} ${endDef1AttrName}(I${endDef2TypeName} related) throws InvalidRequestException {
+        public I${endDef2TypeName} ${endDef1AttrName}(I${endDef2TypeName} related, Reference.SaveSemantic semantic) throws InvalidRequestException {
             ${className} attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ${endDef1AttrName?cap_first}._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ${endDef1AttrName?cap_first}._internal()
@@ -182,6 +187,7 @@ public class ${className} extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

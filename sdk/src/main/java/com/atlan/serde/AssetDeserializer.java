@@ -170,7 +170,27 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         // copy of the same
         Set<String> processedAttributes = new HashSet<>();
 
-        // Only process relationshipAttributes if this is a full asset, not a relationship
+        // If this is a relationship reference, then treat its relationshipAttributes as actual
+        // relationship-level attributes (i.e. force them to be parsed as such).
+        if (relationshipGuid != null
+                && !relationshipGuid.isNull()
+                && relationshipAttributes != null
+                && !relationshipAttributes.isNull()
+                && relationshipAttributes.has("attributes")) {
+            Method method = ReflectionCache.getSetter(builderClass, "relationshipAttributes");
+            if (method != null) {
+                try {
+                    Object value = Serde.deserialize(client, relationshipAttributes, method, "relationshipAttributes");
+                    ReflectionCache.setValue(builder, "relationshipAttributes", value);
+                } catch (NoSuchMethodException e) {
+                    throw new IOException("Missing fromValue method for enum.", e);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    throw new IOException("Failed to deserialize through reflection.", e);
+                }
+            }
+        }
+
+        // Only process relationshipAttributes as any other attributes if this is a full asset, not a relationship
         // reference. (If it is a relationship reference, the relationshipGuid will be non-null.)
         if (relationshipGuid == null || relationshipGuid.isNull()) {
             if (relationshipAttributes != null && !relationshipAttributes.isNull()) {

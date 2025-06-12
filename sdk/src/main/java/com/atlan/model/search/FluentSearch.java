@@ -209,7 +209,7 @@ public class FluentSearch extends CompoundQuery {
                     .collect(Collectors.toList()));
         }
         if (includeRelationshipAttributes != null) {
-            request.requestRelationshipAttrsForSearch(includeRelationshipAttributes);
+            request.includeRelationshipAttributes(includeRelationshipAttributes);
         }
         if (restrictByPersona != null && !restrictByPersona.isEmpty()) {
             request.persona(restrictByPersona);
