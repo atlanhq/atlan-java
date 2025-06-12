@@ -63,30 +63,31 @@ object AssetRefXformer {
         asset: Asset,
     ): String {
         // Handle some assets as direct embeds
-        val baseEncoding = when (asset) {
-            is Readme -> asset.description ?: ""
-            is Link -> {
-                // Transform to a set of useful, non-overlapping info
-                Link
-                    ._internal()
-                    .name(asset.name)
-                    .link(asset.link)
-                    .build()
-                    .toJson(ctx.client)
-            }
-            is Glossary -> GlossaryXformer.encode(ctx, asset)
-            is GlossaryCategory -> GlossaryCategoryXformer.encode(ctx, asset)
-            is GlossaryTerm -> GlossaryTermXformer.encode(ctx, asset)
-            is DataDomain -> DataDomainXformer.encode(ctx, asset)
-            is IModel -> ModelAssetXformer.encode(ctx, asset)
-            else -> {
-                var qualifiedName = asset.qualifiedName
-                if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
-                    qualifiedName = asset.uniqueAttributes.qualifiedName
+        val baseEncoding =
+            when (asset) {
+                is Readme -> asset.description ?: ""
+                is Link -> {
+                    // Transform to a set of useful, non-overlapping info
+                    Link
+                        ._internal()
+                        .name(asset.name)
+                        .link(asset.link)
+                        .build()
+                        .toJson(ctx.client)
                 }
-                "${asset.typeName}$TYPE_QN_DELIMITER$qualifiedName"
+                is Glossary -> GlossaryXformer.encode(ctx, asset)
+                is GlossaryCategory -> GlossaryCategoryXformer.encode(ctx, asset)
+                is GlossaryTerm -> GlossaryTermXformer.encode(ctx, asset)
+                is DataDomain -> DataDomainXformer.encode(ctx, asset)
+                is IModel -> ModelAssetXformer.encode(ctx, asset)
+                else -> {
+                    var qualifiedName = asset.qualifiedName
+                    if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
+                        qualifiedName = asset.uniqueAttributes.qualifiedName
+                    }
+                    "${asset.typeName}$TYPE_QN_DELIMITER$qualifiedName"
+                }
             }
-        }
         return if (asset.relationshipAttributes is UserDefRelationship) {
             UserDefRelationshipXformer.encode(ctx, baseEncoding, asset.relationshipAttributes)
         } else {

@@ -36,9 +36,11 @@ object UserDefRelationshipXformer {
         baseEncoding: String,
         relationshipAttrs: RelationshipAttributes,
     ): String {
-        val extras = relationshipAttrs.all.map { (key, value) ->
-            "$key$KEY_VAL_SEPARATOR$value"
-        }.joinToString(KEY_VAL_DELIMITER)
+        val extras =
+            relationshipAttrs.all
+                .map { (key, value) ->
+                    "$key$KEY_VAL_SEPARATOR$value"
+                }.joinToString(KEY_VAL_DELIMITER)
         return "$baseEncoding$PROPERTIES_START$extras$PROPERTIES_END"
     }
 
@@ -59,10 +61,11 @@ object UserDefRelationshipXformer {
             in USER_DEF_RELN_FIELDS -> {
                 val (extendedRef, semantic) = getSemantic(assetRef)
                 val (ref, properties) = getRefAndProperties(extendedRef)
-                val term = ctx.termCache
-                    .getByIdentity(ref)
-                    ?.trimToReference()
-                    ?: throw NoSuchElementException("Term not found (in $fieldName): $assetRef")
+                val term =
+                    ctx.termCache
+                        .getByIdentity(ref)
+                        ?.trimToReference()
+                        ?: throw NoSuchElementException("Term not found (in $fieldName): $assetRef")
                 val toLabel = properties.getOrDefault("toTypeLabel", "")
                 val fromLabel = properties.getOrDefault("fromTypeLabel", "")
                 UserDefRelationship
@@ -74,7 +77,7 @@ object UserDefRelationshipXformer {
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
 
-    private fun getRefAndProperties(extendedRef: String): Pair<String,Map<String, String>> =
+    private fun getRefAndProperties(extendedRef: String): Pair<String, Map<String, String>> =
         when {
             extendedRef.contains(PROPERTIES_START) -> {
                 val baseRef = extendedRef.substringBefore(PROPERTIES_START)
