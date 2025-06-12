@@ -15,6 +15,7 @@ import com.atlan.model.assets.Readme
 import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.relations.Reference.SaveSemantic
+import com.atlan.model.relations.UserDefRelationship
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.util.AssetResolver
@@ -62,7 +63,7 @@ object AssetRefXformer {
         asset: Asset,
     ): String {
         // Handle some assets as direct embeds
-        return when (asset) {
+        val baseEncoding = when (asset) {
             is Readme -> asset.description ?: ""
             is Link -> {
                 // Transform to a set of useful, non-overlapping info
@@ -85,6 +86,11 @@ object AssetRefXformer {
                 }
                 "${asset.typeName}$TYPE_QN_DELIMITER$qualifiedName"
             }
+        }
+        return if (asset.relationshipAttributes is UserDefRelationship) {
+            UserDefRelationshipXformer.encode(ctx, baseEncoding, asset.relationshipAttributes)
+        } else {
+            baseEncoding
         }
     }
 
@@ -115,6 +121,7 @@ object AssetRefXformer {
             "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(ctx, assetRef, fieldName)
             DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, assetRef, fieldName)
             in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, assetRef, fieldName)
+            in UserDefRelationshipXformer.USER_DEF_RELN_FIELDS -> UserDefRelationshipXformer.decode(ctx, assetRef, fieldName)
             else -> {
                 val (ref, semantic) = getSemantic(assetRef)
                 val typeName = ref.substringBefore(TYPE_QN_DELIMITER)
