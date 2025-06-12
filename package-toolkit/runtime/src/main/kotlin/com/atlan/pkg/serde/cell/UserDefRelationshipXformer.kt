@@ -20,7 +20,9 @@ object UserDefRelationshipXformer {
     val USER_DEF_RELN_FIELDS =
         setOf(
             Asset.USER_DEF_RELATIONSHIP_TOS.atlanFieldName,
+            "userDefRelationshipTos",
             Asset.USER_DEF_RELATIONSHIP_FROMS.atlanFieldName,
+            "userDefRelationshipFroms",
         )
 
     /**
