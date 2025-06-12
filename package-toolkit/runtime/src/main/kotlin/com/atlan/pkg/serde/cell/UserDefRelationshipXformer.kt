@@ -69,7 +69,7 @@ object UserDefRelationshipXformer {
                     .builder()
                     .toTypeLabel(toLabel)
                     .fromTypeLabel(fromLabel)
-                    .userDefRelationshipTo(term, semantic)
+                    .userDefRelationshipTo(term, semantic) as Asset
             }
             else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
         }
