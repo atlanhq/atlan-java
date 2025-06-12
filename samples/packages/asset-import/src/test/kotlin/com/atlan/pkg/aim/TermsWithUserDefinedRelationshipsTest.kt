@@ -81,8 +81,8 @@ class TermsWithUserDefinedRelationshipsTest : PackageTest("twudr") {
         val relnAttrs = related.first().relationshipAttributes
         assertTrue(relnAttrs is UserDefRelationship)
         val udr = relnAttrs as UserDefRelationship
-        assertEquals("links to", udr.toTypeLabel)
-        assertEquals("linked from", udr.fromTypeLabel)
+        assertEquals("Links to", udr.toTypeLabel)
+        assertEquals("Linked from", udr.fromTypeLabel)
     }
 
     @Test
@@ -94,8 +94,8 @@ class TermsWithUserDefinedRelationshipsTest : PackageTest("twudr") {
         val relnAttrs = related.first().relationshipAttributes
         assertTrue(relnAttrs is UserDefRelationship)
         val udr = relnAttrs as UserDefRelationship
-        assertEquals("links to", udr.toTypeLabel)
-        assertEquals("linked from", udr.fromTypeLabel)
+        assertEquals("Links to", udr.toTypeLabel)
+        assertEquals("Linked from", udr.fromTypeLabel)
     }
 
     @Test
