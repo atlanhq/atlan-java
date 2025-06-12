@@ -85,6 +85,7 @@ class GlossaryExporter(
                     .pageSize(batchSize)
                     .includesOnResults(getAttributesToExtract())
                     .includesOnRelations(getRelatedAttributesToExtract())
+                    .includeRelationshipAttributes(true)
 
             csv.streamAssets(assets.stream(true), this, assets.count(), batchSize, logger)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
@@ -119,6 +120,8 @@ class GlossaryExporter(
                 GlossaryTerm.TRANSLATED_TERMS,
                 GlossaryTerm.VALID_VALUES_FOR,
                 GlossaryTerm.CLASSIFIES,
+                Asset.USER_DEF_RELATIONSHIP_TOS,
+                Asset.USER_DEF_RELATIONSHIP_FROMS,
             )
         for (cmField in cmFields) {
             attributeList.add(cmField)

@@ -352,6 +352,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                     .where(GlossaryTerm.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -367,6 +368,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                     .where(GlossaryTerm.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -546,6 +548,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                 .includeOnResults(GlossaryTerm.ANCHOR)
                 ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .includeOnRelations(Asset.NAME)
+                .includeRelationshipAttributes(true)
                 .pageSize(2)
                 .stream()
                 .limit(2)
@@ -582,6 +585,7 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                 .includeOnResults(GlossaryTerm.ANCHOR)
                 .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
                 .includeOnRelations(Asset.NAME)
+                .includeRelationshipAttributes(true)
                 .pageSize(2)
                 .stream()
                 .limit(2)

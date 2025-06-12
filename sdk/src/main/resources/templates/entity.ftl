@@ -358,6 +358,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
                 .where(${className}.GUID.eq(id))
                 .includesOnResults(attributes)
                 .includesOnRelations(attributesOnRelated)
+                .includeRelationshipAttributes(true)
                 .pageSize(1)
                 .stream()
                 .findFirst();
@@ -373,6 +374,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
                 .where(${className}.QUALIFIED_NAME.eq(id))
                 .includesOnResults(attributes)
                 .includesOnRelations(attributesOnRelated)
+                .includeRelationshipAttributes(true)
                 .pageSize(1)
                 .stream()
                 .findFirst();

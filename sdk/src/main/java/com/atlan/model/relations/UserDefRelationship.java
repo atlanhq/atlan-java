@@ -94,15 +94,18 @@ public class UserDefRelationship extends RelationshipAttributes {
          * Build the UserDefRelationship relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IAsset userDefRelationshipFrom(IAsset related) throws InvalidRequestException {
+        public IAsset userDefRelationshipFrom(IAsset related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             UserDefRelationship attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return UserDefRelationshipFrom._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return UserDefRelationshipFrom._internal()
@@ -110,6 +113,7 @@ public class UserDefRelationship extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -118,15 +122,18 @@ public class UserDefRelationship extends RelationshipAttributes {
          * Build the UserDefRelationship relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IAsset userDefRelationshipTo(IAsset related) throws InvalidRequestException {
+        public IAsset userDefRelationshipTo(IAsset related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             UserDefRelationship attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return UserDefRelationshipTo._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return UserDefRelationshipTo._internal()
