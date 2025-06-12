@@ -31,15 +31,16 @@ class TermsWithUDRsTest : PackageTest("twudr") {
         val rGloss = gloss.save(client)
         val glossary = rGloss.getResult(gloss)
         val term1 = GlossaryTerm.creator("term1", glossary.guid).build()
-        val term2 = GlossaryTerm.creator("term2", glossary.guid)
-            .userDefRelationshipTo(
-                UserDefRelationship
-                    .builder()
-                    .toTypeLabel("relates to")
-                    .fromTypeLabel("related from")
-                    .userDefRelationshipTo(term1.trimToReference(), Reference.SaveSemantic.REPLACE)
-            )
-            .build()
+        val term2 =
+            GlossaryTerm
+                .creator("term2", glossary.guid)
+                .userDefRelationshipTo(
+                    UserDefRelationship
+                        .builder()
+                        .toTypeLabel("relates to")
+                        .fromTypeLabel("related from")
+                        .userDefRelationshipTo(term1.trimToReference(), Reference.SaveSemantic.REPLACE),
+                ).build()
         val response = client.assets.save(listOf(term1, term2))
         glossaryQN = glossary.qualifiedName
         term1QN = response.getResult(term1).qualifiedName
@@ -67,14 +68,14 @@ class TermsWithUDRsTest : PackageTest("twudr") {
         fileHasLineStartingWith(
             "glossary-export.csv",
             """
-                "$term1QN","AtlasGlossaryTerm","term1","$g1",,,,,,,,,,,,,,,,,,,,,,,,,"term2@@@$g1 {{fromTypeLabel=Related from|||toTypeLabel=Relates to}}"
-            """.trimIndent()
+            "$term1QN","AtlasGlossaryTerm","term1","$g1",,,,,,,,,,,,,,,,,,,,,,,,,"term2@@@$g1 {{fromTypeLabel=Related from|||toTypeLabel=Relates to}}"
+            """.trimIndent(),
         )
         fileHasLineStartingWith(
             "glossary-export.csv",
             """
-                "$term2QN","AtlasGlossaryTerm","term2","$g1",,,,,,,,,,,,,,,,,,,,,,,,"term1@@@$g1 {{fromTypeLabel=Related from|||toTypeLabel=Relates to}}"
-            """.trimIndent()
+            "$term2QN","AtlasGlossaryTerm","term2","$g1",,,,,,,,,,,,,,,,,,,,,,,,"term1@@@$g1 {{fromTypeLabel=Related from|||toTypeLabel=Relates to}}"
+            """.trimIndent(),
         )
     }
 
