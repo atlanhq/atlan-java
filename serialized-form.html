@@ -43258,6 +43258,12 @@ loadScripts(document, 'script');</script>
  is set to false.</div>
 </li>
 <li class="block-list">
+<h5>includeRelationshipAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> includeRelationshipAttributes</pre>
+<div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
+ By default, this is false and therefore relationship-level attributes are not included.</div>
+</li>
+<li class="block-list">
 <h5>persona</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> persona</pre>
 <div class="block">Qualified name of a persona through which to restrict the results of the search.</div>
@@ -43280,6 +43286,9 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>requestRelationshipAttrsForSearch</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> requestRelationshipAttrsForSearch</pre>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">see <code>IndexSearchRequest.includeRelationshipAttributes</code> instead</div>
+</div>
 <div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
  By default, this is false and therefore relationship-level attributes are not included.</div>
 </li>
