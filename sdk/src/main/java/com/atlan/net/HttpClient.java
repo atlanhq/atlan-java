@@ -251,7 +251,7 @@ public abstract class HttpClient {
                 }
             } else {
                 log.debug(
-                    " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
+                        " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
                 rateLimit(waitTime(numRetries).toMillis());
             }
             return true;
@@ -324,9 +324,7 @@ public abstract class HttpClient {
                     log.debug(" ... internal server error, will retry: {}", response.body());
                 }
             }
-            return (response.code() == 302
-                    || response.code() == 403
-                    || response.code() >= 500);
+            return (response.code() == 302 || response.code() == 403 || response.code() >= 500);
         }
         return false;
     }
