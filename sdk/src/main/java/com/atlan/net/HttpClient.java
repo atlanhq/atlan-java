@@ -219,7 +219,45 @@ public abstract class HttpClient {
 
     private <T extends AbstractAtlanResponse<?>> boolean shouldRetry(
             int numRetries, AtlanException exception, AtlanRequest request, T response) {
-        // Do not retry if we are out of retries.
+        // Continue retrying in case of connection errors (ignore max retries in these cases)
+        if ((exception != null)
+                && (exception.getCause() != null)
+                && (exception.getCause() instanceof ConnectException
+                        || exception.getCause() instanceof SocketTimeoutException)) {
+            log.debug(" ... network issue, will retry.", exception);
+            return true;
+        }
+
+        // Continue retrying in case of rate limiting (ignore max retries in this case)
+        if (response != null && response.code() == 429) {
+            if (exception != null) {
+                log.debug(" ... rate-limited, will retry with a delay: {}", response.body(), exception);
+            } else {
+                log.debug(" ... rate-limited, will retry with a delay: {}", response.body());
+            }
+            Optional<String> retryAfter = response.headers.firstValue("Retry-After");
+            if (retryAfter.isPresent()) {
+                try {
+                    String retryInSeconds = retryAfter.get();
+                    long waitTime = Long.parseLong(retryInSeconds);
+                    if (waitTime > 0) {
+                        rateLimit(waitTime * 1000);
+                    } else {
+                        rateLimit(waitTime(numRetries).toMillis());
+                    }
+                } catch (NumberFormatException e) {
+                    log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
+                    rateLimit(waitTime(numRetries).toMillis());
+                }
+            } else {
+                log.debug(
+                        " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
+                rateLimit(waitTime(numRetries).toMillis());
+            }
+            return true;
+        }
+
+        // Otherwise, do not retry if we are out of retries.
         if (numRetries >= request.options().getMaxNetworkRetries()) {
             if (exception != null) {
                 log.error(
@@ -232,15 +270,6 @@ public abstract class HttpClient {
                         request.options().getMaxNetworkRetries());
             }
             return false;
-        }
-
-        // Retry on connection error.
-        if ((exception != null)
-                && (exception.getCause() != null)
-                && (exception.getCause() instanceof ConnectException
-                        || exception.getCause() instanceof SocketTimeoutException)) {
-            log.debug(" ... network issue, will retry.", exception);
-            return true;
         }
 
         if (response != null) {
@@ -287,30 +316,6 @@ public abstract class HttpClient {
                 } else {
                     log.debug(" ... no permission for the operation (yet), will retry: {}", response.body());
                 }
-            } else if (response.code() == 429) {
-                // Retry on a rate-limited request (including waiting the suggested wait time, if available in response
-                // header)
-                if (exception != null) {
-                    log.debug(" ... rate-limited, will retry with a delay: {}", response.body(), exception);
-                } else {
-                    log.debug(" ... rate-limited, will retry with a delay: {}", response.body());
-                }
-                Optional<String> retryAfter = response.headers.firstValue("Retry-After");
-                if (retryAfter.isPresent()) {
-                    try {
-                        String retryInSeconds = retryAfter.get();
-                        log.debug(" ... pausing for {} seconds before retrying, given the rate-limit", retryInSeconds);
-                        long waitTime = Long.parseLong(retryInSeconds);
-                        Thread.sleep(waitTime * 1000);
-                    } catch (NumberFormatException e) {
-                        log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
-                    } catch (InterruptedException e) {
-                        log.warn(" ... wait on retry-after was interrupted: {}", retryAfter.get(), e);
-                    }
-                } else {
-                    log.debug(
-                            " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
-                }
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.
                 if (exception != null) {
@@ -319,12 +324,14 @@ public abstract class HttpClient {
                     log.debug(" ... internal server error, will retry: {}", response.body());
                 }
             }
-            return (response.code() == 302
-                    || response.code() == 403
-                    || response.code() == 429
-                    || response.code() >= 500);
+            return (response.code() == 302 || response.code() == 403 || response.code() >= 500);
         }
         return false;
+    }
+
+    private void rateLimit(long waitTime) {
+        GlobalRateLimiter limiter = GlobalRateLimiter.getInstance();
+        limiter.setRateLimit(waitTime);
     }
 
     private Duration sleepTime(int numRetries) {
