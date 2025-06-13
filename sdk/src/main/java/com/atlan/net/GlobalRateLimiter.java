@@ -2,12 +2,11 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Cross-thread, global rate limiting mechanism -- so if at any point the SDK receives
