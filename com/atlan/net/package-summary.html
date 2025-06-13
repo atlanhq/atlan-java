@@ -129,44 +129,51 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="FormEncoder.html" title="class in com.atlan.net">FormEncoder</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GlobalRateLimiter.html" title="class in com.atlan.net">GlobalRateLimiter</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Cross-thread, global rate limiting mechanism -- so if at any point the SDK receives
+ a 429 response that it is being rate-limited (throttled) then we can centrally pause
+ and coordinate retries across all threads, rather than allowing individual threads to
+ further overwhelm the throttling via their own independent requests.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HttpClient.html" title="class in com.atlan.net">HttpClient</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Base abstract class for HTTP clients used to send requests to Atlan's API.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Represents the content of an HTTP request, i.e.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A read-only view of a set of HTTP headers.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HttpURLConnectionClient.html" title="class in com.atlan.net">HttpURLConnectionClient</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HttpURLConnectionClient.html" title="class in com.atlan.net">HttpURLConnectionClient</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Class that actually handles the HTTP-level communications with Atlan.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;K,<wbr>V&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A KeyValuePair holds a key and a value.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LiveAtlanResponseGetter.html" title="class in com.atlan.net">LiveAtlanResponseGetter</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LiveAtlanResponseGetter.html" title="class in com.atlan.net">LiveAtlanResponseGetter</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Class that wraps the API request and response handling, such as detecting errors from specific response codes.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MultipartProcessor.html" title="class in com.atlan.net">MultipartProcessor</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MultipartProcessor.html" title="class in com.atlan.net">MultipartProcessor</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Currently unused — may be useful longer-term for endpoints that need to upload files (TBC).</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RequestMetrics.html" title="class in com.atlan.net">RequestMetrics</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RequestMetrics.html" title="class in com.atlan.net">RequestMetrics</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Class to capture response time metrics at the lowest level of granularity we can from the client-side.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Class to encapsulate all the options that can be overridden on individual API calls.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 </div>
 </div>
 </div>
