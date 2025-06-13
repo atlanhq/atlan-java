@@ -257,6 +257,21 @@ public abstract class HttpClient {
             return true;
         }
 
+        // Continue retrying in case of locking (ignore max retries in this case)
+        if (response != null && response.code() == 423) {
+            if (exception != null) {
+                log.debug(" ... lock encountered, will retry with a long delay: {}", response.body(), exception);
+            } else {
+                log.debug(" ... lock encountered, will retry with a long delay: {}", response.body());
+            }
+            try {
+                Thread.sleep(waitLongTime(numRetries).toMillis());
+            } catch (InterruptedException e) {
+                log.warn(" ... wait interrupted.", exception);
+            }
+            return true;
+        }
+
         // Otherwise, do not retry if we are out of retries.
         if (numRetries >= request.options().getMaxNetworkRetries()) {
             if (exception != null) {
@@ -349,13 +364,28 @@ public abstract class HttpClient {
      * @return a duration giving the time to wait (sleep)
      */
     public static Duration waitTime(int attempt) {
-        // Apply exponential backoff with MinNetworkRetriesDelay on the number of numRetries
-        // so far as inputs.
+        return waitTime(attempt, 1);
+    }
+
+    /**
+     * Add an extensive wait (with jitter), in particular for operations that rely on
+     * centralized back-end locking (like type updates).
+     *
+     * @param attempt the retry attempt (count)
+     * @return a duration giving the time to wait (sleep)
+     */
+    public static Duration waitLongTime(int attempt) {
+        return waitTime(attempt, 12);
+    }
+
+    private static Duration waitTime(int attempt, int multiplier) {
         Duration delay = Duration.ofNanos((long) (minNetworkRetriesDelay.toNanos() * Math.pow(2, attempt - 1)));
 
+        Duration max = maxNetworkRetriesDelay.multipliedBy(multiplier);
+
         // Do not allow the number to exceed MaxNetworkRetriesDelay
-        if (delay.compareTo(maxNetworkRetriesDelay) > 0) {
-            delay = maxNetworkRetriesDelay;
+        if (delay.compareTo(max) > 0) {
+            delay = max;
         }
 
         // Apply some jitter by randomizing the value in the range of 75%-100%.
