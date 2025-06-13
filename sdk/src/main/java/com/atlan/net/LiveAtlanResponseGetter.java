@@ -371,6 +371,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
                 exception = new ConflictException(
                         ErrorCode.CONFLICT_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
                 break;
+            case 423:
+                exception = new LockedException(
+                        ErrorCode.LOCK_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());
+                break;
             case 429:
                 exception = new RateLimitException(
                         ErrorCode.RATE_LIMIT_PASSTHROUGH, error.findCode(), error.findMessage(), error.renderCauses());

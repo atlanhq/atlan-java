@@ -517,11 +517,17 @@ public enum ErrorCode implements ExceptionMessageSet {
             "Provided service type is reserved for internal Atlan use only: {0}",
             "You cannot create, update or remove any type definitions using this service type, it is reserved for Atlan use only."),
 
+    LOCK_PASSTHROUGH(
+            423,
+            "ATLAN-JAVA-423-000",
+            "Server responded with a lock -- {0}: {1} -- caused by: {2}",
+            "Will be automatically retried up to the retry limit. If it still fails, check how many parallel type operations you are attempting or check for outages."),
+
     RATE_LIMIT_PASSTHROUGH(
             429,
             "ATLAN-JAVA-429-000",
             "Server responded with a rate limit violation -- {0}: {1} -- caused by: {2}",
-            "Check the details of the server's message to correct your request."),
+            "Will be automatically retried with an exponential back-off (including jitter). If long-repeating, check how many parallel operations you are attempting or contact Atlan for options to increase limits."),
 
     ERROR_PASSTHROUGH(
             500,

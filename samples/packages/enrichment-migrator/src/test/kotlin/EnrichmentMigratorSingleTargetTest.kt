@@ -146,7 +146,7 @@ class EnrichmentMigratorSingleTargetTest : PackageTest("st") {
             filename = "transformed-file.csv",
             line =
                 """
-                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1",,,,,,,,,,,,,,,,,"${TimestampXformer.encode(now)}"
+                "${targetConnection.qualifiedName}/db1/sch1/tbl1","Table","tbl1",,,,,,,,,,,,,,,,,,,"${TimestampXformer.encode(now)}"
                 """.trimIndent(),
         )
     }
