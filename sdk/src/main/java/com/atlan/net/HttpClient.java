@@ -299,17 +299,20 @@ public abstract class HttpClient {
                 if (retryAfter.isPresent()) {
                     try {
                         String retryInSeconds = retryAfter.get();
-                        log.debug(" ... pausing for {} seconds before retrying, given the rate-limit", retryInSeconds);
                         long waitTime = Long.parseLong(retryInSeconds);
-                        Thread.sleep(waitTime * 1000);
+                        if (waitTime > 0) {
+                            rateLimit(waitTime * 1000);
+                        } else {
+                            rateLimit(waitTime(numRetries).toMillis());
+                        }
                     } catch (NumberFormatException e) {
                         log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
-                    } catch (InterruptedException e) {
-                        log.warn(" ... wait on retry-after was interrupted: {}", retryAfter.get(), e);
+                        rateLimit(waitTime(numRetries).toMillis());
                     }
                 } else {
                     log.debug(
                             " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
+                    rateLimit(waitTime(numRetries).toMillis());
                 }
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.
@@ -325,6 +328,11 @@ public abstract class HttpClient {
                     || response.code() >= 500);
         }
         return false;
+    }
+
+    private void rateLimit(long waitTime) {
+        GlobalRateLimiter limiter = GlobalRateLimiter.getInstance();
+        limiter.setRateLimit(waitTime);
     }
 
     private Duration sleepTime(int numRetries) {
