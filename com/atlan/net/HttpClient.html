@@ -197,8 +197,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Sends the given request to Atlan's API, retrying if it encounters certain problems.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#waitTime(int)" class="member-name-link">waitTime</a><wbr>(int&nbsp;attempt)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#waitLongTime(int)" class="member-name-link">waitLongTime</a><wbr>(int&nbsp;attempt)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Add an extensive wait (with jitter), in particular for operations that rely on
+ centralized back-end locking (like type updates).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#waitTime(int)" class="member-name-link">waitTime</a><wbr>(int&nbsp;attempt)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Calculate an exponential-backoff time to wait, with a jitter.</div>
 </div>
 </div>
@@ -404,6 +410,20 @@ loadScripts(document, 'script');</script>
 <h3>waitTime</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a></span>&nbsp;<span class="element-name">waitTime</span><wbr><span class="parameters">(int&nbsp;attempt)</span></div>
 <div class="block">Calculate an exponential-backoff time to wait, with a jitter.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>attempt</code> - the retry attempt (count)</dd>
+<dt>Returns:</dt>
+<dd>a duration giving the time to wait (sleep)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="waitLongTime(int)">
+<h3>waitLongTime</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a></span>&nbsp;<span class="element-name">waitLongTime</span><wbr><span class="parameters">(int&nbsp;attempt)</span></div>
+<div class="block">Add an extensive wait (with jitter), in particular for operations that rely on
+ centralized back-end locking (like type updates).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>attempt</code> - the retry attempt (count)</dd>
