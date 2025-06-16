@@ -4,6 +4,7 @@ package com.atlan.model.fields;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.ScriptLanguage;
+import co.elastic.clients.elasticsearch._types.ScriptSource;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.enums.ElasticRegexOperator;
@@ -159,9 +160,10 @@ public interface IKeywordSearchable {
      * @see #in(Collection)
      */
     static Query in(final String field, final List<String> values, final int minMustMatch) {
+        List<FieldValue> vals = values.stream().map(FieldValue::of).collect(Collectors.toList());
         return TermsSetQuery.of(
-                        t -> t.field(field).terms(values).minimumShouldMatchScript(s -> s.lang(ScriptLanguage.Painless)
-                                .source("" + minMustMatch)))
+                        t -> t.field(field).terms(vals).minimumShouldMatchScript(s -> s.lang(ScriptLanguage.Painless)
+                                .source(ScriptSource.of(f -> f.scriptString("" + minMustMatch)))))
                 ._toQuery();
     }
 
