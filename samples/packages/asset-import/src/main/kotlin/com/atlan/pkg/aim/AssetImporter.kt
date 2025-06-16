@@ -6,6 +6,8 @@ import AssetImportCfg
 import com.atlan.model.assets.ADLSAccount
 import com.atlan.model.assets.ADLSContainer
 import com.atlan.model.assets.ADLSObject
+import com.atlan.model.assets.APIField
+import com.atlan.model.assets.APIObject
 import com.atlan.model.assets.APIPath
 import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.AirflowDag
@@ -46,6 +48,7 @@ import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
+import com.atlan.model.assets.CustomEntity
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
 import com.atlan.model.assets.DataStudioAsset
@@ -66,6 +69,7 @@ import com.atlan.model.assets.DomoDatasetColumn
 import com.atlan.model.assets.DynamoDBGlobalSecondaryIndex
 import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
+import com.atlan.model.assets.File
 import com.atlan.model.assets.FlowDataOperation
 import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowInterimField
@@ -554,6 +558,8 @@ class AssetImporter(
                     listOf(
                         APISpec.TYPE_NAME,
                         APIPath.TYPE_NAME,
+                        APIObject.TYPE_NAME,
+                        APIField.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
@@ -889,6 +895,13 @@ class AssetImporter(
                     ),
                 ),
                 TypeGrouping(
+                    "Custom",
+                    listOf(
+                        File.TYPE_NAME,
+                        CustomEntity.TYPE_NAME,
+                    ),
+                ),
+                TypeGrouping(
                     "Flows",
                     listOf(
                         FlowProcessGrouping.TYPE_NAME,
@@ -1008,13 +1021,11 @@ class AssetImporter(
                         "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
                     )
                 }
-            } else if (typeName.isNotBlank()) {
-                if (deferredIdentity == null) {
-                    throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
-                } else {
-                    val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
-                    connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
-                }
+            } else if (deferredIdentity == null) {
+                throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+            } else {
+                val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
+                connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
             }
             return row
         }

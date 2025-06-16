@@ -48,4 +48,8 @@ public abstract class RelationshipAttributes extends AtlanObject {
 
     @JsonIgnore
     public abstract Map<String, Object> getAll();
+
+    public abstract static class RelationshipAttributesBuilder<
+                    C extends RelationshipAttributes, B extends RelationshipAttributesBuilder<C, B>>
+            extends AtlanObjectBuilder<C, B> {}
 }

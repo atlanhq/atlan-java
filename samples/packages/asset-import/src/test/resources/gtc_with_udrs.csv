@@ -1,0 +1,4 @@
+qualifiedName,typeName,name,anchor,userDescription,userDefRelationshipTos
+,AtlasGlossary,{GLOSSARY},,Test glossary for user-defined relationships import.,
+,AtlasGlossaryTerm,Term1,{GLOSSARY},Test term 1 for user-defined relationships import.,Term2@@@{GLOSSARY} {{toTypeLabel=links to|||fromTypeLabel=linked from}}
+,AtlasGlossaryTerm,Term2,{GLOSSARY},Test term 2 for user-defined relationships import.,

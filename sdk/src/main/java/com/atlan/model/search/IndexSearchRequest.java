@@ -100,9 +100,18 @@ public class IndexSearchRequest extends AtlanObject {
     /**
      * Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
      * By default, this is false and therefore relationship-level attributes are not included.
+     * @deprecated see {@link #includeRelationshipAttributes} instead
      */
+    @Deprecated
     @Builder.Default
     Boolean requestRelationshipAttrsForSearch = false;
+
+    /**
+     * Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
+     * By default, this is false and therefore relationship-level attributes are not included.
+     */
+    @Builder.Default
+    Boolean includeRelationshipAttributes = false;
 
     /** Controls how the search is logged (if at all). */
     @Builder.Default

@@ -61,7 +61,7 @@ public class HttpURLConnectionClient extends HttpClient {
                         "Received unexpected null response stream -- treating as an ephemeral network issue.");
             }
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             throw new ApiConnectionException(
                     ErrorCode.CONNECTION_ERROR, e, request.client().getBaseUrl());
         }
@@ -110,9 +110,11 @@ public class HttpURLConnectionClient extends HttpClient {
     }
 
     private static HttpURLConnection createAtlanConnection(AtlanRequest request)
-            throws IOException, ApiConnectionException {
-        HttpURLConnection conn = null;
+            throws IOException, InterruptedException {
+        GlobalRateLimiter limiter = GlobalRateLimiter.getInstance();
+        limiter.waitIfRateLimited();
 
+        HttpURLConnection conn;
         if (request.options().getConnectionProxy() != null) {
             conn = (HttpURLConnection)
                     request.url().openConnection(request.options().getConnectionProxy());

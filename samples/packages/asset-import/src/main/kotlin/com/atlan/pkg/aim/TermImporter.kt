@@ -9,6 +9,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
+import com.atlan.pkg.serde.cell.UserDefRelationshipXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
@@ -50,6 +51,7 @@ class TermImporter(
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
         firstPassSkip.addAll(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
+        firstPassSkip.addAll(UserDefRelationshipXformer.USER_DEF_RELN_FIELDS)
         firstPassSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
