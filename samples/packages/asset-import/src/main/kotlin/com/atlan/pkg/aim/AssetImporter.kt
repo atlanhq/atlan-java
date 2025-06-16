@@ -13,6 +13,8 @@ import com.atlan.model.assets.APISpec
 import com.atlan.model.assets.AirflowDag
 import com.atlan.model.assets.AirflowTask
 import com.atlan.model.assets.AnomaloCheck
+import com.atlan.model.assets.Application
+import com.atlan.model.assets.ApplicationField
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.AtlanCollection
 import com.atlan.model.assets.AtlanQuery
@@ -524,6 +526,13 @@ class AssetImporter(
                         Persona.TYPE_NAME,
                         Purpose.TYPE_NAME,
                         AuthPolicy.TYPE_NAME,
+                    ),
+                ),
+                TypeGrouping(
+                    "Applications",
+                    listOf(
+                        Application.TYPE_NAME,
+                        ApplicationField.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
