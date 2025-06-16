@@ -1,17 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
-import com.github.jengelman.gradle.plugins.shadow.ShadowStats
-import com.github.jengelman.gradle.plugins.shadow.transformers.CacheableTransformer
 import com.github.jengelman.gradle.plugins.shadow.transformers.DontIncludeResourceTransformer
-import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext
-import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext.Companion.getEntryTimestamp
-import org.apache.commons.io.output.CloseShieldOutputStream
-import org.apache.logging.log4j.core.config.plugins.processor.PluginCache
-import org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor
-import org.apache.tools.zip.ZipEntry
-import org.apache.tools.zip.ZipOutputStream
-import java.net.URL
-import java.util.Collections
-import java.util.Enumeration
+
+// SPDX-License-Identifier: Apache-2.0
 
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarName = "package-toolkit-runtime"
@@ -255,7 +244,6 @@ tasks {
             include(dependency("com.squareup.okio:okio-jvm:.*"))
         }
         mergeServiceFiles()
-        transform(Log4j2PluginsCustomTransformer())
         transform(DontIncludeResourceTransformer::class.java) {
             resource = "LICENSE"
         }
@@ -331,55 +319,4 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications["mavenJavaPkgRun"])
-}
-
-/**
- * Modified from the original, to simplify (and as the original was not working)
- *
- * Modified from [org.apache.logging.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer.java](https://github.com/apache/logging-log4j-transform/blob/main/log4j-transform-maven-shade-plugin-extensions/src/main/java/org/apache/logging/log4j/maven/plugins/shade/transformer/Log4j2PluginCacheFileTransformer.java).
- *
- * @author Christopher Grote
- * @author Paul Nelson Baker
- * @author John Engelman
- */
-@CacheableTransformer
-open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.shadow.transformers.Transformer {
-    private val temporaryFiles = mutableListOf<File>()
-    private var stats: ShadowStats? = null
-
-    override fun canTransformResource(element: FileTreeElement): Boolean = PluginProcessor.PLUGIN_CACHE_FILE == element.name
-
-    override fun transform(context: TransformerContext) {
-        val temporaryFile = File.createTempFile("Log4j2Plugins", ".dat")
-        temporaryFile.deleteOnExit()
-        temporaryFiles.add(temporaryFile)
-        val fos = temporaryFile.outputStream()
-        context.inputStream.use {
-            it.copyTo(fos)
-        }
-        if (stats == null) {
-            stats = context.stats
-        }
-    }
-
-    override fun hasTransformedResource(): Boolean = temporaryFiles.isNotEmpty()
-
-    override fun modifyOutputStream(
-        os: ZipOutputStream,
-        preserveFileTimestamps: Boolean,
-    ) {
-        val pluginCache = PluginCache()
-        pluginCache.loadCacheFiles(urlEnumeration)
-        val entry = ZipEntry(PluginProcessor.PLUGIN_CACHE_FILE)
-        entry.time = getEntryTimestamp(preserveFileTimestamps, entry.time)
-        os.putNextEntry(entry)
-        pluginCache.writeCache(CloseShieldOutputStream.wrap(os))
-        temporaryFiles.clear()
-    }
-
-    private val urlEnumeration: Enumeration<URL>
-        get() {
-            val urls = temporaryFiles.map { it.toURI().toURL() }
-            return Collections.enumeration(urls)
-        }
 }
